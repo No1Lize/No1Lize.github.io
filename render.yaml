@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: lize-road-one-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: INTERNAL_SYNC_SECRET
+        generateValue: true
+      - key: SEC_USER_AGENT
+        sync: false
+      - key: PUBLIC_ORIGINS
+        value: '["https://no1lize.github.io"]'
+      - key: GITHUB_REPOSITORY
+        value: No1Lize/No1Lize.github.io
+      - key: GITHUB_TOKEN
+        sync: false
+  - type: worker
+    name: lize-road-one-scheduler
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    dockerCommand: python -m workers.ingestion.scheduler
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: SEC_USER_AGENT
+        sync: false

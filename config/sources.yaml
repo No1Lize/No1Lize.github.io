@@ -1,0 +1,19 @@
+sources:
+  - id: openai
+    name: OpenAI
+    source_type: company
+    base_url: https://openai.com/
+    access_method: html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: sec
+    name: SEC EDGAR
+    source_type: regulator
+    base_url: https://data.sec.gov/
+    access_method: api
+    reliability_level: 1
+    update_frequency: daily
+    is_enabled: true
+    requires_api_key: false

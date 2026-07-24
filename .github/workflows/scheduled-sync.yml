@@ -1,0 +1,30 @@
+name: Scheduled public-data sync
+on:
+  schedule:
+    - cron: "17 */2 * * *"
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Optional source adapter
+        required: false
+        type: choice
+        options: ["", openai, sec]
+permissions:
+  contents: read
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger protected backend sync
+        env:
+          API_BASE_URL: ${{ vars.API_BASE_URL }}
+          INTERNAL_SYNC_SECRET: ${{ secrets.INTERNAL_SYNC_SECRET }}
+          SOURCE: ${{ inputs.source }}
+        run: |
+          test -n "$API_BASE_URL"
+          test -n "$INTERNAL_SYNC_SECRET"
+          curl --fail-with-body --retry 3 --retry-all-errors \
+            -H "Content-Type: application/json" \
+            -H "X-Internal-Secret: $INTERNAL_SYNC_SECRET" \
+            -d "{\"source\":\"${SOURCE:-}\"}" \
+            "$API_BASE_URL/api/internal/sync/run"
