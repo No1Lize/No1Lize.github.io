@@ -1,15 +1,25 @@
 import {
   intelligenceEvents,
-  sectors as baseSectors,
   type IntelligenceEvent,
-  type Sector,
 } from "@/lib/intelligence-data";
+import {
+  sectorDefinitions,
+  type SectorDefinition,
+} from "@/lib/sector-definitions";
 import {
   userTrackingConfig,
   type TrackingTrack,
 } from "@/lib/user-tracking";
 
-export type TrackedSector = Sector & {
+export type TrackedSector = SectorDefinition & {
+  heat: number;
+  completeness: number;
+  trend: "up" | "flat" | "down";
+  events: number;
+  institutions: number;
+  financingEvents: number;
+  sourceCount: number;
+  fundingLabel: string;
   tracking: TrackingTrack;
   aliases: string[];
   baseName?: string;
@@ -17,7 +27,7 @@ export type TrackedSector = Sector & {
 
 type SectorRaw = {
   tracking: TrackingTrack;
-  base?: Sector;
+  base?: SectorDefinition;
   aliases: string[];
   events: IntelligenceEvent[];
   financing: number;
@@ -54,19 +64,22 @@ function normalizer(values: number[]): (value: number) => number {
 }
 
 function genericDefinition(track: TrackingTrack): string {
-  const focus = unique([
-    ...track.keywords,
-    ...track.sampleCompanies,
-    ...track.people,
-  ], 6);
+  const focus = unique(
+    [...track.keywords, ...track.sampleCompanies, ...track.people],
+    6,
+  );
   return focus.length
     ? `聚焦${focus.join("、")}等方向，持续跟踪技术里程碑、公司进展、资本事件与关键人物动向。`
     : `持续跟踪${track.name}相关技术、公司、资本事件与产业化进展。`;
 }
 
 function buildRaw(): SectorRaw[] {
-  const baseBySlug = new Map(baseSectors.map((sector) => [sector.slug, sector]));
-  const baseByName = new Map(baseSectors.map((sector) => [sector.name, sector]));
+  const baseBySlug = new Map(
+    sectorDefinitions.map((sector) => [sector.slug, sector]),
+  );
+  const baseByName = new Map(
+    sectorDefinitions.map((sector) => [sector.name, sector]),
+  );
   const asOf = Math.max(
     Date.now(),
     ...intelligenceEvents.map((event) => dateValue(event.publishedAt)),
@@ -78,11 +91,13 @@ function buildRaw(): SectorRaw[] {
   return userTrackingConfig.tracks
     .filter((track) => track.enabled)
     .map((tracking) => {
-      const base = baseBySlug.get(tracking.slug) ?? baseByName.get(tracking.name);
+      const base =
+        baseBySlug.get(tracking.slug) ?? baseByName.get(tracking.name);
       const aliases = unique([tracking.name, base?.name ?? ""], 4);
       const events = intelligenceEvents.filter(
         (event) =>
-          aliases.includes(event.sector) && dateValue(event.publishedAt) >= yearAgo,
+          aliases.includes(event.sector) &&
+          dateValue(event.publishedAt) >= yearAgo,
       );
       const financing = events.filter((event) => event.type === "融资").length;
       const institutions = new Set(
@@ -104,6 +119,7 @@ function buildRaw(): SectorRaw[] {
         const timestamp = dateValue(event.publishedAt);
         return timestamp >= previousNinetyDays && timestamp < ninetyDaysAgo;
       }).length;
+
       return {
         tracking,
         base,
@@ -183,7 +199,11 @@ function buildTrackedSectors(): TrackedSector[] {
         : ["关键技术指标", "商业化进度", "资本与监管变化"],
       risks:
         base?.risks ??
-        ["技术路线尚未收敛", "产业化周期与资本开支压力", "数据、合规与供应链不确定性"],
+        [
+          "技术路线尚未收敛",
+          "产业化周期与资本开支压力",
+          "数据、合规与供应链不确定性",
+        ],
       heat,
       completeness,
       trend:
@@ -213,5 +233,7 @@ export function getTrackedSector(slug: string): TrackedSector | undefined {
 export function eventsForTrackedSector(
   sector: Pick<TrackedSector, "aliases">,
 ): IntelligenceEvent[] {
-  return intelligenceEvents.filter((event) => sector.aliases.includes(event.sector));
+  return intelligenceEvents.filter((event) =>
+    sector.aliases.includes(event.sector),
+  );
 }
