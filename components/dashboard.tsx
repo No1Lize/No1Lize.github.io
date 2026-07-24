@@ -7,10 +7,10 @@ import { institutionCatalog } from "@/lib/catalog-data";
 import {
   focusCompanies,
   heatMethodology,
-  sectors,
   type EventType,
 } from "@/lib/intelligence-data";
 import { getInstitutionProfile } from "@/lib/research-content";
+import { trackedSectors } from "@/lib/tracked-sectors";
 import { useArticles } from "@/lib/use-articles";
 
 const regions = ["全部", "中国", "美国", "全球"] as const;
@@ -31,6 +31,14 @@ const eventTypes = [
   "人物观点",
 ] as const;
 
+const enabledSectorNames = new Set(
+  trackedSectors.flatMap((sector) => sector.aliases),
+);
+const rankedSectors = [...trackedSectors].sort(
+  (left, right) =>
+    right.heat - left.heat || right.events - left.events || left.name.localeCompare(right.name),
+);
+
 export function Dashboard() {
   const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
@@ -38,39 +46,50 @@ export function Dashboard() {
   const [query, setQuery] = useState("");
   const [showMethod, setShowMethod] = useState(false);
 
+  const activeArticles = useMemo(
+    () => articles.filter((item) => enabledSectorNames.has(item.sector)),
+    [articles],
+  );
   const visibleEvents = useMemo(
     () =>
-      articles
+      activeArticles
         .filter((item) => region === "全部" || item.region === region)
         .filter((item) => eventType === "全部" || item.type === (eventType as EventType))
-        .filter((item) => `${item.title}${item.summary}${item.company}`.toLowerCase().includes(query.toLowerCase()))
+        .filter((item) =>
+          `${item.title}${item.summary}${item.company}`
+            .toLowerCase()
+            .includes(query.toLowerCase()),
+        )
         .sort(
           (a, b) =>
             b.publishedAt.localeCompare(a.publishedAt) ||
             b.importance - a.importance,
         ),
-    [articles, eventType, query, region],
+    [activeArticles, eventType, query, region],
   );
-  const sourceCount = new Set(articles.map((item) => item.source.url)).size;
+  const sourceCount = new Set(activeArticles.map((item) => item.source.url)).size;
   const platformCount = new Set(
-    articles.map((item) => item.source.platform).filter(Boolean),
+    activeArticles.map((item) => item.source.platform).filter(Boolean),
   ).size;
+  const activeSourceIds = new Set(activeArticles.map((item) => item.sourceId).filter(Boolean));
   const healthySourceCount = sourceStatus.filter(
     (item) =>
-      ["ok", "partial"].includes(item.status) && item.accepted > 0,
+      activeSourceIds.has(item.id) &&
+      ["ok", "partial"].includes(item.status) &&
+      item.accepted > 0,
   ).length;
-  const sectorCount = new Set(articles.map((item) => item.sector)).size;
-  const chinaCount = articles.filter((item) => item.region === "中国").length;
-  const usCount = articles.filter((item) => item.region === "美国").length;
+  const sectorCount = trackedSectors.length;
+  const chinaCount = activeArticles.filter((item) => item.region === "中国").length;
+  const usCount = activeArticles.filter((item) => item.region === "美国").length;
   const marketSourceCount = (market: "中国" | "美国") =>
     new Set(
-      articles
+      activeArticles
         .filter((item) => item.region === market)
         .map((item) => item.source.url),
     ).size;
   const topSector = (market: "中国" | "美国") => {
     const counts = new Map<string, number>();
-    articles
+    activeArticles
       .filter((item) => item.region === market)
       .forEach((item) => counts.set(item.sector, (counts.get(item.sector) ?? 0) + 1));
     return (
@@ -99,11 +118,11 @@ export function Dashboard() {
             <span>公开资料快照 · {generatedAt.slice(0, 10)}</span>
             <span className="status-pill"><i /> {isLive ? "已同步" : "内置快照"}</span>
           </div>
-          <strong>{String(articles.length).padStart(2, "0")}</strong>
-          <p>{qualityGate?.passed === false ? "数据质量门未通过" : "可追溯公开情报"}</p>
+          <strong>{String(activeArticles.length).padStart(2, "0")}</strong>
+          <p>{qualityGate?.passed === false ? "数据质量门未通过" : "当前启用赛道的可追溯公开情报"}</p>
           <div className="snapshot-meta">
             <span>{healthySourceCount || sourceCount} 个有效来源</span>
-            <span>{platformCount} 类平台 · {sectorCount} 个赛道</span>
+            <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>
           </div>
         </div>
       </section>
@@ -176,7 +195,7 @@ export function Dashboard() {
               <div className="empty-state">
                 <Search size={22} />
                 <strong>当前筛选没有结果</strong>
-                <p>尝试清除关键词、切换地区或选择其他事件类型。</p>
+                <p>尝试清除关键词、切换地区或在追踪配置中启用其他赛道。</p>
               </div>
             )}
           </div>
@@ -192,7 +211,7 @@ export function Dashboard() {
           </div>
           {showMethod && <p className="method-note">{heatMethodology}</p>}
           <div className="heat-list">
-            {sectors.slice(0, 7).map((sector, index) => (
+            {rankedSectors.slice(0, 7).map((sector, index) => (
               <Link href={`/technology/${sector.slug}`} className="heat-row" key={sector.slug}>
                 <span className="heat-rank">{String(index + 1).padStart(2, "0")}</span>
                 <div>
@@ -204,7 +223,8 @@ export function Dashboard() {
               </Link>
             ))}
           </div>
-          <Link className="text-link" href="/technology">查看全部十个赛道 <ChevronRight size={15} /></Link>
+          <Link className="text-link" href="/technology">查看全部 {trackedSectors.length} 个启用赛道 <ChevronRight size={15} /></Link>
+          <Link className="text-link" href="/tracking">管理追踪配置 <ChevronRight size={15} /></Link>
         </aside>
       </section>
 
