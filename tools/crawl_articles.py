@@ -1601,6 +1601,16 @@ def crawl_papers(
     errors: list[str] = []
     for spec in specs:
         if not spec.get("enabled", True):
+            statuses.append(
+                _status(
+                    spec["id"],
+                    spec["name"],
+                    "disabled",
+                    0,
+                    0,
+                    platform=spec.get("platform", spec["name"]),
+                )
+            )
             continue
         try:
             incoming, status = crawl_paper_source(spec, user_agent)
@@ -1722,7 +1732,11 @@ def replace_source_batches(
     successful_ids = {
         status["id"]
         for status in statuses
-        if status.get("status") in {"ok", "partial"} and status.get("accepted", 0) > 0
+        if status.get("status") == "disabled"
+        or (
+            status.get("status") in {"ok", "partial"}
+            and status.get("accepted", 0) > 0
+        )
     }
     preserved = [
         article
