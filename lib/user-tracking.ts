@@ -3,9 +3,10 @@ import rawTrackingConfig from "@/config/user_tracking.json";
 export const TRACKING_REPOSITORY = "No1Lize/No1Lize.github.io";
 export const TRACKING_BRANCH = "main";
 export const TRACKING_CONFIG_PATH = "config/user_tracking.json";
+export const TRACKING_OWNER = "No1Lize";
 
 export type TrackingRegion = "中国" | "美国" | "全球";
-export type TrackingSourceType = "rss" | "listing-search";
+export type TrackingSourceType = "rss" | "listing-search" | "sec";
 
 export type TrackingTrack = {
   slug: string;
@@ -37,7 +38,7 @@ export type UserTrackingConfig = {
 };
 
 const REGIONS: TrackingRegion[] = ["中国", "美国", "全球"];
-const SOURCE_TYPES: TrackingSourceType[] = ["rss", "listing-search"];
+const SOURCE_TYPES: TrackingSourceType[] = ["rss", "listing-search", "sec"];
 
 function cleanText(value: unknown, maxLength = 120): string {
   return typeof value === "string"
@@ -61,8 +62,7 @@ export function slugifyTrack(value: string): string {
     .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 48);
-  if (ascii) return ascii;
-  return `track-${Date.now().toString(36)}`;
+  return ascii || `track-${Date.now().toString(36)}`;
 }
 
 function normalizeTrack(value: unknown, index: number): TrackingTrack | null {
@@ -85,11 +85,22 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
   if (!value || typeof value !== "object") return null;
   const raw = value as Record<string, unknown>;
   const name = cleanText(raw.name, 80);
-  const url = cleanText(raw.url, 500);
-  if (!name || !/^https?:\/\//i.test(url)) return null;
   const sourceType = SOURCE_TYPES.includes(raw.sourceType as TrackingSourceType)
     ? (raw.sourceType as TrackingSourceType)
     : "listing-search";
+  const ticker = cleanText(raw.ticker, 30).toUpperCase();
+  const suppliedUrl = cleanText(raw.url, 500);
+  const url =
+    sourceType === "sec" && !suppliedUrl
+      ? "https://www.sec.gov/edgar/search/"
+      : suppliedUrl;
+  if (
+    !name ||
+    !/^https?:\/\//i.test(url) ||
+    (sourceType === "sec" && !ticker)
+  ) {
+    return null;
+  }
   const region = REGIONS.includes(raw.region as TrackingRegion)
     ? (raw.region as TrackingRegion)
     : "全球";
@@ -103,14 +114,17 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
     region,
     sector: cleanText(raw.sector, 60) || "AI / AGI",
     company: cleanText(raw.company, 80),
-    ticker: cleanText(raw.ticker, 30).toUpperCase(),
+    ticker,
     keywords: uniqueStrings(raw.keywords),
     enabled: raw.enabled !== false,
   };
 }
 
 export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
-  const raw = value && typeof value === "object" ? (value as Record<string, unknown>) : {};
+  const raw =
+    value && typeof value === "object"
+      ? (value as Record<string, unknown>)
+      : {};
   const tracks = Array.isArray(raw.tracks)
     ? raw.tracks
         .map(normalizeTrack)
@@ -138,7 +152,9 @@ export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
   };
 }
 
-export function cloneTrackingConfig(config: UserTrackingConfig): UserTrackingConfig {
+export function cloneTrackingConfig(
+  config: UserTrackingConfig,
+): UserTrackingConfig {
   return JSON.parse(JSON.stringify(config)) as UserTrackingConfig;
 }
 
