@@ -15,7 +15,7 @@ test("production catalog meets the initial coverage floor", () => {
   assert.ok(institutionCatalog.length >= 20);
   assert.ok(ipoCompanies.length >= 15);
   assert.equal(sectors.length, 10);
-  assert.equal(people.length, 4);
+  assert.ok(people.length >= 6);
   assert.ok(reports.length >= 5);
 });
 

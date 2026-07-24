@@ -15,6 +15,7 @@ const materialLabels: Record<string, string> = {
   public_document: "公开文件",
   compiled_work: "第三方整理",
   commentary: "第三方评论",
+  research_paper: "研究论文",
 };
 
 export function generateStaticParams() {
@@ -136,7 +137,7 @@ export default async function PersonDetail({
           <div className="confidence-box">
             <span>公开材料</span>
             <strong>{person.materials.length}</strong>
-            <p>股东信、演讲、文章与公开发文</p>
+            <p>股东信、演讲、论文、文章与公开发文</p>
           </div>
           <div className="confidence-box">
             <span>研究概念</span>

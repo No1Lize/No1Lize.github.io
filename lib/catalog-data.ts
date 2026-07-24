@@ -213,4 +213,30 @@ export const people: Person[] = [
       {title:"Poor Charlie's Almanack foreword/context",date:"2005",type:"commentary",url:"https://www.stripe.press/poor-charlies-almanack",source:"Stripe Press"},
     ],
   },
+  {
+    slug:"kaiming-he", name:"何恺明", englishName:"Kaiming He", role:"MIT 教授、AI 研究者",
+    concepts:["深度残差学习","实例分割","自监督学习","可扩展视觉表征"],
+    summary:"围绕计算机视觉、深度学习与自监督表征提出多项基础方法，材料以论文和个人学术主页为主。",
+    materials:[
+      {title:"Kaiming He — Academic Homepage",date:"持续更新",type:"public_post",url:"https://people.csail.mit.edu/kaiming/",source:"MIT CSAIL"},
+      {title:"Deep Residual Learning for Image Recognition",date:"2015-12-10",type:"authored_work",url:"https://arxiv.org/abs/1512.03385",source:"arXiv"},
+      {title:"Mask R-CNN",date:"2017-03-20",type:"authored_work",url:"https://arxiv.org/abs/1703.06870",source:"arXiv"},
+      {title:"Masked Autoencoders Are Scalable Vision Learners",date:"2021-11-11",type:"authored_work",url:"https://arxiv.org/abs/2111.06377",source:"arXiv"},
+      {title:"Kaiming He publications",date:"持续更新",type:"public_document",url:"https://people.csail.mit.edu/kaiming/publications.html",source:"MIT CSAIL"},
+      {title:"Kaiming He on X",date:"持续更新",type:"public_post",url:"https://x.com/kaiminghe",source:"X"},
+    ],
+  },
+  {
+    slug:"shunyu-yao", name:"姚顺雨", englishName:"Shunyu Yao", role:"AI 研究者",
+    concepts:["ReAct","Tree of Thoughts","智能体评测","The Second Half"],
+    summary:"研究语言模型推理、行动与软件智能体，持续讨论从预训练扩展到真实任务学习与评测的方法。",
+    materials:[
+      {title:"Shunyu Yao — Homepage",date:"持续更新",type:"public_post",url:"https://ysymyth.github.io/",source:"个人学术主页"},
+      {title:"ReAct: Synergizing Reasoning and Acting in Language Models",date:"2022-10-06",type:"authored_work",url:"https://arxiv.org/abs/2210.03629",source:"arXiv"},
+      {title:"Tree of Thoughts: Deliberate Problem Solving with Large Language Models",date:"2023-05-17",type:"authored_work",url:"https://arxiv.org/abs/2305.10601",source:"arXiv"},
+      {title:"SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",date:"2023-10-10",type:"authored_work",url:"https://arxiv.org/abs/2310.06770",source:"arXiv"},
+      {title:"The Second Half",date:"2025",type:"article",url:"https://ysymyth.github.io/The-Second-Half/",source:"个人学术主页"},
+      {title:"Shunyu Yao on X",date:"持续更新",type:"public_post",url:"https://x.com/ShunyuYao12",source:"X"},
+    ],
+  },
 ];

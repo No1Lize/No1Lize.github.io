@@ -340,6 +340,36 @@ const personProfiles: Record<string, PersonProfile> = {
       { name: "能力圈扩展", explanation: "通过持续学习扩大理解范围，同时维持对未知领域的边界意识。", evidenceIndex: 0 },
     ],
   },
+  "kaiming-he": {
+    overview: "研究主线是让视觉模型更深、更可训练，并把监督学习中的结构经验推进到检测、分割与大规模自监督表征。页面只把论文可验证结论作为事实。",
+    evolution: [
+      "以深度残差学习解决超深网络优化困难，推动 ResNet 成为视觉系统的通用骨干。",
+      "将统一的检测框架扩展到像素级实例分割，形成 Mask R-CNN。",
+      "转向可扩展自监督学习，以遮挡重建研究视觉表征的预训练方法。",
+      "持续研究视觉模型结构、学习目标与规模化之间的关系。",
+    ],
+    concepts: [
+      { name: "深度残差学习", explanation: "通过学习相对恒等映射的残差函数，使显著更深的网络能够稳定优化。", evidenceIndex: 1 },
+      { name: "实例分割", explanation: "在目标检测的基础上增加并行掩码分支，把分类、定位与像素级分割纳入统一框架。", evidenceIndex: 2 },
+      { name: "自监督学习", explanation: "用大比例遮挡后的图像重建任务学习无需人工标签的视觉表示。", evidenceIndex: 3 },
+      { name: "可扩展视觉表征", explanation: "关注模型结构、训练规模和学习目标能否共同形成可迁移的通用表示。", evidenceIndex: 4 },
+    ],
+  },
+  "shunyu-yao": {
+    overview: "研究主线是把语言模型从只生成文本推进到可观察、可行动、可评测的智能体，并讨论预训练之后如何从环境反馈继续学习。",
+    evolution: [
+      "以 ReAct 将推理轨迹和外部行动交错组织，让模型在任务过程中获取新证据。",
+      "以 Tree of Thoughts 探索多路径搜索、评估与回溯，而非固定为单条思维链。",
+      "通过 SWE-bench 把真实软件仓库问题转化为可复现的智能体评测任务。",
+      "在 The Second Half 中把研究重心转向预训练之后的环境、任务、反馈与持续学习。",
+    ],
+    concepts: [
+      { name: "ReAct", explanation: "让语言模型交替产生推理步骤和环境动作，用观察结果修正后续决策。", evidenceIndex: 1 },
+      { name: "Tree of Thoughts", explanation: "把中间思路视为可搜索状态，允许生成多个候选、评估并回溯。", evidenceIndex: 2 },
+      { name: "智能体评测", explanation: "以真实 GitHub 问题检验模型能否理解代码库、修改程序并通过测试。", evidenceIndex: 3 },
+      { name: "The Second Half", explanation: "强调预训练之后的真实环境学习、任务设计和可验证结果将成为下一阶段研究中心。", evidenceIndex: 4 },
+    ],
+  },
 };
 
 export function getPersonProfile(person: Person): PersonProfile {
