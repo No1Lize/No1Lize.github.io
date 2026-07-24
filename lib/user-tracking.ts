@@ -54,15 +54,24 @@ function uniqueStrings(value: unknown, maxItems = 80): string[] {
   );
 }
 
+function stableHash(value: string): string {
+  let hash = 2166136261;
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36);
+}
+
 export function slugifyTrack(value: string): string {
   const ascii = value
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-")
+    .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 48);
-  return ascii || `track-${Date.now().toString(36)}`;
+  return ascii || `track-${stableHash(value)}`;
 }
 
 function normalizeTrack(value: unknown, index: number): TrackingTrack | null {
@@ -70,11 +79,15 @@ function normalizeTrack(value: unknown, index: number): TrackingTrack | null {
   const raw = value as Record<string, unknown>;
   const name = cleanText(raw.name, 60);
   if (!name) return null;
+  const custom = raw.custom === true;
+  const suppliedSlug = cleanText(raw.slug, 60);
   return {
-    slug: cleanText(raw.slug, 60) || `${slugifyTrack(name)}-${index + 1}`,
+    slug: custom
+      ? slugifyTrack(suppliedSlug || name)
+      : suppliedSlug || `${slugifyTrack(name)}-${index + 1}`,
     name,
     enabled: raw.enabled !== false,
-    custom: raw.custom === true,
+    custom,
     keywords: uniqueStrings(raw.keywords),
     people: uniqueStrings(raw.people),
     sampleCompanies: uniqueStrings(raw.sampleCompanies),
@@ -136,10 +149,16 @@ export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
         .filter((item): item is TrackingSource => Boolean(item))
     : [];
 
-  const uniqueTracks = tracks.filter(
-    (track, index) =>
-      tracks.findIndex((candidate) => candidate.slug === track.slug) === index,
-  );
+  const uniqueTracks = tracks.filter((track, index) => {
+    const normalizedName = track.name.toLocaleLowerCase("zh-CN");
+    return (
+      tracks.findIndex(
+        (candidate) =>
+          candidate.slug === track.slug ||
+          candidate.name.toLocaleLowerCase("zh-CN") === normalizedName,
+      ) === index
+    );
+  });
   const uniqueSources = sources.filter(
     (source, index) =>
       sources.findIndex((candidate) => candidate.id === source.id) === index,
