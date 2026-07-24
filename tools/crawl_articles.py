@@ -540,11 +540,41 @@ def infer_event_type(
     return "公司动态", 76
 
 
-def infer_company(title: str, summary: str, fallback: str = "科技产业") -> tuple[str, str | None, str | None]:
-    text = f"{title} {summary}".casefold()
-    for aliases, result in COMPANY_ALIASES:
-        if any(alias.casefold() in text for alias in aliases):
-            return result
+def _company_alias_in_title(alias: str, folded_title: str) -> bool:
+    normalized = clean_text(alias).casefold()
+    if not normalized:
+        return False
+    if re.fullmatch(r"[a-z0-9 .-]+", normalized):
+        return bool(
+            re.search(
+                rf"(?<![a-z0-9]){re.escape(normalized)}(?![a-z0-9])",
+                folded_title,
+            )
+        )
+    return normalized in folded_title
+
+
+def infer_company(
+    title: str, summary: str, fallback: str = "科技产业"
+) -> tuple[str, str | None, str | None]:
+    """Attribute a media item only when its title identifies one company.
+
+    Feed summaries often mention competitors or add generic context. Using that
+    text for ownership caused Claude stories to be assigned to OpenAI and
+    unrelated stories to inherit whichever alias appeared first. The summary
+    argument remains for call-site compatibility but is intentionally excluded
+    from entity attribution.
+    """
+
+    del summary
+    folded_title = clean_text(title).casefold()
+    matches = {
+        result
+        for aliases, result in COMPANY_ALIASES
+        if any(_company_alias_in_title(alias, folded_title) for alias in aliases)
+    }
+    if len(matches) == 1:
+        return next(iter(matches))
     return fallback, None, None
 
 
@@ -1724,6 +1754,31 @@ def merge_articles(
     return list(deduplicated.values())[:MAX_ARTICLES]
 
 
+def repair_media_company_attribution(
+    articles: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Recompute generated media ownership using the conservative title rule."""
+
+    repaired: list[dict[str, Any]] = []
+    for article in articles:
+        source = article.get("source", {})
+        if article.get("curated") or source.get("level") != "媒体报道":
+            repaired.append(article)
+            continue
+        company, company_slug, _ = infer_company(
+            str(article.get("title", "")),
+            "",
+        )
+        next_article = dict(article)
+        next_article["company"] = company
+        if company_slug:
+            next_article["companySlug"] = company_slug
+        else:
+            next_article.pop("companySlug", None)
+        repaired.append(next_article)
+    return repaired
+
+
 def replace_source_batches(
     existing: list[dict[str, Any]],
     incoming: list[dict[str, Any]],
@@ -2005,6 +2060,7 @@ def main() -> int:
         merged = replace_source_batches(
             payload.get("articles", []), incoming, new_statuses
         )
+    merged = repair_media_company_attribution(merged)
     source_status = merge_source_status(
         payload.get("sourceStatus", []), new_statuses
     )
