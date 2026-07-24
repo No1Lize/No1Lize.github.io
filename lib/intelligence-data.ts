@@ -12,12 +12,21 @@ export type EventType =
   | "财报"
   | "政策"
   | "监管文件"
-  | "IPO";
+  | "IPO"
+  | "论文"
+  | "人物观点";
 
 export type Source = {
   name: string;
   url: string;
-  level: "官方披露" | "原始材料" | "监管文件";
+  level:
+    | "官方披露"
+    | "原始材料"
+    | "监管文件"
+    | "媒体报道"
+    | "数据库记录"
+    | "待交叉验证";
+  platform?: string;
 };
 
 export type IntelligenceEvent = {
@@ -29,6 +38,9 @@ export type IntelligenceEvent = {
   sector: string;
   company: string;
   companySlug?: string;
+  personSlug?: string;
+  sourceId?: string;
+  authors?: string[];
   institutions?: string[];
   publishedAt: string;
   importance: number;
@@ -73,7 +85,17 @@ type SnapshotFile = {
     scanned: number;
     accepted: number;
     failed?: number;
+    platform?: string;
+    error?: string;
   }[];
+  qualityGate?: {
+    passed: boolean;
+    checks: Record<
+      string,
+      { actual: number; required: number; passed: boolean }
+    >;
+    invalidArticles?: { id: string; errors: string[] }[];
+  };
 };
 
 const snapshot = publicArticleData as SnapshotFile;
@@ -93,6 +115,8 @@ export const companyFacts: Record<string, CompanyFactProfile> =
   snapshot.companyFacts ?? {};
 
 export const sourceStatus = snapshot.sourceStatus ?? [];
+
+export const qualityGate = snapshot.qualityGate;
 
 type SectorDefinition = {
   slug: string;

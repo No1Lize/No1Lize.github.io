@@ -13,20 +13,26 @@ import {
 import { getInstitutionProfile } from "@/lib/research-content";
 import { useArticles } from "@/lib/use-articles";
 
-const regions = ["全部", "中国", "美国"] as const;
+const regions = ["全部", "中国", "美国", "全球"] as const;
 const eventTypes = [
   "全部",
   "融资",
+  "产业投资",
+  "并购",
+  "IPO",
+  "财报",
+  "政策",
+  "监管文件",
   "商业进展",
   "产品发布",
   "技术突破",
-  "财报",
-  "监管文件",
-  "IPO",
+  "公司动态",
+  "论文",
+  "人物观点",
 ] as const;
 
 export function Dashboard() {
-  const { articles, generatedAt, isLive } = useArticles();
+  const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
   const [query, setQuery] = useState("");
@@ -46,6 +52,13 @@ export function Dashboard() {
     [articles, eventType, query, region],
   );
   const sourceCount = new Set(articles.map((item) => item.source.url)).size;
+  const platformCount = new Set(
+    articles.map((item) => item.source.platform).filter(Boolean),
+  ).size;
+  const healthySourceCount = sourceStatus.filter(
+    (item) =>
+      ["ok", "partial"].includes(item.status) && item.accepted > 0,
+  ).length;
   const sectorCount = new Set(articles.map((item) => item.sector)).size;
   const chinaCount = articles.filter((item) => item.region === "中国").length;
   const usCount = articles.filter((item) => item.region === "美国").length;
@@ -78,7 +91,7 @@ export function Dashboard() {
           <p className="eyebrow">DAILY INTELLIGENCE DESK · 中美双轨</p>
           <h1>把公开信息，变成可追溯的判断依据。</h1>
           <p className="intro-copy">
-            持续读取公司新闻稿、投资者关系页面与 SEC EDGAR，连接中美科技公司的产品、融资、经营和资本市场进展。
+            持续读取公司与监管披露、金融创投媒体、新浪、X、微信公开索引及开放论文数据库，连接中美科技公司的产品、融资、经营、研究与资本市场进展。
           </p>
         </div>
         <div className="snapshot-card">
@@ -87,10 +100,10 @@ export function Dashboard() {
             <span className="status-pill"><i /> {isLive ? "已同步" : "内置快照"}</span>
           </div>
           <strong>{String(articles.length).padStart(2, "0")}</strong>
-          <p>已核验关键事件</p>
+          <p>{qualityGate?.passed === false ? "数据质量门未通过" : "可追溯公开情报"}</p>
           <div className="snapshot-meta">
-            <span>{sourceCount} 个原始链接</span>
-            <span>覆盖 {sectorCount} 个赛道</span>
+            <span>{healthySourceCount || sourceCount} 个有效来源</span>
+            <span>{platformCount} 类平台 · {sectorCount} 个赛道</span>
           </div>
         </div>
       </section>
@@ -139,10 +152,18 @@ export function Dashboard() {
                     <span>{item.region}</span>
                     <span>{item.sector}</span>
                   </div>
-                  <h3>{item.companySlug ? <Link href={`/companies/${item.companySlug}`}>{item.title}</Link> : item.title}</h3>
+                  <h3>
+                    {item.personSlug ? (
+                      <Link href={`/people/${item.personSlug}`}>{item.title}</Link>
+                    ) : item.companySlug ? (
+                      <Link href={`/companies/${item.companySlug}`}>{item.title}</Link>
+                    ) : (
+                      item.title
+                    )}
+                  </h3>
                   <p>{item.summary}</p>
                   <a className="source-link" href={item.source.url} target="_blank" rel="noreferrer">
-                    {item.source.level} · {item.source.name}
+                    {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
                     <ArrowUpRight size={14} />
                   </a>
                 </div>

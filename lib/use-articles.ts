@@ -20,6 +20,8 @@ const eventTypeSchema = z.enum([
   "政策",
   "监管文件",
   "IPO",
+  "论文",
+  "人物观点",
 ]);
 
 const articleSchema = z.object({
@@ -31,13 +33,24 @@ const articleSchema = z.object({
   sector: z.string(),
   company: z.string(),
   companySlug: z.string().optional(),
+  personSlug: z.string().optional(),
+  sourceId: z.string().optional(),
+  authors: z.array(z.string()).optional(),
   institutions: z.array(z.string()).optional(),
   publishedAt: z.string(),
   importance: z.number().min(0).max(100),
   source: z.object({
     name: z.string(),
     url: z.url(),
-    level: z.enum(["官方披露", "原始材料", "监管文件"]),
+    level: z.enum([
+      "官方披露",
+      "原始材料",
+      "监管文件",
+      "媒体报道",
+      "数据库记录",
+      "待交叉验证",
+    ]),
+    platform: z.string().optional(),
   }),
   curated: z.boolean().optional(),
 });
@@ -55,7 +68,21 @@ const payloadSchema = z.object({
     scanned: z.number(),
     accepted: z.number(),
     failed: z.number().optional(),
+    platform: z.string().optional(),
+    error: z.string().optional(),
   })).optional(),
+  qualityGate: z.object({
+    passed: z.boolean(),
+    checks: z.record(z.string(), z.object({
+      actual: z.number(),
+      required: z.number(),
+      passed: z.boolean(),
+    })),
+    invalidArticles: z.array(z.object({
+      id: z.string(),
+      errors: z.array(z.string()),
+    })).optional(),
+  }).optional(),
 });
 
 type ArticlePayload = z.infer<typeof payloadSchema>;
@@ -67,6 +94,7 @@ const fallbackPayload: ArticlePayload = {
   articles: intelligenceEvents,
   companyFacts: {},
   sourceStatus: [],
+  qualityGate: undefined,
 };
 
 async function fetchArticles(): Promise<ArticlePayload> {
@@ -89,6 +117,7 @@ export function useArticles() {
     articles: payload.articles as IntelligenceEvent[],
     generatedAt: payload.generatedAt,
     sourceStatus: payload.sourceStatus ?? [],
+    qualityGate: payload.qualityGate,
     isLive: query.isSuccess && !query.isPlaceholderData,
   };
 }
