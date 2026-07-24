@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   TRACKING_BRANCH,
   TRACKING_CONFIG_PATH,
@@ -21,6 +21,7 @@ const LIST_FIELDS = ["keywords", "people", "sampleCompanies"] as const;
 type ListField = (typeof LIST_FIELDS)[number];
 
 type StatusKind = "neutral" | "success" | "error";
+type SaveMode = "auto" | "manual";
 
 type SourceDraft = {
   name: string;
@@ -101,7 +102,9 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
   const [token, setToken] = useState("");
   const [username, setUsername] = useState("");
   const [remoteSha, setRemoteSha] = useState("");
-  const [status, setStatus] = useState("尚未连接 GitHub。所有本地修改在同步前不会写入仓库。");
+  const [status, setStatus] = useState(
+    "尚未连接 GitHub。连接后，添加、删除和启停操作会自动写入仓库。",
+  );
   const [statusKind, setStatusKind] = useState<StatusKind>("neutral");
   const [busy, setBusy] = useState(false);
   const [active, setActive] = useState(0);
@@ -112,6 +115,8 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
     sampleCompanies: "",
   });
   const [sourceDraft, setSourceDraft] = useState<SourceDraft>(EMPTY_SOURCE);
+  const remoteShaRef = useRef("");
+  const saveQueueRef = useRef<Promise<void>>(Promise.resolve());
 
   const track = config.tracks[active];
   const connected = Boolean(username && remoteSha);
@@ -126,15 +131,76 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
     }
   }, [active, config.tracks.length]);
 
-  function update(next: UserTrackingConfig) {
-    setConfig(normalizeTrackingConfig(next));
-    setStatusKind("neutral");
-    setStatus("存在尚未同步的本地修改。");
-  }
-
   function setMessage(message: string, kind: StatusKind = "neutral") {
     setStatus(message);
     setStatusKind(kind);
+  }
+
+  async function persistConfig(next: UserTrackingConfig, mode: SaveMode) {
+    const cleanToken = token.trim();
+    const currentSha = remoteShaRef.current;
+    if (!username || !cleanToken || !currentSha) {
+      setMessage("本地修改尚未保存：请先连接 GitHub。", "error");
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const fileUrl = `${API_ROOT}/repos/${TRACKING_REPOSITORY}/contents/${TRACKING_CONFIG_PATH}`;
+      const latest = await githubJson<{ sha: string }>(
+        `${fileUrl}?ref=${TRACKING_BRANCH}`,
+        cleanToken,
+      );
+      if (latest.sha !== currentSha) {
+        throw new Error("远端配置已经变化。请重新载入后再操作，避免覆盖其他修改。");
+      }
+
+      const result = await githubJson<{
+        content?: { sha?: string };
+        commit?: { sha?: string };
+      }>(fileUrl, cleanToken, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: "config: update technology tracking from website",
+          content: encodeBase64(`${JSON.stringify(next, null, 2)}\n`),
+          sha: currentSha,
+          branch: TRACKING_BRANCH,
+        }),
+      });
+
+      const nextSha = result.content?.sha;
+      if (!nextSha) throw new Error("GitHub 已接受请求，但没有返回新的文件 SHA。");
+      remoteShaRef.current = nextSha;
+      setRemoteSha(nextSha);
+      setConfig(next);
+      const commit = result.commit?.sha?.slice(0, 8) ?? "已创建";
+      setMessage(
+        `${mode === "auto" ? "已自动同步" : "已同步"}（${commit}）。刷新页面后修改仍会保留。`,
+        "success",
+      );
+    } catch (error) {
+      setMessage(`同步失败：${error instanceof Error ? error.message : String(error)}`, "error");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  function enqueueSave(next: UserTrackingConfig, mode: SaveMode = "auto") {
+    const normalized = normalizeTrackingConfig(next);
+    setConfig(normalized);
+    if (!connected || !token.trim() || !remoteShaRef.current) {
+      setMessage("存在尚未保存的本地修改。连接 GitHub 后点击“立即同步”。", "neutral");
+      return Promise.resolve();
+    }
+
+    setMessage(mode === "auto" ? "正在自动同步到 GitHub……" : "正在同步到 GitHub……");
+    saveQueueRef.current = saveQueueRef.current.then(() => persistConfig(normalized, mode));
+    return saveQueueRef.current;
+  }
+
+  function update(next: UserTrackingConfig) {
+    void enqueueSave(next, "auto");
   }
 
   async function loadFromGithub() {
@@ -156,12 +222,17 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
       );
       const remoteConfig = normalizeTrackingConfig(JSON.parse(decodeBase64(file.content)));
       setConfig(remoteConfig);
+      remoteShaRef.current = file.sha;
       setRemoteSha(file.sha);
       setUsername(user.login);
       setActive(0);
-      setMessage(`已连接 ${user.login}，当前配置已从 main 分支载入。`, "success");
+      setMessage(
+        `已连接 ${user.login}。此后每次添加、删除或启停都会自动提交到 main 分支。`,
+        "success",
+      );
     } catch (error) {
       setUsername("");
+      remoteShaRef.current = "";
       setRemoteSha("");
       setMessage(`连接失败：${error instanceof Error ? error.message : String(error)}`, "error");
     } finally {
@@ -170,44 +241,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
   }
 
   async function syncGithub() {
-    if (!connected || !token.trim()) {
-      setMessage("请先连接 GitHub 并载入远端配置。", "error");
-      return;
-    }
-    setBusy(true);
-    try {
-      setMessage("正在检查远端版本……");
-      const fileUrl = `${API_ROOT}/repos/${TRACKING_REPOSITORY}/contents/${TRACKING_CONFIG_PATH}`;
-      const latest = await githubJson<{ sha: string }>(
-        `${fileUrl}?ref=${TRACKING_BRANCH}`,
-        token.trim(),
-      );
-      if (latest.sha !== remoteSha) {
-        throw new Error("远端配置已被其他提交修改。请先点击“重新载入”，再合并本地修改。");
-      }
-      const normalized = normalizeTrackingConfig(config);
-      const result = await githubJson<{
-        content?: { sha?: string };
-        commit?: { sha?: string };
-      }>(fileUrl, token.trim(), {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          message: "config: update technology tracking from website",
-          content: encodeBase64(`${JSON.stringify(normalized, null, 2)}\n`),
-          sha: remoteSha,
-          branch: TRACKING_BRANCH,
-        }),
-      });
-      setConfig(normalized);
-      setRemoteSha(result.content?.sha ?? remoteSha);
-      const commit = result.commit?.sha?.slice(0, 8) ?? "已创建";
-      setMessage(`配置已提交（${commit}）。Actions 将自动刷新爬虫数据和网站。`, "success");
-    } catch (error) {
-      setMessage(`同步失败：${error instanceof Error ? error.message : String(error)}`, "error");
-    } finally {
-      setBusy(false);
-    }
+    await enqueueSave(config, "manual");
   }
 
   function addTrack() {
@@ -352,7 +386,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
           <p className="eyebrow">GITHUB-BACKED CONFIGURATION</p>
           <h1>新兴科技追踪管理</h1>
           <p>
-            在前端增删赛道、关键词、人物、样本公司和上市公司信息源。同步后直接修改仓库中的
+            在前端增删赛道、关键词、人物、样本公司和上市公司信息源。连接成功后，每次操作都会自动修改仓库中的
             <code> {TRACKING_CONFIG_PATH}</code>，并触发自动爬取与部署。
           </p>
         </div>
@@ -413,7 +447,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
               }}
               placeholder="新增赛道名称"
             />
-            <button className={styles.button} onClick={addTrack}>添加</button>
+            <button className={styles.button} onClick={addTrack}>添加并自动同步</button>
           </div>
         </section>
 
@@ -443,7 +477,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
                         <button
                           className={styles.tag}
                           key={value}
-                          title="点击删除"
+                          title="点击删除并自动同步"
                           onClick={() => removeListItem(field, value)}
                         >
                           {value} ×
@@ -466,7 +500,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
                         placeholder={LABELS[field].placeholder}
                       />
                       <button className={styles.secondary} onClick={() => addListItem(field)}>
-                        添加
+                        添加并同步
                       </button>
                     </div>
                   </div>
@@ -575,7 +609,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
             />
           </label>
           <div className={styles.wide}>
-            <button className={styles.button} onClick={addSource}>添加信息源</button>
+            <button className={styles.button} onClick={addSource}>添加信息源并自动同步</button>
           </div>
         </div>
 
@@ -614,17 +648,17 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
       <section className={styles.card}>
         <div className={styles.sectionHeader}>
           <div>
-            <p className="section-index">PUBLISH</p>
-            <h2>写入仓库并启动刷新</h2>
+            <p className="section-index">SYNC STATUS</p>
+            <h2>GitHub 自动同步</h2>
           </div>
           <span className={styles.muted}>{connected ? `已连接 ${username}` : "未连接"}</span>
         </div>
         <p className={styles.help}>
-          同步会创建一次 main 分支 commit。配置文件变化将触发 Refresh public intelligence，随后 Pages 自动发布最新数据。
+          连接成功后，每次添加、删除、启用或停用都会创建 main 分支提交。下面的按钮只用于失败后的手动重试。
         </p>
         <div className={styles.actions}>
           <button className={styles.button} disabled={busy || !connected} onClick={syncGithub}>
-            同步到 GitHub 后端
+            立即重试同步
           </button>
           <button className={styles.secondary} disabled={busy || !token.trim()} onClick={loadFromGithub}>
             放弃本地修改并重新载入
