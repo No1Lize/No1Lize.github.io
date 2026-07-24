@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "expectedCompanyCount": 58,
   "defaults": {
     "maxItems": 4,
     "maxCandidateLinks": 10,
@@ -458,10 +459,15 @@
       "region": "中国",
       "sector": "AI / AGI",
       "homepage": "https://www.zhipuai.cn/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.zhipuai.cn/zh/news"
+      ],
       "aliases": [
         "Zhipu AI",
         "智谱"
+      ],
+      "articleUrlPatterns": [
+        "/zh/news/\\d+$"
       ]
     },
     {
@@ -482,9 +488,14 @@
       "region": "中国",
       "sector": "AI / AGI",
       "homepage": "https://www.minimaxi.com/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.minimaxi.com/news"
+      ],
       "aliases": [
         "稀宇科技"
+      ],
+      "articleUrlPatterns": [
+        "/news/[^/?#]+$"
       ]
     },
     {
@@ -517,10 +528,15 @@
       "region": "中国",
       "sector": "半导体",
       "homepage": "https://www.birentech.com/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.birentech.com/news/"
+      ],
       "aliases": [
         "Biren Technology",
         "壁仞"
+      ],
+      "articleUrlPatterns": [
+        "/news/[^/?#]+/?$"
       ]
     },
     {
@@ -529,9 +545,14 @@
       "region": "中国",
       "sector": "半导体",
       "homepage": "https://www.mthreads.com/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.mthreads.com/news"
+      ],
       "aliases": [
         "Moore Threads"
+      ],
+      "articleUrlPatterns": [
+        "/news/\\d+$"
       ]
     },
     {
@@ -540,9 +561,14 @@
       "region": "中国",
       "sector": "半导体",
       "homepage": "https://www.cambricon.com/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.cambricon.com/index.php?m=content&c=index&a=lists&catid=127"
+      ],
       "aliases": [
         "Cambricon"
+      ],
+      "articleUrlPatterns": [
+        "[?&]a=show(?:&|$)"
       ]
     },
     {
@@ -551,10 +577,15 @@
       "region": "中国",
       "sector": "半导体",
       "homepage": "https://www.horizon.auto/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.horizon.auto/news"
+      ],
       "aliases": [
         "Horizon Robotics",
         "地平线"
+      ],
+      "articleUrlPatterns": [
+        "/news/(?:press/)?[^/?#]+$"
       ]
     },
     {
@@ -589,11 +620,12 @@
       "name": "小鹏汇天",
       "region": "中国",
       "sector": "商业航天",
-      "homepage": "https://www.aeroht.com/",
+      "homepage": "https://www.aridge.com/",
       "newsUrls": [],
       "aliases": [
         "XPENG AEROHT",
-        "小鹏飞行汽车"
+        "小鹏飞行汽车",
+        "ARIDGE"
       ]
     },
     {
@@ -605,6 +637,9 @@
       "newsUrls": [],
       "aliases": [
         "LandSpace"
+      ],
+      "articleUrlPatterns": [
+        "/news-detail\\.html"
       ]
     },
     {
@@ -612,10 +647,15 @@
       "name": "星河动力",
       "region": "中国",
       "sector": "商业航天",
-      "homepage": "http://www.galactic-energy.cn/",
-      "newsUrls": [],
+      "homepage": "https://www.galactic-energy.cn/",
+      "newsUrls": [
+        "https://www.galactic-energy.cn/index.php/List/cid/11"
+      ],
       "aliases": [
         "Galactic Energy"
+      ],
+      "articleUrlPatterns": [
+        "/index\\.php/Show/cid/11/aid/\\d+$"
       ]
     },
     {
@@ -652,7 +692,12 @@
       "aliases": [
         "Envision Energy",
         "远景"
-      ]
+      ],
+      "entityAliases": [
+        "远景能源",
+        "Envision Energy"
+      ],
+      "requireEntityMatch": true
     },
     {
       "slug": "svlot",
@@ -660,7 +705,9 @@
       "region": "中国",
       "sector": "新能源",
       "homepage": "https://www.svolt.cn/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.svolt.cn/news"
+      ],
       "aliases": [
         "SVOLT"
       ]
@@ -671,7 +718,9 @@
       "region": "中国",
       "sector": "生物科技",
       "homepage": "https://www.xtalpi.com/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.xtalpi.com/category/news/"
+      ],
       "aliases": [
         "XtalPi"
       ]
@@ -684,9 +733,16 @@
       "homepage": "https://www.bgi.com/",
       "newsUrls": [],
       "aliases": [
-        "BGI Genomics",
-        "BGI"
-      ]
+        "BGI Genomics"
+      ],
+      "entityAliases": [
+        "华大基因",
+        "BGI Genomics"
+      ],
+      "articleUrlPatterns": [
+        "/news/\\d+$"
+      ],
+      "requireEntityMatch": true
     },
     {
       "slug": "insilico-medicine",
@@ -707,9 +763,14 @@
       "region": "中国",
       "sector": "机器人",
       "homepage": "https://www.fftai.com/",
-      "newsUrls": [],
+      "newsUrls": [
+        "https://www.fftai.com/newsroom/"
+      ],
       "aliases": [
         "Fourier Intelligence"
+      ],
+      "articleUrlPatterns": [
+        "/newsroom-[^/]+/\\d+$"
       ]
     },
     {
@@ -717,11 +778,16 @@
       "name": "智元机器人",
       "region": "中国",
       "sector": "机器人",
-      "homepage": "https://www.zhiyuan-robot.com/",
-      "newsUrls": [],
+      "homepage": "https://www.agibot.com.cn/",
+      "newsUrls": [
+        "https://www.agibot.com.cn/News/Company"
+      ],
       "aliases": [
         "AgiBot",
         "智元"
+      ],
+      "articleUrlPatterns": [
+        "/article/\\d+/detail/\\d+\\.html$"
       ]
     },
     {
