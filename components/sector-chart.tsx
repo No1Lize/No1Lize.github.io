@@ -2,7 +2,12 @@
 
 import * as echarts from "echarts";
 import { useEffect, useMemo, useRef } from "react";
+import { trackedSectors } from "@/lib/tracked-sectors";
 import { useArticles } from "@/lib/use-articles";
+
+const enabledSectorNames = new Set(
+  trackedSectors.flatMap((sector) => sector.aliases),
+);
 
 function monthKey(date: Date) {
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}`;
@@ -27,7 +32,9 @@ export function SectorChart() {
       ]),
     );
     for (const article of articles) {
+      if (!enabledSectorNames.has(article.sector)) continue;
       const date = new Date(`${article.publishedAt}T00:00:00Z`);
+      if (!Number.isFinite(date.getTime())) continue;
       const key = `${monthKey(date)}-${article.region}`;
       if (counts.has(key)) counts.set(key, (counts.get(key) ?? 0) + 1);
     }
@@ -109,7 +116,7 @@ export function SectorChart() {
         ref={ref}
         className="chart-canvas"
         role="img"
-        aria-label={`最近六个月公开事件数量：中国 ${seriesData.china.join("、")}；美国 ${seriesData.usa.join("、")}。`}
+        aria-label={`当前启用赛道最近六个月公开事件数量：中国 ${seriesData.china.join("、")}；美国 ${seriesData.usa.join("、")}。`}
       />
       <details className="chart-table">
         <summary>查看数据表</summary>
