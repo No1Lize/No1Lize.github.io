@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-24T18:00:15+00:00",
-  "articleCount": 481,
+  "generatedAt": "2026-07-24T21:49:24+00:00",
+  "articleCount": 483,
   "articles": [
     {
       "id": "tmtpost-ebc7a2bc79319b28",
@@ -55,24 +55,6 @@
         "url": "https://zhuanlan.zhihu.com/p/1948710663309489740",
         "level": "待交叉验证",
         "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "prnewswire-tech-0dfba04c64b1075d",
-      "sourceId": "prnewswire-tech",
-      "title": "Snorkel AI Highlights First Wave of Open Benchmarks Grants Projects",
-      "summary": "SAN FRANCISCO, July 24, 2026 /PRNewswire/ -- Snorkel AI today highlighted the first group of projects supported through Open Benchmarks Grants, a $3 million commitment to support open-source datasets, benchmarks, and evaluation research. Launched in February 2026, Open Benchmarks Grants...",
-      "type": "技术突破",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 85,
-      "source": {
-        "name": "PR Newswire Consumer Technology",
-        "url": "https://www.prnewswire.com/news-releases/snorkel-ai-highlights-first-wave-of-open-benchmarks-grants-projects-302833805.html",
-        "level": "官方披露",
-        "platform": "新闻稿"
       }
     },
     {
@@ -206,19 +188,19 @@
       "companySlug": "openai"
     },
     {
-      "id": "sina-finance-d3aa70a52f3a8d30",
+      "id": "sina-finance-1c8dd58174e55a08",
       "sourceId": "sina-finance",
-      "title": "韩国总统李在明访美期间 三星与SK海力士将与美企签署重磅芯片协议",
-      "summary": "韩国总统府政策室长金容范周四表示，韩国总统李在明访问美国硅谷期间，三星电子与SK海力士将与多家美国头部科技企业共同公布多项重大合作协议，涉及金额庞大。",
-      "type": "商业进展",
+      "title": "威瑞森二季度业绩超预期 AI协议有望带来数十亿美元收入",
+      "summary": "美国最大无线运营商威瑞森通信周五公布第二季度财报，调整后每股收益为1.30美元，超过市场预期的1.28美元。受业绩提振及人工智能基础设施相关增长前景推动...",
+      "type": "财报",
       "region": "中国",
-      "sector": "半导体",
+      "sector": "AI / AGI",
       "company": "科技产业",
       "publishedAt": "2026-07-24",
       "importance": 84,
       "source": {
         "name": "新浪财经",
-        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-25/doc-iniixspu9246877.shtml",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-25/doc-iniiyccq9114878.shtml",
         "level": "媒体报道",
         "platform": "新浪"
       }
@@ -337,21 +319,60 @@
       }
     },
     {
-      "id": "prnewswire-tech-344bcd1c4a43bc08",
-      "sourceId": "prnewswire-tech",
-      "title": "JAMS Launches AI for Enterprise Job Scheduling: JAX and JAMS MCP",
-      "summary": "A new AI agent and an open-standard connector let IT teams query, diagnose, and manage automation in plain language, on the model they choose, without sending operational data outside their own network MIDDLETOWN, Del., July 24, 2026 /PRNewswire/ -- JAMS Software, an orchestration...",
+      "id": "ionq-7eb057b02a7a9cc8",
+      "sourceId": "official-ionq",
+      "title": "IonQ | IonQ to Announce Second Quarter 2026 Financial Results on August 5",
+      "summary": "IonQ (NYSE: IONQ) will release its Q2 2026 financial results after market close on Wednesday, August 5, 2026, followed by a conference call at 4:30 PM ET.",
+      "type": "财报",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-07-24",
+      "importance": 84,
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/news/ionq-to-report-second-quarter-2026-financial-results-on-august-5-2026",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "sina-finance-26bb8c7c26831058",
+      "sourceId": "sina-finance",
+      "title": "应对企业成本管控与行业竞争 人工智能厂商Anthropic发布高性价比新模型",
+      "summary": "美国人工智能初创企业Anthropic于当地时间周五发布名为“Claude Opus 5”的全新人工智能模型。在当前企业客户日益注重AI部署成本、行业市场竞争不断加剧的背景下...",
       "type": "产品发布",
-      "region": "全球",
+      "region": "中国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
       "publishedAt": "2026-07-24",
       "importance": 82,
       "source": {
-        "name": "PR Newswire Consumer Technology",
-        "url": "https://www.prnewswire.com/news-releases/jams-launches-ai-for-enterprise-job-scheduling-jax-and-jams-mcp-302833745.html",
+        "name": "新浪财经",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-25/doc-iniixwvv4710205.shtml",
+        "level": "媒体报道",
+        "platform": "新浪"
+      },
+      "companySlug": "anthropic"
+    },
+    {
+      "id": "official-cerebras-04ccf492e1fd6805",
+      "sourceId": "official-cerebras",
+      "title": "AMD and Cerebras Launch AI Inference Solution",
+      "summary": "AMD and Cerebras partner to deliver an ultra-low-latency, high-throughput AI inference solution combining AMD Helios and the Cerebras Wafer-Scale Engine.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "Cerebras Systems",
+      "companySlug": "cerebras",
+      "publishedAt": "2026-07-24",
+      "importance": 82,
+      "source": {
+        "name": "Cerebras Systems",
+        "url": "https://www.cerebras.ai/press-release/amd-and-cerebras-announce-industry-leading-ultra-low-latency-and-high-throughput-ai-inference",
         "level": "官方披露",
-        "platform": "新闻稿"
+        "platform": "官方网站"
       }
     },
     {
@@ -467,9 +488,9 @@
       }
     },
     {
-      "id": "official-user-谷歌新闻-a5e378930e280837",
+      "id": "official-user-谷歌新闻-a6e6dd4f2320dc85",
       "sourceId": "official-user-谷歌新闻",
-      "title": "More headlines & perspectives - Trump on Iran - Google News",
+      "title": "More headlines & perspectives - Donald Trump imposes new tariffs on dozens of countries - Google News",
       "summary": "See the latest updates, context, and perspectives about this story.",
       "type": "公司动态",
       "region": "全球",
@@ -480,15 +501,15 @@
       "importance": 80,
       "source": {
         "name": "谷歌新闻",
-        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2k4aHBMU0VSRXI5X0ZnTldaLVZTZ0FQAQ",
+        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2p6NWJmVEVSSHhMVFJSbHJuXzRDZ0FQAQ",
         "level": "官方披露",
         "platform": "官方网站"
       }
     },
     {
-      "id": "official-user-谷歌新闻-7fe7af95dd807482",
+      "id": "official-user-谷歌新闻-79e365a0767e0ee2",
       "sourceId": "official-user-谷歌新闻",
-      "title": "More headlines & perspectives - LeBron James to the 76ers - Google News",
+      "title": "More headlines & perspectives - Corey Ruiz fatally shot by Madison police officer - Google News",
       "summary": "See the latest updates, context, and perspectives about this story.",
       "type": "公司动态",
       "region": "全球",
@@ -499,7 +520,7 @@
       "importance": 80,
       "source": {
         "name": "谷歌新闻",
-        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2lqc2FUVUVSSHlkTFBnQ0dpdzZ5Z0FQAQ",
+        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2lRbm9yVkVSRmstSGJmaW15czNTZ0FQAQ",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -524,9 +545,9 @@
       }
     },
     {
-      "id": "official-user-谷歌新闻-5e4af6bff98d989c",
+      "id": "official-user-谷歌新闻-020b7c5a49cfd1e7",
       "sourceId": "official-user-谷歌新闻",
-      "title": "More headlines & perspectives - Donald Trump administration sets new forced-labor tariffs - Google News",
+      "title": "More headlines & perspectives - News about Donald Trump • Benjamin Netanyahu - Google News",
       "summary": "See the latest updates, context, and perspectives about this story.",
       "type": "公司动态",
       "region": "全球",
@@ -537,7 +558,7 @@
       "importance": 80,
       "source": {
         "name": "谷歌新闻",
-        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2p6NWJmVEVSR181d3ZQX04tZ0tTZ0FQAQ",
+        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2k4aHBMU0VSSFUwRDlOT0xUU0FpZ0FQAQ",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -695,6 +716,63 @@
       }
     },
     {
+      "id": "official-cerebras-a72bb3d4d2044c73",
+      "sourceId": "official-cerebras",
+      "title": "Cerebras and Upstage Bring Fast AI to Korea",
+      "summary": "Cerebras and Upstage bring ultra-fast AI inference to Korea, delivering up to 2,000 tokens per second for real-time enterprise AI applications.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "Cerebras Systems",
+      "companySlug": "cerebras",
+      "publishedAt": "2026-07-24",
+      "importance": 80,
+      "source": {
+        "name": "Cerebras Systems",
+        "url": "https://www.cerebras.ai/blog/cerebras-and-upstage-bring-ultra-fast-ai-to-korea",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-cerebras-97cbcf1a8ceb6a31",
+      "sourceId": "official-cerebras",
+      "title": "How Faster AI Inference Strengthens Cybersecurity",
+      "summary": "Discover how faster AI inference helps cybersecurity teams improve threat detection, AI security, validation, and response without sacrificing speed.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "Cerebras Systems",
+      "companySlug": "cerebras",
+      "publishedAt": "2026-07-24",
+      "importance": 80,
+      "source": {
+        "name": "Cerebras Systems",
+        "url": "https://www.cerebras.ai/blog/ai-inference-cybersecurity",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-cerebras-047e30e74273aa45",
+      "sourceId": "official-cerebras",
+      "title": "Gemma 4 on Cerebras—The Fastest Inference is Now Multimodal",
+      "summary": "Gemma 4 on Cerebras delivers the fastest multimodal inference—1,500+ TPS for real-time image understanding, agentic workflows, and document AI.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "Cerebras Systems",
+      "companySlug": "cerebras",
+      "publishedAt": "2026-07-24",
+      "importance": 80,
+      "source": {
+        "name": "Cerebras Systems",
+        "url": "https://www.cerebras.ai/blog/gemma-4-on-cerebras-the-fastest-inference-is-now-multimodal",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-bgi-genomics-df320fa25dcd07c8",
       "sourceId": "official-bgi-genomics",
       "title": "乌拉圭小伙到访深圳，全程直呼Amazing！他究竟看到了什么？",
@@ -768,6 +846,43 @@
         "url": "https://www.anthropic.com/news/hard-questions",
         "level": "官方披露",
         "platform": "官方网站"
+      }
+    },
+    {
+      "id": "xai-ff9a5c1479e9780e",
+      "sourceId": "xai",
+      "title": "Grok in Google Workspace",
+      "summary": "Use the Grok add-on for Google Workspace to work directly in Sheets, Slides, and Docs.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/introducing-google-workspace-addon",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "user-track-web3-db67f0751c1461b2",
+      "sourceId": "user-track-web3",
+      "title": "What is Web3 technology (and why is it important)? | McKinsey",
+      "summary": "In this McKinsey Explainer, we explore what Web3 is and why this revolutionary technology has the power to reshape virtually every aspect of our society.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-web3",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
       }
     },
     {
@@ -1077,22 +1192,23 @@
       }
     },
     {
-      "id": "user-track-ai-efdbb5c3e3b99454",
-      "sourceId": "user-track-ai",
-      "title": "Free AI Chat Online – GPT-5, Gemini & More ｜ NoteGPT",
-      "summary": "AI Chat is an online tool that lets you chat with ChatGPT, Gemini, DeepSeek and more. You can ask questions, get instant answers, brainstorm ideas, create content, and explore knowledge in real time. It’s perfect for students, creators, and professionals who want to learn, write, research, or solve problems quickly. With AI Chat, you can access the latest AI models free online, enjoy ...",
+      "id": "user-source-source-youtube-f140f7c7001ddae2",
+      "sourceId": "user-source-source-youtube",
+      "title": "m - YouTube",
+      "summary": "Share your videos with friends, family, and the world",
       "type": "公司动态",
       "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
+      "sector": "半导体",
+      "company": "YOUTUBE",
       "publishedAt": "2026-07-24",
       "importance": 76,
       "source": {
-        "name": "AI / AGI · 用户追踪",
-        "url": "https://notegpt.io/ai-chat",
+        "name": "YOUTUBE",
+        "url": "https://www.youtube.com/m/home",
         "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
+        "platform": "用户公司来源"
+      },
+      "companySlug": "youtube"
     },
     {
       "id": "user-source-source-youtube-dbae2d0204aa489e",
@@ -1133,7 +1249,26 @@
       "companySlug": "youtube"
     },
     {
-      "id": "user-source-source-track-1sp7gkg-dce8a60c9654d672",
+      "id": "user-source-source-track-1sp7gkg-ff9149397eee46e9",
+      "sourceId": "user-source-source-track-1sp7gkg",
+      "title": "股票频道 - 东方财富网",
+      "summary": "东方财富网 (www.eastmoney.com)股票频道：提供24小时全球股票行情、股市直播、大盘分析、板块聚焦、焦点点评、报刊头条、热门股追踪、个股点睛 ...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "东方财富",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "东方财富",
+        "url": "https://stock.eastmoney.com/",
+        "level": "待交叉验证",
+        "platform": "用户公司来源"
+      },
+      "companySlug": "东方财富"
+    },
+    {
+      "id": "user-source-source-track-1sp7gkg-9740836ca7c47e1e",
       "sourceId": "user-source-source-track-1sp7gkg",
       "title": "东方财富网：财经门户，提供专业的财经、股票、行情、证券、基金、理财、银行、保险、信托、期货、黄金、股吧、博客等各类财经资讯及数据",
       "summary": "东方财富 手机免费版 iPhone版 Android版 东方财富小程序 电脑免费版 PC经典版 Mac版 电脑增值版 Level-2极速版 决策版 策略版 领航版 操盘密码",
@@ -1145,7 +1280,7 @@
       "importance": 76,
       "source": {
         "name": "东方财富",
-        "url": "https://www.eastmoney.com/?t=1",
+        "url": "https://www.eastmoney.com/?r=31",
         "level": "待交叉验证",
         "platform": "用户公司来源"
       },
@@ -1171,10 +1306,10 @@
       "companySlug": "东方财富"
     },
     {
-      "id": "user-source-source-track-1sp7gkg-03b19182475eb002",
+      "id": "user-source-source-track-1sp7gkg-4a451fa2d6079c9d",
       "sourceId": "user-source-source-track-1sp7gkg",
-      "title": "东方财富终端--东方财富PC客户端 - eastmoney.com",
-      "summary": "炒股理财利器 一站式交易 沪深京普通、融资融券、期权、港美股、港股通、场内基金、otc理财，一站式覆盖交易市场 账户图形化分析报告 及时了解自己过去的投资收益，总结适合自己的交易方式方法 • 交易业务由东方财富证券股份有限公司提供 免费下载 ...",
+      "title": "东方财富 (300059)_最新价格_行情_走势图—东方财富网",
+      "summary": "提供东方财富 (300059)股票的行情走势、五档盘口、逐笔交易等实时行情数据，及东方财富 (300059)的新闻资讯、公司公告、研究报告、行业研报、F10资料、行业资讯、资金流分析、阶段涨幅、所属板块、财务指标、机构观点、行业排名、估值水平、股吧互动等与 ...",
       "type": "公司动态",
       "region": "全球",
       "sector": "AI / AGI",
@@ -1183,7 +1318,7 @@
       "importance": 76,
       "source": {
         "name": "东方财富",
-        "url": "https://emdesk.eastmoney.com/pc_activity/Pages/VIPTrade/pages/index.html",
+        "url": "https://quote.eastmoney.com/",
         "level": "待交叉验证",
         "platform": "用户公司来源"
       },
@@ -1281,10 +1416,10 @@
       }
     },
     {
-      "id": "prnewswire-tech-1f2156b15f7e9299",
+      "id": "prnewswire-tech-7baf788ecbf2121b",
       "sourceId": "prnewswire-tech",
-      "title": "Solid Joins Snowflake and Industry Leaders to Advance Open Standards for AI-Ready Semantic Context",
-      "summary": "The Open Semantic Interchange (OSI) creates a universal semantic framework that enables AI agents, analytics platforms, and data systems to share trusted business context across the modern data ecosystem. NEW YORK, July 13, 2026 /PRNewswire/ -- Solid today announced it is joining the Open...",
+      "title": "As ADA Anniversary Approaches, University of Phoenix Survey Highlights AI's Potential to Advance Accessibility in Work and Learning",
+      "summary": "Survey conducted by The Harris Poll on behalf of University of Phoenix finds among those already using AI in the workplace, 60% say AI has improved their knowledge of and ability to use accessibility standards and guidelines. PHOENIX, July 24, 2026 /PRNewswire/ -- As artificial...",
       "type": "公司动态",
       "region": "全球",
       "sector": "AI / AGI",
@@ -1293,7 +1428,7 @@
       "importance": 76,
       "source": {
         "name": "PR Newswire Consumer Technology",
-        "url": "https://www.prnewswire.com/news-releases/solid-joins-snowflake-and-industry-leaders-to-advance-open-standards-for-ai-ready-semantic-context-302834217.html",
+        "url": "https://www.prnewswire.com/news-releases/as-ada-anniversary-approaches-university-of-phoenix-survey-highlights-ais-potential-to-advance-accessibility-in-work-and-learning-302834448.html",
         "level": "官方披露",
         "platform": "新闻稿"
       }
@@ -1537,25 +1672,6 @@
       }
     },
     {
-      "id": "official-cerebras-04ccf492e1fd6805",
-      "sourceId": "official-cerebras",
-      "title": "AMD and Cerebras Launch AI Inference Solution",
-      "summary": "AMD and Cerebras partner to deliver an ultra-low-latency, high-throughput AI inference solution combining AMD Helios and the Cerebras Wafer-Scale Engine.",
-      "type": "产品发布",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Cerebras Systems",
-      "companySlug": "cerebras",
-      "publishedAt": "2026-07-23",
-      "importance": 82,
-      "source": {
-        "name": "Cerebras Systems",
-        "url": "https://www.cerebras.ai/press-release/amd-and-cerebras-announce-industry-leading-ultra-low-latency-and-high-throughput-ai-inference",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
       "id": "sec-8fba148a0f812784",
       "sourceId": "sec",
       "title": "Mobileye 提交 8-K（重大事项报告）",
@@ -1608,63 +1724,6 @@
       "source": {
         "name": "Databricks",
         "url": "https://www.databricks.com/blog/how-fda-built-ai-platform-85-its-staff-now-use-daily",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-cerebras-a72bb3d4d2044c73",
-      "sourceId": "official-cerebras",
-      "title": "Cerebras and Upstage Bring Fast AI to Korea",
-      "summary": "Cerebras and Upstage bring ultra-fast AI inference to Korea, delivering up to 2,000 tokens per second for real-time enterprise AI applications.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Cerebras Systems",
-      "companySlug": "cerebras",
-      "publishedAt": "2026-07-23",
-      "importance": 80,
-      "source": {
-        "name": "Cerebras Systems",
-        "url": "https://www.cerebras.ai/blog/cerebras-and-upstage-bring-ultra-fast-ai-to-korea",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-cerebras-97cbcf1a8ceb6a31",
-      "sourceId": "official-cerebras",
-      "title": "How Faster AI Inference Strengthens Cybersecurity",
-      "summary": "Discover how faster AI inference helps cybersecurity teams improve threat detection, AI security, validation, and response without sacrificing speed.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Cerebras Systems",
-      "companySlug": "cerebras",
-      "publishedAt": "2026-07-23",
-      "importance": 80,
-      "source": {
-        "name": "Cerebras Systems",
-        "url": "https://www.cerebras.ai/blog/ai-inference-cybersecurity",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-cerebras-047e30e74273aa45",
-      "sourceId": "official-cerebras",
-      "title": "Gemma 4 on Cerebras—The Fastest Inference is Now Multimodal",
-      "summary": "Gemma 4 on Cerebras delivers the fastest multimodal inference—1,500+ TPS for real-time image understanding, agentic workflows, and document AI.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Cerebras Systems",
-      "companySlug": "cerebras",
-      "publishedAt": "2026-07-23",
-      "importance": 80,
-      "source": {
-        "name": "Cerebras Systems",
-        "url": "https://www.cerebras.ai/blog/gemma-4-on-cerebras-the-fastest-inference-is-now-multimodal",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -2253,6 +2312,25 @@
       }
     },
     {
+      "id": "user-source-source-track-1sp7gkg-55ce39b1efdb672e",
+      "sourceId": "user-source-source-track-1sp7gkg",
+      "title": "东方财富网：财经门户，提供专业的财经、股票、行情、证券、基金、理财、银行、保险、信托、期货、黄金、股吧、博客等各类财经资讯及数据",
+      "summary": "东方财富网，专业的互联网财经媒体，提供7*24小时财经资讯及全球金融市场报价，汇聚全方位的综合财经资讯和金融市场资讯，覆盖股票、财经、证券、金融、美股、港股、行情、基金、债券、期货、外汇、科创板、保险、信托、黄金、理财、商业、银行、博客 ...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "东方财富",
+      "publishedAt": "2026-07-23",
+      "importance": 76,
+      "source": {
+        "name": "东方财富",
+        "url": "https://www.eastmoney.com/",
+        "level": "待交叉验证",
+        "platform": "用户公司来源"
+      },
+      "companySlug": "东方财富"
+    },
+    {
       "id": "openai-e19fbb75eb44457e",
       "sourceId": "openai",
       "title": "GPT-5.6: Frontier intelligence that scales with your ambition",
@@ -2797,24 +2875,6 @@
       "companySlug": "anthropic"
     },
     {
-      "id": "user-track-web3-db67f0751c1461b2",
-      "sourceId": "user-track-web3",
-      "title": "What is Web3 technology (and why is it important)? | McKinsey",
-      "summary": "In this McKinsey Explainer, we explore what Web3 is and why this revolutionary technology has the power to reshape virtually every aspect of our society.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2026-07-22",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-web3",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
       "id": "user-track-track-3p0dg3-8b43604f4aa016aa",
       "sourceId": "user-track-track-3p0dg3",
       "title": "可控核聚变_百度百科",
@@ -3165,6 +3225,25 @@
         "level": "待交叉验证",
         "platform": "用户追踪"
       }
+    },
+    {
+      "id": "user-track-ai-921456099702a732",
+      "sourceId": "user-track-ai",
+      "title": "AI fundamentals | OpenAI Academy",
+      "summary": "Learn the fundamentals of AI, including how AI systems are built and used, how OpenAI products and APIs work, and principles for responsible AI use.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "AI / AGI · 用户追踪",
+        "url": "https://openai.com/academy/ai-fundamentals",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      },
+      "companySlug": "openai"
     },
     {
       "id": "techcrunch-venture-d72878aab319270b",
@@ -4778,25 +4857,6 @@
         "url": "https://www.sec.gov/Archives/edgar/data/1910139/000110465926077512/tm2618975d1_8k.htm",
         "level": "监管文件",
         "platform": "SEC"
-      }
-    },
-    {
-      "id": "xai-6554b8ad4d00ae3e",
-      "sourceId": "xai",
-      "title": "Explore the markets with Interactive Brokers and Grok",
-      "summary": "Interactive Brokers now integrates with Grok, bringing powerful AI directly into your trading experience — portfolio analysis, scenario modeling, research, and order instructions.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "xAI",
-      "companySlug": "xai",
-      "publishedAt": "2026-06-25",
-      "importance": 76,
-      "source": {
-        "name": "xAI",
-        "url": "https://x.ai/news/grok-interactive-brokers",
-        "level": "官方披露",
-        "platform": "官方网站"
       }
     },
     {
@@ -6565,8 +6625,8 @@
     },
     {
       "id": "ionq-b37932e407fd000e",
-      "sourceId": "official-ionq",
-      "title": "IonQ | Automated 3-Day InSAR Monitoring: Precision Ground Deformation",
+      "sourceId": "ionq",
+      "title": "Automated 3-Day InSAR Monitoring: Precision Ground Deformation",
       "summary": "IonQ launches fully automated 3-day repeat InSAR time series data. Achieve millimeter-precision monitoring for urban subsidence, infrastructure, and national security at scale.",
       "type": "公司动态",
       "region": "美国",
@@ -6957,25 +7017,6 @@
       "source": {
         "name": "IonQ",
         "url": "https://ionq.com/news/ionq-achieves-key-photonic-interconnect-milestone-demonstrating-networked-quantum-systems-using-entanglement",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "ionq-135817c6ee6b9f32",
-      "sourceId": "ionq",
-      "title": "IonQ Selected to Bid to Build Multi-Qubit Quantum Networks for DARPA HARQ",
-      "summary": "Discover how IonQ is leveraging synthetic diamond quantum memories to link trapped ions, neutral atoms, and superconducting qubits in DARPA’s new HARQ program.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "量子计算",
-      "company": "IonQ",
-      "companySlug": "ionq",
-      "publishedAt": "2026-04-14",
-      "importance": 76,
-      "source": {
-        "name": "IonQ",
-        "url": "https://ionq.com/news/ionq-selected-for-darpas-heterogeneous-architectures-for-quantum-harq-program",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -10189,10 +10230,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 0,
-      "scanned": 1,
+      "discovered": 1,
+      "scanned": 2,
       "accepted": 0,
-      "failed": 8,
+      "failed": 9,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -10461,8 +10502,8 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 1,
-      "discovered": 1,
-      "scanned": 2,
+      "discovered": 2,
+      "scanned": 3,
       "accepted": 0,
       "failed": 1,
       "platform": "官方网站",
@@ -10546,12 +10587,12 @@
       "company": "文远知行",
       "companySlug": "weride",
       "coverage": "attempted",
-      "status": "ok",
+      "status": "partial",
       "configuredIndexes": 2,
       "discovered": 11,
       "scanned": 7,
       "accepted": 4,
-      "failed": 0,
+      "failed": 1,
       "platform": "官方网站"
     },
     {
@@ -10642,8 +10683,8 @@
       "id": "prnewswire-tech",
       "name": "PR Newswire Consumer Technology",
       "status": "ok",
-      "scanned": 3,
-      "accepted": 3,
+      "scanned": 1,
+      "accepted": 1,
       "failed": 0,
       "platform": "新闻稿"
     },
@@ -10677,8 +10718,8 @@
       "id": "sina-finance",
       "name": "新浪财经",
       "status": "ok",
-      "scanned": 1,
-      "accepted": 1,
+      "scanned": 2,
+      "accepted": 2,
       "failed": 0,
       "platform": "新浪"
     },
@@ -10731,8 +10772,8 @@
       "id": "user-source-source-track-1sp7gkg",
       "name": "东方财富",
       "status": "ok",
-      "scanned": 4,
-      "accepted": 4,
+      "scanned": 5,
+      "accepted": 5,
       "failed": 0,
       "platform": "用户公司来源"
     },
@@ -10758,8 +10799,8 @@
       "id": "user-source-source-youtube",
       "name": "YOUTUBE",
       "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
+      "scanned": 6,
+      "accepted": 6,
       "failed": 0,
       "platform": "用户公司来源"
     },
@@ -10802,9 +10843,9 @@
     {
       "id": "user-track-materials",
       "name": "新材料 · 用户追踪",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -10829,9 +10870,9 @@
     {
       "id": "user-track-semiconductor",
       "name": "半导体 · 用户追踪",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -10847,9 +10888,9 @@
     {
       "id": "user-track-track-3p0dg3",
       "name": "可控核聚变 · 用户追踪",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -11003,12 +11044,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 481,
+        "actual": 483,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 71,
+        "actual": 68,
         "required": 6,
         "passed": true
       },
@@ -11033,7 +11074,7 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 117,
+        "actual": 118,
         "required": 8,
         "passed": true
       },
@@ -11043,7 +11084,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1206,
+        "actual": 0.1201,
         "required": 0.45,
         "passed": true
       },
@@ -11053,8 +11094,8 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 481,
-        "required": 481,
+        "actual": 483,
+        "required": 483,
         "passed": true
       }
     },
