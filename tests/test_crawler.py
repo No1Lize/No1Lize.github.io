@@ -453,15 +453,34 @@ class CrawlerTests(unittest.TestCase):
             "https://other.example/news",
             "official-other",
         )
+        transient_empty = article(
+            "transient-empty",
+            "https://third.example/news",
+            "official-third",
+        )
         merged = replace_official_source_batches(
-            [stale, retained],
+            [stale, retained, transient_empty],
             [],
             [
-                {"id": "official-example", "status": "empty", "accepted": 0},
+                {
+                    "id": "official-example",
+                    "status": "empty",
+                    "accepted": 0,
+                    "failed": 0,
+                },
                 {"id": "official-other", "status": "error", "accepted": 0},
+                {
+                    "id": "official-third",
+                    "status": "empty",
+                    "accepted": 0,
+                    "failed": 1,
+                },
             ],
         )
-        self.assertEqual([item["id"] for item in merged], ["temporary-failure"])
+        self.assertEqual(
+            {item["id"] for item in merged},
+            {"temporary-failure", "transient-empty"},
+        )
 
     def test_rss_feed_is_filtered_and_parsed(self) -> None:
         feed = """

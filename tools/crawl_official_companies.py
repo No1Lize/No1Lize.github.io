@@ -927,7 +927,11 @@ def replace_official_source_batches(
     replace_ids = {
         str(status.get("id", ""))
         for status in statuses
-        if status.get("status") in {"ok", "partial", "empty"}
+        if status.get("status") in {"ok", "partial"}
+        or (
+            status.get("status") == "empty"
+            and int(status.get("failed", 0)) == 0
+        )
     }
     preserved = [
         article
