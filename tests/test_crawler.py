@@ -78,6 +78,27 @@ class CrawlerTests(unittest.TestCase):
         self.assertEqual(len(merged), 1)
         self.assertEqual(merged[0]["id"], "curated-id")
 
+    def test_disabled_source_removes_previous_generated_batch(self) -> None:
+        existing = [
+            article("old-paper", "https://example.com/paper", "openalex-ai"),
+            article("old-news", "https://example.com/news", "feed-a"),
+        ]
+        merged = replace_source_batches(
+            existing,
+            [],
+            [
+                {
+                    "id": "openalex-ai",
+                    "name": "OpenAlex",
+                    "status": "disabled",
+                    "scanned": 0,
+                    "accepted": 0,
+                    "failed": 0,
+                }
+            ],
+        )
+        self.assertEqual([item["id"] for item in merged], ["old-news"])
+
     def test_successful_source_replaces_batch_failed_source_is_retained(self) -> None:
         existing = [
             article("old-a", "https://example.com/a", "feed-a"),
