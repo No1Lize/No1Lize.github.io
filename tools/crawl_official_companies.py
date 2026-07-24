@@ -78,6 +78,7 @@ except ImportError:  # Executed directly with ``python tools/...``.
 
 
 REGISTRY_PATH = ROOT / "config" / "official_company_sources.json"
+CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 NEWS_PATH_HINTS = (
     "/news",
     "/newsroom",
@@ -129,18 +130,35 @@ SKIP_PATH_HINTS = (
 )
 GENERIC_TITLES = {
     "news",
+    "news center",
     "newsroom",
+    "latest news and events.",
     "press",
     "press releases",
+    "press updates",
     "blog",
     "updates",
     "articles",
     "insights",
     "media",
+    "media center",
     "新闻",
     "新闻中心",
+    "企业新闻",
     "公司动态",
     "资讯中心",
+}
+GENERIC_INDEX_SEGMENTS = {
+    "articles",
+    "blog",
+    "insights",
+    "media",
+    "news",
+    "newsroom",
+    "press",
+    "press-archives",
+    "press-releases",
+    "updates",
 }
 
 
@@ -152,7 +170,11 @@ class CompanySpec:
     sector: str
     homepage: str
     news_urls: tuple[str, ...]
+    sitemap_urls: tuple[str, ...]
     aliases: tuple[str, ...]
+    entity_aliases: tuple[str, ...]
+    article_url_patterns: tuple[str, ...]
+    require_entity_match: bool
     max_items: int
     max_candidate_links: int
     max_age_days: int
@@ -165,7 +187,7 @@ class CompanySpec:
     @property
     def allowed_hosts(self) -> tuple[str, ...]:
         hosts: list[str] = []
-        for raw_url in (self.homepage, *self.news_urls):
+        for raw_url in (self.homepage, *self.news_urls, *self.sitemap_urls):
             host = (urlsplit(raw_url).hostname or "").lower()
             if host.startswith("www."):
                 host = host[4:]
@@ -238,9 +260,40 @@ class FeedLinkParser:
         return links
 
 
-def load_registry(path: Path = REGISTRY_PATH) -> list[CompanySpec]:
+def _load_catalog_companies(path: Path = CATALOG_PATH) -> dict[str, dict[str, str]]:
+    """Read the canonical company catalog without maintaining a second slug list."""
+
+    body = path.read_text(encoding="utf-8")
+    section = re.search(
+        r"export\s+const\s+companies\s*:\s*Company\[\]\s*=\s*\[(.*?)\n\];",
+        body,
+        flags=re.DOTALL,
+    )
+    if not section:
+        raise ValueError("could not locate the companies array in catalog-data.ts")
+    pattern = re.compile(
+        r'\{\s*slug:"([^"]+)",\s*name:"([^"]+)",'
+        r'(?:\s*englishName:"[^"]+",)?\s*region:"([^"]+)",\s*sector:"([^"]+)"'
+    )
+    companies = {
+        match.group(1): {
+            "name": match.group(2),
+            "region": match.group(3),
+            "sector": match.group(4),
+        }
+        for match in pattern.finditer(section.group(1))
+    }
+    if not companies:
+        raise ValueError("company catalog parser returned no companies")
+    return companies
+
+
+def load_registry(
+    path: Path = REGISTRY_PATH, catalog_path: Path = CATALOG_PATH
+) -> list[CompanySpec]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     defaults = payload.get("defaults", {})
+    expected_count = int(payload.get("expectedCompanyCount", 58))
     raw_companies = payload.get("companies", [])
     if not isinstance(raw_companies, list):
         raise ValueError("official company registry must contain a companies array")
@@ -255,9 +308,26 @@ def load_registry(path: Path = REGISTRY_PATH) -> list[CompanySpec]:
             news_urls=tuple(
                 normalize_url(str(url)) for url in raw.get("newsUrls", []) if url
             ),
+            sitemap_urls=tuple(
+                normalize_url(str(url)) for url in raw.get("sitemapUrls", []) if url
+            ),
             aliases=tuple(
                 clean_text(str(alias)) for alias in raw.get("aliases", []) if alias
             ),
+            entity_aliases=tuple(
+                clean_text(str(alias))
+                for alias in raw.get(
+                    "entityAliases",
+                    [raw.get("name", ""), *raw.get("aliases", [])],
+                )
+                if alias
+            ),
+            article_url_patterns=tuple(
+                clean_text(str(pattern))
+                for pattern in raw.get("articleUrlPatterns", [])
+                if pattern
+            ),
+            require_entity_match=bool(raw.get("requireEntityMatch", False)),
             max_items=int(raw.get("maxItems", defaults.get("maxItems", 4))),
             max_candidate_links=int(
                 raw.get(
@@ -284,12 +354,51 @@ def load_registry(path: Path = REGISTRY_PATH) -> list[CompanySpec]:
             raise ValueError(f"registry entry missing {','.join(missing)}: {raw}")
         if not spec.allowed_hosts:
             raise ValueError(f"registry entry has no valid official host: {spec.slug}")
+        for pattern in spec.article_url_patterns:
+            try:
+                re.compile(pattern)
+            except re.error as exc:
+                raise ValueError(
+                    f"invalid articleUrlPatterns value for {spec.slug}: {pattern}"
+                ) from exc
         specs.append(spec)
     slugs = [spec.slug for spec in specs]
     if len(slugs) != len(set(slugs)):
         raise ValueError("official company registry contains duplicate slugs")
-    if len(specs) < 58:
-        raise ValueError(f"official company registry covers only {len(specs)} companies")
+    if len(specs) != expected_count:
+        raise ValueError(
+            f"official company registry has {len(specs)} companies; "
+            f"expected exactly {expected_count}"
+        )
+    catalog = _load_catalog_companies(catalog_path)
+    if len(catalog) != expected_count:
+        raise ValueError(
+            f"company catalog has {len(catalog)} companies; expected {expected_count}"
+        )
+    registry_by_slug = {spec.slug: spec for spec in specs}
+    missing = sorted(set(catalog) - set(registry_by_slug))
+    extra = sorted(set(registry_by_slug) - set(catalog))
+    if missing or extra:
+        raise ValueError(
+            "official company registry does not match company catalog: "
+            f"missing={missing}, extra={extra}"
+        )
+    mismatches = [
+        spec.slug
+        for spec in specs
+        if any(
+            (
+                spec.name != catalog[spec.slug]["name"],
+                spec.region != catalog[spec.slug]["region"],
+                spec.sector != catalog[spec.slug]["sector"],
+            )
+        )
+    ]
+    if mismatches:
+        raise ValueError(
+            "official company registry metadata differs from company catalog: "
+            + ", ".join(sorted(mismatches))
+        )
     return specs
 
 
@@ -316,7 +425,9 @@ def _path_date(url: str) -> str | None:
     return None
 
 
-def _candidate_score(url: str, anchor_text: str) -> int:
+def _candidate_score(
+    url: str, anchor_text: str, article_url_patterns: Sequence[str] = ()
+) -> int:
     parts = urlsplit(url)
     path = parts.path.casefold()
     text = anchor_text.casefold()
@@ -325,6 +436,11 @@ def _candidate_score(url: str, anchor_text: str) -> int:
     if any(hint in path for hint in SKIP_PATH_HINTS):
         return -100
     score = 0
+    if any(
+        re.search(pattern, url, flags=re.IGNORECASE)
+        for pattern in article_url_patterns
+    ):
+        score += 10
     if any(hint in path for hint in NEWS_PATH_HINTS):
         score += 5
     if any(hint in text for hint in NEWS_TEXT_HINTS):
@@ -343,6 +459,7 @@ def discover_candidate_urls(
     body: str,
     allowed_hosts: Sequence[str],
     limit: int,
+    article_url_patterns: Sequence[str] = (),
 ) -> tuple[list[str], list[str]]:
     parser = OfficialIndexParser()
     parser.feed(body)
@@ -353,7 +470,7 @@ def discover_candidate_urls(
             absolute, allowed_hosts
         ):
             continue
-        score = _candidate_score(absolute, text)
+        score = _candidate_score(absolute, text, article_url_patterns)
         if score >= 4:
             scored[absolute] = max(score, scored.get(absolute, -100))
     candidates = [
@@ -368,6 +485,49 @@ def discover_candidate_urls(
         if _host_allowed(absolute, allowed_hosts) and absolute not in feeds:
             feeds.append(absolute)
     return candidates, feeds
+
+
+def _contains_entity_alias(text: str, alias: str) -> bool:
+    folded_text = text.casefold()
+    folded_alias = clean_text(alias).casefold()
+    if not folded_alias:
+        return False
+    if re.fullmatch(r"[a-z0-9][a-z0-9 .&+_-]*", folded_alias):
+        return bool(
+            re.search(
+                rf"(?<![a-z0-9]){re.escape(folded_alias)}(?![a-z0-9])",
+                folded_text,
+            )
+        )
+    return folded_alias in folded_text
+
+
+def _is_index_page(spec: CompanySpec, url: str, title: str) -> bool:
+    normalized = normalize_url(url)
+    configured_indexes = {
+        normalize_url(index_url)
+        for index_url in (spec.homepage, *spec.news_urls)
+    }
+    if normalized in configured_indexes:
+        return True
+    segments = [
+        segment.casefold()
+        for segment in urlsplit(normalized).path.split("/")
+        if segment
+    ]
+    if segments and segments[-1] in GENERIC_INDEX_SEGMENTS:
+        return True
+    if len(segments) <= 2 and segments[-2:] == ["blog", "product"]:
+        return True
+    folded_title = clean_text(title).casefold()
+    if folded_title in GENERIC_TITLES:
+        return True
+    entity_names = (spec.name, *spec.aliases)
+    return any(
+        folded_title == clean_text(entity_name).casefold()
+        for entity_name in entity_names
+        if entity_name
+    )
 
 
 def _article_from_page(
@@ -401,8 +561,17 @@ def _article_from_page(
     title = clean_text(title)
     if (
         len(title) < 8
-        or title.casefold() in GENERIC_TITLES
-        or title.casefold() == spec.name.casefold()
+        or _is_index_page(spec, canonical_url, title)
+    ):
+        return None
+    summary = strip_html(
+        parser.meta.get("description", "")
+        or parser.meta.get("og:description", "")
+        or parser.meta.get("twitter:description", "")
+    )
+    if spec.require_entity_match and not any(
+        _contains_entity_alias(f"{title} {summary}", alias)
+        for alias in spec.entity_aliases
     ):
         return None
     published_at = normalize_date(_published_value(parser, body)) or _path_date(
@@ -413,11 +582,6 @@ def _article_from_page(
     published_date = date.fromisoformat(published_at)
     if published_date < datetime.now(UTC).date() - timedelta(days=spec.max_age_days):
         return None
-    summary = strip_html(
-        parser.meta.get("description", "")
-        or parser.meta.get("og:description", "")
-        or parser.meta.get("twitter:description", "")
-    )
     if not summary:
         summary = f"{spec.name} 发布“{title}”；完整事实、数据与附件见官方原文。"
     event_type, importance = infer_event_type(title, summary)
@@ -456,6 +620,71 @@ def _candidate_urls_from_feed(
     return candidates
 
 
+def _default_sitemap_urls(spec: CompanySpec) -> list[str]:
+    if spec.sitemap_urls:
+        return list(spec.sitemap_urls)
+    parts = urlsplit(spec.homepage)
+    return [f"{parts.scheme}://{parts.netloc}/sitemap.xml"]
+
+
+def _sitemap_locations(body: str) -> list[str]:
+    root = ET.fromstring(body)
+    return [
+        clean_text(node.text or "")
+        for node in root.iter()
+        if node.tag.rsplit("}", 1)[-1].lower() == "loc"
+        and clean_text(node.text or "")
+    ]
+
+
+def _discover_sitemap_urls(
+    spec: CompanySpec, user_agent: str
+) -> tuple[list[str], int, int]:
+    queue = _default_sitemap_urls(spec)
+    visited: set[str] = set()
+    discovered: list[str] = []
+    scanned = 0
+    failures = 0
+    while queue and scanned < 4 and len(discovered) < spec.max_candidate_links:
+        sitemap_url = normalize_url(queue.pop(0))
+        if sitemap_url in visited or not _host_allowed(
+            sitemap_url, spec.allowed_hosts
+        ):
+            continue
+        visited.add(sitemap_url)
+        try:
+            body = fetch_text(
+                sitemap_url,
+                user_agent,
+                timeout=min(spec.request_timeout, 8),
+                attempts=1,
+            )
+            scanned += 1
+            for location in _sitemap_locations(body):
+                normalized = normalize_url(location)
+                if not _host_allowed(normalized, spec.allowed_hosts):
+                    continue
+                if urlsplit(normalized).path.casefold().endswith(".xml"):
+                    if normalized not in visited and normalized not in queue:
+                        queue.append(normalized)
+                    continue
+                if (
+                    normalized not in discovered
+                    and _candidate_score(
+                        normalized, "", spec.article_url_patterns
+                    )
+                    >= 4
+                ):
+                    discovered.append(normalized)
+                    if len(discovered) >= spec.max_candidate_links:
+                        break
+        except (ET.ParseError, OSError, TimeoutError, ValueError):
+            failures += 1
+        except Exception:
+            failures += 1
+    return discovered, scanned, failures
+
+
 def _search_official_urls(
     spec: CompanySpec, user_agent: str
 ) -> list[str]:
@@ -478,7 +707,10 @@ def _search_official_urls(
                 if (
                     _host_allowed(normalized, spec.allowed_hosts)
                     and normalized not in discovered
-                    and _candidate_score(normalized, "news") >= 4
+                    and _candidate_score(
+                        normalized, "news", spec.article_url_patterns
+                    )
+                    >= 4
                 ):
                     discovered.append(normalized)
                 if len(discovered) >= spec.max_candidate_links:
@@ -499,6 +731,7 @@ def crawl_company(
     feed_urls: list[str] = []
     failures = 0
     scanned_indexes = 0
+    scanned_sitemaps = 0
     for index_url in index_urls:
         try:
             body = fetch_text(
@@ -513,6 +746,7 @@ def crawl_company(
                 body,
                 spec.allowed_hosts,
                 spec.max_candidate_links,
+                spec.article_url_patterns,
             )
             for candidate in candidates:
                 if candidate not in candidate_urls:
@@ -542,25 +776,52 @@ def crawl_company(
         except Exception:
             failures += 1
 
-    if not candidate_urls:
-        candidate_urls.extend(_search_official_urls(spec, user_agent))
-
     articles: list[dict[str, Any]] = []
     seen_urls: set[str] = set()
-    for candidate in candidate_urls[: spec.max_candidate_links]:
-        try:
-            body = fetch_text(
-                candidate,
-                user_agent,
-                timeout=spec.request_timeout,
-                attempts=2,
-            )
-            article = _article_from_page(spec, candidate, body)
-            if article and article["source"]["url"] not in seen_urls:
-                articles.append(article)
-                seen_urls.add(article["source"]["url"])
-        except Exception:
-            failures += 1
+    attempted_urls: set[str] = set()
+
+    def parse_candidates(candidates: Sequence[str], budget: int) -> None:
+        nonlocal failures
+        for candidate in candidates:
+            if (
+                candidate in attempted_urls
+                or len(attempted_urls) >= budget
+                or len(articles) >= spec.max_items
+            ):
+                continue
+            attempted_urls.add(candidate)
+            try:
+                body = fetch_text(
+                    candidate,
+                    user_agent,
+                    timeout=spec.request_timeout,
+                    attempts=2,
+                )
+                article = _article_from_page(spec, candidate, body)
+                if article and article["source"]["url"] not in seen_urls:
+                    articles.append(article)
+                    seen_urls.add(article["source"]["url"])
+            except Exception:
+                failures += 1
+
+    parse_candidates(candidate_urls, spec.max_candidate_links)
+
+    if len(articles) < spec.max_items:
+        sitemap_candidates, scanned_sitemaps, sitemap_failures = (
+            _discover_sitemap_urls(spec, user_agent)
+        )
+        failures += sitemap_failures
+        for candidate in sitemap_candidates:
+            if candidate not in candidate_urls:
+                candidate_urls.append(candidate)
+        search_candidates = _search_official_urls(spec, user_agent)
+        for candidate in search_candidates:
+            if candidate not in candidate_urls:
+                candidate_urls.append(candidate)
+        fallback_budget = spec.max_candidate_links + max(
+            4, spec.max_candidate_links // 2
+        )
+        parse_candidates(candidate_urls, fallback_budget)
 
     articles.sort(
         key=lambda item: (
@@ -576,14 +837,20 @@ def crawl_company(
     print(
         f"official={spec.slug} status={status} accepted={len(articles)} "
         f"candidates={len(candidate_urls)} indexes={scanned_indexes} "
+        f"sitemaps={scanned_sitemaps} "
         f"failures={failures} seconds={elapsed:.2f}",
         file=sys.stderr,
     )
     result: dict[str, Any] = {
         "id": spec.source_id,
         "name": f"{spec.name} 官方动态",
+        "company": spec.name,
+        "companySlug": spec.slug,
+        "coverage": "attempted",
         "status": status,
-        "scanned": len(candidate_urls) + scanned_indexes,
+        "configuredIndexes": len(index_urls),
+        "discovered": len(candidate_urls),
+        "scanned": len(attempted_urls) + scanned_indexes + scanned_sitemaps,
         "accepted": len(articles),
         "failed": failures,
         "platform": "官方网站",
@@ -598,6 +865,8 @@ def crawl_all_companies(
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     articles: list[dict[str, Any]] = []
     statuses: list[dict[str, Any]] = []
+    if not specs:
+        raise ValueError("official company registry is empty")
     with ThreadPoolExecutor(max_workers=min(8, len(specs))) as executor:
         future_map = {
             executor.submit(crawl_company, spec, user_agent): spec for spec in specs
@@ -613,6 +882,9 @@ def crawl_all_companies(
                     {
                         "id": spec.source_id,
                         "name": f"{spec.name} 官方动态",
+                        "company": spec.name,
+                        "companySlug": spec.slug,
+                        "coverage": "attempted",
                         "status": "error",
                         "scanned": 0,
                         "accepted": 0,
@@ -625,6 +897,10 @@ def crawl_all_companies(
                     f"official={spec.slug} fatal={type(exc).__name__}: {exc}",
                     file=sys.stderr,
                 )
+    if len(statuses) != len(specs):
+        raise RuntimeError(
+            f"attempted {len(statuses)} of {len(specs)} official companies"
+        )
     return articles, sorted(statuses, key=lambda item: item["id"])
 
 
@@ -638,7 +914,11 @@ def main() -> int:
     quality = evaluate_quality(merged, source_status, load_config().get("qualityGate", {}))
     result = {
         "registeredCompanies": len(specs),
+        "attemptedCompanies": len(statuses),
         "companiesWithArticles": sum(status.get("accepted", 0) > 0 for status in statuses),
+        "companiesWithoutArticles": sum(
+            status.get("accepted", 0) == 0 for status in statuses
+        ),
         "incoming": len(incoming),
         "total": len(merged),
         "qualityPassed": quality["passed"],
