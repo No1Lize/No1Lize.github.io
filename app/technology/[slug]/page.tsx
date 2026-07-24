@@ -3,11 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
 import {
-  heatMethodology,
-  intelligenceEvents,
-  sectors,
-  snapshotDate,
-} from "@/lib/intelligence-data";
+  eventsForTrackedSector,
+  getTrackedSector,
+  trackedSectors,
+} from "@/lib/tracked-sectors";
+import { heatMethodology, snapshotDate } from "@/lib/intelligence-data";
 import { reportContent } from "@/lib/research-content";
 
 const institutionKeywords: Record<string, string[]> = {
@@ -16,15 +16,10 @@ const institutionKeywords: Record<string, string[]> = {
   半导体: ["硬科技", "先进制造", "制造", "科技"],
   新能源: ["气候科技", "先进制造", "制造", "科技"],
   生物科技: ["生物科技", "医疗"],
-  量子计算: ["硬科技", "科技"],
-  商业航天: ["商业航天", "国防科技", "硬科技"],
-  "Web3 / 区块链": ["Web3", "科技"],
-  新材料: ["先进制造", "制造", "硬科技"],
-  智能制造: ["先进制造", "制造", "工业", "硬科技"],
 };
 
 export function generateStaticParams() {
-  return sectors.map((sector) => ({ slug: sector.slug }));
+  return trackedSectors.map((sector) => ({ slug: sector.slug }));
 }
 
 export async function generateMetadata({
@@ -33,7 +28,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const sector = sectors.find((item) => item.slug === slug);
+  const sector = getTrackedSector(slug);
   return { title: sector?.name ?? "赛道" };
 }
 
@@ -43,13 +38,16 @@ export default async function SectorDetail({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const sector = sectors.find((item) => item.slug === slug);
+  const sector = getTrackedSector(slug);
   if (!sector) notFound();
 
   const relatedCompanies = companies
     .filter((item) => item.sector === sector.name)
     .slice(0, 12);
-  const keywords = institutionKeywords[sector.name] ?? [sector.name];
+  const keywords = [
+    ...(institutionKeywords[sector.name] ?? []),
+    ...sector.tracking.keywords,
+  ];
   const relatedInstitutions = institutionCatalog
     .filter((institution) =>
       institution.sectors.some((focus) =>
@@ -59,8 +57,7 @@ export default async function SectorDetail({
       ),
     )
     .slice(0, 10);
-  const events = intelligenceEvents
-    .filter((item) => item.sector === sector.name)
+  const events = eventsForTrackedSector(sector)
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
     .slice(0, 12);
   const relatedReports = reports.filter((report) =>
@@ -71,15 +68,11 @@ export default async function SectorDetail({
     <main className="page-shell subpage">
       <header className="entity-hero">
         <div>
-          <p className="eyebrow">
-            SECTOR DOSSIER · {sector.events} 项公开事件
-          </p>
+          <p className="eyebrow">SECTOR DOSSIER · {sector.events} 项公开事件</p>
           <h1>{sector.name}</h1>
           <p>{sector.definition}</p>
           <div className="hero-chips">
-            {sector.subsectors.map((subsector) => (
-              <span key={subsector}>{subsector}</span>
-            ))}
+            {sector.subsectors.map((item) => <span key={item}>{item}</span>)}
           </div>
         </div>
         <div className="hero-stat">
@@ -90,176 +83,35 @@ export default async function SectorDetail({
       </header>
 
       <div className="detail-layout">
-        <aside className="toc">
-          <strong>赛道档案</strong>
-          {[
-            "赛道定义",
-            "中美对照",
-            "产业链",
-            "代表公司",
-            "投资机构",
-            ...(events.length ? ["最新事件"] : []),
-            "研究重点",
-            "风险",
-            "数据口径",
-          ].map((item) => (
-            <a href={`#${item}`} key={item}>
-              {item}
-            </a>
-          ))}
-        </aside>
-
         <article className="detail-article">
-          <Section id="赛道定义" title="赛道定义">
-            <p>{sector.definition}</p>
-            <div className="chip-list">
-              {sector.subsectors.map((subsector) => (
-                <span key={subsector}>{subsector}</span>
-              ))}
-            </div>
-          </Section>
-
+          <Section id="赛道定义" title="赛道定义"><p>{sector.definition}</p></Section>
           <Section id="中美对照" title="中美发展对照">
             <div className="comparison-columns">
-              <div>
-                <span>中国</span>
-                <strong>
-                  {relatedCompanies.filter((item) => item.region === "中国").length}{" "}
-                  家样本公司
-                </strong>
-                <p>{sector.chinaLens}</p>
-              </div>
-              <div>
-                <span>美国</span>
-                <strong>
-                  {relatedCompanies.filter((item) => item.region === "美国").length}{" "}
-                  家样本公司
-                </strong>
-                <p>{sector.usLens}</p>
-              </div>
+              <div><span>中国</span><strong>{relatedCompanies.filter((item) => item.region === "中国").length} 家样本公司</strong><p>{sector.chinaLens}</p></div>
+              <div><span>美国</span><strong>{relatedCompanies.filter((item) => item.region === "美国").length} 家样本公司</strong><p>{sector.usLens}</p></div>
             </div>
           </Section>
-
           <Section id="产业链" title="产业链结构">
-            <div className="chain">
-              {sector.chain.map((node) => (
-                <Link href="/companies" key={node.title}>
-                  <strong>{node.title}</strong>
-                  <span>{node.detail}</span>
-                </Link>
-              ))}
-            </div>
+            <div className="chain">{sector.chain.map((node) => <Link href="/companies" key={node.title}><strong>{node.title}</strong><span>{node.detail}</span></Link>)}</div>
           </Section>
-
           <Section id="代表公司" title="代表公司">
-            <div className="entity-list">
-              {relatedCompanies.map((company) => (
-                <Link href={`/companies/${company.slug}`} key={company.slug}>
-                  <strong>{company.name}</strong>
-                  <span>
-                    {company.region} · {company.product}
-                  </span>
-                </Link>
-              ))}
-            </div>
+            <div className="entity-list">{relatedCompanies.map((company) => <Link href={`/companies/${company.slug}`} key={company.slug}><strong>{company.name}</strong><span>{company.region} · {company.product}</span></Link>)}</div>
           </Section>
-
-          <Section id="投资机构" title="关注该赛道的投资机构">
-            <div className="chip-list">
-              {relatedInstitutions.map((institution) => (
-                <Link
-                  href={`/institutions/${institution.slug}`}
-                  key={institution.slug}
-                >
-                  {institution.name}
-                </Link>
-              ))}
-            </div>
-          </Section>
-
-          {events.length > 0 && (
-            <Section id="最新事件" title="最新事件">
-              <div className="timeline">
-                {events.map((event) => (
-                  <div key={event.id}>
-                    <time>{event.publishedAt}</time>
-                    <div>
-                      <strong>{event.title}</strong>
-                      <p>{event.summary}</p>
-                      <a
-                        href={event.source.url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {event.source.level} · {event.source.name}
-                      </a>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </Section>
-          )}
-
           <Section id="研究重点" title="关键研究变量">
-            <div className="analysis-grid">
-              {sector.researchFocus.map((item, index) => (
-                <div key={item}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <strong>{item}</strong>
-                  <p>结合公司经营、技术里程碑和资本事件持续比较。</p>
-                </div>
-              ))}
-            </div>
+            <div className="analysis-grid">{sector.researchFocus.map((item,index)=><div key={item}><span>{String(index+1).padStart(2,"0")}</span><strong>{item}</strong></div>)}</div>
           </Section>
-
-          <Section id="风险" title="主要风险">
-            <ul className="risk-list">
-              {sector.risks.map((risk) => (
-                <li key={risk}>{risk}</li>
-              ))}
-            </ul>
-          </Section>
-
-          <Section id="数据口径" title="热度计算口径">
-            <p>{heatMethodology}</p>
-          </Section>
+          <Section id="风险" title="主要风险"><ul className="risk-list">{sector.risks.map((risk)=><li key={risk}>{risk}</li>)}</ul></Section>
+          <Section id="数据口径" title="热度计算口径"><p>{heatMethodology}</p><p>更新：{snapshotDate}</p></Section>
         </article>
-
         <aside className="source-rail">
           <strong>相关研究</strong>
-          {relatedReports.map((report) => (
-            <Link href={`/reports/${report.slug}`} key={report.slug}>
-              {report.title}
-              <span>{report.date}</span>
-            </Link>
-          ))}
-          <div className="confidence-box">
-            <span>数据完整度</span>
-            <strong>{sector.completeness}%</strong>
-            <p>
-              {sector.events} 项事件 · 更新 {snapshotDate}
-            </p>
-          </div>
+          {relatedReports.map((report)=><Link href={`/reports/${report.slug}`} key={report.slug}>{report.title}<span>{report.date}</span></Link>)}
         </aside>
       </div>
     </main>
   );
 }
 
-function Section({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} className="article-section">
-      <p className="section-index">{id.toUpperCase()}</p>
-      <h2>{title}</h2>
-      {children}
-    </section>
-  );
+function Section({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
+  return <section id={id} className="article-section"><p className="section-index">{id}</p><h2>{title}</h2>{children}</section>;
 }
