@@ -13,7 +13,9 @@
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "test:unit": "node --import tsx --test tests/catalog.test.ts",
     "test:crawler": "python3 -m unittest tests/test_crawler.py",
-    "build:pages": "GITHUB_PAGES=true next build",
+    "validate:tracking": "node scripts/validate-tracking-pages.mjs",
+    "verify:tracking-pages": "node scripts/validate-tracking-pages.mjs --check-output",
+    "build:pages": "npm run validate:tracking && GITHUB_PAGES=true next build && npm run verify:tracking-pages",
     "crawl": "python3 tools/crawl_articles.py",
     "validate:artifact": "bash scripts/validate-artifact.sh",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next"
