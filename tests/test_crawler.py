@@ -1,8 +1,11 @@
 import json
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
+from unittest.mock import patch
 
+import tools.crawl_official_companies as official_companies
 from tools.crawl_articles import (
     ArticleHTMLParser,
     NewsSource,
@@ -21,6 +24,12 @@ from tools.crawl_articles import (
     replace_source_batches,
     sec_article,
     write_if_changed,
+)
+from tools.crawl_official_companies import (
+    CompanySpec,
+    _article_from_page,
+    discover_candidate_urls,
+    load_registry,
 )
 
 
@@ -143,6 +152,155 @@ class CrawlerTests(unittest.TestCase):
         assert parsed is not None
         self.assertEqual(parsed["publishedAt"], "2026-07-23")
         self.assertEqual(parsed["type"], "产品发布")
+
+    def test_official_registry_must_exactly_match_company_catalog(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            registry_path = root / "official.json"
+            catalog_path = root / "catalog-data.ts"
+            registry_path.write_text(
+                json.dumps(
+                    {
+                        "expectedCompanyCount": 1,
+                        "companies": [
+                            {
+                                "slug": "example",
+                                "name": "Example",
+                                "region": "美国",
+                                "sector": "AI / AGI",
+                                "homepage": "https://example.com/",
+                                "newsUrls": [],
+                                "aliases": [],
+                            }
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            catalog_path.write_text(
+                'export const companies: Company[] = [\n'
+                '  { slug:"example", name:"Example", region:"美国", '
+                'sector:"AI / AGI", stage:"成长期", status:"运营中" },\n'
+                "];\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                [spec.slug for spec in load_registry(registry_path, catalog_path)],
+                ["example"],
+            )
+            catalog_path.write_text(
+                'export const companies: Company[] = [\n'
+                '  { slug:"missing", name:"Missing", region:"美国", '
+                'sector:"AI / AGI", stage:"成长期", status:"运营中" },\n'
+                "];\n",
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "does not match company catalog"):
+                load_registry(registry_path, catalog_path)
+
+    def test_official_parser_rejects_indexes_and_wrong_group_company(self) -> None:
+        spec = CompanySpec(
+            slug="bgi-genomics",
+            name="华大基因",
+            region="中国",
+            sector="生物科技",
+            homepage="https://www.bgi.com/",
+            news_urls=("https://www.bgi.com/news",),
+            sitemap_urls=(),
+            aliases=("BGI Genomics",),
+            entity_aliases=("华大基因", "BGI Genomics"),
+            article_url_patterns=(r"/news/\d+$",),
+            require_entity_match=True,
+            max_items=4,
+            max_candidate_links=10,
+            max_age_days=730,
+            request_timeout=10,
+        )
+        listing = (
+            '<a href="/news/2026072204">公司进展</a>'
+            '<a href="/about">About</a>'
+        )
+        candidates, _ = discover_candidate_urls(
+            spec.news_urls[0],
+            listing,
+            spec.allowed_hosts,
+            spec.max_candidate_links,
+            spec.article_url_patterns,
+        )
+        self.assertEqual(candidates, ["https://www.bgi.com/news/2026072204"])
+
+        index_page = """
+        <meta property="og:title" content="新闻中心">
+        <meta property="article:published_time" content="2026-07-23">
+        """
+        self.assertIsNone(
+            _article_from_page(spec, "https://www.bgi.com/news", index_page)
+        )
+
+        group_page = """
+        <meta property="og:title" content="华大集团发布生命科学计划">
+        <meta property="og:description" content="华大集团介绍集团层面的最新进展。">
+        <meta property="article:published_time" content="2026-07-23">
+        """
+        self.assertIsNone(
+            _article_from_page(
+                spec, "https://www.bgi.com/news/2026072204", group_page
+            )
+        )
+
+        company_page = """
+        <meta property="og:title" content="华大基因发布精准医学新方案">
+        <meta property="og:description" content="华大基因公布产品和业务进展。">
+        <meta property="article:published_time" content="2026-07-23">
+        """
+        parsed = _article_from_page(
+            spec, "https://www.bgi.com/news/2026072205", company_page
+        )
+        self.assertIsNotNone(parsed)
+        assert parsed is not None
+        self.assertEqual(parsed["companySlug"], "bgi-genomics")
+
+    def test_official_crawl_reports_every_registered_company(self) -> None:
+        base = CompanySpec(
+            slug="one",
+            name="One",
+            region="美国",
+            sector="AI / AGI",
+            homepage="https://one.example/",
+            news_urls=(),
+            sitemap_urls=(),
+            aliases=(),
+            entity_aliases=("One",),
+            article_url_patterns=(),
+            require_entity_match=False,
+            max_items=4,
+            max_candidate_links=10,
+            max_age_days=730,
+            request_timeout=10,
+        )
+        specs = [base, replace(base, slug="two", name="Two")]
+
+        def fake_crawl(spec: CompanySpec, _user_agent: str):
+            if spec.slug == "two":
+                raise RuntimeError("blocked")
+            return [], {
+                "id": spec.source_id,
+                "name": spec.name,
+                "company": spec.name,
+                "companySlug": spec.slug,
+                "coverage": "attempted",
+                "status": "empty",
+                "scanned": 1,
+                "accepted": 0,
+                "failed": 0,
+            }
+
+        with patch.object(official_companies, "crawl_company", side_effect=fake_crawl):
+            _, statuses = official_companies.crawl_all_companies(specs, "test")
+        self.assertEqual(
+            {status["companySlug"] for status in statuses}, {"one", "two"}
+        )
+        self.assertTrue(all(status["coverage"] == "attempted" for status in statuses))
 
     def test_rss_feed_is_filtered_and_parsed(self) -> None:
         feed = """
