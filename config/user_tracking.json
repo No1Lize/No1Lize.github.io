@@ -6,70 +6,158 @@
       "name": "AI / AGI",
       "enabled": true,
       "custom": false,
-      "keywords": ["基础模型", "大模型", "AI agent", "推理模型", "多模态"],
-      "people": ["Sam Altman", "Demis Hassabis", "何恺明", "姚顺雨"],
-      "sampleCompanies": ["OpenAI", "Anthropic", "DeepSeek", "xAI"]
+      "keywords": [
+        "基础模型",
+        "大模型",
+        "AI agent",
+        "推理模型",
+        "多模态"
+      ],
+      "people": [
+        "Sam Altman",
+        "Demis Hassabis",
+        "何恺明",
+        "姚顺雨"
+      ],
+      "sampleCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "DeepSeek",
+        "xAI"
+      ]
     },
     {
       "slug": "robotics",
       "name": "机器人",
       "enabled": true,
       "custom": false,
-      "keywords": ["具身智能", "人形机器人", "自动驾驶", "VLA", "机器人量产"],
+      "keywords": [
+        "具身智能",
+        "人形机器人",
+        "自动驾驶",
+        "VLA",
+        "机器人量产"
+      ],
       "people": [],
-      "sampleCompanies": ["Figure AI", "宇树科技", "智元机器人", "小马智行"]
+      "sampleCompanies": [
+        "Figure AI",
+        "宇树科技",
+        "智元机器人",
+        "小马智行"
+      ]
     },
     {
       "slug": "semiconductor",
       "name": "半导体",
       "enabled": true,
       "custom": false,
-      "keywords": ["AI 芯片", "GPU", "推理芯片", "先进封装", "国产算力"],
+      "keywords": [
+        "AI 芯片",
+        "GPU",
+        "推理芯片",
+        "先进封装",
+        "国产算力"
+      ],
       "people": [],
-      "sampleCompanies": ["寒武纪", "Cerebras", "Groq", "地平线机器人"]
+      "sampleCompanies": [
+        "寒武纪",
+        "Cerebras",
+        "Groq",
+        "地平线机器人"
+      ]
     },
     {
       "slug": "energy",
       "name": "新能源",
       "enabled": true,
       "custom": false,
-      "keywords": ["长时储能", "固态电池", "聚变能源", "动力电池", "储能系统"],
+      "keywords": [
+        "长时储能",
+        "固态电池",
+        "聚变能源",
+        "动力电池",
+        "储能系统"
+      ],
       "people": [],
-      "sampleCompanies": ["宁德时代", "Helion Energy", "Form Energy", "Redwood Materials"]
+      "sampleCompanies": [
+        "宁德时代",
+        "Helion Energy",
+        "Form Energy",
+        "Redwood Materials"
+      ]
     },
     {
       "slug": "biotech",
       "name": "生物科技",
       "enabled": true,
       "custom": false,
-      "keywords": ["AI 制药", "基因组学", "计算生物学", "药物发现", "自动化实验"],
+      "keywords": [
+        "AI 制药",
+        "基因组学",
+        "计算生物学",
+        "药物发现",
+        "自动化实验"
+      ],
       "people": [],
-      "sampleCompanies": ["晶泰科技", "英矽智能", "Tempus AI", "Recursion"]
+      "sampleCompanies": [
+        "晶泰科技",
+        "英矽智能",
+        "Tempus AI",
+        "Recursion"
+      ]
     },
     {
       "slug": "quantum",
       "name": "量子计算",
       "enabled": true,
       "custom": false,
-      "keywords": ["量子纠错", "逻辑量子比特", "离子阱", "超导量子", "光子量子"],
+      "keywords": [
+        "量子纠错",
+        "逻辑量子比特",
+        "离子阱",
+        "超导量子",
+        "光子量子"
+      ],
       "people": [],
-      "sampleCompanies": ["IonQ", "Rigetti", "PsiQuantum", "本源量子"]
+      "sampleCompanies": [
+        "IonQ",
+        "Rigetti",
+        "PsiQuantum",
+        "本源量子"
+      ]
     },
     {
       "slug": "space",
       "name": "商业航天",
       "enabled": true,
       "custom": false,
-      "keywords": ["可复用火箭", "卫星互联网", "商业发射", "在轨服务", "商业空间站"],
+      "keywords": [
+        "可复用火箭",
+        "卫星互联网",
+        "商业发射",
+        "在轨服务",
+        "商业空间站"
+      ],
       "people": [],
-      "sampleCompanies": ["SpaceX", "Rocket Lab", "蓝箭航天", "天兵科技"]
+      "sampleCompanies": [
+        "SpaceX",
+        "Rocket Lab",
+        "蓝箭航天",
+        "天兵科技"
+      ]
     },
     {
       "slug": "web3",
       "name": "Web3",
       "enabled": true,
       "custom": false,
-      "keywords": ["稳定币", "区块链基础设施", "数字资产", "链上支付", "RWA"],
+      "keywords": [
+        "稳定币",
+        "区块链基础设施",
+        "数字资产",
+        "链上支付",
+        "RWA"
+      ],
       "people": [],
       "sampleCompanies": []
     },
@@ -78,7 +166,13 @@
       "name": "新材料",
       "enabled": true,
       "custom": false,
-      "keywords": ["半导体材料", "复合材料", "电池材料", "高性能材料", "材料量产"],
+      "keywords": [
+        "半导体材料",
+        "复合材料",
+        "电池材料",
+        "高性能材料",
+        "材料量产"
+      ],
       "people": [],
       "sampleCompanies": []
     },
@@ -87,9 +181,19 @@
       "name": "智能制造",
       "enabled": true,
       "custom": false,
-      "keywords": ["工业软件", "数字工厂", "工业自动化", "自主系统", "智能装备"],
+      "keywords": [
+        "工业软件",
+        "数字工厂",
+        "工业自动化",
+        "自主系统",
+        "智能装备"
+      ],
       "people": [],
-      "sampleCompanies": ["Anduril", "大疆创新", "傅利叶智能"]
+      "sampleCompanies": [
+        "Anduril",
+        "大疆创新",
+        "傅利叶智能"
+      ]
     }
   ],
   "sources": []
