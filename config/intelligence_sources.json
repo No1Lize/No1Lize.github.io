@@ -10,7 +10,17 @@
       "sourceLevel": "媒体报道",
       "region": "美国",
       "maxItems": 12,
-      "keywords": ["AI", "robot", "semiconductor", "space", "quantum", "biotech", "startup", "funding", "venture"]
+      "keywords": [
+        "AI",
+        "robot",
+        "semiconductor",
+        "space",
+        "quantum",
+        "biotech",
+        "startup",
+        "funding",
+        "venture"
+      ]
     },
     {
       "id": "venturebeat-ai",
@@ -21,7 +31,14 @@
       "sourceLevel": "媒体报道",
       "region": "美国",
       "maxItems": 12,
-      "keywords": ["AI", "model", "agent", "robot", "chip", "funding"]
+      "keywords": [
+        "AI",
+        "model",
+        "agent",
+        "robot",
+        "chip",
+        "funding"
+      ]
     },
     {
       "id": "tmtpost",
@@ -33,7 +50,18 @@
       "region": "中国",
       "maxItems": 12,
       "strictTitleKeywords": true,
-      "keywords": ["人工智能", "AI", "大模型", "机器人", "半导体", "芯片", "融资", "创投", "上市", "新能源"]
+      "keywords": [
+        "人工智能",
+        "AI",
+        "大模型",
+        "机器人",
+        "半导体",
+        "芯片",
+        "融资",
+        "创投",
+        "上市",
+        "新能源"
+      ]
     },
     {
       "id": "leiphone",
@@ -44,7 +72,15 @@
       "sourceLevel": "媒体报道",
       "region": "中国",
       "maxItems": 12,
-      "keywords": ["人工智能", "AI", "大模型", "机器人", "自动驾驶", "芯片", "融资"]
+      "keywords": [
+        "人工智能",
+        "AI",
+        "大模型",
+        "机器人",
+        "自动驾驶",
+        "芯片",
+        "融资"
+      ]
     },
     {
       "id": "sina-finance",
@@ -55,8 +91,45 @@
       "sourceLevel": "媒体报道",
       "region": "中国",
       "maxItems": 18,
-      "keywords": ["人工智能", "AI", "大模型", "机器人", "自动驾驶", "半导体", "芯片", "融资", "创投", "上市", "科技公司", "新能源"],
-      "requiredKeywords": ["发布", "推出", "融资", "投资", "合作", "签署", "上市", "IPO", "财报", "业绩", "政策", "监管", "法规", "研发", "突破", "订单", "获批", "成立", "投产", "建厂", "收购", "并购", "评级"],
+      "keywords": [
+        "人工智能",
+        "AI",
+        "大模型",
+        "机器人",
+        "自动驾驶",
+        "半导体",
+        "芯片",
+        "融资",
+        "创投",
+        "上市",
+        "科技公司",
+        "新能源"
+      ],
+      "requiredKeywords": [
+        "发布",
+        "推出",
+        "融资",
+        "投资",
+        "合作",
+        "签署",
+        "上市",
+        "IPO",
+        "财报",
+        "业绩",
+        "政策",
+        "监管",
+        "法规",
+        "研发",
+        "突破",
+        "订单",
+        "获批",
+        "成立",
+        "投产",
+        "建厂",
+        "收购",
+        "并购",
+        "评级"
+      ],
       "strictRequiredTitleKeywords": true
     },
     {
@@ -69,7 +142,16 @@
       "region": "全球",
       "maxItems": 10,
       "strictTitleKeywords": true,
-      "keywords": ["artificial intelligence", " AI ", "robot", "semiconductor", "quantum", "satellite", "funding", "acquisition"]
+      "keywords": [
+        "artificial intelligence",
+        " AI ",
+        "robot",
+        "semiconductor",
+        "quantum",
+        "satellite",
+        "funding",
+        "acquisition"
+      ]
     },
     {
       "id": "deepmind-blog",
@@ -95,41 +177,151 @@
     }
   ],
   "xProfiles": [
-    {"id": "x-openai", "name": "OpenAI", "handle": "OpenAI", "kind": "organization", "company": "OpenAI", "companySlug": "openai", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-anthropic", "name": "Anthropic", "handle": "AnthropicAI", "kind": "organization", "company": "Anthropic", "companySlug": "anthropic", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-deepmind", "name": "Google DeepMind", "handle": "GoogleDeepMind", "kind": "organization", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-karpathy", "name": "Andrej Karpathy", "handle": "karpathy", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-lecun", "name": "Yann LeCun", "handle": "ylecun", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-feifei-li", "name": "李飞飞", "handle": "drfeifei", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-sam-altman", "name": "Sam Altman", "handle": "sama", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-demis", "name": "Demis Hassabis", "handle": "demishassabis", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
-    {"id": "x-shunyu-yao", "name": "姚顺雨", "handle": "ShunyuYao12", "kind": "person", "personSlug": "shunyu-yao", "region": "中国", "platform": "X", "maxItems": 5},
-    {"id": "x-kaiming-he", "name": "何恺明", "handle": "kaiminghe", "kind": "person", "personSlug": "kaiming-he", "region": "中国", "platform": "X", "maxItems": 5}
+    {
+      "id": "x-openai",
+      "name": "OpenAI",
+      "handle": "OpenAI",
+      "kind": "organization",
+      "company": "OpenAI",
+      "companySlug": "openai",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-anthropic",
+      "name": "Anthropic",
+      "handle": "AnthropicAI",
+      "kind": "organization",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-deepmind",
+      "name": "Google DeepMind",
+      "handle": "GoogleDeepMind",
+      "kind": "organization",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-karpathy",
+      "name": "Andrej Karpathy",
+      "handle": "karpathy",
+      "kind": "person",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-lecun",
+      "name": "Yann LeCun",
+      "handle": "ylecun",
+      "kind": "person",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-feifei-li",
+      "name": "李飞飞",
+      "handle": "drfeifei",
+      "kind": "person",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-sam-altman",
+      "name": "Sam Altman",
+      "handle": "sama",
+      "kind": "person",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-demis",
+      "name": "Demis Hassabis",
+      "handle": "demishassabis",
+      "kind": "person",
+      "region": "美国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-shunyu-yao",
+      "name": "姚顺雨",
+      "handle": "ShunyuYao12",
+      "kind": "person",
+      "personSlug": "shunyu-yao",
+      "region": "中国",
+      "platform": "X",
+      "maxItems": 5
+    },
+    {
+      "id": "x-kaiming-he",
+      "name": "何恺明",
+      "handle": "kaiminghe",
+      "kind": "person",
+      "personSlug": "kaiming-he",
+      "region": "中国",
+      "platform": "X",
+      "maxItems": 5
+    }
   ],
   "papers": [
     {
       "id": "openalex-ai",
-      "name": "OpenAlex AI conference works",
+      "name": "OpenAlex（已停用：避免泛 AI 论文）",
       "url": "https://api.openalex.org/works?search=artificial%20intelligence&filter=from_publication_date:2026-01-01,to_publication_date:{today},type:article&sort=publication_date:desc&per-page=50",
       "adapter": "openalex",
       "platform": "OpenAlex",
       "sourceLevel": "数据库记录",
       "region": "全球",
       "sector": "AI / AGI",
-      "maxItems": 12,
-      "keywords": ["AI", "artificial intelligence", "language model", "machine learning", "robot", "agent"]
+      "maxItems": 0,
+      "keywords": [
+        "AI",
+        "artificial intelligence",
+        "language model",
+        "machine learning",
+        "robot",
+        "agent"
+      ],
+      "enabled": false
     },
     {
       "id": "arxiv-ai",
-      "name": "arXiv AI",
-      "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI%20OR%20cat:cs.LG%20OR%20cat:cs.CV&start=0&max_results=12&sortBy=submittedDate&sortOrder=descending",
+      "name": "arXiv · Core AI companies",
+      "url": "https://export.arxiv.org/api/query?search_query=all:%22OpenAI%22%20OR%20all:%22Anthropic%22%20OR%20all:%22Google%20DeepMind%22%20OR%20all:%22Meta%20AI%22%20OR%20all:%22xAI%22&start=0&max_results=8&sortBy=submittedDate&sortOrder=descending",
       "adapter": "atom",
       "platform": "arXiv",
       "sourceLevel": "原始材料",
       "region": "全球",
       "sector": "AI / AGI",
       "eventType": "论文",
-      "maxItems": 12
+      "maxItems": 8,
+      "keywords": [
+        "OpenAI",
+        "Anthropic",
+        "Google DeepMind",
+        "DeepMind",
+        "Meta AI",
+        "xAI"
+      ],
+      "strictTitleKeywords": false,
+      "trackedCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "Google DeepMind",
+        "Meta AI",
+        "xAI"
+      ]
     }
   ],
   "publicDiscovery": [
@@ -143,8 +335,19 @@
       "region": "中国",
       "maxItems": 10,
       "strictTitleKeywords": true,
-      "allowedHosts": ["mp.weixin.qq.com"],
-      "keywords": ["AI", "人工智能", "大模型", "机器人", "融资", "投资", "半导体", "芯片"]
+      "allowedHosts": [
+        "mp.weixin.qq.com"
+      ],
+      "keywords": [
+        "AI",
+        "人工智能",
+        "大模型",
+        "机器人",
+        "融资",
+        "投资",
+        "半导体",
+        "芯片"
+      ]
     },
     {
       "id": "finance-media-index",
@@ -156,8 +359,30 @@
       "region": "全球",
       "maxItems": 12,
       "strictTitleKeywords": true,
-      "allowedHosts": ["36kr.com", "pedaily.cn", "wallstreetcn.com", "yicai.com", "stcn.com", "cnstock.com", "sina.com.cn", "techcrunch.com", "venturebeat.com", "reuters.com"],
-      "keywords": ["AI", "人工智能", "大模型", "机器人", "半导体", "芯片", "融资", "投资", "IPO", "上市"]
+      "allowedHosts": [
+        "36kr.com",
+        "pedaily.cn",
+        "wallstreetcn.com",
+        "yicai.com",
+        "stcn.com",
+        "cnstock.com",
+        "sina.com.cn",
+        "techcrunch.com",
+        "venturebeat.com",
+        "reuters.com"
+      ],
+      "keywords": [
+        "AI",
+        "人工智能",
+        "大模型",
+        "机器人",
+        "半导体",
+        "芯片",
+        "融资",
+        "投资",
+        "IPO",
+        "上市"
+      ]
     }
   ],
   "qualityGate": {
