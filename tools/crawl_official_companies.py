@@ -45,10 +45,10 @@ try:  # Imported by tests as tools.crawl_official_companies.
         infer_event_type,
         load_config,
         load_existing_payload,
+        merge_articles,
         merge_source_status,
         normalize_date,
         normalize_url,
-        replace_source_batches,
         strip_html,
         write_if_changed,
     )
@@ -68,10 +68,10 @@ except ImportError:  # Executed directly with ``python tools/...``.
         infer_event_type,
         load_config,
         load_existing_payload,
+        merge_articles,
         merge_source_status,
         normalize_date,
         normalize_url,
-        replace_source_batches,
         strip_html,
         write_if_changed,
     )
@@ -650,10 +650,10 @@ def _discover_sitemap_urls(
 ) -> tuple[list[str], int, int]:
     queue = _default_sitemap_urls(spec)
     visited: set[str] = set()
-    discovered: list[str] = []
+    scored: dict[str, int] = {}
     scanned = 0
     failures = 0
-    while queue and scanned < 4 and len(discovered) < spec.max_candidate_links:
+    while queue and scanned < 4:
         sitemap_url = normalize_url(queue.pop(0))
         if sitemap_url in visited or not _host_allowed(
             sitemap_url, spec.allowed_hosts
@@ -676,20 +676,20 @@ def _discover_sitemap_urls(
                     if normalized not in visited and normalized not in queue:
                         queue.append(normalized)
                     continue
-                if (
-                    normalized not in discovered
-                    and _candidate_score(
-                        normalized, "", spec.article_url_patterns
-                    )
-                    >= 4
-                ):
-                    discovered.append(normalized)
-                    if len(discovered) >= spec.max_candidate_links:
-                        break
+                score = _candidate_score(
+                    normalized, "", spec.article_url_patterns
+                )
+                if score >= 4:
+                    scored[normalized] = max(score, scored.get(normalized, -100))
         except (ET.ParseError, OSError, TimeoutError, ValueError):
             failures += 1
         except Exception:
             failures += 1
+    discovered = sorted(
+        scored,
+        key=lambda candidate: scored[candidate],
+        reverse=True,
+    )[: spec.max_candidate_links]
     return discovered, scanned, failures
 
 
@@ -912,12 +912,40 @@ def crawl_all_companies(
     return articles, sorted(statuses, key=lambda item: item["id"])
 
 
+def replace_official_source_batches(
+    existing: list[dict[str, Any]],
+    incoming: list[dict[str, Any]],
+    statuses: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Replace every completed official batch, including a verified empty one.
+
+    Retaining an old batch after a clean empty scan kept previously accepted
+    index pages alive indefinitely. Only a fatal per-company error preserves
+    the prior batch; completed ok/partial/empty scans are authoritative.
+    """
+
+    replace_ids = {
+        str(status.get("id", ""))
+        for status in statuses
+        if status.get("status") in {"ok", "partial", "empty"}
+    }
+    preserved = [
+        article
+        for article in existing
+        if article.get("curated")
+        or str(article.get("sourceId", "")) not in replace_ids
+    ]
+    return merge_articles(preserved, incoming)
+
+
 def main() -> int:
     specs = load_registry()
     user_agent = os.environ.get("SEC_USER_AGENT", "").strip() or DEFAULT_USER_AGENT
     payload = load_existing_payload()
     incoming, statuses = crawl_all_companies(specs, user_agent)
-    merged = replace_source_batches(payload.get("articles", []), incoming, statuses)
+    merged = replace_official_source_batches(
+        payload.get("articles", []), incoming, statuses
+    )
     source_status = merge_source_status(payload.get("sourceStatus", []), statuses)
     quality = evaluate_quality(merged, source_status, load_config().get("qualityGate", {}))
     result = {

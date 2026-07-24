@@ -30,8 +30,10 @@ from tools.crawl_articles import (
 from tools.crawl_official_companies import (
     CompanySpec,
     _article_from_page,
+    _discover_sitemap_urls,
     discover_candidate_urls,
     load_registry,
+    replace_official_source_batches,
 )
 
 
@@ -214,6 +216,43 @@ class CrawlerTests(unittest.TestCase):
                 "https://example.com/news/a-first",
             ],
         )
+
+    def test_sitemap_prioritizes_article_patterns_over_early_indexes(self) -> None:
+        spec = CompanySpec(
+            slug="example",
+            name="Example",
+            region="美国",
+            sector="AI / AGI",
+            homepage="https://example.com/",
+            news_urls=("https://example.com/news",),
+            sitemap_urls=("https://example.com/sitemap.xml",),
+            aliases=(),
+            entity_aliases=("Example",),
+            article_url_patterns=(r"/news/[a-z0-9]+-",),
+            require_entity_match=False,
+            max_items=4,
+            max_candidate_links=2,
+            max_age_days=730,
+            request_timeout=10,
+        )
+        sitemap = """
+        <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+          <url><loc>https://example.com/news</loc></url>
+          <url><loc>https://example.com/blog</loc></url>
+          <url><loc>https://example.com/news/alpha-launch</loc></url>
+          <url><loc>https://example.com/news/beta-release</loc></url>
+        </urlset>
+        """
+        with patch.object(official_companies, "fetch_text", return_value=sitemap):
+            candidates, scanned, failures = _discover_sitemap_urls(spec, "test")
+        self.assertEqual(
+            candidates,
+            [
+                "https://example.com/news/alpha-launch",
+                "https://example.com/news/beta-release",
+            ],
+        )
+        self.assertEqual((scanned, failures), (1, 0))
 
     def test_official_registry_must_exactly_match_company_catalog(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -402,6 +441,27 @@ class CrawlerTests(unittest.TestCase):
             {status["companySlug"] for status in statuses}, {"one", "two"}
         )
         self.assertTrue(all(status["coverage"] == "attempted" for status in statuses))
+
+    def test_completed_empty_official_batch_removes_stale_articles(self) -> None:
+        stale = article(
+            "stale-index",
+            "https://example.com/news",
+            "official-example",
+        )
+        retained = article(
+            "temporary-failure",
+            "https://other.example/news",
+            "official-other",
+        )
+        merged = replace_official_source_batches(
+            [stale, retained],
+            [],
+            [
+                {"id": "official-example", "status": "empty", "accepted": 0},
+                {"id": "official-other", "status": "error", "accepted": 0},
+            ],
+        )
+        self.assertEqual([item["id"] for item in merged], ["temporary-failure"])
 
     def test_rss_feed_is_filtered_and_parsed(self) -> None:
         feed = """
