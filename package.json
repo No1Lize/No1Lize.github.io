@@ -12,15 +12,14 @@
     "start": "WRANGLER_LOG_PATH=.wrangler/wrangler.log vinext start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "test:unit": "node --import tsx --test tests/catalog.test.ts",
-    "build:pages": "node --import tsx tools/export_snapshot.ts && GITHUB_PAGES=true next build",
-    "snapshot": "node --import tsx tools/export_snapshot.ts",
+    "test:crawler": "python3 -m unittest tests/test_crawler.py",
+    "build:pages": "GITHUB_PAGES=true next build",
+    "crawl": "python3 tools/crawl_articles.py",
     "validate:artifact": "bash scripts/validate-artifact.sh",
-    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate"
+    "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.4",
-    "drizzle-orm": "0.45.2",
     "echarts": "^6.1.0",
     "lucide-react": "^0.468.0",
     "next": "16.2.6",
@@ -36,7 +35,6 @@
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
-    "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
     "react-server-dom-webpack": "19.2.6",

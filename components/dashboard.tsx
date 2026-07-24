@@ -7,15 +7,16 @@ import {
   focusCompanies,
   heatMethodology,
   institutions,
-  intelligenceEvents,
   sectors,
   type EventType,
 } from "@/lib/intelligence-data";
+import { useArticles } from "@/lib/use-articles";
 
 const regions = ["全部", "中国", "美国"] as const;
-const eventTypes = ["全部", "融资", "产业投资", "产品发布", "技术突破"] as const;
+const eventTypes = ["全部", "融资", "产业投资", "产品发布", "技术突破", "监管文件"] as const;
 
 export function Dashboard() {
+  const { articles, generatedAt, isLive } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
   const [query, setQuery] = useState("");
@@ -23,13 +24,17 @@ export function Dashboard() {
 
   const visibleEvents = useMemo(
     () =>
-      intelligenceEvents
+      articles
         .filter((item) => region === "全部" || item.region === region)
         .filter((item) => eventType === "全部" || item.type === (eventType as EventType))
         .filter((item) => `${item.title}${item.summary}${item.company}`.toLowerCase().includes(query.toLowerCase()))
         .sort((a, b) => b.importance - a.importance),
-    [eventType, query, region],
+    [articles, eventType, query, region],
   );
+  const sourceCount = new Set(articles.map((item) => item.source.url)).size;
+  const sectorCount = new Set(articles.map((item) => item.sector)).size;
+  const chinaCount = articles.filter((item) => item.region === "中国").length;
+  const usCount = articles.filter((item) => item.region === "美国").length;
 
   return (
     <>
@@ -43,22 +48,22 @@ export function Dashboard() {
         </div>
         <div className="snapshot-card">
           <div className="snapshot-top">
-            <span>公开资料快照</span>
-            <span className="status-pill"><i /> 正常</span>
+            <span>公开资料快照 · {generatedAt.slice(0, 10)}</span>
+            <span className="status-pill"><i /> {isLive ? "已同步" : "内置快照"}</span>
           </div>
-          <strong>08</strong>
+          <strong>{String(articles.length).padStart(2, "0")}</strong>
           <p>已核验关键事件</p>
           <div className="snapshot-meta">
-            <span>一级来源 100%</span>
-            <span>覆盖 4 个赛道</span>
+            <span>{sourceCount} 个原始链接</span>
+            <span>覆盖 {sectorCount} 个赛道</span>
           </div>
         </div>
       </section>
 
       <section className="market-strip" aria-label="中美科技投资概览">
-        <MarketSummary market="中国" amount="按披露口径" events="02" sector="AI / 机器人" />
+        <MarketSummary market="中国" amount="按披露口径" events={String(chinaCount).padStart(2, "0")} sector="AI / 机器人" />
         <div className="market-divider"><span>CN</span><i /><span>US</span></div>
-        <MarketSummary market="美国" amount="$136B+" events="06" sector="AI / 机器人" />
+        <MarketSummary market="美国" amount="按披露口径" events={String(usCount).padStart(2, "0")} sector="AI / 机器人" />
       </section>
 
       <section className="content-grid">

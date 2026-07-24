@@ -8,43 +8,32 @@
 4. 首次运行 `Build and deploy GitHub Pages`；
 5. 发布地址应为 `https://No1Lize.github.io/`，不设置 `basePath`。
 
-## 2. Neon
+## 2. 自动抓取
 
-创建 PostgreSQL 数据库并复制带 TLS 的连接串。建议使用池化连接串给 API，非池化连接串仅用于迁移或运维。启用自动备份并定期验证恢复。
+`.github/workflows/scheduled-sync.yml` 每两小时运行一次。任务直接执行 Python 标准库抓取脚本，不需要安装依赖，不需要服务器或数据库。
 
-## 3. Render
+任务完成后：
 
-Render Blueprint 读取根目录 `render.yaml`，创建：
+1. 读取现有 `public/data/articles.json`；
+2. 抓取 OpenAI 官方页面与 SEC EDGAR；
+3. 规范化 URL、去重并保留人工核验摘要；
+4. 只在数据变化时提交；
+5. 提交成功后显式启动 Pages 工作流。
 
-- `lize-road-one-api`：FastAPI Web Service；
-- `lize-road-one-scheduler`：定时采集 Worker。
+## 3. GitHub 设置
 
-必须配置：
+不需要 GitHub Secret。建议设置一个普通 Actions Variable：
 
-- `DATABASE_URL`
-- `INTERNAL_SYNC_SECRET`
-- `SEC_USER_AGENT`
+- `SEC_USER_AGENT`：包含站点或联系邮箱的 SEC 请求标识。
 
-可选配置：
+路径：**Settings → Secrets and variables → Actions → Variables**。
 
-- `GITHUB_TOKEN`：数据更新后触发 Pages 构建；
-- `PUBLIC_ORIGINS`：如增加自定义域名，必须同步追加。
+仓库工作流需要 `contents: write`，配置已写在 YAML 中。如仓库把默认 `GITHUB_TOKEN` 权限强制设为只读，需要在 **Settings → Actions → General → Workflow permissions** 选择 **Read and write permissions**。
 
-## 4. GitHub 变量与密钥
+## 4. 验证
 
-变量：
-
-- `NEXT_PUBLIC_API_BASE_URL=https://<render-service>.onrender.com`
-- `API_BASE_URL=https://<render-service>.onrender.com`
-
-密钥：
-
-- `INTERNAL_SYNC_SECRET`
-
-## 5. 验证
-
-- `GET /healthz` 返回 `{"status":"ok"}`；
-- `GET /api/v1/status` 显示 `database=connected`；
-- 手动运行 scheduled-sync；
-- 检查任务扫描、新增、跳过和错误数；
-- 确认 Pages 工作流完成且旧版本未因失败被覆盖。
+- 在 Actions 手动运行 `Refresh public articles`；
+- 检查 `public/data/articles.json` 是否产生新提交；
+- 确认该提交自动触发 `Build and deploy GitHub Pages`；
+- 打开首页，状态应显示“自动更新 JSON”和最后更新时间；
+- 无新内容时任务应输出 `No article changes`，不产生提交。

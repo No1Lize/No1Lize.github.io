@@ -1,3 +1,5 @@
+import publicArticleData from "../public/data/articles.json";
+
 export type Region = "中国" | "美国" | "全球";
 export type EventType =
   | "融资"
@@ -5,6 +7,7 @@ export type EventType =
   | "产品发布"
   | "技术突破"
   | "政策"
+  | "监管文件"
   | "IPO";
 
 export type Source = {
@@ -27,9 +30,7 @@ export type IntelligenceEvent = {
   source: Source;
 };
 
-export const snapshotDate = "2026-07-24";
-
-export const intelligenceEvents: IntelligenceEvent[] = [
+const fallbackIntelligenceEvents: IntelligenceEvent[] = [
   {
     id: "openai-2026-financing",
     title: "OpenAI 完成新一轮融资",
@@ -175,6 +176,17 @@ export const intelligenceEvents: IntelligenceEvent[] = [
     },
   },
 ];
+
+const generatedDate =
+  typeof publicArticleData.generatedAt === "string"
+    ? publicArticleData.generatedAt.slice(0, 10)
+    : "2026-07-24";
+
+export const snapshotDate = generatedDate;
+export const intelligenceEvents: IntelligenceEvent[] =
+  (publicArticleData.articles as IntelligenceEvent[]).length > 0
+    ? (publicArticleData.articles as IntelligenceEvent[])
+    : fallbackIntelligenceEvents;
 
 export type Sector = {
   slug: string;

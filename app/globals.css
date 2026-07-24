@@ -155,6 +155,7 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .tag { border: 1px solid var(--border); padding: 2px 7px; color: var(--green-bright); }
 .tag-融资 { color: var(--blue); }
 .tag-技术突破 { color: var(--orange); }
+.tag-监管文件 { color: var(--green-bright); }
 .event-main h3 { font-size: 17px; margin-bottom: 6px; line-height: 1.4; }
 .event-main h3 a:hover { color: var(--green-bright); }
 .event-main p { color: var(--muted); font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
