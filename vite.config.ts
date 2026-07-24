@@ -1,9 +1,17 @@
+import { readFileSync } from "node:fs";
 import vinext from "vinext";
 import { defineConfig } from "vite";
-import hostingConfig from "./.openai/hosting.json";
 import { sites } from "./build/sites-vite-plugin";
 
-const { r2 } = hostingConfig;
+let r2: string | null = null;
+try {
+  const hostingConfig = JSON.parse(
+    readFileSync(new URL("./.openai/hosting.json", import.meta.url), "utf8"),
+  ) as { r2?: string | null };
+  r2 = hostingConfig.r2 ?? null;
+} catch {
+  // GitHub Pages does not need or receive the Sites-only hosting manifest.
+}
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
