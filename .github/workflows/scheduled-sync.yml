@@ -1,6 +1,12 @@
 name: Refresh public intelligence
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - tools/crawl_articles.py
+      - config/intelligence_sources.json
+      - .github/workflows/scheduled-sync.yml
   schedule:
     - cron: "17 */2 * * *"
   workflow_dispatch:
@@ -10,7 +16,7 @@ on:
         required: false
         type: choice
         default: all
-        options: [all, news, sec]
+        options: [all, news, company, feeds, x, papers, discovery, sec]
 
 permissions:
   contents: write
@@ -23,6 +29,7 @@ concurrency:
 jobs:
   crawl:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,6 +41,8 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/crawl_articles.py --source "${{ inputs.source || 'all' }}"
+      - name: Validate data quality
+        run: python tools/crawl_articles.py --validate-only
       - name: Test crawler
         run: python -m unittest tests/test_crawler.py
       - name: Commit changed public data

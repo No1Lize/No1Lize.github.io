@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "feeds": [
+    {
+      "id": "techcrunch-venture",
+      "name": "TechCrunch Venture",
+      "url": "https://techcrunch.com/category/venture/feed/",
+      "adapter": "rss",
+      "platform": "专业媒体",
+      "sourceLevel": "媒体报道",
+      "region": "美国",
+      "maxItems": 12,
+      "keywords": ["AI", "robot", "semiconductor", "space", "quantum", "biotech", "startup", "funding", "venture"]
+    },
+    {
+      "id": "venturebeat-ai",
+      "name": "VentureBeat AI",
+      "url": "https://venturebeat.com/category/ai/feed/",
+      "adapter": "rss",
+      "platform": "专业媒体",
+      "sourceLevel": "媒体报道",
+      "region": "美国",
+      "maxItems": 12,
+      "keywords": ["AI", "model", "agent", "robot", "chip", "funding"]
+    },
+    {
+      "id": "tmtpost",
+      "name": "钛媒体",
+      "url": "https://www.tmtpost.com/rss.xml",
+      "adapter": "rss",
+      "platform": "专业媒体",
+      "sourceLevel": "媒体报道",
+      "region": "中国",
+      "maxItems": 12,
+      "strictTitleKeywords": true,
+      "keywords": ["人工智能", "AI", "大模型", "机器人", "半导体", "芯片", "融资", "创投", "上市", "新能源"]
+    },
+    {
+      "id": "leiphone",
+      "name": "雷峰网",
+      "url": "https://www.leiphone.com/feed",
+      "adapter": "rss",
+      "platform": "专业媒体",
+      "sourceLevel": "媒体报道",
+      "region": "中国",
+      "maxItems": 12,
+      "keywords": ["人工智能", "AI", "大模型", "机器人", "自动驾驶", "芯片", "融资"]
+    },
+    {
+      "id": "sina-finance",
+      "name": "新浪财经",
+      "url": "https://feed.mix.sina.com.cn/api/roll/get?pageid=153&lid=2516&num=80&page=1",
+      "adapter": "sina_json",
+      "platform": "新浪",
+      "sourceLevel": "媒体报道",
+      "region": "中国",
+      "maxItems": 18,
+      "keywords": ["人工智能", "AI", "大模型", "机器人", "自动驾驶", "半导体", "芯片", "融资", "创投", "上市", "科技公司", "新能源"],
+      "requiredKeywords": ["发布", "推出", "融资", "投资", "合作", "签署", "上市", "IPO", "财报", "业绩", "政策", "监管", "法规", "研发", "突破", "订单", "获批", "成立", "投产", "建厂", "收购", "并购", "评级"],
+      "strictRequiredTitleKeywords": true
+    },
+    {
+      "id": "prnewswire-tech",
+      "name": "PR Newswire Consumer Technology",
+      "url": "https://www.prnewswire.com/rss/consumer-technology-latest-news/consumer-technology-latest-news-list.rss",
+      "adapter": "rss",
+      "platform": "新闻稿",
+      "sourceLevel": "官方披露",
+      "region": "全球",
+      "maxItems": 10,
+      "strictTitleKeywords": true,
+      "keywords": ["artificial intelligence", " AI ", "robot", "semiconductor", "quantum", "satellite", "funding", "acquisition"]
+    },
+    {
+      "id": "deepmind-blog",
+      "name": "Google DeepMind",
+      "url": "https://deepmind.google/blog/rss.xml",
+      "adapter": "rss",
+      "platform": "官方网站",
+      "sourceLevel": "官方披露",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "maxItems": 10
+    },
+    {
+      "id": "google-ai-blog",
+      "name": "Google AI",
+      "url": "https://blog.google/technology/ai/rss/",
+      "adapter": "rss",
+      "platform": "官方网站",
+      "sourceLevel": "官方披露",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "maxItems": 10
+    }
+  ],
+  "xProfiles": [
+    {"id": "x-openai", "name": "OpenAI", "handle": "OpenAI", "kind": "organization", "company": "OpenAI", "companySlug": "openai", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-anthropic", "name": "Anthropic", "handle": "AnthropicAI", "kind": "organization", "company": "Anthropic", "companySlug": "anthropic", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-deepmind", "name": "Google DeepMind", "handle": "GoogleDeepMind", "kind": "organization", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-karpathy", "name": "Andrej Karpathy", "handle": "karpathy", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-lecun", "name": "Yann LeCun", "handle": "ylecun", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-feifei-li", "name": "李飞飞", "handle": "drfeifei", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-sam-altman", "name": "Sam Altman", "handle": "sama", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-demis", "name": "Demis Hassabis", "handle": "demishassabis", "kind": "person", "region": "美国", "platform": "X", "maxItems": 5},
+    {"id": "x-shunyu-yao", "name": "姚顺雨", "handle": "ShunyuYao12", "kind": "person", "personSlug": "shunyu-yao", "region": "中国", "platform": "X", "maxItems": 5},
+    {"id": "x-kaiming-he", "name": "何恺明", "handle": "kaiminghe", "kind": "person", "personSlug": "kaiming-he", "region": "中国", "platform": "X", "maxItems": 5}
+  ],
+  "papers": [
+    {
+      "id": "openalex-ai",
+      "name": "OpenAlex AI conference works",
+      "url": "https://api.openalex.org/works?search=artificial%20intelligence&filter=from_publication_date:2026-01-01,to_publication_date:{today},type:article&sort=publication_date:desc&per-page=50",
+      "adapter": "openalex",
+      "platform": "OpenAlex",
+      "sourceLevel": "数据库记录",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "maxItems": 12,
+      "keywords": ["AI", "artificial intelligence", "language model", "machine learning", "robot", "agent"]
+    },
+    {
+      "id": "arxiv-ai",
+      "name": "arXiv AI",
+      "url": "https://export.arxiv.org/api/query?search_query=cat:cs.AI%20OR%20cat:cs.LG%20OR%20cat:cs.CV&start=0&max_results=12&sortBy=submittedDate&sortOrder=descending",
+      "adapter": "atom",
+      "platform": "arXiv",
+      "sourceLevel": "原始材料",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "eventType": "论文",
+      "maxItems": 12
+    }
+  ],
+  "publicDiscovery": [
+    {
+      "id": "wechat-public-index",
+      "name": "微信公众号公开索引",
+      "url": "https://www.bing.com/search?format=rss&q=site%3Amp.weixin.qq.com+%28AI+OR+%E5%A4%A7%E6%A8%A1%E5%9E%8B+OR+%E6%9C%BA%E5%99%A8%E4%BA%BA+OR+%E8%9E%8D%E8%B5%84%29",
+      "adapter": "rss",
+      "platform": "微信",
+      "sourceLevel": "待交叉验证",
+      "region": "中国",
+      "maxItems": 10,
+      "strictTitleKeywords": true,
+      "allowedHosts": ["mp.weixin.qq.com"],
+      "keywords": ["AI", "人工智能", "大模型", "机器人", "融资", "投资", "半导体", "芯片"]
+    },
+    {
+      "id": "finance-media-index",
+      "name": "金融与创投媒体公开索引",
+      "url": "https://www.bing.com/search?format=rss&q=%28AI+OR+%E6%9C%BA%E5%99%A8%E4%BA%BA+OR+%E5%8D%8A%E5%AF%BC%E4%BD%93%29+%28%E8%9E%8D%E8%B5%84+OR+%E6%8A%95%E8%B5%84+OR+IPO%29",
+      "adapter": "rss",
+      "platform": "金融媒体",
+      "sourceLevel": "媒体报道",
+      "region": "全球",
+      "maxItems": 12,
+      "strictTitleKeywords": true,
+      "allowedHosts": ["36kr.com", "pedaily.cn", "wallstreetcn.com", "yicai.com", "stcn.com", "cnstock.com", "sina.com.cn", "techcrunch.com", "venturebeat.com", "reuters.com"],
+      "keywords": ["AI", "人工智能", "大模型", "机器人", "半导体", "芯片", "融资", "投资", "IPO", "上市"]
+    }
+  ],
+  "qualityGate": {
+    "minimumArticles": 50,
+    "minimumHealthySources": 6,
+    "minimumRegions": 2,
+    "minimumSourceLevels": 3,
+    "minimumPlatforms": 4,
+    "minimumEventTypes": 6,
+    "minimumChinaArticles": 8,
+    "minimumUsArticles": 20,
+    "maximumSingleSourceShare": 0.45
+  }
+}
