@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-24T07:47:00+00:00",
-  "articleCount": 254,
+  "generatedAt": "2026-07-24T08:02:45+00:00",
+  "articleCount": 287,
   "articles": [
     {
       "id": "tmtpost-f31df3626492a2ca",
@@ -348,23 +348,22 @@
       }
     },
     {
-      "id": "leiphone-89590dab211ee0e6",
+      "id": "leiphone-c0d889c7d185a8c8",
       "sourceId": "leiphone",
-      "title": "具身智能数据需求暴涨千倍，这家“数据炼油厂”刚拿到近亿元融资",
-      "summary": "大模型的军备竞赛正在进入一个新阶段。当算法架构趋于收敛、算力供给逐渐充沛，一个更隐蔽却更致命的瓶颈浮出水面——高质量数据的匮乏。 近日，人工智能高质量数据生产运营商景联文科技完成近亿元A轮融资，投资方包括滨江金投、杭州金投、创新数谷基金、安恒信息、玉禾田等，上一轮投资方麦迪科技继续加注。 这不是一笔简单的融资。观察投资方阵容——地方国资、数据安全企业、环卫上市公司、医疗上市公司——几乎涵盖了AI数据从生产到流通、从场景到安全的全链条。这种跨产业的资本组合，恰恰折射出当前AI产业的核心命题：真实世界的数据，正在取代算法和算力，成为下一阶段竞争的关键变量。 数据标注的三次革命 景联文科技CEO刘云涛用一句话概括行业的代际跃迁：“第一次革命拼人头，第二次革命拼技术，第三次革命拼知识。” 2018年公司从生物识别算法转型数据服务时，行业还是典型的劳动密集型产业——拉框、标点、转录语音，拼的是交付速度和人力成本。彼时数据被视为“低端配套”，所有人的目光都聚焦在算法上。 但大模型爆发后，通用模型能写诗聊天，一旦进入医疗、工业、具身智能等专业领域就暴露出“不懂行”的短板。训练这些模型所需的行业数据，",
-      "type": "融资",
+      "title": "腾讯混元组织架构再升级，合并大语言模型和多模态团队，加速模型研发",
+      "summary": "7 月 23 日，腾讯宣布混元多模态模型部门与大语言模型部门合并，成立基础模型部，统一由腾讯首席 AI 科学家姚顺雨管理，以进一步提升模型研发和协同效率，探索全模态模型的智能上限。 以大语言模型为基础，腾讯混元构建了图像、视频、语音、3D 生成模型等完整的模型矩阵。2026 年以来，腾讯混元模型迭代速度不断加快，与腾讯公司业务的协同也持续增强。 7 月正式上线的大语言模型 Hy3，展现出显著强于同尺寸模型且比肩参数规模 2-5 倍的旗舰模型的智能水平，已在 WorkBuddy/CodeBuddy、元宝、Marvis、ima 等多个业务接入，API 已在腾讯云 TokenHub 以及多个海外平台上线。发布一周后， Hy3 总调用量较上一代模型（Hy2）增长超 68 倍，WorkBuddy 自选模型的用户中，选择 Hy3 的占比达到 60%。 混元多模态模型也在持续进化。4 月发布并开源的混元 3D 世界模型 2.0（Hy World 2.0）能够根据文字、图片、视频等不同类型输入，自动生成、重建和模拟 3D 世界，同时支持多格式 3D 资产导出，能与现有的游戏工作流无缝对接，快速生成游戏",
+      "type": "公司动态",
       "region": "中国",
-      "sector": "机器人",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-23",
-      "importance": 91,
+      "sector": "AI / AGI",
+      "company": "腾讯 / 元宝",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
       "source": {
         "name": "雷峰网",
-        "url": "https://www.leiphone.com/category/ai/XRwFfhV1xdAQfrac.html",
+        "url": "https://www.leiphone.com/category/industrynews/LNHgLirIT5DvYfcV.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "companySlug": "openai"
+      }
     },
     {
       "id": "openalex-ai-e7e74e4ddf7b5ace",
@@ -477,6 +476,222 @@
       ]
     },
     {
+      "id": "arxiv-ai-ce7894ead1401b95",
+      "sourceId": "arxiv-ai",
+      "title": "Inference-Time Scaling of Diffusion Models via Progressive Seed Pruning",
+      "summary": "Diffusion and flow-matching models dominate conditional image generation, yet inference-time scaling for these models is far less developed than for autoregressive language models. Because final quality is highly sensitive to the initial noise seed, many approaches spend extra compute on seed search or resampling under a black-box reward, but typically maintaining a constant memory footprint throughout inference. We show that relaxing this constraint enables an underexplored inference-time scali",
+      "type": "论文",
+      "region": "全球",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21591v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-c691abec9bf42793",
+      "sourceId": "arxiv-ai",
+      "title": "Unified Video Dense Prediction from Disjoint Data",
+      "summary": "Scene understanding requires simultaneous prediction about geometry, appearance, and semantics. However, existing task-specific annotations are fragmented across incompatible, domain-specific datasets. Current unified systems circumvent this by restricting training to fully co-annotated data, or by incurring the large computational cost of pseudo-labeling. To mitigate this, we introduce UniD, a unified video model that jointly predicts eight dense scene properties-depth, surface normals, semanti",
+      "type": "论文",
+      "region": "全球",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21592v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-c2b707cc7b212884",
+      "sourceId": "arxiv-ai",
+      "title": "Synthetic data generation framework for quality control automation in gravure printing",
+      "summary": "Quality control in printing, particularly in rotogravure printing, still depends on slow, costly, and subjective manual inspection. Automated surface defect detection is critical for maintaining high-quality standards in rotogravure printing. Deep learning models give prospects for automation. However, training robust deep learning models, such as YOLO or Vision Transformers, is heavily hindered by the extreme scarcity of real-world industrial defects images. To overcome this limitation, this pa",
+      "type": "论文",
+      "region": "全球",
+      "sector": "智能制造",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21577v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-a39422bc8203bbfe",
+      "sourceId": "arxiv-ai",
+      "title": "Scene Parameter Saliency via Differentiable Light Transport",
+      "summary": "Gradient-based saliency methods reveal which input features most influence a neural network's output, and are a standard tool for model interpretability. We observe that differentiable renderers, which are conventionally used for parameter optimisation, produce an analogous form of saliency: given any scalar metric evaluated on a rendered image, a single reverse-mode differentiation pass yields per-parameter gradients that identify which scene elements most influence the metric. We call these gr",
+      "type": "论文",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21562v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-913c06693298a5b2",
+      "sourceId": "arxiv-ai",
+      "title": "Beyond Sufficiency: Time Series Explanation with Counterfactual Necessity",
+      "summary": "Faithful explanations of time-series classifiers should identify subsequences that are not only sufficient to preserve a black-box model's prediction, but also necessary for maintaining it. However, existing sufficiency-oriented methods can assign high importance to spurious subsequences that support the prediction without being essential to the model's decision. We introduce \\textbf{TimePNS}, a necessity-aware framework for time-series explanation. Inspired by Pearl's counterfactual notion of n",
+      "type": "论文",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21573v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-8cbff65620724969",
+      "sourceId": "arxiv-ai",
+      "title": "Barzilai-Borwein Fails Superlinear Convergence on an Open Set of Quadratics for Every Dimension $n\\geq 4$",
+      "summary": "Barzilai--Borwein (BB) method has shown strong practical performance in continuous optimization, yet its convergence dynamics remains poorly understood. In particular, a central unresolved question is whether BB converges superlinearly for almost every strictly convex quadratic problem and initialization. We provide a negative answer to this question. Specifically, for every finite dimension $n\\geq4$, we construct a nonempty open, hence positive-Lebesgue-measure, family of strictly convex quadra",
+      "type": "论文",
+      "region": "全球",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21579v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-8a789ff259ddafa8",
+      "sourceId": "arxiv-ai",
+      "title": "Self-Supervised Learning of Structured Dynamics from Videos",
+      "summary": "Understanding motion in video is a fundamental challenge for visual learning, as frame-to-frame change entangles two sources of dynamics: camera motion and object motion. This decomposition has remained underexplored in representation learning, partly because these factors are tightly coupled in natural videos and difficult to supervise separately. Yet recovering it is important for learning robust motion representations that separate meaningful object dynamics from camera-induced variation. We",
+      "type": "论文",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21576v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-3fb107311bd6ceac",
+      "sourceId": "arxiv-ai",
+      "title": "GraphVid: Interactive Graph-Controllable Video Generation",
+      "summary": "Controllable video generation remains challenging due to the difficulty of specifying precise multi-object interactions using text prompts or motion-control inputs that primarily constrain pixel movement. In practice, trajectory-based control often requires users to draw accurate tracks for multiple objects, which scales poorly with scene complexity and becomes ambiguous under occlusion or overlap. To enable flexible yet precise multi-subject control, we introduce $\\textbf{GraphVid}$, a graph-co",
+      "type": "论文",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21580v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-327d865c2eaa3ac3",
+      "sourceId": "arxiv-ai",
+      "title": "Streaming Multi-Agent Autoregressive Diffusion Model with World State Registers",
+      "summary": "Multi-agent interactive world models should not only generate consistent observations, but also maintain world states that persist across agents and evolve across views. Existing autoregressive video diffusion pipelines carry forward observation history as conditioning context, which makes shared state difficult to maintain in multi-agent and multi-view settings. We present WorldWeaver (W^2), a streaming multi-agent video diffusion model that augments rollout with cross-agent world state registe",
+      "type": "论文",
+      "region": "全球",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21594v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-2a285cf7ee5b659f",
+      "sourceId": "arxiv-ai",
+      "title": "3D-Aware VLMs with Implicit and Explicit Geometries",
+      "summary": "Despite rapid progress, most existing vision-language models (VLMs) built from 2D visual inputs often struggle when handling various 3D tasks that require fine-grained spatial understanding and reasoning. To bridge this gap, we present VLM-IE3D, a unified framework that enhances the 3D spatial awareness of VLMs by equipping them with both implicit and explicit 3D geometries learned from RGB videos. Our VLM-IE3D introduces Implicit Geometry Tokens (IGTs) that capture high-level geometric priors f",
+      "type": "论文",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21595v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-1fd1fc8b7a177b0c",
+      "sourceId": "arxiv-ai",
+      "title": "Scale Up Strategically: Learning Compositional Generalization via Bias-Aware Evaluation and Data Collection for Robotic Manipulation",
+      "summary": "Compositional generalization is essential for robot to follow diverse instructions. However, pretrained policies are known to take shortcuts, deferring to salient cues rather than grounding language. We introduce a diagnostic framework that localizes this failure to individual \\textit{instruction factors}, \\textit{e.g.,} reusable semantic components such as color, verb, object, size, and spatial attribute. Our framework formalizes instruction factor bias, the tendency of fine-tuned policies to o",
+      "type": "论文",
+      "region": "全球",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21582v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
+      "id": "arxiv-ai-15ffb7c45e391bba",
+      "sourceId": "arxiv-ai",
+      "title": "Expanding Flow Maps",
+      "summary": "Flow-based generative models have enabled remarkable progress in fast and controllable generation across continuous and discrete state spaces, yet existing parameterizations are constrained to fixed dimensions or fixed sequence lengths. Here, we introduce Expanding Generative Flows (EFlows), which define flows between distributions of increasing dimensionality along an expanding interpolant that grows the state by augmenting it with conditional noise. Building on this construction, we propose Ex",
+      "type": "论文",
+      "region": "全球",
+      "sector": "商业航天",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 84,
+      "source": {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/abs/2607.21585v1",
+        "level": "原始材料",
+        "platform": "arXiv"
+      }
+    },
+    {
       "id": "sec-0611c335ab074d56",
       "sourceId": "sec",
       "title": "Mobileye 提交 10-Q（季度报告）",
@@ -549,6 +764,25 @@
         "url": "https://www.sec.gov/Archives/edgar/data/1910139/000110465926086061/tm2621099d1_8k.htm",
         "level": "监管文件",
         "platform": "SEC"
+      }
+    },
+    {
+      "id": "xai-6415582bccdc3afe",
+      "sourceId": "xai",
+      "title": "Workflows in Grok Build",
+      "summary": "Grok Build can now write and run workflows: orchestration scripts that fan a task out across hundreds of parallel agents, verify the results, and report back in one background run.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-23",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/workflows",
+        "level": "官方披露",
+        "platform": "官方网站"
       }
     },
     {
@@ -832,6 +1066,82 @@
       }
     },
     {
+      "id": "anthropic-413ef8ab41769726",
+      "sourceId": "anthropic",
+      "title": "Apply for Anthropic’s AI for Science rare disease research grants",
+      "summary": "Anthropic is sharing a focused call for AI for Science applications centered specifically on rare genetic diseases. Accepted applicants will receive up to $50,000 in Claude credits over six months, with the goal of building a community of researchers looking into how AI can reshape our understanding of rare disease.",
+      "type": "技术突破",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 85,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/rare-disease-research-grants",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "anthropic-26b4e01c469da5de",
+      "sourceId": "anthropic",
+      "title": "Supporting ambitious external research through the Anthropic Economic Futures Research Fund",
+      "summary": "We’re committing $200 million to the Anthropic Economic Futures Research Fund to support ambitious external research.",
+      "type": "技术突破",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 85,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/economic-futures-research-fund-agenda",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "anthropic-0221b1d0649ec5f2",
+      "sourceId": "anthropic",
+      "title": "Anthropic commits $10 million to Canadian AI research",
+      "summary": "Anthropic is committing $10M to Canadian research institutions to fund the next generation of AI research.",
+      "type": "技术突破",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 85,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/canadian-ai-research",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "weride-3de1ac9a4a12973f",
+      "sourceId": "weride",
+      "title": "WeRide to Report Second Quarter and First Half 2026 Financial Results on Wednesday, August 12, 2026",
+      "summary": "NEW YORK, July 22, 2026 (GLOBE NEWSWIRE) -- WeRide Inc. (“WeRide” or the “Company”) (NASDAQ: WRD; HKEX: 0800), a global leader in autonomous driving technology, today announced that it will release its unaudited financial results for the second quarter 2026 and unaudited interim results for the",
+      "type": "财报",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "文远知行",
+      "companySlug": "weride",
+      "publishedAt": "2026-07-22",
+      "importance": 84,
+      "source": {
+        "name": "WeRide Investor Relations",
+        "url": "https://ir.weride.ai/news-releases/news-release-details/weride-report-second-quarter-and-first-half-2026-financial",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "rocket-lab-e0976f427052f3c2",
       "sourceId": "rocket-lab",
       "title": "Rocket Lab Announces Date of Second Quarter 2026 Financial Results",
@@ -1005,6 +1315,44 @@
       }
     },
     {
+      "id": "anthropic-ad504bbdb221cc44",
+      "sourceId": "anthropic",
+      "title": "Introducing Claude for Teachers",
+      "summary": "Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 82,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-for-teachers",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "anthropic-4307222bc7e5f2e4",
+      "sourceId": "anthropic",
+      "title": "Introducing Claude Sonnet 5",
+      "summary": "Our most agentic Sonnet yet, with top-tier intelligence for coding and everyday professional work.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 82,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-sonnet-5",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "sec-54ef3f53be247c4e",
       "sourceId": "sec",
       "title": "文远知行 提交 6-K（境外发行人报告）",
@@ -1021,6 +1369,25 @@
         "url": "https://www.sec.gov/Archives/edgar/data/1867729/000110465926085632/tm2621088d1_6k.htm",
         "level": "监管文件",
         "platform": "SEC"
+      }
+    },
+    {
+      "id": "xai-68223e75ebd40eaa",
+      "sourceId": "xai",
+      "title": "Bringing Grok 4.5 to iOS, Android, Web, and X",
+      "summary": "Grok 4.5, our most intelligent model yet, is now on grok.com, X, iOS, and Android.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/grok-4-5-everywhere",
+        "level": "官方披露",
+        "platform": "官方网站"
       }
     },
     {
@@ -1173,6 +1540,101 @@
       }
     },
     {
+      "id": "anthropic-fdd9745edc3aad4e",
+      "sourceId": "anthropic",
+      "title": "Redeploying Claude Fable 5",
+      "summary": "Anthropic is redeploying Claude Fable 5 starting July 1 following the lifting of export controls, with updated cybersecurity safeguards and a new industry jailbreak framework.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/redeploying-fable-5",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "anthropic-a66075dc0af41a68",
+      "sourceId": "anthropic",
+      "title": "The Anthropic Economic Index connector",
+      "summary": "We're launching the Anthropic Economic Index connector for Claude, which lets anyone explore the data directly.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/anthropic-economic-index-connector",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "anthropic-a577f205a73beafc",
+      "sourceId": "anthropic",
+      "title": "Claude Science, an AI workbench for scientists",
+      "summary": "Claude Science is a customizable app that integrates the tools and packages researchers most often use, produces auditable artifacts, and provides flexible access to computing resources.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-science-ai-workbench",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "anthropic-9d9e4fbe80b29906",
+      "sourceId": "anthropic",
+      "title": "Donating another $20 million to Public First Action",
+      "summary": "Anthropic is contributing an additional $20 million to Public First Action, bringing our total support to $40 million.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/donation-public-first-action",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "anthropic-8dbb2238c30b71eb",
+      "sourceId": "anthropic",
+      "title": "Inviting hard questions",
+      "summary": "We're asking the public for their hardest questions about AI, and committing to show our work as we address them.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/hard-questions",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "techcrunch-venture-a2ce7357e3ec5e67",
       "sourceId": "techcrunch-venture",
       "title": "Bluecore Energy raises $10M to build portable nuclear reactors on barges",
@@ -1223,6 +1685,25 @@
       "source": {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/introducing-gemini-36-flash-35-flash-lite-and-35-flash-cyber",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "xai-f8f038096d193f1b",
+      "sourceId": "xai",
+      "title": "Grok for Outlook",
+      "summary": "Use the Grok add-in for Microsoft Outlook to summarize long email threads, draft replies in your voice, and keep your inbox organized.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/introducing-outlook-addin",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -1318,6 +1799,25 @@
         "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526309073/d128960d8k.htm",
         "level": "监管文件",
         "platform": "SEC"
+      }
+    },
+    {
+      "id": "xai-c56614b1f012b2d0",
+      "sourceId": "xai",
+      "title": "Grok for Excel",
+      "summary": "Use the Grok add-in for Microsoft Excel to ask questions in plain English, write formulas, and run scenarios without leaving the workbook.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/introducing-excel-addin",
+        "level": "官方披露",
+        "platform": "官方网站"
       }
     },
     {
@@ -1543,6 +2043,44 @@
       }
     },
     {
+      "id": "xai-c5fe4e158440bf6a",
+      "sourceId": "xai",
+      "title": "Introducing Grok 4.5",
+      "summary": "Grok 4.5 is SpaceXAI's smartest model built for coding, agentic tasks, and knowledge work.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-16",
+      "importance": 82,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/grok-4-5",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "xai-be250a2523098377",
+      "sourceId": "xai",
+      "title": "Automations in Grok",
+      "summary": "Describe a job once and Grok runs it on a schedule or when an email arrives, then reports back.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-16",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/grok-automations",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "openai-a5ab872c216c2f94",
       "sourceId": "openai",
       "title": "Safety and alignment in an era of long-horizon models",
@@ -1652,6 +2190,25 @@
         "platform": "专业媒体"
       },
       "companySlug": "openai"
+    },
+    {
+      "id": "xai-9efc9cea8bbe3188",
+      "sourceId": "xai",
+      "title": "Grok Build is Now Open Source",
+      "summary": "Explore the harness behind our coding agent and TUI.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-15",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/grok-build-open-source",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "x-anthropic-3c4995a0689e4cc7",
@@ -1935,6 +2492,25 @@
       "companySlug": "anthropic"
     },
     {
+      "id": "xai-fb328d59b08e2389",
+      "sourceId": "xai",
+      "title": "21 New Flagship Grok Voices",
+      "summary": "New multilingual voices for Grok Voice, plus improved naturalness for the original five.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-06",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/new-flagship-voices",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "deepmind-blog-4e2b1466249cf48f",
       "sourceId": "deepmind-blog",
       "title": "Google DeepMind and A24 announce first-of-its-kind research partnership",
@@ -1969,6 +2545,25 @@
         "url": "https://www.sec.gov/Archives/edgar/data/1867729/000110465926080040/tm2619430d1_6k.htm",
         "level": "监管文件",
         "platform": "SEC"
+      }
+    },
+    {
+      "id": "xai-1dafde049d0ad3ab",
+      "sourceId": "xai",
+      "title": "Introducing the Voice Agent Builder",
+      "summary": "Create a personalized voice agent in under 2 minutes without a single line of code.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-07-01",
+      "importance": 82,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/grok-voice-agent-builder",
+        "level": "官方披露",
+        "platform": "官方网站"
       }
     },
     {
@@ -2268,6 +2863,25 @@
         "url": "https://www.sec.gov/Archives/edgar/data/1910139/000110465926077512/tm2618975d1_8k.htm",
         "level": "监管文件",
         "platform": "SEC"
+      }
+    },
+    {
+      "id": "xai-6554b8ad4d00ae3e",
+      "sourceId": "xai",
+      "title": "Explore the markets with Interactive Brokers and Grok",
+      "summary": "Interactive Brokers now integrates with Grok, bringing powerful AI directly into your trading experience — portfolio analysis, scenario modeling, research, and order instructions.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "xAI",
+      "companySlug": "xai",
+      "publishedAt": "2026-06-25",
+      "importance": 76,
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/news/grok-interactive-brokers",
+        "level": "官方披露",
+        "platform": "官方网站"
       }
     },
     {
@@ -5396,22 +6010,20 @@
     {
       "id": "anthropic",
       "name": "Anthropic",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "官方网站",
-      "error": "<urlopen error timed out>"
+      "status": "ok",
+      "scanned": 10,
+      "accepted": 10,
+      "failed": 0,
+      "platform": "官方网站"
     },
     {
       "id": "arxiv-ai",
       "name": "arXiv AI",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "arXiv",
-      "error": "<urlopen error timed out>"
+      "status": "ok",
+      "scanned": 12,
+      "accepted": 12,
+      "failed": 0,
+      "platform": "arXiv"
     },
     {
       "id": "catl",
@@ -5479,11 +6091,12 @@
     {
       "id": "openai",
       "name": "OpenAI",
-      "status": "ok",
-      "scanned": 10,
-      "accepted": 10,
-      "failed": 0,
-      "platform": "官方网站"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "官方网站",
+      "error": "HTTP Error 403: Forbidden"
     },
     {
       "id": "openalex-ai",
@@ -5588,121 +6201,130 @@
       "name": "WeRide Investor Relations",
       "status": "ok",
       "scanned": 10,
-      "accepted": 9,
+      "accepted": 10,
       "failed": 0,
       "platform": "官方网站"
     },
     {
       "id": "x-anthropic",
       "name": "Anthropic",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-deepmind",
-      "name": "Google DeepMind",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-demis",
-      "name": "Demis Hassabis",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-feifei-li",
-      "name": "李飞飞",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-kaiming-he",
-      "name": "何恺明",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-karpathy",
-      "name": "Andrej Karpathy",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-lecun",
-      "name": "Yann LeCun",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-openai",
-      "name": "OpenAI",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-sam-altman",
-      "name": "Sam Altman",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "x-shunyu-yao",
-      "name": "姚顺雨",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
-    },
-    {
-      "id": "xai",
-      "name": "xAI",
       "status": "error",
       "scanned": 0,
       "accepted": 0,
       "failed": 1,
-      "platform": "官方网站",
-      "error": "HTTP Error 403: Forbidden"
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-deepmind",
+      "name": "Google DeepMind",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-demis",
+      "name": "Demis Hassabis",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-feifei-li",
+      "name": "李飞飞",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-kaiming-he",
+      "name": "何恺明",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-karpathy",
+      "name": "Andrej Karpathy",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-lecun",
+      "name": "Yann LeCun",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-openai",
+      "name": "OpenAI",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-sam-altman",
+      "name": "Sam Altman",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "x-shunyu-yao",
+      "name": "姚顺雨",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
+    },
+    {
+      "id": "xai",
+      "name": "xAI",
+      "status": "ok",
+      "scanned": 10,
+      "accepted": 10,
+      "failed": 0,
+      "platform": "官方网站"
     }
   ],
   "qualityGate": {
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 254,
+        "actual": 287,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 27,
+        "actual": 20,
         "required": 6,
         "passed": true
       },
@@ -5717,7 +6339,7 @@
         "passed": true
       },
       "minimumPlatforms": {
-        "actual": 7,
+        "actual": 8,
         "required": 4,
         "passed": true
       },
@@ -5727,17 +6349,17 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 71,
+        "actual": 72,
         "required": 8,
         "passed": true
       },
       "minimumUsArticles": {
-        "actual": 170,
+        "actual": 190,
         "required": 20,
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.2283,
+        "actual": 0.2021,
         "required": 0.45,
         "passed": true
       },
@@ -5747,8 +6369,8 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 254,
-        "required": 254,
+        "actual": 287,
+        "required": 287,
         "passed": true
       }
     },
