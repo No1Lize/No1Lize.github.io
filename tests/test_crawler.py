@@ -57,6 +57,8 @@ class CrawlerTests(unittest.TestCase):
 
     def test_date_validation_rejects_malformed_and_future_dates(self) -> None:
         self.assertIsNone(normalize_date("2026-52-26"))
+        self.assertIsNone(normalize_date("January 1, 2099"))
+        self.assertIsNone(normalize_date("4070908800"))
         self.assertEqual(normalize_date("Fri, 24 Jul 2026 08:00:00 GMT"), "2026-07-24")
 
     def test_meta_without_property_or_name_does_not_crash(self) -> None:

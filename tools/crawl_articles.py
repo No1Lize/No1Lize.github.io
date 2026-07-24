@@ -364,7 +364,9 @@ def normalize_date(value: str | int | float | None) -> str | None:
             if number > 10_000_000_000:
                 number /= 1000
             parsed = datetime.fromtimestamp(number, tz=UTC).date()
-            return parsed.isoformat()
+            if parsed <= datetime.now(UTC).date() + timedelta(days=2):
+                return parsed.isoformat()
+            return None
         except (OSError, OverflowError, ValueError):
             return None
     text = clean_text(str(value))
@@ -393,7 +395,10 @@ def normalize_date(value: str | int | float | None) -> str | None:
     )
     if named:
         try:
-            return datetime.strptime(" ".join(named.groups()), "%B %d %Y").date().isoformat()
+            parsed = datetime.strptime(" ".join(named.groups()), "%B %d %Y").date()
+            if parsed <= datetime.now(UTC).date() + timedelta(days=2):
+                return parsed.isoformat()
+            return None
         except ValueError:
             return None
     return None
