@@ -12,6 +12,7 @@ from tools.crawl_articles import (
     _latest_metric,
     discover_news_urls,
     evaluate_quality,
+    infer_company,
     infer_event_type,
     load_existing_payload,
     merge_articles,
@@ -21,6 +22,7 @@ from tools.crawl_articles import (
     parse_news_article,
     parse_sina_items,
     parse_x_timeline,
+    repair_media_company_attribution,
     replace_source_batches,
     sec_article,
     write_if_changed,
@@ -79,6 +81,44 @@ class CrawlerTests(unittest.TestCase):
         self.assertNotEqual(infer_event_type("Company listed on Nasdaq reports update")[0], "IPO")
         self.assertEqual(infer_event_type("Company files for IPO")[0], "IPO")
         self.assertEqual(infer_event_type("City adopts new AI regulation")[0], "政策")
+
+    def test_media_company_inference_uses_unambiguous_title_only(self) -> None:
+        self.assertEqual(
+            infer_company(
+                "Claude launches a new enterprise agent",
+                "The market also includes ChatGPT and other assistants.",
+            )[:2],
+            ("Anthropic", "anthropic"),
+        )
+        self.assertEqual(
+            infer_company(
+                "AI startup raises a new funding round",
+                "The company competes with DeepSeek.",
+            )[:2],
+            ("科技产业", None),
+        )
+        self.assertEqual(
+            infer_company(
+                "OpenAI and Anthropic publish competing benchmarks",
+                "",
+            )[:2],
+            ("科技产业", None),
+        )
+
+    def test_existing_media_attribution_is_repaired(self) -> None:
+        wrong = article(
+            "wrong-company",
+            "https://media.example/claude",
+            "venturebeat-ai",
+        )
+        wrong["title"] = "Claude adds new research capabilities"
+        wrong["summary"] = "The article compares the release with ChatGPT."
+        wrong["company"] = "OpenAI"
+        wrong["companySlug"] = "openai"
+        wrong["source"]["level"] = "媒体报道"
+        repaired = repair_media_company_attribution([wrong])
+        self.assertEqual(repaired[0]["company"], "Anthropic")
+        self.assertEqual(repaired[0]["companySlug"], "anthropic")
 
     def test_merge_deduplicates_by_canonical_url(self) -> None:
         old = article("curated-id", "https://example.com/item/?utm_source=old")
