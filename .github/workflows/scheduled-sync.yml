@@ -5,9 +5,11 @@ on:
     branches: [main]
     paths:
       - tools/crawl_articles.py
+      - tools/crawl_with_tracking.py
       - tools/crawl_official_companies.py
       - config/intelligence_sources.json
       - config/official_company_sources.json
+      - config/user_tracking.json
       - .github/workflows/scheduled-sync.yml
   schedule:
     - cron: "17 */2 * * *"
@@ -42,7 +44,7 @@ jobs:
       - name: Crawl public sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/crawl_articles.py --source "${{ inputs.source || 'all' }}"
+        run: python tools/crawl_with_tracking.py --source "${{ inputs.source || 'all' }}"
       - name: Crawl all 58 official company sources
         if: ${{ inputs.source == '' || inputs.source == 'all' || inputs.source == 'news' || inputs.source == 'company' }}
         env:
@@ -70,7 +72,6 @@ jobs:
               break
             fi
             if [ "$attempt" -eq 3 ]; then
-              echo "Unable to publish refreshed data after 3 attempts." >&2
               exit 1
             fi
           done
