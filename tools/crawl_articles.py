@@ -249,7 +249,13 @@ class ArticleHTMLParser(HTMLParser):
         self.time_values: list[str] = []
         self._capture: str | None = None
         self._current: list[str] = []
-        self._texts: dict[str, list[str]] = {"h1": [], "title": []}
+        self._texts: dict[str, list[str]] = {
+            "h1": [],
+            "h2": [],
+            "h3": [],
+            "time": [],
+            "title": [],
+        }
 
     def handle_starttag(
         self, tag: str, attrs: list[tuple[str, str | None]]
@@ -263,8 +269,11 @@ class ArticleHTMLParser(HTMLParser):
                 self.meta[key] = content
         elif tag == "a" and values.get("href"):
             self.links.append(values["href"])
-        elif tag == "time" and values.get("datetime"):
-            self.time_values.append(values["datetime"])
+        elif tag == "time":
+            if values.get("datetime"):
+                self.time_values.append(values["datetime"])
+            self._capture = tag
+            self._current = []
         elif tag in self._texts:
             self._capture = tag
             self._current = []
@@ -284,6 +293,9 @@ class ArticleHTMLParser(HTMLParser):
     def text(self, tag: str) -> str:
         values = self._texts.get(tag, [])
         return values[0] if values else ""
+
+    def texts(self, tag: str) -> tuple[str, ...]:
+        return tuple(self._texts.get(tag, []))
 
 
 def clean_text(value: str) -> str:
@@ -374,6 +386,19 @@ def normalize_date(value: str | int | float | None) -> str | None:
     if iso_match:
         try:
             parsed = date.fromisoformat(iso_match.group(0))
+            if parsed > datetime.now(UTC).date() + timedelta(days=2):
+                return None
+            return parsed.isoformat()
+        except ValueError:
+            pass
+    localized = re.search(
+        r"(?<!\d)(\d{4})\s*(?:年|[/.])\s*(\d{1,2})"
+        r"\s*(?:月|[/.])\s*(\d{1,2})\s*日?",
+        text,
+    )
+    if localized:
+        try:
+            parsed = date(*(int(part) for part in localized.groups()))
             if parsed > datetime.now(UTC).date() + timedelta(days=2):
                 return None
             return parsed.isoformat()
@@ -619,6 +644,8 @@ def _published_value(parser: ArticleHTMLParser, body: str) -> str | None:
         parser.meta.get("datepublished"),
         parser.meta.get("publishdate"),
         parser.time_values[0] if parser.time_values else None,
+        parser.text("time"),
+        parser.text("h3"),
     )
     for candidate in candidates:
         if normalize_date(candidate):
@@ -641,6 +668,17 @@ def _published_value(parser: ArticleHTMLParser, body: str) -> str | None:
     ]
     if valid_iso_dates:
         return max(valid_iso_dates)
+    localized_dates = [
+        normalized
+        for match in re.finditer(
+            r"(?<!\d)\d{4}\s*(?:年|[/.])\s*\d{1,2}"
+            r"\s*(?:月|[/.])\s*\d{1,2}\s*日?",
+            strip_html(body),
+        )
+        if (normalized := normalize_date(match.group(0)))
+    ]
+    if localized_dates:
+        return localized_dates[0]
     named_dates = re.findall(
         r"(?:January|February|March|April|May|June|July|August|September|"
         r"October|November|December)\s+\d{1,2},?\s+\d{4}",

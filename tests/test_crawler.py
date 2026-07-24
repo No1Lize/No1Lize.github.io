@@ -71,6 +71,8 @@ class CrawlerTests(unittest.TestCase):
         self.assertIsNone(normalize_date("January 1, 2099"))
         self.assertIsNone(normalize_date("4070908800"))
         self.assertEqual(normalize_date("Fri, 24 Jul 2026 08:00:00 GMT"), "2026-07-24")
+        self.assertEqual(normalize_date("发布于 2026年6月17日"), "2026-06-17")
+        self.assertEqual(normalize_date("2025/11/19"), "2025-11-19")
 
     def test_meta_without_property_or_name_does_not_crash(self) -> None:
         parser = ArticleHTMLParser()
@@ -193,6 +195,26 @@ class CrawlerTests(unittest.TestCase):
         self.assertEqual(parsed["publishedAt"], "2026-07-23")
         self.assertEqual(parsed["type"], "产品发布")
 
+    def test_official_candidates_keep_index_order_when_scores_tie(self) -> None:
+        listing = (
+            '<a href="/news/z-last">Newest article</a>'
+            '<a href="/news/a-first">Older article</a>'
+            '<a href="/news/m-middle">Oldest article</a>'
+        )
+        candidates, _ = discover_candidate_urls(
+            "https://example.com/news",
+            listing,
+            ("example.com",),
+            2,
+        )
+        self.assertEqual(
+            candidates,
+            [
+                "https://example.com/news/z-last",
+                "https://example.com/news/a-first",
+            ],
+        )
+
     def test_official_registry_must_exactly_match_company_catalog(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -299,6 +321,45 @@ class CrawlerTests(unittest.TestCase):
         self.assertIsNotNone(parsed)
         assert parsed is not None
         self.assertEqual(parsed["companySlug"], "bgi-genomics")
+
+    def test_official_parser_ignores_homepage_og_url_and_reads_local_date(self) -> None:
+        spec = CompanySpec(
+            slug="example",
+            name="Example",
+            region="美国",
+            sector="AI / AGI",
+            homepage="https://example.com/",
+            news_urls=("https://example.com/news",),
+            sitemap_urls=(),
+            aliases=(),
+            entity_aliases=("Example",),
+            article_url_patterns=(r"/news/\d+$",),
+            require_entity_match=False,
+            max_items=4,
+            max_candidate_links=10,
+            max_age_days=730,
+            request_timeout=10,
+        )
+        page = """
+        <html><head>
+          <meta property="og:url" content="https://example.com/">
+          <title>Example launches a new platform | Example</title>
+        </head><body>
+          <h1>Latest</h1>
+          <h1>Example launches a new platform</h1>
+          <time>2026年6月17日</time>
+          <aside>最新资讯 2026年7月21日</aside>
+        </body></html>
+        """
+        parsed = _article_from_page(
+            spec,
+            "https://example.com/news/322",
+            page,
+        )
+        self.assertIsNotNone(parsed)
+        assert parsed is not None
+        self.assertEqual(parsed["publishedAt"], "2026-06-17")
+        self.assertEqual(parsed["source"]["url"], "https://example.com/news/322")
 
     def test_official_crawl_reports_every_registered_company(self) -> None:
         base = CompanySpec(

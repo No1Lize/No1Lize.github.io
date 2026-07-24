@@ -473,12 +473,14 @@ def discover_candidate_urls(
         score = _candidate_score(absolute, text, article_url_patterns)
         if score >= 4:
             scored[absolute] = max(score, scored.get(absolute, -100))
-    candidates = [
-        url
-        for url, _ in sorted(
-            scored.items(), key=lambda item: (item[1], item[0]), reverse=True
-        )[:limit]
-    ]
+    # Python's sort is stable, so equal-score links retain the newsroom's own
+    # order. Most official indexes place their newest articles first; sorting
+    # equal scores by URL previously selected arbitrary slugs instead.
+    candidates = sorted(
+        scored,
+        key=lambda candidate: scored[candidate],
+        reverse=True,
+    )[:limit]
     feeds = []
     for href in parser.feeds:
         absolute = normalize_url(urljoin(index_url, href))
@@ -535,34 +537,40 @@ def _article_from_page(
 ) -> dict[str, Any] | None:
     parser = ArticleHTMLParser()
     parser.feed(body)
-    canonical_url = normalize_url(parser.meta.get("og:url", "") or url)
+    requested_url = normalize_url(url)
+    canonical_url = normalize_url(parser.meta.get("og:url", "") or requested_url)
+    configured_indexes = {
+        normalize_url(index_url)
+        for index_url in (spec.homepage, *spec.news_urls)
+    }
+    # Some corporate CMS templates put the homepage in og:url on every page.
+    # Keep the requested article URL when that metadata collapses to an index.
+    if canonical_url in configured_indexes and requested_url not in configured_indexes:
+        canonical_url = requested_url
     if not _host_allowed(canonical_url, spec.allowed_hosts):
         return None
-    raw_title = next(
-        (
-            value
-            for value in (
-                parser.meta.get("og:title", ""),
-                parser.text("h1"),
-                parser.text("title"),
-            )
-            if clean_title(value)
-        ),
-        "",
-    )
-    title = clean_title(raw_title)
-    for suffix in (spec.name, *spec.aliases):
-        title = re.sub(
-            rf"\s*(?:\||—|–|-)\s*{re.escape(suffix)}\s*$",
-            "",
-            title,
-            flags=re.IGNORECASE,
-        )
-    title = clean_text(title)
-    if (
-        len(title) < 8
-        or _is_index_page(spec, canonical_url, title)
+    title = ""
+    for raw_title in (
+        parser.meta.get("og:title", ""),
+        parser.text("title"),
+        *parser.texts("h1"),
     ):
+        candidate_title = clean_title(raw_title)
+        for suffix in (spec.name, *spec.aliases):
+            candidate_title = re.sub(
+                rf"\s*(?:\||—|–|-)\s*{re.escape(suffix)}\s*$",
+                "",
+                candidate_title,
+                flags=re.IGNORECASE,
+            )
+        candidate_title = clean_text(candidate_title)
+        if (
+            len(candidate_title) >= 8
+            and not _is_index_page(spec, canonical_url, candidate_title)
+        ):
+            title = candidate_title
+            break
+    if not title:
         return None
     summary = strip_html(
         parser.meta.get("description", "")

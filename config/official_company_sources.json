@@ -150,6 +150,9 @@
       ],
       "aliases": [
         "Hivemind"
+      ],
+      "articleUrlPatterns": [
+        "^https://shield\\.ai/(?!newsroom(?:/|$))[^/]+/?$"
       ]
     },
     {
@@ -652,7 +655,8 @@
         "https://www.galactic-energy.cn/index.php/List/cid/11"
       ],
       "aliases": [
-        "Galactic Energy"
+        "Galactic Energy",
+        "星河动力航天"
       ],
       "articleUrlPatterns": [
         "/index\\.php/Show/cid/11/aid/\\d+$"
