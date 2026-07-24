@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, Moon, Search, Sun, X } from "lucide-react";
+import { Menu, Moon, Search, Settings, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LiveStatus } from "@/components/live-status";
@@ -51,6 +51,9 @@ export function SiteHeader() {
 
         <div className="header-actions">
           <LiveStatus />
+          <Link className="icon-button" href="/tracking" aria-label="追踪配置管理" title="追踪配置管理">
+            <Settings size={18} />
+          </Link>
           <Link className="icon-button" href="/search" aria-label="全局搜索">
             <Search size={18} />
           </Link>
