@@ -3,17 +3,27 @@
 import { ArrowUpRight, ChevronRight, Info, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { institutionCatalog } from "@/lib/catalog-data";
 import {
   focusCompanies,
   heatMethodology,
-  institutions,
   sectors,
   type EventType,
 } from "@/lib/intelligence-data";
+import { getInstitutionProfile } from "@/lib/research-content";
 import { useArticles } from "@/lib/use-articles";
 
 const regions = ["全部", "中国", "美国"] as const;
-const eventTypes = ["全部", "融资", "产业投资", "产品发布", "技术突破", "监管文件"] as const;
+const eventTypes = [
+  "全部",
+  "融资",
+  "商业进展",
+  "产品发布",
+  "技术突破",
+  "财报",
+  "监管文件",
+  "IPO",
+] as const;
 
 export function Dashboard() {
   const { articles, generatedAt, isLive } = useArticles();
@@ -28,13 +38,38 @@ export function Dashboard() {
         .filter((item) => region === "全部" || item.region === region)
         .filter((item) => eventType === "全部" || item.type === (eventType as EventType))
         .filter((item) => `${item.title}${item.summary}${item.company}`.toLowerCase().includes(query.toLowerCase()))
-        .sort((a, b) => b.importance - a.importance),
+        .sort(
+          (a, b) =>
+            b.publishedAt.localeCompare(a.publishedAt) ||
+            b.importance - a.importance,
+        ),
     [articles, eventType, query, region],
   );
   const sourceCount = new Set(articles.map((item) => item.source.url)).size;
   const sectorCount = new Set(articles.map((item) => item.sector)).size;
   const chinaCount = articles.filter((item) => item.region === "中国").length;
   const usCount = articles.filter((item) => item.region === "美国").length;
+  const marketSourceCount = (market: "中国" | "美国") =>
+    new Set(
+      articles
+        .filter((item) => item.region === market)
+        .map((item) => item.source.url),
+    ).size;
+  const topSector = (market: "中国" | "美国") => {
+    const counts = new Map<string, number>();
+    articles
+      .filter((item) => item.region === market)
+      .forEach((item) => counts.set(item.sector, (counts.get(item.sector) ?? 0) + 1));
+    return (
+      [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "持续更新"
+    );
+  };
+  const institutions = institutionCatalog
+    .map((institution) => ({
+      ...institution,
+      portfolioCount: getInstitutionProfile(institution).portfolio.length,
+    }))
+    .sort((a, b) => b.portfolioCount - a.portfolioCount);
 
   return (
     <>
@@ -43,7 +78,7 @@ export function Dashboard() {
           <p className="eyebrow">DAILY INTELLIGENCE DESK · 中美双轨</p>
           <h1>把公开信息，变成可追溯的判断依据。</h1>
           <p className="intro-copy">
-            聚合公司、监管机构与投资机构的原始披露。事实、计算与分析分层呈现，不用未经核验的数字填补信息空白。
+            持续读取公司新闻稿、投资者关系页面与 SEC EDGAR，连接中美科技公司的产品、融资、经营和资本市场进展。
           </p>
         </div>
         <div className="snapshot-card">
@@ -61,9 +96,9 @@ export function Dashboard() {
       </section>
 
       <section className="market-strip" aria-label="中美科技投资概览">
-        <MarketSummary market="中国" amount="按披露口径" events={String(chinaCount).padStart(2, "0")} sector="AI / 机器人" />
+        <MarketSummary market="中国" sources={marketSourceCount("中国")} events={String(chinaCount).padStart(2, "0")} sector={topSector("中国")} />
         <div className="market-divider"><span>CN</span><i /><span>US</span></div>
-        <MarketSummary market="美国" amount="按披露口径" events={String(usCount).padStart(2, "0")} sector="AI / 机器人" />
+        <MarketSummary market="美国" sources={marketSourceCount("美国")} events={String(usCount).padStart(2, "0")} sector={topSector("美国")} />
       </section>
 
       <section className="content-grid">
@@ -92,7 +127,7 @@ export function Dashboard() {
           </div>
 
           <div className="event-list">
-            {visibleEvents.length ? visibleEvents.map((item) => (
+            {visibleEvents.length ? visibleEvents.slice(0, 30).map((item) => (
               <article className="event-row" key={item.id}>
                 <div className="event-date">
                   <strong>{item.publishedAt.slice(5)}</strong>
@@ -120,7 +155,7 @@ export function Dashboard() {
               <div className="empty-state">
                 <Search size={22} />
                 <strong>当前筛选没有结果</strong>
-                <p>尝试清除关键词或切换地区。系统不会用模拟数据补齐空白。</p>
+                <p>尝试清除关键词、切换地区或选择其他事件类型。</p>
               </div>
             )}
           </div>
@@ -175,11 +210,11 @@ export function Dashboard() {
             <Link href="/institutions">机构库</Link>
           </div>
           {institutions.slice(0, 6).map((institution) => (
-            <div className="institution-row" key={institution.name}>
-              <div><strong>{institution.name}</strong><span>{institution.region} · {institution.focus}</span></div>
-              <div className="institution-score"><i style={{ width: `${institution.activity}%` }} /></div>
-              <b>{institution.activity}</b>
-            </div>
+            <Link className="institution-row" href={`/institutions/${institution.slug}`} key={institution.name}>
+              <div><strong>{institution.name}</strong><span>{institution.region} · {institution.sectors.join(" / ")}</span></div>
+              <span className="institution-sample">公开组合</span>
+              <b>{institution.portfolioCount}</b>
+            </Link>
           ))}
         </div>
       </section>
@@ -187,13 +222,13 @@ export function Dashboard() {
   );
 }
 
-function MarketSummary({ market, amount, events, sector }: { market: string; amount: string; events: string; sector: string }) {
+function MarketSummary({ market, sources, events, sector }: { market: string; sources: number; events: string; sector: string }) {
   return (
     <div className="market-summary">
       <div className="market-name"><span>{market === "中国" ? "CN" : "US"}</span><strong>{market}</strong></div>
       <dl>
         <div><dt>样本事件</dt><dd>{events}</dd></div>
-        <div><dt>披露金额</dt><dd>{amount}</dd></div>
+        <div><dt>原始来源</dt><dd>{sources}</dd></div>
         <div><dt>高活跃赛道</dt><dd>{sector}</dd></div>
       </dl>
     </div>

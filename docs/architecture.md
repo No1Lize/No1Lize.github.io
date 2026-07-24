@@ -5,8 +5,9 @@
 ```text
 GitHub Actions 定时任务
         │
-        ├── OpenAI 官方公开页面
-        └── SEC EDGAR 公开 JSON
+        ├── 9 个公司官方新闻/投资者关系页面
+        ├── SEC EDGAR submissions
+        └── SEC Company Facts
         │
         ▼
 public/data/articles.json
@@ -20,11 +21,12 @@ GitHub Pages 构建并发布
 ## 数据流
 
 1. 抓取脚本只请求代码中列明的公开来源；
-2. 解析标题、摘要、发布日期和原始链接；
-3. 规范化 URL，并以原始链接为主键去重；
-4. 合并仓库中已有的人工核验记录；
-5. 仅在内容变化时写入 `public/data/articles.json`；
-6. GitHub Actions 提交更新，并显式启动 Pages 工作流。
+2. 解析标题、摘要、发布日期、公司、事件类型和原始链接；
+3. 从 SEC 提取最近申报及带报告期、表单口径的财务指标；
+4. 规范化 URL，并用来源链接与事件指纹双重去重；
+5. 合并仓库中已有的人工核验记录；
+6. 仅在内容变化时写入 `public/data/articles.json`；
+7. GitHub Actions 提交更新，并显式启动 Pages 工作流。
 
 ## 降级
 

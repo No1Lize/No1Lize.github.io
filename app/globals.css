@@ -259,13 +259,24 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .evidence-box strong { color: var(--green-bright); }.evidence-box p { margin: 4px 0 0; }
 .timeline { display: grid; }.timeline > div { display: grid; grid-template-columns: 90px 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border-soft); }.timeline time { color: var(--faint); font-size: 11px; }.timeline strong { font-size: 14px; }.timeline p { color: var(--muted); font-size: 12px; margin: 5px 0; }.timeline a { color: var(--blue); font-size: 10px; }
 .analysis-grid, .concept-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }.analysis-grid > div, .concept-grid > div { padding: 14px; background: var(--surface); border: 1px solid var(--border-soft); }.analysis-grid span, .concept-grid span { color: var(--green); font-size: 9px; }.analysis-grid strong, .concept-grid strong { display: block; }.analysis-grid p, .concept-grid p { color: var(--muted); font-size: 11px; margin: 5px 0 0; }
+.concept-grid a { display:block; color:var(--blue); font-size:9px; margin-top:10px; }
+.insight-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+.insight-grid > div { min-height:140px; padding:17px; border:1px solid var(--border-soft); background:var(--surface); }
+.insight-grid span { color:var(--green); font-size:9px; letter-spacing:.08em; }
+.insight-grid strong { display:block; margin-top:5px; font-size:14px; }
+.insight-grid p { color:var(--muted); font-size:12px; margin:7px 0 0; }
+.metric-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-bottom:12px; }
+.metric-grid > div { padding:18px; border:1px solid var(--border); background:var(--surface); }
+.metric-grid span,.metric-grid small { display:block; color:var(--faint); font-size:10px; }
+.metric-grid strong { display:block; margin:5px 0; color:var(--green-bright); font-size:24px; font-weight:500; }
 .risk-list { padding-left: 19px; color: var(--muted); }.risk-list li { margin: 8px 0; padding-left: 4px; }
-.source-card { display: grid; padding: 16px; border: 1px solid var(--border); background: var(--surface); }.source-card span { color: var(--green); font-size: 10px; }.source-card strong { margin: 3px 0; }.source-card small { color: var(--faint); overflow-wrap: anywhere; }
+.source-card { display: grid; padding: 16px; border: 1px solid var(--border); background: var(--surface); }.source-card + .source-card { margin-top:8px; }.source-card span { color: var(--green); font-size: 10px; }.source-card strong { margin: 3px 0; }.source-card small { color: var(--faint); overflow-wrap: anywhere; }
 .source-rail { position: sticky; top: 100px; display: grid; gap: 8px; }.source-rail > strong { font-size: 11px; margin-top: 8px; }.source-rail > a { padding: 10px 0; border-bottom: 1px solid var(--border-soft); font-size: 11px; }.source-rail > a span { display: block; color: var(--faint); font-size: 9px; }
 .confidence-box { margin-top: 15px; padding: 16px; border: 1px solid var(--border); background: var(--surface); }.confidence-box span { color: var(--faint); font-size: 10px; }.confidence-box strong { display: block; font-size: 22px; color: var(--green-bright); }.confidence-box p { color: var(--faint); font-size: 9px; margin: 4px 0 0; }
 .comparison-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }.comparison-columns > div { padding: 18px; border: 1px solid var(--border); background: var(--surface); }.comparison-columns span { color: var(--green); font-size: 10px; }.comparison-columns strong { display: block; font-size: 18px; margin: 4px 0; }.comparison-columns p { color: var(--muted); font-size: 11px; margin: 0; }
-.chain { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-bottom: 12px; }.chain a { position: relative; border: 1px solid var(--border); background: var(--surface); padding: 16px; font-size: 12px; }.chain a:not(:last-child)::after { content:"→"; position:absolute; right:-20px; color:var(--green); }
-.entity-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-soft); }.entity-list a { background: var(--surface); padding: 13px; }.entity-list strong { display: block; }.entity-list span { color: var(--faint); font-size: 10px; }
+.chain { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-bottom: 12px; }.chain a { position: relative; border: 1px solid var(--border); background: var(--surface); padding: 16px; font-size: 12px; }.chain a strong,.chain a span { display:block; }.chain a span { color:var(--faint); font-size:10px; margin-top:5px; }.chain a:not(:last-child)::after { content:"→"; position:absolute; right:-20px; color:var(--green); }
+.entity-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-soft); }.entity-list a,.entity-list > div { background: var(--surface); padding: 13px; }.entity-list strong { display: block; }.entity-list span { color: var(--faint); font-size: 10px; }
+.institution-sample { color:var(--faint); font-size:9px; text-align:right; }
 
 .comparison-banner { display: grid; grid-template-columns: 180px 180px 1fr; gap: 1px; margin: 24px 0; background: var(--border); border: 1px solid var(--border); }.comparison-banner > * { background: var(--surface); padding: 16px; margin: 0; }.comparison-banner span { color: var(--faint); font-size: 10px; }.comparison-banner strong { display: block; font-size: 27px; }.comparison-banner p { color: var(--muted); font-size: 11px; display: flex; align-items: center; }
 .institutions-grid .catalog-card { min-height: 250px; }
@@ -331,7 +342,7 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
   .sector-card-grid,.catalog-grid,.people-grid { grid-template-columns: 1fr; }
   .directory-filters { flex-wrap:wrap; }.directory-search { width:100%;min-width:0; }.directory-filters > span { width:100%;margin:0; }
   .entity-hero { grid-template-columns:1fr; }.entity-monogram,.person-monogram.large { width:80px;height:80px;grid-row:1; }
-  .facts-grid,.analysis-grid,.concept-grid,.comparison-columns,.entity-list { grid-template-columns:1fr; }
+  .facts-grid,.analysis-grid,.concept-grid,.insight-grid,.metric-grid,.comparison-columns,.entity-list { grid-template-columns:1fr; }
   .chain { grid-template-columns:1fr;gap:8px; }.chain a::after { display:none; }
   .comparison-banner { grid-template-columns:1fr 1fr; }.comparison-banner p { grid-column:1/-1; }
   .material-list a { grid-template-columns:90px 1fr; }.material-list time { grid-column:2;text-align:left; }

@@ -4,9 +4,13 @@ import unittest
 from pathlib import Path
 
 from tools.crawl_articles import (
+    NewsSource,
+    _latest_metric,
+    discover_news_urls,
     load_existing_payload,
     merge_articles,
     normalize_url,
+    parse_news_article,
     sec_article,
     write_if_changed,
 )
@@ -59,8 +63,80 @@ class CrawlerTests(unittest.TestCase):
             accession_number="000000-26-000001",
             primary_document="ionq-10k.htm",
         )
-        self.assertEqual(item["type"], "监管文件")
+        self.assertEqual(item["type"], "财报")
         self.assertIn("sec.gov/Archives/edgar/data/", item["source"]["url"])
+
+    def test_official_news_page_is_discovered_and_parsed(self) -> None:
+        source = NewsSource(
+            "example",
+            "Example Newsroom",
+            "https://example.com/news",
+            "Example",
+            "example",
+            "美国",
+            "AI / AGI",
+            ("/news/",),
+        )
+        listing = """
+        <a href="/news/product-launch">Product launch</a>
+        <a href="/about">About</a>
+        """
+        self.assertEqual(
+            discover_news_urls(source, listing),
+            ["https://example.com/news/product-launch"],
+        )
+        page = """
+        <html><head>
+          <meta property="og:title" content="Introducing Example One">
+          <meta property="og:description" content="A new model for developers.">
+          <meta property="article:published_time" content="2026-07-23T12:00:00Z">
+        </head><body><h1>Introducing Example One</h1></body></html>
+        """
+        parsed = parse_news_article(
+            source, "https://example.com/news/product-launch", page
+        )
+        self.assertIsNotNone(parsed)
+        assert parsed is not None
+        self.assertEqual(parsed["publishedAt"], "2026-07-23")
+        self.assertEqual(parsed["type"], "产品发布")
+
+    def test_latest_financial_metric_keeps_period_and_filing(self) -> None:
+        facts = {
+            "facts": {
+                "us-gaap": {
+                    "Revenues": {
+                        "units": {
+                            "USD": [
+                                {
+                                    "val": 100,
+                                    "filed": "2025-03-01",
+                                    "end": "2024-12-31",
+                                    "form": "10-K",
+                                    "fy": 2024,
+                                    "fp": "FY",
+                                    "accn": "old",
+                                },
+                                {
+                                    "val": 40,
+                                    "filed": "2026-05-01",
+                                    "end": "2026-03-31",
+                                    "form": "10-Q",
+                                    "fy": 2026,
+                                    "fp": "Q1",
+                                    "accn": "new",
+                                },
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+        metric = _latest_metric(facts, "revenue", "营业收入", ("Revenues",))
+        self.assertIsNotNone(metric)
+        assert metric is not None
+        self.assertEqual(metric["value"], 40)
+        self.assertEqual(metric["periodEnd"], "2026-03-31")
+        self.assertEqual(metric["accessionNumber"], "new")
 
     def test_legacy_snapshot_migrates_to_public_payload(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -75,16 +151,19 @@ class CrawlerTests(unittest.TestCase):
             payload = load_existing_payload(output, legacy)
             self.assertEqual(payload["articleCount"], 1)
             self.assertEqual(payload["articles"][0]["id"], "a")
+            self.assertEqual(payload["schemaVersion"], 2)
 
     def test_unchanged_payload_does_not_rewrite_file(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "articles.json"
             items = [article("a", "https://example.com/a")]
             payload = {
-                "schemaVersion": 1,
+                "schemaVersion": 2,
                 "generatedAt": "2026-07-24T00:00:00+00:00",
                 "articleCount": 1,
                 "articles": items,
+                "companyFacts": {},
+                "sourceStatus": [],
             }
             output.write_text(json.dumps(payload), encoding="utf-8")
             self.assertFalse(write_if_changed(items, payload, output))

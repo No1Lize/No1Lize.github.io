@@ -1,9 +1,181 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import { reports } from "@/lib/catalog-data";
-import { intelligenceEvents } from "@/lib/intelligence-data";
+import { companies, reports } from "@/lib/catalog-data";
+import { intelligenceEvents, snapshotDate } from "@/lib/intelligence-data";
+import { reportContent } from "@/lib/research-content";
 
-export function generateStaticParams(){return reports.map(i=>({slug:i.slug}));}
-export async function generateMetadata({params}:{params:Promise<{slug:string}>}):Promise<Metadata>{const{slug}=await params;const r=reports.find(i=>i.slug===slug);return{title:r?.title??"研究报告",description:r?.summary}}
-export default async function ReportDetail({params}:{params:Promise<{slug:string}>}){const{slug}=await params;const report=reports.find(i=>i.slug===slug);if(!report)notFound();return <main className="page-shell subpage printable"><header className="report-hero"><p className="eyebrow">{report.type} · {report.date}</p><h1>{report.title}</h1><p>{report.summary}</p><div>{report.tags.map(t=><span key={t}>{t}</span>)}<span>{report.sources} 个来源</span></div></header><article className="report-body"><Section title="摘要"><p>{report.summary} 本报告只使用当前快照中可回溯的事实，未披露金额与推测性结论不进入统计。</p></Section><Section title="核心观点"><ol><li>不同披露口径必须拆分，不能机械相加。</li><li>技术发布、融资完成和基础设施承诺是不同类型事件。</li><li>样本完整度决定结论边界，缺失不是零。</li></ol></Section><Section title="事实与数据"><div className="timeline">{intelligenceEvents.slice(0,5).map(e=><div key={e.id}><time>{e.publishedAt}</time><div><strong>{e.title}</strong><p>{e.summary}</p><a href={e.source.url} target="_blank" rel="noreferrer">{e.source.name}</a></div></div>)}</div></Section><Section title="方法与口径"><p>来源优先级依次为监管与交易所、公司和机构官网、人物原始材料、权威媒体。事件按规范化 URL、标题、日期、公司、金额与投资方组合去重。</p></Section><Section title="风险与反证"><p>当前样本对主动披露的大型企业存在偏倚；不同市场的信息时效、币种和监管口径不一致。任何热度或事件计数都不应直接解释为未来回报。</p></Section><Section title="后续跟踪"><ul><li>增量同步官方 RSS 与监管文件。</li><li>补齐公司别名和跨语言实体消歧。</li><li>保存来源冲突与历史修订。</li></ul></Section><footer>修订时间：2026-07-24 · 本文不构成投资建议</footer></article></main>}
-function Section({title,children}:{title:string;children:React.ReactNode}){return <section><p className="section-index">{title}</p><h2>{title}</h2>{children}</section>}
+export function generateStaticParams() {
+  return reports.map((item) => ({ slug: item.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const report = reports.find((item) => item.slug === slug);
+  return {
+    title: report?.title ?? "研究报告",
+    description: report?.summary,
+  };
+}
+
+export default async function ReportDetail({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const report = reports.find((item) => item.slug === slug);
+  const content = reportContent[slug];
+  if (!report || !content) notFound();
+
+  const relatedCompanies = content.companySlugs
+    .map((companySlug) =>
+      companies.find((company) => company.slug === companySlug),
+    )
+    .filter((company) => company !== undefined);
+  const evidence = intelligenceEvents
+    .filter(
+      (event) =>
+        (event.companySlug &&
+          content.companySlugs.includes(event.companySlug)) ||
+        content.eventSectors.includes(event.sector),
+    )
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+    .slice(0, 12);
+  const sources = Array.from(
+    new Map(
+      [
+        ...evidence.map((event) => event.source),
+        ...relatedCompanies.map((company) => company.source),
+      ].map((source) => [source.url, source]),
+    ).values(),
+  );
+
+  return (
+    <main className="page-shell subpage printable">
+      <header className="report-hero">
+        <p className="eyebrow">
+          {report.type} · 更新 {snapshotDate}
+        </p>
+        <h1>{report.title}</h1>
+        <p>{content.thesis}</p>
+        <div>
+          {report.tags.map((tag) => (
+            <span key={tag}>{tag}</span>
+          ))}
+          <span>{sources.length} 个一手来源</span>
+        </div>
+      </header>
+
+      <article className="report-body">
+        <Section title="摘要">
+          <p>{report.summary}</p>
+          <p>{content.thesis}</p>
+        </Section>
+
+        <Section title="核心发现">
+          <div className="insight-grid">
+            {content.points.map((point, index) => (
+              <div key={point.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{point.title}</strong>
+                <p>{point.body}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        {evidence.length > 0 && (
+          <Section title="事实时间线">
+            <div className="timeline">
+              {evidence.map((event) => (
+                <div key={event.id}>
+                  <time>{event.publishedAt}</time>
+                  <div>
+                    <div className="event-tags">
+                      <span className={`tag tag-${event.type}`}>
+                        {event.type}
+                      </span>
+                      <span>{event.company}</span>
+                    </div>
+                    <strong>{event.title}</strong>
+                    <p>{event.summary}</p>
+                    <a
+                      href={event.source.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {event.source.name}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Section>
+        )}
+
+        <Section title="公司样本">
+          <div className="entity-list">
+            {relatedCompanies.map((company) => (
+              <Link href={`/companies/${company.slug}`} key={company.slug}>
+                <strong>{company.name}</strong>
+                <span>
+                  {company.region} · {company.product}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="后续跟踪">
+          <div className="analysis-grid">
+            {content.watchlist.map((item, index) => (
+              <div key={item}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{item}</strong>
+                <p>后续公告和监管文件将进入同一时间线。</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="来源">
+          {sources.map((source) => (
+            <a
+              className="source-card"
+              href={source.url}
+              target="_blank"
+              rel="noreferrer"
+              key={source.url}
+            >
+              <span>{source.level}</span>
+              <strong>{source.name}</strong>
+              <small>{source.url}</small>
+            </a>
+          ))}
+        </Section>
+        <footer>修订时间：{snapshotDate} · 研究记录，不构成投资建议</footer>
+      </article>
+    </main>
+  );
+}
+
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section>
+      <p className="section-index">{title}</p>
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}

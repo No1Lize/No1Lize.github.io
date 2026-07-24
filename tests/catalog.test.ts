@@ -42,3 +42,15 @@ test("slugs are unique within each route collection", () => {
     assert.equal(new Set(slugs).size, slugs.length);
   }
 });
+
+test("every linked event company has a generated company route", () => {
+  const companySlugs = new Set(companies.map((company) => company.slug));
+  for (const event of intelligenceEvents) {
+    if (event.companySlug) {
+      assert.ok(
+        companySlugs.has(event.companySlug),
+        `missing company route for ${event.companySlug}`,
+      );
+    }
+  }
+});

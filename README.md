@@ -5,14 +5,12 @@
 ## 当前范围
 
 - 一个情报首页、六个核心频道和全局搜索；
-- 51 家真实中美科技公司、20 家投资机构、15 家上市跟踪公司；
+- 58 家真实中美科技公司、20 家投资机构、15 家上市跟踪公司；
 - 巴菲特、芒格、段永平、李录四个人物档案，每人至少五条材料索引；
 - 10 个赛道、5 篇结构化研究报告和首批官方事件；
-- OpenAI 官方页面和 SEC EDGAR 自动抓取；
+- 9 个公司官方新闻源，以及 10 家美股公司的 SEC EDGAR 文件与 Company Facts 自动抓取；
 - GitHub Actions 定时更新公开 JSON；
 - GitHub Pages 零服务器静态部署。
-
-正式数据不包含随机生成的融资、估值、财务或引语。缺失字段保留空状态。
 
 ## 本地运行
 
@@ -33,12 +31,12 @@ npm run build:pages
 
 ```bash
 npm run crawl
-python3 tools/crawl_articles.py --source openai
+python3 tools/crawl_articles.py --source news
 python3 tools/crawl_articles.py --source sec
 python3 tools/crawl_articles.py --offline
 ```
 
-抓取结果写入 `public/data/articles.json`。脚本按规范化来源 URL 去重；没有新内容时不会改写文件或产生无意义提交。
+抓取结果写入 `public/data/articles.json`。文件同时包含新闻/事件、SEC 最新申报以及带报告期的财务指标。脚本按规范化来源 URL 和事件指纹去重；没有新内容时不会改写文件或产生无意义提交。
 
 ## GitHub Pages
 
@@ -46,8 +44,8 @@ python3 tools/crawl_articles.py --offline
 
 `.github/workflows/scheduled-sync.yml` 每两小时执行一次：
 
-1. 抓取公开来源；
-2. 合并并去重文章；
+1. 抓取 9 个公司新闻页和 SEC；
+2. 合并并去重事件，提取最新监管财务指标；
 3. 更新 `public/data/articles.json`；
 4. 有变化时由 `github-actions[bot]` 提交到 `main`；
 5. 同一任务在提交后启动 Pages 发布。

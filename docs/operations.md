@@ -2,9 +2,9 @@
 
 ## 任务频率
 
-- GitHub Actions 每两小时检查 OpenAI 与 SEC；
+- GitHub Actions 每两小时检查公司官方新闻页、投资者关系页面与 SEC；
 - 无新增或修订时不提交；
-- 可从 Actions 页面手动选择 `all`、`openai` 或 `sec` 运行。
+- 可从 Actions 页面手动选择 `all`、`news` 或 `sec` 运行。
 
 ## 失败处理
 
@@ -12,7 +12,7 @@
 
 ## 观察指标
 
-Actions 日志显示来源、抓取数量、总记录数和错误摘要。公开页面只显示 JSON 生成时间，不暴露任务内部错误。
+Actions 日志显示每个来源的扫描量、收录量、财务档案数和错误摘要。`articles.json` 同时保存简化后的来源状态，页面显示最近成功生成时间。
 
 ## 恢复
 

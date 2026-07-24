@@ -47,7 +47,7 @@ export function CompanyDirectory() {
           </Link>
         ))}
       </div>
-      {!visible.length && <div className="empty-state"><Search size={22}/><strong>没有匹配的公司</strong><p>系统不会用模拟公司填补结果。</p></div>}
+      {!visible.length && <div className="empty-state"><Search size={22}/><strong>没有匹配的公司</strong><p>换一个关键词，或清除地区与赛道筛选。</p></div>}
       <div className="pagination">
         <button disabled={page === 1} onClick={() => setPage(page - 1)}>上一页</button>
         <span>{page} / {pages}</span>

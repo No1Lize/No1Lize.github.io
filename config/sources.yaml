@@ -2,8 +2,80 @@ sources:
   - id: openai
     name: OpenAI
     source_type: company
-    base_url: https://openai.com/
-    access_method: html
+    base_url: https://openai.com/news/
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: anthropic
+    name: Anthropic
+    source_type: company
+    base_url: https://www.anthropic.com/news
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: figure
+    name: Figure AI
+    source_type: company
+    base_url: https://www.figure.ai/news
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: xai
+    name: xAI
+    source_type: company
+    base_url: https://x.ai/news
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: pony-ai
+    name: Pony.ai Investor Relations
+    source_type: company
+    base_url: https://ir.pony.ai/news-events/news-releases
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: weride
+    name: WeRide Investor Relations
+    source_type: company
+    base_url: https://ir.weride.ai/news-events/news-releases/
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: rocket-lab
+    name: Rocket Lab
+    source_type: company
+    base_url: https://www.rocketlabusa.com/updates/
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: ionq
+    name: IonQ
+    source_type: company
+    base_url: https://ionq.com/news
+    access_method: public_html
+    reliability_level: 2
+    update_frequency: every_2_hours
+    is_enabled: true
+    requires_api_key: false
+  - id: catl
+    name: CATL
+    source_type: company
+    base_url: https://www.catl.com/en/news/
+    access_method: public_html
     reliability_level: 2
     update_frequency: every_2_hours
     is_enabled: true
@@ -12,8 +84,8 @@ sources:
     name: SEC EDGAR
     source_type: regulator
     base_url: https://data.sec.gov/
-    access_method: api
+    access_method: public_json
     reliability_level: 1
-    update_frequency: daily
+    update_frequency: every_2_hours
     is_enabled: true
     requires_api_key: false

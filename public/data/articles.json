@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "generatedAt": "2026-07-24T03:51:27+00:00",
   "articleCount": 8,
   "articles": [
@@ -138,6 +138,17 @@
         "url": "https://www.unitree.com/g1",
         "level": "官方披露"
       }
+    }
+  ],
+  "companyFacts": {},
+  "sourceStatus": [
+    {
+      "id": "seed",
+      "name": "首批官方资料",
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
+      "failed": 0
     }
   ]
 }

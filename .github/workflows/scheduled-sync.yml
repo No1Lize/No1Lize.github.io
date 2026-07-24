@@ -1,4 +1,4 @@
-name: Refresh public articles
+name: Refresh public intelligence
 
 on:
   schedule:
@@ -10,7 +10,7 @@ on:
         required: false
         type: choice
         default: all
-        options: [all, openai, sec]
+        options: [all, news, sec]
 
 permissions:
   contents: write

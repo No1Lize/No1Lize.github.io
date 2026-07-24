@@ -34,7 +34,7 @@ export function GlobalSearch() {
       <div className="global-search-box"><Search size={22}/><input autoFocus value={query} onChange={(e) => setQuery(e.target.value)} placeholder="搜索公司、机构、赛道、人物、报告或事件" aria-label="全局搜索关键词" /></div>
       <div className="search-types">{["全部","公司","机构","赛道","人物","报告","事件"].map((item) => <button className={type === item ? "active" : ""} onClick={() => setType(item)} key={item}>{item}</button>)}</div>
       {!query && <div className="search-guide"><strong>从一个实体开始</strong><p>可尝试：OpenAI、机器人、红杉、巴菲特或 AI 芯片。</p></div>}
-      {query && !matches.length && <div className="empty-state"><Search size={22}/><strong>未找到真实记录</strong><p>换一个关键词，或清除类型筛选。</p></div>}
+      {query && !matches.length && <div className="empty-state"><Search size={22}/><strong>没有匹配记录</strong><p>换一个关键词，或清除类型筛选。</p></div>}
       <div className="search-results">{matches.map((item, index) => <Link href={item.href} key={`${item.type}-${item.title}-${index}`}><span>{item.type}</span><div><h2>{item.title}</h2><p>{item.text}</p></div><small>{item.region}</small></Link>)}</div>
     </div>
   );
