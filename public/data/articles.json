@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "generatedAt": "2026-07-24T08:02:45+00:00",
-  "articleCount": 287,
+  "articleCount": 264,
   "articles": [
     {
       "id": "tmtpost-f31df3626492a2ca",
@@ -363,332 +363,6 @@
         "url": "https://www.leiphone.com/category/industrynews/LNHgLirIT5DvYfcV.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      }
-    },
-    {
-      "id": "openalex-ai-e7e74e4ddf7b5ace",
-      "sourceId": "openalex-ai",
-      "title": "A Cognitive Defense Framework for Detecting and Containing Autonomous Cyber Incidents Caused by Next-Generation Agentic Artificial Intelligence",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Dmytro Prokopovych-Tkachenko；发表载体：Zenodo (CERN European Organization for Nuclear Research)。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Zenodo (CERN European Organization for Nuclear Research)",
-        "url": "https://doi.org/10.5281/zenodo.21500378",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Dmytro Prokopovych-Tkachenko"
-      ]
-    },
-    {
-      "id": "openalex-ai-bcdabffa8bcf7957",
-      "sourceId": "openalex-ai",
-      "title": "“Hermeneutic burden” and clinical responsibility: a response to Sparrow et al. on explanation and machine learning",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Jonathan Adams；发表载体：Bioethics News。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Bioethics News",
-        "url": "https://doi.org/10.1007/s40592-026-00300-6",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Jonathan Adams"
-      ]
-    },
-    {
-      "id": "openalex-ai-b0879efb4ea7821e",
-      "sourceId": "openalex-ai",
-      "title": "Artificial intelligence in impurity prediction: current landscape, challenges, and future directions",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Shreehari Thombre、Chandrakant Bonde、R. Bhole、Jineetkumar Gawad、Pawan Karwa；发表载体：Journal of Computer-Aided Molecular Design。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Journal of Computer-Aided Molecular Design",
-        "url": "https://doi.org/10.1007/s10822-026-00876-5",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Shreehari Thombre",
-        "Chandrakant Bonde",
-        "R. Bhole",
-        "Jineetkumar Gawad",
-        "Pawan Karwa"
-      ]
-    },
-    {
-      "id": "openalex-ai-a19f9af5ef5a2ec0",
-      "sourceId": "openalex-ai",
-      "title": "Transformasi Manajemen Pendidikan Islam pada Era Kecerdasan Buatan (Artificial Intelligence): Tantangan, Peluang, dan Arah Pengembangannya di Indonesia",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：La Ode Nasir；发表载体：Ikhlas Jurnal Ilmiah Pendidikan Islam。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Ikhlas Jurnal Ilmiah Pendidikan Islam",
-        "url": "https://doi.org/10.61132/ikhlas.v3i3.2400",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "La Ode Nasir"
-      ]
-    },
-    {
-      "id": "openalex-ai-46778d563369c657",
-      "sourceId": "openalex-ai",
-      "title": "English students’ narratives of AI integration in learning: Cognitive benefits, ethical challenges, and impact on student autonomy",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Dewi Zulaiha、Yunika Triana；发表载体：Journal of Educational Management and Instruction (JEMIN)。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Journal of Educational Management and Instruction (JEMIN)",
-        "url": "https://doi.org/10.22515/jemin.v6i1.12885",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Dewi Zulaiha",
-        "Yunika Triana"
-      ]
-    },
-    {
-      "id": "arxiv-ai-ce7894ead1401b95",
-      "sourceId": "arxiv-ai",
-      "title": "Inference-Time Scaling of Diffusion Models via Progressive Seed Pruning",
-      "summary": "Diffusion and flow-matching models dominate conditional image generation, yet inference-time scaling for these models is far less developed than for autoregressive language models. Because final quality is highly sensitive to the initial noise seed, many approaches spend extra compute on seed search or resampling under a black-box reward, but typically maintaining a constant memory footprint throughout inference. We show that relaxing this constraint enables an underexplored inference-time scali",
-      "type": "论文",
-      "region": "全球",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21591v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-c691abec9bf42793",
-      "sourceId": "arxiv-ai",
-      "title": "Unified Video Dense Prediction from Disjoint Data",
-      "summary": "Scene understanding requires simultaneous prediction about geometry, appearance, and semantics. However, existing task-specific annotations are fragmented across incompatible, domain-specific datasets. Current unified systems circumvent this by restricting training to fully co-annotated data, or by incurring the large computational cost of pseudo-labeling. To mitigate this, we introduce UniD, a unified video model that jointly predicts eight dense scene properties-depth, surface normals, semanti",
-      "type": "论文",
-      "region": "全球",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21592v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-c2b707cc7b212884",
-      "sourceId": "arxiv-ai",
-      "title": "Synthetic data generation framework for quality control automation in gravure printing",
-      "summary": "Quality control in printing, particularly in rotogravure printing, still depends on slow, costly, and subjective manual inspection. Automated surface defect detection is critical for maintaining high-quality standards in rotogravure printing. Deep learning models give prospects for automation. However, training robust deep learning models, such as YOLO or Vision Transformers, is heavily hindered by the extreme scarcity of real-world industrial defects images. To overcome this limitation, this pa",
-      "type": "论文",
-      "region": "全球",
-      "sector": "智能制造",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21577v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-a39422bc8203bbfe",
-      "sourceId": "arxiv-ai",
-      "title": "Scene Parameter Saliency via Differentiable Light Transport",
-      "summary": "Gradient-based saliency methods reveal which input features most influence a neural network's output, and are a standard tool for model interpretability. We observe that differentiable renderers, which are conventionally used for parameter optimisation, produce an analogous form of saliency: given any scalar metric evaluated on a rendered image, a single reverse-mode differentiation pass yields per-parameter gradients that identify which scene elements most influence the metric. We call these gr",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21562v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-913c06693298a5b2",
-      "sourceId": "arxiv-ai",
-      "title": "Beyond Sufficiency: Time Series Explanation with Counterfactual Necessity",
-      "summary": "Faithful explanations of time-series classifiers should identify subsequences that are not only sufficient to preserve a black-box model's prediction, but also necessary for maintaining it. However, existing sufficiency-oriented methods can assign high importance to spurious subsequences that support the prediction without being essential to the model's decision. We introduce \\textbf{TimePNS}, a necessity-aware framework for time-series explanation. Inspired by Pearl's counterfactual notion of n",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21573v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-8cbff65620724969",
-      "sourceId": "arxiv-ai",
-      "title": "Barzilai-Borwein Fails Superlinear Convergence on an Open Set of Quadratics for Every Dimension $n\\geq 4$",
-      "summary": "Barzilai--Borwein (BB) method has shown strong practical performance in continuous optimization, yet its convergence dynamics remains poorly understood. In particular, a central unresolved question is whether BB converges superlinearly for almost every strictly convex quadratic problem and initialization. We provide a negative answer to this question. Specifically, for every finite dimension $n\\geq4$, we construct a nonempty open, hence positive-Lebesgue-measure, family of strictly convex quadra",
-      "type": "论文",
-      "region": "全球",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21579v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-8a789ff259ddafa8",
-      "sourceId": "arxiv-ai",
-      "title": "Self-Supervised Learning of Structured Dynamics from Videos",
-      "summary": "Understanding motion in video is a fundamental challenge for visual learning, as frame-to-frame change entangles two sources of dynamics: camera motion and object motion. This decomposition has remained underexplored in representation learning, partly because these factors are tightly coupled in natural videos and difficult to supervise separately. Yet recovering it is important for learning robust motion representations that separate meaningful object dynamics from camera-induced variation. We",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21576v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-3fb107311bd6ceac",
-      "sourceId": "arxiv-ai",
-      "title": "GraphVid: Interactive Graph-Controllable Video Generation",
-      "summary": "Controllable video generation remains challenging due to the difficulty of specifying precise multi-object interactions using text prompts or motion-control inputs that primarily constrain pixel movement. In practice, trajectory-based control often requires users to draw accurate tracks for multiple objects, which scales poorly with scene complexity and becomes ambiguous under occlusion or overlap. To enable flexible yet precise multi-subject control, we introduce $\\textbf{GraphVid}$, a graph-co",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21580v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-327d865c2eaa3ac3",
-      "sourceId": "arxiv-ai",
-      "title": "Streaming Multi-Agent Autoregressive Diffusion Model with World State Registers",
-      "summary": "Multi-agent interactive world models should not only generate consistent observations, but also maintain world states that persist across agents and evolve across views. Existing autoregressive video diffusion pipelines carry forward observation history as conditioning context, which makes shared state difficult to maintain in multi-agent and multi-view settings. We present WorldWeaver (W^2), a streaming multi-agent video diffusion model that augments rollout with cross-agent world state registe",
-      "type": "论文",
-      "region": "全球",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21594v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-2a285cf7ee5b659f",
-      "sourceId": "arxiv-ai",
-      "title": "3D-Aware VLMs with Implicit and Explicit Geometries",
-      "summary": "Despite rapid progress, most existing vision-language models (VLMs) built from 2D visual inputs often struggle when handling various 3D tasks that require fine-grained spatial understanding and reasoning. To bridge this gap, we present VLM-IE3D, a unified framework that enhances the 3D spatial awareness of VLMs by equipping them with both implicit and explicit 3D geometries learned from RGB videos. Our VLM-IE3D introduces Implicit Geometry Tokens (IGTs) that capture high-level geometric priors f",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21595v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-1fd1fc8b7a177b0c",
-      "sourceId": "arxiv-ai",
-      "title": "Scale Up Strategically: Learning Compositional Generalization via Bias-Aware Evaluation and Data Collection for Robotic Manipulation",
-      "summary": "Compositional generalization is essential for robot to follow diverse instructions. However, pretrained policies are known to take shortcuts, deferring to salient cues rather than grounding language. We introduce a diagnostic framework that localizes this failure to individual \\textit{instruction factors}, \\textit{e.g.,} reusable semantic components such as color, verb, object, size, and spatial attribute. Our framework formalizes instruction factor bias, the tendency of fine-tuned policies to o",
-      "type": "论文",
-      "region": "全球",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21582v1",
-        "level": "原始材料",
-        "platform": "arXiv"
-      }
-    },
-    {
-      "id": "arxiv-ai-15ffb7c45e391bba",
-      "sourceId": "arxiv-ai",
-      "title": "Expanding Flow Maps",
-      "summary": "Flow-based generative models have enabled remarkable progress in fast and controllable generation across continuous and discrete state spaces, yet existing parameterizations are constrained to fixed dimensions or fixed sequence lengths. Here, we introduce Expanding Generative Flows (EFlows), which define flows between distributions of increasing dimensionality along an expanding interpolant that grows the state by augmenting it with conditional noise. Building on this construction, we propose Ex",
-      "type": "论文",
-      "region": "全球",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "arXiv AI",
-        "url": "https://arxiv.org/abs/2607.21585v1",
-        "level": "原始材料",
-        "platform": "arXiv"
       }
     },
     {
@@ -1159,141 +833,6 @@
         "level": "官方披露",
         "platform": "官方网站"
       }
-    },
-    {
-      "id": "openalex-ai-bc7fe98de29694fd",
-      "sourceId": "openalex-ai",
-      "title": "Generative Artificial Intelligence for image synthesis using Generative Adversarial Networks (GANs) and variational autoencoders",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Manoj T S、Kumar Siddamallappa U、Anusha Jajur. J；发表载体：World Journal of Advanced Research and Reviews。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-22",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · World Journal of Advanced Research and Reviews",
-        "url": "https://doi.org/10.30574/wjarr.2026.31.1.1945",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Manoj T S",
-        "Kumar Siddamallappa U",
-        "Anusha Jajur. J"
-      ]
-    },
-    {
-      "id": "openalex-ai-b0b7ded5426f53f2",
-      "sourceId": "openalex-ai",
-      "title": "Human Resource Development in Higher Education: A Humanistic Core–AI Enhanced Model from Islamic Perspectives",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Ummu Shofiyah、Ali Muhtarom；发表载体：Kharisma Jurnal Administrasi dan Manajemen Pendidikan。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-22",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Kharisma Jurnal Administrasi dan Manajemen Pendidikan",
-        "url": "https://doi.org/10.59373/kharisma.v5i2.214",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Ummu Shofiyah",
-        "Ali Muhtarom"
-      ]
-    },
-    {
-      "id": "openalex-ai-a1a175cee5244cb7",
-      "sourceId": "openalex-ai",
-      "title": "The AI Hospital Formulary: A Practical Governance Framework for Prescribing, Monitoring, and Deprescribing Artificial Intelligence in Hospitals",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Francisco Epelde；发表载体：Hospitals。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-22",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Hospitals",
-        "url": "https://doi.org/10.3390/hospitals3030015",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Francisco Epelde"
-      ]
-    },
-    {
-      "id": "openalex-ai-8f48a4cd747a3af5",
-      "sourceId": "openalex-ai",
-      "title": "AI-Assisted Drug Repurposing System for Pediatric Oncology: The TAKUYA Framework",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Daniela Maria Capuano1-3 and Roberto Verna1-3 Gianluca Mondillo1；发表载体：Zenodo (CERN European Organization for Nuclear Research)。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "生物科技",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-22",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Zenodo (CERN European Organization for Nuclear Research)",
-        "url": "https://doi.org/10.5281/zenodo.21476599",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Daniela Maria Capuano1-3 and Roberto Verna1-3 Gianluca Mondillo1"
-      ]
-    },
-    {
-      "id": "openalex-ai-5a80baee403e5f80",
-      "sourceId": "openalex-ai",
-      "title": "The Essential Role of Pediatric Trainees in Developing Ethical Artificial Intelligence Tools",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Regan Hill、Haniyah Syed、Nicholas Porter、Logan Pearson；发表载体：Hospital Pediatrics。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-22",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Hospital Pediatrics",
-        "url": "https://doi.org/10.1542/hpeds.2026-009471",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Regan Hill",
-        "Haniyah Syed",
-        "Nicholas Porter",
-        "Logan Pearson"
-      ]
-    },
-    {
-      "id": "openalex-ai-22530b511ff2ecff",
-      "sourceId": "openalex-ai",
-      "title": "Can Artificial Intelligence Adoption Empower Digital–Green Synergy in Manufacturing Firms? Evidence from Large Language Models",
-      "summary": "OpenAlex 收录的人工智能研究成果；作者：Xiao Tang、Guizhu Tan、Da Gao、Qingshuo Wang；发表载体：Sustainability。",
-      "type": "论文",
-      "region": "全球",
-      "sector": "智能制造",
-      "company": "AI 研究",
-      "publishedAt": "2026-07-22",
-      "importance": 84,
-      "source": {
-        "name": "OpenAlex · Sustainability",
-        "url": "https://doi.org/10.3390/su18147485",
-        "level": "数据库记录",
-        "platform": "OpenAlex"
-      },
-      "authors": [
-        "Xiao Tang",
-        "Guizhu Tan",
-        "Da Gao",
-        "Qingshuo Wang"
-      ]
     },
     {
       "id": "openai-bf70d809f9542eee",
@@ -6100,10 +5639,10 @@
     },
     {
       "id": "openalex-ai",
-      "name": "OpenAlex AI conference works",
-      "status": "ok",
-      "scanned": 12,
-      "accepted": 12,
+      "name": "OpenAlex（已停用：避免泛 AI 论文）",
+      "status": "disabled",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "OpenAlex"
     },
@@ -6319,12 +5858,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 287,
+        "actual": 264,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 20,
+        "actual": 19,
         "required": 6,
         "passed": true
       },
@@ -6334,17 +5873,17 @@
         "passed": true
       },
       "minimumSourceLevels": {
-        "actual": 5,
+        "actual": 4,
         "required": 3,
         "passed": true
       },
       "minimumPlatforms": {
-        "actual": 8,
+        "actual": 6,
         "required": 4,
         "passed": true
       },
       "minimumEventTypes": {
-        "actual": 12,
+        "actual": 11,
         "required": 6,
         "passed": true
       },
@@ -6359,7 +5898,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.2021,
+        "actual": 0.2197,
         "required": 0.45,
         "passed": true
       },
@@ -6369,8 +5908,8 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 287,
-        "required": 287,
+        "actual": 264,
+        "required": 264,
         "passed": true
       }
     },
