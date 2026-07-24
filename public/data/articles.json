@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-24T09:45:40+00:00",
-  "articleCount": 401,
+  "generatedAt": "2026-07-24T09:51:54+00:00",
+  "articleCount": 404,
   "articles": [
     {
       "id": "leiphone-9e846f1537b1804f",
@@ -203,24 +203,6 @@
       "source": {
         "name": "钛媒体",
         "url": "https://www.tmtpost.com/8077783.html",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      }
-    },
-    {
-      "id": "tmtpost-deddb15adb7beee6",
-      "sourceId": "tmtpost",
-      "title": "不做通用大模型，这家公司凭什么在WAIC排起长队？",
-      "summary": "AI音乐“隐形冠军”终于浮出水面。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "钛媒体",
-        "url": "https://www.tmtpost.com/8077217.html",
         "level": "媒体报道",
         "platform": "专业媒体"
       }
@@ -5942,6 +5924,44 @@
       }
     },
     {
+      "id": "official-form-energy-afe04636dadad0f2",
+      "sourceId": "official-form-energy",
+      "title": "Form Energy & Crusoe Announce Agreement for 12 Gigawatt-Hours of Iron-Air Batteries for AI Data Centers",
+      "summary": "Partnership advances speed to power, domestic manufacturing, and U.S. leadership in the AI–energy nexus",
+      "type": "商业进展",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "Form Energy",
+      "companySlug": "form-energy",
+      "publishedAt": "2026-03-24",
+      "importance": 84,
+      "source": {
+        "name": "Form Energy",
+        "url": "https://formenergy.com/form-energy-crusoe-announce-agreement-for-12-gigawatt-hours-of-iron-air-batteries-for-ai-data-centers",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-form-energy-efc10c6b01624ea6",
+      "sourceId": "official-form-energy",
+      "title": "Form Energy and FuturEnergy Ireland Announce Agreement To Deploy First Iron-Air Battery Storage Project In Ireland",
+      "summary": "Somerville, MA - Form Energy, an American energy storage company, and FuturEnergy Ireland, a leading Irish clean energy developer, today announced an agreement to jointly deploy a 10 MW / 1,000 MWh iron-air battery system in the northwest of Ireland. The project will be used to demonstrate the value of multi-day energy storage in helping Ireland meet its energy targets, while ensuring grid reliability, affordability and security. Anticipated to come online in 2029, this is the first internationa",
+      "type": "商业进展",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "Form Energy",
+      "companySlug": "form-energy",
+      "publishedAt": "2026-03-17",
+      "importance": 84,
+      "source": {
+        "name": "Form Energy",
+        "url": "https://formenergy.com/form-energy-and-futurenergy-ireland-announce-agreement-to-deploy-first-iron-air-battery-storage-project-in-ireland",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-axiom-space-e9f1f68dda6dc735",
       "sourceId": "official-axiom-space",
       "title": "Meet Axiom Space Project Astronaut Emiliano Ventura",
@@ -6965,6 +6985,25 @@
       }
     },
     {
+      "id": "official-form-energy-aeff7db6145c5ec6",
+      "sourceId": "official-form-energy",
+      "title": "Form Energy’s Breakthrough Iron-Air Battery Technology Sets a New Benchmark for Safety in Energy Storage Systems",
+      "summary": "Form Energy, a leader in multi-day energy storage solutions, proudly announces that its breakthrough iron-air battery system has successfully completed UL9540A safety testing, demonstrating the highest safety standards with no flame or thermal event propagation.",
+      "type": "技术突破",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "Form Energy",
+      "companySlug": "form-energy",
+      "publishedAt": "2024-12-12",
+      "importance": 85,
+      "source": {
+        "name": "Form Energy",
+        "url": "https://formenergy.com/form-energys-breakthrough-iron-air-battery-technology-sets-a-new-benchmark-for-safety-in-energy-storage-systems",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-xai-d92fdc93d4b23831",
       "sourceId": "official-xai",
       "title": "Grok Image Generation Release",
@@ -7035,6 +7074,25 @@
       "source": {
         "name": "xAI",
         "url": "https://x.ai/news/api",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-form-energy-40043b805aa30bbb",
+      "sourceId": "official-form-energy",
+      "title": "Form Energy Begins Expansion of Form Factory 1 to Increase Manufacturing Capacity",
+      "summary": "Today, Form Energy announced the start of construction to expand Form Factory 1, its high-volume manufacturing facility located in Weirton, West Virginia.",
+      "type": "商业进展",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "Form Energy",
+      "companySlug": "form-energy",
+      "publishedAt": "2024-10-14",
+      "importance": 84,
+      "source": {
+        "name": "Form Energy",
+        "url": "https://formenergy.com/form-energy-begins-expansion-of-form-factory-1-to-increase-manufacturing-capacity",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -8452,14 +8510,13 @@
       "company": "Form Energy",
       "companySlug": "form-energy",
       "coverage": "attempted",
-      "status": "empty",
+      "status": "ok",
       "configuredIndexes": 2,
-      "discovered": 0,
-      "scanned": 3,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "官方网站",
-      "error": "official indexes returned no dated article pages"
+      "discovered": 27,
+      "scanned": 19,
+      "accepted": 4,
+      "failed": 0,
+      "platform": "官方网站"
     },
     {
       "id": "official-fourier-intelligence",
@@ -8581,12 +8638,12 @@
       "company": "英矽智能",
       "companySlug": "insilico-medicine",
       "coverage": "attempted",
-      "status": "ok",
+      "status": "partial",
       "configuredIndexes": 2,
       "discovered": 15,
       "scanned": 18,
       "accepted": 1,
-      "failed": 0,
+      "failed": 2,
       "platform": "官方网站"
     },
     {
@@ -9129,8 +9186,8 @@
       "id": "tmtpost",
       "name": "钛媒体",
       "status": "ok",
-      "scanned": 7,
-      "accepted": 7,
+      "scanned": 6,
+      "accepted": 6,
       "failed": 0,
       "platform": "专业媒体"
     },
@@ -9164,92 +9221,102 @@
     {
       "id": "x-anthropic",
       "name": "Anthropic",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-deepmind",
       "name": "Google DeepMind",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-demis",
       "name": "Demis Hassabis",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-feifei-li",
       "name": "李飞飞",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-kaiming-he",
       "name": "何恺明",
-      "status": "empty",
+      "status": "error",
       "scanned": 0,
       "accepted": 0,
-      "failed": 0,
-      "platform": "X"
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-karpathy",
       "name": "Andrej Karpathy",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-lecun",
       "name": "Yann LeCun",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-openai",
       "name": "OpenAI",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-sam-altman",
       "name": "Sam Altman",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-shunyu-yao",
       "name": "姚顺雨",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "xai",
@@ -9265,12 +9332,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 401,
+        "actual": 404,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 70,
+        "actual": 62,
         "required": 6,
         "passed": true
       },
@@ -9295,17 +9362,17 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 118,
+        "actual": 117,
         "required": 8,
         "passed": true
       },
       "minimumUsArticles": {
-        "actual": 274,
+        "actual": 278,
         "required": 20,
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1446,
+        "actual": 0.1436,
         "required": 0.45,
         "passed": true
       },
@@ -9315,8 +9382,8 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 401,
-        "required": 401,
+        "actual": 404,
+        "required": 404,
         "passed": true
       }
     },
