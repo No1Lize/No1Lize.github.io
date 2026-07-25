@@ -7,6 +7,7 @@ import {
   type AdminRecommendationItem,
 } from "@/components/tracking-admin-recommendation";
 import { companies, ipoCompanies } from "@/lib/catalog-data";
+import { sourceBrandKey } from "@/lib/source-brand";
 import {
   recommendListedCompanies,
   type ListedCompanyRecommendation,
@@ -29,14 +30,6 @@ type Snapshot = {
 
 function normalize(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase("zh-CN");
-}
-
-function sourceHost(value: string): string {
-  try {
-    return new URL(value).hostname.toLocaleLowerCase("en-US").replace(/^www\./, "");
-  } catch {
-    return "";
-  }
 }
 
 function sectionByTitle(title: string): HTMLElement | null {
@@ -142,12 +135,12 @@ function fallbackSourceRecommendations(
   sector: string,
   existingUrls: string[],
 ): TrackingSourceRecommendation[] {
-  const existingHosts = new Set(existingUrls.map(sourceHost).filter(Boolean));
+  const existingBrands = new Set(existingUrls.map(sourceBrandKey).filter(Boolean));
   return companies
     .filter((company) => normalize(company.sector) === normalize(sector))
     .filter((company) => {
-      const host = sourceHost(company.source.url);
-      return Boolean(host && !existingHosts.has(host));
+      const brand = sourceBrandKey(company.source.url);
+      return Boolean(brand && !existingBrands.has(brand));
     })
     .map((company) => ({
       value: company.source.url,
@@ -171,10 +164,13 @@ function fallbackSourceRecommendations(
 function mergeSources(
   primary: TrackingSourceRecommendation[],
   fallback: TrackingSourceRecommendation[],
+  existingUrls: string[],
 ): TrackingSourceRecommendation[] {
+  const existingBrands = new Set(existingUrls.map(sourceBrandKey).filter(Boolean));
   const merged = new Map<string, TrackingSourceRecommendation>();
   for (const item of [...primary, ...fallback]) {
-    const key = sourceHost(item.source.url) || item.value;
+    const key = sourceBrandKey(item.source.url);
+    if (!key || existingBrands.has(key)) continue;
     const current = merged.get(key);
     if (!current || item.score > current.score) merged.set(key, item);
   }
@@ -248,6 +244,7 @@ export function TrackingAdminModuleRecommendations() {
     return mergeSources(
       discovered,
       fallbackSourceRecommendations(snapshot.sector, snapshot.sourceUrls),
+      snapshot.sourceUrls,
     );
   }, [articles, snapshot.sector, snapshot.sourceUrls]);
 
