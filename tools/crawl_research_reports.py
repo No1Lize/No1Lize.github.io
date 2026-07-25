@@ -49,16 +49,19 @@ except ModuleNotFoundError:  # direct execution: python tools/crawl_research_rep
 
 try:
     from tools.research_report_registry import (
+        load_curated_pdf_candidates,
         load_local_cik_map,
         load_official_websites,
         merge_source_maps,
     )
 except ModuleNotFoundError:  # direct execution
     from research_report_registry import (
+        load_curated_pdf_candidates,
         load_local_cik_map,
         load_official_websites,
         merge_source_maps,
     )
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "user_tracking.json"
@@ -607,11 +610,23 @@ def crawl_company(
     company: dict[str, str],
     website: str,
     cik: str,
+    curated_candidates: list[dict[str, str]],
     previous_reports: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     new_reports: list[dict[str, Any]] = []
     errors: list[str] = []
     fetched = 0
+
+    for candidate in curated_candidates:
+        fetched += 1
+        try:
+            report = archive_public_report(candidate, company)
+        except Exception as error:
+            errors.append(f"curated PDF {candidate.get('url', '')}: {error}")
+            continue
+        new_reports.append(report)
+        if len(new_reports) >= MAX_REPORTS_PER_COMPANY:
+            break
 
     try:
         eastmoney_records = fetch_eastmoney_reports(company)
@@ -673,6 +688,7 @@ def crawl_company(
         "archived": len(new_reports),
         "retained": max(0, len(reports) - len(new_reports)),
         "adapters": [
+            *( ["verified-direct"] if curated_candidates else [] ),
             "Eastmoney",
             *( ["SEC"] if cik else [] ),
             "public-web",
@@ -689,6 +705,7 @@ def main() -> int:
         load_company_websites(),
         load_official_websites(ROOT),
     )
+    curated_candidates = load_curated_pdf_candidates()
     sec_tickers = merge_source_maps(
         load_sec_ticker_map(request_bytes),
         load_local_cik_map(ROOT),
@@ -712,6 +729,7 @@ def main() -> int:
                 company,
                 websites.get(company["slug"], ""),
                 sec_tickers.get(company["ticker"], ""),
+                curated_candidates.get(company["slug"], []),
                 previous_by_company.get(company["slug"], []),
             ): company
             for company in companies
