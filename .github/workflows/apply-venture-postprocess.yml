@@ -1,0 +1,78 @@
+name: Apply venture post-processing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/sanitize_venture_profiles.py
+      - tests/test_venture_profile_postprocess.py
+      - .github/workflows/apply-venture-postprocess.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: apply-venture-postprocess
+  cancel-in-progress: false
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate sanitizer
+        run: |
+          python -m py_compile tools/sanitize_venture_profiles.py
+          python -m unittest tests.test_venture_profile_postprocess
+      - name: Sanitize current snapshot
+        run: |
+          python tools/sanitize_venture_profiles.py
+          python tools/sanitize_venture_profiles.py --check
+      - name: Commit sanitized snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm .github/workflows/apply-venture-postprocess.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            python tools/sanitize_venture_profiles.py
+            python tools/sanitize_venture_profiles.py --check
+            python -m unittest tests.test_venture_profile_postprocess
+            git add public/data/venture_profiles.json .github/workflows/apply-venture-postprocess.yml
+
+            if git diff --cached --quiet; then
+              echo "No snapshot changes after rebase."
+              exit 0
+            fi
+
+            if git rev-parse --verify HEAD^ >/dev/null 2>&1 && git log -1 --pretty=%s | grep -q '^data: sanitize current venture profiles$'; then
+              git commit --amend --no-edit
+            else
+              git commit -m "data: sanitize current venture profiles"
+            fi
+
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+            git reset --soft HEAD^
+          done
+      - name: Publish sanitized site
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
