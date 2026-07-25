@@ -29,10 +29,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Normalize and validate venture snapshot
-        shell: bash
+      - name: Compile venture pipeline
         run: |
-          set -euo pipefail
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
@@ -40,6 +38,8 @@ jobs:
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py
+      - name: Run venture unit tests
+        run: |
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
@@ -47,15 +47,26 @@ jobs:
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer
-          python tools/normalize_venture_profiles.py
-          python tools/sanitize_venture_profiles.py
-          python tools/sanitize_venture_narratives.py
-          python tools/normalize_venture_profiles.py --check
-          python tools/sanitize_venture_profiles.py --check
-          python tools/sanitize_venture_narratives.py --check
-          python tools/crawl_venture_profiles.py --validate-only
-          python tools/enrich_venture_profiles.py --validate-only
-          git diff --check
+      - name: Enrich current snapshot
+        run: python tools/enrich_venture_profiles.py
+      - name: Normalize cross-entity consistency
+        run: python tools/normalize_venture_profiles.py
+      - name: Sanitize structured fields
+        run: python tools/sanitize_venture_profiles.py
+      - name: Sanitize narrative fields
+        run: python tools/sanitize_venture_narratives.py
+      - name: Check normalizer idempotence
+        run: python tools/normalize_venture_profiles.py --check
+      - name: Check structured sanitizer idempotence
+        run: python tools/sanitize_venture_profiles.py --check
+      - name: Check narrative sanitizer idempotence
+        run: python tools/sanitize_venture_narratives.py --check
+      - name: Validate crawler quality gate
+        run: python tools/crawl_venture_profiles.py --validate-only
+      - name: Validate enrichment quality gate
+        run: python tools/enrich_venture_profiles.py --validate-only
+      - name: Check generated diff
+        run: git diff --check
       - name: Commit sanitized data to PR branch
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
