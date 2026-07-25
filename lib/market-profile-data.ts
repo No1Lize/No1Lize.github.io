@@ -1,4 +1,5 @@
 import rawMarketProfiles from "@/public/data/market_profiles.json";
+import { ipoProfiles } from "@/lib/research-content";
 import type { TrackingMarket } from "@/lib/user-tracking";
 
 export type MarketPricePoint = {
@@ -79,6 +80,20 @@ const PROVINCES = [
   "广西", "西藏", "宁夏", "新疆", "香港", "澳门", "台湾",
 ];
 
+const NAVIGATION_NOISE = [
+  "所属地域",
+  "所属地区",
+  "经营分析",
+  "财务分析",
+  "公司资料",
+  "公司概况",
+  "主营业务",
+  "营业收入构成",
+  "总市值",
+  "行情走势",
+  "新闻公告",
+];
+
 function hasNumericValue(value: string | undefined) {
   return Boolean(value && /\d/u.test(value) && !["0", "0.00", "0%"].includes(value));
 }
@@ -117,8 +132,24 @@ function normalizedRegion(company: MarketCompanyProfile, market: TrackingMarket)
   return "中国";
 }
 
+function isNavigationNoise(value: string) {
+  const compact = value.replace(/[\s，。；;:：|\-—_/]/gu, "");
+  if (!compact) return true;
+  const noiseHits = NAVIGATION_NOISE.filter((label) => compact.includes(label)).length;
+  if (noiseHits >= 2 && compact.length < 80) return true;
+  if (noiseHits >= 1 && compact.length < 18) return true;
+  return /^(?:--?|暂无|待同步|亿|万|元|股)+$/u.test(compact);
+}
+
+function cleanIndustry(value: string | undefined) {
+  const text = (value || "").replace(/\s+/gu, " ").trim();
+  if (!text || isNavigationNoise(text) || /总市值|流通市值|成交额/u.test(text)) return "";
+  return text.slice(0, 80);
+}
+
 function cleanCompanyText(value: string | undefined, limit: number) {
   let text = (value || "").replace(/\s+/gu, " ").trim().replace(/[，；;\s]+$/u, "");
+  if (isNavigationNoise(text)) return "";
   for (const marker of [
     "公司成立至今共获得多项荣誉",
     "公司先后获得多项荣誉",
@@ -143,14 +174,24 @@ function cleanCompanyText(value: string | undefined, limit: number) {
   return text;
 }
 
+function fallbackDescription(profile: MarketProfile) {
+  const archive = ipoProfiles[profile.slug]?.description?.replace(/[。\s]+$/u, "");
+  if (archive) {
+    return `${profile.company.name}是一家${archive}，本页持续跟踪其历史行情、财务指标、公司公告与经营进展。`;
+  }
+  return `${profile.company.name}的公开市场资料页，持续跟踪历史行情、财务指标、公司公告与经营进展。`;
+}
+
 function normalizeProfile(profile: MarketProfile): MarketProfile {
   const company = { ...profile.company };
+  company.industry = cleanIndustry(company.industry) || undefined;
   const description = cleanCompanyText(company.description, 360);
   const mainBusiness = cleanCompanyText(company.mainBusiness, 220);
-  company.mainBusiness = mainBusiness || company.mainBusiness;
-  company.description = description.length >= 70 || !mainBusiness || description.includes(mainBusiness)
+  company.mainBusiness = mainBusiness || undefined;
+  const combined = description.length >= 70 || !mainBusiness || description.includes(mainBusiness)
     ? description || mainBusiness
     : cleanCompanyText(`${description} ${mainBusiness}`, 360);
+  company.description = combined.length >= 40 ? combined : fallbackDescription(profile);
   company.region = normalizedRegion(company, profile.market);
 
   const metrics = profile.metrics.filter((metric) => hasNumericValue(metric.value));
