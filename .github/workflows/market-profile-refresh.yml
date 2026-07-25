@@ -26,10 +26,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Crawl listed market profiles with Tonghuashun and US historical fallback
+      - name: Crawl A-share Hong Kong and US profiles with layered public fallbacks
         run: python tools/refresh_market_profiles.py
-      - name: Verify three-market parser transport and fallback behavior
+      - name: Verify three-market parsers routes and fallback behavior
         run: python -m unittest tests.test_market_profiles tests.test_market_profile_transport
+      - name: Validate generated market snapshot
+        run: python tools/validate_market_profiles.py
       - name: Commit market snapshot
         id: snapshot
         run: |
@@ -44,6 +46,7 @@ jobs:
           git pull --rebase origin main
           python tools/refresh_market_profiles.py
           python -m unittest tests.test_market_profiles tests.test_market_profile_transport
+          python tools/validate_market_profiles.py
           git add public/data/market_profiles.json
           if ! git diff --cached --quiet; then
             git commit --amend --no-edit
