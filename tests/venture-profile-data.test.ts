@@ -9,6 +9,7 @@ import {
   institutionVentureProfiles,
   ventureProfileQualityGate,
   ventureProfileSourceStatus,
+  ventureResearchModelVersion,
 } from "../lib/venture-profile-data";
 
 const companySlugs = new Set(companies.map((item) => item.slug));
@@ -46,6 +47,28 @@ test("venture profile sources are traceable public URLs", () => {
     for (const source of profile.sources) {
       assert.match(source.url, /^https?:\/\//u);
       assert.ok(source.name.length > 0);
+    }
+  }
+});
+
+test("research model v2 exposes the same structured fields for every entity", () => {
+  if (ventureResearchModelVersion < 2) return;
+  for (const profile of Object.values(companyVentureProfiles)) {
+    assert.ok(profile.projectBackground?.summary);
+    assert.ok(Array.isArray(profile.technologyProducts));
+    assert.ok(profile.capitalSummary);
+    assert.ok(profile.exitPerformance);
+    for (const product of profile.technologyProducts ?? []) {
+      assert.ok(product.name);
+      assert.ok(product.description);
+    }
+  }
+  for (const profile of Object.values(institutionVentureProfiles)) {
+    assert.ok(profile.recentYearSummary);
+    assert.match(profile.recentYearSummary!.periodStart, /^20\d{2}-\d{2}-\d{2}$/u);
+    assert.match(profile.recentYearSummary!.periodEnd, /^20\d{2}-\d{2}-\d{2}$/u);
+    for (const item of profile.classicCases) {
+      assert.ok(item.analysis);
     }
   }
 });
