@@ -42,6 +42,16 @@ test("generated people expose the unified research schema", () => {
   assert.ok(person.materials.some((material) => material.url.startsWith("https://")));
 });
 
+test("sourced papers and talks populate works and speeches", () => {
+  const kaiming = researchPeople.find((item) => item.slug === "kaiming-he");
+  assert.ok(kaiming);
+  assert.ok(kaiming.works.some((title) => title.includes("Deep Residual Learning")));
+
+  const munger = researchPeople.find((item) => item.slug === "charlie-munger");
+  assert.ok(munger);
+  assert.ok(munger.speeches.some((material) => material.type === "speech"));
+});
+
 test("curated investment people remain available", () => {
   const slugs = new Set(researchPeople.map((person) => person.slug));
   assert.ok(slugs.has("warren-buffett"));
