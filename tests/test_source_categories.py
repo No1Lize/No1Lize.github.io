@@ -36,29 +36,77 @@ class SourceCategoryTests(unittest.TestCase):
             "media",
         )
 
-    def test_generic_crawler_excludes_company_sources(self) -> None:
-        sources = [
-            {
-                "id": "company",
-                "sourceCategory": "company",
-                "sourceType": "listing-search",
-            },
-            {
-                "id": "media",
-                "sourceCategory": "media",
-                "sourceType": "listing-search",
-            },
-            {
-                "id": "person",
-                "sourceCategory": "person",
-                "sourceType": "listing-search",
-            },
-        ]
-        filtered = generic_categories.filter_sources(sources)
+    def test_generic_router_keeps_all_website_categories_except_eastmoney(self) -> None:
+        tracking = {
+            "sources": [
+                {
+                    "id": "company",
+                    "name": "公司官网",
+                    "company": "Example Company",
+                    "sourceCategory": "company",
+                    "sourceType": "listing-search",
+                    "url": "https://company.example/news",
+                },
+                {
+                    "id": "media",
+                    "name": "行业媒体",
+                    "sourceCategory": "media",
+                    "sourceType": "listing-search",
+                    "url": "https://media.example/news",
+                },
+                {
+                    "id": "person",
+                    "name": "研究者博客",
+                    "sourceCategory": "person",
+                    "sourceType": "listing-search",
+                    "url": "https://person.example/blog",
+                },
+                {
+                    "id": "eastmoney",
+                    "name": "东方财富",
+                    "sourceCategory": "media",
+                    "sourceType": "listing-search",
+                    "url": "https://www.eastmoney.com/default.html",
+                },
+            ]
+        }
+
+        runtime_specs, sec_specs = generic_categories._custom_sources(tracking, [])
+        specs_by_id = {spec["id"]: spec for spec in runtime_specs}
+
+        self.assertEqual(sec_specs, {})
         self.assertEqual(
-            {source["id"] for source in filtered},
-            {"media", "person"},
+            set(specs_by_id),
+            {
+                "user-source-company",
+                "user-source-media",
+                "user-source-person",
+            },
         )
+        self.assertEqual(
+            specs_by_id["user-source-company"]["sourceCategory"],
+            "company",
+        )
+        self.assertEqual(
+            specs_by_id["user-source-media"]["sourceCategory"],
+            "media",
+        )
+        self.assertEqual(
+            specs_by_id["user-source-person"]["sourceCategory"],
+            "person",
+        )
+        self.assertEqual(
+            specs_by_id["user-source-company"]["company"],
+            "Example Company",
+        )
+
+    def _filtered_official_tracking(self, tracking: dict) -> dict:
+        original = official_categories._original_load_tracking
+        try:
+            official_categories._original_load_tracking = lambda _path: tracking
+            return official_categories._filtered_tracking()
+        finally:
+            official_categories._original_load_tracking = original
 
     def test_official_crawler_keeps_company_sources(self) -> None:
         tracking = {
@@ -79,7 +127,9 @@ class SourceCategoryTests(unittest.TestCase):
                 },
             ]
         }
-        filtered = official_categories._filtered_tracking_payload(tracking)
+
+        filtered = self._filtered_official_tracking(tracking)
+
         self.assertEqual(
             [source["id"] for source in filtered["sources"]],
             ["company"],
@@ -104,7 +154,9 @@ class SourceCategoryTests(unittest.TestCase):
                 },
             ]
         }
-        filtered = official_categories._filtered_tracking_payload(tracking)
+
+        filtered = self._filtered_official_tracking(tracking)
+
         self.assertEqual(
             [source["id"] for source in filtered["sources"]],
             ["eastmoney"],
