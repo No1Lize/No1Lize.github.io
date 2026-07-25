@@ -11,6 +11,22 @@ except ImportError:
     import refresh_market_profiles as runner
 
 _original_crawl_item = runner.crawl_item
+_original_parse_tonghuashun = runner.market.parse_tonghuashun_html
+
+
+def parse_tonghuashun_html(raw_html, identity, configured_name):
+    parsed = _original_parse_tonghuashun(raw_html, identity, configured_name)
+    parser = runner.market.TextCollector()
+    parser.feed(raw_html)
+    text = parser.text()
+    region = runner.robust_labeled_value(
+        text,
+        ["所属地域", "所属地区", "所在地区", "国家/地区", "注册地区"],
+        40,
+    )
+    if region:
+        parsed.setdefault("company", {})["region"] = region
+    return parsed
 
 
 def crawl_item(item, previous):
@@ -31,6 +47,7 @@ def crawl_item(item, previous):
 
 
 def main() -> int:
+    runner.market.parse_tonghuashun_html = parse_tonghuashun_html
     runner.crawl_item = crawl_item
     return runner.main()
 
