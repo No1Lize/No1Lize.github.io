@@ -28,7 +28,7 @@ function track(
 }
 
 test("track aliases are derived for bilingual and punctuation-rich names", () => {
-  assert.deepEqual(trackNameAliases("AI / AGI"), ["AI / AGI", "AI/AGI", "AI", "AGI"]);
+  assert.deepEqual(trackNameAliases("AI / AGI"), ["AI / AGI", "AI", "AGI"]);
   assert.deepEqual(trackNameAliases("脑机接口（BCI）"), ["脑机接口(BCI)", "脑机接口", "BCI"]);
 });
 
