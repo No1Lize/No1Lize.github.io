@@ -7,6 +7,7 @@ on:
       - tools/crawl_venture_profiles.py
       - tools/venture_profile_extraction.py
       - tools/enrich_venture_profiles.py
+      - tools/normalize_venture_profiles.py
       - lib/catalog-data.ts
       - lib/venture-profile-data.ts
       - public/data/articles.json
@@ -15,6 +16,7 @@ on:
       - tests/test_venture_profile_extraction.py
       - tests/test_venture_profile_noise_filters.py
       - tests/test_venture_profile_enrichment.py
+      - tests/test_normalize_venture_profiles.py
       - tests/venture-profile-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
   schedule:
@@ -42,15 +44,17 @@ jobs:
           python-version: "3.12"
       - name: Verify crawler syntax and focused tests
         run: |
-          # semantic-profile-refresh-v9
+          # semantic-profile-refresh-v10
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
-            tools/enrich_venture_profiles.py
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
-            tests.test_venture_profile_enrichment
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles
       - name: Record catalog revision
         id: catalog-before
         env:
@@ -63,14 +67,18 @@ jobs:
         run: python tools/crawl_venture_profiles.py --workers 8 --max-pages 6
       - name: Enrich profiles with intelligence and capital evidence
         run: python tools/enrich_venture_profiles.py
+      - name: Normalize cross-entity profile consistency
+        run: python tools/normalize_venture_profiles.py
       - name: Validate generated venture snapshot
         run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
+          python tools/normalize_venture_profiles.py --check
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
-            tests.test_venture_profile_enrichment
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles
       - uses: actions/setup-node@v4
         with:
           node-version: 22
