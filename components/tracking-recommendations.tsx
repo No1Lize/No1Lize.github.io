@@ -1,25 +1,36 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import type { TrackingRecommendation } from "@/lib/tracking-recommendations";
+import type {
+  TrackingRecommendation,
+  TrackingRecommendationSet,
+  TrackingSourceRecommendation,
+} from "@/lib/tracking-recommendations";
 import styles from "./tracking-recommendations.module.css";
 
 const labels = {
   keywords: "推荐关键词",
   people: "推荐人物 / 账号",
   companies: "推荐样本公司",
+  sources: "推荐信息源",
 } as const;
 
 export type RecommendationType = keyof typeof labels;
+export type AnyTrackingRecommendation =
+  | TrackingRecommendation
+  | TrackingSourceRecommendation;
 
 export function TrackingRecommendations({
   recommendations,
   onlyType,
   onAdd,
 }: {
-  recommendations: Record<RecommendationType, TrackingRecommendation[]>;
+  recommendations: TrackingRecommendationSet;
   onlyType?: RecommendationType;
-  onAdd?: (type: RecommendationType, value: string) => Promise<void> | void;
+  onAdd?: (
+    type: RecommendationType,
+    item: AnyTrackingRecommendation,
+  ) => Promise<void> | void;
 }) {
   const [pending, setPending] = useState<string>("");
   const [hidden, setHidden] = useState<Record<string, boolean>>({});
@@ -31,16 +42,16 @@ export function TrackingRecommendations({
         .map((type) => ({
           type,
           title: labels[type],
-          items: recommendations[type].slice(0, 8),
+          items: recommendations[type].slice(0, 8) as AnyTrackingRecommendation[],
         })),
     [onlyType, recommendations],
   );
 
-  async function add(type: RecommendationType, item: TrackingRecommendation) {
+  async function add(type: RecommendationType, item: AnyTrackingRecommendation) {
     const key = `${type}-${item.value}`;
     setPending(key);
     try {
-      await onAdd?.(type, item.value);
+      await onAdd?.(type, item);
       setHidden((current) => ({ ...current, [key]: true }));
     } finally {
       setPending("");
