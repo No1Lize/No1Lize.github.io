@@ -1,0 +1,52 @@
+name: Apply research report PDF integration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-research-report-ui.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-research-report-ui
+  cancel-in-progress: true
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch listed-company research section
+        run: python tools/apply_research_report_ui.py
+      - name: Commit patch with conflict retries
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- app/ipo/'[slug]'/page.tsx; then
+            exit 0
+          fi
+          git add app/ipo/'[slug]'/page.tsx
+          git commit -m "feat: show archived PDF reports on company pages"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main; then
+              python tools/apply_research_report_ui.py
+              git add app/ipo/'[slug]'/page.tsx
+              if ! git diff --cached --quiet; then
+                git commit --amend --no-edit
+              fi
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 3
+          done
+          exit 1
