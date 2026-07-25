@@ -66,6 +66,25 @@ class FakeRobust:
                 "failed": 0,
                 "strategies": ["primary", "structured-data"],
             }
+        if source_url == "https://finance.eastmoney.com/":
+            article = {
+                "id": "eastmoney-discovered",
+                "sourceId": spec["id"],
+                "title": "AI芯片公司签署合作协议",
+                "publishedAt": "2026-07-25",
+                "importance": 80,
+                "source": {
+                    "url": "https://finance.eastmoney.com/a/202607253821110827.html",
+                    "name": "东方财富",
+                },
+            }
+            return [article], {
+                "status": "ok",
+                "scanned": 2,
+                "accepted": 1,
+                "failed": 0,
+                "strategies": ["primary", "structured-data"],
+            }
         return [], {
             "status": "empty",
             "scanned": 1,
@@ -125,7 +144,10 @@ class AdaptivePublicSourceTests(unittest.TestCase):
 
     def test_eastmoney_uses_same_profile_kernel(self) -> None:
         seeds = adaptive.source_seed_urls("https://www.eastmoney.com/default.html")
-        self.assertEqual(adaptive.profile_for(seeds[0]).id, "eastmoney")
+        profile = adaptive.profile_for(seeds[0])
+        self.assertEqual(profile.id, "eastmoney")
+        self.assertEqual(profile.publisher_handoff, "eastmoney-strict-detail")
+        self.assertEqual(profile.handoff_status_id, "official-user-东方财富")
         self.assertIn("https://finance.eastmoney.com/", seeds)
         self.assertIn("https://fund.eastmoney.com/", seeds)
 
@@ -165,6 +187,32 @@ class AdaptivePublicSourceTests(unittest.TestCase):
         self.assertIn("structured-data", status["strategies"])
         self.assertEqual(status["canonicalSourceUrl"], "https://tw.yahoo.com/")
         self.assertEqual(status["historyLimit"], adaptive.DEFAULT_HISTORY_LIMIT)
+
+    def test_strict_profile_discovers_but_does_not_publish_generic_batch(self) -> None:
+        spec = {
+            "id": "user-source-eastmoney",
+            "name": "东方财富",
+            "url": "https://www.eastmoney.com/default.html",
+            "sourceUrl": "https://www.eastmoney.com/default.html",
+            "maxItems": 5,
+        }
+
+        items, status = adaptive.crawl_adaptive_source(
+            spec,
+            "test-agent",
+            FakeCrawler(),
+            FakeGeneric(),
+            FakeRobust(),
+        )
+
+        self.assertEqual(items, [])
+        self.assertEqual(status["adapter"], "adaptive-public-v1")
+        self.assertEqual(status["profile"], "eastmoney")
+        self.assertEqual(status["status"], "partial")
+        self.assertEqual(status["accepted"], 0)
+        self.assertEqual(status["discoveredAccepted"], 1)
+        self.assertEqual(status["publisherHandoff"], "eastmoney-strict-detail")
+        self.assertEqual(status["handoffStatusId"], "official-user-东方财富")
 
     def test_successful_adaptive_batch_keeps_bounded_history(self) -> None:
         existing = [
