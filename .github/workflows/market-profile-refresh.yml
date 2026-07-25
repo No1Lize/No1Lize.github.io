@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Crawl A-share Hong Kong and US profiles with layered public fallbacks
+      - name: Crawl A-share Hong Kong and US profiles with Yahoo Eastmoney and Stooq fallbacks
         run: python tools/refresh_market_profiles.py
       - name: Verify three-market parsers routes and fallback behavior
         run: python -m unittest tests.test_market_profiles tests.test_market_profile_transport
