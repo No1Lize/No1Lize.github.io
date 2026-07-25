@@ -74,6 +74,21 @@ NAVIGATION_TERMS = tuple(sorted(NAVIGATION_LABELS, key=len, reverse=True))
 CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\n]+|(?<=\.)\s+(?=[A-Z\u3400-\u9fff])")
 CJK_RE = re.compile(r"[\u3400-\u9fff]")
 WORD_RE = re.compile(r"[A-Za-z0-9]+|[\u3400-\u9fff]")
+PAGE_TITLE_PREFIX_RE = re.compile(
+    r"^[^.!?。！？\n]{8,180}\s+::\s+[^.!?。！？\n]{2,100}[.!?。！？]\s*",
+    re.IGNORECASE,
+)
+PAGE_TAIL_RE = re.compile(
+    r"\b(?:investor relations|transfer agent|toll[- ]?free|media kit|"
+    r"featured\s*\(\d+\)|cookie settings|all rights reserved)\b|"
+    r"(?:投资者关系|联系我们|加入我们|媒体资料|版权所有|备案号)",
+    re.IGNORECASE,
+)
+STREET_ADDRESS_RE = re.compile(
+    r"\b\d{2,6}\s+[A-Z][A-Za-z.-]+(?:\s+[A-Z][A-Za-z.-]+){0,3}\s+"
+    r"(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Boulevard|Blvd\.?|Drive|Dr\.?|Way)\b",
+    re.IGNORECASE,
+)
 
 
 def _compact(value: Any) -> str:
@@ -120,8 +135,20 @@ def _looks_like_navigation(value: str) -> bool:
     return False
 
 
+def _trim_page_chrome(value: Any) -> str:
+    text = PAGE_TITLE_PREFIX_RE.sub("", clean_text(value, 5000), count=1)
+    candidates = [
+        match.start()
+        for pattern in (PAGE_TAIL_RE, STREET_ADDRESS_RE)
+        if (match := pattern.search(text)) is not None and match.start() >= 32
+    ]
+    if candidates:
+        text = text[: min(candidates)]
+    return clean_text(text, 5000)
+
+
 def _split_clauses(value: str) -> list[str]:
-    text = clean_text(value, 5000)
+    text = _trim_page_chrome(value)
     if not text:
         return []
     text = text.replace("\u00a0", " ")
@@ -174,13 +201,31 @@ def sanitize_narrative(value: Any, fallback: str = "", *, limit: int = 780) -> s
             break
 
     if not selected:
-        return clean_text(fallback, limit)
+        return clean_text(_trim_page_chrome(fallback), limit)
 
     cjk_count = sum(len(CJK_RE.findall(clause)) for clause in selected)
     character_count = sum(len(clause) for clause in selected)
     if cjk_count / max(1, character_count) >= 0.18:
         return clean_text("。".join(item.rstrip("。") for item in selected) + "。", limit)
     return clean_text(". ".join(item.rstrip(".") for item in selected) + ".", limit)
+
+
+def _residual_narrative_errors(payload: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    for kind, collection, fields in (
+        ("company", payload.get("companies", {}), COMPANY_NARRATIVE_FIELDS),
+        ("institution", payload.get("institutions", {}), INSTITUTION_NARRATIVE_FIELDS),
+    ):
+        if not isinstance(collection, dict):
+            continue
+        for slug, profile in collection.items():
+            if not isinstance(profile, dict):
+                continue
+            for field in fields:
+                text = clean_text(profile.get(field), 5000)
+                if PAGE_TAIL_RE.search(text) or STREET_ADDRESS_RE.search(text) or PAGE_TITLE_PREFIX_RE.search(text):
+                    errors.append(f"{kind}:{slug}:{field}")
+    return errors
 
 
 def sanitize_snapshot_payload(payload: dict[str, Any]) -> tuple[dict[str, Any], int]:
@@ -207,13 +252,15 @@ def sanitize_snapshot_payload(payload: dict[str, Any]) -> tuple[dict[str, Any], 
                 changed_fields += 1
             profile[field] = normalized
 
+    errors = _residual_narrative_errors(cleaned)
     quality_gate = cleaned.setdefault("qualityGate", {})
     checks = quality_gate.setdefault("checks", {})
     checks["narrativeNoise"] = {
-        "actual": 0,
+        "actual": len(errors),
         "required": 0,
-        "passed": True,
+        "passed": not errors,
     }
+    quality_gate["narrativeErrors"] = errors[:50]
     quality_gate["passed"] = all(
         bool(check.get("passed"))
         for check in checks.values()
@@ -236,6 +283,9 @@ def main() -> int:
     if args.check:
         if rendered != current:
             print(f"Narrative sanitation required in {changed_fields} fields.")
+            return 1
+        if not cleaned.get("qualityGate", {}).get("checks", {}).get("narrativeNoise", {}).get("passed", False):
+            print("Residual venture narrative noise remains.")
             return 1
         print("Venture narrative fields are sanitized.")
         return 0
