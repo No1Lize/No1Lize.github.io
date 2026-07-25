@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T08:46:50+00:00",
-  "articleCount": 432,
+  "generatedAt": "2026-07-25T08:50:01+00:00",
+  "articleCount": 431,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -308,10 +308,10 @@
         "level": "媒体报道",
         "platform": "东方财富"
       },
-      "companySlug": "moonshot-ai",
       "trackSlugs": [
         "ai"
-      ]
+      ],
+      "companySlug": "moonshot-ai"
     },
     {
       "id": "official-minimax-218aa2e267825583",
@@ -3674,6 +3674,35 @@
         "level": "官方披露",
         "platform": "官方网站"
       },
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-track-ai-google-us-c6a4e78cb482b505",
+      "sourceId": "user-track-ai-google-us",
+      "title": "Anthropic’s IPO Isn’t Just a Windfall for Amazon — It’s a Decade-Long Cloud Computing Bet That’s Paying Off - NAI500",
+      "summary": "Anthropic’s IPO Isn’t Just a Windfall for Amazon — It’s a Decade-Long Cloud Computing Bet That’s Paying Off NAI500",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "AI / AGI · Google News 英文",
+        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxNQlAxRnotNVlpbmpSbEc4M25aeW9tWjdOQkxBS1h4Ni1HekdWa1o1T2FFb3lUcU9HLUpaWmo3UmVRVW9BY29RTWp0M29JVjF3S2o3WHVFcjc5UHlSRjFUTXFkWEgzWHZ5Vm1wb053a20xcVhISzdYZDVlMEtXY1d2WGQxQmNsS3YzTGRiazhBWmhPNHNmdjB5MGdzaDJTR3paVWdnMG1NRmZsZ0hmZDdpVUk3RGNYdWdQRUJteXk4cmdzQ0REYTFaMksya2xEWUE?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "companySlug": "anthropic",
+      "qualityScore": 37,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
       "trackSlugs": [
         "ai"
       ]
@@ -9280,48 +9309,6 @@
       ]
     },
     {
-      "id": "x-feifei-li-0722dff400d599a6",
-      "sourceId": "x-feifei-li",
-      "title": "李飞飞：A picture now is worth more than a thousand words in genAI; it can be turned into a full 3D world! And you can stroll in this garden endlessly long, i",
-      "summary": "A picture now is worth more than a thousand words in genAI; it can be turned into a full 3D world! And you can stroll in this garden endlessly long, it will still be there. https://t.co/barrcW05z0",
-      "type": "人物观点",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "李飞飞",
-      "publishedAt": "2025-08-22",
-      "importance": 81,
-      "source": {
-        "name": "李飞飞 on X",
-        "url": "https://x.com/drfeifei/status/1958774959867928981",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-demis-6d30d8d7ee4b315d",
-      "sourceId": "x-demis",
-      "title": "Demis Hassabis：One word: relentless. just in the past two weeks, we’ve shipped: 🌐 Genie 3 - the most advanced world simulator ever 🤔 Gemini 2.5 Pro Deep Think availa",
-      "summary": "One word: relentless. just in the past two weeks, we’ve shipped: 🌐 Genie 3 - the most advanced world simulator ever 🤔 Gemini 2.5 Pro Deep Think available to Ultra subs 🎓 Gemini Pro free for uni students & $1B for US ed 🌍 AlphaEarth - a geospatial model of the entire planet",
-      "type": "人物观点",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Demis Hassabis",
-      "publishedAt": "2025-08-08",
-      "importance": 81,
-      "source": {
-        "name": "Demis Hassabis on X",
-        "url": "https://x.com/demishassabis/status/1953887339094143156",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
       "id": "official-groq-88e4a9623533dd85",
       "sourceId": "official-groq",
       "title": "Inside the LPU: Deconstructing Groq’s Speed",
@@ -11168,7 +11155,7 @@
       "status": "ok",
       "configuredIndexes": 5,
       "discovered": 178,
-      "scanned": 19,
+      "scanned": 15,
       "accepted": 8,
       "failed": 0,
       "platform": "官方网站",
@@ -11429,11 +11416,12 @@
     {
       "id": "user-source-source-youtube",
       "name": "YOUTUBE",
-      "status": "partial",
+      "status": "error",
       "scanned": 28,
-      "accepted": 3,
+      "accepted": 0,
       "failed": 5,
       "platform": "YOUTUBE",
+      "error": "sitemap HTTPError: HTTP Error 404: Not Found; sitemap HTTPError: HTTP Error 404: Not Found; sitemap HTTPError: HTTP Error 404: Not Found",
       "adapter": "generic-web-v2",
       "detectedLanguage": "en",
       "strategies": [
@@ -11687,9 +11675,9 @@
     {
       "id": "user-track-space-bing",
       "name": "商业航天 · Bing 发现",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "Bing 搜索"
     },
@@ -11889,7 +11877,7 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 432,
+        "actual": 431,
         "required": 50,
         "passed": true
       },
@@ -11924,12 +11912,12 @@
         "passed": true
       },
       "minimumUsArticles": {
-        "actual": 268,
+        "actual": 267,
         "required": 20,
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1343,
+        "actual": 0.1346,
         "required": 0.45,
         "passed": true
       },
@@ -11939,22 +11927,22 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 432,
-        "required": 432,
+        "actual": 431,
+        "required": 431,
         "passed": true
       }
     },
     "invalidArticles": [],
     "trackingQuality": {
-      "scoredUserArticles": 229,
-      "acceptedUserArticles": 49,
-      "rejectedUserArticles": 180,
+      "scoredUserArticles": 236,
+      "acceptedUserArticles": 50,
+      "rejectedUserArticles": 186,
       "clusteredDuplicates": 1,
       "minimumScore": 31
     }
   },
   "trackingConfigHash": "b7e271039d33c863b2b76bbf9fc76a65172d73afed98b47004bacbd12255a3dd",
-  "trackingEnrichedAt": "2026-07-25T08:46:51+00:00",
+  "trackingEnrichedAt": "2026-07-25T08:50:02+00:00",
   "trackCoverage": {
     "ai": {
       "slug": "ai",
@@ -11967,11 +11955,11 @@
       "failedSources": 0,
       "scanned": 21,
       "accepted": 21,
-      "matchedArticles": 163,
+      "matchedArticles": 162,
       "backfilledArticles": 7,
-      "independentSources": 163,
-      "lastRun": "2026-07-25T08:46:50+00:00",
-      "message": "三路发现均已尝试，当前匹配 163 条公开事件。"
+      "independentSources": 162,
+      "lastRun": "2026-07-25T08:50:01+00:00",
+      "message": "三路发现均已尝试，当前匹配 162 条公开事件。"
     },
     "robotics": {
       "slug": "robotics",
@@ -11987,7 +11975,7 @@
       "matchedArticles": 86,
       "backfilledArticles": 8,
       "independentSources": 86,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 86 条公开事件。"
     },
     "semiconductor": {
@@ -12004,7 +11992,7 @@
       "matchedArticles": 47,
       "backfilledArticles": 0,
       "independentSources": 47,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 47 条公开事件。"
     },
     "energy": {
@@ -12021,7 +12009,7 @@
       "matchedArticles": 36,
       "backfilledArticles": 0,
       "independentSources": 36,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 36 条公开事件。"
     },
     "biotech": {
@@ -12038,7 +12026,7 @@
       "matchedArticles": 22,
       "backfilledArticles": 0,
       "independentSources": 22,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 22 条公开事件。"
     },
     "quantum": {
@@ -12055,7 +12043,7 @@
       "matchedArticles": 34,
       "backfilledArticles": 0,
       "independentSources": 34,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 34 条公开事件。"
     },
     "space": {
@@ -12065,14 +12053,14 @@
       "label": "已完成",
       "expectedSources": 3,
       "completedSources": 3,
-      "healthySources": 2,
+      "healthySources": 3,
       "failedSources": 0,
-      "scanned": 16,
-      "accepted": 16,
+      "scanned": 24,
+      "accepted": 24,
       "matchedArticles": 51,
       "backfilledArticles": 1,
       "independentSources": 51,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 51 条公开事件。"
     },
     "web3": {
@@ -12089,7 +12077,7 @@
       "matchedArticles": 2,
       "backfilledArticles": 1,
       "independentSources": 2,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 2 条公开事件。"
     },
     "materials": {
@@ -12106,7 +12094,7 @@
       "matchedArticles": 1,
       "backfilledArticles": 0,
       "independentSources": 1,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 1 条公开事件。"
     },
     "manufacturing": {
@@ -12123,7 +12111,7 @@
       "matchedArticles": 6,
       "backfilledArticles": 0,
       "independentSources": 6,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 6 条公开事件。"
     },
     "fusion": {
@@ -12140,7 +12128,7 @@
       "matchedArticles": 5,
       "backfilledArticles": 4,
       "independentSources": 5,
-      "lastRun": "2026-07-25T08:46:50+00:00",
+      "lastRun": "2026-07-25T08:50:01+00:00",
       "message": "三路发现均已尝试，当前匹配 5 条公开事件。"
     }
   }
