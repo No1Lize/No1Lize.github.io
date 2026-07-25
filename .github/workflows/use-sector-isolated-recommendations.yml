@@ -1,0 +1,72 @@
+name: One-time connect sector-isolated recommendations
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/use-sector-isolated-recommendations.yml
+
+permissions:
+  contents: write
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Connect strict recommendation boundary
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('components/tracking-recommendations-bridge.tsx')
+          source = path.read_text(encoding='utf-8')
+          old = '''import {
+  recommendTrackingAdditions,
+  type TrackingRecommendationSet,
+  type TrackingSourceRecommendation,
+} from "@/lib/tracking-recommendations";'''
+          new = '''import {
+  type TrackingRecommendationSet,
+  type TrackingSourceRecommendation,
+} from "@/lib/tracking-recommendations";
+import { recommendSectorTrackingAdditions } from "@/lib/tracking-sector-recommendations";'''
+          if old not in source:
+              raise SystemExit('missing recommendation import marker')
+          source = source.replace(old, new, 1)
+          source = source.replace(
+              'recommendTrackingAdditions(articles, snapshot.sector, {',
+              'recommendSectorTrackingAdditions(articles, snapshot.sector, {',
+              1,
+          )
+          path.write_text(source, encoding='utf-8')
+
+          test_path = Path('tests/tracking-sector-recommendation-isolation.test.ts')
+          test_source = test_path.read_text(encoding='utf-8')
+          test_source = test_source.replace(
+              'import { recommendTrackingAdditions } from "../lib/tracking-recommendations";',
+              'import { recommendSectorTrackingAdditions } from "../lib/tracking-sector-recommendations";',
+          )
+          test_source = test_source.replace(
+              'recommendTrackingAdditions(',
+              'recommendSectorTrackingAdditions(',
+          )
+          test_path.write_text(test_source, encoding='utf-8')
+          PY
+      - name: Install and verify
+        run: npm install && npm run test:unit && npx tsc --noEmit
+      - name: Commit verified connection
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components/tracking-recommendations-bridge.tsx tests/tracking-sector-recommendation-isolation.test.ts
+          git commit -m "fix: use sector-isolated recommendations in admin"
+          git pull --rebase origin main
+          git push origin HEAD:main
