@@ -15,7 +15,10 @@ import {
   listedCompaniesForDisplay,
   listedCompanyBySlug,
 } from "@/lib/listed-companies";
-import { marketProfiles } from "@/lib/market-profile-data";
+import {
+  marketProfiles,
+  type MarketMetric,
+} from "@/lib/market-profile-data";
 import { ipoProfiles } from "@/lib/research-content";
 
 export function generateStaticParams() {
@@ -67,22 +70,21 @@ export default async function IpoDetail({
     marketData?.company.listedAt ?? researchProfile?.listedAt ?? "持续跟踪";
   const exchange =
     marketData?.company.exchange ?? researchProfile?.exchange ?? company.market;
-  const description =
+  const rawDescription =
     marketData?.company.description ??
     marketData?.company.mainBusiness ??
     researchProfile?.description ??
     `${displayName}的公开市场、财务与公司披露跟踪页面。`;
-  const sections = [
-    "行情走势",
-    "基本资料",
-    "新闻公告",
-    "财务分析",
-    "经营分析",
-    "上市概览",
-    "状态时间线",
-    "经营观察",
-    "来源",
-  ];
+  const detailDescription = composeDescription(
+    rawDescription,
+    marketData?.company.mainBusiness,
+    360,
+  );
+  const heroDescription = clipAtSentence(detailDescription, 140);
+  const region = marketData?.company.region || inferDisplayRegion(company.market);
+  const marketCap = metricValue(marketData?.metrics, "marketCap");
+  const marketSections = ["行情走势", "基本资料", "新闻公告", "财务分析", "经营分析"];
+  const archiveSections = ["上市概览", "状态时间线", "经营观察", "来源", "研报与行业研究"];
 
   return (
     <main className="page-shell subpage">
@@ -92,11 +94,12 @@ export default async function IpoDetail({
             {company.market} · {company.sector}
           </p>
           <h1>{displayName}</h1>
-          <p>{description}</p>
+          <p className="market-hero-description">{heroDescription}</p>
           <div className="hero-chips">
             <span>{company.ticker}</span>
             <span>{company.status}</span>
             <span>{exchange}</span>
+            <span>{region}</span>
             <span>
               {marketData?.status === "ok"
                 ? "市场数据已同步"
@@ -106,20 +109,29 @@ export default async function IpoDetail({
             </span>
           </div>
         </div>
-        <div className="hero-stat">
-          <span>上市代码</span>
-          <strong>{company.ticker}</strong>
-          <small>{listedAt}</small>
+        <div className="market-hero-stats">
+          <div className="hero-stat">
+            <span>上市代码</span>
+            <strong>{company.ticker}</strong>
+            <small>{listedAt}</small>
+          </div>
+          <div className="hero-stat">
+            <span>总市值</span>
+            <strong className="market-cap-value">{marketCap || "待同步"}</strong>
+            <small>延迟公开报价</small>
+          </div>
         </div>
       </header>
 
       <div className="detail-layout market-detail-layout">
         <aside className="toc market-toc">
           <strong>同花顺内容</strong>
-          {sections.map((item) => (
-            <a href={`#${item}`} key={item}>
-              {item}
-            </a>
+          {marketSections.map((item) => (
+            <a href={`#${item}`} key={item}>{item}</a>
+          ))}
+          <strong className="toc-group-title">上市档案</strong>
+          {archiveSections.map((item) => (
+            <a href={`#${item}`} key={item}>{item}</a>
           ))}
         </aside>
 
@@ -128,6 +140,7 @@ export default async function IpoDetail({
             <MarketLineChart
               points={marketData?.priceHistory ?? []}
               market={company.market}
+              metrics={marketData?.metrics ?? []}
             />
           </Section>
 
@@ -136,10 +149,12 @@ export default async function IpoDetail({
               <Fact label="证券代码" value={company.ticker} />
               <Fact label="交易市场" value={exchange} />
               <Fact label="上市日期" value={listedAt} />
+              <Fact label="所属地域" value={region} />
               <Fact
                 label="所属行业"
                 value={marketData?.company.industry || company.sector}
               />
+              <Fact label="总市值" value={marketCap} />
               <Fact label="董事长 / 负责人" value={marketData?.company.chairman} />
               <Fact label="员工人数" value={marketData?.company.employees} />
               <Fact label="公司网站" value={marketData?.company.website} />
@@ -148,7 +163,11 @@ export default async function IpoDetail({
             {marketData?.company.address && (
               <p className="data-note">办公 / 注册地址：{marketData.company.address}</p>
             )}
-            <p>{description}</p>
+            <div className="company-description-card">
+              <span>公司简介</span>
+              <p>{detailDescription}</p>
+              <small>已自动移除冗长荣誉列表，并在完整语句处截断。</small>
+            </div>
           </Section>
 
           <Section id="新闻公告" title="新闻公告">
@@ -156,9 +175,7 @@ export default async function IpoDetail({
               <div className="timeline">
                 {[...news.slice(0, 6), ...filings.slice(0, 4)]
                   .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-                  .map((event) => (
-                    <EventRow event={event} key={event.id} />
-                  ))}
+                  .map((event) => <EventRow event={event} key={event.id} />)}
               </div>
             ) : (
               <DataPending text="已建立公司页，等待新闻与公告抓取器完成首次归属。" />
@@ -177,7 +194,7 @@ export default async function IpoDetail({
                 ))}
               </div>
             ) : (
-              <DataPending text="同花顺公开页暂未返回可验证的核心指标，旧快照不会被空结果覆盖。" />
+              <DataPending text="公开公司页暂未返回可验证的核心指标，旧快照不会被空结果覆盖。" />
             )}
 
             {marketData?.financialSeries.length ? (
@@ -197,8 +214,7 @@ export default async function IpoDetail({
                       <span>{metric.label}</span>
                       <strong>{formatMetric(metric)}</strong>
                       <small>
-                        报告期 {metric.periodEnd} · {metric.form} ·{" "}
-                        {metric.fiscalPeriod ?? "报告期"}
+                        报告期 {metric.periodEnd} · {metric.form} · {metric.fiscalPeriod ?? "报告期"}
                       </small>
                     </div>
                   ))}
@@ -212,10 +228,11 @@ export default async function IpoDetail({
               <span>主营业务</span>
               <strong>{displayName}</strong>
               <p>
-                {marketData?.company.mainBusiness ||
-                  marketData?.company.description ||
-                  researchProfile?.description ||
-                  "等待公开公司资料同步。"}
+                {composeDescription(
+                  marketData?.company.mainBusiness || detailDescription,
+                  detailDescription,
+                  240,
+                )}
               </p>
             </div>
             <div className="analysis-grid">
@@ -236,9 +253,11 @@ export default async function IpoDetail({
               <Fact label="证券代码" value={company.ticker} />
               <Fact label="交易所" value={exchange} />
               <Fact label="上市日期" value={listedAt} />
+              <Fact label="所属地域" value={region} />
+              <Fact label="总市值" value={marketCap} />
               <Fact label="资料更新" value={marketData?.updatedAt?.slice(0, 10) || snapshotDate} />
             </dl>
-            <p>{description}</p>
+            <p>{detailDescription}</p>
           </Section>
 
           <Section id="状态时间线" title="状态时间线">
@@ -247,9 +266,7 @@ export default async function IpoDetail({
                 <time>{listedAt}</time>
                 <div>
                   <strong>{exchange}挂牌</strong>
-                  <p>
-                    证券代码 {company.ticker}，当前状态为{company.status}。
-                  </p>
+                  <p>证券代码 {company.ticker}，当前状态为{company.status}。</p>
                 </div>
               </div>
               <div>
@@ -278,57 +295,87 @@ export default async function IpoDetail({
 
           <Section id="来源" title="数据与监管来源">
             {marketData && (
-              <a
-                className="source-card"
-                href={marketData.sources.tonghuashun}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span>数据库记录</span>
+              <a className="source-card" href={marketData.sources.tonghuashun} target="_blank" rel="noreferrer">
+                <span>公司资料</span>
                 <strong>同花顺公开公司页</strong>
                 <small>{marketData.sources.tonghuashun}</small>
               </a>
             )}
+            {marketData?.sources.quote && (
+              <a className="source-card" href={marketData.sources.quote} target="_blank" rel="noreferrer">
+                <span>公开报价快照</span>
+                <strong>总市值、估值与交易指标补全源</strong>
+                <small>{marketData.sources.quote}</small>
+              </a>
+            )}
             {marketData?.sources.price && (
-              <a
-                className="source-card"
-                href={marketData.sources.price}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a className="source-card" href={marketData.sources.price} target="_blank" rel="noreferrer">
                 <span>延迟公开行情</span>
-                <strong>日线走势回退源</strong>
+                <strong>历史日线走势源</strong>
                 <small>{marketData.sources.price}</small>
               </a>
             )}
             {company.source && (
-              <a
-                className="source-card"
-                href={company.source.url}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a className="source-card" href={company.source.url} target="_blank" rel="noreferrer">
                 <span>{company.source.level}</span>
                 <strong>{company.source.name}</strong>
                 <small>{company.source.url}</small>
               </a>
             )}
             {facts && (
-              <a
-                className="source-card"
-                href={facts.source.url}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a className="source-card" href={facts.source.url} target="_blank" rel="noreferrer">
                 <span>{facts.source.level}</span>
                 <strong>{facts.source.name}</strong>
                 <small>CIK {facts.cik} · {facts.entityName}</small>
               </a>
             )}
           </Section>
+
+          <Section id="研报与行业研究" title="研报与行业研究">
+            <p className="research-directory-intro">
+              使用公司名称“{displayName}”、代码“{company.ticker}”或行业“{marketData?.company.industry || company.sector}”检索。
+              以下为第三方公开入口，部分全文可能需要登录或受平台权限限制。
+            </p>
+            <div className="research-directory-grid">
+              <ResearchLink
+                platform="萝卜投研"
+                title="个股深度研究"
+                description={`检索 ${displayName} 的券商观点、公司研究、财务预测与产业链信息。`}
+                href="https://robo.datayes.com/"
+              />
+              <ResearchLink
+                platform="萝卜投研"
+                title="行业与产业链分析"
+                description={`以“${marketData?.company.industry || company.sector}”为关键词查看行业数据和深度研究。`}
+                href="https://robo.datayes.com/"
+              />
+              <ResearchLink
+                platform="慧博投研"
+                title="全市场券商研报"
+                description="浏览券商公司调研、行业分析、投资策略、港美研究和新股研究。"
+                href="https://p.hibor.com.cn/"
+              />
+              <ResearchLink
+                platform="慧博投研"
+                title="高级研报搜索"
+                description={`在研究报告高级搜索中输入“${displayName}”或“${company.ticker}”。`}
+                href="https://www.hibor.com.cn/supersearch.html"
+              />
+            </div>
+          </Section>
         </article>
 
         <aside className="source-rail market-source-rail">
+          <div className="confidence-box">
+            <span>总市值</span>
+            <strong>{marketCap || "待同步"}</strong>
+            <p>公开延迟报价</p>
+          </div>
+          <div className="confidence-box">
+            <span>所属地域</span>
+            <strong>{region}</strong>
+            <p>公司资料与地址归一化</p>
+          </div>
           <div className="confidence-box">
             <span>行情交易日</span>
             <strong>{marketData?.priceHistory.length ?? 0}</strong>
@@ -337,7 +384,7 @@ export default async function IpoDetail({
           <div className="confidence-box">
             <span>核心指标</span>
             <strong>{marketData?.metrics.length ?? 0}</strong>
-            <p>来自公开公司页面</p>
+            <p>公司资料与报价快照合并</p>
           </div>
           <div className="confidence-box">
             <span>新闻与监管文件</span>
@@ -358,6 +405,51 @@ export default async function IpoDetail({
   );
 }
 
+function metricValue(metrics: MarketMetric[] | undefined, id: string) {
+  return metrics?.find((metric) => metric.id === id)?.value || "";
+}
+
+function inferDisplayRegion(market: "A股" | "港股" | "美股") {
+  if (market === "港股") return "中国香港";
+  if (market === "美股") return "美国";
+  return "中国";
+}
+
+function cleanDisplayText(value: string) {
+  return value
+    .replace(/\s+/g, " ")
+    .replace(/公司成立至今共获得多项荣誉[\s\S]*$/u, "")
+    .replace(/公司先后获得多项荣誉[\s\S]*$/u, "")
+    .trim()
+    .replace(/[，；;\s]+$/u, "");
+}
+
+function clipAtSentence(value: string, maxLength: number) {
+  const text = cleanDisplayText(value);
+  if (text.length <= maxLength) return ensureSentence(text);
+  const clipped = text.slice(0, maxLength);
+  const sentenceEnd = Math.max(clipped.lastIndexOf("。"), clipped.lastIndexOf("！"), clipped.lastIndexOf("？"));
+  if (sentenceEnd >= Math.max(50, Math.floor(maxLength * 0.55))) {
+    return clipped.slice(0, sentenceEnd + 1);
+  }
+  const commaEnd = Math.max(clipped.lastIndexOf("，"), clipped.lastIndexOf("；"));
+  return ensureSentence((commaEnd >= 60 ? clipped.slice(0, commaEnd) : clipped).trim());
+}
+
+function ensureSentence(value: string) {
+  if (!value) return "等待公开公司资料同步。";
+  return /[。！？]$/u.test(value) ? value : `${value}。`;
+}
+
+function composeDescription(primary: string, secondary: string | undefined, maxLength: number) {
+  let value = cleanDisplayText(primary);
+  const fallback = cleanDisplayText(secondary || "");
+  if (value.length < 70 && fallback && !value.includes(fallback) && !fallback.includes(value)) {
+    value = `${value} ${fallback}`.trim();
+  }
+  return clipAtSentence(value, maxLength);
+}
+
 function findCompanyEvents(
   slug: string,
   catalogSlug: string,
@@ -369,9 +461,9 @@ function findCompanyEvents(
   return intelligenceEvents
     .filter((event) => {
       if (event.companySlug === slug || event.companySlug === catalogSlug) return true;
-      const company = event.company.toLocaleLowerCase("zh-CN");
+      const eventCompany = event.company.toLocaleLowerCase("zh-CN");
       return normalizedNames.some(
-        (name) => company === name || company.includes(name) || name.includes(company),
+        (name) => eventCompany === name || eventCompany.includes(name) || name.includes(eventCompany),
       );
     })
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
@@ -407,6 +499,27 @@ function DataPending({ text }: { text: string }) {
       <strong>等待数据同步</strong>
       <p>{text}</p>
     </div>
+  );
+}
+
+function ResearchLink({
+  platform,
+  title,
+  description,
+  href,
+}: {
+  platform: string;
+  title: string;
+  description: string;
+  href: string;
+}) {
+  return (
+    <a className="research-directory-card" href={href} target="_blank" rel="noreferrer">
+      <span>{platform}</span>
+      <strong>{title}</strong>
+      <p>{description}</p>
+      <small>打开公开入口 →</small>
+    </a>
   );
 }
 
