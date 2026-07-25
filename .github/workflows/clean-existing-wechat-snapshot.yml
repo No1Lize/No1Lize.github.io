@@ -1,5 +1,6 @@
 name: One-time clean existing WeChat snapshot quality
 
+# Re-run after standalone WeChat sector reassignment landed on main.
 on:
   push:
     branches: [main]
