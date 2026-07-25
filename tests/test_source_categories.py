@@ -104,7 +104,7 @@ class SourceCategoryTests(unittest.TestCase):
         )
         self.assertEqual(
             specs_by_id["user-source-eastmoney"]["sourceUrl"],
-            "https://eastmoney.com/",
+            "https://www.eastmoney.com/",
         )
         self.assertEqual(
             specs_by_id["user-source-company"]["company"],
