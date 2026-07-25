@@ -1,0 +1,27 @@
+commit=dd6420ca65e7abaa8de5ecd2ed66177b10c2d1cf
+generated_at=2026-07-25T10:28:01Z
+
+===== py_compile =====
+exit_code=0
+
+===== full_unittest =====
+....................official=two fatal=RuntimeError: blocked
+..............................................................F..........................................
+======================================================================
+FAIL: test_media_website_routes_to_generic_adapter_without_company_entity (test_generic_web_sources.LanguageAwareSourceTests.test_media_website_routes_to_generic_adapter_without_company_entity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_generic_web_sources.py", line 56, in test_media_website_routes_to_generic_adapter_without_company_entity
+    self.assertEqual(runtime[0]["sourceUrl"], "https://tw.yahoo.com/?p=us")
+AssertionError: 'https://tw.yahoo.com/' != 'https://tw.yahoo.com/?p=us'
+- https://tw.yahoo.com/
++ https://tw.yahoo.com/?p=us
+?                      +++++
+
+
+----------------------------------------------------------------------
+Ran 125 tests in 0.136s
+
+FAILED (failures=1)
+No snapshot changes (1 articles).
+exit_code=1
