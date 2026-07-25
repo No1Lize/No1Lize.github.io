@@ -45,115 +45,35 @@ jobs:
             tools/enrich_venture_profiles.py \
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
-            tools/sanitize_venture_narratives.py
-      - name: Test profile extraction
-        run: python -m unittest tests.test_venture_profile_extraction
-      - name: Test profile noise filters
-        run: python -m unittest tests.test_venture_profile_noise_filters
-      - name: Test profile enrichment
-        run: python -m unittest tests.test_venture_profile_enrichment
-      - name: Persist enrichment test failure
-        if: failure()
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py
+      - name: Run venture unit tests
         run: |
-          set -euo pipefail
-          mkdir -p diagnostics
-          python -m unittest -v tests.test_venture_profile_enrichment \
-            > diagnostics/venture-pr-enrichment-test.txt 2>&1 || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/venture-pr-enrichment-test.txt
-          git commit -m "ci: record venture enrichment test failure"
-          git push origin "HEAD:${HEAD_REF}"
-      - name: Test consistency normalizer
-        run: python -m unittest tests.test_normalize_venture_profiles
-      - name: Persist normalizer test failure
-        if: failure()
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p diagnostics
-          python -m unittest -v tests.test_normalize_venture_profiles \
-            > diagnostics/venture-pr-normalizer-test.txt 2>&1 || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/venture-pr-normalizer-test.txt
-          git commit -m "ci: record venture normalizer test failure"
-          git push origin "HEAD:${HEAD_REF}"
-      - name: Test structured postprocess
-        run: python -m unittest tests.test_venture_profile_postprocess
-      - name: Persist structured test failure
-        if: failure()
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p diagnostics
-          python -m unittest -v tests.test_venture_profile_postprocess \
-            > diagnostics/venture-pr-structured-test.txt 2>&1 || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/venture-pr-structured-test.txt
-          git commit -m "ci: record venture structured test failure"
-          git push origin "HEAD:${HEAD_REF}"
-      - name: Test narrative sanitizer
-        run: python -m unittest tests.test_venture_narrative_sanitizer
-      - name: Persist narrative test failure
-        if: failure()
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p diagnostics
-          python -m unittest -v tests.test_venture_narrative_sanitizer \
-            > diagnostics/venture-pr-narrative-test.txt 2>&1 || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/venture-pr-narrative-test.txt
-          git commit -m "ci: record venture narrative test failure"
-          git push origin "HEAD:${HEAD_REF}"
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
       - name: Enrich current snapshot
         run: python tools/enrich_venture_profiles.py
       - name: Normalize cross-entity consistency
         run: python tools/normalize_venture_profiles.py
-      - name: Sanitize structured fields
-        run: python tools/sanitize_venture_profiles.py
-      - name: Sanitize narrative fields
-        run: python tools/sanitize_venture_narratives.py
+      - name: Apply final venture quality gate
+        run: python tools/finalize_venture_profiles.py
+      - name: Check finalizer idempotence
+        run: python tools/finalize_venture_profiles.py --check
       - name: Check normalizer idempotence
         run: python tools/normalize_venture_profiles.py --check
-      - name: Persist normalizer idempotence failure
-        if: failure()
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p diagnostics
-          python tools/normalize_venture_profiles.py --check \
-            > diagnostics/venture-pr-normalizer-check.txt 2>&1 || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/venture-pr-normalizer-check.txt
-          git commit -m "ci: record venture normalizer idempotence failure"
-          git push origin "HEAD:${HEAD_REF}"
-      - name: Check structured sanitizer idempotence
-        run: python tools/sanitize_venture_profiles.py --check
-      - name: Check narrative sanitizer idempotence
-        run: python tools/sanitize_venture_narratives.py --check
       - name: Validate crawler quality gate
         run: python tools/crawl_venture_profiles.py --validate-only
       - name: Validate enrichment quality gate
         run: python tools/enrich_venture_profiles.py --validate-only
       - name: Check generated diff
         run: git diff --check
-      - name: Commit sanitized data to PR branch
+      - name: Commit validated data to PR branch
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
         shell: bash
@@ -166,9 +86,9 @@ jobs:
           rm -f diagnostics/venture-pr-normalizer-test.txt
           rm -f diagnostics/venture-pr-structured-test.txt
           rm -f diagnostics/venture-pr-narrative-test.txt
-          rm -f diagnostics/venture-pr-normalizer-check.txt
           rm -f tools/patch_venture_enrichment_idempotence.py
           rm -f tools/patch_venture_structured_products.py
+          rm -f tools/patch_venture_narrative_prose.py
           git add -A
           git commit -m "data: normalize startup and institution profiles"
           git push origin "HEAD:${HEAD_REF}"
