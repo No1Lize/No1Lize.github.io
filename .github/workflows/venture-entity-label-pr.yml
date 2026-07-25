@@ -34,63 +34,87 @@ jobs:
           python tools/patch_venture_entity_labels_v1.py
           python tools/patch_venture_short_summary_fallback.py
       - name: Run semantic and terminal regressions
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
         run: |
-          set +e
-          mkdir -p diagnostics
           python -m py_compile \
             tools/enforce_venture_entity_semantics.py \
-            tools/stabilize_venture_profiles.py \
-            > diagnostics/venture-entity-label-tests.txt 2>&1
-          status=$?
-          if [ "$status" -eq 0 ]; then
-            python -m unittest -v \
-              tests.test_venture_entity_semantics \
-              tests.test_stabilize_venture_profiles \
-              >> diagnostics/venture-entity-label-tests.txt 2>&1
-            status=$?
-          fi
-          cat diagnostics/venture-entity-label-tests.txt
-          if [ "$status" -ne 0 ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add diagnostics/venture-entity-label-tests.txt
-            git commit -m "ci: record venture entity-label regression failure"
-            git push origin "HEAD:${HEAD_REF}"
-          fi
-          exit "$status"
-      - name: Regenerate terminal venture snapshot
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
+            tools/finalize_venture_profiles.py \
+            tools/stabilize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
+      - name: Apply semantic cleanup directly
         run: |
-          set +e
-          mkdir -p diagnostics
-          {
-            echo '=== stabilize ==='
-            python tools/stabilize_venture_profiles.py
-            echo '=== stabilize check ==='
-            python tools/stabilize_venture_profiles.py --check
-            echo '=== finalizer check ==='
-            python tools/finalize_venture_profiles.py --check
-            echo '=== semantics check ==='
-            python tools/enforce_venture_entity_semantics.py --check
-            echo '=== diff check ==='
-            git diff --check
-          } > diagnostics/venture-entity-label-regeneration.txt 2>&1
-          status=$?
-          cat diagnostics/venture-entity-label-regeneration.txt
-          if [ "$status" -ne 0 ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add diagnostics/venture-entity-label-regeneration.txt
-            git commit -m "ci: record venture snapshot regeneration failure"
-            git push origin "HEAD:${HEAD_REF}"
-          fi
-          exit "$status"
-      - name: Commit validated fix to PR branch
+          python tools/enforce_venture_entity_semantics.py
+          python - <<'PY'
+          import json
+          from tools.enforce_venture_entity_semantics import (
+              CATALOG_PATH,
+              SNAPSHOT_PATH,
+              _valid_person_name,
+              _valid_product,
+              parse_catalog,
+          )
+
+          payload = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+          companies, institutions = parse_catalog(CATALOG_PATH.read_text(encoding="utf-8"))
+          company_aliases = {item.slug: item.aliases for item in companies}
+
+          forbidden = {
+              "英特尔深化智能生态合作",
+              "Spotlight Megan Holston-Alexander Hear",
+              "Chris Lyons. The Next",
+              "Chris Lyons. Black History",
+          }
+          rendered = json.dumps(payload, ensure_ascii=False)
+          remaining = sorted(item for item in forbidden if item in rendered)
+          assert not remaining, f"known venture noise remains: {remaining}"
+
+          for slug, profile in payload.get("companies", {}).items():
+              aliases = (profile.get("name", ""), slug, *company_aliases.get(slug, ()))
+              invalid_products = [
+                  item for item in profile.get("products", [])
+                  if not _valid_product(item, aliases)
+              ]
+              invalid_people = [
+                  row.get("name", "") for row in profile.get("team", [])
+                  if isinstance(row, dict) and not _valid_person_name(row.get("name"))
+              ]
+              assert not invalid_products, f"{slug} invalid products: {invalid_products}"
+              assert not invalid_people, f"{slug} invalid team: {invalid_people}"
+
+          for slug, profile in payload.get("institutions", {}).items():
+              invalid_people = [
+                  row.get("name", "") for row in profile.get("team", [])
+                  if isinstance(row, dict) and not _valid_person_name(row.get("name"))
+              ]
+              assert not invalid_people, f"{slug} invalid team: {invalid_people}"
+          PY
+      - name: Reach shared terminal fixed point
+        run: |
+          python tools/stabilize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          git diff --check
+      - name: Recheck cleaned production data
+        run: |
+          python - <<'PY'
+          import json
+          from tools.enforce_venture_entity_semantics import SNAPSHOT_PATH
+
+          text = SNAPSHOT_PATH.read_text(encoding="utf-8")
+          payload = json.loads(text)
+          forbidden = (
+              "英特尔深化智能生态合作",
+              "Spotlight Megan Holston-Alexander Hear",
+              "Chris Lyons. The Next",
+              "Chris Lyons. Black History",
+          )
+          assert all(item not in text for item in forbidden)
+          checks = payload.get("qualityGate", {}).get("checks", {})
+          assert checks.get("entitySemanticConsistency", {}).get("passed") is True
+          PY
+      - name: Commit validated files to PR branch
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
         shell: bash
@@ -99,11 +123,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           rm -f .venture-entity-label-trigger
-          rm -rf diagnostics
-          rm -f tools/patch_venture_entity_labels_v1.py
-          rm -f tools/patch_venture_short_summary_fallback.py
-          rm -f .github/workflows/patch-venture-entity-labels-v1.yml
-          rm -f .github/workflows/venture-entity-label-pr.yml
-          git add -A
+          git add \
+            tools/enforce_venture_entity_semantics.py \
+            tools/finalize_venture_profiles.py \
+            tests/test_venture_entity_semantics.py \
+            public/data/venture_profiles.json
           git commit -m "fix: reject venture editorial labels as entities"
           git push origin "HEAD:${HEAD_REF}"
