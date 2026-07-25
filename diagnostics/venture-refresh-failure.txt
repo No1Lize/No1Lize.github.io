@@ -1,0 +1,39 @@
+refresh	Validate generated snapshot	﻿2026-07-25T15:34:22.8987982Z ##[group]Run python tools/crawl_venture_profiles.py --validate-only
+refresh	Validate generated snapshot	2026-07-25T15:34:22.8988922Z ^[[36;1mpython tools/crawl_venture_profiles.py --validate-only^[[0m
+refresh	Validate generated snapshot	2026-07-25T15:34:22.8989434Z ^[[36;1mpython -m unittest discover -s tests -p "test_*.py"^[[0m
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9018076Z shell: /usr/bin/bash -e {0}
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9018416Z env:
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9019142Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9019785Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9020277Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9020751Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9021210Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9021653Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9022056Z ##[endgroup]
+refresh	Validate generated snapshot	2026-07-25T15:34:22.9996252Z {"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "productiveCompanies": 52, "productiveInstitutions": 18}
+refresh	Validate generated snapshot	2026-07-25T15:34:23.8512487Z ......................official=two fatal=RuntimeError: blocked
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9449478Z ..........................................................................................................................................E
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9451101Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9452572Z ERROR: test_wechat_public_sources (unittest.loader._FailedTest.test_wechat_public_sources)
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9453833Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9454966Z ImportError: Failed to import test module: test_wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9456032Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9465900Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9466937Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9467406Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9468205Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9469276Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9470025Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_wechat_public_sources.py", line 6, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9470941Z     from tools import wechat_public_sources as wechat
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9471781Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 129
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9472647Z     _person_name(value) for value in track.get("people", []) if _person_name(value)
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9473386Z     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9473961Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9474334Z 
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9474345Z 
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9474622Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9475195Z Ran 161 tests in 0.187s
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9475465Z 
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9475609Z FAILED (errors=1)
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9476084Z No snapshot changes (1 articles).
+refresh	Validate generated snapshot	2026-07-25T15:34:23.9674891Z ##[error]Process completed with exit code 1.
