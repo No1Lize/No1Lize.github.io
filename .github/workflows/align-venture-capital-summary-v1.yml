@@ -1,0 +1,85 @@
+name: Align venture capital summary v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/align-venture-capital-summary-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: align-venture-capital-summary-v1
+  cancel-in-progress: true
+
+jobs:
+  align:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/venture-layered-evidence-v4
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Align contracts and validate terminal gates
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          (
+            set -euo pipefail
+            python tools/patch_entity_capital_summary_contract.py
+            python -m py_compile \
+              tools/enforce_venture_entity_semantics.py \
+              tools/finalize_venture_profiles.py
+            python -m unittest -v \
+              tests.test_venture_entity_semantics \
+              tests.test_finalize_venture_profiles
+            python tools/enforce_venture_entity_semantics.py
+            python tools/enforce_venture_entity_semantics.py --check
+            python tools/finalize_venture_profiles.py --check
+            python tools/refine_venture_research_evidence.py --check
+            python tools/enrich_venture_profiles.py --validate-only
+            git diff --check
+          ) > diagnostics/align-venture-capital-summary-v1.txt 2>&1
+          STATUS=$?
+          cat diagnostics/align-venture-capital-summary-v1.txt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "$STATUS" -eq 0 ]; then
+            rm -rf diagnostics
+            git add -A
+            git commit -m "data: align venture capital summary contracts"
+          else
+            git add -A
+            git commit -m "ci: record venture capital summary alignment failure"
+          fi
+          git push origin HEAD:feature/venture-layered-evidence-v4
+          exit "$STATUS"
+      - name: Remove one-time dispatcher
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B cleanup-capital-summary-v1 origin/main
+          git rm .github/workflows/align-venture-capital-summary-v1.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: remove capital summary alignment dispatcher"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
