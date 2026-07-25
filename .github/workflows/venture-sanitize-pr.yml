@@ -47,6 +47,28 @@ jobs:
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py \
             tools/finalize_venture_profiles.py
+      - name: Persist compile failure
+        if: failure()
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostics
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py \
+            tools/sanitize_venture_profiles.py \
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py \
+            > diagnostics/venture-pr-compile.txt 2>&1 || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/venture-pr-compile.txt
+          git commit -m "ci: record venture compile failure"
+          git push origin "HEAD:${HEAD_REF}"
       - name: Run venture unit tests
         run: |
           python -m unittest \
@@ -82,10 +104,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           rm -f .venture-sanitize-trigger
+          rm -f diagnostics/venture-pr-compile.txt
           rm -f diagnostics/venture-pr-enrichment-test.txt
           rm -f diagnostics/venture-pr-normalizer-test.txt
           rm -f diagnostics/venture-pr-structured-test.txt
           rm -f diagnostics/venture-pr-narrative-test.txt
+          rm -f diagnostics/venture-pr-normalizer-check.txt
           rm -f tools/patch_venture_enrichment_idempotence.py
           rm -f tools/patch_venture_structured_products.py
           rm -f tools/patch_venture_narrative_prose.py
