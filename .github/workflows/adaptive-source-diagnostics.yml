@@ -1,0 +1,57 @@
+name: Adaptive source diagnostics
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/adaptive-source-diagnostics.yml
+      - tools/adaptive_public_sources.py
+      - tools/crawl_with_source_categories.py
+      - tools/eastmoney_transport.py
+      - tools/validate_user_source_coverage.py
+      - tests/test_adaptive_public_sources.py
+      - tests/test_source_categories.py
+      - tests/test_user_source_coverage.py
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run diagnostics
+        shell: bash
+        run: |
+          set +e
+          REPORT="diagnostics/adaptive-source-report.txt"
+          mkdir -p diagnostics
+          {
+            echo "commit=$(git rev-parse HEAD)"
+            echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            echo "===== py_compile ====="
+            python -m py_compile \
+              tools/adaptive_public_sources.py \
+              tools/crawl_with_source_categories.py \
+              tools/eastmoney_transport.py \
+              tools/validate_user_source_coverage.py
+            echo "exit_code=$?"
+            echo
+            echo "===== full_unittest ====="
+            python -m unittest discover -s tests -p "test_*.py"
+            echo "exit_code=$?"
+          } >"$REPORT" 2>&1
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$REPORT"
+          git commit -m "ci: record adaptive source diagnostics"
+          git pull --rebase origin main
+          git push origin HEAD:main
