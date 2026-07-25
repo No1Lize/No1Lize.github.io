@@ -1,16 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { validateStrictPersonLabel } from "@/lib/strict-person-label";
-import { validateTrackingKeyword } from "@/lib/user-tracking";
-
-type GuardState = {
-  visible: boolean;
-  message: string;
-  kind: "success" | "warning" | "error";
-  top: number;
-  left: number;
-  width: number;
-};
-
-t
+/**
+ * Input validation is handled directly by UserTrackingPanel.
+ *
+ * This compatibility component remains mounted by UserTrackingLoader so older
+ * builds and imports do not break, but it intentionally renders no duplicate
+ * UI or DOM observers.
+ */
+export function TrackingKeywordGuard() {
+  return null;
+}
