@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T04:18:12+00:00",
-  "articleCount": 406,
+  "generatedAt": "2026-07-25T04:23:29+00:00",
+  "articleCount": 407,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -40,6 +40,42 @@
       }
     },
     {
+      "id": "official-user-东方财富-b1a8fd77edace479",
+      "sourceId": "official-user-东方财富",
+      "title": "三星电子与博通公司签署协议 拟合作开发先进内存芯片制造业务",
+      "summary": "据报道，三星 电子 与 博通 公司签署协议，拟合作开发先进内存芯片制造业务，该协议价值超过200亿美元，期限为5年。",
+      "type": "商业进展",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 84,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253821110827.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
+      }
+    },
+    {
+      "id": "official-user-东方财富-90ea50be8895edf5",
+      "sourceId": "official-user-东方财富",
+      "title": "三星电子、SK海力士将与美国大型科技公司达成价值1375万亿韩元的芯片合作伙伴关系",
+      "summary": "据报道，三星 电子 、 SK海力士 将与美国大型科技公司达成价值1375万亿韩元的芯片合作伙伴关系。",
+      "type": "商业进展",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 84,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253821110592.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
+      }
+    },
+    {
       "id": "tmtpost-7aac2971e8c48e5f",
       "sourceId": "tmtpost",
       "title": "Anthropic发布Opus 5，性能直逼Fable 5，价格却只有一半？！",
@@ -75,24 +111,6 @@
         "url": "https://www.anthropic.com/news/claude-opus-5",
         "level": "官方披露",
         "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-东方财富-c8e4dd022db9750d",
-      "sourceId": "official-user-东方财富",
-      "title": "SK集团将向包括英伟达在内的美国科技公司供应价值7500亿美元的芯片",
-      "summary": "据报道，SK集团将向包括 英伟达 在内的美国科技公司供应价值7500亿美元的芯片。",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-25",
-      "importance": 80,
-      "source": {
-        "name": "东方财富",
-        "url": "https://finance.eastmoney.com/a/202607253821111224.html",
-        "level": "媒体报道",
-        "platform": "东方财富"
       }
     },
     {
@@ -8590,13 +8608,14 @@
       "company": "Form Energy",
       "companySlug": "form-energy",
       "coverage": "attempted",
-      "status": "ok",
+      "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 27,
-      "scanned": 19,
-      "accepted": 4,
-      "failed": 0,
-      "platform": "官方网站"
+      "discovered": 0,
+      "scanned": 3,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "官方网站",
+      "error": "official indexes returned no dated article pages"
     },
     {
       "id": "official-fourier-intelligence",
@@ -9090,7 +9109,7 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 23,
+      "discovered": 22,
       "scanned": 18,
       "accepted": 0,
       "failed": 0,
@@ -9382,9 +9401,9 @@
     {
       "id": "user-track-materials",
       "name": "新材料 · 用户追踪",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -9593,7 +9612,7 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 406,
+        "actual": 407,
         "required": 50,
         "passed": true
       },
@@ -9633,7 +9652,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1429,
+        "actual": 0.1425,
         "required": 0.45,
         "passed": true
       },
@@ -9643,16 +9662,16 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 406,
-        "required": 406,
+        "actual": 407,
+        "required": 407,
         "passed": true
       }
     },
     "invalidArticles": [],
     "trackingQuality": {
-      "scoredUserArticles": 15,
+      "scoredUserArticles": 23,
       "acceptedUserArticles": 7,
-      "rejectedUserArticles": 8,
+      "rejectedUserArticles": 16,
       "clusteredDuplicates": 0,
       "minimumScore": 31
     }
