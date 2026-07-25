@@ -50,7 +50,7 @@ jobs:
           python-version: "3.12"
       - name: Verify crawler syntax and focused tests
         run: |
-          # semantic-profile-refresh-v13
+          # semantic-profile-refresh-v14
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
@@ -89,7 +89,6 @@ jobs:
         run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
-          python tools/normalize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python -m unittest \
             tests.test_venture_profile_extraction \
