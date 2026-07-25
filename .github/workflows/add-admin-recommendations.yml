@@ -19,10 +19,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Integrate direct admin recommendations and session token recovery
+      - name: Apply, verify and record result
         shell: bash
         run: |
-          python - <<'PY'
+          set +e
+          python - <<'PY' > admin-recommendation-patch.log 2>&1
           from pathlib import Path
 
           path = Path("components/user-tracking-panel.tsx")
@@ -31,7 +32,7 @@ jobs:
           def replace_once(old: str, new: str) -> None:
               global source
               if old not in source:
-                  raise SystemExit(f"missing patch marker:\n{old[:180]}")
+                  raise SystemExit(f"missing patch marker:\n{old[:220]}")
               source = source.replace(old, new, 1)
 
           replace_once(
@@ -74,12 +75,33 @@ jobs:
               '    setToken("");\n    setConfig(cloneTrackingConfig(initial));',
               '    setToken("");\n    window.sessionStorage.removeItem(TOKEN_SESSION_KEY);\n    setConfig(cloneTrackingConfig(initial));',
           )
-          replace_once(
-              '  function addCatalogCompany(catalog: CatalogCompany): void {',
-              '  function addCatalogCompany(catalog: CatalogCompany): void {',
-          )
-          marker = '''  function addListedCompany(event: FormEvent<HTMLFormElement>): void {'''
-          insertion = '''  function addRecommendedListedCompany(\n    recommendation: ListedCompanyRecommendation,\n  ): void {\n    addCatalogCompany(recommendation.company);\n  }\n\n  function addRecommendedSource(\n    recommendation: TrackingSourceRecommendation,\n  ): void {\n    const suggested = recommendation.source;\n    const base = `source-${slugifyTrack(suggested.name)}`;\n    let id = base;\n    let suffix = 2;\n    while (config.sources.some((source) => source.id === id)) {\n      id = `${base}-${suffix}`;\n      suffix += 1;\n    }\n    const source: TrackingSource = {\n      id,\n      ...suggested,\n      enabled: true,\n    };\n    update({ ...config, sources: [...config.sources, source] });\n  }\n\n  function addListedCompany(event: FormEvent<HTMLFormElement>): void {'''
+          marker = '  function addListedCompany(event: FormEvent<HTMLFormElement>): void {'
+          insertion = '''  function addRecommendedListedCompany(
+    recommendation: ListedCompanyRecommendation,
+  ): void {
+    addCatalogCompany(recommendation.company);
+  }
+
+  function addRecommendedSource(
+    recommendation: TrackingSourceRecommendation,
+  ): void {
+    const suggested = recommendation.source;
+    const base = `source-${slugifyTrack(suggested.name)}`;
+    let id = base;
+    let suffix = 2;
+    while (config.sources.some((source) => source.id === id)) {
+      id = `${base}-${suffix}`;
+      suffix += 1;
+    }
+    const source: TrackingSource = {
+      id,
+      ...suggested,
+      enabled: true,
+    };
+    update({ ...config, sources: [...config.sources, source] });
+  }
+
+  function addListedCompany(event: FormEvent<HTMLFormElement>): void {'''
           replace_once(marker, insertion)
           replace_once(
               '                onClick={loadFromGithub}\n',
@@ -101,20 +123,80 @@ jobs:
 
           bridge_path = Path("components/tracking-recommendations-bridge.tsx")
           bridge = bridge_path.read_text(encoding="utf-8")
-          old = '''  const sourceTarget = sourceSection();\n\n  return (\n    <>\n      {(Object.keys(LIST_FIELD_META) as ListRecommendationType[]).map((type) => {\n        const target = fieldEditor(type);\n        if (!target) return null;\n        return createPortal(\n          <TrackingRecommendations\n            key={`${snapshot.sector}-${type}`}\n            recommendations={recommendations}\n            onlyType={type}\n            onAdd={addThroughExistingEditor}\n          />,\n          target,\n        );\n      })}\n      {sourceTarget\n        ? createPortal(\n            <TrackingRecommendations\n              key={`${snapshot.sector}-sources`}\n              recommendations={recommendations}\n              onlyType="sources"\n              onAdd={addThroughExistingEditor}\n            />,\n            sourceTarget,\n          )\n        : null}\n    </>\n  );'''
-          new = '''  return (\n    <>\n      {(Object.keys(LIST_FIELD_META) as ListRecommendationType[]).map((type) => {\n        const target = fieldEditor(type);\n        if (!target) return null;\n        return createPortal(\n          <TrackingRecommendations\n            key={`${snapshot.sector}-${type}`}\n            recommendations={recommendations}\n            onlyType={type}\n            onAdd={addThroughExistingEditor}\n          />,\n          target,\n        );\n      })}\n    </>\n  );'''
-          if old not in bridge:
-              raise SystemExit("missing bridge source portal marker")
-          bridge_path.write_text(bridge.replace(old, new, 1), encoding="utf-8")
+          start = bridge.index('  const sourceTarget = sourceSection();')
+          end = bridge.index('\n}', start)
+          replacement = '''  return (
+    <>
+      {(Object.keys(LIST_FIELD_META) as ListRecommendationType[]).map((type) => {
+        const target = fieldEditor(type);
+        if (!target) return null;
+        return createPortal(
+          <TrackingRecommendations
+            key={`${snapshot.sector}-${type}`}
+            recommendations={recommendations}
+            onlyType={type}
+            onAdd={addThroughExistingEditor}
+          />,
+          target,
+        );
+      })}
+    </>
+  );'''
+          bridge = bridge[:start] + replacement + bridge[end:]
+          bridge_path.write_text(bridge, encoding="utf-8")
           PY
-      - name: Install and verify
-        run: npm install && npm run test:unit && npx tsc --noEmit
-      - name: Commit verified integration
-        shell: bash
-        run: |
+          patch_status=$?
+
+          install_status=99
+          test_status=99
+          type_status=99
+          if [ "$patch_status" -eq 0 ]; then
+            npm install > admin-recommendation-install.log 2>&1
+            install_status=$?
+            if [ "$install_status" -eq 0 ]; then
+              npm run test:unit > admin-recommendation-test.log 2>&1
+              test_status=$?
+              npx tsc --noEmit > admin-recommendation-type.log 2>&1
+              type_status=$?
+            fi
+          fi
+
+          export PATCH_STATUS="$patch_status"
+          export INSTALL_STATUS="$install_status"
+          export TEST_STATUS="$test_status"
+          export TYPE_STATUS="$type_status"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+
+          def tail(name):
+              path = Path(name)
+              return path.read_text(encoding="utf-8", errors="replace").splitlines()[-80:] if path.exists() else []
+
+          result = {
+              "patchStatus": int(os.environ["PATCH_STATUS"]),
+              "installStatus": int(os.environ["INSTALL_STATUS"]),
+              "testStatus": int(os.environ["TEST_STATUS"]),
+              "typeStatus": int(os.environ["TYPE_STATUS"]),
+              "passed": all(int(os.environ[key]) == 0 for key in ["PATCH_STATUS", "INSTALL_STATUS", "TEST_STATUS", "TYPE_STATUS"]),
+              "patchLog": tail("admin-recommendation-patch.log"),
+              "installLog": tail("admin-recommendation-install.log"),
+              "testLog": tail("admin-recommendation-test.log"),
+              "typeLog": tail("admin-recommendation-type.log"),
+          }
+          target = Path("diagnostics/admin-recommendation-status.json")
+          target.parent.mkdir(parents=True, exist_ok=True)
+          target.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add components/user-tracking-panel.tsx components/tracking-recommendations-bridge.tsx
-          git commit -m "feat: recommend sources and listed companies without reload"
+          git add diagnostics/admin-recommendation-status.json
+          if [ "$patch_status" -eq 0 ] && [ "$install_status" -eq 0 ] && [ "$test_status" -eq 0 ] && [ "$type_status" -eq 0 ]; then
+            git add components/user-tracking-panel.tsx components/tracking-recommendations-bridge.tsx
+            git commit -m "feat: recommend sources and listed companies without reload"
+          else
+            git commit -m "ci: record admin recommendation integration failure"
+          fi
           git pull --rebase origin main
           git push origin HEAD:main
