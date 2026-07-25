@@ -27,6 +27,9 @@ except ImportError:
 
 EASTMONEY_HOST_SUFFIX = "eastmoney.com"
 EASTMONEY_HISTORY_LIMIT = 12
+EASTMONEY_ORIGIN_FIELD = "_eastmoneyBatchOrigin"
+EASTMONEY_ORIGIN_NEW = "new"
+EASTMONEY_ORIGIN_RETAINED = "retained"
 BROWSER_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -188,6 +191,12 @@ def _article_sort_key(article: dict[str, Any]) -> tuple[str, int, str]:
     )
 
 
+def _with_origin(article: dict[str, Any], origin: str) -> dict[str, Any]:
+    marked = dict(article)
+    marked[EASTMONEY_ORIGIN_FIELD] = origin
+    return marked
+
+
 def merge_eastmoney_history(
     existing: list[dict[str, Any]],
     incoming: list[dict[str, Any]],
@@ -201,6 +210,10 @@ def merge_eastmoney_history(
     merely because a different set of links was visible. Incoming records take
     precedence over cached copies with the same URL; the newest bounded set is
     passed to the shared replacement function and refined later as usual.
+
+    An internal origin marker is attached so the refinement stage can report exact
+    final counts after irrelevant stories are removed. The marker is stripped
+    before the public snapshot is written.
     """
 
     source_ids = {
@@ -235,11 +248,17 @@ def merge_eastmoney_history(
         for article in existing_group:
             key = _article_identity(article)
             if key:
-                by_identity[key] = article
+                by_identity[key] = _with_origin(
+                    article,
+                    EASTMONEY_ORIGIN_RETAINED,
+                )
         for article in incoming_group:
             key = _article_identity(article)
             if key:
-                by_identity[key] = article
+                by_identity[key] = _with_origin(
+                    article,
+                    EASTMONEY_ORIGIN_NEW,
+                )
 
         history = sorted(
             by_identity.values(),
@@ -247,7 +266,8 @@ def merge_eastmoney_history(
             reverse=True,
         )[: max(1, limit)]
         retained_count = sum(
-            _article_identity(article) not in incoming_keys for article in history
+            article.get(EASTMONEY_ORIGIN_FIELD) == EASTMONEY_ORIGIN_RETAINED
+            for article in history
         )
 
         for status in statuses:
