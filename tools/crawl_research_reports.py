@@ -38,12 +38,14 @@ try:
     from tools.research_report_adapters import (
         discover_sec_candidates,
         discover_web_candidates,
+        is_rejected_text,
         load_sec_ticker_map,
     )
 except ModuleNotFoundError:  # direct execution: python tools/crawl_research_reports.py
     from research_report_adapters import (
         discover_sec_candidates,
         discover_web_candidates,
+        is_rejected_text,
         load_sec_ticker_map,
     )
 
@@ -606,6 +608,14 @@ def archive_public_report(
     }
 
 
+def report_is_relevant(report: dict[str, Any]) -> bool:
+    text = " ".join(
+        str(report.get(key) or "")
+        for key in ("title", "summary", "sourcePageUrl", "originalPdfUrl")
+    )
+    return not is_rejected_text(text)
+
+
 def crawl_company(
     company: dict[str, str],
     website: str,
@@ -672,6 +682,8 @@ def crawl_company(
 
     merged: dict[str, dict[str, Any]] = {}
     for report in [*new_reports, *previous_reports]:
+        if not report_is_relevant(report):
+            continue
         report_id = clean_text(report.get("id"), 160)
         if report_id and report_id not in merged:
             merged[report_id] = report
