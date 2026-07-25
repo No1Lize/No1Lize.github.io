@@ -102,7 +102,24 @@ jobs:
             exit 1
           fi
       - name: Normalize cross-entity consistency
-        run: python tools/normalize_venture_profiles.py
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          python tools/normalize_venture_profiles.py \
+            > diagnostics/venture-normalizer-output.txt 2>&1
+          status=$?
+          cat diagnostics/venture-normalizer-output.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-normalizer-output.txt
+            git commit -m "ci: record venture normalizer failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
       - name: Apply structural quality gate
         run: |
           python tools/finalize_venture_profiles.py
