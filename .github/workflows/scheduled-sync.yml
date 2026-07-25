@@ -14,6 +14,7 @@ on:
       - tools/wechat_public_sources.py
       - tools/wechat_registry_bridge.py
       - tools/wechat_index_context_guard.py
+      - tools/wechat_index_record_fallback.py
       - tools/wechat_source_registry.py
       - tools/wechat_sogou_index.py
       - tools/wechat_sogou_bridge.py
