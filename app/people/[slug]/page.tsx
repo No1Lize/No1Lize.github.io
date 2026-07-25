@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { researchPeople, type PersonMaterial, type ResearchPerson } from "@/lib/people-data";
+import { researchPeople, type PersonMaterial } from "@/lib/people-data";
 import { getPersonProfile } from "@/lib/research-content";
 
 const materialLabels: Record<string, string> = {
