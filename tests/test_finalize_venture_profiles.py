@@ -66,7 +66,7 @@ class VentureProfileFinalizerTests(unittest.TestCase):
         self.assertIn("raises", rows[0]["title"])
 
     def test_recent_investments_use_actual_one_year_window(self) -> None:
-        rows = finalizer.finalize_recent(
+        rows = finalizer.finalize_recent_investments(
             [
                 {
                     "name": "OldCo",
@@ -112,7 +112,7 @@ class VentureProfileFinalizerTests(unittest.TestCase):
                 "sourceUrl": "https://example.com/listed",
             },
         ]
-        rows = finalizer.finalize_cases(values, {"listed": {}}, {"listed"})
+        rows = finalizer.finalize_classic_cases(values, {"listed": {}}, {"listed"})
         self.assertEqual([item["name"] for item in rows], ["ListedCo"])
         self.assertEqual(rows[0]["investmentLogic"], "机构在成长期布局该项目。")
         self.assertEqual(rows[0]["exitPerformance"], "公司随后上市。")
