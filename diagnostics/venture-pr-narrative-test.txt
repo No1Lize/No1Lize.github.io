@@ -1,0 +1,16 @@
+test_removes_anthropic_navigation_tail (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_removes_anthropic_navigation_tail) ... FAIL
+test_removes_long_product_navigation_run (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_removes_long_product_navigation_run) ... ok
+test_snapshot_sanitation_is_idempotent (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_snapshot_sanitation_is_idempotent) ... ok
+
+======================================================================
+FAIL: test_removes_anthropic_navigation_tail (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_removes_anthropic_navigation_tail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_narrative_sanitizer.py", line 19, in test_removes_anthropic_navigation_tail
+    self.assertIn("transformative AI", cleaned)
+AssertionError: 'transformative AI' not found in 'Anthropic builds reliable, interpretable, and steerable AI systems.'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=1)
