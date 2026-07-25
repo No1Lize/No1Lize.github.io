@@ -25,6 +25,21 @@ except ModuleNotFoundError:  # direct execution: python tools/crawl_research_rep
     )
 '''
 
+REGISTRY_IMPORT = '''
+try:
+    from tools.research_report_registry import (
+        load_local_cik_map,
+        load_official_websites,
+        merge_source_maps,
+    )
+except ModuleNotFoundError:  # direct execution
+    from research_report_registry import (
+        load_local_cik_map,
+        load_official_websites,
+        merge_source_maps,
+    )
+'''
+
 
 def replace_once(text: str, old: str, new: str, label: str) -> str:
     if new in text:
@@ -37,12 +52,16 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
 def normalize_adapter_import(text: str) -> str:
     duplicate = f"{DIRECT_IMPORT}\n{FALLBACK_IMPORT}"
     if duplicate in text:
-        return text.replace(duplicate, FALLBACK_IMPORT, 1)
-    if FALLBACK_IMPORT in text:
-        return text
-    if DIRECT_IMPORT in text:
-        return text.replace(DIRECT_IMPORT, FALLBACK_IMPORT, 1)
-    raise RuntimeError("cannot find research report adapter import")
+        text = text.replace(duplicate, FALLBACK_IMPORT, 1)
+    elif FALLBACK_IMPORT in text:
+        pass
+    elif DIRECT_IMPORT in text:
+        text = text.replace(DIRECT_IMPORT, FALLBACK_IMPORT, 1)
+    else:
+        raise RuntimeError("cannot find research report adapter import")
+    if REGISTRY_IMPORT.strip() not in text:
+        text = text.replace(FALLBACK_IMPORT, f"{FALLBACK_IMPORT}{REGISTRY_IMPORT}", 1)
+    return text
 
 
 def main() -> int:
@@ -140,13 +159,37 @@ def main() -> int:
     text = replace_once(
         text,
         '''    websites = load_company_websites()
-    companies = [
-''',
-        '''    websites = load_company_websites()
     sec_tickers = load_sec_ticker_map(request_bytes)
     companies = [
 ''',
-        "SEC ticker map",
+        '''    websites = merge_source_maps(
+        load_company_websites(),
+        load_official_websites(ROOT),
+    )
+    sec_tickers = merge_source_maps(
+        load_sec_ticker_map(request_bytes),
+        load_local_cik_map(ROOT),
+    )
+    companies = [
+''',
+        "repository source registry merge",
+    )
+    text = replace_once(
+        text,
+        '''    websites = load_company_websites()
+    companies = [
+''',
+        '''    websites = merge_source_maps(
+        load_company_websites(),
+        load_official_websites(ROOT),
+    )
+    sec_tickers = merge_source_maps(
+        load_sec_ticker_map(request_bytes),
+        load_local_cik_map(ROOT),
+    )
+    companies = [
+''',
+        "repository source registry initial merge",
     )
     text = replace_once(
         text,
