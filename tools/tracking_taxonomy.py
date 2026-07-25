@@ -2,8 +2,8 @@
 """Generic taxonomy helpers for arbitrary user-created tracking sectors.
 
 The module derives aliases from names, keeps sector identity terms separate from
-actor terms, and prevents a company or person shared by multiple sectors from
-becoming an unscoped standalone discovery seed.
+actor terms, and prevents terms shared by multiple sectors from becoming
+unscoped standalone discovery seeds.
 """
 
 from __future__ import annotations
@@ -62,28 +62,58 @@ def all_track_terms(track: dict[str, Any], tracking_module: Any) -> list[str]:
     return unique([*identity_terms(track), *actor_terms(track, tracking_module)], 80)
 
 
-def unique_actor_terms_by_track(
-    tracks: list[dict[str, Any]], tracking_module: Any
+def _unique_terms_by_track(
+    tracks: list[dict[str, Any]],
+    terms_for_track: Any,
 ) -> dict[str, list[str]]:
     counts: Counter[str] = Counter()
-    actors_by_slug: dict[str, list[str]] = {}
+    values_by_slug: dict[str, list[str]] = {}
 
     for track in tracks:
         slug = clean(track.get("slug"), 80)
-        actors = actor_terms(track, tracking_module)
-        actors_by_slug[slug] = actors
-        counts.update({normalize_term(value) for value in actors})
+        values = terms_for_track(track)
+        values_by_slug[slug] = values
+        counts.update({normalize_term(value) for value in values})
 
     return {
-        slug: [value for value in actors if counts[normalize_term(value)] == 1]
-        for slug, actors in actors_by_slug.items()
+        slug: [value for value in values if counts[normalize_term(value)] == 1]
+        for slug, values in values_by_slug.items()
     }
+
+
+def unique_identity_terms_by_track(
+    tracks: list[dict[str, Any]],
+) -> dict[str, list[str]]:
+    unique_keywords = _unique_terms_by_track(
+        tracks,
+        lambda track: unique(track.get("keywords", []), 60),
+    )
+    return {
+        clean(track.get("slug"), 80): unique(
+            [
+                *name_aliases(track.get("name")),
+                *unique_keywords.get(clean(track.get("slug"), 80), []),
+            ],
+            24,
+        )
+        for track in tracks
+    }
+
+
+def unique_actor_terms_by_track(
+    tracks: list[dict[str, Any]], tracking_module: Any
+) -> dict[str, list[str]]:
+    return _unique_terms_by_track(
+        tracks,
+        lambda track: actor_terms(track, tracking_module),
+    )
 
 
 def generated_track_sources(
     tracks: list[dict[str, Any]], tracking_module: Any
 ) -> list[dict[str, Any]]:
     sources: list[dict[str, Any]] = []
+    unique_identities = unique_identity_terms_by_track(tracks)
     unique_actors = unique_actor_terms_by_track(tracks, tracking_module)
     event_terms = (
         "融资 OR 投资 OR IPO OR 上市 OR 发布 OR 突破 OR 研究 OR 政策 "
@@ -92,7 +122,7 @@ def generated_track_sources(
 
     for track in tracks:
         slug = clean(track.get("slug"), 80)
-        core = identity_terms(track)
+        core = unique_identities.get(slug, name_aliases(track.get("name")))
         actors = unique_actors.get(slug, [])
         terms = unique([*core, *actors], 80)
         if not core:
