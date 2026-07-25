@@ -1,0 +1,547 @@
+{
+  "sourceCommit": "cc149b220c9214039bdc049349b3d876dbbfde40",
+  "lintExit": null,
+  "lint": "\n> lize-road-one@0.1.0 lint\n> bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next\n\n\n/home/runner/work/No1Lize.github.io/No1Lize.github.io/app/people/[slug]/page.tsx\n  3:52  warning  'ResearchPerson' is defined but never used  @typescript-eslint/no-unused-vars\n\n/home/runner/work/No1Lize.github.io/No1Lize.github.io/components/tracking-admin-module-recommendations.tsx\n  199:5  error    Error: Calling setState synchronously within an effect can trigger cascading renders\n\nEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:\n* Update external systems with the latest state from React.\n* Subscribe for updates from some external system, calling setState in a callback function when external state changes.\n\nCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).\n\n/home/runner/work/No1Lize.github.io/No1Lize.github.io/components/tracking-admin-module-recommendations.tsx:199:5\n  197 |\n  198 |   useEffect(() => {\n> 199 |     setMounted(true);\n      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect\n  200 |     let frame = 0;\n  201 |     let previous = \"\";\n  202 |     const refresh = () => {  react-hooks/set-state-in-effect\n  252:6  warning  React Hook useMemo has an unnecessary dependency: 'dismissalVersion'. Either exclude it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps\n  267:6  warning  React Hook useMemo has an unnecessary dependency: 'dismissalVersion'. Either exclude it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps\n\n/home/runner/work/No1Lize.github.io/No1Lize.github.io/components/tracking-recommendations-bridge.tsx\n  310:5  error    Error: Calling setState synchronously within an effect can trigger cascading renders\n\nEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:\n* Update external systems with the latest state from React.\n* Subscribe for updates from some external system, calling setState in a callback function when external state changes.\n\nCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).\n\n/home/runner/work/No1Lize.github.io/No1Lize.github.io/components/tracking-recommendations-bridge.tsx:310:5\n  308 |\n  309 |   useEffect(() => {\n> 310 |     setMounted(true);\n      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect\n  311 |     let frame = 0;\n  312 |     let previous = \"\";\n  313 |  react-hooks/set-state-in-effect\n  356:6  warning  React Hook useMemo has an unnecessary dependency: 'dismissalVersion'. Either exclude it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       react-hooks/exhaustive-deps\n\n/home/runner/work/No1Lize.github.io/No1Lize.github.io/components/user-tracking-panel.tsx\n  235:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders\n\nEffects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:\n* Update external systems with the latest state from React.\n* Subscribe for updates from some external system, calling setState in a callback function when external state changes.\n\nCalling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).\n\n/home/runner/work/No1Lize.github.io/No1Lize.github.io/components/user-tracking-panel.tsx:235:7\n  233 |   useEffect(() => {\n  234 |     if (active >= config.tracks.length) {\n> 235 |       setActive(Math.max(0, config.tracks.length - 1));\n      |       ^^^^^^^^^ Avoid calling setState() directly within an effect\n  236 |     }\n  237 |   }, [active, config.tracks.length]);\n  238 |  react-hooks/set-state-in-effect\n\n✖ 7 problems (3 errors, 4 warnings)\n\n",
+  "auditMetadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 1,
+      "moderate": 0,
+      "high": 19,
+      "critical": 0,
+      "total": 20
+    },
+    "dependencies": {
+      "prod": 27,
+      "dev": 626,
+      "optional": 174,
+      "peer": 43,
+      "peerOptional": 0,
+      "total": 660
+    }
+  },
+  "vulnerabilities": [
+    {
+      "name": "@cloudflare/vite-plugin",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "miniflare",
+        "wrangler",
+        "ws"
+      ],
+      "effects": [],
+      "range": "<=0.0.0-fff677e35 || 0.1.5 - 1.46.0",
+      "fixAvailable": {
+        "name": "@cloudflare/vite-plugin",
+        "version": "1.47.0",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "@eslint/config-array",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "minimatch"
+      ],
+      "effects": [
+        "eslint"
+      ],
+      "range": "<=0.22.0",
+      "fixAvailable": {
+        "name": "eslint",
+        "version": "10.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "@eslint/eslintrc",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "minimatch"
+      ],
+      "effects": [
+        "eslint"
+      ],
+      "range": "0.0.1 || >=0.1.1",
+      "fixAvailable": {
+        "name": "eslint",
+        "version": "10.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "brace-expansion",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1124334,
+          "name": "brace-expansion",
+          "severity": "high",
+          "title": "brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash",
+          "range": "<=5.0.7"
+        }
+      ],
+      "effects": [
+        "minimatch"
+      ],
+      "range": "<=5.0.7",
+      "fixAvailable": {
+        "name": "eslint",
+        "version": "10.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "esbuild",
+      "severity": "low",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1120680,
+          "name": "esbuild",
+          "severity": "low",
+          "title": "esbuild allows arbitrary file read when running the development server on Windows",
+          "range": ">=0.27.3 <0.28.1"
+        }
+      ],
+      "effects": [
+        "wrangler"
+      ],
+      "range": "0.27.3 - 0.28.0",
+      "fixAvailable": {
+        "name": "@cloudflare/vite-plugin",
+        "version": "1.47.0",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "eslint",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "@eslint/config-array",
+        "@eslint/eslintrc",
+        "minimatch"
+      ],
+      "effects": [],
+      "range": "0.12.0 - 2.0.0-rc.1 || 4.1.0 - 10.0.0-rc.2",
+      "fixAvailable": {
+        "name": "eslint",
+        "version": "10.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "eslint-config-next",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "eslint-plugin-import",
+        "eslint-plugin-jsx-a11y",
+        "eslint-plugin-react"
+      ],
+      "effects": [],
+      "range": ">=10.2.1-canary.2",
+      "fixAvailable": {
+        "name": "eslint-config-next",
+        "version": "12.0.4",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "eslint-plugin-import",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "minimatch"
+      ],
+      "effects": [
+        "eslint-config-next"
+      ],
+      "range": ">=1.15.0",
+      "fixAvailable": {
+        "name": "eslint-config-next",
+        "version": "12.0.4",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "eslint-plugin-jsx-a11y",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "minimatch"
+      ],
+      "effects": [
+        "eslint-config-next"
+      ],
+      "range": ">=6.5.0",
+      "fixAvailable": {
+        "name": "eslint-config-next",
+        "version": "12.0.4",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "eslint-plugin-react",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "minimatch"
+      ],
+      "effects": [],
+      "range": ">=7.23.0",
+      "fixAvailable": true
+    },
+    {
+      "name": "miniflare",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "sharp",
+        "undici",
+        "ws"
+      ],
+      "effects": [
+        "@cloudflare/vite-plugin",
+        "wrangler"
+      ],
+      "range": "<=0.0.0-fff677e35 || 3.20250204.0 - 4.20260721.0",
+      "fixAvailable": {
+        "name": "@cloudflare/vite-plugin",
+        "version": "1.47.0",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "minimatch",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        "brace-expansion"
+      ],
+      "effects": [
+        "@eslint/config-array",
+        "@eslint/eslintrc",
+        "eslint",
+        "eslint-plugin-import",
+        "eslint-plugin-jsx-a11y",
+        "eslint-plugin-react"
+      ],
+      "range": "2.0.0 - 10.0.2",
+      "fixAvailable": {
+        "name": "eslint",
+        "version": "10.8.0",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "next",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        {
+          "source": 1124170,
+          "name": "next",
+          "severity": "high",
+          "title": "Next.js: Middleware / Proxy bypass in App Router applications using Turbopack and single locale",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124171,
+          "name": "next",
+          "severity": "high",
+          "title": "Next.js: Denial of Service in App Router using Server Actions",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124184,
+          "name": "next",
+          "severity": "high",
+          "title": "Next.js: Server-Side Request Forgery in Server Actions on custom servers",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124186,
+          "name": "next",
+          "severity": "moderate",
+          "title": "Next.js: Cache confusion of response bodies for requests with bodies",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124188,
+          "name": "next",
+          "severity": "moderate",
+          "title": "Next.js: Cache confusion of response bodies for requests with bodies containing invalid UTF-8 byte sequences",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124190,
+          "name": "next",
+          "severity": "moderate",
+          "title": "Next.js: Unbounded Server Action payload in Edge runtime",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124192,
+          "name": "next",
+          "severity": "high",
+          "title": "Next.js: Server-Side Request Forgery in rewrites via attacker-controlled destination hostname",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124194,
+          "name": "next",
+          "severity": "moderate",
+          "title": "Next.js: Denial of Service in the Image Optimization API using SVGs",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        {
+          "source": 1124196,
+          "name": "next",
+          "severity": "moderate",
+          "title": "Next.js: Unauthenticated disclosure of internal Server Function endpoints",
+          "range": ">=16.0.0 <16.2.11"
+        },
+        "postcss",
+        "sharp"
+      ],
+      "effects": [],
+      "range": "9.3.4-canary.0 - 16.3.0-preview.7",
+      "fixAvailable": {
+        "name": "next",
+        "version": "16.2.11",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "postcss",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1117015,
+          "name": "postcss",
+          "severity": "moderate",
+          "title": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
+          "range": "<8.5.10"
+        },
+        {
+          "source": 1124252,
+          "name": "postcss",
+          "severity": "high",
+          "title": "PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments",
+          "range": "<=8.5.11"
+        },
+        {
+          "source": 1124288,
+          "name": "postcss",
+          "severity": "high",
+          "title": "PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure",
+          "range": "<=8.5.17"
+        }
+      ],
+      "effects": [
+        "next"
+      ],
+      "range": "<=8.5.17",
+      "fixAvailable": {
+        "name": "next",
+        "version": "16.2.11",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "react-server-dom-webpack",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        {
+          "source": 1124314,
+          "name": "react-server-dom-webpack",
+          "severity": "high",
+          "title": "react-server-dom: Denial of Service in Server Functions",
+          "range": ">=19.2.0 <19.2.8"
+        }
+      ],
+      "effects": [],
+      "range": "19.2.0 - 19.2.7",
+      "fixAvailable": {
+        "name": "react-server-dom-webpack",
+        "version": "19.2.8",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "sharp",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1124066,
+          "name": "sharp",
+          "severity": "high",
+          "title": "sharp inherited vulnerabilities in libvips: CVE-2026-33327, CVE-2026-33328, CVE-2026-35590, CVE-2026-35591",
+          "range": "<0.35.0"
+        }
+      ],
+      "effects": [
+        "miniflare",
+        "next"
+      ],
+      "range": "<0.35.0",
+      "fixAvailable": {
+        "name": "@cloudflare/vite-plugin",
+        "version": "1.47.0",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "undici",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1121187,
+          "name": "undici",
+          "severity": "high",
+          "title": "undici vulnerable to TLS certificate validation bypass via dropped requestTls in SOCKS5 ProxyAgent",
+          "range": ">=7.23.0 <7.28.0"
+        },
+        {
+          "source": 1121241,
+          "name": "undici",
+          "severity": "moderate",
+          "title": "undici vulnerable to HTTP header injection via Set-Cookie percent-decoding",
+          "range": ">=7.0.0 <7.28.0"
+        },
+        {
+          "source": 1121244,
+          "name": "undici",
+          "severity": "high",
+          "title": "undici WebSocket client vulnerable to denial of service via fragment count bypass",
+          "range": ">=7.0.0 <7.28.0"
+        },
+        {
+          "source": 1121247,
+          "name": "undici",
+          "severity": "high",
+          "title": "undici vulnerable to cross-origin request routing via SOCKS5 proxy pool reuse",
+          "range": ">=7.23.0 <7.28.0"
+        },
+        {
+          "source": 1121249,
+          "name": "undici",
+          "severity": "low",
+          "title": "undici vulnerable to HTTP response queue poisoning via keep-alive socket reuse",
+          "range": ">=7.0.0 <7.28.0"
+        },
+        {
+          "source": 1121254,
+          "name": "undici",
+          "severity": "low",
+          "title": "undici vulnerable to Set-Cookie SameSite attribute downgrade via permissive substring matching",
+          "range": ">=7.0.0 <7.28.0"
+        },
+        {
+          "source": 1121428,
+          "name": "undici",
+          "severity": "moderate",
+          "title": "undici vulnerable to cross-user information disclosure via shared cache whitespace bypass",
+          "range": ">=7.0.0 <7.28.0"
+        }
+      ],
+      "effects": [
+        "miniflare"
+      ],
+      "range": "7.0.0 - 7.27.2",
+      "fixAvailable": {
+        "name": "@cloudflare/vite-plugin",
+        "version": "1.47.0",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "vite",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        {
+          "source": 1120786,
+          "name": "vite",
+          "severity": "moderate",
+          "title": "launch-editor: NTLMv2 hash disclosure via UNC path handling on Windows",
+          "range": ">=8.0.0 <=8.0.15"
+        },
+        {
+          "source": 1123527,
+          "name": "vite",
+          "severity": "high",
+          "title": "vite: `server.fs.deny` bypass on Windows alternate paths",
+          "range": ">=8.0.0 <=8.0.15"
+        }
+      ],
+      "effects": [],
+      "range": "8.0.0 - 8.0.15",
+      "fixAvailable": {
+        "name": "vite",
+        "version": "8.1.5",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "wrangler",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "esbuild",
+        "miniflare"
+      ],
+      "effects": [
+        "@cloudflare/vite-plugin"
+      ],
+      "range": "<=0.0.0-7ae5dd357 || 4.16.0 - 4.113.0",
+      "fixAvailable": {
+        "name": "@cloudflare/vite-plugin",
+        "version": "1.47.0",
+        "isSemVerMajor": false
+      }
+    },
+    {
+      "name": "ws",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1119108,
+          "name": "ws",
+          "severity": "moderate",
+          "title": "ws: Uninitialized memory disclosure",
+          "range": ">=8.0.0 <8.20.1"
+        },
+        {
+          "source": 1123259,
+          "name": "ws",
+          "severity": "high",
+          "title": "ws: Memory exhaustion DoS from tiny fragments and data chunks",
+          "range": ">=8.0.0 <8.21.0"
+        }
+      ],
+      "effects": [
+        "@cloudflare/vite-plugin",
+        "miniflare"
+      ],
+      "range": "8.0.0 - 8.20.1",
+      "fixAvailable": {
+        "name": "@cloudflare/vite-plugin",
+        "version": "1.47.0",
+        "isSemVerMajor": false
+      }
+    }
+  ],
+  "auditStderr": ""
+}
