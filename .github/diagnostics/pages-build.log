@@ -1,0 +1,31 @@
+
+> lize-road-one@0.1.0 build:pages
+> npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && GITHUB_PAGES=true next build && npm run verify:tracking-pages && node scripts/validate-static-links.mjs
+
+
+> lize-road-one@0.1.0 validate:tracking
+> node scripts/validate-tracking-pages.mjs
+
+Tracking configuration valid: 11 unique tracks, 11 enabled.
+  /technology/ai/  <- AI / AGI
+  /technology/robotics/  <- 机器人
+  /technology/semiconductor/  <- 半导体
+  /technology/energy/  <- 新能源
+  /technology/biotech/  <- 生物科技
+  /technology/quantum/  <- 量子计算
+  /technology/space/  <- 商业航天
+  /technology/web3/  <- Web3
+  /technology/materials/  <- 新材料
+  /technology/manufacturing/  <- 智能制造
+  /technology/fusion/  <- 可控核聚变
+
+> lize-road-one@0.1.0 validate:taxonomy
+> node --import tsx scripts/validate-tracking-taxonomy.ts
+
+TRACKING_TAXONOMY_WARNING: company “宁德时代” 同时属于 新材料、新能源；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+Tracking taxonomy valid: 11 tracks, 1 non-blocking overlaps.
+
+> lize-road-one@0.1.0 validate:tracking-snapshot
+> node scripts/validate-tracking-snapshot.mjs
+
+TRACKING_SNAPSHOT_ERROR: tracking configuration is newer than the article snapshot; wait for Refresh public intelligence
