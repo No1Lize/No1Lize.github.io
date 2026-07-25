@@ -12,7 +12,7 @@ except ImportError:
 
 def _bounded_context(parser: Any, position: int, next_position: int | None) -> str:
     start = max(0, position)
-    natural_end = min(len(parser.text_parts), position + 10)
+    natural_end = min(len(parser.text_parts), position + 14)
     end = min(natural_end, next_position) if next_position is not None else natural_end
     return parser_module._clean(" ".join(parser.text_parts[start:end]), 1200)
 
@@ -21,12 +21,16 @@ def _bounded_title(
     parser: Any,
     position: int,
     next_position: int | None,
-    anchor_title: str,
+    anchor_titles: list[str],
 ) -> str:
-    title = parser_module._clean(anchor_title, 240)
-    if title.casefold() not in parser_module._GENERIC_ANCHOR_TEXT and len(title) >= 6:
-        return title
-    natural_end = min(len(parser.text_parts), position + 8)
+    for raw_title in anchor_titles:
+        title = parser_module._clean(raw_title, 240)
+        if (
+            title.casefold() not in parser_module._GENERIC_ANCHOR_TEXT
+            and len(title) >= 6
+        ):
+            return title
+    natural_end = min(len(parser.text_parts), position + 10)
     end = min(natural_end, next_position) if next_position is not None else natural_end
     for item in parser.text_parts[position:end]:
         candidate = parser_module._clean(item, 240)
@@ -36,6 +40,42 @@ def _bounded_title(
         ):
             return candidate
     return ""
+
+
+def _article_link_groups(parser: Any, crawler: Any) -> list[dict[str, Any]]:
+    """Group repeated title/original links belonging to one article card."""
+
+    candidates: list[dict[str, Any]] = []
+    for link in parser.links:
+        url = crawler.normalize_url(str(link.get("url", "")))
+        if not (
+            parser_module._is_wechat_article_url(url)
+            or parser_module._is_resolvable_detail_url(url)
+        ):
+            continue
+        candidates.append(
+            {
+                "url": url,
+                "position": int(link.get("position", 0)),
+                "title": str(link.get("title", "")),
+            }
+        )
+
+    groups: list[dict[str, Any]] = []
+    for candidate in candidates:
+        if groups and groups[-1]["url"] == candidate["url"]:
+            groups[-1]["titles"].append(candidate["title"])
+            groups[-1]["lastPosition"] = candidate["position"]
+            continue
+        groups.append(
+            {
+                "url": candidate["url"],
+                "position": candidate["position"],
+                "lastPosition": candidate["position"],
+                "titles": [candidate["title"]],
+            }
+        )
+    return groups
 
 
 def extract_index_rows(
@@ -48,19 +88,16 @@ def extract_index_rows(
 ) -> list[dict[str, str]]:
     parser = parser_module.PublicIndexParser(index_url)
     parser.feed(body or "")
+    groups = _article_link_groups(parser, crawler)
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
-    for index, link in enumerate(parser.links):
-        url = crawler.normalize_url(str(link.get("url", "")))
-        if not (
-            parser_module._is_wechat_article_url(url)
-            or parser_module._is_resolvable_detail_url(url)
-        ):
-            continue
-        position = int(link.get("position", 0))
+
+    for index, group in enumerate(groups):
+        url = str(group["url"])
+        position = int(group["position"])
         next_position = (
-            int(parser.links[index + 1].get("position", 0))
-            if index + 1 < len(parser.links)
+            int(groups[index + 1]["position"])
+            if index + 1 < len(groups)
             else None
         )
         context = _bounded_context(parser, position, next_position)
@@ -72,7 +109,7 @@ def extract_index_rows(
             parser,
             position,
             next_position,
-            str(link.get("title", "")),
+            list(group["titles"]),
         )
         if not title or url in seen or parser_module._WECHAT is None:
             continue
