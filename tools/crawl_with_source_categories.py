@@ -19,6 +19,7 @@ try:  # Imported by tests as tools.crawl_with_source_categories.
     from . import generic_web_sources
     from . import robust_web_fallback
     from . import strict_tracking_config
+    from . import tracking_taxonomy
     from . import x_rate_limit
     from .crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 except ImportError:  # Executed directly with ``python tools/...``.
@@ -26,6 +27,7 @@ except ImportError:  # Executed directly with ``python tools/...``.
     import generic_web_sources
     import robust_web_fallback
     import strict_tracking_config
+    import tracking_taxonomy
     import x_rate_limit
     from crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 
@@ -249,6 +251,7 @@ def _install_generic_adapter() -> None:
 
 def main() -> int:
     _install_strict_tracking_validation()
+    tracking_taxonomy.install(tracking)
     x_rate_limit.install(tracking.crawler)
     tracking._custom_sources = _custom_sources
     _install_generic_adapter()
