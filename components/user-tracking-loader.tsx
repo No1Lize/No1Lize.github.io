@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { UserTrackingPanel } from "@/components/user-tracking-panel";
+import { TrackingKeywordGuard } from "@/components/tracking-keyword-guard";
 import {
   TRACKING_BRANCH,
   TRACKING_CONFIG_PATH,
@@ -52,5 +53,10 @@ export function UserTrackingLoader({ initial }: { initial: UserTrackingConfig })
     };
   }, []);
 
-  return <UserTrackingPanel key={sourceKey} initial={config} />;
+  return (
+    <>
+      <UserTrackingPanel key={sourceKey} initial={config} />
+      <TrackingKeywordGuard />
+    </>
+  );
 }
