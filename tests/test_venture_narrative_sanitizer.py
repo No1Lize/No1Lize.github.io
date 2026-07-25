@@ -55,7 +55,8 @@ class VentureNarrativeSanitizerTests(unittest.TestCase):
             },
         }
         cleaned, changed = sanitizer.sanitize_snapshot_payload(copy.deepcopy(payload))
-        self.assertGreaterEqual(changed, 1)
+        self.assertGreaterEqual(changed, 2)
+        self.assertEqual(cleaned["institutions"]["fund"]["strategy"], "")
         self.assertTrue(cleaned["qualityGate"]["checks"]["narrativeNoise"]["passed"])
         second, changed_again = sanitizer.sanitize_snapshot_payload(cleaned)
         self.assertEqual(second, cleaned)
