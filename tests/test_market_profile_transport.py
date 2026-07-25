@@ -1,3 +1,4 @@
+import json
 import unittest
 
 from tools import crawl_market_profiles as market
@@ -35,6 +36,66 @@ class MarketProfileTransportTests(unittest.TestCase):
             refresh.is_tonghuashun_company_root(
                 "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
             )
+        )
+
+    def test_a_share_routes_include_index_company_finance_operate_and_youth(self):
+        pages = refresh.tonghuashun_pages(
+            "https://stockpage.10jqka.com.cn/600519/"
+        )
+        self.assertEqual(pages[0], "https://stockpage.10jqka.com.cn/600519/")
+        self.assertIn("https://stockpage.10jqka.com.cn/600519/index/", pages)
+        self.assertIn("https://stockpage.10jqka.com.cn/600519/company/", pages)
+        self.assertIn("https://stockpage.10jqka.com.cn/600519/finance/", pages)
+        self.assertIn("https://stockpage.10jqka.com.cn/600519/operate/", pages)
+        self.assertIn("https://stockpage.10jqka.com.cn/youth/600519/", pages)
+        self.assertNotIn(
+            "https://stockpage.10jqka.com.cn/youth/HK0700/",
+            refresh.tonghuashun_pages(
+                "https://stockpage.10jqka.com.cn/HK0700/"
+            ),
+        )
+
+    def test_eastmoney_market_mapping_and_kline_shape(self):
+        identity = market.company_identity("美股", "AAPL")
+        self.assertEqual(
+            refresh.eastmoney_market_ids("美国NASDAQ证券交易所"),
+            [105, 106, 107],
+        )
+        self.assertEqual(
+            refresh.eastmoney_market_ids("美国纽约证券交易所"),
+            [106, 105, 107],
+        )
+        self.assertIn("secid=105.AAPL", refresh.eastmoney_url(identity, 105))
+        payload = json.dumps(
+            {
+                "data": {
+                    "klines": [
+                        "2026-07-21,210,213,214,209,1000",
+                        "2026-07-22,213,215,216,212,1200",
+                    ]
+                }
+            }
+        )
+        self.assertEqual(
+            refresh.parse_eastmoney_kline(payload),
+            [
+                {
+                    "date": "2026-07-21",
+                    "open": 210.0,
+                    "close": 213.0,
+                    "high": 214.0,
+                    "low": 209.0,
+                    "volume": 1000.0,
+                },
+                {
+                    "date": "2026-07-22",
+                    "open": 213.0,
+                    "close": 215.0,
+                    "high": 216.0,
+                    "low": 212.0,
+                    "volume": 1200.0,
+                },
+            ],
         )
 
     def test_stooq_csv_provides_full_us_trend_shape(self):
