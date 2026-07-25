@@ -72,6 +72,14 @@ function sourceSection(): HTMLElement | null {
   ) ?? null;
 }
 
+function trackDetailSector(): string {
+  const detailLabel = Array.from(
+    document.querySelectorAll<HTMLElement>("p"),
+  ).find((node) => node.textContent?.trim() === "TRACK DETAIL");
+  const section = detailLabel?.closest<HTMLElement>("section");
+  return section?.querySelector("h2")?.textContent?.trim() ?? "";
+}
+
 function currentSector(): string {
   const activeTabs = Array.from(
     document.querySelectorAll<HTMLButtonElement>('button[data-active="true"]'),
@@ -80,7 +88,7 @@ function currentSector(): string {
     const spans = button.querySelectorAll("span");
     return spans.length >= 2 && /启用|停用/.test(spans[1]?.textContent ?? "");
   });
-  return active?.querySelector("span")?.textContent?.trim() ?? "";
+  return active?.querySelector("span")?.textContent?.trim() || trackDetailSector();
 }
 
 function existingValues(type: ListRecommendationType): string[] {
