@@ -8,9 +8,12 @@ on:
       - tools/crawl_with_tracking.py
       - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
+      - tools/crawl_with_wechat_registry.py
       - tools/adaptive_public_sources.py
       - tools/generic_web_sources.py
       - tools/wechat_public_sources.py
+      - tools/wechat_registry_bridge.py
+      - tools/wechat_source_registry.py
       - tools/robust_web_fallback.py
       - tools/validate_user_source_coverage.py
       - tools/tracking_taxonomy.py
@@ -31,6 +34,7 @@ on:
       - tools/migrate_article_entities.py
       - tests/**/*.py
       - config/intelligence_sources.json
+      - config/wechat_sources.json
       - config/official_company_sources.json
       - config/user_tracking.json
       - .github/workflows/scheduled-sync.yml
@@ -67,7 +71,7 @@ jobs:
       - name: Crawl public sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/crawl_with_source_categories.py --source "${{ inputs.source || 'all' }}"
+        run: python tools/crawl_with_wechat_registry.py --source "${{ inputs.source || 'all' }}"
       - name: Crawl official company sources with category filter
         if: ${{ inputs.source == '' || inputs.source == 'all' || inputs.source == 'news' || inputs.source == 'company' }}
         env:
