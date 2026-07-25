@@ -24,6 +24,7 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: |
+          # probe revision: yahoo-native-search-v2
           set +e
           mkdir -p diagnostics
           python - <<'PY' > diagnostics/yahoo-adaptive-probe.json 2>&1
