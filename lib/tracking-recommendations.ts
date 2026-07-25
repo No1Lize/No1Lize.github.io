@@ -1,3 +1,4 @@
+import entitySeedConfig from "../config/tracking_entity_seeds.json";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 export type TrackingRecommendation = {
@@ -35,6 +36,28 @@ type ExistingTrackingValues = {
   sources?: string[];
 };
 
+type EntitySeedConfig = {
+  schemaVersion: number;
+  seedAcronyms: string[];
+  globalTerms: string[];
+  sectorTerms: Record<string, string[]>;
+};
+
+type DynamicCandidate = {
+  label: string;
+  articles: Map<string, LiveIntelligenceEvent>;
+  sources: Set<string>;
+  titleMentions: number;
+  contextMentions: number;
+  authoritativeMentions: number;
+  strongShape: boolean;
+};
+
+const ENTITY_SEEDS = entitySeedConfig as EntitySeedConfig;
+const SEED_ACRONYMS = new Set(ENTITY_SEEDS.seedAcronyms);
+const GLOBAL_TECH_TERMS = ENTITY_SEEDS.globalTerms;
+const SECTOR_FALLBACKS = ENTITY_SEEDS.sectorTerms;
+
 const GENERIC_COMPANIES = new Set([
   "",
   "AI 研究",
@@ -64,6 +87,29 @@ const GENERIC_TERMS = new Set([
   "cfo",
   "coo",
   "vp",
+  "the",
+  "new",
+  "this",
+  "that",
+  "with",
+  "from",
+  "into",
+  "using",
+  "based",
+  "research",
+  "report",
+  "study",
+  "update",
+  "release",
+  "launch",
+  "model",
+  "models",
+  "system",
+  "platform",
+  "company",
+  "technology",
+  "tech",
+  "news",
   "人工智能",
   "技术",
   "科技",
@@ -104,7 +150,18 @@ const GENERIC_PERSON_LABELS = new Set([
   "团队",
 ]);
 
-const APPROVED_ACRONYMS = new Set(["VLA", "MCP", "RAG", "HBM"]);
+const TECH_CONTEXT_PATTERN =
+  /\b(?:model|models|architecture|framework|protocol|benchmark|dataset|algorithm|agent|agents|inference|training|reasoning|multimodal|token|context|chip|accelerator|memory|robot|robotics|battery|semiconductor|quantum|protein|genome|satellite|rocket|compiler|runtime)\b|模型|架构|框架|协议|基准|数据集|算法|智能体|推理|训练|多模态|芯片|加速器|机器人|电池|半导体|量子|蛋白质|基因|卫星|火箭|编译器|运行时/i;
+
+const DYNAMIC_PATTERNS = [
+  /\b[A-Z][A-Z0-9]{2,9}(?:-[A-Z0-9]{1,8})*\b/g,
+  /\b[A-Za-z]{2,}[0-9][A-Za-z0-9.-]*\b/g,
+  /\b[A-Za-z][A-Za-z0-9]*(?:-[A-Za-z0-9]+)+\b/g,
+  /\b[A-Z][a-z]{1,15}(?:[A-Z][A-Za-z0-9]{1,15})+\b/g,
+  /\b[A-Z][A-Za-z0-9-]{2,20}\s+(?:Transformer|Model|Network|Protocol|Framework|Benchmark|Dataset|Algorithm|Architecture|Agent|Runtime|Compiler)\b/g,
+];
+
+const TITLECASE_PATTERN = /\b[A-Z][a-z]{3,15}\b/g;
 
 const BLOCKED_RECOMMENDATION_HOSTS = new Set([
   "x.com",
@@ -122,55 +179,6 @@ const BLOCKED_RECOMMENDATION_HOSTS = new Set([
   "www.google.com",
 ]);
 
-const GLOBAL_TECH_TERMS = [
-  "AI Agent",
-  "Agentic AI",
-  "VLA",
-  "MCP",
-  "RAG",
-  "多模态",
-  "推理模型",
-  "世界模型",
-  "代码智能体",
-  "长上下文",
-  "函数调用",
-  "强化学习",
-  "合成数据",
-  "模型蒸馏",
-  "端侧模型",
-  "具身智能",
-  "人形机器人",
-  "灵巧手",
-  "自动驾驶",
-  "固态电池",
-  "钠离子电池",
-  "硅光",
-  "Chiplet",
-  "先进封装",
-  "HBM",
-  "量子纠错",
-  "容错量子计算",
-  "基因编辑",
-  "蛋白质设计",
-  "商业航天",
-  "可回收火箭",
-  "卫星互联网",
-  "核聚变",
-  "低空经济",
-];
-
-const SECTOR_FALLBACKS: Record<string, string[]> = {
-  "ai / agi": ["AI Agent", "多模态", "推理模型", "MCP", "长上下文", "代码智能体"],
-  机器人: ["VLA", "具身智能", "世界模型", "人形机器人", "灵巧手", "强化学习"],
-  半导体: ["Chiplet", "先进封装", "HBM", "硅光", "端侧模型"],
-  新能源: ["固态电池", "钠离子电池", "储能", "电池回收", "光伏钙钛矿"],
-  生物科技: ["基因编辑", "蛋白质设计", "AI制药", "细胞治疗", "合成生物学"],
-  量子计算: ["量子纠错", "容错量子计算", "量子芯片", "量子网络"],
-  商业航天: ["可回收火箭", "卫星互联网", "低轨卫星", "商业发射"],
-  新材料: ["钙钛矿", "碳纤维", "超材料", "高温超导"],
-  智能制造: ["工业机器人", "数字孪生", "机器视觉", "柔性制造"],
-};
-
 function normalize(value: string): string {
   return value.normalize("NFKC").replace(/\s+/g, " ").trim();
 }
@@ -185,6 +193,14 @@ function daysAgo(value: string): number {
   return Math.max(0, (Date.now() - timestamp) / 86_400_000);
 }
 
+function urlHost(value: string): string {
+  try {
+    return new URL(value).hostname.toLocaleLowerCase("en-US").replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
 function sectorMatches(articleSector: string, selectedSector: string): boolean {
   const article = normalizedKey(articleSector);
   const selected = normalizedKey(selectedSector);
@@ -196,13 +212,35 @@ function articleText(article: LiveIntelligenceEvent): string {
   return `${article.title} ${article.summary} ${article.company}`.normalize("NFKC");
 }
 
-function isMeaningfulKeyword(value: string): boolean {
+function isSeedKeyword(value: string): boolean {
   const term = normalize(value);
   const key = normalizedKey(term);
   if (!term || GENERIC_TERMS.has(key)) return false;
   if (/^[A-Za-z]{1,2}$/.test(term)) return false;
-  if (/^[A-Z0-9-]+$/.test(term) && !APPROVED_ACRONYMS.has(term)) return false;
+  if (/^[A-Z0-9-]+$/.test(term) && !SEED_ACRONYMS.has(term)) return false;
   return /[A-Za-z0-9\u3400-\u9fff]/.test(term);
+}
+
+function isPotentialDynamicTerm(value: string): boolean {
+  const term = normalize(value).replace(/^[\s.,:;()[\]{}]+|[\s.,:;()[\]{}]+$/g, "");
+  const key = normalizedKey(term);
+  if (!term || term.length < 3 || term.length > 40 || GENERIC_TERMS.has(key)) return false;
+  if (/^\d+$/.test(term) || /https?:|www\.|@/.test(term)) return false;
+  if (/^[A-Za-z]{1,2}$/.test(term)) return false;
+  return /[A-Za-z]/.test(term);
+}
+
+function hasStrongEntityShape(value: string): boolean {
+  const term = normalize(value);
+  return (
+    /^[A-Z][A-Z0-9]{2,9}(?:-[A-Z0-9]{1,8})*$/.test(term) ||
+    /\d/.test(term) ||
+    /-/.test(term) ||
+    /[a-z][A-Z]/.test(term) ||
+    /\s(?:Transformer|Model|Network|Protocol|Framework|Benchmark|Dataset|Algorithm|Architecture|Agent|Runtime|Compiler)$/.test(
+      term,
+    )
+  );
 }
 
 function isLikelyPersonName(value: string): boolean {
@@ -262,6 +300,142 @@ function reasonFor(items: LiveIntelligenceEvent[]): string {
   return `在 ${items.length} 条当前赛道情报中出现`;
 }
 
+function mentionHasTechnicalContext(text: string, label: string): boolean {
+  const lowerText = text.toLocaleLowerCase("en-US");
+  const lowerLabel = label.toLocaleLowerCase("en-US");
+  let offset = 0;
+  while (offset < lowerText.length) {
+    const index = lowerText.indexOf(lowerLabel, offset);
+    if (index < 0) return false;
+    const window = text.slice(Math.max(0, index - 90), index + label.length + 90);
+    if (TECH_CONTEXT_PATTERN.test(window)) return true;
+    offset = index + Math.max(1, label.length);
+  }
+  return false;
+}
+
+function structuredEntityKeys(articles: LiveIntelligenceEvent[]): Set<string> {
+  const values: string[] = [];
+  for (const article of articles) {
+    values.push(article.company, article.source.name, article.source.platform ?? "");
+    values.push(...(article.authors ?? []), ...(article.institutions ?? []));
+  }
+  return new Set(values.map(normalizedKey).filter(Boolean));
+}
+
+function extractedDynamicTerms(article: LiveIntelligenceEvent): Array<{
+  label: string;
+  titleMention: boolean;
+  strongShape: boolean;
+}> {
+  const found = new Map<string, { label: string; titleMention: boolean; strongShape: boolean }>();
+  const collect = (text: string, titleMention: boolean, pattern: RegExp) => {
+    for (const match of text.match(pattern) ?? []) {
+      const label = normalize(match);
+      const key = normalizedKey(label);
+      if (!isPotentialDynamicTerm(label)) continue;
+      const current = found.get(key);
+      found.set(key, {
+        label: current?.label ?? label,
+        titleMention: Boolean(current?.titleMention || titleMention),
+        strongShape: Boolean(current?.strongShape || hasStrongEntityShape(label)),
+      });
+    }
+  };
+
+  for (const pattern of DYNAMIC_PATTERNS) {
+    collect(article.title, true, pattern);
+    collect(article.summary, false, pattern);
+  }
+  collect(article.title, true, TITLECASE_PATTERN);
+  return [...found.values()];
+}
+
+function dynamicKeywordCandidates(
+  articles: LiveIntelligenceEvent[],
+  existing: Set<string>,
+): TrackingRecommendation[] {
+  const blockedEntities = structuredEntityKeys(articles);
+  const candidates = new Map<string, DynamicCandidate>();
+
+  for (const article of articles) {
+    const text = `${article.title} ${article.summary}`;
+    for (const extracted of extractedDynamicTerms(article)) {
+      const key = normalizedKey(extracted.label);
+      if (existing.has(key) || blockedEntities.has(key)) continue;
+      if (!mentionHasTechnicalContext(text, extracted.label)) continue;
+
+      const current = candidates.get(key) ?? {
+        label: extracted.label,
+        articles: new Map<string, LiveIntelligenceEvent>(),
+        sources: new Set<string>(),
+        titleMentions: 0,
+        contextMentions: 0,
+        authoritativeMentions: 0,
+        strongShape: false,
+      };
+      if (!current.articles.has(article.id)) {
+        current.articles.set(article.id, article);
+        current.contextMentions += 1;
+        if (extracted.titleMention) current.titleMentions += 1;
+        if (sourceWeight(article) >= 0.8) current.authoritativeMentions += 1;
+      }
+      const host = urlHost(article.source.url);
+      if (host) current.sources.add(host);
+      current.strongShape ||= extracted.strongShape;
+      candidates.set(key, current);
+    }
+  }
+
+  return [...candidates.values()]
+    .filter((candidate) => {
+      const items = [...candidate.articles.values()];
+      const articleCount = items.length;
+      const sourceCount = candidate.sources.size;
+      const averageQuality =
+        items.reduce((sum, item) => sum + (item.qualityScore ?? 55), 0) / articleCount;
+      const averageImportance =
+        items.reduce((sum, item) => sum + item.importance, 0) / articleCount;
+      const plainTitleCase = /^[A-Z][a-z]{3,15}$/.test(candidate.label);
+
+      if (plainTitleCase) {
+        return articleCount >= 3 && sourceCount >= 2 && candidate.titleMentions >= 2;
+      }
+      if (articleCount >= 2 && sourceCount >= 2 && candidate.titleMentions >= 1) {
+        return true;
+      }
+      if (
+        articleCount >= 3 &&
+        candidate.authoritativeMentions >= 1 &&
+        candidate.titleMentions >= 1
+      ) {
+        return true;
+      }
+      return (
+        articleCount === 1 &&
+        candidate.strongShape &&
+        candidate.authoritativeMentions === 1 &&
+        candidate.titleMentions === 1 &&
+        averageQuality >= 85 &&
+        averageImportance >= 80
+      );
+    })
+    .map((candidate) => {
+      const items = [...candidate.articles.values()];
+      return {
+        value: candidate.label,
+        label: candidate.label,
+        reason:
+          items.length === 1
+            ? "动态发现：高质量官方首发中的新技术实体"
+            : `动态发现：${items.length} 条情报、${candidate.sources.size} 个独立来源`,
+        score: scoreArticles(items) + 18 + candidate.sources.size * 5,
+      };
+    })
+    .sort((left, right) => right.score - left.score || left.label.localeCompare(right.label))
+    .slice(0, 18);
+}
+
 function keywordCandidates(
   articles: LiveIntelligenceEvent[],
   selectedSector: string,
@@ -277,20 +451,14 @@ function keywordCandidates(
     const text = articleText(article).toLocaleLowerCase("zh-CN");
     for (const term of terms) {
       const key = normalizedKey(term);
-      if (
-        !isMeaningfulKeyword(term) ||
-        existing.has(key) ||
-        !text.includes(key)
-      ) {
-        continue;
-      }
+      if (!isSeedKeyword(term) || existing.has(key) || !text.includes(key)) continue;
       const current = candidates.get(key) ?? { label: term, articles: [] };
       current.articles.push(article);
       candidates.set(key, current);
     }
   }
 
-  const ranked = [...candidates.entries()]
+  const seeded = [...candidates.entries()]
     .map(([key, candidate]) => ({
       value: candidate.label,
       label: candidate.label,
@@ -299,15 +467,25 @@ function keywordCandidates(
       key,
     }))
     .sort((left, right) => right.score - left.score || left.label.localeCompare(right.label))
-    .slice(0, 18)
     .map(({ key: _key, ...item }) => item);
+
+  const merged = new Map<string, TrackingRecommendation>();
+  for (const item of [...seeded, ...dynamicKeywordCandidates(articles, existing)]) {
+    const key = normalizedKey(item.value);
+    const current = merged.get(key);
+    if (!current || item.score > current.score) merged.set(key, item);
+  }
+
+  const ranked = [...merged.values()]
+    .sort((left, right) => right.score - left.score || left.label.localeCompare(right.label))
+    .slice(0, 18);
 
   if (ranked.length >= 6) return ranked;
   const fallback = SECTOR_FALLBACKS[normalizedKey(selectedSector)] ?? [];
   for (const term of fallback) {
     const key = normalizedKey(term);
     if (
-      !isMeaningfulKeyword(term) ||
+      !isSeedKeyword(term) ||
       existing.has(key) ||
       ranked.some((item) => normalizedKey(item.value) === key)
     ) {
@@ -316,7 +494,7 @@ function keywordCandidates(
     ranked.push({
       value: term,
       label: term,
-      reason: "赛道技术词表中的高相关实体",
+      reason: "赛道种子配置中的高相关技术实体",
       score: 1,
     });
     if (ranked.length >= 12) break;
@@ -403,14 +581,6 @@ function companyCandidates(
     .slice(0, 18);
 }
 
-function urlHost(value: string): string {
-  try {
-    return new URL(value).hostname.toLocaleLowerCase("en-US").replace(/^www\./, "");
-  } catch {
-    return "";
-  }
-}
-
 function mostCommon<T extends string>(values: T[], fallback: T): T {
   const counts = new Map<T, number>();
   values.forEach((value) => counts.set(value, (counts.get(value) ?? 0) + 1));
@@ -459,9 +629,7 @@ function sourceCandidates(
       const sourceName = normalize(
         representative.source.name || representative.source.platform || host,
       );
-      const name = isCompanySource
-        ? `${company} 官方来源`
-        : sourceName || host;
+      const name = isCompanySource ? `${company} 官方来源` : sourceName || host;
       const region = mostCommon(
         items.map((item) => item.region),
         "全球" as const,
