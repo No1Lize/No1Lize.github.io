@@ -2,8 +2,8 @@
 """Generic taxonomy helpers for arbitrary user-created tracking sectors.
 
 The module derives aliases from names, keeps sector identity terms separate from
-actor terms, and prevents terms shared by multiple sectors from becoming
-unscoped standalone discovery seeds.
+actor terms, prevents shared terms from becoming unscoped discovery seeds, and
+builds several independent discovery sources for every enabled track.
 """
 
 from __future__ import annotations
@@ -12,10 +12,12 @@ import re
 import unicodedata
 from collections import Counter
 from typing import Any, Iterable
+from urllib.parse import quote_plus
 
 SPLIT_PATTERN = re.compile(r"[/／|｜,，;；、&＆+＋()（）\[\]【】]+")
 TRIM_PATTERN = re.compile(r"^[\s._:：\-—–]+|[\s._:：\-—–]+$")
 NORMALIZE_PATTERN = re.compile(r"[\s._:：\-—–/／|｜,，;；、&＆+＋()（）\[\]【】]+")
+TRACK_SOURCE_SUFFIXES = ("bing", "google-cn", "google-us")
 
 
 def clean(value: Any, limit: int = 160) -> str:
@@ -67,32 +69,35 @@ def _unique_terms_by_track(
     terms_for_track: Any,
 ) -> dict[str, list[str]]:
     counts: Counter[str] = Counter()
-    values_by_slug: dict[str, list[str]] = {}
-
+    terms_by_slug: dict[str, list[str]] = {}
     for track in tracks:
         slug = clean(track.get("slug"), 80)
-        values = terms_for_track(track)
-        values_by_slug[slug] = values
-        counts.update({normalize_term(value) for value in values})
-
+        terms = terms_for_track(track)
+        terms_by_slug[slug] = terms
+        counts.update({normalize_term(value) for value in terms})
     return {
-        slug: [value for value in values if counts[normalize_term(value)] == 1]
-        for slug, values in values_by_slug.items()
+        slug: [value for value in terms if counts[normalize_term(value)] == 1]
+        for slug, terms in terms_by_slug.items()
     }
 
 
 def unique_identity_terms_by_track(
     tracks: list[dict[str, Any]],
 ) -> dict[str, list[str]]:
-    unique_keywords = _unique_terms_by_track(
-        tracks,
-        lambda track: unique(track.get("keywords", []), 60),
-    )
+    keyword_counts: Counter[str] = Counter()
+    for track in tracks:
+        keyword_counts.update(
+            {normalize_term(value) for value in unique(track.get("keywords", []), 60)}
+        )
     return {
         clean(track.get("slug"), 80): unique(
             [
                 *name_aliases(track.get("name")),
-                *unique_keywords.get(clean(track.get("slug"), 80), []),
+                *[
+                    value
+                    for value in unique(track.get("keywords", []), 60)
+                    if keyword_counts[normalize_term(value)] == 1
+                ],
             ],
             24,
         )
@@ -106,6 +111,23 @@ def unique_actor_terms_by_track(
     return _unique_terms_by_track(
         tracks,
         lambda track: actor_terms(track, tracking_module),
+    )
+
+
+def expected_source_ids(slug: str) -> list[str]:
+    return [f"user-track-{slug}-{suffix}" for suffix in TRACK_SOURCE_SUFFIXES]
+
+
+def _google_news_url(query: str, *, chinese: bool) -> str:
+    encoded = quote_plus(query)
+    if chinese:
+        return (
+            "https://news.google.com/rss/search?"
+            f"q={encoded}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
+        )
+    return (
+        "https://news.google.com/rss/search?"
+        f"q={encoded}&hl=en-US&gl=US&ceid=US:en"
     )
 
 
@@ -127,22 +149,47 @@ def generated_track_sources(
         terms = unique([*core, *actors], 80)
         if not core:
             continue
-        query = f"({tracking_module._quoted_or_query(terms)}) ({event_terms})"
-        sources.append(
-            {
-                "id": f"user-track-{slug}",
-                "name": f"{track['name']} · 用户追踪",
-                "url": tracking_module._bing_rss(query),
-                "adapter": "rss",
-                "platform": "用户追踪",
-                "sourceLevel": "待交叉验证",
-                "region": "全球",
-                "sector": track["name"],
-                "maxItems": 8,
-                "keywords": terms,
-                "strictTitleKeywords": False,
-                "enabled": True,
-            }
+        quoted_terms = tracking_module._quoted_or_query(terms)
+        query = f"({quoted_terms}) ({event_terms})"
+        common = {
+            "name": track["name"],
+            "adapter": "rss",
+            "sourceLevel": "待交叉验证",
+            "sector": track["name"],
+            "keywords": terms,
+            "strictTitleKeywords": False,
+            "enabled": True,
+        }
+        sources.extend(
+            [
+                {
+                    **common,
+                    "id": f"user-track-{slug}-bing",
+                    "name": f"{track['name']} · Bing 发现",
+                    "url": tracking_module._bing_rss(query),
+                    "platform": "Bing 搜索",
+                    "region": "全球",
+                    "maxItems": 8,
+                },
+                {
+                    **common,
+                    "id": f"user-track-{slug}-google-cn",
+                    "name": f"{track['name']} · Google News 中文",
+                    "url": _google_news_url(query, chinese=True),
+                    "platform": "Google News",
+                    "region": "中国",
+                    "maxItems": 8,
+                },
+                {
+                    **common,
+                    "id": f"user-track-{slug}-google-us",
+                    "name": f"{track['name']} · Google News 英文",
+                    "url": _google_news_url(query, chinese=False),
+                    "platform": "Google News",
+                    "region": "美国",
+                    "maxItems": 8,
+                },
+            ]
         )
     return sources
 
