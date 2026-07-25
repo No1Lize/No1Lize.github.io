@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T04:42:11+00:00",
-  "articleCount": 412,
+  "generatedAt": "2026-07-25T04:48:16+00:00",
+  "articleCount": 414,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -55,7 +55,8 @@
         "url": "https://finance.eastmoney.com/a/202607253821110827.html",
         "level": "媒体报道",
         "platform": "东方财富"
-      }
+      },
+      "_eastmoneyBatchOrigin": "retained"
     },
     {
       "id": "official-user-东方财富-90ea50be8895edf5",
@@ -73,7 +74,8 @@
         "url": "https://finance.eastmoney.com/a/202607253821110592.html",
         "level": "媒体报道",
         "platform": "东方财富"
-      }
+      },
+      "_eastmoneyBatchOrigin": "retained"
     },
     {
       "id": "tmtpost-7aac2971e8c48e5f",
@@ -93,6 +95,25 @@
         "platform": "专业媒体"
       },
       "companySlug": "anthropic"
+    },
+    {
+      "id": "official-user-东方财富-456a6b67c23de1f2",
+      "sourceId": "official-user-东方财富",
+      "title": "英伟达与SK集团推出5000亿美元AI计划",
+      "summary": "据报道， 英伟达 表示，将协助海力士设计未来的 高带宽内存 芯片，此举将有助于确保内存供应。 英伟达 还表示，与SK集团合作的“ 人工智能 计划”总价值将超过5000亿美元。黄仁勋在采访中表示，这个数字包括 英伟达 购买内存芯片的资金，以及SK集团购买英伟达超级 计算机 的资金。“所以，我们双方的交易额将达到5000亿美元。”他说道。 SK电讯计划使用英伟达Vera Rubin芯片和 SK海力士 HBM4内存构建2吉瓦AI 数据中心 。这大约相当于150万户家庭的用电量。 英伟达表示，首批由SK电信公司建造的所谓“ 人工智能 工厂”将于明年投入使用。",
+      "type": "产品发布",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 82,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253820995926.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
+      },
+      "_eastmoneyBatchOrigin": "new"
     },
     {
       "id": "anthropic-c34a327604b5be4a",
@@ -129,7 +150,8 @@
         "url": "https://finance.eastmoney.com/a/202607253821111224.html",
         "level": "媒体报道",
         "platform": "东方财富"
-      }
+      },
+      "_eastmoneyBatchOrigin": "retained"
     },
     {
       "id": "official-user-东方财富-503a6c8409337748",
@@ -147,7 +169,8 @@
         "url": "https://finance.eastmoney.com/a/202607253821114037.html",
         "level": "媒体报道",
         "platform": "东方财富"
-      }
+      },
+      "_eastmoneyBatchOrigin": "retained"
     },
     {
       "id": "official-user-东方财富-4b308b69f7e59c59",
@@ -165,7 +188,8 @@
         "url": "https://finance.eastmoney.com/a/202607253821083595.html",
         "level": "媒体报道",
         "platform": "东方财富"
-      }
+      },
+      "_eastmoneyBatchOrigin": "new"
     },
     {
       "id": "official-user-东方财富-46f56292a149bbe8",
@@ -184,7 +208,8 @@
         "level": "媒体报道",
         "platform": "东方财富"
       },
-      "companySlug": "moonshot-ai"
+      "companySlug": "moonshot-ai",
+      "_eastmoneyBatchOrigin": "new"
     },
     {
       "id": "official-minimax-218aa2e267825583",
@@ -315,6 +340,24 @@
         "url": "https://www.tmtpost.com/8078756.html",
         "level": "媒体报道",
         "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "prnewswire-tech-d32673a2ce8fada8",
+      "sourceId": "prnewswire-tech",
+      "title": "Hyundai Motor Group Executive Chair Euisun Chung Announces Physical AI Vision at San Francisco AI Summit",
+      "summary": "Hyundai Motor Group shares roadmap for realizing its Physical AI vision and collaboration strategy with global tech leaders at the San Francisco AI Summit Executive Chair Euisun Chung presented, \"Hyundai Motor Group is evolving beyond the traditional boundaries of automotive manufacturing...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "智能制造",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/hyundai-motor-group-executive-chair-euisun-chung-announces-physical-ai-vision-at-san-francisco-ai-summit-302834557.html",
+        "level": "官方披露",
+        "platform": "新闻稿"
       }
     },
     {
@@ -9323,8 +9366,8 @@
       "id": "prnewswire-tech",
       "name": "PR Newswire Consumer Technology",
       "status": "ok",
-      "scanned": 4,
-      "accepted": 4,
+      "scanned": 5,
+      "accepted": 5,
       "failed": 0,
       "platform": "新闻稿"
     },
@@ -9481,6 +9524,15 @@
       "platform": "用户追踪"
     },
     {
+      "id": "user-track-fusion",
+      "name": "可控核聚变 · 用户追踪",
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 0,
+      "platform": "用户追踪"
+    },
+    {
       "id": "user-track-manufacturing",
       "name": "智能制造 · 用户追踪",
       "status": "empty",
@@ -9528,15 +9580,6 @@
     {
       "id": "user-track-space",
       "name": "商业航天 · 用户追踪",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 0,
-      "platform": "用户追踪"
-    },
-    {
-      "id": "user-track-track-3p0dg3",
-      "name": "可控核聚变 · 用户追踪",
       "status": "empty",
       "scanned": 0,
       "accepted": 0,
@@ -9592,20 +9635,22 @@
     {
       "id": "x-anthropic",
       "name": "Anthropic",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
     },
     {
       "id": "x-deepmind",
       "name": "Google DeepMind",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
     },
     {
       "id": "x-demis",
@@ -9640,11 +9685,12 @@
     {
       "id": "x-karpathy",
       "name": "Andrej Karpathy",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
     },
     {
       "id": "x-lecun",
@@ -9654,16 +9700,17 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X returned HTTP 429 after delayed retry; circuit opened and previous snapshot retained"
+      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
     },
     {
       "id": "x-openai",
       "name": "OpenAI",
-      "status": "ok",
-      "scanned": 5,
-      "accepted": 5,
-      "failed": 0,
-      "platform": "X"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "X returned HTTP 429 after delayed retry; circuit opened and previous snapshot retained"
     },
     {
       "id": "x-sam-altman",
@@ -9699,12 +9746,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 412,
+        "actual": 414,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 67,
+        "actual": 63,
         "required": 6,
         "passed": true
       },
@@ -9739,7 +9786,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1408,
+        "actual": 0.1401,
         "required": 0.45,
         "passed": true
       },
@@ -9749,8 +9796,8 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 412,
-        "required": 412,
+        "actual": 414,
+        "required": 414,
         "passed": true
       }
     },
