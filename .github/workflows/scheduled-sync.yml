@@ -31,6 +31,7 @@ on:
       - tools/refresh_people_profiles.py
       - tools/refresh_people_profiles_with_video.py
       - tools/person_video_discovery.py
+      - tools/person_wechat_video_discovery.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
       - tools/crawl_official_with_source_categories.py
