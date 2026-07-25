@@ -1,0 +1,157 @@
+name: Apply layered venture evidence v4
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-layered-venture-evidence-v4.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: apply-layered-venture-evidence-v4
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/venture-layered-evidence-v4
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply migration and all venture gates
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          {
+            echo "branch_commit=$(git rev-parse HEAD)"
+            echo "checked_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            python tools/patch_refine_venture_evidence_regressions.py
+            PATCH_STATUS=$?
+            echo "patch_status=$PATCH_STATUS"
+            if [ "$PATCH_STATUS" -eq 0 ]; then
+              python -m py_compile \
+                tools/venture_profile_extraction.py \
+                tools/crawl_venture_profiles.py \
+                tools/enrich_venture_profiles.py \
+                tools/refine_venture_research_evidence.py \
+                tools/normalize_venture_profiles.py \
+                tools/sanitize_venture_profiles.py \
+                tools/sanitize_venture_narratives.py \
+                tools/finalize_venture_profiles.py \
+                tools/enforce_venture_entity_semantics.py
+              COMPILE_STATUS=$?
+            else
+              COMPILE_STATUS=1
+            fi
+            echo "compile_status=$COMPILE_STATUS"
+            if [ "$COMPILE_STATUS" -eq 0 ]; then
+              python -m unittest \
+                tests.test_venture_profile_extraction \
+                tests.test_venture_profile_noise_filters \
+                tests.test_venture_profile_enrichment \
+                tests.test_refine_venture_research_evidence \
+                tests.test_normalize_venture_profiles \
+                tests.test_venture_profile_postprocess \
+                tests.test_venture_narrative_sanitizer \
+                tests.test_finalize_venture_profiles \
+                tests.test_venture_entity_semantics
+              TEST_STATUS=$?
+            else
+              TEST_STATUS=1
+            fi
+            echo "test_status=$TEST_STATUS"
+            if [ "$TEST_STATUS" -eq 0 ]; then
+              python tools/enrich_venture_profiles.py
+              ENRICH_STATUS=$?
+              python tools/refine_venture_research_evidence.py
+              REFINE_STATUS=$?
+              python tools/refine_venture_research_evidence.py --check
+              REFINE_CHECK_STATUS=$?
+              python tools/normalize_venture_profiles.py
+              NORMALIZE_STATUS=$?
+              python tools/finalize_venture_profiles.py
+              FINALIZE_STATUS=$?
+              python tools/finalize_venture_profiles.py --check
+              FINALIZE_CHECK_STATUS=$?
+              python tools/enforce_venture_entity_semantics.py
+              ENTITY_STATUS=$?
+              python tools/enforce_venture_entity_semantics.py --check
+              ENTITY_CHECK_STATUS=$?
+              python tools/crawl_venture_profiles.py --validate-only
+              CRAWL_VALIDATE_STATUS=$?
+              python tools/enrich_venture_profiles.py --validate-only
+              ENRICH_VALIDATE_STATUS=$?
+              git diff --check
+              DIFF_STATUS=$?
+            else
+              ENRICH_STATUS=1
+              REFINE_STATUS=1
+              REFINE_CHECK_STATUS=1
+              NORMALIZE_STATUS=1
+              FINALIZE_STATUS=1
+              FINALIZE_CHECK_STATUS=1
+              ENTITY_STATUS=1
+              ENTITY_CHECK_STATUS=1
+              CRAWL_VALIDATE_STATUS=1
+              ENRICH_VALIDATE_STATUS=1
+              DIFF_STATUS=1
+            fi
+            echo "enrich_status=$ENRICH_STATUS"
+            echo "refine_status=$REFINE_STATUS"
+            echo "refine_check_status=$REFINE_CHECK_STATUS"
+            echo "normalize_status=$NORMALIZE_STATUS"
+            echo "finalize_status=$FINALIZE_STATUS"
+            echo "finalize_check_status=$FINALIZE_CHECK_STATUS"
+            echo "entity_status=$ENTITY_STATUS"
+            echo "entity_check_status=$ENTITY_CHECK_STATUS"
+            echo "crawl_validate_status=$CRAWL_VALIDATE_STATUS"
+            echo "enrich_validate_status=$ENRICH_VALIDATE_STATUS"
+            echo "diff_status=$DIFF_STATUS"
+          } > diagnostics/layered-venture-evidence-v4.txt 2>&1
+          STATUS=$((PATCH_STATUS || COMPILE_STATUS || TEST_STATUS || ENRICH_STATUS || REFINE_STATUS || REFINE_CHECK_STATUS || NORMALIZE_STATUS || FINALIZE_STATUS || FINALIZE_CHECK_STATUS || ENTITY_STATUS || ENTITY_CHECK_STATUS || CRAWL_VALIDATE_STATUS || ENRICH_VALIDATE_STATUS || DIFF_STATUS))
+          cat diagnostics/layered-venture-evidence-v4.txt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "$STATUS" -eq 0 ]; then
+            rm -f .venture-sanitize-trigger
+            rm -f tools/patch_refine_venture_evidence_regressions.py
+            rm -rf diagnostics
+            git add -A
+            git commit -m "data: separate canonical and research venture evidence"
+          else
+            git add -A
+            git commit -m "ci: record layered venture evidence failure"
+          fi
+          git push origin HEAD:feature/venture-layered-evidence-v4
+          exit "$STATUS"
+      - name: Remove one-time dispatcher
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B cleanup-layered-v4 origin/main
+          git rm .github/workflows/apply-layered-venture-evidence-v4.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: remove layered venture migration dispatcher"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
