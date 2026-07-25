@@ -55,6 +55,41 @@ class MarketProfileTransportTests(unittest.TestCase):
             ),
         )
 
+    def test_yahoo_chart_urls_and_parser(self):
+        identity = market.company_identity("美股", "AAPL")
+        urls = refresh.yahoo_chart_urls(identity)
+        self.assertEqual(len(urls), 2)
+        self.assertIn("query1.finance.yahoo.com", urls[0])
+        self.assertIn("/chart/AAPL?", urls[0])
+        payload = json.dumps(
+            {
+                "chart": {
+                    "result": [
+                        {
+                            "timestamp": [1784592000, 1784678400],
+                            "indicators": {
+                                "quote": [
+                                    {
+                                        "open": [210, 213],
+                                        "close": [213, 215],
+                                        "high": [214, 216],
+                                        "low": [209, 212],
+                                        "volume": [1000, 1200],
+                                    }
+                                ]
+                            },
+                        }
+                    ],
+                    "error": None,
+                }
+            }
+        )
+        points = refresh.parse_yahoo_chart(payload)
+        self.assertEqual(len(points), 2)
+        self.assertEqual(points[0]["open"], 210.0)
+        self.assertEqual(points[1]["close"], 215.0)
+        self.assertEqual(points[1]["volume"], 1200.0)
+
     def test_eastmoney_market_mapping_and_kline_shape(self):
         identity = market.company_identity("美股", "AAPL")
         self.assertEqual(
@@ -65,7 +100,10 @@ class MarketProfileTransportTests(unittest.TestCase):
             refresh.eastmoney_market_ids("美国纽约证券交易所"),
             [106, 105, 107],
         )
-        self.assertIn("secid=105.AAPL", refresh.eastmoney_url(identity, 105))
+        url = refresh.eastmoney_url(identity, 105)
+        self.assertIn("63.push2his.eastmoney.com", url)
+        self.assertIn("secid=105.AAPL", url)
+        self.assertIn("ut=fa5fd1943c7b386f172d6893dbfba10b", url)
         payload = json.dumps(
             {
                 "data": {
