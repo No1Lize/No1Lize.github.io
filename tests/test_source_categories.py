@@ -36,7 +36,7 @@ class SourceCategoryTests(unittest.TestCase):
             "media",
         )
 
-    def test_generic_router_keeps_all_website_categories_except_eastmoney(self) -> None:
+    def test_generic_router_keeps_all_public_website_categories(self) -> None:
         tracking = {
             "sources": [
                 {
@@ -81,8 +81,11 @@ class SourceCategoryTests(unittest.TestCase):
                 "user-source-company",
                 "user-source-media",
                 "user-source-person",
+                "user-source-eastmoney",
             },
         )
+        for spec in specs_by_id.values():
+            self.assertEqual(spec["adapter"], "generic_web")
         self.assertEqual(
             specs_by_id["user-source-company"]["sourceCategory"],
             "company",
@@ -94,6 +97,14 @@ class SourceCategoryTests(unittest.TestCase):
         self.assertEqual(
             specs_by_id["user-source-person"]["sourceCategory"],
             "person",
+        )
+        self.assertEqual(
+            specs_by_id["user-source-eastmoney"]["sourceCategory"],
+            "media",
+        )
+        self.assertEqual(
+            specs_by_id["user-source-eastmoney"]["sourceUrl"],
+            "https://eastmoney.com/",
         )
         self.assertEqual(
             specs_by_id["user-source-company"]["company"],
