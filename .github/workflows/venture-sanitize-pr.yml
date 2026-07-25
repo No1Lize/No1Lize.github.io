@@ -111,6 +111,12 @@ jobs:
           python tools/normalize_venture_profiles.py \
             > diagnostics/venture-normalizer-output.txt 2>&1
           status=$?
+          if [ "$status" -ne 0 ]; then
+            printf '\nFull quality gate after normalization:\n' \
+              >> diagnostics/venture-normalizer-output.txt
+            python tools/normalize_venture_profiles.py --check \
+              >> diagnostics/venture-normalizer-output.txt 2>&1 || true
+          fi
           cat diagnostics/venture-normalizer-output.txt
           if [ "$status" -ne 0 ]; then
             git config user.name "github-actions[bot]"
