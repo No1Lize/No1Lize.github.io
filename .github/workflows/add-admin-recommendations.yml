@@ -1,0 +1,120 @@
+name: One-time admin recommendation integration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/add-admin-recommendations.yml
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Integrate direct admin recommendations and session token recovery
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("components/user-tracking-panel.tsx")
+          source = path.read_text(encoding="utf-8")
+
+          def replace_once(old: str, new: str) -> None:
+              global source
+              if old not in source:
+                  raise SystemExit(f"missing patch marker:\n{old[:180]}")
+              source = source.replace(old, new, 1)
+
+          replace_once(
+              'import { useEffect, useMemo, useRef, useState } from "react";\nimport { ipoCompanies } from "@/lib/catalog-data";',
+              'import { useEffect, useMemo, useRef, useState } from "react";\nimport { TrackingAdminRecommendation } from "@/components/tracking-admin-recommendation";\nimport { ipoCompanies } from "@/lib/catalog-data";\nimport {\n  recommendListedCompanies,\n  type ListedCompanyRecommendation,\n} from "@/lib/tracking-listed-recommendations";\nimport {\n  recommendTrackingAdditions,\n  type TrackingSourceRecommendation,\n} from "@/lib/tracking-recommendations";\nimport { useArticles } from "@/lib/use-articles";',
+          )
+          replace_once(
+              'const API_ROOT = "https://api.github.com";\n',
+              'const API_ROOT = "https://api.github.com";\nconst TOKEN_SESSION_KEY = "no1lize:tracking-admin-token";\n',
+          )
+          replace_once(
+              '}) {\n  const [config, setConfig] = useState(() => cloneTrackingConfig(initial));',
+              '}) {\n  const { articles } = useArticles();\n  const [config, setConfig] = useState(() => cloneTrackingConfig(initial));',
+          )
+          replace_once(
+              '  const remoteShaRef = useRef("");\n  const saveQueueRef = useRef<Promise<void>>(Promise.resolve());',
+              '  const remoteShaRef = useRef("");\n  const saveQueueRef = useRef<Promise<void>>(Promise.resolve());\n  const restoreAttemptedRef = useRef(false);',
+          )
+          replace_once(
+              '  const enabledTracks = useMemo(\n    () => config.tracks.filter((item) => item.enabled),\n    [config.tracks],\n  );',
+              '  const enabledTracks = useMemo(\n    () => config.tracks.filter((item) => item.enabled),\n    [config.tracks],\n  );\n  const listedRecommendations = useMemo(\n    () =>\n      track\n        ? recommendListedCompanies(\n            articles,\n            track.name,\n            ipoCompanies,\n            config.listedCompanies,\n          )\n        : [],\n    [articles, config.listedCompanies, track?.name],\n  );\n  const sourceRecommendations = useMemo(\n    () =>\n      track\n        ? recommendTrackingAdditions(articles, track.name, {\n            sources: config.sources.map((source) => source.url),\n          }).sources\n        : [],\n    [articles, config.sources, track?.name],\n  );',
+          )
+          replace_once(
+              '  useEffect(() => {\n    if (active >= config.tracks.length) {\n      setActive(Math.max(0, config.tracks.length - 1));\n    }\n  }, [active, config.tracks.length]);',
+              '  useEffect(() => {\n    if (active >= config.tracks.length) {\n      setActive(Math.max(0, config.tracks.length - 1));\n    }\n  }, [active, config.tracks.length]);\n\n  useEffect(() => {\n    if (restoreAttemptedRef.current) return;\n    restoreAttemptedRef.current = true;\n    const savedToken = window.sessionStorage.getItem(TOKEN_SESSION_KEY) ?? "";\n    if (!savedToken) return;\n    setToken(savedToken);\n    void loadFromGithub(savedToken);\n  }, []);',
+          )
+          replace_once(
+              '  async function loadFromGithub(): Promise<void> {\n    const cleanToken = token.trim();',
+              '  async function loadFromGithub(tokenOverride?: string): Promise<void> {\n    const cleanToken = (tokenOverride ?? token).trim();',
+          )
+          replace_once(
+              '      setUsername(user.login);\n      setActive(0);',
+              '      setUsername(user.login);\n      window.sessionStorage.setItem(TOKEN_SESSION_KEY, cleanToken);\n      setActive(0);',
+          )
+          replace_once(
+              '    } catch (error) {\n      setUsername("");\n      remoteShaRef.current = "";',
+              '    } catch (error) {\n      window.sessionStorage.removeItem(TOKEN_SESSION_KEY);\n      setUsername("");\n      remoteShaRef.current = "";',
+          )
+          replace_once(
+              '    setToken("");\n    setConfig(cloneTrackingConfig(initial));',
+              '    setToken("");\n    window.sessionStorage.removeItem(TOKEN_SESSION_KEY);\n    setConfig(cloneTrackingConfig(initial));',
+          )
+          replace_once(
+              '  function addCatalogCompany(catalog: CatalogCompany): void {',
+              '  function addCatalogCompany(catalog: CatalogCompany): void {',
+          )
+          marker = '''  function addListedCompany(event: FormEvent<HTMLFormElement>): void {'''
+          insertion = '''  function addRecommendedListedCompany(\n    recommendation: ListedCompanyRecommendation,\n  ): void {\n    addCatalogCompany(recommendation.company);\n  }\n\n  function addRecommendedSource(\n    recommendation: TrackingSourceRecommendation,\n  ): void {\n    const suggested = recommendation.source;\n    const base = `source-${slugifyTrack(suggested.name)}`;\n    let id = base;\n    let suffix = 2;\n    while (config.sources.some((source) => source.id === id)) {\n      id = `${base}-${suffix}`;\n      suffix += 1;\n    }\n    const source: TrackingSource = {\n      id,\n      ...suggested,\n      enabled: true,\n    };\n    update({ ...config, sources: [...config.sources, source] });\n  }\n\n  function addListedCompany(event: FormEvent<HTMLFormElement>): void {'''
+          replace_once(marker, insertion)
+          replace_once(
+              '                onClick={loadFromGithub}\n',
+              '                onClick={() => void loadFromGithub()}\n',
+          )
+          replace_once(
+              '            Token 仅存在当前页面内存中，不写入 localStorage、仓库或构建产物；刷新或退出后清除。',
+              '            Token 仅保存在当前标签页的 sessionStorage 中，不写入仓库、构建产物或长期 localStorage；关闭标签页或退出后清除。',
+          )
+          replace_once(
+              '            <p className={styles.help}>\n              搜索已有档案可一键加入并复用固定官方来源；手动添加公司会自动建立监管披露源。\n            </p>',
+              '            <p className={styles.help}>\n              搜索已有档案可一键加入并复用固定官方来源；手动添加公司会自动建立监管披露源。\n            </p>\n            <TrackingAdminRecommendation\n              title="推荐上市公司"\n              items={listedRecommendations}\n              onAdd={addRecommendedListedCompany}\n            />',
+          )
+          replace_once(
+              '            <p className={styles.help}>\n              先选择来源归属。媒体和人物来源不会生成公司详情链接；只有公司来源可以绑定公司名称、股票代码和 SEC。\n            </p>',
+              '            <p className={styles.help}>\n              先选择来源归属。媒体和人物来源不会生成公司详情链接；只有公司来源可以绑定公司名称、股票代码和 SEC。\n            </p>\n            <TrackingAdminRecommendation\n              title="推荐信息源"\n              items={sourceRecommendations}\n              onAdd={addRecommendedSource}\n            />',
+          )
+          path.write_text(source, encoding="utf-8")
+
+          bridge_path = Path("components/tracking-recommendations-bridge.tsx")
+          bridge = bridge_path.read_text(encoding="utf-8")
+          old = '''  const sourceTarget = sourceSection();\n\n  return (\n    <>\n      {(Object.keys(LIST_FIELD_META) as ListRecommendationType[]).map((type) => {\n        const target = fieldEditor(type);\n        if (!target) return null;\n        return createPortal(\n          <TrackingRecommendations\n            key={`${snapshot.sector}-${type}`}\n            recommendations={recommendations}\n            onlyType={type}\n            onAdd={addThroughExistingEditor}\n          />,\n          target,\n        );\n      })}\n      {sourceTarget\n        ? createPortal(\n            <TrackingRecommendations\n              key={`${snapshot.sector}-sources`}\n              recommendations={recommendations}\n              onlyType="sources"\n              onAdd={addThroughExistingEditor}\n            />,\n            sourceTarget,\n          )\n        : null}\n    </>\n  );'''
+          new = '''  return (\n    <>\n      {(Object.keys(LIST_FIELD_META) as ListRecommendationType[]).map((type) => {\n        const target = fieldEditor(type);\n        if (!target) return null;\n        return createPortal(\n          <TrackingRecommendations\n            key={`${snapshot.sector}-${type}`}\n            recommendations={recommendations}\n            onlyType={type}\n            onAdd={addThroughExistingEditor}\n          />,\n          target,\n        );\n      })}\n    </>\n  );'''
+          if old not in bridge:
+              raise SystemExit("missing bridge source portal marker")
+          bridge_path.write_text(bridge.replace(old, new, 1), encoding="utf-8")
+          PY
+      - name: Install and verify
+        run: npm install && npm run test:unit && npx tsc --noEmit
+      - name: Commit verified integration
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components/user-tracking-panel.tsx components/tracking-recommendations-bridge.tsx
+          git commit -m "feat: recommend sources and listed companies without reload"
+          git pull --rebase origin main
+          git push origin HEAD:main
