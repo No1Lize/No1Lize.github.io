@@ -4,7 +4,8 @@
 A public crawler cannot guarantee content behind authentication, CAPTCHAs or
 paywalls. It can guarantee that no configured source is silently ignored. This
 validator checks routing and diagnostic coverage rather than pretending every
-website must return articles on every run.
+website must return articles on every run. Adaptive discovery handoffs must also
+resolve to an explicit strict-publisher status.
 """
 
 from __future__ import annotations
@@ -63,6 +64,7 @@ def evaluate_coverage(
     missing_statuses: list[str] = []
     unroutable_sources: list[dict[str, str]] = []
     adapter_mismatches: list[dict[str, str]] = []
+    missing_handoffs: list[dict[str, str]] = []
     attempted = 0
     productive = 0
 
@@ -106,7 +108,21 @@ def evaluate_coverage(
             missing_statuses.append(source_id)
             continue
         attempted += 1
-        if int(status.get("accepted", 0) or 0) > 0:
+        productive_status = status
+        if status.get("publisherHandoff"):
+            handoff_id = str(status.get("handoffStatusId") or "")
+            handoff_status = status_by_id.get(handoff_id)
+            if not handoff_id or handoff_status is None:
+                missing_handoffs.append(
+                    {
+                        "id": source_id,
+                        "handoff": str(status.get("publisherHandoff") or "missing"),
+                        "expectedStatusId": handoff_id or "missing",
+                    }
+                )
+            else:
+                productive_status = handoff_status
+        if int(productive_status.get("accepted", 0) or 0) > 0:
             productive += 1
         if (
             spec.get("adapter") == "generic_web"
@@ -140,6 +156,8 @@ def evaluate_coverage(
         errors.append("enabled sources missing sourceStatus records")
     if adapter_mismatches:
         errors.append("public websites bypassed the adaptive adapter")
+    if missing_handoffs:
+        errors.append("adaptive discovery handoffs lack strict publisher statuses")
     if duplicates:
         errors.append("configured sources resolve to duplicate runtime ids")
 
@@ -152,6 +170,7 @@ def evaluate_coverage(
         "unroutableSources": unroutable_sources,
         "missingStatuses": sorted(set(missing_statuses)),
         "adapterMismatches": adapter_mismatches,
+        "missingHandoffs": missing_handoffs,
         "duplicateRuntimeIds": duplicates,
         "errors": errors,
     }
