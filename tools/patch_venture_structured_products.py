@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Apply the final cross-field venture profile quality fixes.
 
-This temporary migration is executed by the owner-only PR runner. It patches the
-permanent crawler/finalizer sources and regression tests, then is removed from
-the resulting commit together with the trigger files.
+The owner-only venture PR runner executes this current-state-aware migration,
+runs the full venture suite, regenerates the snapshot, and removes the helper.
 """
 
 from __future__ import annotations
@@ -14,37 +13,39 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FINALIZER = ROOT / "tools" / "finalize_venture_profiles.py"
 NARRATIVE = ROOT / "tools" / "sanitize_venture_narratives.py"
-CRAWLER = ROOT / "tools" / "crawl_venture_profiles.py"
-REFRESH_WORKFLOW = ROOT / ".github" / "workflows" / "refresh-venture-profiles.yml"
 FINALIZER_TESTS = ROOT / "tests" / "test_finalize_venture_profiles.py"
+NARRATIVE_TESTS = ROOT / "tests" / "test_venture_narrative_sanitizer.py"
 
 
-def replace_once(path: Path, old: str, new: str, label: str, *, required: bool = True) -> bool:
+def replace_function(path: Path, name: str, next_name: str, block: str) -> None:
     text = path.read_text(encoding="utf-8")
-    if new in text:
-        print(f"{label}: already applied")
-        return False
-    if old not in text:
-        if required:
-            raise SystemExit(f"{label}: expected source block not found in {path}")
-        print(f"{label}: source block already superseded")
-        return False
-    path.write_text(text.replace(old, new, 1), encoding="utf-8")
-    print(f"{label}: applied")
-    return True
+    if block in text:
+        print(f"{name}: already applied")
+        return
+    start_marker = f"def {name}("
+    end_marker = f"\n\ndef {next_name}("
+    start = text.find(start_marker)
+    end = text.find(end_marker, start)
+    if start < 0 or end < 0:
+        raise SystemExit(f"{name}: function boundary not found in {path}")
+    path.write_text(text[:start] + block.rstrip() + text[end:], encoding="utf-8")
+    print(f"{name}: replaced")
+
+
+def insert_before(path: Path, marker: str, block: str, sentinel: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    if sentinel in text:
+        print(f"{sentinel}: already applied")
+        return
+    index = text.find(marker)
+    if index < 0:
+        raise SystemExit(f"{sentinel}: insertion marker not found in {path}")
+    path.write_text(text[:index] + block.rstrip() + "\n\n" + text[index:], encoding="utf-8")
+    print(f"{sentinel}: inserted")
 
 
 def patch_finalizer() -> None:
-    old_constants = '''PRODUCT_PERIOD_RE = re.compile(
-    r"^(?:q[1-4]|fy)\\s*20\\d{2}$|^20\\d{2}\\s*(?:q[1-4]|年度|年报)$",
-    re.IGNORECASE,
-)
-'''
-    new_constants = '''PRODUCT_PERIOD_RE = re.compile(
-    r"^(?:q[1-4]|fy)\\s*20\\d{2}$|^20\\d{2}\\s*(?:q[1-4]|年度|年报)$",
-    re.IGNORECASE,
-)
-PRODUCT_SUFFIX_RE = re.compile(
+    constants = '''PRODUCT_SUFFIX_RE = re.compile(
     r"(?:等)?(?:机器人|产品|解决方案)?系列$|(?:等产品|等解决方案)$",
     re.IGNORECASE,
 )
@@ -56,26 +57,10 @@ FINAL_NARRATIVE_NOISE_RE = re.compile(
     r"cookie settings|all rights reserved)\\b|"
     r"(?:投资者关系|联系我们|媒体资料|版权所有|备案号)",
     re.IGNORECASE,
-)
-'''
-    replace_once(FINALIZER, old_constants, new_constants, "finalizer constants")
+)'''
+    insert_before(FINALIZER, "TEAM_NAME_NOISE_TERMS =", constants, "PRODUCT_SUFFIX_RE")
 
-    old_split = '''def _split_product_values(values: Sequence[Any]) -> list[str]:
-    result: list[str] = []
-    for raw in values:
-        value = clean_text(raw, 800)
-        result.extend(
-            clean_text(part, 180).strip(" >›→-|｜。.!！")
-            for part in re.split(
-                r"[、，,;/]|\\s*与\\s*|\\s+and\\s+",
-                value,
-                flags=re.IGNORECASE,
-            )
-            if clean_text(part, 180).strip(" >›→-|｜。.!！")
-        )
-    return result
-'''
-    new_split = '''def _normalize_product_label(value: Any) -> str:
+    split_block = '''def _normalize_product_label(value: Any) -> str:
     item = clean_text(value, 180).strip(" >›→-|｜。.!！")
     item = PRODUCT_SUFFIX_RE.sub("", item).strip(" >›→-|｜。.!！")
     return clean_text(item, 180)
@@ -93,34 +78,10 @@ def _split_product_values(values: Sequence[Any]) -> list[str]:
             item = _normalize_product_label(part)
             if item:
                 result.append(item)
-    return result
-'''
-    replace_once(FINALIZER, old_split, new_split, "product label normalization")
+    return result'''
+    replace_function(FINALIZER, "_split_product_values", "_product_noise", split_block)
 
-    old_team = '''def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[str, str]]:
-    originals = {
-        clean_text(row.get("name"), 120).casefold(): row
-        for row in values if isinstance(row, dict) and clean_text(row.get("name"), 120)
-    }
-    result: list[dict[str, str]] = []
-    for row in sanitize_team_members(values, aliases):
-        name = clean_text(row.get("name"), 120)
-        if any(term in name.casefold() for term in TEAM_NAME_NOISE_TERMS):
-            continue
-        original = originals.get(name.casefold(), {})
-        result.append(
-            {
-                "name": name,
-                "role": clean_text(row.get("role"), 160),
-                "summary": clean_text(row.get("summary"), 360),
-                "background": clean_text(original.get("background"), 420),
-                "previousExperience": clean_text(original.get("previousExperience"), 420),
-                "sourceUrl": normalize_url(row.get("sourceUrl", "")),
-            }
-        )
-    return result[:20]
-'''
-    new_team = '''def _person_like_name(value: Any) -> bool:
+    team_block = '''def _person_like_name(value: Any) -> bool:
     name = clean_text(value, 120).strip(" ,，:：;；-|｜")
     lowered = name.casefold()
     if not name or any(term in lowered for term in TEAM_NAME_NOISE_TERMS):
@@ -130,10 +91,13 @@ def _split_product_values(values: Sequence[Any]) -> list[str]:
     tokens = [token for token in name.split() if token]
     if not 2 <= len(tokens) <= 6:
         return False
-    if not LATIN_PERSON_TOKEN_RE.fullmatch(tokens[0]) or not LATIN_PERSON_TOKEN_RE.fullmatch(tokens[-1]):
+    if not LATIN_PERSON_TOKEN_RE.fullmatch(tokens[0]):
+        return False
+    if not LATIN_PERSON_TOKEN_RE.fullmatch(tokens[-1]):
         return False
     return all(
-        LATIN_PERSON_TOKEN_RE.fullmatch(token) or token.casefold() in LATIN_PERSON_PARTICLES
+        LATIN_PERSON_TOKEN_RE.fullmatch(token)
+        or token.casefold() in LATIN_PERSON_PARTICLES
         for token in tokens[1:-1]
     )
 
@@ -141,7 +105,8 @@ def _split_product_values(values: Sequence[Any]) -> list[str]:
 def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[str, str]]:
     originals = {
         clean_text(row.get("name"), 120).casefold(): row
-        for row in values if isinstance(row, dict) and clean_text(row.get("name"), 120)
+        for row in values
+        if isinstance(row, dict) and clean_text(row.get("name"), 120)
     }
     result: list[dict[str, str]] = []
     for row in sanitize_team_members(values, aliases):
@@ -155,72 +120,73 @@ def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[st
                 "role": clean_text(row.get("role"), 160),
                 "summary": clean_text(row.get("summary"), 360),
                 "background": clean_text(original.get("background"), 420),
-                "previousExperience": clean_text(original.get("previousExperience"), 420),
+                "previousExperience": clean_text(
+                    original.get("previousExperience"), 420
+                ),
                 "sourceUrl": normalize_url(row.get("sourceUrl", "")),
             }
         )
-    return result[:20]
-'''
-    replace_once(FINALIZER, old_team, new_team, "person-name validation")
+    return result[:20]'''
+    replace_function(FINALIZER, "finalize_team", "finalize_financing", team_block)
 
-    marker = '''def finalize_snapshot(
-    payload: dict[str, Any], catalog_text: str
-) -> tuple[dict[str, Any], dict[str, int]]:
-'''
     audit = '''def _final_semantic_errors(
     companies: dict[str, dict[str, Any]],
     institutions: dict[str, dict[str, Any]],
 ) -> list[str]:
     errors: list[str] = []
     for slug, profile in companies.items():
-        for product in profile.get("products", []) if isinstance(profile.get("products"), list) else []:
-            if _normalize_product_label(product) != clean_text(product, 180) or _product_noise(product):
-                errors.append(f"company:{slug}:product:{clean_text(product, 80)}")
-        for member in profile.get("team", []) if isinstance(profile.get("team"), list) else []:
-            if not isinstance(member, dict) or not _person_like_name(member.get("name")):
-                errors.append(f"company:{slug}:team:{clean_text(member.get('name') if isinstance(member, dict) else '', 80)}")
-        for event in profile.get("capitalMarkets", []) if isinstance(profile.get("capitalMarkets"), list) else []:
+        products = profile.get("products", [])
+        for product in products if isinstance(products, list) else []:
+            if (
+                _normalize_product_label(product) != clean_text(product, 180)
+                or _product_noise(product)
+            ):
+                errors.append(
+                    f"company:{slug}:product:{clean_text(product, 80)}"
+                )
+        team = profile.get("team", [])
+        for member in team if isinstance(team, list) else []:
+            if not isinstance(member, dict) or not _person_like_name(
+                member.get("name")
+            ):
+                name = member.get("name") if isinstance(member, dict) else ""
+                errors.append(f"company:{slug}:team:{clean_text(name, 80)}")
+        events = profile.get("capitalMarkets", [])
+        for event in events if isinstance(events, list) else []:
             if not isinstance(event, dict) or not CAPITAL_EVIDENCE_RE.search(
                 f"{event.get('title', '')} {event.get('summary', '')}"
             ):
                 errors.append(f"company:{slug}:capital-market")
         for field in ("background", "technology"):
-            if FINAL_NARRATIVE_NOISE_RE.search(clean_text(profile.get(field), 2000)):
+            if FINAL_NARRATIVE_NOISE_RE.search(
+                clean_text(profile.get(field), 2000)
+            ):
                 errors.append(f"company:{slug}:{field}-navigation")
+
     for slug, profile in institutions.items():
-        for member in profile.get("team", []) if isinstance(profile.get("team"), list) else []:
-            if not isinstance(member, dict) or not _person_like_name(member.get("name")):
-                errors.append(f"institution:{slug}:team:{clean_text(member.get('name') if isinstance(member, dict) else '', 80)}")
+        team = profile.get("team", [])
+        for member in team if isinstance(team, list) else []:
+            if not isinstance(member, dict) or not _person_like_name(
+                member.get("name")
+            ):
+                name = member.get("name") if isinstance(member, dict) else ""
+                errors.append(f"institution:{slug}:team:{clean_text(name, 80)}")
         for field in ("overview", "strategy"):
-            if FINAL_NARRATIVE_NOISE_RE.search(clean_text(profile.get(field), 2000)):
+            if FINAL_NARRATIVE_NOISE_RE.search(
+                clean_text(profile.get(field), 2000)
+            ):
                 errors.append(f"institution:{slug}:{field}-navigation")
-    return errors
+    return errors'''
+    insert_before(FINALIZER, "def finalize_snapshot(", audit, "def _final_semantic_errors(")
 
-
-'''
     text = FINALIZER.read_text(encoding="utf-8")
-    if "def _final_semantic_errors(" not in text:
-        if marker not in text:
-            raise SystemExit("final semantic audit insertion point not found")
-        FINALIZER.write_text(text.replace(marker, audit + marker, 1), encoding="utf-8")
-        print("final semantic audit: applied")
-    else:
-        print("final semantic audit: already applied")
-
-    old_quality = '''    quality = cleaned.setdefault("qualityGate", {})
-    checks = quality.setdefault("checks", {})
-    checks["finalSemanticConsistency"] = {
-        "actual": 0,
-        "required": 0,
-        "passed": True,
-    }
-    quality["passed"] = all(
-        bool(check.get("passed"))
-        for check in checks.values()
-        if isinstance(check, dict) and "passed" in check
-    )
-'''
-    new_quality = '''    quality = cleaned.setdefault("qualityGate", {})
+    old_start = '    quality = cleaned.setdefault("qualityGate", {})\n'
+    schema_marker = '    cleaned["schemaVersion"] = max(2, int(cleaned.get("schemaVersion", 1) or 1))\n'
+    start = text.find(old_start)
+    end = text.find(schema_marker, start)
+    if start < 0 or end < 0:
+        raise SystemExit("final semantic quality block not found")
+    quality_block = '''    quality = cleaned.setdefault("qualityGate", {})
     checks = quality.setdefault("checks", {})
     final_errors = _final_semantic_errors(companies, institutions)
     checks["finalSemanticConsistency"] = {
@@ -235,14 +201,17 @@ def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[st
         if isinstance(check, dict) and "passed" in check
     )
 '''
-    replace_once(FINALIZER, old_quality, new_quality, "final semantic quality gate")
+    if 'quality["finalSemanticErrors"]' not in text:
+        FINALIZER.write_text(
+            text[:start] + quality_block + text[end:], encoding="utf-8"
+        )
+        print("final semantic quality gate: applied")
+    else:
+        print("final semantic quality gate: already applied")
 
 
 def patch_narratives() -> None:
-    old_constants = '''WORD_RE = re.compile(r"[A-Za-z0-9]+|[\\u3400-\\u9fff]")
-'''
-    new_constants = '''WORD_RE = re.compile(r"[A-Za-z0-9]+|[\\u3400-\\u9fff]")
-PAGE_TITLE_PREFIX_RE = re.compile(
+    constants = '''PAGE_TITLE_PREFIX_RE = re.compile(
     r"^[^.!?。！？\\n]{8,180}\\s+::\\s+[^.!?。！？\\n]{2,100}[.!?。！？]\\s*",
     re.IGNORECASE,
 )
@@ -253,35 +222,35 @@ PAGE_TAIL_RE = re.compile(
     re.IGNORECASE,
 )
 STREET_ADDRESS_RE = re.compile(
-    r"\\b\\d{2,6}\\s+[A-Z][A-Za-z.-]+(?:\\s+[A-Z][A-Za-z.-]+){0,3}\\s+"
-    r"(?:Street|St\\.?|Avenue|Ave\\.?|Road|Rd\\.?|Boulevard|Blvd\\.?|Drive|Dr\\.?|Way)\\b",
+    r"\\b\\d{2,6}\\s+[A-Z][A-Za-z.-]+(?:\\s+[A-Z][A-Za-z.-]+){0,4}\\s+"
+    r"(?:Street|St\\.?|Avenue|Ave\\.?|Road|Rd\\.?|Boulevard|Blvd\\.?|"
+    r"Drive|Dr\\.?|Lane|Ln\\.?|Way)\\b",
     re.IGNORECASE,
 )
-'''
-    replace_once(NARRATIVE, old_constants, new_constants, "narrative tail constants")
+PHONE_RE = re.compile(
+    r"(?:toll[- ]?free|phone|tel(?:ephone)?|传真|电话)\\s*[:：]?\\s*"
+    r"(?:\\+?\\d[\\d() .-]{7,}\\d)",
+    re.IGNORECASE,
+)
+DATE_TOKEN_RE = re.compile(
+    r"\\b(?:20\\d{2}[-/.]\\d{1,2}(?:[-/.]\\d{1,2})?|"
+    r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
+    r"\\s+\\d{1,2},\\s+20\\d{2})\\b",
+    re.IGNORECASE,
+)'''
+    insert_before(NARRATIVE, "def _compact(", constants, "PAGE_TITLE_PREFIX_RE")
 
-    old_split = '''def _split_clauses(value: str) -> list[str]:
-    text = clean_text(value, 5000)
-    if not text:
-        return []
-    text = text.replace("\\u00a0", " ")
-    result: list[str] = []
-    for raw in CLAUSE_SPLIT_RE.split(text):
-        clause = clean_text(raw, 900).strip(" .。|｜\\-")
-        if len(clause) < 18:
-            continue
-        if len(clause) > 520:
-            clause = clause[:520].rsplit(" ", 1)[0] or clause[:520]
-        result.append(clause)
-    return result
-'''
-    new_split = '''def _trim_page_chrome(value: str) -> str:
+    split_block = '''def _trim_page_chrome(value: str) -> str:
     text = PAGE_TITLE_PREFIX_RE.sub("", clean_text(value, 5000), count=1)
     candidates = [
         match.start()
-        for pattern in (PAGE_TAIL_RE, STREET_ADDRESS_RE)
-        if (match := pattern.search(text)) is not None and match.start() >= 32
+        for pattern in (PAGE_TAIL_RE, STREET_ADDRESS_RE, PHONE_RE)
+        if (match := pattern.search(text)) is not None
+        and match.start() >= 18
     ]
+    dates = list(DATE_TOKEN_RE.finditer(text))
+    if len(dates) >= 2 and dates[0].start() >= 18:
+        candidates.append(dates[0].start())
     if candidates:
         text = text[: min(candidates)]
     return clean_text(text, 5000)
@@ -297,138 +266,93 @@ def _split_clauses(value: str) -> list[str]:
         clause = clean_text(raw, 900).strip(" .。|｜\\-")
         if len(clause) < 18:
             continue
+        if "::" in clause and len(clause) <= 240:
+            continue
         if len(clause) > 520:
             clause = clause[:520].rsplit(" ", 1)[0] or clause[:520]
         result.append(clause)
-    return result
-'''
-    replace_once(NARRATIVE, old_split, new_split, "narrative page-chrome trimming")
+    return result'''
+    replace_function(NARRATIVE, "_split_clauses", "_deduplicate", split_block)
 
 
-def patch_crawler_quality() -> None:
-    old = '''        team = profile.get("team", [])
-        if team != sanitize_team_members(team, (profile.get("name", ""),)):
-            semantic_errors.append(f"company:{slug}:team-noise")
-    for slug, profile in institutions.items():
-        team = profile.get("team", [])
-        if team != sanitize_team_members(team, (profile.get("name", ""),)):
-            semantic_errors.append(f"institution:{slug}:team-noise")
-'''
-    new = '''        team = profile.get("team", [])
-        team_core = [
-            {
-                "name": clean_text(item.get("name"), 120),
-                "role": clean_text(item.get("role"), 160),
-                "summary": clean_text(item.get("summary"), 320),
-                "sourceUrl": normalize_url(item.get("sourceUrl", "")),
-            }
-            for item in team if isinstance(item, dict)
-        ]
-        if team_core != sanitize_team_members(team_core, (profile.get("name", ""),)):
-            semantic_errors.append(f"company:{slug}:team-noise")
-    for slug, profile in institutions.items():
-        team = profile.get("team", [])
-        team_core = [
-            {
-                "name": clean_text(item.get("name"), 120),
-                "role": clean_text(item.get("role"), 160),
-                "summary": clean_text(item.get("summary"), 320),
-                "sourceUrl": normalize_url(item.get("sourceUrl", "")),
-            }
-            for item in team if isinstance(item, dict)
-        ]
-        if team_core != sanitize_team_members(team_core, (profile.get("name", ""),)):
-            semantic_errors.append(f"institution:{slug}:team-noise")
-'''
-    replace_once(CRAWLER, old, new, "crawler team quality projection")
-
-
-def patch_refresh_workflow() -> None:
-    old = '''          python tools/crawl_venture_profiles.py --validate-only
-          python tools/enrich_venture_profiles.py --validate-only
-          python tools/normalize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-'''
-    new = '''          python tools/crawl_venture_profiles.py --validate-only
-          python tools/enrich_venture_profiles.py --validate-only
-          python tools/finalize_venture_profiles.py --check
-'''
-    replace_once(REFRESH_WORKFLOW, old, new, "refresh workflow final-stage validation")
+def add_test(path: Path, marker: str, sentinel: str, block: str) -> None:
+    text = path.read_text(encoding="utf-8")
+    if sentinel in text:
+        print(f"{sentinel}: already present")
+        return
+    index = text.find(marker)
+    if index < 0:
+        raise SystemExit(f"{sentinel}: test insertion marker not found")
+    path.write_text(text[:index] + block.rstrip() + "\n\n" + text[index:], encoding="utf-8")
+    print(f"{sentinel}: added")
 
 
 def patch_tests() -> None:
-    text = FINALIZER_TESTS.read_text(encoding="utf-8")
-    import_old = '''from tools import finalize_venture_profiles as finalizer
-'''
-    import_new = '''from tools import finalize_venture_profiles as finalizer
-from tools.crawl_venture_profiles import evaluate_quality
-'''
-    if import_new not in text:
-        if import_old not in text:
-            raise SystemExit("finalizer test import marker not found")
-        text = text.replace(import_old, import_new, 1)
-
-    marker = '''    def test_financing_rejects_round_like_product_copy(self) -> None:
-'''
-    additions = '''    def test_catalog_series_suffix_is_normalized(self) -> None:
+    finalizer_tests = '''    def test_catalog_series_suffix_is_normalized(self) -> None:
         products = finalizer.finalize_products(
             ["灵犀等机器人系列。", "Q1 2026", "Transfer Agent"],
             "远征、灵犀等机器人系列。",
         )
         self.assertEqual(products, ["远征", "灵犀"])
 
-    def test_narrative_removes_address_and_investor_relations_tail(self) -> None:
-        value = (
-            "We build technology that serves all communities. "
-            "1654 Smallman Street Pittsburgh, PA 15222 Toll-Free: (888) 583-9506 "
-            "Investor Relations Transfer Agent Media Kit Locations."
-        )
-        cleaned = finalizer.sanitize_narrative(value)
-        self.assertIn("serves all communities", cleaned)
-        self.assertNotIn("Smallman Street", cleaned)
-        self.assertNotIn("Investor Relations", cleaned)
-
-    def test_crawler_quality_ignores_finalizer_experience_fields(self) -> None:
-        quality = evaluate_quality(
+    def test_final_semantic_audit_reports_navigation_noise(self) -> None:
+        errors = finalizer._final_semantic_errors(
             {
                 "example": {
-                    "name": "Example",
                     "products": ["Example API"],
-                    "team": [
-                        {
-                            "name": "Chris Urmson",
-                            "role": "CEO",
-                            "summary": "",
-                            "background": "Previously led autonomous driving research.",
-                            "previousExperience": "Former engineering executive.",
-                            "sourceUrl": "https://example.com/team",
-                        }
-                    ],
-                    "sources": [],
-                    "status": "ok",
+                    "team": [],
+                    "capitalMarkets": [],
+                    "background": "Investor Relations Transfer Agent",
+                    "technology": "Verified platform technology.",
                 }
             },
             {},
-            1,
-            0,
-            [{"kind": "company", "slug": "example"}],
         )
-        self.assertTrue(quality["checks"]["semanticNoise"]["passed"])
-
+        self.assertIn("company:example:background-navigation", errors)
 '''
-    if "def test_catalog_series_suffix_is_normalized" not in text:
-        if marker not in text:
-            raise SystemExit("finalizer test insertion marker not found")
-        text = text.replace(marker, additions + marker, 1)
-    FINALIZER_TESTS.write_text(text, encoding="utf-8")
-    print("venture finalizer regressions: applied")
+    add_test(
+        FINALIZER_TESTS,
+        "    def test_financing_rejects_round_like_product_copy",
+        "def test_catalog_series_suffix_is_normalized",
+        finalizer_tests,
+    )
+
+    narrative_tests = '''    def test_trims_contact_address_and_date_tail(self) -> None:
+        value = (
+            "We work with urgency and focus on the work that will accelerate our "
+            "progress towards our mission and strengthen our company. "
+            "1654 Smallman Street Pittsburgh, PA 15222 Toll-Free: (888) 583-9506 "
+            "Investor Relations Email Transfer Agent Equiniti Trust Company, LLC. "
+            "Featured July 22, 2026 August 7, 2025 May 1, 2025 Locations Our Company."
+        )
+        cleaned = sanitizer.sanitize_narrative(value)
+        self.assertIn("accelerate our progress towards our mission", cleaned)
+        self.assertNotIn("1654 Smallman Street", cleaned)
+        self.assertNotIn("Investor Relations", cleaned)
+        self.assertNotIn("July 22, 2026", cleaned)
+
+    def test_removes_headline_fragment_but_keeps_technology_claims(self) -> None:
+        value = (
+            "Consumers’ Pockets Annually by 2035 :: Aurora Innovation, Inc. "
+            "We are building a technology and a company to serve all people and all communities. "
+            "We are committed to safely developing and deploying transformational self-driving technology."
+        )
+        cleaned = sanitizer.sanitize_narrative(value)
+        self.assertNotIn("Consumers’ Pockets", cleaned)
+        self.assertIn("serve all people and all communities", cleaned)
+        self.assertIn("transformational self-driving technology", cleaned)
+'''
+    add_test(
+        NARRATIVE_TESTS,
+        "    def test_snapshot_sanitation_is_idempotent",
+        "def test_trims_contact_address_and_date_tail",
+        narrative_tests,
+    )
 
 
 def main() -> int:
     patch_finalizer()
     patch_narratives()
-    patch_crawler_quality()
-    patch_refresh_workflow()
     patch_tests()
     return 0
 
