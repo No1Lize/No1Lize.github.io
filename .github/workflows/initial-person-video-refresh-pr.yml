@@ -1,0 +1,49 @@
+name: Initial person video data refresh
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/initial-person-video-refresh-pr.yml
+      - tools/initial_person_video_refresh_report.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: initial-person-video-data-pr
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test video discovery adapters
+        run: python -m unittest tests.test_person_video_discovery tests.test_refresh_people_profiles_with_video
+      - name: Refresh public person videos
+        run: python tools/refresh_people_profiles_with_video.py --workers 4
+      - name: Build discovery report
+        run: python tools/initial_person_video_refresh_report.py
+      - name: Validate generated snapshot
+        run: |
+          python tools/refresh_people_profiles_with_video.py --offline --validate-only
+          python -m unittest tests.test_person_video_discovery tests.test_refresh_people_profiles_with_video
+      - name: Persist generated data to PR branch
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          rm .github/workflows/initial-person-video-refresh-pr.yml
+          rm tools/initial_person_video_refresh_report.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/people.json diagnostics/person-video-refresh.json .github/workflows/initial-person-video-refresh-pr.yml tools/initial_person_video_refresh_report.py
+          git commit -m "data: generate initial public person video snapshot"
+          git push origin "HEAD:${HEAD_REF}"
