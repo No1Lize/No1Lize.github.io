@@ -1,0 +1,69 @@
+name: Enrich tracked people profiles once
+
+on:
+  push:
+    branches: [feature/tracked-people-research-20260725]
+    paths:
+      - '.github/workflows/enrich-people-profiles-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/tracked-people-research-20260725
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Refresh Wikipedia, Wikidata and intelligence evidence
+        id: refresh
+        continue-on-error: true
+        run: python tools/refresh_people_profiles.py --workers 6 > /tmp/people-refresh.log 2>&1
+      - name: Validate generated profiles
+        id: validate
+        continue-on-error: true
+        run: |
+          python tools/refresh_people_profiles.py --offline --validate-only > /tmp/people-validate.log 2>&1
+          python -m unittest discover -s tests -p 'test_*.py' >> /tmp/people-validate.log 2>&1
+      - name: Commit enrichment and diagnosis
+        if: always()
+        run: |
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json, pathlib, os
+          def tail(path):
+              item = pathlib.Path(path)
+              return item.read_text(errors='replace')[-16000:] if item.exists() else ''
+          payload = json.loads(pathlib.Path('public/data/people.json').read_text())
+          diagnosis = {
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'refresh': '${{ steps.refresh.outcome }}',
+              'validate': '${{ steps.validate.outcome }}',
+              'personCount': payload.get('personCount'),
+              'complete': sum(1 for item in payload.get('people', []) if item.get('status') == 'complete'),
+              'partial': sum(1 for item in payload.get('people', []) if item.get('status') == 'partial'),
+              'pending': sum(1 for item in payload.get('people', []) if item.get('status') == 'pending'),
+              'wikipediaProfiles': sum(1 for item in payload.get('people', []) if any('wikipedia.org' in url for url in item.get('sources', []))),
+              'wikidataProfiles': sum(1 for item in payload.get('people', []) if any('wikidata.org' in url for url in item.get('sources', []))),
+              'refreshLog': tail('/tmp/people-refresh.log'),
+              'validationLog': tail('/tmp/people-validate.log'),
+          }
+          pathlib.Path('diagnostics/people-enrichment.json').write_text(json.dumps(diagnosis, ensure_ascii=False, indent=2))
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add public/data/people.json diagnostics/people-enrichment.json
+          git commit -m 'data: enrich tracked people profiles' || true
+          git pull --rebase origin feature/tracked-people-research-20260725
+          git push origin HEAD:feature/tracked-people-research-20260725
+      - name: Fail when enrichment or validation failed
+        if: always()
+        run: |
+          test '${{ steps.refresh.outcome }}' = 'success'
+          test '${{ steps.validate.outcome }}' = 'success'
