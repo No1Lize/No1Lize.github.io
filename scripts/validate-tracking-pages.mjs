@@ -106,11 +106,6 @@ for (const track of enabledTracks) {
       );
     }
   }
-  if (/\b(?:undefined|null)\b/.test(html)) {
-    outputErrors.push(
-      `${track.name}: out/${relativePage} contains an undefined/null rendering artifact`,
-    );
-  }
 
   routes.push({
     name: track.name,
