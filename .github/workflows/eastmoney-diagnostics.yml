@@ -33,26 +33,83 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run Eastmoney regression suite
-        id: tests
+      - name: Run complete static snapshot pipeline
+        id: pipeline
         continue-on-error: true
         shell: bash
         run: |
-          set -o pipefail
-          python -m unittest discover -s tests -p "test_*eastmoney*.py" 2>&1 | tee /tmp/eastmoney-tests.log
-          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          set +e
+          : > /tmp/eastmoney-pipeline.log
+          overall=0
+
+          run_step() {
+            name="$1"
+            shift
+            echo "===== ${name} =====" | tee -a /tmp/eastmoney-pipeline.log
+            "$@" >> /tmp/eastmoney-pipeline.log 2>&1
+            code=$?
+            echo "exit_code=${code}" | tee -a /tmp/eastmoney-pipeline.log
+            echo | tee -a /tmp/eastmoney-pipeline.log
+            if [ "$code" -ne 0 ]; then
+              overall=1
+            fi
+          }
+
+          run_step migrate python tools/migrate_article_entities.py
+          run_step refine python tools/refine_eastmoney_snapshot.py
+          run_step quality_validate python tools/crawl_articles.py --validate-only
+          run_step eastmoney_validate python tools/validate_eastmoney_snapshot.py --require-attempt
+          run_step full_unittest python -m unittest discover -s tests -p "test_*.py"
+
+          echo "===== final_snapshot_summary =====" | tee -a /tmp/eastmoney-pipeline.log
+          python - <<'PY' >> /tmp/eastmoney-pipeline.log 2>&1
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
+          articles = [item for item in payload.get("articles", []) if isinstance(item, dict)]
+          eastmoney = [
+              item for item in articles
+              if str(item.get("sourceId", "")).startswith(("official-user-东方财富", "user-source-"))
+              and "eastmoney.com" in str((item.get("source") or {}).get("url", ""))
+          ]
+          statuses = [
+              item for item in payload.get("sourceStatus", [])
+              if isinstance(item, dict) and "东方财富" in " ".join(
+                  str(item.get(key, "")) for key in ("id", "name", "company")
+              )
+          ]
+          print(json.dumps({
+              "generatedAt": payload.get("generatedAt"),
+              "articleCount": payload.get("articleCount"),
+              "eastmoneyDetailCount": len(eastmoney),
+              "internalMarkerCount": sum("_eastmoneyBatchOrigin" in item for item in articles),
+              "eastmoneyStatuses": statuses,
+              "qualityPassed": (payload.get("qualityGate") or {}).get("passed"),
+          }, ensure_ascii=False, indent=2))
+          PY
+          summary_code=$?
+          echo "exit_code=${summary_code}" | tee -a /tmp/eastmoney-pipeline.log
+          if [ "$summary_code" -ne 0 ]; then
+            overall=1
+          fi
+
+          git checkout -- public/data/articles.json
+          echo "overall_exit_code=${overall}" >> "$GITHUB_OUTPUT"
+          exit "$overall"
       - name: Record diagnostic report
+        if: always()
         env:
-          TEST_EXIT_CODE: ${{ steps.tests.outputs.exit_code }}
+          PIPELINE_EXIT_CODE: ${{ steps.pipeline.outputs.overall_exit_code }}
         shell: bash
         run: |
           mkdir -p diagnostics
           {
             echo "commit=${GITHUB_SHA}"
             echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            echo "exit_code=${TEST_EXIT_CODE:-unknown}"
+            echo "exit_code=${PIPELINE_EXIT_CODE:-unknown}"
             echo
-            cat /tmp/eastmoney-tests.log
+            cat /tmp/eastmoney-pipeline.log
           } > diagnostics/eastmoney-test-report.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -70,6 +127,6 @@ jobs:
               exit 1
             fi
           done
-      - name: Fail when tests failed
-        if: steps.tests.outputs.exit_code != '0'
+      - name: Fail when pipeline failed
+        if: steps.pipeline.outputs.overall_exit_code != '0'
         run: exit 1
