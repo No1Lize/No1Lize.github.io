@@ -10,7 +10,10 @@ import {
   resolveSectorDefinition,
   sectorCompleteness,
 } from "@/lib/sector-profile-generator";
-import { uniqueIdentityTermsByTrack } from "@/lib/tracking-taxonomy";
+import {
+  normalizeTaxonomyTerm,
+  uniqueIdentityTermsByTrack,
+} from "@/lib/tracking-taxonomy";
 import {
   userTrackingConfig,
   type TrackingTrack,
@@ -50,8 +53,8 @@ function unique(values: string[], limit = 12): string[] {
   const seen = new Set<string>();
   for (const value of values) {
     const cleaned = value.trim();
-    const key = cleaned.toLocaleLowerCase("zh-CN");
-    if (!cleaned || seen.has(key)) continue;
+    const key = normalizeTaxonomyTerm(cleaned);
+    if (!cleaned || !key || seen.has(key)) continue;
     result.push(cleaned);
     seen.add(key);
     if (result.length >= limit) break;
@@ -93,12 +96,10 @@ function buildRaw(): SectorRaw[] {
       [...(ownedIdentityTerms.get(tracking.slug) ?? [tracking.name]), base?.name ?? ""],
       24,
     );
-    const aliasKeys = new Set(
-      aliases.map((alias) => alias.toLocaleLowerCase("zh-CN")),
-    );
+    const aliasKeys = new Set(aliases.map(normalizeTaxonomyTerm));
     const events = intelligenceEvents.filter(
       (event) =>
-        aliasKeys.has(event.sector.toLocaleLowerCase("zh-CN")) &&
+        aliasKeys.has(normalizeTaxonomyTerm(event.sector)) &&
         dateValue(event.publishedAt) >= yearAgo,
     );
     const financing = events.filter((event) => event.type === "融资").length;
@@ -192,10 +193,8 @@ export function getTrackedSector(slug: string): TrackedSector | undefined {
 export function eventsForTrackedSector(
   sector: Pick<TrackedSector, "aliases">,
 ): IntelligenceEvent[] {
-  const aliasKeys = new Set(
-    sector.aliases.map((alias) => alias.toLocaleLowerCase("zh-CN")),
-  );
+  const aliasKeys = new Set(sector.aliases.map(normalizeTaxonomyTerm));
   return intelligenceEvents.filter((event) =>
-    aliasKeys.has(event.sector.toLocaleLowerCase("zh-CN")),
+    aliasKeys.has(normalizeTaxonomyTerm(event.sector)),
   );
 }
