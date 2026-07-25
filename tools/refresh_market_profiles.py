@@ -4,8 +4,8 @@
 Each company remains an isolated crawl unit. Slow or blocked sites cannot stall
 all three markets, while output ordering remains deterministic and prior valid
 snapshots continue to be preserved by the underlying crawler. Tonghuashun's
-public overview, company, finance and operations pages are merged before semantic
-field extraction so the adapter is not tied to one market's page layout.
+public overview, company, finance, operations and A-share youth pages are merged
+before semantic field extraction so the adapter is not tied to one market layout.
 """
 
 from __future__ import annotations
@@ -26,7 +26,7 @@ except ImportError:
 
 MAX_WORKERS = 5
 MIN_TREND_POINTS = 20
-TONGHUASHUN_SECTIONS = ("company", "finance", "operate")
+TONGHUASHUN_SECTIONS = ("index", "company", "finance", "operate")
 _BASE_LABELED_VALUE = market.labeled_value
 
 
@@ -38,8 +38,8 @@ def robust_labeled_value(text: str, labels: Iterable[str], limit: int = 300) -> 
         return strict
     for label in labels:
         patterns = (
-            rf"(?:^|\n)\s*{re.escape(label)}\s*\n\s*([^\n|]{{1,{limit}}})",
-            rf"(?:^|\n)\s*{re.escape(label)}\s+([^\n|]{{1,{limit}}})",
+            rf"(?:^|\n|\|)\s*{re.escape(label)}\s*\n\s*([^\n|]{{1,{limit}}})",
+            rf"(?:^|\n|\|)\s*{re.escape(label)}\s+([^\n|]{{1,{limit}}})",
         )
         for pattern in patterns:
             match = re.search(pattern, text, flags=re.IGNORECASE)
@@ -64,17 +64,24 @@ def is_tonghuashun_company_root(url: str) -> bool:
     return len(segments) == 1
 
 
+def tonghuashun_pages(url: str) -> list[str]:
+    root = url.rstrip("/")
+    code = root.rsplit("/", 1)[-1]
+    pages = [url, *(f"{root}/{section}/" for section in TONGHUASHUN_SECTIONS)]
+    if re.fullmatch(r"\d{6}", code):
+        pages.append(f"https://stockpage.10jqka.com.cn/youth/{code}/")
+    return list(dict.fromkeys(pages))
+
+
 def multi_page_fetch(url: str) -> str:
     """Merge bounded public company sections; use one attempt per endpoint."""
 
     if not is_tonghuashun_company_root(url):
         return market.fetch_text(url, attempts=1)
 
-    root = url.rstrip("/")
-    pages = [url, *(f"{root}/{section}/" for section in TONGHUASHUN_SECTIONS)]
     bodies: list[str] = []
     errors: list[str] = []
-    for page_url in pages:
+    for page_url in tonghuashun_pages(url):
         try:
             bodies.append(market.fetch_text(page_url, attempts=1))
         except Exception as exc:  # noqa: BLE001 - partial sections remain useful.
@@ -82,6 +89,53 @@ def multi_page_fetch(url: str) -> str:
     if not bodies:
         raise RuntimeError("; ".join(errors[:2]) or "all Tonghuashun sections failed")
     return "\n<!-- merged public company section -->\n".join(bodies)
+
+
+def eastmoney_market_ids(exchange: str) -> list[int]:
+    normalized = exchange.casefold()
+    if "nasdaq" in normalized:
+        return [105, 106, 107]
+    if "纽约" in exchange or "nyse" in normalized:
+        return [106, 105, 107]
+    if "amex" in normalized or "美国证券交易所" in exchange:
+        return [107, 105, 106]
+    return [105, 106, 107]
+
+
+def eastmoney_url(identity: market.CompanyIdentity, market_id: int) -> str:
+    fields1 = "f1,f2,f3,f4,f5,f6"
+    fields2 = "f51,f52,f53,f54,f55,f56"
+    return (
+        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
+        f"?secid={market_id}.{identity.ticker}"
+        f"&fields1={fields1}&fields2={fields2}"
+        "&klt=101&fqt=1&beg=0&end=20500101&lmt=120"
+    )
+
+
+def parse_eastmoney_kline(body: str) -> list[dict[str, Any]]:
+    payload = json.loads(body)
+    data = payload.get("data") if isinstance(payload, dict) else None
+    rows = data.get("klines", []) if isinstance(data, dict) else []
+    points: list[dict[str, Any]] = []
+    for raw in rows:
+        columns = str(raw).split(",")
+        if len(columns) < 6:
+            continue
+        try:
+            points.append(
+                {
+                    "date": columns[0],
+                    "open": float(columns[1]),
+                    "close": float(columns[2]),
+                    "high": float(columns[3]),
+                    "low": float(columns[4]),
+                    "volume": float(columns[5]),
+                }
+            )
+        except (TypeError, ValueError):
+            continue
+    return market.dedupe_price_points(points)
 
 
 def stooq_url(identity: market.CompanyIdentity) -> str:
@@ -134,26 +188,57 @@ def clean_profile(profile: dict[str, Any]) -> dict[str, Any]:
     return profile
 
 
+def backfill_us_trend(
+    identity: market.CompanyIdentity,
+    profile: dict[str, Any],
+) -> dict[str, Any]:
+    current = profile.get("priceHistory", [])
+    if identity.market != "美股" or len(current) >= MIN_TREND_POINTS:
+        return profile
+
+    company = profile.get("company") if isinstance(profile.get("company"), dict) else {}
+    exchange = str(company.get("exchange") or "")
+    attempted: list[str] = []
+    for market_id in eastmoney_market_ids(exchange):
+        fallback_url = eastmoney_url(identity, market_id)
+        attempted.append(fallback_url)
+        try:
+            points = parse_eastmoney_kline(market.fetch_text(fallback_url, attempts=1))
+        except Exception:
+            continue
+        if len(points) > len(current):
+            profile["priceHistory"] = points
+            profile.setdefault("sources", {})["price"] = fallback_url
+            current = points
+        if len(current) >= MIN_TREND_POINTS:
+            return clean_profile(profile)
+
+    fallback_url = stooq_url(identity)
+    attempted.append(fallback_url)
+    try:
+        points = parse_stooq_csv(market.fetch_text(fallback_url, attempts=1))
+        if len(points) > len(current):
+            profile["priceHistory"] = points
+            profile.setdefault("sources", {})["price"] = fallback_url
+            current = points
+    except Exception:
+        pass
+
+    if len(current) < MIN_TREND_POINTS:
+        warnings = profile.setdefault("warnings", [])
+        warnings.append(
+            f"美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 {len(current)} 个交易日"
+        )
+        profile["warnings"] = warnings[-8:]
+    return clean_profile(profile)
+
+
 def crawl_item(
     item: dict[str, Any],
     previous: dict[str, Any] | None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     profile, status = market.crawl_company(item, previous, multi_page_fetch)
-    profile = clean_profile(profile)
-    identity: market.CompanyIdentity = item["identity"]
-
-    if identity.market == "美股" and len(profile.get("priceHistory", [])) < MIN_TREND_POINTS:
-        fallback_url = stooq_url(identity)
-        try:
-            points = parse_stooq_csv(market.fetch_text(fallback_url, attempts=1))
-            if len(points) > len(profile.get("priceHistory", [])):
-                profile["priceHistory"] = points
-                profile.setdefault("sources", {})["price"] = fallback_url
-        except Exception as exc:  # noqa: BLE001 - the primary snapshot remains valid.
-            warnings = profile.setdefault("warnings", [])
-            warnings.append(f"美股历史行情回退失败：{type(exc).__name__}: {exc}")
-            profile["warnings"] = warnings[-8:]
-
+    profile = backfill_us_trend(item["identity"], clean_profile(profile))
     status["status"] = profile.get("status", status.get("status", "partial"))
     status["pricePoints"] = len(profile.get("priceHistory", []))
     return profile, status
