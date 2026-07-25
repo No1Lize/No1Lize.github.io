@@ -18,46 +18,8 @@ jobs:
         with:
           fetch-depth: 0
       - name: Filter stale venture snapshot entities
-        shell: bash
         run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('tools/crawl_venture_profiles.py')
-          text = path.read_text(encoding='utf-8')
-          marker = '''    ordered_status = sorted(statuses.values(), key=lambda item: (item.get("kind", ""), item.get("slug", "")))
-'''
-          replacement = '''    # Remove profiles and statuses for entities that no longer exist in the
-    # production catalog. Partial refreshes may legitimately retain current
-    # catalog entities, but deleted or renamed rows must never pollute coverage.
-    company_keys = {item.slug for item in company_specs}
-    institution_keys = {item.slug for item in institution_specs}
-    company_profiles = {
-        profile_slug: profile
-        for profile_slug, profile in company_profiles.items()
-        if profile_slug in company_keys
-    }
-    institution_profiles = {
-        profile_slug: profile
-        for profile_slug, profile in institution_profiles.items()
-        if profile_slug in institution_keys
-    }
-    statuses = {
-        key: status
-        for key, status in statuses.items()
-        if (key[0] == "company" and key[1] in company_keys)
-        or (key[0] == "institution" and key[1] in institution_keys)
-    }
-
-    ordered_status = sorted(statuses.values(), key=lambda item: (item.get("kind", ""), item.get("slug", "")))
-'''
-          if replacement in text:
-              print('catalog filter already present')
-          elif marker not in text:
-              raise SystemExit('target marker not found')
-          else:
-              path.write_text(text.replace(marker, replacement, 1), encoding='utf-8')
-          PY
+          python tools/apply_venture_catalog_filter_patch.py
           python -m py_compile tools/crawl_venture_profiles.py tools/venture_profile_extraction.py
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
