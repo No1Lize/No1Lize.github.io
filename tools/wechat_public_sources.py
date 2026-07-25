@@ -327,6 +327,53 @@ def _specific_keywords(values: Sequence[str]) -> list[str]:
     ]
 
 
+PERSON_CONTEXT_PATTERN = re.compile(
+    r"创始人|联合创始人|首席|CEO|CTO|研究员|科学家|教授|博士|作者|"
+    r"负责人|贡献者|宣布|表示|指出|认为|加入|离职|任命|担任|领导",
+    flags=re.IGNORECASE,
+)
+PERSON_STOP_WORDS = {
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Deep Learning",
+    "Open Source",
+    "United States",
+    "New York",
+    "San Francisco",
+    "Cycle Double Cover",
+}
+
+
+def _dynamic_people(text: str) -> list[str]:
+    result: list[str] = []
+    for match in re.finditer(
+        r"(?<![A-Za-z])([A-Z][a-zA-Z'.-]{1,24}(?:\s+[A-Z][a-zA-Z'.-]{1,24}){1,2})(?![A-Za-z])",
+        text,
+    ):
+        name = _clean(match.group(1), 100)
+        window = text[max(0, match.start() - 55) : match.end() + 55]
+        if name in PERSON_STOP_WORDS or not PERSON_CONTEXT_PATTERN.search(window):
+            continue
+        result.append(name)
+
+    chinese_patterns = (
+        r"(?:第一作者|通讯作者|作者|教授|研究员|科学家|博士|创始人|联合创始人|负责人)[：:、，,\s]+([\u4e00-\u9fff·]{2,5})",
+        r"([\u4e00-\u9fff·]{2,5})(?:教授|博士|研究员|科学家)(?:表示|指出|认为|称)?",
+    )
+    for pattern in chinese_patterns:
+        result.extend(match.group(1) for match in re.finditer(pattern, text))
+    return _unique(result, 12)
+
+
+def _known_companies(text: str, crawler: Any) -> list[str]:
+    result: list[str] = []
+    for aliases, company in getattr(crawler, "COMPANY_ALIASES", ()):
+        name = str(company[0])
+        if any(_contains_phrase(text, alias, crawler) for alias in aliases):
+            result.append(name)
+    return _unique(result, 24)
+
+
 def _relevance_entities(
     title: str,
     summary: str,
@@ -335,11 +382,23 @@ def _relevance_entities(
     crawler: Any,
 ) -> tuple[list[str], list[str], list[str]]:
     text = f"{title} {summary} {content}"
-    companies = _matched(spec.get("trackedCompanies", []), text, crawler)
+    companies = _unique(
+        [
+            *_matched(spec.get("trackedCompanies", []), text, crawler),
+            *_known_companies(text, crawler),
+        ],
+        24,
+    )
     company_keys = {_clean(value, 120).casefold() for value in companies}
     people = [
         value
-        for value in _matched(spec.get("trackedPeople", []), text, crawler)
+        for value in _unique(
+            [
+                *_matched(spec.get("trackedPeople", []), text, crawler),
+                *_dynamic_people(text),
+            ],
+            16,
+        )
         if _clean(value, 120).casefold() not in company_keys
     ]
     keywords = _matched(_specific_keywords(spec.get("keywords", [])), text, crawler)

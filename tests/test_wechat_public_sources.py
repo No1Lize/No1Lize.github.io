@@ -136,6 +136,44 @@ class WeChatPublicSourcesTest(unittest.TestCase):
         assert article is not None
         self.assertRegex(article["publishedAt"], r"^\d{4}-\d{2}-\d{2}$")
 
+    def test_discovers_contextual_people_not_preconfigured(self) -> None:
+        body = """
+        <html><head>
+          <meta property="og:title" content="OpenAI首席未来学家Joshua Achiam宣布离职" />
+          <meta property="article:published_time" content="2026-07-25" />
+        </head><body>
+          <a id="js_name">量子位</a>
+          <div id="js_content">
+            <p>OpenAI首席未来学家 Joshua Achiam 在X上宣布离职。</p>
+            <p>研究员 Noam Brown 表示这一变化值得关注。</p>
+            <p>论文第一作者 黄佳诺 介绍了新的推理模型。</p>
+          </div>
+        </body></html>
+        """
+        spec = {
+            "id": "user-track-wechat-qbitai-ai",
+            "name": "量子位",
+            "sector": "AI / AGI",
+            "region": "中国",
+            "keywords": ["推理模型"],
+            "trackedCompanies": ["OpenAI"],
+            "trackedPeople": [],
+            "sourceLevel": "媒体报道",
+        }
+        article = wechat.parse_wechat_article(
+            spec,
+            "https://mp.weixin.qq.com/s?__biz=test&mid=1",
+            body,
+            crawl_articles,
+        )
+        self.assertIsNotNone(article)
+        assert article is not None
+        self.assertIn("Joshua Achiam", article["mentionedPeople"])
+        self.assertIn("Noam Brown", article["mentionedPeople"])
+        self.assertIn("黄佳诺", article["mentionedPeople"])
+        self.assertIn("OpenAI", article["mentionedCompanies"])
+        self.assertNotIn("OpenAI", article["mentionedPeople"])
+
 
 if __name__ == "__main__":
     unittest.main()
