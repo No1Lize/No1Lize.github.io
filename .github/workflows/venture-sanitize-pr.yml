@@ -58,6 +58,7 @@ jobs:
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
             tests.test_refine_venture_research_evidence \
+            tests.test_refine_venture_project_stability \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
