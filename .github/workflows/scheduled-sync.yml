@@ -16,6 +16,7 @@ on:
       - tools/enrich_tracking_snapshot.py
       - tools/tracking_quality.py
       - tools/crawl_market_profiles.py
+      - tools/refresh_market_profiles.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
       - tools/crawl_official_with_source_categories.py
@@ -69,7 +70,7 @@ jobs:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/eastmoney_transport.py
       - name: Crawl listed market profiles and trends
-        run: python tools/crawl_market_profiles.py
+        run: python tools/refresh_market_profiles.py
       - name: Migrate legacy entity attribution
         run: python tools/migrate_article_entities.py
       - name: Refine Eastmoney snapshot
@@ -102,7 +103,7 @@ jobs:
             # A run may have started before newer crawler/refinement commits landed.
             # Re-process and validate with the code now at the rebased HEAD so a
             # stale run cannot publish old tracking or market-profile semantics.
-            python tools/crawl_market_profiles.py
+            python tools/refresh_market_profiles.py
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
             python tools/enrich_tracking_snapshot.py
