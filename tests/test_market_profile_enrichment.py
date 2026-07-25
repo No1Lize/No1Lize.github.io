@@ -57,6 +57,28 @@ class MarketProfileEnrichmentTests(unittest.TestCase):
         )
         self.assertEqual(parsed["company"]["region"], "北京")
 
+    def test_navigation_noise_is_rejected_and_previous_copy_is_preserved(self):
+        current = {
+            "company": {
+                "name": "宁德时代",
+                "industry": "总市值： -- 亿",
+                "description": "所属地域。 经营分析。",
+                "mainBusiness": "经营分析。",
+            }
+        }
+        previous = {
+            "company": {
+                "name": "宁德时代",
+                "industry": "电力设备 — 电池",
+                "description": "公司主营动力电池、储能电池和电池回收业务。",
+                "mainBusiness": "动力电池与储能系统研发、生产和销售。",
+            }
+        }
+        cleaned = enriched_runner.preserve_company_copy(current, previous)
+        self.assertEqual(cleaned["company"]["industry"], "电力设备 — 电池")
+        self.assertIn("动力电池", cleaned["company"]["description"])
+        self.assertIn("储能系统", cleaned["company"]["mainBusiness"])
+
     def test_description_removes_award_tail_and_closes_sentence(self):
         raw = (
             "公司主营人工智能芯片研发、设计与销售，产品覆盖云端、边缘和终端设备。"
