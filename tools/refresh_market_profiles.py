@@ -17,7 +17,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timezone
 from io import StringIO
 from typing import Any, Iterable
+from urllib.error import HTTPError, URLError
 from urllib.parse import quote_plus, urlsplit
+from urllib.request import Request, urlopen
 
 try:
     from . import crawl_market_profiles as market
@@ -91,6 +93,81 @@ def multi_page_fetch(url: str) -> str:
     return "\n<!-- merged public company section -->\n".join(bodies)
 
 
+def neutral_fetch_text(url: str, timeout: int = 18) -> str:
+    """Fetch public JSON/CSV endpoints without leaking an unrelated Referer."""
+
+    request = Request(
+        url,
+        headers={
+            "User-Agent": market.USER_AGENT,
+            "Accept": "application/json,text/csv,text/plain,*/*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9,zh-CN;q=0.7",
+            "Cache-Control": "no-cache",
+        },
+    )
+    try:
+        with urlopen(request, timeout=timeout) as response:
+            return market.decode_response(
+                response.read(), response.headers.get("Content-Type", "")
+            )
+    except (HTTPError, URLError, TimeoutError, OSError) as exc:
+        raise RuntimeError(f"fetch failed for {url}: {exc}") from exc
+
+
+def yahoo_chart_urls(identity: market.CompanyIdentity) -> list[str]:
+    symbol = quote_plus(identity.ticker)
+    query = "range=6mo&interval=1d&events=history&includeAdjustedClose=true"
+    return [
+        f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?{query}",
+        f"https://query2.finance.yahoo.com/v8/finance/chart/{symbol}?{query}",
+    ]
+
+
+def parse_yahoo_chart(body: str) -> list[dict[str, Any]]:
+    payload = json.loads(body)
+    chart = payload.get("chart") if isinstance(payload, dict) else None
+    results = chart.get("result") if isinstance(chart, dict) else None
+    result = results[0] if isinstance(results, list) and results else None
+    if not isinstance(result, dict):
+        return []
+    timestamps = result.get("timestamp")
+    indicators = result.get("indicators")
+    quotes = indicators.get("quote") if isinstance(indicators, dict) else None
+    quote = quotes[0] if isinstance(quotes, list) and quotes else None
+    if not isinstance(timestamps, list) or not isinstance(quote, dict):
+        return []
+
+    opens = quote.get("open") if isinstance(quote.get("open"), list) else []
+    closes = quote.get("close") if isinstance(quote.get("close"), list) else []
+    highs = quote.get("high") if isinstance(quote.get("high"), list) else []
+    lows = quote.get("low") if isinstance(quote.get("low"), list) else []
+    volumes = quote.get("volume") if isinstance(quote.get("volume"), list) else []
+    points: list[dict[str, Any]] = []
+    for index, raw_timestamp in enumerate(timestamps):
+        try:
+            values = (
+                float(opens[index]),
+                float(closes[index]),
+                float(highs[index]),
+                float(lows[index]),
+            )
+            point: dict[str, Any] = {
+                "date": datetime.fromtimestamp(
+                    int(raw_timestamp), timezone.utc
+                ).date().isoformat(),
+                "open": values[0],
+                "close": values[1],
+                "high": values[2],
+                "low": values[3],
+            }
+            if index < len(volumes) and volumes[index] is not None:
+                point["volume"] = float(volumes[index])
+            points.append(point)
+        except (IndexError, TypeError, ValueError, OverflowError):
+            continue
+    return market.dedupe_price_points(points)
+
+
 def eastmoney_market_ids(exchange: str) -> list[int]:
     normalized = exchange.casefold()
     if "nasdaq" in normalized:
@@ -106,8 +183,9 @@ def eastmoney_url(identity: market.CompanyIdentity, market_id: int) -> str:
     fields1 = "f1,f2,f3,f4,f5,f6"
     fields2 = "f51,f52,f53,f54,f55,f56"
     return (
-        "https://push2his.eastmoney.com/api/qt/stock/kline/get"
+        "https://63.push2his.eastmoney.com/api/qt/stock/kline/get"
         f"?secid={market_id}.{identity.ticker}"
+        f"&ut=fa5fd1943c7b386f172d6893dbfba10b"
         f"&fields1={fields1}&fields2={fields2}"
         "&klt=101&fqt=1&beg=0&end=20500101&lmt=120"
     )
@@ -196,14 +274,24 @@ def backfill_us_trend(
     if identity.market != "美股" or len(current) >= MIN_TREND_POINTS:
         return profile
 
+    for fallback_url in yahoo_chart_urls(identity):
+        try:
+            points = parse_yahoo_chart(neutral_fetch_text(fallback_url))
+        except Exception:
+            continue
+        if len(points) > len(current):
+            profile["priceHistory"] = points
+            profile.setdefault("sources", {})["price"] = fallback_url
+            current = points
+        if len(current) >= MIN_TREND_POINTS:
+            return clean_profile(profile)
+
     company = profile.get("company") if isinstance(profile.get("company"), dict) else {}
     exchange = str(company.get("exchange") or "")
-    attempted: list[str] = []
     for market_id in eastmoney_market_ids(exchange):
         fallback_url = eastmoney_url(identity, market_id)
-        attempted.append(fallback_url)
         try:
-            points = parse_eastmoney_kline(market.fetch_text(fallback_url, attempts=1))
+            points = parse_eastmoney_kline(neutral_fetch_text(fallback_url))
         except Exception:
             continue
         if len(points) > len(current):
@@ -214,9 +302,8 @@ def backfill_us_trend(
             return clean_profile(profile)
 
     fallback_url = stooq_url(identity)
-    attempted.append(fallback_url)
     try:
-        points = parse_stooq_csv(market.fetch_text(fallback_url, attempts=1))
+        points = parse_stooq_csv(neutral_fetch_text(fallback_url))
         if len(points) > len(current):
             profile["priceHistory"] = points
             profile.setdefault("sources", {})["price"] = fallback_url
@@ -227,7 +314,8 @@ def backfill_us_trend(
     if len(current) < MIN_TREND_POINTS:
         warnings = profile.setdefault("warnings", [])
         warnings.append(
-            f"美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 {len(current)} 个交易日"
+            "美股历史日线不足：已尝试 Yahoo Chart、东方财富市场映射与 Stooq，"
+            f"当前 {len(current)} 个交易日"
         )
         profile["warnings"] = warnings[-8:]
     return clean_profile(profile)
