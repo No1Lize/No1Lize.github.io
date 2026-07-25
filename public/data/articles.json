@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T10:53:01+00:00",
-  "articleCount": 434,
+  "generatedAt": "2026-07-25T11:00:30+00:00",
+  "articleCount": 435,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -140,35 +140,6 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "space"
-      ]
-    },
-    {
-      "id": "user-track-robotics-google-cn-4d4102dc8298a30a",
-      "sourceId": "user-track-robotics-google-cn",
-      "title": "Claude Opus 5 正式发布；智元机器人已启动上市流程；特斯拉官宣Cybercab 接入集成星链｜极客早知道 - 极客公园",
-      "summary": "Claude Opus 5 正式发布；智元机器人已启动上市流程；特斯拉官宣Cybercab 接入集成星链｜极客早知道 极客公园",
-      "type": "产品发布",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "Anthropic",
-      "publishedAt": "2026-07-25",
-      "importance": 82,
-      "source": {
-        "name": "机器人 · Google News 中文",
-        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE4wZzZzU29QTk5Qdjdtdzd5SjUwQWhXeXpHQVh5TWs2MlQwRXhaamduQkQxYW5Kbkh3ODNsZktFb0NQSXY4bDYxTGFTREQ?oc=5",
-        "level": "待交叉验证",
-        "platform": "Google News"
-      },
-      "companySlug": "anthropic",
-      "qualityScore": 32,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "robotics"
       ]
     },
     {
@@ -428,6 +399,35 @@
       "companySlug": "openai",
       "trackSlugs": [
         "ai"
+      ]
+    },
+    {
+      "id": "user-track-energy-google-cn-d1d818049ce94f0b",
+      "sourceId": "user-track-energy-google-cn",
+      "title": "“喜羊羊之父”转行和宁德时代抢生意，携奥动新能源又要IPO了！ - 新浪财经",
+      "summary": "“喜羊羊之父”转行和宁德时代抢生意，携奥动新能源又要IPO了！ 新浪财经",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "新能源 · Google News 中文",
+        "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPdTNYRTRoRjdxaVBJSVhZdlBHWmlTRnZQbzZBQmJXX0VGMW1sSkNoOTE5S3VRNl9UdjZLUzBZZjNnZWdGVkxNMWFkSm9obS1UdDE1WmFSNW52OUR0S18wSVFrMW1FM0RuNEx1aE9JMkZyUlBxaTlxWUlnSTN6b1oycFVmU2xxVjRLMzJOYXpCdjhKR2FIV2RTMlJCNER3YzdhNGpQS2h1dw?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "companySlug": "catl",
+      "qualityScore": 33,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "energy"
       ]
     },
     {
@@ -1451,6 +1451,33 @@
       },
       "trackSlugs": [
         "ai"
+      ]
+    },
+    {
+      "id": "user-track-robotics-google-cn-70de5c5b2189b55d",
+      "sourceId": "user-track-robotics-google-cn",
+      "title": "智元机器人已启动赴港IPO流程，具身智能赛道“抢滩”港股 - 奥一网",
+      "summary": "智元机器人已启动赴港IPO流程，具身智能赛道“抢滩”港股 奥一网",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "机器人 · Google News 中文",
+        "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9FcEtWUXRwTEZaVXRrS0JRYUNiV0VkeW82U2NqS3d1eDdacDItZms2R2ZIQTRxejlHYzlIQjZYTjU3LVRCMVZqcVMtLVdWbGxqZ1NvdDBoeTNQOXBHUmJxbEl6RFB1UQ?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "qualityScore": 41,
+      "qualitySignals": [
+        "标题命中 2 个追踪词",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "robotics"
       ]
     },
     {
@@ -10700,13 +10727,14 @@
       "company": "Form Energy",
       "companySlug": "form-energy",
       "coverage": "attempted",
-      "status": "ok",
+      "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 27,
-      "scanned": 19,
-      "accepted": 4,
-      "failed": 0,
-      "platform": "官方网站"
+      "discovered": 0,
+      "scanned": 3,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "官方网站",
+      "error": "official indexes returned no dated article pages"
     },
     {
       "id": "official-fourier-intelligence",
@@ -10942,10 +10970,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 0,
-      "scanned": 1,
+      "discovered": 1,
+      "scanned": 2,
       "accepted": 0,
-      "failed": 2,
+      "failed": 3,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -10972,10 +11000,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 1,
-      "scanned": 2,
+      "discovered": 0,
+      "scanned": 1,
       "accepted": 0,
-      "failed": 9,
+      "failed": 8,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -11200,7 +11228,7 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 23,
+      "discovered": 22,
       "scanned": 18,
       "accepted": 0,
       "failed": 0,
@@ -11219,9 +11247,9 @@
       "accepted": 8,
       "failed": 0,
       "platform": "官方网站",
-      "newAccepted": 2,
+      "newAccepted": 1,
       "retainedPrevious": true,
-      "retainedPreviousCount": 6
+      "retainedPreviousCount": 7
     },
     {
       "id": "official-varda",
@@ -11417,7 +11445,13 @@
         "primary",
         "sitemap"
       ],
-      "historyLimit": 20
+      "historyLimit": 20,
+      "requestBudget": {
+        "timeoutSeconds": 12,
+        "attempts": 2,
+        "seedLimit": 6,
+        "stopAfterAccepted": 3
+      }
     },
     {
       "id": "user-source-source-the-washington-post",
@@ -11433,7 +11467,7 @@
       "id": "user-source-source-track-1r4ht2r",
       "name": "谷歌新闻",
       "status": "ok",
-      "scanned": 9,
+      "scanned": 6,
       "accepted": 10,
       "failed": 0,
       "platform": "谷歌新闻",
@@ -11448,13 +11482,19 @@
         "primary"
       ],
       "historyLimit": 20,
+      "requestBudget": {
+        "timeoutSeconds": 12,
+        "attempts": 2,
+        "seedLimit": 6,
+        "stopAfterAccepted": 3
+      },
       "newAccepted": 10
     },
     {
       "id": "user-source-source-track-1sp7gkg",
       "name": "东方财富",
       "status": "partial",
-      "scanned": 12,
+      "scanned": 5,
       "accepted": 0,
       "failed": 0,
       "platform": "东方财富",
@@ -11463,15 +11503,19 @@
       "canonicalSourceUrl": "https://www.eastmoney.com/",
       "attemptedSeeds": [
         "https://www.eastmoney.com/",
-        "https://finance.eastmoney.com/",
-        "https://stock.eastmoney.com/",
-        "https://fund.eastmoney.com/"
+        "https://finance.eastmoney.com/"
       ],
       "strategies": [
         "primary"
       ],
       "historyLimit": 20,
-      "discoveredAccepted": 10,
+      "requestBudget": {
+        "timeoutSeconds": 12,
+        "attempts": 2,
+        "seedLimit": 2,
+        "stopAfterAccepted": 1
+      },
+      "discoveredAccepted": 3,
       "publisherHandoff": "eastmoney-strict-detail",
       "handoffStatusId": "official-user-东方财富"
     },
@@ -11503,6 +11547,12 @@
         "primary"
       ],
       "historyLimit": 20,
+      "requestBudget": {
+        "timeoutSeconds": 12,
+        "attempts": 2,
+        "seedLimit": 6,
+        "stopAfterAccepted": 3
+      },
       "newAccepted": 10,
       "retainedPrevious": true,
       "retainedPreviousCount": 2
@@ -11510,10 +11560,10 @@
     {
       "id": "user-source-source-yahoo-tw",
       "name": "Yahoo奇摩",
-      "status": "partial",
-      "scanned": 71,
+      "status": "ok",
+      "scanned": 30,
       "accepted": 10,
-      "failed": 28,
+      "failed": 0,
       "platform": "Yahoo奇摩",
       "adapter": "adaptive-public-v1",
       "profile": "yahoo-tw",
@@ -11524,12 +11574,18 @@
         "https://tw.stock.yahoo.com/"
       ],
       "strategies": [
-        "primary",
-        "structured-data",
-        "sitemap"
+        "primary"
       ],
       "historyLimit": 20,
-      "newAccepted": 10
+      "requestBudget": {
+        "timeoutSeconds": 12,
+        "attempts": 2,
+        "seedLimit": 6,
+        "stopAfterAccepted": 3
+      },
+      "newAccepted": 5,
+      "retainedPrevious": true,
+      "retainedPreviousCount": 5
     },
     {
       "id": "user-source-source-youtube",
@@ -11550,7 +11606,13 @@
         "primary",
         "search-page"
       ],
-      "historyLimit": 20
+      "historyLimit": 20,
+      "requestBudget": {
+        "timeoutSeconds": 12,
+        "attempts": 2,
+        "seedLimit": 6,
+        "stopAfterAccepted": 3
+      }
     },
     {
       "id": "user-track-ai-bing",
@@ -12040,12 +12102,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 434,
+        "actual": 435,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 90,
+        "actual": 89,
         "required": 6,
         "passed": true
       },
@@ -12070,7 +12132,7 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 113,
+        "actual": 114,
         "required": 8,
         "passed": true
       },
@@ -12080,7 +12142,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1336,
+        "actual": 0.1333,
         "required": 0.45,
         "passed": true
       },
@@ -12090,22 +12152,22 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 434,
-        "required": 434,
+        "actual": 435,
+        "required": 435,
         "passed": true
       }
     },
     "invalidArticles": [],
     "trackingQuality": {
       "scoredUserArticles": 216,
-      "acceptedUserArticles": 51,
-      "rejectedUserArticles": 165,
+      "acceptedUserArticles": 52,
+      "rejectedUserArticles": 164,
       "clusteredDuplicates": 1,
       "minimumScore": 31
     }
   },
   "trackingConfigHash": "c18863c4b8539ac2f78e40351cbf7c26adfa11d5553f0ef956047a0b7aeeed11",
-  "trackingEnrichedAt": "2026-07-25T10:53:02+00:00",
+  "trackingEnrichedAt": "2026-07-25T11:00:31+00:00",
   "trackCoverage": {
     "ai": {
       "slug": "ai",
@@ -12118,11 +12180,11 @@
       "failedSources": 0,
       "scanned": 23,
       "accepted": 23,
-      "matchedArticles": 176,
-      "backfilledArticles": 15,
-      "independentSources": 176,
-      "lastRun": "2026-07-25T10:53:01+00:00",
-      "message": "三路发现均已尝试，当前匹配 176 条公开事件。"
+      "matchedArticles": 175,
+      "backfilledArticles": 14,
+      "independentSources": 175,
+      "lastRun": "2026-07-25T11:00:30+00:00",
+      "message": "三路发现均已尝试，当前匹配 175 条公开事件。"
     },
     "robotics": {
       "slug": "robotics",
@@ -12138,7 +12200,7 @@
       "matchedArticles": 87,
       "backfilledArticles": 8,
       "independentSources": 87,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 87 条公开事件。"
     },
     "semiconductor": {
@@ -12155,7 +12217,7 @@
       "matchedArticles": 46,
       "backfilledArticles": 0,
       "independentSources": 46,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 46 条公开事件。"
     },
     "energy": {
@@ -12169,11 +12231,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 33,
+      "matchedArticles": 34,
       "backfilledArticles": 0,
-      "independentSources": 33,
-      "lastRun": "2026-07-25T10:53:01+00:00",
-      "message": "三路发现均已尝试，当前匹配 33 条公开事件。"
+      "independentSources": 34,
+      "lastRun": "2026-07-25T11:00:30+00:00",
+      "message": "三路发现均已尝试，当前匹配 34 条公开事件。"
     },
     "biotech": {
       "slug": "biotech",
@@ -12189,7 +12251,7 @@
       "matchedArticles": 22,
       "backfilledArticles": 0,
       "independentSources": 22,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 22 条公开事件。"
     },
     "quantum": {
@@ -12206,7 +12268,7 @@
       "matchedArticles": 34,
       "backfilledArticles": 0,
       "independentSources": 34,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 34 条公开事件。"
     },
     "space": {
@@ -12223,7 +12285,7 @@
       "matchedArticles": 51,
       "backfilledArticles": 1,
       "independentSources": 51,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 51 条公开事件。"
     },
     "web3": {
@@ -12240,7 +12302,7 @@
       "matchedArticles": 2,
       "backfilledArticles": 1,
       "independentSources": 2,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 2 条公开事件。"
     },
     "materials": {
@@ -12257,7 +12319,7 @@
       "matchedArticles": 1,
       "backfilledArticles": 0,
       "independentSources": 1,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 1 条公开事件。"
     },
     "manufacturing": {
@@ -12274,7 +12336,7 @@
       "matchedArticles": 6,
       "backfilledArticles": 0,
       "independentSources": 6,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 6 条公开事件。"
     },
     "fusion": {
@@ -12291,7 +12353,7 @@
       "matchedArticles": 5,
       "backfilledArticles": 4,
       "independentSources": 5,
-      "lastRun": "2026-07-25T10:53:01+00:00",
+      "lastRun": "2026-07-25T11:00:30+00:00",
       "message": "三路发现均已尝试，当前匹配 5 条公开事件。"
     }
   }

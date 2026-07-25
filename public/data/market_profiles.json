@@ -1,16 +1,21 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-25T10:53:01+00:00",
+  "generatedAt": "2026-07-25T11:00:30+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-07-25T10:52:50+00:00",
+      "updatedAt": "2026-07-25T11:00:12+00:00",
       "status": "ok",
       "company": {
-        "name": "寒武纪"
+        "name": "中科寒武纪科技股份有限公司",
+        "industry": "电子 — 半导体及元件",
+        "listedAt": "2020-07-20",
+        "chairman": "陈天石",
+        "description": "中科寒武纪科技股份有限公司的主营业务是应用于各类云服务器、边缘计算设备、终端设备中人工智能核心芯片的研发、设计和销售。公司的主要产品是云端智能芯片及板卡、智能整机、边缘计算、IP授权和基础系统软件平台、智能计算集群。公司成立至今共获得多项荣誉：2017年12月，公司获得全球知名创投研究机构CBInsights颁布的“2018年全球人工智能企业100强”奖项；2018年11月，于深圳举办的第二十届中国国际高新技术成果交易会上，寒武纪1M处理器、思元100智能芯片、思元100加速卡三款产品连续斩获高交会组委会颁发的“优秀创新产品奖”；同月，公司上榜由美国著名权威半导体杂志《EETimes》评选的“2018年全球60家最值得关注的半导体公司（EETimesSilicon60of2018）”榜单；2019年6月，公司入选《福布斯》杂志中文版颁布的“2019福布斯中国最具创新力企业榜”；2019年10月，思元270芯片获得第六届乌镇世界互联网大会“世界互联网领先科技成果奖”；2020年4月，公司获得全球知名创投研究机构CBInsights颁布的“2020ICDESIGNChina”奖项；2020年6月，公司获得胡润研究院“2020胡润中国芯片设计10强民营企业”荣誉称号；2020年6月，公司上榜《EETimes》评选的“2020年全球100家最值得关注的半导体公司（EETimesSilico",
+        "mainBusiness": "应用于各类云服务器、边缘计算设备、终端设备中人工智能核心芯片的研发、设计和销售。"
       },
       "priceHistory": [
         {
@@ -974,7 +979,53 @@
           "volume": 8586383.0
         }
       ],
-      "metrics": [],
+      "metrics": [
+        {
+          "id": "marketCap",
+          "label": "总市值",
+          "value": "亿"
+        },
+        {
+          "id": "totalShares",
+          "label": "总股本",
+          "value": "6.28亿股"
+        },
+        {
+          "id": "floatShares",
+          "label": "流通股",
+          "value": "6.28亿"
+        },
+        {
+          "id": "eps",
+          "label": "每股收益",
+          "value": "2.40元"
+        },
+        {
+          "id": "netIncome",
+          "label": "净利润",
+          "value": "10.13亿元"
+        },
+        {
+          "id": "revenue",
+          "label": "营业收入",
+          "value": "28.85亿元"
+        },
+        {
+          "id": "cashFlowPerShare",
+          "label": "每股现金流",
+          "value": "1.98元"
+        },
+        {
+          "id": "bookValuePerShare",
+          "label": "每股净资产",
+          "value": "30.52元"
+        },
+        {
+          "id": "roe",
+          "label": "净资产收益率",
+          "value": "7.87%"
+        }
+      ],
       "financialSeries": [],
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/688256/",
@@ -986,10 +1037,14 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-07-25T10:52:49+00:00",
+      "updatedAt": "2026-07-25T11:00:12+00:00",
       "status": "ok",
       "company": {
-        "name": "宁德时代"
+        "name": "宁德时代",
+        "industry": "总市值： -- 亿",
+        "listedAt": "2018-06-11",
+        "description": "所属地域",
+        "mainBusiness": "经营分析"
       },
       "priceHistory": [
         {
@@ -1953,7 +2008,53 @@
           "volume": 254542.0
         }
       ],
-      "metrics": [],
+      "metrics": [
+        {
+          "id": "marketCap",
+          "label": "总市值",
+          "value": "亿"
+        },
+        {
+          "id": "totalShares",
+          "label": "总股本",
+          "value": "46.27亿"
+        },
+        {
+          "id": "floatShares",
+          "label": "流通股",
+          "value": "42.60亿"
+        },
+        {
+          "id": "eps",
+          "label": "每股收益",
+          "value": "9.51元"
+        },
+        {
+          "id": "netIncome",
+          "label": "净利润",
+          "value": "432.84亿元"
+        },
+        {
+          "id": "revenue",
+          "label": "营业收入",
+          "value": "2769.17亿元"
+        },
+        {
+          "id": "cashFlowPerShare",
+          "label": "每股现金流",
+          "value": "13.02元"
+        },
+        {
+          "id": "bookValuePerShare",
+          "label": "每股净资产",
+          "value": "81.99元"
+        },
+        {
+          "id": "roe",
+          "label": "净资产收益率",
+          "value": "11.41%"
+        }
+      ],
       "financialSeries": [],
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/300750/",
@@ -1965,10 +2066,14 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-07-25T10:52:49+00:00",
+      "updatedAt": "2026-07-25T11:00:12+00:00",
       "status": "ok",
       "company": {
-        "name": "华大基因"
+        "name": "华大基因",
+        "industry": "总市值： -- 亿",
+        "listedAt": "2017-07-14",
+        "description": "所属地域",
+        "mainBusiness": "经营分析"
       },
       "priceHistory": [
         {
@@ -2932,7 +3037,53 @@
           "volume": 45219.0
         }
       ],
-      "metrics": [],
+      "metrics": [
+        {
+          "id": "marketCap",
+          "label": "总市值",
+          "value": "亿"
+        },
+        {
+          "id": "totalShares",
+          "label": "总股本",
+          "value": "4.18亿"
+        },
+        {
+          "id": "floatShares",
+          "label": "流通股",
+          "value": "4.16亿"
+        },
+        {
+          "id": "eps",
+          "label": "每股收益",
+          "value": "0.02元"
+        },
+        {
+          "id": "netIncome",
+          "label": "净利润",
+          "value": "0.10亿元"
+        },
+        {
+          "id": "revenue",
+          "label": "营业收入",
+          "value": "8.09亿元"
+        },
+        {
+          "id": "cashFlowPerShare",
+          "label": "每股现金流",
+          "value": "0.43元"
+        },
+        {
+          "id": "bookValuePerShare",
+          "label": "每股净资产",
+          "value": "20.15元"
+        },
+        {
+          "id": "roe",
+          "label": "净资产收益率",
+          "value": "0.11%"
+        }
+      ],
       "financialSeries": [],
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/300676/",
@@ -2944,7 +3095,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-07-25T10:52:50+00:00",
+      "updatedAt": "2026-07-25T11:00:08+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -3965,7 +4116,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-07-25T10:52:50+00:00",
+      "updatedAt": "2026-07-25T11:00:08+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -4986,7 +5137,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-07-25T10:52:55+00:00",
+      "updatedAt": "2026-07-25T11:00:15+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -5051,14 +5202,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/PONY/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usPONY%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "weride": {
       "slug": "weride",
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-07-25T10:52:55+00:00",
+      "updatedAt": "2026-07-25T11:00:15+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -5118,14 +5272,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/WRD/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usWRD%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "rigetti": {
       "slug": "rigetti",
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-07-25T10:52:55+00:00",
+      "updatedAt": "2026-07-25T11:00:19+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -5195,14 +5352,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/RGTI/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usRGTI%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "ionq": {
       "slug": "ionq",
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-07-25T10:52:55+00:00",
+      "updatedAt": "2026-07-25T11:00:19+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -5272,14 +5432,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/IONQ/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usIONQ%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "rocket-lab": {
       "slug": "rocket-lab",
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-07-25T10:52:55+00:00",
+      "updatedAt": "2026-07-25T11:00:19+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -5349,14 +5512,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/RKLB/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usRKLB%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "tempus-ai": {
       "slug": "tempus-ai",
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-07-25T10:53:00+00:00",
+      "updatedAt": "2026-07-25T11:00:24+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -5426,14 +5592,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/TEM/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usTEM%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "recursion": {
       "slug": "recursion",
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-07-25T10:53:00+00:00",
+      "updatedAt": "2026-07-25T11:00:24+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -5503,14 +5672,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/RXRX/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usRXRX%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "mobileye": {
       "slug": "mobileye",
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-07-25T10:53:01+00:00",
+      "updatedAt": "2026-07-25T11:00:27+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -5580,14 +5752,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/MBLY/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usMBLY%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "aurora": {
       "slug": "aurora",
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-07-25T10:53:00+00:00",
+      "updatedAt": "2026-07-25T11:00:28+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -5656,14 +5831,17 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/AUR/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usAUR%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     },
     "joby": {
       "slug": "joby",
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-07-25T10:53:01+00:00",
+      "updatedAt": "2026-07-25T11:00:28+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
@@ -5732,26 +5910,29 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/JOBY/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=usJOBY%2Cday%2C%2C%2C120%2Cqfq"
-      }
+      },
+      "warnings": [
+        "美股历史日线不足：已尝试东方财富市场映射与 Stooq，当前 1 个交易日"
+      ]
     }
   },
   "sourceStatus": [
     {
       "slug": "cambricon",
       "status": "ok",
-      "profileAccepted": false,
+      "profileAccepted": true,
       "pricePoints": 120
     },
     {
       "slug": "catl",
       "status": "ok",
-      "profileAccepted": false,
+      "profileAccepted": true,
       "pricePoints": 120
     },
     {
       "slug": "bgi-genomics",
       "status": "ok",
-      "profileAccepted": false,
+      "profileAccepted": true,
       "pricePoints": 120
     },
     {
