@@ -128,6 +128,21 @@ jobs:
         run: python tools/sanitize_venture_narratives.py
       - name: Check normalizer idempotence
         run: python tools/normalize_venture_profiles.py --check
+      - name: Persist normalizer idempotence failure
+        if: failure()
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostics
+          python tools/normalize_venture_profiles.py --check \
+            > diagnostics/venture-pr-normalizer-check.txt 2>&1 || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/venture-pr-normalizer-check.txt
+          git commit -m "ci: record venture normalizer idempotence failure"
+          git push origin "HEAD:${HEAD_REF}"
       - name: Check structured sanitizer idempotence
         run: python tools/sanitize_venture_profiles.py --check
       - name: Check narrative sanitizer idempotence
@@ -151,6 +166,7 @@ jobs:
           rm -f diagnostics/venture-pr-normalizer-test.txt
           rm -f diagnostics/venture-pr-structured-test.txt
           rm -f diagnostics/venture-pr-narrative-test.txt
+          rm -f diagnostics/venture-pr-normalizer-check.txt
           rm -f tools/patch_venture_enrichment_idempotence.py
           rm -f tools/patch_venture_structured_products.py
           git add -A
