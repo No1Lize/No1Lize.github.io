@@ -87,6 +87,10 @@ PERSON_NAME_NOISE = {
     "办公室",
     "委员会",
     "研究院",
+    "高级",
+    "高级副",
+    "副总",
+    "总裁办",
 }
 
 GENERIC_PRODUCT_LABELS = {
@@ -125,6 +129,23 @@ PRODUCT_DOCUMENT_TERMS = (
     "售后",
     "参数",
     "软件包",
+)
+
+PRODUCT_EVENT_TERMS = (
+    "competition",
+    "contest",
+    "event",
+    "conference",
+    "webinar",
+    "news",
+    "blog",
+    "大赛",
+    "赛事",
+    "活动",
+    "大会",
+    "发布会",
+    "新闻",
+    "报告",
 )
 
 COMPANY_LINK_TERMS = {
@@ -783,14 +804,25 @@ def _specific_product_label(value: str) -> bool:
         return False
     if lowered in NAVIGATION_NOISE or lowered in GENERIC_PRODUCT_LABELS:
         return False
-    if any(term in lowered for term in PRODUCT_DOCUMENT_TERMS):
+    if any(term in lowered for term in (*PRODUCT_DOCUMENT_TERMS, *PRODUCT_EVENT_TERMS)):
         return False
     if compact in {re.sub(r"\W+", "", value).casefold() for value in GENERIC_PRODUCT_LABELS}:
         return False
-    return bool(
-        re.search(r"[A-Z0-9][A-Za-z0-9.+_-]*", item)
-        or re.search(r"[\u3400-\u9fff]{2,}(?:机器人|模型|平台|系统|芯片|引擎|终端|助手|智能体|API)", item, re.IGNORECASE)
+    chinese_product = bool(
+        re.search(
+            r"[\u3400-\u9fffA-Za-z0-9.+_-]{2,}(?:机器人|模型|平台|系统|芯片|引擎|终端|助手|智能体|API)(?:[A-Za-z0-9.+_-]*)?$",
+            item,
+            re.IGNORECASE,
+        )
     )
+    english_product = bool(
+        re.search(r"\b[A-Za-z][A-Za-z.+_-]*\d+[A-Za-z0-9.+_-]*\b", item)
+        or re.search(
+            r"\b[A-Z][A-Za-z0-9.+_-]*(?:\s+[A-Z][A-Za-z0-9.+_-]*){0,3}\s+(?:Platform|Model|Robot|System|API|Agent|Chip|Engine)\b",
+            item,
+        )
+    )
+    return chinese_product or english_product
 
 
 def sanitize_product_items(values: Sequence[Any]) -> list[str]:
@@ -803,7 +835,7 @@ def sanitize_product_items(values: Sequence[Any]) -> list[str]:
         compact = re.sub(r"[^a-z0-9\u3400-\u9fff]+", "", lowered)
         if not item or lowered in NAVIGATION_NOISE or lowered in GENERIC_PRODUCT_LABELS:
             continue
-        if any(term in lowered for term in PRODUCT_DOCUMENT_TERMS):
+        if any(term in lowered for term in (*PRODUCT_DOCUMENT_TERMS, *PRODUCT_EVENT_TERMS)):
             continue
         if compact in {
             re.sub(r"\W+", "", label).casefold()
@@ -884,7 +916,12 @@ def sanitize_team_members(
         role = clean_text(member.get("role"), 160)
         if not _valid_person_name(name):
             continue
-        if any(alias in name.casefold() for alias in alias_keys if len(alias) >= 2):
+        lowered_name = name.casefold()
+        if any(
+            alias in lowered_name or lowered_name in alias
+            for alias in alias_keys
+            if len(alias) >= 2
+        ):
             continue
         key = name.casefold()
         if key in seen:
@@ -935,7 +972,12 @@ def extract_team(pages: Sequence[ParsedPage], aliases: Sequence[str]) -> list[di
         role = clean_text(member.get("role"), 160)
         if not _valid_person_name(name):
             continue
-        if any(alias in name.casefold() for alias in alias_keys if len(alias) >= 2):
+        lowered_name = name.casefold()
+        if any(
+            alias in lowered_name or lowered_name in alias
+            for alias in alias_keys
+            if len(alias) >= 2
+        ):
             continue
         key = name.casefold()
         if key in seen:
