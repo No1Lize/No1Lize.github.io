@@ -1,0 +1,47 @@
+commit=40e6aa81cde12448411a4cfc4753bc6b7f1fcf8f
+checkedAt=2026-07-25T17:12:43Z
+compile=0
+test_classic_cases_preserve_analysis_fields_and_require_evidence (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_classic_cases_preserve_analysis_fields_and_require_evidence) ... FAIL
+test_financing_rejects_round_like_product_copy (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_financing_rejects_round_like_product_copy) ... ok
+test_products_remove_pure_research_but_keep_api (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_products_remove_pure_research_but_keep_api) ... FAIL
+test_recent_investments_use_actual_one_year_window (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_recent_investments_use_actual_one_year_window) ... ok
+test_snapshot_finalization_is_idempotent (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_snapshot_finalization_is_idempotent) ... ok
+test_team_preserves_structured_experience (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_team_preserves_structured_experience) ... ok
+
+======================================================================
+FAIL: test_classic_cases_preserve_analysis_fields_and_require_evidence (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_classic_cases_preserve_analysis_fields_and_require_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_finalize_venture_profiles.py", line 116, in test_classic_cases_preserve_analysis_fields_and_require_evidence
+    self.assertEqual([item["name"] for item in rows], ["ListedCo"])
+AssertionError: Lists differ: [] != ['ListedCo']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'ListedCo'
+
+- []
++ ['ListedCo']
+
+======================================================================
+FAIL: test_products_remove_pure_research_but_keep_api (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_products_remove_pure_research_but_keep_api)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_finalize_venture_profiles.py", line 16, in test_products_remove_pure_research_but_keep_api
+    self.assertEqual(products[:2], ["Claude 模型", "企业 API"])
+AssertionError: Lists differ: ['Claude 模型', '企业 API 与安全研究。'] != ['Claude 模型', '企业 API']
+
+First differing element 1:
+'企业 API 与安全研究。'
+'企业 API'
+
+- ['Claude 模型', '企业 API 与安全研究。']
+?                      -------
+
++ ['Claude 模型', '企业 API']
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+FAILED (failures=2)
+tests=1
