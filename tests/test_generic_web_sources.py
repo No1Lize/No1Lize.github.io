@@ -53,7 +53,7 @@ class LanguageAwareSourceTests(unittest.TestCase):
         )
         self.assertEqual(sec, {})
         self.assertEqual(runtime[0]["adapter"], "generic_web")
-        self.assertEqual(runtime[0]["sourceUrl"], "https://tw.yahoo.com/?p=us")
+        self.assertEqual(runtime[0]["sourceUrl"], "https://tw.yahoo.com/")
         self.assertNotIn("company", runtime[0])
         self.assertNotIn("companySlug", runtime[0])
 
