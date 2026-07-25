@@ -32,6 +32,7 @@ NAVIGATION_LABELS = {
     "home",
     "about",
     "company",
+    "companies",
     "products",
     "solutions",
     "research",
@@ -39,6 +40,10 @@ NAVIGATION_LABELS = {
     "commitments",
     "learn",
     "news",
+    "insights",
+    "investments",
+    "projects",
+    "more",
     "careers",
     "contact",
     "privacy",
@@ -60,6 +65,9 @@ NAVIGATION_LABELS = {
     "招聘",
     "团队",
     "投资组合",
+    "被投企业",
+    "投资项目",
+    "更多",
 }
 
 NAVIGATION_TERMS = tuple(sorted(NAVIGATION_LABELS, key=len, reverse=True))
