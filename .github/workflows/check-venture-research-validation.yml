@@ -21,6 +21,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
+          # rerun-after-capital-type-normalization
           set -euo pipefail
           mkdir -p /tmp/venture-status
           PATCH_STATUS=/tmp/venture-status/venture-patch-status.json
