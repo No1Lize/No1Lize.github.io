@@ -7,6 +7,10 @@ import {
   type SectorDefinition,
 } from "@/lib/sector-definitions";
 import {
+  resolveSectorDefinition,
+  sectorCompleteness,
+} from "@/lib/sector-profile-generator";
+import {
   userTrackingConfig,
   type TrackingTrack,
 } from "@/lib/user-tracking";
@@ -23,6 +27,7 @@ export type TrackedSector = SectorDefinition & {
   tracking: TrackingTrack;
   aliases: string[];
   baseName?: string;
+  profileMode: "curated" | "generated";
 };
 
 type SectorRaw = {
@@ -44,7 +49,7 @@ function unique(values: string[], limit = 12): string[] {
   const seen = new Set<string>();
   for (const value of values) {
     const cleaned = value.trim();
-    const key = cleaned.toLowerCase();
+    const key = cleaned.toLocaleLowerCase("zh-CN");
     if (!cleaned || seen.has(key)) continue;
     result.push(cleaned);
     seen.add(key);
@@ -61,16 +66,6 @@ function dateValue(value: string): number {
 function normalizer(values: number[]): (value: number) => number {
   const maximum = Math.max(...values, 0);
   return (value) => (maximum > 0 ? Math.round((value / maximum) * 100) : 0);
-}
-
-function genericDefinition(track: TrackingTrack): string {
-  const focus = unique(
-    [...track.keywords, ...track.sampleCompanies, ...track.people],
-    6,
-  );
-  return focus.length
-    ? `聚焦${focus.join("、")}等方向，持续跟踪技术里程碑、公司进展、资本事件与关键人物动向。`
-    : `持续跟踪${track.name}相关技术、公司、资本事件与产业化进展。`;
 }
 
 function buildRaw(): SectorRaw[] {
@@ -147,6 +142,7 @@ function buildTrackedSectors(): TrackedSector[] {
   return raw.map((item) => {
     const { tracking, base, aliases, events } = item;
     const sourceCount = new Set(events.map((event) => event.source.url)).size;
+    const definition = resolveSectorDefinition(tracking, events, base);
     const heat = Math.round(
       0.3 * normalizeFinancing(item.financing) +
         0.2 * normalizeInstitutions(item.institutions) +
@@ -154,58 +150,13 @@ function buildTrackedSectors(): TrackedSector[] {
         0.15 * normalizeIpo(item.ipo) +
         0.15 * normalizeResearch(item.research),
     );
-    const completeness = Math.min(
-      100,
-      Math.round(
-        (events.length > 0 ? 35 : 10) +
-          Math.min(events.length, 10) * 4 +
-          Math.min(sourceCount, 5) * 5 +
-          Math.min(tracking.keywords.length, 5) * 2,
-      ),
-    );
-    const subsectors = unique(
-      [...tracking.keywords, ...(base?.subsectors ?? [])],
-      8,
-    );
-    const researchFocus = unique(
-      [
-        ...tracking.keywords,
-        ...tracking.people,
-        ...(base?.researchFocus ?? []),
-      ],
-      5,
-    );
 
     return {
+      ...definition,
       slug: tracking.slug,
       name: tracking.name,
-      definition: base?.definition ?? genericDefinition(tracking),
-      subsectors: subsectors.length ? subsectors : [tracking.name],
-      chain:
-        base?.chain ??
-        [
-          { title: "基础研究", detail: "核心原理、关键论文与技术可行性" },
-          { title: "工程平台", detail: "产品、基础设施与规模化能力" },
-          { title: "产业应用", detail: "客户验证、商业模式与资本事件" },
-        ],
-      chinaLens:
-        base?.chinaLens ??
-        `关注中国市场中的${tracking.name}供应链、工程化速度、政策环境与商业落地。`,
-      usLens:
-        base?.usLens ??
-        `关注美国市场中的${tracking.name}前沿研究、平台公司、资本投入与规模化部署。`,
-      researchFocus: researchFocus.length
-        ? researchFocus
-        : ["关键技术指标", "商业化进度", "资本与监管变化"],
-      risks:
-        base?.risks ??
-        [
-          "技术路线尚未收敛",
-          "产业化周期与资本开支压力",
-          "数据、合规与供应链不确定性",
-        ],
       heat,
-      completeness,
+      completeness: sectorCompleteness(tracking, events, Boolean(base)),
       trend:
         item.current > item.previous
           ? "up"
@@ -220,6 +171,7 @@ function buildTrackedSectors(): TrackedSector[] {
       tracking,
       aliases,
       baseName: base?.name,
+      profileMode: base ? "curated" : "generated",
     };
   });
 }
