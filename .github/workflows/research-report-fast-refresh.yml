@@ -24,6 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
+      REFRESH_REVISION: "final-v4"
       RESEARCH_REPORTS_PER_COMPANY: "3"
       RESEARCH_REPORTS_MAX_TOTAL: "48"
       RESEARCH_REPORT_MAX_BYTES: "16777216"
@@ -55,26 +56,40 @@ jobs:
           payload = json.loads(Path('public/data/research_reports.json').read_text(encoding='utf-8'))
           companies = [item for item in config.get('listedCompanies', []) if item.get('enabled', True)]
           statuses = payload.get('sourceStatus', [])
+          reports = payload.get('reports', [])
           assert payload.get('trackedCompanies') == len(companies), (payload.get('trackedCompanies'), len(companies))
           assert len(statuses) == len(companies), (len(statuses), len(companies))
           assert set(payload.get('marketCounts', {})) == {'A股', '港股', '美股'}
-          for report in payload.get('reports', []):
+          reject_terms = (
+              'certificate', 'iso 9001', 'form of proxy', 'annual general meeting',
+              'poll results', 'monthly return', 'next day disclosure', 'notice of agm',
+              '委任表格', '股东大会通知', '月报表', '翌日披露报表',
+          )
+          for report in reports:
               path = Path('public') / report['localPdfUrl'].lstrip('/')
               data = path.read_bytes()
               assert data.lstrip().startswith(b'%PDF-'), path
               assert b'%%EOF' in data[-8192:], path
               assert path.stat().st_size == report['fileSizeBytes'], path
+              combined = f"{report.get('title', '')} {report.get('sourcePageUrl', '')}".casefold()
+              assert not any(term.casefold() in combined for term in reject_terms), report.get('title')
+          report_counts = {
+              market: sum(1 for report in reports if report.get('market') == market)
+              for market in ('A股', '港股', '美股')
+          }
+          assert report_counts['A股'] > 0
+          assert report_counts['港股'] > 0
+          assert report_counts['美股'] > 0
           print(json.dumps({
+              'revision': 'final-v4',
               'trackedCompanies': payload.get('trackedCompanies'),
               'marketCounts': payload.get('marketCounts'),
-              'reportCounts': {
-                  market: sum(1 for report in payload.get('reports', []) if report.get('market') == market)
-                  for market in ('A股', '港股', '美股')
-              },
-              'reports': len(payload.get('reports', [])),
+              'reportCounts': report_counts,
+              'reports': len(reports),
               'archiveBytes': payload.get('archiveBytes', 0),
               'statuses': {kind: sum(1 for item in statuses if item.get('status') == kind) for kind in ('ok', 'retained', 'empty', 'failed')},
               'adapterCoverage': {
+                  'verified-direct': sum(1 for item in statuses if 'verified-direct' in item.get('adapters', [])),
                   'SEC': sum(1 for item in statuses if 'SEC' in item.get('adapters', [])),
                   'company-domain': sum(1 for item in statuses if 'company-domain' in item.get('adapters', [])),
               },
@@ -82,7 +97,7 @@ jobs:
           PY
           INDEX=$?
           cat > .github/diagnostics/research-report-fast-refresh.json <<EOF
-          {"crawl":$CRAWL,"tests":$TESTS,"index":$INDEX,"commit":"$GITHUB_SHA","runId":"$GITHUB_RUN_ID"}
+          {"revision":"final-v4","crawl":$CRAWL,"tests":$TESTS,"index":$INDEX,"commit":"$GITHUB_SHA","runId":"$GITHUB_RUN_ID"}
           EOF
           echo "crawl=$CRAWL" >> "$GITHUB_OUTPUT"
           echo "tests=$TESTS" >> "$GITHUB_OUTPUT"
@@ -103,7 +118,7 @@ jobs:
             git add public/data/research_reports.json public/research-reports
             VALID=true
           fi
-          git commit -m "data: publish isolated all-company research PDF refresh" || true
+          git commit -m "data: publish final all-company research PDF archive" || true
           for attempt in 1 2 3; do
             if git pull --rebase origin main && git push origin HEAD:main; then
               echo "valid=$VALID" >> "$GITHUB_OUTPUT"
