@@ -24,6 +24,10 @@ export type LiveIntelligenceEvent = IntelligenceEvent & {
   relatedSources?: RelatedArticleSource[];
   duplicateCount?: number;
   eventClusterId?: string;
+  wechatAccount?: string;
+  mentionedCompanies?: string[];
+  mentionedPeople?: string[];
+  matchedTrackingTerms?: string[];
 };
 
 const eventTypeSchema = z.enum([
@@ -86,6 +90,10 @@ const articleSchema = z.object({
   relatedSources: z.array(relatedSourceSchema).optional(),
   duplicateCount: z.number().int().nonnegative().optional(),
   eventClusterId: z.string().optional(),
+  wechatAccount: z.string().optional(),
+  mentionedCompanies: z.array(z.string()).optional(),
+  mentionedPeople: z.array(z.string()).optional(),
+  matchedTrackingTerms: z.array(z.string()).optional(),
 });
 
 const payloadSchema = z.object({
