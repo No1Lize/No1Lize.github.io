@@ -15,6 +15,7 @@ concurrency:
   group: sanitize-venture-now
   cancel-in-progress: false
 
+# trigger-immediate-sanitation
 jobs:
   sanitize:
     runs-on: ubuntu-latest
