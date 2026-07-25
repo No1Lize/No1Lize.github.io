@@ -1,0 +1,49 @@
+{
+  "compileStatus": 0,
+  "targetedTestStatus": 0,
+  "allPythonTestStatus": 0,
+  "liveProbeStatus": 0,
+  "passed": true,
+  "liveProbe": {
+    "configuredSources": 23,
+    "whitelistedSources": 18,
+    "probeSource": {
+      "id": "user-track-wechat-qbitai-ai",
+      "name": "量子位",
+      "sector": "AI / AGI",
+      "publicIndexes": [
+        "https://weixin.imaseo.com/",
+        "https://www.jintiankansha.com/column/8LA3hF4EoQ"
+      ]
+    },
+    "status": {
+      "id": "user-track-wechat-qbitai-ai",
+      "name": "量子位",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "微信",
+      "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+      "retainedPrevious": true,
+      "discoveryProvider": "sogou-weixin+fallback",
+      "sogouScanned": 9,
+      "sogouResolved": 9
+    },
+    "samples": []
+  },
+  "logTail": [
+    ".................",
+    "----------------------------------------------------------------------",
+    "Ran 17 tests in 0.029s",
+    "",
+    "OK",
+    "......................official=two fatal=RuntimeError: blocked",
+    "...............................................................................................................................................................................",
+    "----------------------------------------------------------------------",
+    "Ran 197 tests in 0.301s",
+    "",
+    "OK",
+    "No snapshot changes (1 articles)."
+  ]
+}
