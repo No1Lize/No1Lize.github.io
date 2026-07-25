@@ -3,11 +3,12 @@
 import { ArrowUpRight, ChevronRight, Info, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { institutionCatalog } from "@/lib/catalog-data";
+import { companies, institutionCatalog, people } from "@/lib/catalog-data";
 import {
   focusCompanies,
   heatMethodology,
   type EventType,
+  type IntelligenceEvent,
 } from "@/lib/intelligence-data";
 import { getInstitutionProfile } from "@/lib/research-content";
 import { trackedSectors } from "@/lib/tracked-sectors";
@@ -38,6 +39,8 @@ const rankedSectors = [...trackedSectors].sort(
   (left, right) =>
     right.heat - left.heat || right.events - left.events || left.name.localeCompare(right.name),
 );
+const knownCompanySlugs = new Set(companies.map((company) => company.slug));
+const knownPersonSlugs = new Set(people.map((person) => person.slug));
 
 export function Dashboard() {
   const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
@@ -171,15 +174,7 @@ export function Dashboard() {
                     <span>{item.region}</span>
                     <span>{item.sector}</span>
                   </div>
-                  <h3>
-                    {item.personSlug ? (
-                      <Link href={`/people/${item.personSlug}`}>{item.title}</Link>
-                    ) : item.companySlug ? (
-                      <Link href={`/companies/${item.companySlug}`}>{item.title}</Link>
-                    ) : (
-                      item.title
-                    )}
-                  </h3>
+                  <h3><EventTitle item={item} /></h3>
                   <p>{item.summary}</p>
                   <a className="source-link" href={item.source.url} target="_blank" rel="noreferrer">
                     {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
@@ -260,6 +255,20 @@ export function Dashboard() {
         </div>
       </section>
     </>
+  );
+}
+
+function EventTitle({ item }: { item: IntelligenceEvent }) {
+  if (item.personSlug && knownPersonSlugs.has(item.personSlug)) {
+    return <Link href={`/people/${item.personSlug}`}>{item.title}</Link>;
+  }
+  if (item.companySlug && knownCompanySlugs.has(item.companySlug)) {
+    return <Link href={`/companies/${item.companySlug}`}>{item.title}</Link>;
+  }
+  return (
+    <a href={item.source.url} target="_blank" rel="noreferrer">
+      {item.title}
+    </a>
   );
 }
 
