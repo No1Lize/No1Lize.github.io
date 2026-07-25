@@ -53,23 +53,48 @@ export function Dashboard() {
     () => articles.filter((item) => enabledSectorNames.has(item.sector)),
     [articles],
   );
+  const normalizedQuery = query.trim().toLowerCase();
   const visibleEvents = useMemo(
     () =>
       activeArticles
         .filter((item) => region === "全部" || item.region === region)
         .filter((item) => eventType === "全部" || item.type === (eventType as EventType))
-        .filter((item) =>
-          `${item.title}${item.summary}${item.company}`
-            .toLowerCase()
-            .includes(query.toLowerCase()),
-        )
+        .filter((item) => {
+          if (!normalizedQuery) return true;
+          const searchableText = [
+            item.title,
+            item.summary,
+            item.company,
+            item.sector,
+            item.type,
+            item.region,
+            item.source.name,
+            item.source.platform,
+            item.source.level,
+            item.wechatAccount,
+            ...(item.authors ?? []),
+            ...(item.mentionedCompanies ?? []),
+            ...(item.mentionedPeople ?? []),
+            ...(item.matchedTrackingTerms ?? []),
+            ...(item.relatedSources ?? []).flatMap((source) => [
+              source.name,
+              source.platform,
+              source.title,
+            ]),
+          ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+          return searchableText.includes(normalizedQuery);
+        })
         .sort(
           (a, b) =>
             b.publishedAt.localeCompare(a.publishedAt) ||
             b.importance - a.importance,
         ),
-    [activeArticles, eventType, query, region],
+    [activeArticles, eventType, normalizedQuery, region],
   );
+  const displayedEvents = visibleEvents.slice(0, normalizedQuery ? 100 : 30);
   const sourceCount = new Set(activeArticles.map((item) => item.source.url)).size;
   const platformCount = new Set(
     activeArticles.map((item) => item.source.platform).filter(Boolean),
@@ -149,7 +174,11 @@ export function Dashboard() {
               <p className="section-index">01 / KEY EVENTS</p>
               <h2>关键事件</h2>
             </div>
-            <span>{visibleEvents.length} 条可追溯记录</span>
+            <span>
+              {displayedEvents.length < visibleEvents.length
+                ? `显示 ${displayedEvents.length} / ${visibleEvents.length} 条可追溯记录`
+                : `${visibleEvents.length} 条可追溯记录`}
+            </span>
           </div>
 
           <div className="filter-bar">
@@ -163,12 +192,12 @@ export function Dashboard() {
             </select>
             <label className="inline-search">
               <Search size={15} />
-              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索公司或事件" aria-label="搜索关键事件" />
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索公司、事件或媒体" aria-label="搜索公司、事件或媒体" />
             </label>
           </div>
 
           <div className="event-list">
-            {visibleEvents.length ? visibleEvents.slice(0, 30).map((item) => (
+            {displayedEvents.length ? displayedEvents.map((item) => (
               <article className="event-row" key={item.id}>
                 <div className="event-date">
                   <strong>{item.publishedAt.slice(5)}</strong>
@@ -197,7 +226,7 @@ export function Dashboard() {
               <div className="empty-state">
                 <Search size={22} />
                 <strong>当前筛选没有结果</strong>
-                <p>尝试清除关键词、切换地区或在追踪配置中启用其他赛道。</p>
+                <p>搜索会同时受地区和事件类型限制；可切换为“全部”后再次搜索媒体、公司或事件。</p>
               </div>
             )}
           </div>
