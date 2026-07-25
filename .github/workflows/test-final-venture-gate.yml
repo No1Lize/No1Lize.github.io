@@ -10,7 +10,7 @@ on:
       - .github/workflows/test-final-venture-gate.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -18,10 +18,32 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: feature/final-venture-quality-gate-20260726
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Compile finalizer
-        run: python -m py_compile tools/finalize_venture_profiles.py
-      - name: Run finalizer regression tests
-        run: python -m unittest -v tests.test_finalize_venture_profiles
+      - name: Run and persist finalizer checks
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          {
+            echo "commit=$(git rev-parse HEAD)"
+            echo "checkedAt=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            python -m py_compile tools/finalize_venture_profiles.py
+            COMPILE_STATUS=$?
+            echo "compile=$COMPILE_STATUS"
+            python -m unittest -v tests.test_finalize_venture_profiles
+            TEST_STATUS=$?
+            echo "tests=$TEST_STATUS"
+          } > diagnostics/final-venture-quality-gate.txt 2>&1
+          STATUS=$((COMPILE_STATUS || TEST_STATUS))
+          cat diagnostics/final-venture-quality-gate.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/final-venture-quality-gate.txt
+          git commit -m "ci: record final venture quality gate result" || true
+          git push origin HEAD:feature/final-venture-quality-gate-20260726
+          exit "$STATUS"
