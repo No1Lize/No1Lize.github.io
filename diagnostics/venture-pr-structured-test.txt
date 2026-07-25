@@ -1,0 +1,25 @@
+test_capital_events_require_explicit_transaction_evidence (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_capital_events_require_explicit_transaction_evidence) ... ok
+test_company_profile_reapplies_team_and_event_filters (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_company_profile_reapplies_team_and_event_filters) ... ok
+test_products_preserve_catalog_and_remove_editorial_labels (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_products_preserve_catalog_and_remove_editorial_labels) ... FAIL
+
+======================================================================
+FAIL: test_products_preserve_catalog_and_remove_editorial_labels (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_products_preserve_catalog_and_remove_editorial_labels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_postprocess.py", line 21, in test_products_preserve_catalog_and_remove_editorial_labels
+    self.assertEqual(products[:2], ["Claude 模型", "企业 API"])
+AssertionError: Lists differ: ['Claude 模型', '企业 API 与安全研究。'] != ['Claude 模型', '企业 API']
+
+First differing element 1:
+'企业 API 与安全研究。'
+'企业 API'
+
+- ['Claude 模型', '企业 API 与安全研究。']
+?                      -------
+
++ ['Claude 模型', '企业 API']
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.006s
+
+FAILED (failures=1)
