@@ -77,9 +77,29 @@ jobs:
       - name: Enrich current production snapshot
         run: python tools/enrich_venture_profiles.py
       - name: Align research fields to entity evidence
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
         run: |
+          set -euo pipefail
           python tools/refine_venture_research_evidence.py
-          python tools/refine_venture_research_evidence.py --check
+          cp public/data/venture_profiles.json /tmp/venture-refined-first.json
+          if ! python tools/refine_venture_research_evidence.py --check \
+            > /tmp/venture-refine-check.txt 2>&1; then
+            mkdir -p diagnostics
+            cat /tmp/venture-refine-check.txt \
+              > diagnostics/venture-refinement-idempotence.txt
+            python tools/refine_venture_research_evidence.py >/dev/null
+            diff -u /tmp/venture-refined-first.json public/data/venture_profiles.json \
+              >> diagnostics/venture-refinement-idempotence.txt || true
+            cp /tmp/venture-refined-first.json public/data/venture_profiles.json
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-refinement-idempotence.txt
+            git commit -m "ci: record venture refinement idempotence failure"
+            git push origin "HEAD:${HEAD_REF}"
+            exit 1
+          fi
       - name: Normalize cross-entity consistency
         run: python tools/normalize_venture_profiles.py
       - name: Apply structural quality gate
