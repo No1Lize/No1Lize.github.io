@@ -43,7 +43,7 @@ jobs:
           if [ "$NPM_INSTALL" -eq 0 ]; then
             npm run test:unit > .github/diagnostics/unit-tests.log 2>&1
             UNIT_TESTS=$?
-            npm run build:pages > .github/diagnostics/pages-build-full.log 2>&1
+            GITHUB_PAGES=true npx next build > .github/diagnostics/pages-build-full.log 2>&1
             PAGES_BUILD=$?
             tail -n 180 .github/diagnostics/pages-build-full.log > .github/diagnostics/pages-build.log
             rm .github/diagnostics/pages-build-full.log
