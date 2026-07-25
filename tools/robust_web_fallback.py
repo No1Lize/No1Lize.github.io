@@ -36,6 +36,7 @@ URL_FIELDS = (
 SEARCH_REDIRECT_KEYS = ("url", "target", "q", "u", "uddg")
 MAX_SECOND_STAGE_CANDIDATES = 24
 MAX_SITEMAP_FETCHES = 5
+SITEMAP_UNSUITABLE_KINDS = {"youtube", "bilibili", "x"}
 
 
 def _unique(values: Iterable[str], limit: int = 80) -> list[str]:
@@ -123,14 +124,20 @@ def embedded_candidates(source_url: str, body: str, generic: Any) -> list[str]:
         )
     )
 
-    # YouTube and similar hydrated apps expose stable content identifiers even
-    # when no usable anchor elements are server-rendered.
     if generic.source_kind(source_url) == "youtube":
         for video_id in re.findall(
             r'["\']videoId["\']\s*:\s*["\']([A-Za-z0-9_-]{11})',
             normalized_body,
         ):
             values.append(f"https://www.youtube.com/watch?v={video_id}")
+
+    if generic.source_kind(source_url) == "bilibili":
+        for bvid in re.findall(
+            r'["\']bvid["\']\s*:\s*["\'](BV[A-Za-z0-9]{10})',
+            normalized_body,
+            flags=re.IGNORECASE,
+        ):
+            values.append(f"https://www.bilibili.com/video/{bvid}")
 
     result: list[str] = []
     for raw in _unique(values, 200):
@@ -205,6 +212,9 @@ def sitemap_candidates(
 ) -> tuple[list[str], int, list[str]]:
     """Discover bounded same-site candidates from common and indexed sitemaps."""
 
+    if generic.source_kind(source_url) in SITEMAP_UNSUITABLE_KINDS:
+        return [], 0, []
+
     parts = urlsplit(source_url)
     root_url = f"{parts.scheme}://{parts.netloc}"
     queue = [urljoin(root_url, path) for path in COMMON_SITEMAPS]
@@ -256,6 +266,20 @@ def _search_query(keywords: Sequence[str], language: str, generic: Any) -> str:
     return " OR ".join(f'"{term.replace(chr(34), "")}"' for term in terms)
 
 
+def _compact_platform_query(keywords: Sequence[str], language: str) -> str:
+    terms = _unique((str(term or "").strip() for term in keywords), 20)
+    if language == "en":
+        preferred = [
+            term
+            for term in terms
+            if re.fullmatch(r"[A-Za-z0-9 .+/_-]{2,50}", term)
+        ]
+    else:
+        preferred = [term for term in terms if re.search(r"[\u3400-\u9fff]", term)]
+    selected = preferred or terms
+    return " ".join(selected[:4]) or "technology"
+
+
 def native_search_candidates(
     source_url: str,
     keywords: Sequence[str],
@@ -267,7 +291,10 @@ def native_search_candidates(
     """Inspect a public site/search page, then extract embedded destination URLs."""
 
     kind = generic.source_kind(source_url)
-    query = _search_query(keywords, language, generic)
+    if kind in {"youtube", "bilibili"}:
+        query = _compact_platform_query(keywords, language)
+    else:
+        query = _search_query(keywords, language, generic)
     if kind == "youtube":
         search_url = "https://www.youtube.com/results?search_query=" + quote_plus(query)
     elif kind == "bilibili":
