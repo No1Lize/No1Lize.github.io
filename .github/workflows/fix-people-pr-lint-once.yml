@@ -1,0 +1,73 @@
+name: Fix people PR lint once
+
+on:
+  push:
+    branches: [feature/tracked-people-research-20260725]
+    paths:
+      - '.github/workflows/fix-people-pr-lint-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fix-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/tracked-people-research-20260725
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply minimal React lifecycle fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          admin_path = Path('components/tracking-admin-module-recommendations.tsx')
+          admin = admin_path.read_text()
+          admin = admin.replace('  const [mounted, setMounted] = useState(false);\n', '')
+          admin = admin.replace('    setMounted(true);\n', '')
+          admin = admin.replace('    if (!snapshot.sector) return [];\n    return recommendListedCompanies(', '    void dismissalVersion;\n    if (!snapshot.sector) return [];\n    return recommendListedCompanies(', 1)
+          admin = admin.replace('    if (!snapshot.sector) return [];\n    const discovered = recommendTrackingAdditions(', '    void dismissalVersion;\n    if (!snapshot.sector) return [];\n    const discovered = recommendTrackingAdditions(', 1)
+          admin = admin.replace('  if (!mounted || !snapshot.sector) return null;\n', '  if (!snapshot.sector) return null;\n')
+          admin_path.write_text(admin)
+
+          bridge_path = Path('components/tracking-recommendations-bridge.tsx')
+          bridge = bridge_path.read_text()
+          bridge = bridge.replace('  const [mounted, setMounted] = useState(false);\n', '')
+          bridge = bridge.replace('    setMounted(true);\n', '')
+          bridge = bridge.replace('    if (!snapshot.sector) return EMPTY_RECOMMENDATIONS;\n', '    void dismissalVersion;\n    if (!snapshot.sector) return EMPTY_RECOMMENDATIONS;\n', 1)
+          bridge = bridge.replace('  if (!mounted || !snapshot.sector) return null;\n', '  if (!snapshot.sector) return null;\n')
+          bridge_path.write_text(bridge)
+
+          panel_path = Path('components/user-tracking-panel.tsx')
+          panel = panel_path.read_text()
+          old = '''  useEffect(() => {\n    if (active >= config.tracks.length) {\n      setActive(Math.max(0, config.tracks.length - 1));\n    }\n  }, [active, config.tracks.length]);\n'''
+          new = '''  useEffect(() => {\n    if (active < config.tracks.length) return;\n    const frame = requestAnimationFrame(() => {\n      setActive(Math.max(0, config.tracks.length - 1));\n    });\n    return () => cancelAnimationFrame(frame);\n  }, [active, config.tracks.length]);\n'''
+          if old not in panel:
+              raise SystemExit('active-index effect not found')
+          panel_path.write_text(panel.replace(old, new))
+          PY
+      - name: Verify complete combined branch
+        run: |
+          npm install --no-audit --no-fund
+          npm run lint
+          npm run test:unit
+          python -m unittest discover -s tests -p 'test_*.py'
+          npx tsc --noEmit
+          GITHUB_PAGES=true npx next build
+      - name: Commit verified fixes and remove temporary diagnostics
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add components/tracking-admin-module-recommendations.tsx components/tracking-recommendations-bridge.tsx components/user-tracking-panel.tsx
+          git rm -f .github/workflows/fix-people-pr-lint-once.yml .github/workflows/diagnose-people-pr-once.yml diagnostics/people-pr-diagnosis.json
+          git commit -m 'fix: avoid cascading state updates in tracking portals'
+          git pull --rebase origin feature/tracked-people-research-20260725
+          git push origin HEAD:feature/tracked-people-research-20260725
