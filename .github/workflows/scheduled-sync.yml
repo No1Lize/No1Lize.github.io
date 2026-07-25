@@ -91,7 +91,9 @@ jobs:
 
             # A run may have started before newer crawler/refinement commits landed.
             # Re-process and validate with the code now at the rebased HEAD so a
-            # stale run cannot publish internal fields or outdated accounting.
+            # stale run cannot publish internal fields, missing source statuses or
+            # outdated accounting.
+            python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
             python tools/crawl_articles.py --validate-only
             python tools/validate_eastmoney_snapshot.py
