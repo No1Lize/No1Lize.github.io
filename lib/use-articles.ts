@@ -8,6 +8,24 @@ import {
   type IntelligenceEvent,
 } from "@/lib/intelligence-data";
 
+export type RelatedArticleSource = {
+  name: string;
+  url: string;
+  level: string;
+  platform: string;
+  title: string;
+  publishedAt: string;
+};
+
+export type LiveIntelligenceEvent = IntelligenceEvent & {
+  qualityScore?: number;
+  qualityStatus?: "高可信" | "可用" | "低可信";
+  qualitySignals?: string[];
+  relatedSources?: RelatedArticleSource[];
+  duplicateCount?: number;
+  eventClusterId?: string;
+};
+
 const eventTypeSchema = z.enum([
   "融资",
   "产业投资",
@@ -136,7 +154,7 @@ export function useArticles() {
   const payload = query.data ?? fallbackPayload;
   return {
     ...query,
-    articles: payload.articles as IntelligenceEvent[],
+    articles: payload.articles as LiveIntelligenceEvent[],
     generatedAt: payload.generatedAt,
     sourceStatus: payload.sourceStatus ?? [],
     qualityGate: payload.qualityGate,
