@@ -21,6 +21,7 @@ try:  # Imported by tests as tools.crawl_with_source_categories.
     from . import robust_web_fallback
     from . import strict_tracking_config
     from . import tracking_taxonomy
+    from . import wechat_public_sources
     from . import x_rate_limit
     from .crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 except ImportError:  # Executed directly with ``python tools/...``.
@@ -30,6 +31,7 @@ except ImportError:  # Executed directly with ``python tools/...``.
     import robust_web_fallback
     import strict_tracking_config
     import tracking_taxonomy
+    import wechat_public_sources
     import x_rate_limit
     from crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 
@@ -285,6 +287,7 @@ def main() -> int:
     _install_strict_tracking_validation()
     tracking_taxonomy.install(tracking)
     x_rate_limit.install(tracking.crawler)
+    wechat_public_sources.install(tracking)
     tracking._custom_sources = _custom_sources
     _install_generic_adapter()
     configure_crawler()
