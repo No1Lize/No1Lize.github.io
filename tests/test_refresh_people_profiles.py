@@ -2,6 +2,7 @@ import importlib.util
 import json
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -43,6 +44,38 @@ class PeopleProfilePipelineTest(unittest.TestCase):
         musk = next(item for item in people if item["slug"] == "elon-musk")
         self.assertEqual(set(musk["sectors"]), {"AI / AGI", "商业航天"})
         self.assertIn("elonmusk", musk["handles"])
+
+    def test_wikipedia_wikibase_item_is_the_authoritative_wikidata_identity(self):
+        expected = {"id": "Q123", "url": "https://www.wikidata.org/wiki/Q123"}
+        with patch.object(MODULE, "fetch_wikidata_entity", return_value=expected) as fetch_entity, patch.object(
+            MODULE, "request_json", side_effect=AssertionError("search must not run when Wikipedia supplied a QID")
+        ):
+            result = MODULE.fetch_wikidata(
+                ["Example Person"],
+                preferred_id="Q123",
+                queries=["Example Person researcher"],
+                identity_terms=["Example Lab"],
+            )
+        self.assertEqual(result, expected)
+        fetch_entity.assert_called_once_with("Q123")
+
+    def test_wikidata_search_requires_identity_context_without_wikipedia_qid(self):
+        search_payload = {
+            "search": [
+                {"id": "Q1", "label": "Alex Smith", "description": "association football player"},
+                {"id": "Q2", "label": "Alex Smith", "description": "Example Lab artificial intelligence researcher"},
+            ]
+        }
+        with patch.object(MODULE, "request_json", return_value=search_payload), patch.object(
+            MODULE, "fetch_wikidata_entity", return_value={"id": "Q2"}
+        ) as fetch_entity:
+            result = MODULE.fetch_wikidata(
+                ["Alex Smith"],
+                queries=["Alex Smith Example Lab"],
+                identity_terms=["Example Lab", "artificial intelligence researcher"],
+            )
+        self.assertEqual(result, {"id": "Q2"})
+        fetch_entity.assert_called_once_with("Q2", "en")
 
     def test_profile_snapshot_has_single_verified_identity_reference(self):
         payload = json.loads((ROOT / "public" / "data" / "people.json").read_text(encoding="utf-8"))
