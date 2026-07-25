@@ -18,6 +18,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT_PATH = ROOT / "public" / "data" / "articles.json"
 TRACKING_PATH = ROOT / "config" / "user_tracking.json"
+INTERNAL_ARTICLE_FIELDS = {"_eastmoneyBatchOrigin"}
 
 
 def _clean(value: Any) -> str:
@@ -27,6 +28,14 @@ def _clean(value: Any) -> str:
 def _host(url: str) -> str:
     host = (urlsplit(_clean(url)).hostname or "").casefold()
     return host[4:] if host.startswith("www.") else host
+
+
+def _as_nonnegative_int(value: Any) -> int:
+    try:
+        parsed = int(value or 0)
+    except (TypeError, ValueError):
+        return 0
+    return max(0, parsed)
 
 
 def _eastmoney_source_enabled(tracking: dict[str, Any]) -> bool:
@@ -54,6 +63,41 @@ def _is_eastmoney_record(article: dict[str, Any]) -> bool:
     )
 
 
+def _is_eastmoney_status(status: dict[str, Any]) -> bool:
+    text = " ".join(
+        _clean(status.get(key)) for key in ("id", "name", "company")
+    )
+    return "东方财富" in text or _host(_clean(status.get("url"))).endswith(
+        "eastmoney.com"
+    )
+
+
+def _status_accounting_error(status: dict[str, Any]) -> str:
+    has_accounting = (
+        "newAccepted" in status
+        or "retainedPreviousCount" in status
+        or bool(status.get("retainedPrevious"))
+    )
+    if not has_accounting:
+        return ""
+
+    accepted = _as_nonnegative_int(status.get("accepted"))
+    new_accepted = _as_nonnegative_int(status.get("newAccepted"))
+    retained = _as_nonnegative_int(status.get("retainedPreviousCount"))
+    status_id = _clean(status.get("id")) or "东方财富"
+
+    if accepted != new_accepted + retained:
+        return (
+            f"{status_id}: accepted={accepted}, newAccepted={new_accepted}, "
+            f"retainedPreviousCount={retained}"
+        )
+    if retained > 0 and not status.get("retainedPrevious"):
+        return f"{status_id}: retainedPreviousCount>0 但未标记 retainedPrevious"
+    if status.get("retainedPrevious") and retained == 0:
+        return f"{status_id}: retainedPrevious=true 但保留数量为 0"
+    return ""
+
+
 def validate_snapshot(
     snapshot: dict[str, Any],
     tracking: dict[str, Any],
@@ -61,20 +105,16 @@ def validate_snapshot(
     require_attempt: bool = False,
 ) -> dict[str, Any]:
     enabled = _eastmoney_source_enabled(tracking)
-    articles = [
+    all_articles = [
         dict(raw)
         for raw in snapshot.get("articles", [])
-        if isinstance(raw, dict) and _is_eastmoney_record(raw)
+        if isinstance(raw, dict)
     ]
+    articles = [article for article in all_articles if _is_eastmoney_record(article)]
     statuses = [
         dict(raw)
         for raw in snapshot.get("sourceStatus", [])
-        if isinstance(raw, dict)
-        and (
-            "东方财富"
-            in f"{_clean(raw.get('id'))} {_clean(raw.get('name'))} {_clean(raw.get('company'))}"
-            or _host(_clean(raw.get("url"))).endswith("eastmoney.com")
-        )
+        if isinstance(raw, dict) and _is_eastmoney_status(raw)
     ]
 
     detail_articles: list[dict[str, Any]] = []
@@ -82,15 +122,23 @@ def validate_snapshot(
     generic_duplicates: list[str] = []
     media_as_company: list[str] = []
     attributed_companies: set[str] = set()
+    leaked_internal_fields: list[str] = []
+
+    for article in all_articles:
+        leaked = sorted(INTERNAL_ARTICLE_FIELDS & set(article))
+        if leaked:
+            label = _clean(article.get("title")) or _clean(article.get("id"))
+            leaked_internal_fields.append(f"{label}: {', '.join(leaked)}")
 
     for article in articles:
         source = article.get("source") if isinstance(article.get("source"), dict) else {}
         source_url = _clean(source.get("url"))
         source_id = _clean(article.get("sourceId"))
         company = _clean(article.get("company"))
-        if source_id.startswith("user-source-"):
+        is_detail = is_eastmoney_article_url(source_url)
+        if source_id.startswith("user-source-") and not is_detail:
             generic_duplicates.append(source_url or source_id)
-        if not is_eastmoney_article_url(source_url):
+        if not is_detail:
             bad_urls.append(source_url or source_id)
             continue
         detail_articles.append(article)
@@ -99,9 +147,19 @@ def validate_snapshot(
         elif company and company not in {"科技产业", "未识别", "unknown"}:
             attributed_companies.add(company)
 
-    accepted = sum(int(status.get("accepted", 0) or 0) for status in statuses)
+    accepted = sum(_as_nonnegative_int(status.get("accepted")) for status in statuses)
+    accounting_errors = [
+        error
+        for status in statuses
+        if (error := _status_accounting_error(status))
+    ]
     attempted = bool(statuses)
     errors: list[str] = []
+
+    if leaked_internal_fields:
+        errors.append(
+            f"公开快照泄露 {len(leaked_internal_fields)} 条东方财富流水线内部字段"
+        )
     if generic_duplicates:
         errors.append(
             f"仍有 {len(generic_duplicates)} 条东方财富泛化 user-source 重复记录"
@@ -112,10 +170,17 @@ def validate_snapshot(
         errors.append(
             f"仍有 {len(media_as_company)} 条详情文章把媒体错误写成被报道公司"
         )
+    if accounting_errors:
+        errors.append(f"东方财富滚动历史计数不闭合：{len(accounting_errors)} 个来源")
     if require_attempt and enabled and not attempted:
         errors.append("东方财富来源已启用，但快照中没有对应抓取状态")
     if accepted > 0 and not detail_articles:
         errors.append("抓取状态显示已接受文章，但快照中没有东方财富详情页")
+    if statuses and accepted != len(detail_articles):
+        errors.append(
+            "东方财富来源 accepted 与最终详情文章数不一致："
+            f"accepted={accepted}, detailArticles={len(detail_articles)}"
+        )
 
     report = {
         "enabled": enabled,
@@ -133,6 +198,8 @@ def validate_snapshot(
         "badUrls": bad_urls[:8],
         "genericDuplicates": generic_duplicates[:8],
         "mediaAsCompany": media_as_company[:8],
+        "leakedInternalFields": leaked_internal_fields[:8],
+        "accountingErrors": accounting_errors[:8],
         "errors": errors,
     }
     if errors:
