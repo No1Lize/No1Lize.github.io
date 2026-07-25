@@ -25,6 +25,7 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: |
+          # diagnostic revision: adaptive-handoff-v2
           set +e
           REPORT="diagnostics/adaptive-source-pipeline-report.txt"
           mkdir -p diagnostics
