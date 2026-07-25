@@ -6,11 +6,11 @@ exit=0
 exit=0
 
 ===== normalize =====
-{"stats": {"companyTeams": 0, "companyProducts": 1, "companyFinancing": 1, "companyCapitalMarkets": 2, "institutionTeams": 0}, "passed": true, "changed": true}
+{"stats": {"companyTeams": 0, "companyProducts": 2, "companyFinancing": 1, "companyCapitalMarkets": 2, "institutionTeams": 0}, "passed": true, "changed": true}
 exit=0
 
 ===== finalize =====
-{"changedCompanies": 58, "changedInstitutions": 11, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
+{"changedCompanies": 56, "changedInstitutions": 11, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
 Updated public/data/venture_profiles.json.
 exit=0
 
@@ -20,8 +20,8 @@ Venture profile snapshot passed final semantic consistency checks.
 exit=0
 
 ===== crawler_validate =====
-{"passed": false, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 32, "required": 0, "passed": false}}, "invalidSourceUrls": [], "semanticErrors": ["company:agibot:team-noise", "company:aurora:team-noise", "company:cerebras:team-noise", "company:databricks:team-noise", "company:glean:team-noise", "company:harvey:team-noise", "company:helion:team-noise", "company:ionq:team-noise", "company:mobileye:team-noise", "company:moore-threads:team-noise", "company:pony-ai:team-noise", "company:psiquantum:team-noise", "company:redwood-materials:team-noise", "company:relativity-space:team-noise", "company:rocket-lab:team-noise", "company:sambanova:team-noise", "company:shield-ai:team-noise", "company:sierra:team-noise", "company:svlot:team-noise", "company:unitree:team-noise", "company:varda:team-noise", "institution:a16z:team-noise", "institution:founders-fund:team-noise", "institution:hongshan:team-noise", "institution:idg-capital:team-noise", "institution:kleiner-perkins:team-noise", "institution:legend-capital:team-noise", "institution:lightspeed:team-noise", "institution:matrix-china:team-noise", "institution:qiming:team-noise"], "productiveCompanies": 58, "productiveInstitutions": 20}
-exit=1
+{"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20}
+exit=0
 
 ===== enrich_validate =====
 {"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}, "finalSemanticConsistency": {"actual": 0, "required": 0, "passed": true}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}
@@ -32,34 +32,17 @@ exit=0
 exit=1
 
 ===== python_tests =====
-.....................F.........
-======================================================================
-FAIL: test_products_preserve_catalog_and_remove_editorial_labels (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_products_preserve_catalog_and_remove_editorial_labels)
+..................................
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_postprocess.py", line 21, in test_products_preserve_catalog_and_remove_editorial_labels
-    self.assertEqual(products[:2], ["Claude 模型", "企业 API"])
-AssertionError: Lists differ: ['Claude 模型', '企业 API 与安全研究。'] != ['Claude 模型', '企业 API']
+Ran 34 tests in 0.045s
 
-First differing element 1:
-'企业 API 与安全研究。'
-'企业 API'
-
-- ['Claude 模型', '企业 API 与安全研究。']
-?                      -------
-
-+ ['Claude 模型', '企业 API']
-
-----------------------------------------------------------------------
-Ran 31 tests in 0.046s
-
-FAILED (failures=1)
-exit=1
+OK
+exit=0
 
 ===== npm_install =====
 npm warn deprecated tsconfck@3.1.6: unmaintained
 
-added 506 packages in 33s
+added 506 packages in 36s
 exit=0
 
 ===== node_tests =====
@@ -67,79 +50,79 @@ TAP version 13
 # Subtest: production catalog meets the initial coverage floor
 ok 1 - production catalog meets the initial coverage floor
   ---
-  duration_ms: 0.940411
+  duration_ms: 0.90342
   type: 'test'
   ...
 # Subtest: every production entity has a real source URL
 ok 2 - every production entity has a real source URL
   ---
-  duration_ms: 0.359553
+  duration_ms: 0.356363
   type: 'test'
   ...
 # Subtest: person pages expose at least five traceable materials
 ok 3 - person pages expose at least five traceable materials
   ---
-  duration_ms: 0.315932
+  duration_ms: 0.221922
   type: 'test'
   ...
 # Subtest: slugs are unique within each route collection
 ok 4 - slugs are unique within each route collection
   ---
-  duration_ms: 0.237215
+  duration_ms: 0.165137
   type: 'test'
   ...
 # Subtest: every linked event company has a generated company route
 ok 5 - every linked event company has a generated company route
   ---
-  duration_ms: 0.432991
+  duration_ms: 0.27964
   type: 'test'
   ...
 # Subtest: venture profile snapshot only contains catalog entities
 ok 6 - venture profile snapshot only contains catalog entities
   ---
-  duration_ms: 1.178778
+  duration_ms: 1.06397
   type: 'test'
   ...
 # Subtest: venture profile getters are safe before and after the first crawl
 ok 7 - venture profile getters are safe before and after the first crawl
   ---
-  duration_ms: 0.387637
+  duration_ms: 0.346174
   type: 'test'
   ...
 # Subtest: venture profile sources are traceable public URLs
 ok 8 - venture profile sources are traceable public URLs
   ---
-  duration_ms: 0.704089
+  duration_ms: 0.676429
   type: 'test'
   ...
 # Subtest: runtime sanitation removes navigation and editorial labels
 ok 9 - runtime sanitation removes navigation and editorial labels
   ---
-  duration_ms: 0.979715
+  duration_ms: 0.987307
   type: 'test'
   ...
 # Subtest: current snapshot is clean at the frontend boundary
 ok 10 - current snapshot is clean at the frontend boundary
   ---
-  duration_ms: 0.531676
+  duration_ms: 0.533783
   type: 'test'
   ...
 # Subtest: research model v2 exposes the same structured fields for every entity
 ok 11 - research model v2 exposes the same structured fields for every entity
   ---
-  duration_ms: 0.573625
+  duration_ms: 0.523705
   type: 'test'
   ...
 # Subtest: venture profile runtime statuses use unique entity keys
 ok 12 - venture profile runtime statuses use unique entity keys
   ---
-  duration_ms: 0.287138
+  duration_ms: 0.277877
   type: 'test'
   ...
 # Subtest: venture profile quality gate has internally consistent checks
 ok 13 - venture profile quality gate has internally consistent checks
   ---
-  duration_ms: 0.146985
+  duration_ms: 0.183281
   type: 'test'
   ...
 1..13
@@ -150,7 +133,7 @@ ok 13 - venture profile quality gate has internally consistent checks
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 505.624649
+# duration_ms 459.079288
 exit=0
 
 ===== next_build =====
@@ -163,15 +146,15 @@ https://nextjs.org/telemetry
 ▲ Next.js 16.2.6 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 9.1s
+✓ Compiled successfully in 8.6s
   Running TypeScript ...
-  Finished TypeScript in 6.4s ...
+  Finished TypeScript in 6.2s ...
   Collecting page data using 3 workers ...
   Generating static pages using 3 workers (0/163) ...
   Generating static pages using 3 workers (40/163) 
   Generating static pages using 3 workers (81/163) 
   Generating static pages using 3 workers (122/163) 
-✓ Generating static pages using 3 workers (163/163) in 1782ms
+✓ Generating static pages using 3 workers (163/163) in 1795ms
   Finalizing page optimization ...
 
 Route (app)
@@ -285,7 +268,7 @@ exit=0
   },
   "agibotProducts": [
     "远征",
-    "灵犀等机器人系列。",
+    "灵犀",
     "智元AIMA开放平台",
     "灵心平台LinkSoul",
     "灵创平台LinkCraft",
