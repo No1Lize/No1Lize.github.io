@@ -23,7 +23,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          # status revision: post-wechat-fix-v2
+          # status revision: catalog-filter-v3
           mkdir -p diagnostics
           gh run list \
             --workflow refresh-venture-profiles.yml \
