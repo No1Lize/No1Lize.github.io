@@ -3,6 +3,8 @@
 import { ArrowUpRight, ChevronRight, Info, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import qualityStyles from "@/components/dashboard-quality.module.css";
 import { companies, institutionCatalog, people } from "@/lib/catalog-data";
 import {
   focusCompanies,
@@ -81,6 +83,7 @@ export function Dashboard() {
       ["ok", "partial"].includes(item.status) &&
       item.accepted > 0,
   ).length;
+  const trackingQuality = qualityGate?.trackingQuality;
   const sectorCount = trackedSectors.length;
   const chinaCount = activeArticles.filter((item) => item.region === "中国").length;
   const usCount = activeArticles.filter((item) => item.region === "美国").length;
@@ -127,6 +130,11 @@ export function Dashboard() {
             <span>{healthySourceCount || sourceCount} 个有效来源</span>
             <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>
           </div>
+          {trackingQuality && (
+            <p className={qualityStyles.trackingSummary}>
+              用户追踪：{trackingQuality.acceptedUserArticles} 条通过 · {trackingQuality.rejectedUserArticles} 条过滤 · {trackingQuality.clusteredDuplicates} 条重复报道已聚合
+            </p>
+          )}
         </div>
       </section>
 
@@ -180,6 +188,7 @@ export function Dashboard() {
                     {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
                     <ArrowUpRight size={14} />
                   </a>
+                  <EventQualityIndicator item={item} />
                 </div>
                 <div className="importance" title="按事件规模、信源等级与产业影响计算">
                   <span>重要度</span>
