@@ -1,0 +1,58 @@
+name: Finalize venture snapshot now
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/finalize-venture-snapshot-now.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: finalize-venture-snapshot-now
+  cancel-in-progress: false
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Finalize current snapshot atomically
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python -m py_compile tools/finalize_venture_profiles.py
+            python -m unittest -v tests.test_finalize_venture_profiles
+            python tools/finalize_venture_profiles.py
+            python tools/finalize_venture_profiles.py --check
+            git diff --check
+
+            git rm .github/workflows/finalize-venture-snapshot-now.yml
+            git add public/data/venture_profiles.json
+            git commit -m "data: finalize startup and institution profiles"
+            if git push origin HEAD:main; then
+              gh workflow run pages.yml --ref main
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+            sleep 3
+          done
