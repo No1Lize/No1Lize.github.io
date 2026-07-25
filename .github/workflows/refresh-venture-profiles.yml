@@ -7,6 +7,7 @@ on:
       - tools/crawl_venture_profiles.py
       - tools/venture_profile_extraction.py
       - tools/enrich_venture_profiles.py
+      - tools/refine_venture_research_evidence.py
       - tools/normalize_venture_profiles.py
       - tools/sanitize_venture_profiles.py
       - tools/sanitize_venture_narratives.py
@@ -19,6 +20,7 @@ on:
       - tests/test_venture_profile_extraction.py
       - tests/test_venture_profile_noise_filters.py
       - tests/test_venture_profile_enrichment.py
+      - tests/test_refine_venture_research_evidence.py
       - tests/test_normalize_venture_profiles.py
       - tests/test_venture_profile_postprocess.py
       - tests/test_venture_narrative_sanitizer.py
@@ -50,11 +52,12 @@ jobs:
           python-version: "3.12"
       - name: Verify crawler syntax and focused tests
         run: |
-          # semantic-profile-refresh-v14
+          # semantic-profile-refresh-v15
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py \
+            tools/refine_venture_research_evidence.py \
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py \
@@ -63,6 +66,7 @@ jobs:
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
@@ -79,6 +83,10 @@ jobs:
         run: python tools/crawl_venture_profiles.py --workers 8 --max-pages 6
       - name: Enrich profiles with intelligence and capital evidence
         run: python tools/enrich_venture_profiles.py
+      - name: Align research fields to entity-specific evidence
+        run: |
+          python tools/refine_venture_research_evidence.py
+          python tools/refine_venture_research_evidence.py --check
       - name: Normalize cross-entity profile consistency
         run: python tools/normalize_venture_profiles.py
       - name: Apply final venture quality gate
@@ -94,6 +102,7 @@ jobs:
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
