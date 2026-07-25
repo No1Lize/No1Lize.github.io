@@ -51,8 +51,29 @@ function uniqueMaterials(values: PersonMaterial[]): PersonMaterial[] {
   });
 }
 
-function fromCurated(person: Person): ResearchPerson {
+function deriveMaterialLists(person: ResearchPerson): ResearchPerson {
+  const materials = uniqueMaterials(person.materials);
+  const sourcedWorks = materials
+    .filter((item) => ["authored_work", "research_paper"].includes(item.type))
+    .map((item) => item.title);
+  const sourcedBooks = materials
+    .filter((item) => item.type === "authored_work" && /book|almanack|memoir|著作|传记|书/i.test(item.title))
+    .map((item) => item.title);
+  const speeches = uniqueMaterials([
+    ...person.speeches,
+    ...materials.filter((item) => ["speech", "interview", "qa"].includes(item.type)),
+  ]);
   return {
+    ...person,
+    materials,
+    works: uniqueStrings([...person.works, ...sourcedWorks]),
+    books: uniqueStrings([...person.books, ...sourcedBooks]),
+    speeches,
+  };
+}
+
+function fromCurated(person: Person): ResearchPerson {
+  return deriveMaterialLists({
     ...person,
     aliases: uniqueStrings([person.name, person.englishName]),
     handles: [],
@@ -62,17 +83,18 @@ function fromCurated(person: Person): ResearchPerson {
     products: [],
     works: [],
     books: [],
-    speeches: person.materials.filter((item) => ["speech", "interview", "qa"].includes(item.type)),
+    speeches: [],
     sources: uniqueStrings(person.materials.map((item) => item.url)),
     status: person.materials.length >= 4 ? "complete" : "partial",
     updatedAt: "",
     tracked: false,
-  };
+  });
 }
 
 function mergePerson(curated: ResearchPerson | undefined, generated: GeneratedPerson): ResearchPerson {
-  if (!curated) return { ...generated, tracked: true };
-  return {
+  if (!curated) return deriveMaterialLists({ ...generated, tracked: true });
+  const materials = uniqueMaterials([...generated.materials, ...curated.materials]);
+  return deriveMaterialLists({
     ...curated,
     ...generated,
     summary: generated.summary || curated.summary,
@@ -85,12 +107,12 @@ function mergePerson(curated: ResearchPerson | undefined, generated: GeneratedPe
     products: uniqueStrings([...generated.products, ...curated.products]),
     works: uniqueStrings([...generated.works, ...curated.works]),
     books: uniqueStrings([...generated.books, ...curated.books]),
-    materials: uniqueMaterials([...generated.materials, ...curated.materials]),
+    materials,
     speeches: uniqueMaterials([...generated.speeches, ...curated.speeches]),
     sources: uniqueStrings([...generated.sources, ...curated.sources]),
     status: generated.status === "complete" || curated.status === "complete" ? "complete" : generated.status,
     tracked: true,
-  };
+  });
 }
 
 const bySlug = new Map(curatedPeople.map((person) => [person.slug, fromCurated(person)]));
