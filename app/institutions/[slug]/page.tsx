@@ -68,6 +68,7 @@ export default async function InstitutionDetail({
         summary: item.note,
       }));
   const recentInvestments = venture?.recentInvestments ?? [];
+  const recentYearSummary = venture?.recentYearSummary;
   const classicCases: VentureClassicCase[] = venture?.classicCases?.length
     ? venture.classicCases
     : deriveClassicCases(portfolio);
@@ -182,8 +183,14 @@ export default async function InstitutionDetail({
                     <>
                       <strong>{member.name}</strong>
                       <span>
-                        {[member.role, member.summary].filter(Boolean).join(" · ") ||
-                          "公开团队成员"}
+                        {[
+                          member.role,
+                          member.summary,
+                          member.background,
+                          member.previousExperience,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ") || "公开团队成员"}
                       </span>
                     </>
                   );
@@ -209,6 +216,52 @@ export default async function InstitutionDetail({
           </Section>
 
           <Section id="最近一年投资" title="最近一年投资项目汇总">
+            {recentYearSummary && (
+              <>
+                <p>{recentYearSummary.summary}</p>
+                <dl className="facts-grid">
+                  <div>
+                    <dt>统计区间</dt>
+                    <dd>
+                      {recentYearSummary.periodStart} 至 {recentYearSummary.periodEnd}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>投资记录</dt>
+                    <dd>{recentYearSummary.investmentCount}</dd>
+                  </div>
+                  <div>
+                    <dt>涉及项目</dt>
+                    <dd>{recentYearSummary.companies.length}</dd>
+                  </div>
+                  <div>
+                    <dt>公开轮次</dt>
+                    <dd>
+                      {recentYearSummary.rounds.length
+                        ? recentYearSummary.rounds.join("、")
+                        : "未披露或尚未识别"}
+                    </dd>
+                  </div>
+                </dl>
+                {(recentYearSummary.sectors.length > 0 ||
+                  recentYearSummary.companies.length > 0) && (
+                  <div className="insight-grid">
+                    {recentYearSummary.sectors.length > 0 && (
+                      <div>
+                        <span>最近一年赛道</span>
+                        <p>{recentYearSummary.sectors.join("、")}</p>
+                      </div>
+                    )}
+                    {recentYearSummary.companies.length > 0 && (
+                      <div>
+                        <span>公开项目</span>
+                        <p>{recentYearSummary.companies.join("、")}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
             <PortfolioList
               items={recentInvestments}
               emptyText="最近一年暂未从机构官网或公开投资动态中识别到带日期、项目和投资动作的完整记录。系统不会把无日期的组合页面误标为最近投资。"
@@ -230,7 +283,18 @@ export default async function InstitutionDetail({
                     <>
                       <span>{String(index + 1).padStart(2, "0")}</span>
                       <strong>{item.name}</strong>
-                      <p>{item.analysis}</p>
+                      {item.investmentLogic && (
+                        <p>投资逻辑：{item.investmentLogic}</p>
+                      )}
+                      {item.followOnPerformance && (
+                        <p>后续发展：{item.followOnPerformance}</p>
+                      )}
+                      {item.exitPerformance && (
+                        <p>退出表现：{item.exitPerformance}</p>
+                      )}
+                      {!item.investmentLogic &&
+                        !item.followOnPerformance &&
+                        !item.exitPerformance && <p>{item.analysis}</p>}
                     </>
                   );
                   return item.companySlug ? (
@@ -336,7 +400,7 @@ export default async function InstitutionDetail({
           </div>
           <div className="confidence-box">
             <span>最近一年投资</span>
-            <strong>{recentInvestments.length}</strong>
+            <strong>{recentYearSummary?.investmentCount ?? recentInvestments.length}</strong>
             <p>仅统计带日期的公开投资动作</p>
           </div>
           <div className="confidence-box">
