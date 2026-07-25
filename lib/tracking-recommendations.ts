@@ -5,6 +5,10 @@ import {
   trackingSectorSeedTerms,
   trackingSectorsMatch,
 } from "@/lib/tracking-sector-policy";
+import {
+  companyRecommendationAllowedForSector,
+  companySourceAllowedForSector,
+} from "@/lib/tracking-company-sector-policy";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 export type TrackingRecommendation = {
@@ -606,6 +610,7 @@ function peopleCandidates(
 
 function companyCandidates(
   articles: LiveIntelligenceEvent[],
+  selectedSector: string,
   existing: Set<string>,
 ): TrackingRecommendation[] {
   const groups = new Map<
@@ -622,6 +627,13 @@ function companyCandidates(
   }
 
   return [...groups.values()]
+    .filter((candidate) =>
+      companyRecommendationAllowedForSector(
+        candidate.label,
+        candidate.articles,
+        selectedSector,
+      ),
+    )
     .map((candidate) => ({
       value: candidate.label,
       label: candidate.label,
@@ -659,7 +671,8 @@ function sourceCandidates(
       existingHosts.has(host) ||
       BLOCKED_RECOMMENDATION_HOSTS.has(host) ||
       article.source.platform === "X" ||
-      article.source.level === "待交叉验证"
+      article.source.level === "待交叉验证" ||
+      !companySourceAllowedForSector(article, selectedSector)
     ) {
       continue;
     }
@@ -743,7 +756,7 @@ export function recommendTrackingAdditions(
   return {
     keywords: keywordCandidates(sectorArticles, selectedSector, keywordSet),
     people: peopleCandidates(sectorArticles, peopleSet),
-    companies: companyCandidates(sectorArticles, companySet),
+    companies: companyCandidates(sectorArticles, selectedSector, companySet),
     sources: sourceCandidates(
       sectorArticles,
       selectedSector,
