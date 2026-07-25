@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Apply guarded source patch
+      - name: Repair imports and enforce ticker normalization
         run: python tools/apply_listed_ticker_normalization_patch.py
       - name: Verify Python market tests
         run: python -m unittest tests.test_market_profiles tests.test_market_profile_transport
@@ -45,9 +45,9 @@ jobs:
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "fix: normalize listed tickers before backend sync"
+          git commit -m "fix: clean listed ticker normalization imports"
           git pull --rebase origin main
-          python tools/apply_listed_ticker_normalization_patch.py || true
+          python tools/apply_listed_ticker_normalization_patch.py
           git add lib/user-tracking.ts components/user-tracking-panel.tsx
           if ! git diff --cached --quiet; then
             git commit --amend --no-edit
