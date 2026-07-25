@@ -105,6 +105,7 @@ class EastmoneyPipelineMetadataValidationTests(unittest.TestCase):
         self.assertEqual(report["acceptedByCrawler"], 1)
         self.assertEqual(report["leakedInternalFields"], [])
         self.assertEqual(report["accountingErrors"], [])
+        self.assertEqual(report["missingDetailStatusIds"], [])
 
     def test_internal_origin_field_is_rejected(self) -> None:
         report = self.assert_validation_error(
@@ -177,10 +178,26 @@ class EastmoneyPipelineMetadataValidationTests(unittest.TestCase):
         self.assertEqual(report["acceptedByCrawler"], 1)
         self.assertEqual(report["detailArticles"], 1)
 
+    def test_placeholder_only_cannot_cover_official_detail_articles(self) -> None:
+        report = self.assert_validation_error(
+            snapshot(statuses=[placeholder_status()]),
+            "缺少同 sourceId 抓取状态",
+        )
+
+        self.assertEqual(report["detailStatusCount"], 0)
+        self.assertEqual(report["missingDetailStatusIds"], [SOURCE_ID])
+
     def test_concrete_user_source_detail_is_not_a_generic_duplicate(self) -> None:
+        source_id = "user-source-eastmoney"
         payload = snapshot(
-            articles=[article(source_id="user-source-eastmoney")],
-            statuses=[placeholder_status(status="ok", accepted=1)],
+            articles=[article(source_id=source_id)],
+            statuses=[
+                placeholder_status(
+                    id=source_id,
+                    status="ok",
+                    accepted=1,
+                )
+            ],
         )
 
         report = validate_snapshot(payload, tracking(), require_attempt=True)
@@ -188,8 +205,9 @@ class EastmoneyPipelineMetadataValidationTests(unittest.TestCase):
         self.assertEqual(report["genericDuplicates"], [])
         self.assertEqual(report["detailArticles"], 1)
         self.assertEqual(report["attemptStatusCount"], 1)
-        self.assertEqual(report["detailStatusCount"], 0)
-        self.assertEqual(report["acceptedByCrawler"], 0)
+        self.assertEqual(report["detailStatusCount"], 1)
+        self.assertEqual(report["acceptedByCrawler"], 1)
+        self.assertEqual(report["missingDetailStatusIds"], [])
 
 
 if __name__ == "__main__":
