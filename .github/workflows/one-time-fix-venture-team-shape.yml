@@ -1,4 +1,4 @@
-name: One-time venture project background fallback
+name: One-time align venture quality processors
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: one-time-venture-project-background
+  group: one-time-align-venture-quality
   cancel-in-progress: false
 
 jobs:
@@ -24,56 +24,108 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
       - name: Patch, test and commit
         run: |
           set -euo pipefail
           git pull --rebase origin main
           python - <<'PY'
           from pathlib import Path
-          path = Path("lib/venture-profile-data.ts")
-          text = path.read_text(encoding="utf-8")
-          old = '''function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
-            const projectBackground = normalizeProjectBackground(raw.projectBackground);
-            return {
-              slug: clean(raw.slug, 100),
-              name: clean(raw.name, 120),
-              updatedAt: clean(raw.updatedAt, 40),
-              status: raw.status || "fallback",
-              background: projectBackground?.summary || sanitizeVentureNarrative(raw.background, 900),
-              projectBackground,'''
-          new = '''function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
-            const fallbackBackground = sanitizeVentureNarrative(raw.background, 900);
-            const projectBackground =
-              normalizeProjectBackground(raw.projectBackground) ??
-              (Number(raw.researchModelVersion) >= 2
-                ? {
-                    summary:
-                      fallbackBackground ||
-                      "当前公开来源未提供可核对的项目背景说明。",
-                  }
-                : undefined);
-            return {
-              slug: clean(raw.slug, 100),
-              name: clean(raw.name, 120),
-              updatedAt: clean(raw.updatedAt, 40),
-              status: raw.status || "fallback",
-              background: projectBackground?.summary || fallbackBackground,
-              projectBackground,'''
+
+          sanitizer = Path("tools/sanitize_venture_profiles.py")
+          text = sanitizer.read_text(encoding="utf-8")
+          old = '''def _catalog_products(value: str) -> list[str]:
+              parts = re.split(r"[、，,;/]|\\s+与\\s+|\\s+and\\s+", clean_text(value, 800), flags=re.IGNORECASE)
+              return sanitize_product_items([part.strip() for part in parts if part.strip()])'''
+          new = '''def _catalog_products(value: str) -> list[str]:
+              parts = re.split(
+                  r"[、，,;/]|\\s*与\\s*|\\s+and\\s+",
+                  clean_text(value, 800),
+                  flags=re.IGNORECASE,
+              )
+              cleaned: list[str] = []
+              pure_research = {
+                  "research", "ai research", "ai safety research", "safety research",
+                  "研究", "安全研究", "人工智能研究", "ai安全研究",
+              }
+              for raw in parts:
+                  item = clean_text(raw, 180).strip(" >›→-|｜。.!！")
+                  item = re.sub(
+                      r"(?:等)?(?:机器人|产品|解决方案)?系列$|(?:等产品|等解决方案)$",
+                      "",
+                      item,
+                      flags=re.IGNORECASE,
+                  ).strip(" >›→-|｜。.!！")
+                  if item and item.casefold() not in {value.casefold() for value in pure_research}:
+                      cleaned.append(item)
+              return sanitize_product_items(cleaned)'''
           if old not in text:
-              raise SystemExit("normalizeCompanyProfile project background block not found")
-          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+              raise SystemExit("catalog product parser block not found")
+          sanitizer.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          crawler = Path("tools/crawl_venture_profiles.py")
+          text = crawler.read_text(encoding="utf-8")
+          marker = '''def evaluate_quality(
+              companies: dict[str, dict[str, Any]],'''
+          helper = '''def _team_core_rows(values: Sequence[Any]) -> list[dict[str, str]]:
+              result: list[dict[str, str]] = []
+              for raw in values if isinstance(values, list) else []:
+                  if not isinstance(raw, dict):
+                      continue
+                  result.append(
+                      {
+                          "name": clean_text(raw.get("name"), 120),
+                          "role": clean_text(raw.get("role"), 160),
+                          "summary": clean_text(raw.get("summary"), 320),
+                          "sourceUrl": normalize_url(raw.get("sourceUrl", "")),
+                      }
+                  )
+              return result
+
+
+          def evaluate_quality(
+              companies: dict[str, dict[str, Any]],'''
+          if marker not in text:
+              raise SystemExit("evaluate_quality insertion point not found")
+          text = text.replace(marker, helper, 1)
+          text = text.replace(
+              '''        if team != sanitize_team_members(team, (profile.get("name", ""),)):
+                      semantic_errors.append(f"company:{slug}:team-noise")''',
+              '''        if _team_core_rows(team) != sanitize_team_members(
+                      team, (profile.get("name", ""),)
+                  ):
+                      semantic_errors.append(f"company:{slug}:team-noise")''',
+              1,
+          )
+          text = text.replace(
+              '''        if team != sanitize_team_members(team, (profile.get("name", ""),)):
+                      semantic_errors.append(f"institution:{slug}:team-noise")''',
+              '''        if _team_core_rows(team) != sanitize_team_members(
+                      team, (profile.get("name", ""),)
+                  ):
+                      semantic_errors.append(f"institution:{slug}:team-noise")''',
+              1,
+          )
+          crawler.write_text(text, encoding="utf-8")
           PY
-          npm install
-          node --import tsx --test \
-            tests/venture-profile-data.test.ts \
-            tests/catalog.test.ts
-          GITHUB_PAGES=true npx next build
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py \
+            tools/sanitize_venture_profiles.py \
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add lib/venture-profile-data.ts
-          git commit -m "fix: preserve structured project background fallback"
+          git add tools/sanitize_venture_profiles.py tools/crawl_venture_profiles.py
+          git commit -m "fix: align venture product and team quality rules"
           git pull --rebase origin main
           git push origin HEAD:main
