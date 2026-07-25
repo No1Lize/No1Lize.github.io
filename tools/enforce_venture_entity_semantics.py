@@ -330,7 +330,7 @@ def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def enforce_snapshot(
+def _enforce_snapshot_once(
     payload: dict[str, Any], catalog_text: str
 ) -> tuple[dict[str, Any], dict[str, int]]:
     company_specs, institution_specs = parse_catalog(catalog_text)
@@ -472,6 +472,30 @@ def enforce_snapshot(
         if isinstance(check, dict) and "passed" in check
     )
     return cleaned, diagnostics
+
+
+def enforce_snapshot(
+    payload: dict[str, Any], catalog_text: str
+) -> tuple[dict[str, Any], dict[str, int]]:
+    """Return the terminal semantic fixed point in one public invocation.
+
+    Individual field transforms are deterministic and information-reducing, but
+    some derived fields depend on values normalized earlier in the same pass.
+    Iterating the private single pass prevents callers from having to invoke the
+    publication gate repeatedly and makes ``--check`` a true terminal check.
+    """
+    current = copy.deepcopy(payload)
+    aggregate: dict[str, int] = {}
+    for pass_index in range(1, 6):
+        next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+        for key, value in diagnostics.items():
+            if isinstance(value, int):
+                aggregate[key] = aggregate.get(key, 0) + value
+        aggregate["internalPasses"] = pass_index
+        if next_payload == current:
+            return next_payload, aggregate
+        current = next_payload
+    raise RuntimeError("entity-semantic enforcement did not converge within five passes")
 
 
 def main() -> int:

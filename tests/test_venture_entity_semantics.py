@@ -124,6 +124,49 @@ class VentureEntitySemanticTests(unittest.TestCase):
             )
         )
 
+    def test_complex_snapshot_reaches_fixed_point_in_one_call(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems. Investor Relations Transfer Agent.",
+                    "technology": "OpenAI models are discussed. Anthropic develops Claude models.",
+                    "products": ["Claude 模型", "2025"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "technologyProducts": [
+                        {
+                            "name": "Claude 模型",
+                            "description": "Unrelated OpenAI product description.",
+                            "technicalHighlights": [],
+                            "sourceUrl": "",
+                        }
+                    ],
+                    "projectBackground": {
+                        "summary": "Stale derived summary.",
+                        "problemSolved": "Unrelated exercise collection.",
+                        "marketOpportunity": "Anthropic serves enterprise AI users.",
+                    },
+                    "capitalSummary": {
+                        "eventCount": 9,
+                        "summary": "Stale capital summary.",
+                    },
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        first, diagnostics = semantics.enforce_snapshot(copy.deepcopy(payload), CATALOG)
+        second, second_diagnostics = semantics.enforce_snapshot(copy.deepcopy(first), CATALOG)
+        self.assertEqual(first, second)
+        self.assertGreaterEqual(diagnostics["internalPasses"], 2)
+        self.assertEqual(second_diagnostics["changedCompanies"], 0)
+        self.assertEqual(first["companies"]["anthropic"]["products"], ["Claude 模型"])
+        self.assertEqual(first["companies"]["anthropic"]["capitalSummary"]["eventCount"], 0)
+
     def test_is_idempotent(self) -> None:
         payload = {
             "companies": {

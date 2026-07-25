@@ -2,7 +2,7 @@ enricher imports and model version: applied
 def _entity_key(: already applied
 _company_articles: already applied
 _institution_articles: already applied
-_company_project_background: already applied
+_company_project_background: replaced
 research technology product evidence: already applied
 canonical and research company layers: already applied
 def _entity_key(: already applied
@@ -20,23 +20,20 @@ canonical background normalization: already applied
 research technology rendering: already applied
 strict attribution regressions: applied
 contaminated derived snapshot fields: reset
-project background capital routing: applied
-...........................................
+entity semantic fixed-point wrapper and regression: applied
+............F...............................
+======================================================================
+FAIL: test_enriches_every_company_and_institution_with_shared_schema (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enriches_every_company_and_institution_with_shared_schema)
 ----------------------------------------------------------------------
-Ran 43 tests in 0.069s
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_enrichment.py", line 134, in test_enriches_every_company_and_institution_with_shared_schema
+    self.assertEqual(
+AssertionError: 'OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型训练和企业部署。' != '研发并商业化通用人工智能模型与开发者平台。'
+- OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型训练和企业部署。
++ 研发并商业化通用人工智能模型与开发者平台。
 
-OK
-{"companies": 58, "institutions": 20, "researchModelVersion": 3, "qualityPassed": true}
-{"capitalEventsRerouted": 23, "companiesRefined": 50, "institutionsRefined": 11, "productDescriptionsReplaced": 212, "teamSummariesCleared": 41}
-Updated public/data/venture_profiles.json.
-{"capitalEventsRerouted": 0, "companiesRefined": 0, "institutionsRefined": 0, "productDescriptionsReplaced": 0, "teamSummariesCleared": 0}
-Venture profile snapshot passed evidence alignment checks.
-{"stats": {"companyTeams": 0, "companyProducts": 2, "companyFinancing": 0, "companyCapitalMarkets": 0, "institutionTeams": 0}, "passed": true, "changed": true}
-{"changedCompanies": 54, "changedInstitutions": 11, "removedCapitalEvents": 19, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
-Updated public/data/venture_profiles.json.
-{"changedCompanies": 0, "changedInstitutions": 0, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
-Venture profile snapshot passed final semantic consistency checks.
-{"changedCompanies": 58, "changedInstitutions": 10, "clearedTeamSummaries": 14, "removedCapitalMarkets": 0, "removedFinancing": 0, "removedProducts": 1, "replacedTechnologyDescriptions": 22}
-Updated public/data/venture_profiles.json.
-{"changedCompanies": 6, "changedInstitutions": 0, "clearedTeamSummaries": 0, "removedCapitalMarkets": 0, "removedFinancing": 0, "removedProducts": 0, "replacedTechnologyDescriptions": 0}
-Venture profile snapshot requires entity-semantic enforcement.
+
+----------------------------------------------------------------------
+Ran 44 tests in 0.067s
+
+FAILED (failures=1)
