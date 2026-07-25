@@ -1,4 +1,4 @@
-name: One-time align venture quality processors
+name: One-time fix venture evidence alignment
 
 on:
   push:
@@ -10,13 +10,13 @@ permissions:
   contents: write
 
 concurrency:
-  group: one-time-align-venture-quality
+  group: one-time-fix-venture-evidence
   cancel-in-progress: false
 
 jobs:
   patch:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,107 +25,67 @@ jobs:
         with:
           python-version: "3.12"
       - name: Patch, test and commit
+        shell: bash
         run: |
           set -euo pipefail
           git pull --rebase origin main
           python - <<'PY'
           from pathlib import Path
 
-          sanitizer = Path("tools/sanitize_venture_profiles.py")
-          text = sanitizer.read_text(encoding="utf-8")
-          old = '''def _catalog_products(value: str) -> list[str]:
-              parts = re.split(r"[、，,;/]|\\s+与\\s+|\\s+and\\s+", clean_text(value, 800), flags=re.IGNORECASE)
-              return sanitize_product_items([part.strip() for part in parts if part.strip()])'''
-          new = '''def _catalog_products(value: str) -> list[str]:
-              parts = re.split(
-                  r"[、，,;/]|\\s*与\\s*|\\s+and\\s+",
-                  clean_text(value, 800),
-                  flags=re.IGNORECASE,
-              )
-              cleaned: list[str] = []
-              pure_research = {
-                  "research", "ai research", "ai safety research", "safety research",
-                  "研究", "安全研究", "人工智能研究", "ai安全研究",
-              }
-              for raw in parts:
-                  item = clean_text(raw, 180).strip(" >›→-|｜。.!！")
-                  item = re.sub(
-                      r"(?:等)?(?:机器人|产品|解决方案)?系列$|(?:等产品|等解决方案)$",
-                      "",
-                      item,
-                      flags=re.IGNORECASE,
-                  ).strip(" >›→-|｜。.!！")
-                  if item and item.casefold() not in {value.casefold() for value in pure_research}:
-                      cleaned.append(item)
-              return sanitize_product_items(cleaned)'''
+          refiner = Path("tools/refine_venture_research_evidence.py")
+          text = refiner.read_text(encoding="utf-8")
+          old = '''INVESTMENT_ACTION_RE = re.compile(
+              r"(?:\\binvest(?:ed|s|ing)?\\s+(?:in|into)\\b|\\bbacks?\\b|\\bleads?\\b|"
+              r"投资|领投|跟投|参投|加码)",
+              re.IGNORECASE,
+          )'''
+          new = '''INVESTMENT_ACTION_RE = re.compile(
+              r"(?:\\binvest(?:ed|s|ing)?\\s+(?:in|into)\\b|\\bbacks?\\b|\\bleads?\\b|"
+              r"投资|融资|领投|跟投|参投|参与.{0,24}融资|加码)",
+              re.IGNORECASE,
+          )'''
           if old not in text:
-              raise SystemExit("catalog product parser block not found")
-          sanitizer.write_text(text.replace(old, new, 1), encoding="utf-8")
+              raise SystemExit("investment action pattern not found")
+          refiner.write_text(text.replace(old, new, 1), encoding="utf-8")
 
-          crawler = Path("tools/crawl_venture_profiles.py")
-          text = crawler.read_text(encoding="utf-8")
-          marker = '''def evaluate_quality(
-              companies: dict[str, dict[str, Any]],'''
-          helper = '''def _team_core_rows(values: Sequence[Any]) -> list[dict[str, str]]:
-              result: list[dict[str, str]] = []
-              for raw in values if isinstance(values, list) else []:
-                  if not isinstance(raw, dict):
-                      continue
-                  result.append(
-                      {
-                          "name": clean_text(raw.get("name"), 120),
-                          "role": clean_text(raw.get("role"), 160),
-                          "summary": clean_text(raw.get("summary"), 320),
-                          "sourceUrl": normalize_url(raw.get("sourceUrl", "")),
-                      }
-                  )
-              return result
-
-
-          def evaluate_quality(
-              companies: dict[str, dict[str, Any]],'''
-          if marker not in text:
-              raise SystemExit("evaluate_quality insertion point not found")
-          text = text.replace(marker, helper, 1)
+          tests = Path("tests/test_refine_venture_research_evidence.py")
+          text = tests.read_text(encoding="utf-8")
           text = text.replace(
-              '''        if team != sanitize_team_members(team, (profile.get("name", ""),)):
-                      semantic_errors.append(f"company:{slug}:team-noise")''',
-              '''        if _team_core_rows(team) != sanitize_team_members(
-                      team, (profile.get("name", ""),)
-                  ):
-                      semantic_errors.append(f"company:{slug}:team-noise")''',
+              'export const companies = [',
+              'export type Company = {};\nexport const companies: Company[] = [',
               1,
           )
           text = text.replace(
-              '''        if team != sanitize_team_members(team, (profile.get("name", ""),)):
-                      semantic_errors.append(f"institution:{slug}:team-noise")''',
-              '''        if _team_core_rows(team) != sanitize_team_members(
-                      team, (profile.get("name", ""),)
-                  ):
-                      semantic_errors.append(f"institution:{slug}:team-noise")''',
+              'export const institutionCatalog = [',
+              'export const institutionCatalog: Institution[] = [',
               1,
           )
-          crawler.write_text(text, encoding="utf-8")
+          tests.write_text(text, encoding="utf-8")
           PY
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py \
+            tools/refine_venture_research_evidence.py \
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py \
-            tools/finalize_venture_profiles.py
+            tools/finalize_venture_profiles.py \
+            tools/enforce_venture_entity_semantics.py
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
-            tests.test_finalize_venture_profiles
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/sanitize_venture_profiles.py tools/crawl_venture_profiles.py
-          git commit -m "fix: align venture product and team quality rules"
+          git add tools/refine_venture_research_evidence.py \
+            tests/test_refine_venture_research_evidence.py
+          git commit -m "fix: cover explicit participation in venture investments"
           git pull --rebase origin main
           git push origin HEAD:main
