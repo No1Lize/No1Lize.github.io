@@ -1,0 +1,73 @@
+name: One-time verify WeChat intelligence
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-wechat-intelligence.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify implementation
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          : > /tmp/wechat-verify.log
+          python -m py_compile tools/wechat_public_sources.py tools/crawl_with_source_categories.py >> /tmp/wechat-verify.log 2>&1
+          PYCOMPILE=$?
+          python -m unittest tests.test_wechat_public_sources >> /tmp/wechat-verify.log 2>&1
+          WECHAT_TESTS=$?
+          python -m unittest discover -s tests -p "test_*.py" >> /tmp/wechat-verify.log 2>&1
+          PY_TESTS=$?
+          npm install >> /tmp/wechat-verify.log 2>&1
+          INSTALL=$?
+          if [ "$INSTALL" -eq 0 ]; then
+            npx tsc --noEmit >> /tmp/wechat-verify.log 2>&1
+            TYPES=$?
+          else
+            TYPES=99
+          fi
+          PASSED=false
+          if [ "$PYCOMPILE" -eq 0 ] && [ "$WECHAT_TESTS" -eq 0 ] && [ "$PY_TESTS" -eq 0 ] && [ "$INSTALL" -eq 0 ] && [ "$TYPES" -eq 0 ]; then
+            PASSED=true
+          fi
+          python - "$PYCOMPILE" "$WECHAT_TESTS" "$PY_TESTS" "$INSTALL" "$TYPES" "$PASSED" <<'PY'
+          import json, sys
+          from pathlib import Path
+          pycompile, wechat, pytests, install, types, passed = sys.argv[1:]
+          log = Path('/tmp/wechat-verify.log').read_text(errors='replace').splitlines()[-220:]
+          Path('diagnostics/wechat-intelligence.json').write_text(json.dumps({
+              'pycompileStatus': int(pycompile),
+              'wechatTestStatus': int(wechat),
+              'pythonTestStatus': int(pytests),
+              'installStatus': int(install),
+              'typeStatus': int(types),
+              'passed': passed == 'true',
+              'logTail': log,
+          }, ensure_ascii=False, indent=2) + '\n')
+          PY
+      - name: Commit diagnostic
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/wechat-intelligence.json
+          git commit -m "ci: record WeChat intelligence verification"
+          git pull --rebase origin main
+          git push origin HEAD:main
