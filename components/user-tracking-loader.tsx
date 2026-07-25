@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TrackingAdminModuleRecommendations } from "@/components/tracking-admin-module-recommendations";
+import { TrackingAdminSessionGuard } from "@/components/tracking-admin-session-guard";
 import { TrackingRecommendationsBridge } from "@/components/tracking-recommendations-bridge";
 import { UserTrackingPanel } from "@/components/user-tracking-panel";
 import {
@@ -57,6 +59,8 @@ export function UserTrackingLoader({ initial }: { initial: UserTrackingConfig })
     <>
       <UserTrackingPanel key={sourceKey} initial={config} />
       <TrackingRecommendationsBridge />
+      <TrackingAdminModuleRecommendations />
+      <TrackingAdminSessionGuard />
     </>
   );
 }
