@@ -9,6 +9,12 @@ import {
 } from "@/components/tracking-recommendations";
 import { validateStrictPersonLabel } from "@/lib/strict-person-label";
 import {
+  DISMISSAL_EVENT,
+  dismissTrackingRecommendation,
+  hydrateTrackingRecommendationDismissals,
+  isRecommendationDismissed,
+} from "@/lib/tracking-recommendation-dismissal";
+import {
   recommendTrackingAdditions,
   type TrackingRecommendationSet,
   type TrackingSourceRecommendation,
@@ -67,9 +73,11 @@ function fieldEditor(type: ListRecommendationType): HTMLElement | null {
 }
 
 function sourceSection(): HTMLElement | null {
-  return Array.from(document.querySelectorAll<HTMLElement>("section")).find(
-    (section) => section.querySelector("h2")?.textContent?.trim() === "补充信息源",
-  ) ?? null;
+  return (
+    Array.from(document.querySelectorAll<HTMLElement>("section")).find(
+      (section) => section.querySelector("h2")?.textContent?.trim() === "补充信息源",
+    ) ?? null
+  );
 }
 
 function trackDetailSector(): string {
@@ -266,9 +274,30 @@ async function addThroughExistingEditor(
   await addListRecommendation(type, item.value);
 }
 
+function filterDismissed(
+  recommendations: TrackingRecommendationSet,
+  sector: string,
+): TrackingRecommendationSet {
+  return {
+    keywords: recommendations.keywords.filter(
+      (item) => !isRecommendationDismissed(sector, "keywords", item.value),
+    ),
+    people: recommendations.people.filter(
+      (item) => !isRecommendationDismissed(sector, "people", item.value),
+    ),
+    companies: recommendations.companies.filter(
+      (item) => !isRecommendationDismissed(sector, "companies", item.value),
+    ),
+    sources: recommendations.sources.filter(
+      (item) => !isRecommendationDismissed(sector, "sources", item.value),
+    ),
+  };
+}
+
 export function TrackingRecommendationsBridge() {
   const { articles } = useArticles();
   const [mounted, setMounted] = useState(false);
+  const [dismissalVersion, setDismissalVersion] = useState(0);
   const [snapshot, setSnapshot] = useState<PanelSnapshot>({
     sector: "",
     keywords: [],
@@ -293,6 +322,7 @@ export function TrackingRecommendationsBridge() {
         }
       });
     };
+    const refreshDismissals = () => setDismissalVersion((value) => value + 1);
 
     const observer = new MutationObserver(refresh);
     observer.observe(document.body, {
@@ -302,31 +332,34 @@ export function TrackingRecommendationsBridge() {
       attributeFilter: ["data-active", "disabled"],
     });
     document.addEventListener("input", refresh, true);
+    window.addEventListener(DISMISSAL_EVENT, refreshDismissals);
+    void hydrateTrackingRecommendationDismissals();
     refresh();
 
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
       document.removeEventListener("input", refresh, true);
+      window.removeEventListener(DISMISSAL_EVENT, refreshDismissals);
     };
   }, []);
 
-  const recommendations = useMemo(
-    () =>
-      snapshot.sector
-        ? recommendTrackingAdditions(articles, snapshot.sector, {
-            keywords: snapshot.keywords,
-            people: snapshot.people,
-            companies: snapshot.companies,
-            sources: snapshot.sources,
-          })
-        : EMPTY_RECOMMENDATIONS,
-    [articles, snapshot],
-  );
+  const recommendations = useMemo(() => {
+    if (!snapshot.sector) return EMPTY_RECOMMENDATIONS;
+    const generated = recommendTrackingAdditions(articles, snapshot.sector, {
+      keywords: snapshot.keywords,
+      people: snapshot.people,
+      companies: snapshot.companies,
+      sources: snapshot.sources,
+    });
+    return filterDismissed(generated, snapshot.sector);
+  }, [articles, dismissalVersion, snapshot]);
 
   if (!mounted || !snapshot.sector) return null;
 
   const sourceTarget = sourceSection();
+  const dismiss = (type: RecommendationType, item: AnyTrackingRecommendation) =>
+    dismissTrackingRecommendation(snapshot.sector, type, item.value);
 
   return (
     <>
@@ -338,7 +371,9 @@ export function TrackingRecommendationsBridge() {
             key={`${snapshot.sector}-${type}`}
             recommendations={recommendations}
             onlyType={type}
+            sector={snapshot.sector}
             onAdd={addThroughExistingEditor}
+            onDismiss={dismiss}
           />,
           target,
         );
@@ -349,7 +384,9 @@ export function TrackingRecommendationsBridge() {
               key={`${snapshot.sector}-sources`}
               recommendations={recommendations}
               onlyType="sources"
+              sector={snapshot.sector}
               onAdd={addThroughExistingEditor}
+              onDismiss={dismiss}
             />,
             sourceTarget,
           )
