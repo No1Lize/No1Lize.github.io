@@ -1,5 +1,5 @@
-commit=78ee1d5cec88f16ef0f706e6bf6fd89bf3f1e00f
-generated_at=2026-07-25T05:39:34Z
+commit=7bfb02d31fce77bf5f28a4c485b5c7c0aaebb82a
+generated_at=2026-07-25T05:44:33Z
 exit_code=1
 
 ===== migrate =====
@@ -42,32 +42,44 @@ exit_code=0
 
 ===== full_unittest =====
 ...........official=two fatal=RuntimeError: blocked
-...........................................................................F................
+.............................................................................E.EE............
 ======================================================================
-FAIL: test_migration_removes_profile_pages_and_fake_company_links (test_source_categories.LegacyEntityMigrationTests.test_migration_removes_profile_pages_and_fake_company_links)
+ERROR: test_generic_crawler_excludes_company_sources (test_source_categories.SourceCategoryTests.test_generic_crawler_excludes_company_sources)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 209, in test_migration_removes_profile_pages_and_fake_company_links
-    self.assertEqual(migrated["sourceStatus"], [])
-AssertionError: Lists differ: [{'id': 'official-user-投资界', 'status': 'ok'}] != []
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 57, in test_generic_crawler_excludes_company_sources
+    filtered = generic_categories.filter_sources(sources)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'tools.crawl_with_source_categories' has no attribute 'filter_sources'
 
-First list contains 1 additional elements.
-First extra element 0:
-{'id': 'official-user-投资界', 'status': 'ok'}
+======================================================================
+ERROR: test_official_crawler_keeps_company_sources (test_source_categories.SourceCategoryTests.test_official_crawler_keeps_company_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 82, in test_official_crawler_keeps_company_sources
+    filtered = official_categories._filtered_tracking_payload(tracking)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'tools.crawl_official_with_source_categories' has no attribute '_filtered_tracking_payload'
 
-- [{'id': 'official-user-投资界', 'status': 'ok'}]
-+ []
+======================================================================
+ERROR: test_official_crawler_keeps_eastmoney_media_exception (test_source_categories.SourceCategoryTests.test_official_crawler_keeps_eastmoney_media_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 107, in test_official_crawler_keeps_eastmoney_media_exception
+    filtered = official_categories._filtered_tracking_payload(tracking)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'tools.crawl_official_with_source_categories' has no attribute '_filtered_tracking_payload'
 
 ----------------------------------------------------------------------
-Ran 103 tests in 0.042s
+Ran 104 tests in 0.152s
 
-FAILED (failures=1)
+FAILED (errors=3)
 No snapshot changes (1 articles).
 exit_code=1
 
 ===== final_snapshot_summary =====
 {
-  "generatedAt": "2026-07-25T05:39:31+00:00",
+  "generatedAt": "2026-07-25T05:44:31+00:00",
   "articleCount": 432,
   "eastmoneyDetailCount": 7,
   "internalMarkerCount": 0,
