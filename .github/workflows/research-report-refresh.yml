@@ -1,0 +1,77 @@
+name: Refresh public research report PDFs
+
+on:
+  schedule:
+    - cron: "25 2 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/research-report-refresh.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: research-report-refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Crawl validated public PDFs
+        run: python tools/crawl_research_reports.py
+      - name: Run crawler safeguards
+        run: python -m unittest tests.test_research_reports
+      - name: Install frontend dependencies
+        run: npm install
+      - name: Validate report metadata and static routes
+        run: |
+          node --import tsx --test tests/research-report-data.test.ts
+          GITHUB_PAGES=true npx next build
+      - name: Commit report index and bounded PDF archive
+        id: publish
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/research_reports.json public/research-reports
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "data: refresh public research report PDFs"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main; then
+              python tools/crawl_research_reports.py
+              python -m unittest tests.test_research_reports
+              git add public/data/research_reports.json public/research-reports
+              if ! git diff --cached --quiet; then
+                git commit --amend --no-edit
+              fi
+              if git push origin HEAD:main; then
+                echo "changed=true" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 4
+          done
+          exit 1
+      - name: Trigger Pages
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
