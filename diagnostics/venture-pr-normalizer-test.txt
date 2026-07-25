@@ -1,0 +1,51 @@
+test_brand_and_role_fragments_are_removed_from_team (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_brand_and_role_fragments_are_removed_from_team) ... ok
+test_false_policy_and_homepage_events_are_removed (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_false_policy_and_homepage_events_are_removed) ... FAIL
+test_payload_normalization_updates_all_entity_types_and_quality_gate (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_payload_normalization_updates_all_entity_types_and_quality_gate) ... FAIL
+test_product_suffixes_events_and_document_labels_are_removed (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_product_suffixes_events_and_document_labels_are_removed) ... ok
+test_structured_product_cards_follow_cleaned_products (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_structured_product_cards_follow_cleaned_products) ... ok
+
+======================================================================
+FAIL: test_false_policy_and_homepage_events_are_removed (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_false_policy_and_homepage_events_are_removed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_normalize_venture_profiles.py", line 68, in test_false_policy_and_homepage_events_are_removed
+    self.assertEqual([item["title"] for item in financing], ["公司完成B轮融资"])
+AssertionError: Lists differ: ['Announcing our updated Responsible Scaling Policy', '公司完成B轮融资'] != ['公司完成B轮融资']
+
+First differing element 0:
+'Announcing our updated Responsible Scaling Policy'
+'公司完成B轮融资'
+
+First list contains 1 additional elements.
+First extra element 1:
+'公司完成B轮融资'
+
+- ['Announcing our updated Responsible Scaling Policy', '公司完成B轮融资']
++ ['公司完成B轮融资']
+
+======================================================================
+FAIL: test_payload_normalization_updates_all_entity_types_and_quality_gate (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_payload_normalization_updates_all_entity_types_and_quality_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_normalize_venture_profiles.py", line 184, in test_payload_normalization_updates_all_entity_types_and_quality_gate
+    self.assertEqual(company["financing"], [])
+AssertionError: Lists differ: [{'date': '', 'type': '融资', 'title': '安全政策[111 chars]cy'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'date': '', 'type': '融资', 'title': '安全政策更新', 'summary': '公司更新安全政策。', 'amount': '', 'round': '', 'investors': [], 'sourceUrl': 'https://example.com/policy'}
+
++ []
+- [{'amount': '',
+-   'date': '',
+-   'investors': [],
+-   'round': '',
+-   'sourceUrl': 'https://example.com/policy',
+-   'summary': '公司更新安全政策。',
+-   'title': '安全政策更新',
+-   'type': '融资'}]
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.006s
+
+FAILED (failures=2)
