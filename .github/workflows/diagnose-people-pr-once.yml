@@ -1,0 +1,74 @@
+name: Diagnose people PR once
+
+on:
+  push:
+    branches: [feature/tracked-people-research-20260725]
+    paths:
+      - '.github/workflows/diagnose-people-pr-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/tracked-people-research-20260725
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Capture lint and audit output
+        run: |
+          set +e
+          npm run lint > /tmp/lint.log 2>&1
+          lint=$?
+          npm audit --audit-level=high --json > /tmp/audit.json 2>/tmp/audit.stderr
+          audit=$?
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json, pathlib, os
+          lint = pathlib.Path('/tmp/lint.log').read_text(errors='replace')
+          try:
+              audit = json.loads(pathlib.Path('/tmp/audit.json').read_text(errors='replace') or '{}')
+          except json.JSONDecodeError:
+              audit = {}
+          vulnerabilities = []
+          for name, item in (audit.get('vulnerabilities') or {}).items():
+              vulnerabilities.append({
+                  'name': name,
+                  'severity': item.get('severity'),
+                  'isDirect': item.get('isDirect'),
+                  'via': [part if isinstance(part, str) else {
+                      'source': part.get('source'),
+                      'name': part.get('name'),
+                      'severity': part.get('severity'),
+                      'title': part.get('title'),
+                      'range': part.get('range'),
+                  } for part in item.get('via', [])],
+                  'effects': item.get('effects'),
+                  'range': item.get('range'),
+                  'fixAvailable': item.get('fixAvailable'),
+              })
+          result = {
+              'sourceCommit': os.environ.get('GITHUB_SHA'),
+              'lintExit': int('${{ steps.capture.outputs.lint || 0 }}') if False else None,
+              'lint': lint[-24000:],
+              'auditMetadata': audit.get('metadata'),
+              'vulnerabilities': vulnerabilities,
+              'auditStderr': pathlib.Path('/tmp/audit.stderr').read_text(errors='replace')[-4000:],
+          }
+          pathlib.Path('diagnostics/people-pr-diagnosis.json').write_text(
+              json.dumps(result, ensure_ascii=False, indent=2)
+          )
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add diagnostics/people-pr-diagnosis.json
+          git commit -m 'ci: record people PR failure diagnosis' || true
+          git pull --rebase origin feature/tracked-people-research-20260725
+          git push origin HEAD:feature/tracked-people-research-20260725
