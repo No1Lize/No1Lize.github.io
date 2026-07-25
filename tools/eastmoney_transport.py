@@ -26,6 +26,7 @@ except ImportError:
 
 
 EASTMONEY_HOST_SUFFIX = "eastmoney.com"
+EASTMONEY_HISTORY_LIMIT = 12
 BROWSER_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -148,16 +149,122 @@ def _is_eastmoney_status(status: dict[str, Any]) -> bool:
     return "东方财富" in text
 
 
+def _article_source_url(article: dict[str, Any]) -> str:
+    source = article.get("source") if isinstance(article.get("source"), dict) else {}
+    return str(source.get("url", "")).strip()
+
+
+def _is_eastmoney_detail_for_source(
+    article: dict[str, Any], source_id: str
+) -> bool:
+    return (
+        str(article.get("sourceId", "")) == source_id
+        and tracking_crawler._is_eastmoney_article_url(_article_source_url(article))
+    )
+
+
 def _has_existing_eastmoney_details(
     existing: list[dict[str, Any]], source_id: str
 ) -> bool:
-    for article in existing:
-        if str(article.get("sourceId", "")) != source_id:
-            continue
-        source = article.get("source") if isinstance(article.get("source"), dict) else {}
-        if tracking_crawler._is_eastmoney_article_url(str(source.get("url", ""))):
-            return True
-    return False
+    return any(
+        _is_eastmoney_detail_for_source(article, source_id)
+        for article in existing
+    )
+
+
+def _article_identity(article: dict[str, Any]) -> str:
+    return _article_source_url(article) or str(article.get("id", ""))
+
+
+def _article_sort_key(article: dict[str, Any]) -> tuple[str, int, str]:
+    try:
+        importance = int(article.get("importance", 0) or 0)
+    except (TypeError, ValueError):
+        importance = 0
+    return (
+        str(article.get("publishedAt", "")),
+        importance,
+        str(article.get("id", "")),
+    )
+
+
+def merge_eastmoney_history(
+    existing: list[dict[str, Any]],
+    incoming: list[dict[str, Any]],
+    statuses: list[dict[str, Any]],
+    limit: int = EASTMONEY_HISTORY_LIMIT,
+) -> list[dict[str, Any]]:
+    """Merge successful Eastmoney batches with a bounded prior detail history.
+
+    Eastmoney index pages expose a rotating subset of detail links. Replacing the
+    entire source batch on every successful run makes valid intelligence disappear
+    merely because a different set of links was visible. Incoming records take
+    precedence over cached copies with the same URL; the newest bounded set is
+    passed to the shared replacement function and refined later as usual.
+    """
+
+    source_ids = {
+        str(status.get("id", ""))
+        for status in statuses
+        if _is_eastmoney_status(status)
+        and int(status.get("accepted", 0) or 0) > 0
+    }
+    if not source_ids:
+        return list(incoming)
+
+    merged_incoming = [
+        article
+        for article in incoming
+        if str(article.get("sourceId", "")) not in source_ids
+    ]
+
+    for source_id in source_ids:
+        incoming_group = [
+            article
+            for article in incoming
+            if _is_eastmoney_detail_for_source(article, source_id)
+        ]
+        existing_group = [
+            article
+            for article in existing
+            if _is_eastmoney_detail_for_source(article, source_id)
+        ]
+        incoming_keys = {_article_identity(article) for article in incoming_group}
+
+        by_identity: dict[str, dict[str, Any]] = {}
+        for article in existing_group:
+            key = _article_identity(article)
+            if key:
+                by_identity[key] = article
+        for article in incoming_group:
+            key = _article_identity(article)
+            if key:
+                by_identity[key] = article
+
+        history = sorted(
+            by_identity.values(),
+            key=_article_sort_key,
+            reverse=True,
+        )[: max(1, limit)]
+        retained_count = sum(
+            _article_identity(article) not in incoming_keys for article in history
+        )
+
+        for status in statuses:
+            if str(status.get("id", "")) != source_id:
+                continue
+            status["newAccepted"] = int(status.get("accepted", 0) or 0)
+            status["accepted"] = len(history)
+            if retained_count:
+                status["retainedPrevious"] = True
+                status["retainedPreviousCount"] = retained_count
+            else:
+                status.pop("retainedPrevious", None)
+                status.pop("retainedPreviousCount", None)
+
+        merged_incoming.extend(history)
+
+    return merged_incoming
 
 
 def replacement_statuses_for_eastmoney(
@@ -194,7 +301,7 @@ def replacement_statuses_for_eastmoney(
 
 
 def install_snapshot_retention() -> None:
-    """Prevent clean-but-empty Eastmoney discovery from clearing valid details."""
+    """Preserve a bounded Eastmoney detail history across partial discoveries."""
 
     official = tracking_crawler.official
     original_replace = official.replace_official_source_batches
@@ -206,8 +313,9 @@ def install_snapshot_retention() -> None:
         incoming: list[dict[str, Any]],
         statuses: list[dict[str, Any]],
     ) -> list[dict[str, Any]]:
+        merged_incoming = merge_eastmoney_history(existing, incoming, statuses)
         replacement_statuses = replacement_statuses_for_eastmoney(existing, statuses)
-        return original_replace(existing, incoming, replacement_statuses)
+        return original_replace(existing, merged_incoming, replacement_statuses)
 
     setattr(
         replace_official_source_batches,
