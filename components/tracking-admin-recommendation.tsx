@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { currentAdminStatus, waitForAdminSave } from "@/lib/tracking-admin-sync";
 import styles from "./tracking-recommendations.module.css";
 
 export type AdminRecommendationItem = {
@@ -38,8 +39,10 @@ export function TrackingAdminRecommendation<T extends AdminRecommendationItem>({
   async function add() {
     setPending(current.value);
     setError("");
+    const previousStatus = currentAdminStatus();
     try {
       await onAdd(current);
+      await waitForAdminSave(previousStatus);
       setHidden((state) => ({ ...state, [current.value]: true }));
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
