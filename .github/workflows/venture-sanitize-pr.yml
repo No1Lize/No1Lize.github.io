@@ -29,6 +29,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Apply pending evidence migration
+        run: |
+          if [ -f tools/patch_refine_venture_evidence_regressions.py ]; then
+            python tools/patch_refine_venture_evidence_regressions.py
+          fi
       - name: Compile production venture pipeline
         run: |
           python -m py_compile \
@@ -93,7 +98,7 @@ jobs:
           rm -f tools/patch_venture_narrative_prose.py
           rm -f tools/migrate_venture_entity_attribution_v1.py
           rm -f tools/patch_refine_venture_evidence_regressions.py
-          rm -f .github/workflows/venture-sanitize-pr.yml
+          rm -f .github/workflows/patch-refine-venture-evidence.yml
           git add -A
           if git diff --cached --quiet; then
             echo "No venture snapshot changes were required."
