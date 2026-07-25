@@ -23,7 +23,7 @@ jobs:
           mkdir -p diagnostics
           {
             echo '===== FILES ====='
-            find app components lib data public tools tests config -maxdepth 5 -type f 2>/dev/null | sort
+            (find app components lib data public tools tests config -maxdepth 5 -type f 2>/dev/null || true) | sort
             echo
             echo '===== MATCHES ====='
             grep -RInE '创业案例|投资机构|Sequoia Capital|OpenAI|startup|venture|investment institution' app components lib data public tools tests config 2>/dev/null | head -1200 || true
