@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """One-time patch for venture evidence alignment regressions."""
 
+from __future__ import annotations
+
 from pathlib import Path
 
-TARGET = Path(__file__).with_name("refine_venture_research_evidence.py")
+
+REFINER = Path(__file__).with_name("refine_venture_research_evidence.py")
+TESTS = Path(__file__).resolve().parents[1] / "tests" / "test_refine_venture_research_evidence.py"
 
 
 def replace_once(text: str, old: str, new: str, label: str) -> str:
@@ -18,12 +22,12 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
 
 
 def main() -> None:
-    text = TARGET.read_text(encoding="utf-8")
+    text = REFINER.read_text(encoding="utf-8")
     text = replace_once(
         text,
         '    r"投资|领投|跟投|参投|加码)",\n',
-        '    r"投资|领投|跟投|参投|参与|加码)",\n',
-        "explicit participation action",
+        '    r"投资|融资|领投|跟投|参投|参与.{0,24}融资|加码)",\n',
+        "explicit investment participation",
     )
     text = replace_once(
         text,
@@ -34,7 +38,22 @@ def main() -> None:
         '    )\n',
         "short catalog summary fallback",
     )
-    TARGET.write_text(text, encoding="utf-8")
+    REFINER.write_text(text, encoding="utf-8")
+
+    tests = TESTS.read_text(encoding="utf-8")
+    tests = replace_once(
+        tests,
+        'export const companies = [',
+        'export type Company = {};\nexport const companies: Company[] = [',
+        "typed company fixture",
+    )
+    tests = replace_once(
+        tests,
+        'export const institutionCatalog = [',
+        'export const institutionCatalog: Institution[] = [',
+        "typed institution fixture",
+    )
+    TESTS.write_text(tests, encoding="utf-8")
 
 
 if __name__ == "__main__":
