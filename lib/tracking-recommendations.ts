@@ -49,7 +49,21 @@ const GENERIC_COMPANIES = new Set([
 
 const GENERIC_TERMS = new Set([
   "ai",
+  "agi",
   "ml",
+  "llm",
+  "us",
+  "uk",
+  "cn",
+  "eu",
+  "rt",
+  "k3",
+  "stem",
+  "ceo",
+  "cto",
+  "cfo",
+  "coo",
+  "vp",
   "人工智能",
   "技术",
   "科技",
@@ -70,6 +84,27 @@ const GENERIC_TERMS = new Set([
   "市场",
   "应用",
 ]);
+
+const GENERIC_PERSON_LABELS = new Set([
+  "ceo",
+  "cto",
+  "cfo",
+  "coo",
+  "founder",
+  "researcher",
+  "scientist",
+  "author",
+  "team",
+  "staff",
+  "editor",
+  "研究员",
+  "科学家",
+  "创始人",
+  "作者",
+  "团队",
+]);
+
+const APPROVED_ACRONYMS = new Set(["VLA", "MCP", "RAG", "HBM"]);
 
 const BLOCKED_RECOMMENDATION_HOSTS = new Set([
   "x.com",
@@ -161,6 +196,31 @@ function articleText(article: LiveIntelligenceEvent): string {
   return `${article.title} ${article.summary} ${article.company}`.normalize("NFKC");
 }
 
+function isMeaningfulKeyword(value: string): boolean {
+  const term = normalize(value);
+  const key = normalizedKey(term);
+  if (!term || GENERIC_TERMS.has(key)) return false;
+  if (/^[A-Za-z]{1,2}$/.test(term)) return false;
+  if (/^[A-Z0-9-]+$/.test(term) && !APPROVED_ACRONYMS.has(term)) return false;
+  return /[A-Za-z0-9\u3400-\u9fff]/.test(term);
+}
+
+function isLikelyPersonName(value: string): boolean {
+  const label = normalize(value);
+  const key = normalizedKey(label);
+  if (!label || GENERIC_PERSON_LABELS.has(key) || /\d|https?:|www\./i.test(label)) {
+    return false;
+  }
+  if (/^[\u3400-\u9fff·•\s]{2,16}$/.test(label)) return true;
+  const words = label.split(/\s+/).filter(Boolean);
+  return (
+    words.length >= 2 &&
+    words.length <= 5 &&
+    words.every((word) => /^[A-Za-z][A-Za-z'.-]*$/.test(word)) &&
+    !words.every((word) => word === word.toUpperCase())
+  );
+}
+
 function sourceWeight(article: LiveIntelligenceEvent): number {
   switch (article.source.level) {
     case "官方披露":
@@ -217,16 +277,14 @@ function keywordCandidates(
     const text = articleText(article).toLocaleLowerCase("zh-CN");
     for (const term of terms) {
       const key = normalizedKey(term);
-      if (!key || GENERIC_TERMS.has(key) || existing.has(key) || !text.includes(key)) continue;
+      if (
+        !isMeaningfulKeyword(term) ||
+        existing.has(key) ||
+        !text.includes(key)
+      ) {
+        continue;
+      }
       const current = candidates.get(key) ?? { label: term, articles: [] };
-      current.articles.push(article);
-      candidates.set(key, current);
-    }
-
-    for (const token of articleText(article).match(/\b[A-Z][A-Z0-9-]{1,9}\b/g) ?? []) {
-      const key = normalizedKey(token);
-      if (GENERIC_TERMS.has(key) || existing.has(key) || /^\d+$/.test(token)) continue;
-      const current = candidates.get(key) ?? { label: token, articles: [] };
       current.articles.push(article);
       candidates.set(key, current);
     }
@@ -248,11 +306,17 @@ function keywordCandidates(
   const fallback = SECTOR_FALLBACKS[normalizedKey(selectedSector)] ?? [];
   for (const term of fallback) {
     const key = normalizedKey(term);
-    if (existing.has(key) || ranked.some((item) => normalizedKey(item.value) === key)) continue;
+    if (
+      !isMeaningfulKeyword(term) ||
+      existing.has(key) ||
+      ranked.some((item) => normalizedKey(item.value) === key)
+    ) {
+      continue;
+    }
     ranked.push({
       value: term,
       label: term,
-      reason: "与当前赛道高度相关，建议纳入持续追踪",
+      reason: "赛道技术词表中的高相关实体",
       score: 1,
     });
     if (ranked.length >= 12) break;
@@ -281,7 +345,11 @@ function peopleCandidates(
       const handle = xHandle(article);
       const label = handle ? `${displayName || handle} @${handle}` : displayName;
       const key = normalizedKey(label);
-      if (label && !existing.has(key)) {
+      if (
+        label &&
+        !existing.has(key) &&
+        (Boolean(handle) || isLikelyPersonName(displayName))
+      ) {
         const current = groups.get(key) ?? { label, articles: [] };
         current.articles.push(article);
         groups.set(key, current);
@@ -291,7 +359,7 @@ function peopleCandidates(
     for (const author of article.authors ?? []) {
       const label = normalize(author);
       const key = normalizedKey(label);
-      if (label.length < 3 || existing.has(key)) continue;
+      if (!isLikelyPersonName(label) || existing.has(key)) continue;
       const current = groups.get(key) ?? { label, articles: [] };
       current.articles.push(article);
       groups.set(key, current);
