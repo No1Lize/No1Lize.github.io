@@ -6,6 +6,7 @@ on:
     paths:
       - tools/crawl_articles.py
       - tools/crawl_with_tracking.py
+      - tools/crawl_with_source_categories.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
       - tools/eastmoney_entities.py
@@ -48,7 +49,7 @@ jobs:
       - name: Crawl public sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/crawl_with_tracking.py --source "${{ inputs.source || 'all' }}"
+        run: python tools/crawl_with_source_categories.py --source "${{ inputs.source || 'all' }}"
       - name: Crawl official company sources with user extensions
         if: ${{ inputs.source == '' || inputs.source == 'all' || inputs.source == 'news' || inputs.source == 'company' }}
         env:
