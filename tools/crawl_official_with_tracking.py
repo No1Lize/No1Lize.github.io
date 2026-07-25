@@ -267,7 +267,11 @@ def _finalize_eastmoney_article(
     source["level"] = "媒体报道"
     source["platform"] = "东方财富"
     cleaned["source"] = source
-    return attribute_eastmoney_article(cleaned, listed_entities)
+    return attribute_eastmoney_article(
+        cleaned,
+        listed_entities,
+        page_body=body,
+    )
 
 
 def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
