@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T15:13:37+00:00",
-  "articleCount": 464,
+  "generatedAt": "2026-07-25T16:54:14+00:00",
+  "articleCount": 473,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -7654,6 +7654,82 @@
       ]
     },
     {
+      "id": "user-track-wechat-qbitai-robotics-2a70b5b73967722c",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "Claude Code砸的坑，蚂蚁安全在尝试填上",
+      "summary": "鹭羽 发自 凹非寺 量子位 | 公众号 QbitAI 2026年，AI安全终于被推到了台前。 就在前两天，工信部NVDB平台发布风险预警，明确指出 Claude Code 存在 安全后门隐患，可在用户不知情的情况下收集敏感信息。 时间线拨回更早，年初红遍全网的 OpenClaw 也屡屡被 曝出 高危险漏洞。 从横空出世到快速普及，再到漏洞频发、信任受损，这几乎是当前Agent产品共同的发展轨迹。 现在的AI能力是越来越大了，但闯出的祸也跟滚雪球似的。 滥用工具、恶意代码生成、提示注入等诸如此类的行为风险，早已不是一两个补丁就能彻底解决的。 △ 图片由AI生成 面对新的风险形态，一个越来越明显的趋势是，行业开始把注意力从“漏洞修补”转向“安全框架”本身。 最近蚂蚁开源的 SingGuard-NSFA 和 SingGuard ，就是其中比较值得关注的一次尝试。 前者看住智能体的行为，后者看住多模态大模型的感知。 其目的也很明确，就是在AI动手之前，将安全风险扼杀在摇篮之中。 之所以聊到这个项目，也是因为它的背景比较有意思。做这个框架的团队来自 蚂蚁 ，一家在安全领域拥有长期积累的公司。 先",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-12",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1001dfad99170826651e4621dab97f3698600572bca08146882fe8472dcda4814e31b0f3&idx=1&mid=2247903091&sn=6efa9d6657251390eda8017a73484478",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Claude Code"
+      ],
+      "matchedTrackingTerms": [],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai",
+        "robotics",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-ade93c5ff355edb9",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "GPT-5.6一小时解开50年数学猜想，700词Prompt驾驭64个子Agent",
+      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 我看呐，只要以后笔记本半开着，就没有人的事儿了。 刚刚，OpenAI研究院 Ethan Knight 宣布： 昨儿刚出的GPT-5.6，用不到一小时，就完成了一道存在了半个世纪的图论猜想证明。 而这道题呢，来头也还真不小，就是大名鼎鼎的 循环双覆盖猜想（Cycle Double Cover Conjecture） 。 为解决这道题，研究员把现在最顶的GPT-5.6 Sol蹬到Ultra；GPT呢，又自己蹬了64个子agent。 最后，硬是写出了一份三页的pdf，证明完毕，Over。 发布后，还在韩国开ICML的Noam Brown（o1核心贡献者）也隔着太平洋第一时间赶来捧场。 他表示，这次和此前的Erdős单位距离问题不同，不靠什么内部特供模型，靠公开能用的GPT-5.6 Sol Ultra就把活儿干了。 而且，GPT-5.6 Sol Ultra把测试时计算并行大幅铺开，原本可能要磨上一整天的证明，如今被64个子agent压进了一个小时。 可以说，在数学这块，前沿模型的天花板还在拉高。而多agent，也能极快地加速任务的处理",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-11",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da11dddfad98cb798410ee855583c0ee19fd4be0cddfd2fdedf2295e14e941ca238f6ceeec&idx=1&mid=2247902895&sn=e1b447a17522c5595d3096ff0ec17a64",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "OpenAI"
+      ],
+      "mentionedPeople": [
+        "Ethan Knight",
+        "Noam Brown",
+        "Sol Ultra"
+      ],
+      "matchedTrackingTerms": [
+        "智能体",
+        "Agent",
+        "gpt-5"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-source-source-track-108mw2h-d07abdff517e59c7",
       "sourceId": "user-source-source-track-108mw2h",
       "title": "OpenAI 权力洗牌：安全元老 Joshua Achiam 离职，白宫政策操盘手加入",
@@ -7680,6 +7756,40 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-2dd1b00738795f03",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "全球首个「具身原生」预训练模型发布，从物理世界出发为机器人造大脑！",
+      "summary": "金磊 发自 凹非寺 量子位 | 公众号 QbitAI 终于，那句用来教育年轻人的经典嗑，也是用到机器人身上了： 你们啊， 眼光得放长远点~~ △ 图片由AI生成 为啥？ 因为一个靠谱的机器人啊，它不能只是看到什么就做什么，现在还得学会 预判未来 —— 眼睛是看到了当下的这一帧，但脑子应该在盘算几步之后的画面了。 这个事儿在具身智能圈有个专门的名字，叫做 VA （Video-Action）模型。 咱们先来感受一下这个feel： 从视频中我们不难看出，桌上的冰球不仅速度快，轨迹还在不断变化，如果机器人只靠”看到哪打到哪”的反应式操作，大概率要被KO掉的。 正确的解法，应该是模型一边盯着球的运动轨迹，一边提前预判几步之后球会跑到哪，然后提前调整身位、伸拍。 这就是“预判式控制”和“反应式控制”的本质区别。 不过啊，就在今天，VA这件事儿本身也要变了。 因为从现在起，VA模型不仅要“眼光放长远”，还得从娘胎里就是具身的！ 这就是 蚂蚁灵波 刚刚发布的 LingBot-VA 2.0 ，全球第一个 具身原生的 预训练VA基座模型。 从架构，到数据，再到训练目标，第一天起就是为机器人量身定制的。 除",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-10",
+      "importance": 82,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1144dfad98525230c66ff20710ab81547ab4e360003c171868000d1b8cb9f486d9155e4b&idx=1&mid=2247902774&sn=55d8846a7ef42993d385848631d4cc2a",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "VLA",
+        "机器人",
+        "世界模型"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "robotics"
       ]
     },
     {
@@ -7756,6 +7866,49 @@
         "platform": "SEC"
       },
       "trackSlugs": [
+        "robotics"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-032105c91d8d3133",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "大三本科生一作，交出7.92倍加速的投机解码新答卷！DeepSeek和阶跃星辰双双引用",
+      "summary": "Domino团队 投稿 量子位 | 公众号 QbitAI DeepSeek的投机解码框架DSpark，让“如何把大模型推理做得更快”再次成为热点。 论文中仍有不少细节可挖。比如，作者提到了约一个月前来自上海交通大学等机构的工作 Domino ，并指出其CausalEncoder的设计与DSpark的理念相似。此外，Domino算法也在阶跃星辰发布的JetSpec中被提及。 而这篇论文的第一作者 黄佳诺 ，目前还是一名 大三的本科生 。 如果想理解DSpark中draft-model侧的关键设计，不妨先读Domino。Domino更像一个干净的研究原型，用更简单、更集中的结构讲清楚一个核心问题：如何在parallel backbone的低开销基础上，轻量地补回draft block内部的串行依赖，兼顾扩散与自回归的双重优势。 △ Domino方法总览。 核心问题：并行很快，但缺少因果依赖 投机解码的基本思路是：先让轻量draft model一次猜出多个未来token，再交给target model批量验证。它的速度取决于两个因素： draft要足够快，也要足够准。 这就带来一个trade",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "DeepSeek",
+      "publishedAt": "2026-07-09",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1209dfad9b1fe560d54a8062973ca62dc5648c3cffbfd33b523067447b9e4d3cbf0e8889&idx=3&mid=2247902587&sn=879066ecce663ab9daba5d73fe2dc27b",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "deepseek",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "DeepSeek"
+      ],
+      "mentionedPeople": [
+        "QbitAI DeepSeek",
+        "Autoregressive Drafting",
+        "Speculative Decoding",
+        "EPIC Lab",
+        "Jianuo Huang",
+        "Yaojie Zhang",
+        "Linfeng Zhang",
+        "黄佳诺",
+        "论文链接"
+      ],
+      "matchedTrackingTerms": [],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai",
         "robotics"
       ]
     },
@@ -7911,6 +8064,91 @@
         "platform": "官方网站"
       },
       "trackSlugs": [
+        "robotics",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-7ef545ed3faab70c",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "60000小时炼出新开源VLA！20多种机器人都能用",
+      "summary": "金磊 发自 凹非寺 量子位 | 公众号 QbitAI 整整 60000小时 的预训练数据。 一个新 VLA （视觉-语言-动作），就这么水灵灵地被“喂”了出来，而且还是 开源 的那种。 这就是 蚂蚁灵波 刚刚发布的 LingBot-VLA 2.0 ，一个面向复杂物理世界任务的通用VLA模型。 先来聊聊这60000小时真实物理数据是怎么来的。 其实它包含两个部分，其中50000小时来自机器人轨迹数据，覆盖20种机器人构型；另外10000小时来自第一视角人类操作视频。 而距蚂蚁灵波1月发布 LingBot-VLA 1.0 仅半年时间来， 数据规模 从20000小时直接 乘了个3 。 那么效果又如何呢？ 来，直接上结果： 我们从视频中可以看到，机器人先从操作台上拿起饮料、水果放进篮子里，再拎起篮子移动到冰箱前，打开冰箱门、把东西一件件放进去，最后关上冰箱门。 一整套长序列的移动操作，一气呵成，相当丝滑。 不过有一说一，数据规模还仅仅是LingBot-VLA 2.0亮点的一隅，在细扒相关技术报告后我们发现： 支持20多种机器人构型； 从双臂扩展到头部、腰部、移动底盘、灵巧手等更完整的动作空间；",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-08",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5699487ba0a6bdb1c5f2677248b84989dd836c96502d90eb4fdf52a87f7e65&idx=1&mid=2247902258&sn=09ea927102a45e58d2de764072287fc9",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "人形机器人",
+        "VLA",
+        "机器人",
+        "灵巧手"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "robotics"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-ba425ecd1c304768",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "刚刚，OpenAI首席未来学家离职！曾被马斯克骂蠢驴",
+      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 刚刚，OpenAI首席未来学家 Joshua Achiam 在X上宣布离职。 这并不是一个普通员工变动。 在OpenAI内部， 首席未来学家 这个职位夹在AI安全、政策和公司使命之间，负责研究AI继续变强之后，可能给世界带来的风险和机会。 而Joshua Achiam，正是OpenAI这条安全与使命线上的核心人物之一。 9年前的2017，他以实习生身份加入OpenAI。早期，他是一名专注于AI安全的研究科学家，做过深度强化学习里的安全约束研究。 后来，他领导过OpenAI的 Mission Alignment （使命对齐）团队，负责维护这家公司最初那句使命： 确保AGI造福全人类。 今年2月，OpenAI解散Mission Alignment团队，Joshua转任公司首席未来学家。 只不过，短短5个月后，Joshua就宣布自己将在7月24日正式离开这家待了9年的公司。 至于离职原因，Joshua并没有透露太多。 他只是表示，自己离开并不是因为某个具体事件，也不是一时兴起，而是已经思考了很长一段时间。 为了安全的AGI 在X长文",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-08",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5697869e8644d4e3dd0563bf622cb244d475413509993f2678272aca03f685&idx=2&mid=2247902258&sn=9255dfa6c73c1433b887448e2fb783bb",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "openai",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Joshua Achiam",
+        "Mission Alignment",
+        "Chris Lehane",
+        "Dario Amodei",
+        "Anthropic CEO",
+        "David Luan",
+        "Jan Leike",
+        "Miles Brundage",
+        "Steven Adler",
+        "Andrea Vallone",
+        "Boaz Barak",
+        "Noam Brown"
+      ],
+      "matchedTrackingTerms": [
+        "强化学习"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai",
         "robotics",
         "track-1ccjq49"
       ]
@@ -8161,6 +8399,49 @@
       },
       "trackSlugs": [
         "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-78857392e1eaf0bc",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "Loop世界模型论文登顶Hugging Face，来自中国一家初创，周鸿祎陆奇都投了",
+      "summary": "允中 发自 凹非寺 量子位 | 公众号 QbitAI Prompt还没退场，Loop已经开始接管AI叙事。 这两周，硅谷开发者圈最热的词之一，是 Loop Engineering 。 它讲的是一件很“Agent时代”的事：别再手动一轮轮prompt模型了，去设计一个循环系统，让AI自己执行、检查、修正、继续跑，直到任务完成。 传统模式以prompt为核心，现在开始转向以 工作流 为核心，这也是它突然爆红的原因。 而就在大家热议“怎么让AI自己跑起来”时，另一条更硬的线也在快速升温： Looped World Models（循环世界模型） ，简称 LoopWM 。 如果说Loop Engineering解决的是“AI怎么持续干活”，那LoopWM更像是在回答一个上限更高的问题： AI在持续干活时，能不能做到持续理解、修正、推演它所面对的世界。 这也是为什么，它虽然名字里也有“Loop”，但其展现出的技术含金量和想象空间，明显不是一个量级。 它登上了 Hugging Face Papers当日 Top1 ，现已进入了AI社区更广泛的公共讨论。 Loop Engineering为什么突然火了",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-01",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6804dfade112048d76394540f337d27817c96252271a35f45a7a2b9a8d82f96cbe0be301&idx=2&mid=2247901046&sn=da7bf1ec203f115bc3c7ead358b109aa",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "李飞飞",
+        "Google Chrome",
+        "Addy Osmani",
+        "FaceMind Research Asia",
+        "陆弘远"
+      ],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "机器人",
+        "世界模型"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai",
+        "robotics",
         "track-1ccjq49"
       ]
     },
@@ -8459,6 +8740,50 @@
       ]
     },
     {
+      "id": "user-track-wechat-qbitai-ai-7cebb8e161b3b62e",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "「开源Claude时刻」，智谱GLM5.2与Mythos被放在一起了",
+      "summary": "克雷西 发自 凹非寺 量子位 | 公众号 QbitAI 这个周末，智谱没闲着。 多家外媒接连跟进报道，华尔街时报更是直言 「中国重置了AI竞赛」 。 因为，智谱的GLM-5.2，让Claude Mythos在找安全漏洞这件事上，不再是独一无二的神话了！ 代码安全公司Semgrep写了篇测评，标题直接叫「We have Mythos at Home」。 热议的核心只有一件事， GLM-5.2在找安全漏洞这件事上追平了Mythos 。 X上的讨论也跟着炸了。 Databricks研究员Yuchen Jin说，这是 「开源领域的Claude时刻」 ，他们看到的需求增长让人震惊。 GLM找漏洞追平Mythos Semgrep做这个测试，最初其实不是为了找最强的开源模型。 他们想弄清的是另一件事，AI找漏洞的成绩，到底有多少是模型本身的能力，又有多少是外面那层脚手架的功劳。 结果把他们自己吓到了。 GLM-5.2在这次测试里没有任何加持和引导， 只有一个prompt和一堆代码裸跑，结果最终在IDOR漏洞检测上拿到39%的F1分 。 这个成绩不仅超过了同样裸跑的其他开源模型，连带着完整SDK加持、",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-06-29",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6beadfade2fc068f50e81030952ce4708792b1e9abe0461959c42b137b89e7747a5bdf2f&idx=2&mid=2247900312&sn=b5ec17232d8089ec9bb546aec201c145",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "Anthropic",
+        "Databricks",
+        "智谱AI"
+      ],
+      "mentionedPeople": [
+        "唐杰",
+        "Yuchen Jin",
+        "CEO Lior Div",
+        "Mythos Preview",
+        "Nicholas Carlini",
+        "Carlini Loop",
+        "Niels Provos"
+      ],
+      "matchedTrackingTerms": [
+        "Claude",
+        "gpt-5"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
       "id": "google-ai-blog-e0616775a3b94cd0",
       "sourceId": "google-ai-blog",
       "title": "Ask an AI expert: What exactly is the full stack?",
@@ -8546,6 +8871,52 @@
       "trackSlugs": [
         "robotics",
         "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-457c47be6e9702c7",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "DeepSeek你怎么连HR都缺啊？！",
+      "summary": "克雷西 发自 凹非寺 量子位 | 公众号 QbitAI 不是，DeepSeek，我知道你缺人，但没想到你怎么连HR都缺啊？ 这不刚好是毕业季嘛，DeepSeek官方放出了全新一轮的招聘公告。 其中除了算法数据运维这些技术型岗位， 像HR法务行政等职能部门也都在招人 。 其中HR团队还特别加了一条横线，“地位”和AGI核心业务管培生一样，你品，你细品。 那么，这次DeepSeek具体都要招聘什么样的人才呢？ 技术&职能，30+岗位同时招人 DeepSeek官方的招聘页面，一共挂出了30+岗位，覆盖7个职能方向，横跨杭州、北京和内蒙古乌兰察布三地。 大概是这么个格局，全栈开发和算法方向10个、AI核心系统研发6个、模型数据策略5个、深度学习研究员4个，再加上产品、职能、管培各若干。 技术线这块招的最多，这点也符合人们对DeepSeek的一贯印象。 特别是最新押注的Agent Harness方向，正在在疯狂加人，研究员、工程师、产品经理三个方向全部开放，实习全职都收。 搜索方向则是在招算法和架构两个子方向，DeepSeek给搜索写的团队使命是「AGI感知世界的原生感官」，要做的「让每次提问都",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "DeepSeek",
+      "publishedAt": "2026-06-26",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6dabdfade4bd1d8de3d4da2ded03214705837d50fec3c8bc97968c2e937286852f3bb19a&idx=2&mid=2247899865&sn=2b0d2607ead8596c6276d6d76007a995",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "deepseek",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "DeepSeek",
+        "阿里云",
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [
+        "Agent Harness",
+        "工程师",
+        "工程师和用",
+        "深度学习",
+        "又细化出了",
+        "理负责连接"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Agent",
+        "多模态",
+        "Multi-Agent"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai"
       ]
     },
     {
@@ -8639,6 +9010,49 @@
       },
       "trackSlugs": [
         "semiconductor"
+      ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-24fc3720e59e81a1",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "跟Claude谈个恋爱怎么了？Nature最新研究：真能给人聊傻了",
+      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 停停停！再这么跟AI聊下去，真要出事了。 最近，一刷小红书、抖音，总能刷到各种调教Claude的帖子。搜索“Claude人设”、“人机恋”，也是满屏教程。 这些教程教你怎么给Claude一个傲娇男友人设，怎么用system prompt让“他”吃醋、撒娇、发小脾气。 毫不夸张的说，Claude已经，俨然成为了新一代电子老公。 乍一看，这可能只是年轻人向AI讨要点情绪价值。 你甚至可能还会说：Claude又不像GPT那么舔，它是出了名的犟种，有时候还跟你对着干呢。但精神科医生们担心的恰恰不只是谄媚—— 当AI越来越像一个”真人”，不管它是顺着你还是偶尔跟你拌嘴，它带来的或许都不只是陪伴。 最近，发表于Nature旗下《Digital Psychiatry and Neuroscience》的一项研究指出—— 聊天机器人并不需要故意诱导什么，它只要持续顺着你、理解你、陪着你，就都有可能把一个正常人聊到开始怀疑现实。 而在部分真实临床案例中，后果甚至发展到了丢掉工作、住进精神病院，以及多次试图自杀的程度。 这是怎么一回事？ Clau",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-06-25",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6d5edfade44801e52119a3747f9b284195c8b45fe435ca14227aa97f99fef63a33e15f1a&idx=2&mid=2247899692&sn=0a7f73e1559acc292a3cdd7fc172b133",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Digital Psychiatry",
+        "Hamilton Morrin",
+        "AI-Associated Mental Health",
+        "Claude Code",
+        "Fiona Fung"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Claude",
+        "ChatGPT"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "trackSlugs": [
+        "ai"
       ]
     },
     {
@@ -9573,27 +9987,6 @@
         "包含明确事件动作"
       ],
       "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "official-minimax-79aec87b9abf8b5d",
-      "sourceId": "official-minimax",
-      "title": "MaxProof: 生成式验证强化学习驱动的数学证明进化系统 - MiniMax Research",
-      "summary": "在 M3 发布推文中，我们汇报了 M3 模型在 IMO 2025 与 USAMO 2026 两组国际数学竞赛真题上的表现：在搭配 MaxProof 框架后，M3 均超过了人类金牌线。本文将进一步展开我们在推进数学证明能力过程中的技术路径，包括基座模型能力增强、verifier 对齐、refinement 能力构建，以及测试时增强框架 MaxProof 的设计。",
-      "type": "技术突破",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-06-09",
-      "importance": 85,
-      "source": {
-        "name": "MiniMax",
-        "url": "https://www.minimaxi.com/blog/minimax-maxproof-math-proof-evolution",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
       "trackSlugs": [
         "ai"
       ]
@@ -14274,6 +14667,30 @@
       "platform": "Google News"
     },
     {
+      "id": "user-track-wechat-qbitai-ai",
+      "name": "量子位",
+      "status": "partial",
+      "scanned": 18,
+      "accepted": 6,
+      "failed": 8,
+      "platform": "微信",
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics",
+      "name": "量子位",
+      "status": "partial",
+      "scanned": 19,
+      "accepted": 6,
+      "failed": 8,
+      "platform": "微信",
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
+    },
+    {
       "id": "user-x-anthropicai",
       "name": "Anthropic",
       "status": "error",
@@ -14539,7 +14956,7 @@
     }
   },
   "trackingConfigHash": "6ab74b6c66e4aa7f936654288e729c6e70ebd295b4bf0f62bfacdca88628867a",
-  "trackingEnrichedAt": "2026-07-25T15:13:38+00:00",
+  "trackingEnrichedAt": "2026-07-25T16:54:15+00:00",
   "trackCoverage": {
     "ai": {
       "slug": "ai",
@@ -14552,11 +14969,11 @@
       "failedSources": 0,
       "scanned": 21,
       "accepted": 21,
-      "matchedArticles": 271,
-      "backfilledArticles": 14,
-      "independentSources": 271,
-      "lastRun": "2026-07-25T15:13:37+00:00",
-      "message": "三路发现均已尝试，当前匹配 271 条公开事件。"
+      "matchedArticles": 278,
+      "backfilledArticles": 18,
+      "independentSources": 278,
+      "lastRun": "2026-07-25T16:54:14+00:00",
+      "message": "三路发现均已尝试，当前匹配 278 条公开事件。"
     },
     "robotics": {
       "slug": "robotics",
@@ -14569,11 +14986,11 @@
       "failedSources": 0,
       "scanned": 24,
       "accepted": 24,
-      "matchedArticles": 67,
+      "matchedArticles": 73,
       "backfilledArticles": 8,
-      "independentSources": 67,
-      "lastRun": "2026-07-25T15:13:37+00:00",
-      "message": "三路发现均已尝试，当前匹配 67 条公开事件。"
+      "independentSources": 73,
+      "lastRun": "2026-07-25T16:54:14+00:00",
+      "message": "三路发现均已尝试，当前匹配 73 条公开事件。"
     },
     "semiconductor": {
       "slug": "semiconductor",
@@ -14589,7 +15006,7 @@
       "matchedArticles": 46,
       "backfilledArticles": 0,
       "independentSources": 46,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 46 条公开事件。"
     },
     "energy": {
@@ -14606,7 +15023,7 @@
       "matchedArticles": 26,
       "backfilledArticles": 0,
       "independentSources": 26,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 26 条公开事件。"
     },
     "biotech": {
@@ -14623,7 +15040,7 @@
       "matchedArticles": 13,
       "backfilledArticles": 0,
       "independentSources": 13,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 13 条公开事件。"
     },
     "quantum": {
@@ -14640,7 +15057,7 @@
       "matchedArticles": 17,
       "backfilledArticles": 0,
       "independentSources": 17,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 17 条公开事件。"
     },
     "space": {
@@ -14657,7 +15074,7 @@
       "matchedArticles": 37,
       "backfilledArticles": 0,
       "independentSources": 37,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 37 条公开事件。"
     },
     "web3": {
@@ -14674,7 +15091,7 @@
       "matchedArticles": 4,
       "backfilledArticles": 3,
       "independentSources": 4,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 4 条公开事件。"
     },
     "materials": {
@@ -14691,7 +15108,7 @@
       "matchedArticles": 0,
       "backfilledArticles": 0,
       "independentSources": 0,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，但当前快照没有满足匹配条件的文章。"
     },
     "manufacturing": {
@@ -14708,7 +15125,7 @@
       "matchedArticles": 8,
       "backfilledArticles": 2,
       "independentSources": 8,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 8 条公开事件。"
     },
     "fusion": {
@@ -14725,7 +15142,7 @@
       "matchedArticles": 1,
       "backfilledArticles": 0,
       "independentSources": 1,
-      "lastRun": "2026-07-25T15:13:37+00:00",
+      "lastRun": "2026-07-25T16:54:14+00:00",
       "message": "三路发现均已尝试，当前匹配 1 条公开事件。"
     },
     "track-1ccjq49": {
@@ -14739,11 +15156,20 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 203,
-      "backfilledArticles": 203,
-      "independentSources": 203,
-      "lastRun": "2026-07-25T15:13:37+00:00",
-      "message": "三路发现均已尝试，当前匹配 203 条公开事件。"
+      "matchedArticles": 207,
+      "backfilledArticles": 207,
+      "independentSources": 207,
+      "lastRun": "2026-07-25T16:54:14+00:00",
+      "message": "三路发现均已尝试，当前匹配 207 条公开事件。"
     }
+  },
+  "wechatIngestion": {
+    "generatedAt": "2026-07-25T16:54:14+00:00",
+    "configuredSources": 2,
+    "successfulSources": 2,
+    "acceptedArticles": 12,
+    "retainedSources": 0,
+    "mentionedCompanyLinks": 17,
+    "mentionedPeopleLinks": 69
   }
 }
