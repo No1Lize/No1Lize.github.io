@@ -1,0 +1,59 @@
+name: Apply venture entity-label semantic patch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/patch_venture_entity_labels_v1.py
+      - .github/workflows/patch-venture-entity-labels-v1.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: patch-venture-entity-labels-v1
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply semantic label patch
+        run: python tools/patch_venture_entity_labels_v1.py
+      - name: Verify semantic and terminal regressions
+        run: |
+          python -m py_compile \
+            tools/enforce_venture_entity_semantics.py \
+            tools/stabilize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
+          git diff --check
+      - name: Commit permanent semantic fix
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm tools/patch_venture_entity_labels_v1.py
+          rm .github/workflows/patch-venture-entity-labels-v1.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: reject venture editorial labels as entities"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+            sleep 3
+          done
