@@ -1,4 +1,4 @@
-name: Publish enriched market profiles v3
+name: Publish enriched market profiles v4
 
 on:
   push:
@@ -18,7 +18,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,7 +26,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run observable market publication checks
+      - name: Run initial observable checks
         id: check
         shell: bash
         run: |
@@ -51,43 +51,55 @@ jobs:
           echo "tests=$TESTS" >> "$GITHUB_OUTPUT"
           echo "validator=$VALIDATOR" >> "$GITHUB_OUTPUT"
           exit 0
-      - name: Commit diagnostics and valid snapshot
+      - name: Commit validated snapshot with conflict retries
         id: data
+        shell: bash
         run: |
+          set -e
+          VALID=false
+          if [ "${{ steps.check.outputs.crawl }}" = "0" ] && \
+             [ "${{ steps.check.outputs.tests }}" = "0" ] && \
+             [ "${{ steps.check.outputs.validator }}" = "0" ]; then
+            VALID=true
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .github/diagnostics/enriched-market-publication.json \
             .github/diagnostics/enriched-market-crawl.log \
             .github/diagnostics/enriched-market-tests.log \
             .github/diagnostics/enriched-market-validator.log
-          if [ "${{ steps.check.outputs.crawl }}" = "0" ] && \
-             [ "${{ steps.check.outputs.tests }}" = "0" ] && \
-             [ "${{ steps.check.outputs.validator }}" = "0" ]; then
+          if [ "$VALID" = "true" ]; then
             git add public/data/market_profiles.json
-            echo "valid=true" >> "$GITHUB_OUTPUT"
           else
             git checkout -- public/data/market_profiles.json
-            echo "valid=false" >> "$GITHUB_OUTPUT"
           fi
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "valid=$VALID" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "data: publish observable enriched market profile result"
-          git pull --rebase origin main
-          if [ "${{ steps.check.outputs.crawl }}" = "0" ] && \
-             [ "${{ steps.check.outputs.tests }}" = "0" ] && \
-             [ "${{ steps.check.outputs.validator }}" = "0" ]; then
-            python tools/refresh_market_profiles_enriched.py
-            python -m unittest tests.test_market_profiles tests.test_market_profile_transport tests.test_market_profile_enrichment
-            python tools/validate_market_profiles.py
-            git add public/data/market_profiles.json
-            if ! git diff --cached --quiet; then
-              git commit --amend --no-edit
+
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main
+            if [ "$VALID" = "true" ]; then
+              python tools/refresh_market_profiles_enriched.py
+              python -m unittest tests.test_market_profiles tests.test_market_profile_transport tests.test_market_profile_enrichment
+              python tools/validate_market_profiles.py
+              git add public/data/market_profiles.json
+              if ! git diff --cached --quiet; then
+                git commit --amend --no-edit
+              fi
             fi
-          fi
-          git push origin HEAD:main
-          echo "changed=true" >> "$GITHUB_OUTPUT"
+            if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              echo "valid=$VALID" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep $((attempt * 4))
+          done
+          exit 1
       - name: Trigger Pages
         if: steps.data.outputs.changed == 'true' && steps.data.outputs.valid == 'true'
         env:
