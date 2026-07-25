@@ -42,27 +42,34 @@ class FakeGeneric:
     def platform_name(spec: dict) -> str:
         return str(spec.get("name") or urlsplit(str(spec.get("sourceUrl"))).hostname)
 
+    @staticmethod
+    def localize_keywords(terms, _language):
+        return list(terms)
+
 
 class FakeRobust:
     @staticmethod
     def crawl_with_second_stage(spec, _agent, _crawler, _generic):
         source_url = spec["sourceUrl"]
-        if source_url == "https://tw.news.yahoo.com/":
-            article = {
-                "id": "yahoo-article",
-                "sourceId": spec["id"],
-                "title": "人工智慧新創完成融資",
-                "publishedAt": "2026-07-25",
-                "importance": 80,
-                "source": {
-                    "url": "https://tw.news.yahoo.com/ai-funding-20260725.html",
-                    "name": "Yahoo奇摩",
-                },
-            }
-            return [article], {
+        if source_url == "https://tw.news.yahoo.com/search?p=AI":
+            articles = [
+                {
+                    "id": f"yahoo-article-{index}",
+                    "sourceId": spec["id"],
+                    "title": f"人工智慧產業新聞 {index}",
+                    "publishedAt": "2026-07-25",
+                    "importance": 80 - index,
+                    "source": {
+                        "url": f"https://tw.news.yahoo.com/ai-news-{index}-20260725.html",
+                        "name": "Yahoo奇摩",
+                    },
+                }
+                for index in range(1, 4)
+            ]
+            return articles, {
                 "status": "ok",
-                "scanned": 2,
-                "accepted": 1,
+                "scanned": 4,
+                "accepted": 3,
                 "failed": 0,
                 "strategies": ["primary", "structured-data"],
             }
@@ -114,6 +121,19 @@ class AdaptivePublicSourceTests(unittest.TestCase):
             "https://tw.yahoo.com/",
         )
 
+    def test_yahoo_search_parameter_is_preserved(self) -> None:
+        self.assertEqual(
+            adaptive.canonical_source_url("https://tw.news.yahoo.com/search?p=AI"),
+            "https://tw.news.yahoo.com/search?p=AI",
+        )
+        self.assertEqual(
+            adaptive.native_search_seed_urls(
+                "https://tw.yahoo.com/",
+                ["AI / AGI", "人工智慧"],
+            ),
+            ["https://tw.news.yahoo.com/search?p=AI"],
+        )
+
     def test_unknown_site_business_parameters_are_preserved(self) -> None:
         self.assertEqual(
             adaptive.canonical_source_url(
@@ -163,13 +183,14 @@ class AdaptivePublicSourceTests(unittest.TestCase):
             "人工智能与半导体",
         )
 
-    def test_adaptive_pipeline_merges_multiple_entries(self) -> None:
+    def test_adaptive_pipeline_prioritizes_native_search_and_stops(self) -> None:
         spec = {
             "id": "user-source-yahoo-tw",
             "name": "Yahoo奇摩",
             "url": "https://tw.yahoo.com/?p=us&guccounter=1",
             "sourceUrl": "https://tw.yahoo.com/?p=us&guccounter=1",
-            "sourceLanguage": "",
+            "sourceLanguage": "zh-Hant",
+            "keywords": ["AI / AGI", "人工智慧"],
             "maxItems": 5,
         }
         items, status = adaptive.crawl_adaptive_source(
@@ -179,13 +200,25 @@ class AdaptivePublicSourceTests(unittest.TestCase):
             FakeGeneric(),
             FakeRobust(),
         )
-        self.assertEqual([item["id"] for item in items], ["yahoo-article"])
+        self.assertEqual(
+            [item["id"] for item in items],
+            ["yahoo-article-1", "yahoo-article-2", "yahoo-article-3"],
+        )
         self.assertEqual(status["status"], "ok")
         self.assertEqual(status["adapter"], "adaptive-public-v1")
         self.assertEqual(status["profile"], "yahoo-tw")
-        self.assertEqual(status["accepted"], 1)
+        self.assertEqual(status["accepted"], 3)
         self.assertIn("structured-data", status["strategies"])
         self.assertEqual(status["canonicalSourceUrl"], "https://tw.yahoo.com/")
+        self.assertEqual(
+            status["nativeSearchSeeds"],
+            ["https://tw.news.yahoo.com/search?p=AI"],
+        )
+        self.assertEqual(
+            status["attemptedSeeds"],
+            ["https://tw.news.yahoo.com/search?p=AI"],
+        )
+        self.assertEqual(status["requestBudget"]["stopAfterAccepted"], 3)
         self.assertEqual(status["historyLimit"], adaptive.DEFAULT_HISTORY_LIMIT)
 
     def test_strict_profile_discovers_but_does_not_publish_generic_batch(self) -> None:
@@ -194,6 +227,7 @@ class AdaptivePublicSourceTests(unittest.TestCase):
             "name": "东方财富",
             "url": "https://www.eastmoney.com/default.html",
             "sourceUrl": "https://www.eastmoney.com/default.html",
+            "keywords": ["AI"],
             "maxItems": 5,
         }
 
@@ -213,6 +247,7 @@ class AdaptivePublicSourceTests(unittest.TestCase):
         self.assertEqual(status["discoveredAccepted"], 1)
         self.assertEqual(status["publisherHandoff"], "eastmoney-strict-detail")
         self.assertEqual(status["handoffStatusId"], "official-user-东方财富")
+        self.assertEqual(status["requestBudget"]["seedLimit"], 2)
 
     def test_successful_adaptive_batch_keeps_bounded_history(self) -> None:
         existing = [
