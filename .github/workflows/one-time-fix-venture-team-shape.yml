@@ -1,0 +1,60 @@
+name: One-time venture team shape compatibility fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/one-time-fix-venture-team-shape.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-time-venture-team-shape
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch, test and commit
+        run: |
+          set -euo pipefail
+          git pull --rebase origin main
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("tools/normalize_venture_profiles.py")
+          text = path.read_text(encoding="utf-8")
+          old = '''            "summary": clean_text(member.get("summary"), 360),
+                      "background": clean_text(member.get("background"), 360),
+                      "previousExperience": clean_text(member.get("previousExperience"), 360),
+                      "sourceUrl": clean_text(member.get("sourceUrl"), 2000),'''
+          new = '''            "summary": clean_text(member.get("summary"), 360),
+                      "sourceUrl": clean_text(member.get("sourceUrl"), 2000),'''
+          if old not in text:
+              raise SystemExit("expected team-shape block not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          PY
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/normalize_venture_profiles.py
+          git commit -m "fix: keep venture team records compatible with quality validation"
+          git pull --rebase origin main
+          git push origin HEAD:main
