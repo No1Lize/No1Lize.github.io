@@ -1,0 +1,36 @@
+name: Check user source publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/check-user-source-publish.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Record workflow status
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p diagnostics
+          gh run list \
+            --workflow one-time-user-source-publish.yml \
+            --limit 5 \
+            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
+            > diagnostics/user-source-publish-status.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/user-source-publish-status.json
+          git commit -m "ci: record user source publish status"
+          git pull --rebase origin main
+          git push origin HEAD:main
