@@ -1,0 +1,69 @@
+name: Run venture hardening branch
+
+on:
+  push:
+    branches:
+      - feature/venture-narrative-page-chrome-v3
+    paths:
+      - .github/workflows/run-venture-hardening-branch.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: venture-hardening-branch-v3
+  cancel-in-progress: false
+
+jobs:
+  harden:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/venture-narrative-page-chrome-v3
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply migration and validate pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/patch_venture_structured_products.py
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py \
+            tools/sanitize_venture_profiles.py \
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
+          python tools/enrich_venture_profiles.py
+          python tools/normalize_venture_profiles.py
+          python tools/finalize_venture_profiles.py
+          python tools/finalize_venture_profiles.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+          git diff --check
+      - name: Commit validated branch state
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .venture-sanitize-trigger
+          rm -f tools/patch_venture_structured_products.py
+          rm -f .github/workflows/run-venture-hardening-branch.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "data: harden venture profiles and narrative evidence"
+          git push origin HEAD:feature/venture-narrative-page-chrome-v3
