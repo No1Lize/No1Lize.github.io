@@ -14,6 +14,7 @@ try:  # Imported by tests as tools.refresh_wechat_snapshot.
     from . import crawl_articles as crawler
     from . import crawl_with_tracking as tracking
     from . import wechat_index_context_guard
+    from . import wechat_index_record_fallback
     from . import wechat_public_sources
     from . import wechat_registry_bridge
     from . import wechat_sogou_bridge
@@ -21,6 +22,7 @@ except ImportError:  # Executed directly with python tools/...
     import crawl_articles as crawler
     import crawl_with_tracking as tracking
     import wechat_index_context_guard
+    import wechat_index_record_fallback
     import wechat_public_sources
     import wechat_registry_bridge
     import wechat_sogou_bridge
@@ -32,6 +34,10 @@ OUTPUT_PATH = ROOT / "public" / "data" / "articles.json"
 def install_wechat_pipeline() -> None:
     wechat_registry_bridge.install(wechat_public_sources)
     wechat_index_context_guard.install(wechat_registry_bridge)
+    wechat_index_record_fallback.install(
+        wechat_public_sources,
+        wechat_registry_bridge,
+    )
     wechat_sogou_bridge.install(wechat_public_sources)
 
 
@@ -134,6 +140,16 @@ def merge_wechat_snapshot(
                     and int(status.get("accepted", 0) or 0) > 0
                 ),
                 "acceptedArticles": len(incoming),
+                "fullTextArticles": sum(
+                    1
+                    for article in incoming
+                    if article.get("wechatContentMode") != "index-only"
+                ),
+                "indexOnlyArticles": sum(
+                    1
+                    for article in incoming
+                    if article.get("wechatContentMode") == "index-only"
+                ),
                 "retainedSources": sum(
                     1
                     for status in statuses
