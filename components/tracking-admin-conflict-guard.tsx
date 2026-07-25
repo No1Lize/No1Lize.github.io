@@ -8,6 +8,13 @@ import {
 } from "@/lib/user-tracking";
 
 const CONFIG_PATH = `/repos/${TRACKING_REPOSITORY}/contents/${TRACKING_CONFIG_PATH}`;
+const DISMISSAL_KINDS = [
+  "keywords",
+  "people",
+  "companies",
+  "sources",
+  "listedCompanies",
+] as const;
 
 function requestUrl(input: RequestInfo | URL): string {
   if (typeof input === "string") return input;
@@ -35,6 +42,94 @@ function jsonResponse(original: Response, payload: unknown): Response {
     statusText: original.statusText,
     headers,
   });
+}
+
+function decodeBase64(value: string): string {
+  const binary = atob(value.replace(/\n/g, ""));
+  const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+function encodeBase64(value: string): string {
+  const bytes = new TextEncoder().encode(value);
+  let binary = "";
+  for (let index = 0; index < bytes.length; index += 8192) {
+    binary += String.fromCharCode(...Array.from(bytes.subarray(index, index + 8192)));
+  }
+  return btoa(binary);
+}
+
+function normalize(value: unknown): string {
+  return typeof value === "string"
+    ? value.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase("zh-CN")
+    : "";
+}
+
+function uniqueValues(left: unknown, right: unknown): string[] {
+  const values = new Map<string, string>();
+  for (const raw of [
+    ...(Array.isArray(left) ? left : []),
+    ...(Array.isArray(right) ? right : []),
+  ]) {
+    if (typeof raw !== "string") continue;
+    const cleaned = raw.normalize("NFKC").replace(/\s+/g, " ").trim();
+    if (cleaned) values.set(normalize(cleaned), cleaned);
+  }
+  return [...values.values()].slice(0, 300);
+}
+
+function mergeDismissals(outgoingContent: string, remoteContent: string): string {
+  try {
+    const outgoing = JSON.parse(decodeBase64(outgoingContent)) as {
+      tracks?: Array<Record<string, unknown>>;
+    };
+    const remote = JSON.parse(decodeBase64(remoteContent)) as {
+      tracks?: Array<Record<string, unknown>>;
+    };
+    if (!Array.isArray(outgoing.tracks) || !Array.isArray(remote.tracks)) {
+      return outgoingContent;
+    }
+
+    for (const outgoingTrack of outgoing.tracks) {
+      const slug = normalize(outgoingTrack.slug);
+      const name = normalize(outgoingTrack.name);
+      const remoteTrack = remote.tracks.find((candidate) => {
+        const candidateSlug = normalize(candidate.slug);
+        const candidateName = normalize(candidate.name);
+        return Boolean(
+          (slug && candidateSlug === slug) ||
+            (name && candidateName === name),
+        );
+      });
+      if (!remoteTrack) continue;
+
+      const remoteIgnored =
+        remoteTrack.ignoredRecommendations &&
+        typeof remoteTrack.ignoredRecommendations === "object"
+          ? (remoteTrack.ignoredRecommendations as Record<string, unknown>)
+          : {};
+      const outgoingIgnored =
+        outgoingTrack.ignoredRecommendations &&
+        typeof outgoingTrack.ignoredRecommendations === "object"
+          ? ({ ...(outgoingTrack.ignoredRecommendations as Record<string, unknown>) } as Record<
+              string,
+              unknown
+            >)
+          : {};
+
+      for (const kind of DISMISSAL_KINDS) {
+        const merged = uniqueValues(outgoingIgnored[kind], remoteIgnored[kind]);
+        if (merged.length) outgoingIgnored[kind] = merged;
+      }
+      if (Object.keys(outgoingIgnored).length) {
+        outgoingTrack.ignoredRecommendations = outgoingIgnored;
+      }
+    }
+
+    return encodeBase64(`${JSON.stringify(outgoing, null, 2)}\n`);
+  } catch {
+    return outgoingContent;
+  }
 }
 
 export function TrackingAdminConflictGuard() {
@@ -85,12 +180,26 @@ export function TrackingAdminConflictGuard() {
         });
         if (!latestResponse.ok) return latestResponse;
 
-        const latest = (await latestResponse.json()) as { sha?: string };
+        const latest = (await latestResponse.json()) as {
+          sha?: string;
+          content?: string;
+        };
         if (!latest.sha) return originalFetch(input, init);
+
+        const nextBody: Record<string, unknown> = {
+          ...parsedBody,
+          sha: latest.sha,
+        };
+        if (
+          typeof parsedBody.content === "string" &&
+          typeof latest.content === "string"
+        ) {
+          nextBody.content = mergeDismissals(parsedBody.content, latest.content);
+        }
 
         const response = await originalFetch(input, {
           ...init,
-          body: JSON.stringify({ ...parsedBody, sha: latest.sha }),
+          body: JSON.stringify(nextBody),
         });
         lastResponse = response;
 
