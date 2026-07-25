@@ -28,9 +28,15 @@ jobs:
             --limit 5 \
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
             > diagnostics/venture-research-validation-status.json
+          gh run list \
+            --workflow one-time-fix-venture-team-shape.yml \
+            --limit 5 \
+            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
+            > diagnostics/venture-project-background-status.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/venture-research-validation-status.json
-          git commit -m "ci: record rerun venture validation status"
+          git add diagnostics/venture-research-validation-status.json \
+            diagnostics/venture-project-background-status.json
+          git commit -m "ci: record project background sanitation status"
           git pull --rebase origin main
           git push origin HEAD:main
