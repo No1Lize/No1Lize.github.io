@@ -6,6 +6,7 @@ const root = process.cwd();
 const configPath = path.join(root, "config", "user_tracking.json");
 const checkOutput = process.argv.includes("--check-output");
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const requiredPageMarkers = ["产业链结构", "关键研究变量", "主要风险", "最新公开事件"];
 
 function fail(messages) {
   for (const message of messages) {
@@ -86,15 +87,31 @@ if (!checkOutput) {
   process.exit(0);
 }
 
-const missingPages = [];
+const outputErrors = [];
 const routes = [];
 for (const track of enabledTracks) {
   const relativePage = path.join("technology", track.slug, "index.html");
   const absolutePage = path.join(root, "out", relativePage);
   if (!fs.existsSync(absolutePage)) {
-    missingPages.push(`${track.name}: out/${relativePage}`);
+    outputErrors.push(`${track.name}: missing out/${relativePage}`);
     continue;
   }
+
+  const html = fs.readFileSync(absolutePage, "utf8");
+  const markers = [track.name, ...requiredPageMarkers];
+  for (const marker of markers) {
+    if (!html.includes(marker)) {
+      outputErrors.push(
+        `${track.name}: out/${relativePage} is missing generated content marker "${marker}"`,
+      );
+    }
+  }
+  if (/\b(?:undefined|null)\b/.test(html)) {
+    outputErrors.push(
+      `${track.name}: out/${relativePage} contains an undefined/null rendering artifact`,
+    );
+  }
+
   routes.push({
     name: track.name,
     slug: track.slug,
@@ -103,10 +120,10 @@ for (const track of enabledTracks) {
   });
 }
 
-if (missingPages.length) {
+if (outputErrors.length) {
   fail([
-    "Next.js did not export every enabled technology track page",
-    ...missingPages.map((item) => `missing ${item}`),
+    "Next.js did not export complete pages for every enabled technology track",
+    ...outputErrors,
   ]);
 }
 
@@ -130,5 +147,7 @@ fs.writeFileSync(
   "utf8",
 );
 
-console.log(`Verified ${routes.length} generated technology detail pages.`);
-console.log(`Route manifest written to out/technology/route-manifest.json.`);
+console.log(
+  `Verified ${routes.length} generated technology detail pages with complete structured content.`,
+);
+console.log("Route manifest written to out/technology/route-manifest.json.");
