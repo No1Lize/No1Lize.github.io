@@ -3,10 +3,11 @@ from __future__ import annotations
 import unittest
 
 from tools import crawl_with_tracking as tracking
+from tools import tracking_taxonomy as taxonomy
 
 
 class GenericTrackRoutingTests(unittest.TestCase):
-    def test_arbitrary_named_tracks_generate_search_sources(self) -> None:
+    def test_arbitrary_named_tracks_generate_three_search_sources_each(self) -> None:
         payload = {
             "schemaVersion": 1,
             "tracks": [
@@ -42,19 +43,26 @@ class GenericTrackRoutingTests(unittest.TestCase):
         }
 
         tracks = tracking._enabled_tracks(payload)
+        taxonomy.install(tracking)
         sources = tracking._generated_track_sources(tracks)
 
         self.assertEqual(len(tracks), 3)
-        self.assertEqual(len(sources), 3)
+        self.assertEqual(len(sources), 9)
         self.assertEqual(
             {source["sector"] for source in sources},
             {"可控核聚变", "脑机接口", "低空经济"},
         )
-        for source in sources:
-            self.assertTrue(source["id"].startswith("user-track-"))
-            self.assertIn(source["sector"], source["name"])
-            self.assertTrue(source["url"].startswith("https://www.bing.com/search?"))
-            self.assertIn(source["sector"], source["keywords"])
+        for track in tracks:
+            expected_ids = set(taxonomy.expected_source_ids(track["slug"]))
+            actual = [source for source in sources if source["sector"] == track["name"]]
+            self.assertEqual({source["id"] for source in actual}, expected_ids)
+            self.assertTrue(any("bing.com/search" in source["url"] for source in actual))
+            self.assertEqual(
+                sum("news.google.com/rss/search" in source["url"] for source in actual),
+                2,
+            )
+            for source in actual:
+                self.assertIn(source["sector"], source["keywords"])
 
     def test_disabled_and_malformed_tracks_are_ignored(self) -> None:
         payload = {
