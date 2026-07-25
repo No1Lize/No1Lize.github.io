@@ -7,6 +7,34 @@ import json
 from pathlib import Path
 from typing import Any
 
+RESEARCH_SOURCE_OVERRIDES = {
+    "horizon-robotics": "https://www1.hkexnews.hk/search/titlesearch.xhtml?category=0&lang=EN&market=SEHK&stockId=1000238030",
+    "xtalpi": "https://www1.hkexnews.hk/search/titlesearch.xhtml?category=0&lang=EN&market=SEHK&stockId=1000225298",
+    "pony-ai": "https://ir.pony.ai/sec-filings",
+    "weride": "https://ir.weride.ai/financials/sec-filings/",
+    "rigetti": "https://investors.rigetti.com/sec-filings/",
+    "ionq": "https://investors.ionq.com/financials/annual-reports/default.aspx",
+    "rocket-lab": "https://investors.rocketlabcorp.com/sec-filings/",
+    "tempus-ai": "https://investors.tempus.com/financials/sec-filings/default.aspx",
+    "recursion": "https://ir.recursion.com/financials/sec-filings/default.aspx",
+    "mobileye": "https://ir.mobileye.com/financials/sec-filings/default.aspx",
+    "aurora": "https://ir.aurora.tech/financials/sec-filings/default.aspx",
+    "joby": "https://investors.jobyaviation.com/financials/sec-filings/default.aspx",
+}
+
+STABLE_CIK_FALLBACKS = {
+    "PONY": "0001969302",
+    "WRD": "0001867729",
+    "RGTI": "0001838359",
+    "IONQ": "0001824920",
+    "RKLB": "0001819994",
+    "TEM": "0001717115",
+    "RXRX": "0001601830",
+    "MBLY": "0001910139",
+    "AUR": "0001828108",
+    "JOBY": "0001819848",
+}
+
 
 def _read_json(path: Path, fallback: Any) -> Any:
     try:
@@ -16,7 +44,7 @@ def _read_json(path: Path, fallback: Any) -> Any:
 
 
 def load_official_websites(root: Path) -> dict[str, str]:
-    """Return listed-company slug -> best public homepage/IR URL."""
+    """Return listed-company slug -> preferred research/IR URL."""
 
     payload = _read_json(root / "config" / "official_company_sources.json", {})
     companies = payload.get("companies") if isinstance(payload, dict) else []
@@ -39,15 +67,16 @@ def load_official_websites(root: Path) -> dict[str, str]:
         url = preferred or homepage
         if slug and url.startswith(("http://", "https://")):
             result[slug] = url
+    result.update(RESEARCH_SOURCE_OVERRIDES)
     return result
 
 
 def load_local_cik_map(root: Path) -> dict[str, str]:
-    """Return ticker -> zero-padded CIK from the existing article snapshot."""
+    """Return ticker -> zero-padded CIK from snapshots plus stable fallbacks."""
 
     payload = _read_json(root / "public" / "data" / "articles.json", {})
     facts = payload.get("companyFacts") if isinstance(payload, dict) else {}
-    result: dict[str, str] = {}
+    result = dict(STABLE_CIK_FALLBACKS)
     for fact in facts.values() if isinstance(facts, dict) else []:
         if not isinstance(fact, dict):
             continue
