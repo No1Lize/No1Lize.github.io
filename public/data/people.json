@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-25T13:30:00+00:00",
+  "generatedAt": "2026-07-25T15:06:29+00:00",
   "personCount": 15,
   "excludedOrganizationAccounts": [
     "Anthropic @AnthropicAI",
@@ -10,339 +10,1009 @@
   ],
   "people": [
     {
-      "slug": "sam-altman",
-      "name": "Sam Altman",
-      "englishName": "Sam Altman",
-      "aliases": ["Sam Altman", "Samuel Altman"],
-      "handles": [],
-      "sectors": ["AI / AGI"],
-      "role": "OpenAI 首席执行官、创业者",
-      "summary": "人物背景资料将在统一人物爬虫首次运行后，由 Wikipedia、Wikidata、官方资料和站内情报共同补充。",
-      "background": "",
-      "concepts": ["ChatGPT", "OpenAI API", "AI / AGI"],
-      "organizations": ["OpenAI"],
-      "products": ["ChatGPT", "OpenAI API"],
-      "works": [],
-      "books": [],
-      "speeches": [],
-      "materials": [
-        {"title": "Sam Altman on X", "date": "持续更新", "type": "public_post", "url": "https://x.com/sama", "source": "X"},
-        {"title": "OpenAI", "date": "持续更新", "type": "official_profile", "url": "https://openai.com/", "source": "OpenAI"}
-      ],
-      "sources": ["https://x.com/sama", "https://openai.com/"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
-    },
-    {
       "slug": "demis-hassabis",
       "name": "Demis Hassabis",
       "englishName": "Demis Hassabis",
-      "aliases": ["Demis Hassabis"],
+      "aliases": [
+        "Demis Hassabis"
+      ],
       "handles": [],
-      "sectors": ["AI / AGI"],
+      "sectors": [
+        "AI / AGI"
+      ],
       "role": "Google DeepMind 联合创始人、首席执行官",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["AlphaGo", "AlphaFold", "Gemini", "AI / AGI"],
-      "organizations": ["Google DeepMind"],
-      "products": ["AlphaGo", "AlphaFold", "Gemini"],
-      "works": [],
-      "books": [],
-      "speeches": [],
-      "materials": [{"title": "Google DeepMind leadership", "date": "持续更新", "type": "official_profile", "url": "https://deepmind.google/about/", "source": "Google DeepMind"}],
-      "sources": ["https://deepmind.google/about/"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
-    },
-    {
-      "slug": "kaiming-he",
-      "name": "何恺明",
-      "englishName": "Kaiming He",
-      "aliases": ["何恺明", "Kaiming He", "何凯明"],
-      "handles": [],
-      "sectors": ["AI / AGI"],
-      "role": "MIT 教授、计算机视觉研究者",
-      "summary": "围绕计算机视觉、深度学习和可扩展视觉表征开展研究。",
-      "background": "",
-      "concepts": ["ResNet", "Mask R-CNN", "MAE", "AI / AGI"],
-      "organizations": ["MIT", "MIT CSAIL"],
-      "products": ["ResNet", "Mask R-CNN", "MAE"],
+      "summary": "Sir Demis Hassabis (born 27 July 1976) is a British artificial intelligence (AI) researcher and entrepreneur. He is the chief executive officer and co-founder of Google DeepMind and Isomorphic Labs, and a UK Government AI Adviser. In 2024, Hassabis and John M. Jumper were jointly awarded the Nobel Prize in Chemistry for their AI research contributions to protein structure prediction.",
+      "background": "Sir Demis Hassabis (born 27 July 1976) is a British artificial intelligence (AI) researcher and entrepreneur. He is the chief executive officer and co-founder of Google DeepMind and Isomorphic Labs, and a UK Government AI Adviser. In 2024, Hassabis and John M. Jumper were jointly awarded the Nobel Prize in Chemistry for their AI research contributions to protein structure prediction.\nHassabis is a Fellow of the Royal Society and has won awards for his research efforts, including the Breakthrough Prize, the Canada Gairdner International Award and the Lasker Award. He was appointed a CBE in 2017, and knighted in 2024 for his work on AI. He was also listed among the Time 100 most influential people in the world in 2017 and 2025, and was one of the \"Architects of AI\" collectively chosen as Time's 2025 Person of the Year.",
+      "concepts": [
+        "AlphaGo",
+        "AlphaFold",
+        "Gemini",
+        "AI / AGI"
+      ],
+      "organizations": [
+        "Google DeepMind"
+      ],
+      "products": [
+        "AlphaGo",
+        "AlphaFold",
+        "Gemini"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
       "materials": [
-        {"title": "Kaiming He academic homepage", "date": "持续更新", "type": "official_profile", "url": "https://people.csail.mit.edu/kaiming/", "source": "MIT CSAIL"},
-        {"title": "Kaiming He publications", "date": "持续更新", "type": "research_paper", "url": "https://people.csail.mit.edu/kaiming/publications.html", "source": "MIT CSAIL"},
-        {"title": "Kaiming He on X", "date": "持续更新", "type": "public_post", "url": "https://x.com/kaiminghe", "source": "X"}
+        {
+          "title": "Google DeepMind leadership",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://deepmind.google/about/",
+          "source": "Google DeepMind"
+        },
+        {
+          "title": "Demis Hassabis — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://en.wikipedia.org/wiki/Demis_Hassabis",
+          "source": "Wikipedia (en)"
+        },
+        {
+          "title": "Demis Hassabis — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q112843197",
+          "source": "Wikidata"
+        }
       ],
-      "sources": ["https://people.csail.mit.edu/kaiming/", "https://people.csail.mit.edu/kaiming/publications.html", "https://x.com/kaiminghe"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
-    },
-    {
-      "slug": "shunyu-yao",
-      "name": "姚顺雨",
-      "englishName": "Shunyu Yao",
-      "aliases": ["姚顺雨", "Shunyu Yao"],
-      "handles": [],
-      "sectors": ["AI / AGI"],
-      "role": "AI 研究者",
-      "summary": "研究语言模型推理、行动、智能体和真实软件任务评测。",
-      "background": "",
-      "concepts": ["ReAct", "Tree of Thoughts", "SWE-bench", "AI / AGI"],
-      "organizations": [],
-      "products": ["ReAct", "Tree of Thoughts", "SWE-bench"],
-      "works": [],
-      "books": [],
-      "speeches": [],
-      "materials": [
-        {"title": "Shunyu Yao homepage", "date": "持续更新", "type": "official_profile", "url": "https://ysymyth.github.io/", "source": "个人学术主页"},
-        {"title": "Shunyu Yao on X", "date": "持续更新", "type": "public_post", "url": "https://x.com/ShunyuYao12", "source": "X"}
+      "sources": [
+        "https://en.wikipedia.org/wiki/Demis_Hassabis",
+        "https://www.wikidata.org/wiki/Q112843197",
+        "https://deepmind.google/about/"
       ],
-      "sources": ["https://ysymyth.github.io/", "https://x.com/ShunyuYao12"],
       "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "updatedAt": "2026-07-25T15:06:24+00:00"
     },
     {
       "slug": "elon-musk",
       "name": "埃隆·马斯克",
       "englishName": "Elon Musk",
-      "aliases": ["埃隆·马斯克", "Elon Musk", "埃隆・马斯克"],
-      "handles": ["elonmusk"],
-      "sectors": ["AI / AGI"],
+      "aliases": [
+        "埃隆·马斯克",
+        "Elon Musk"
+      ],
+      "handles": [
+        "elonmusk"
+      ],
+      "sectors": [
+        "AI / AGI"
+      ],
       "role": "企业家、工程与产品负责人",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["Starship", "Starlink", "Grok", "Tesla", "AI / AGI"],
-      "organizations": ["SpaceX", "Tesla", "xAI", "X"],
-      "products": ["Starship", "Starlink", "Grok", "Tesla"],
+      "summary": "埃隆·里夫·馬斯克（英語：Elon Reeve Musk /ˈiːlɔːn/；1971年6月28日—），漢名馬誼郎，世界首富、商業大亨、英国皇家学会會士、美国工程院院士。他是SpaceX的創始人、董事長、執行長、首席工程師，特斯拉投資人、執行長、產品設計師、前董事長，无聊公司創始人，Neuralink、OpenAI聯合創始人，同時也是X公司的首席技术官、董事长。2022年馬斯克以2190億美元財富成為世界首富，其后随着旗下公司的股价暴涨，其资产亦同时急剧增加，随着SpaceX于2026年6月在美国纳斯达克上市，其拥有的个人财富突破1万亿美元，成为人类史上首位万亿富豪。",
+      "background": "埃隆·里夫·馬斯克（英語：Elon Reeve Musk /ˈiːlɔːn/；1971年6月28日—），漢名馬誼郎，世界首富、商業大亨、英国皇家学会會士、美国工程院院士。他是SpaceX的創始人、董事長、執行長、首席工程師，特斯拉投資人、執行長、產品設計師、前董事長，无聊公司創始人，Neuralink、OpenAI聯合創始人，同時也是X公司的首席技术官、董事长。2022年馬斯克以2190億美元財富成為世界首富，其后随着旗下公司的股价暴涨，其资产亦同时急剧增加，随着SpaceX于2026年6月在美国纳斯达克上市，其拥有的个人财富突破1万亿美元，成为人类史上首位万亿富豪。\n馬斯克在南非德蘭士瓦省比勒陀利亞長大，曾短暫就讀於比勒陀利亞大學，後於18歲移居加拿大就讀女王大学。兩年後，他轉學到宾夕法尼亚大学，並獲得經濟學、物理學的學士學位。1995年，他搬到加利福尼亚州並就讀於史丹佛大學，而後決定從商。他與弟弟金巴爾共同創辦了網路軟體公司Zip2。1999年，康柏公司以3.07億美元收购了這家初創企業。同年，馬斯克聯合創辦了線上銀行X.com。2000年，該公司與Confinity合併為PayPal。2002年，EBay以15億美元買下PayPal。\n2002年，馬斯克創辦SpaceX，並擔任董事長、執行長、技術長，該公司主要負責太空運輸、航太製造。2004年，他加入電動車製造商特斯拉，並擔任董事長與產品設計師，2008年兼任執行長。2006年，他協助創立太陽能服務公司SolarCity，該公司後成為特斯拉子公司特斯拉能源。2015年，他聯合創辦了非營利公司OpenAI，用於研究和推動友善人工智慧。2016年，他聯合創辦了神經科技公司Neuralink，該公司專注於開發脑机接口。同年，他成立了無聊隧道施工公司，用於研發超迴路列車。2022年10月27日，馬斯克以440億美元收購社交平台Twitter，日後改組為X。2021年10月，美國商業雜誌《富比士》宣布馬斯克财富达到2700億美元，成為該雜誌統計史上最富有的人。2024年11月，美國總統當選人唐納·川普宣布委任馬斯克為總統高級顧問，領導新创立的政府效率部。\n馬斯克被认为曾發表一些误导性或違背科學的言論以及傳播關於COVID-19的錯誤資訊而受到批評。此外，馬斯克在人工智能、加密貨幣、公共交通等方面的觀點亦受到部分專家的批評。",
+      "concepts": [
+        "Starship",
+        "Starlink",
+        "Grok",
+        "Tesla",
+        "AI / AGI"
+      ],
+      "organizations": [
+        "SpaceX",
+        "Tesla",
+        "xAI",
+        "X"
+      ],
+      "products": [
+        "Starship",
+        "Starlink",
+        "Grok",
+        "Tesla"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
       "materials": [
-        {"title": "Elon Musk on X", "date": "持续更新", "type": "public_post", "url": "https://x.com/elonmusk", "source": "X"},
-        {"title": "SpaceX", "date": "持续更新", "type": "official_profile", "url": "https://www.spacex.com/", "source": "SpaceX"},
-        {"title": "Tesla leadership", "date": "持续更新", "type": "official_profile", "url": "https://www.tesla.com/elon-musk", "source": "Tesla"}
+        {
+          "title": "Elon Musk on X",
+          "date": "持续更新",
+          "type": "public_post",
+          "url": "https://x.com/elonmusk",
+          "source": "X"
+        },
+        {
+          "title": "SpaceX",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.spacex.com/",
+          "source": "SpaceX"
+        },
+        {
+          "title": "Tesla leadership",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.tesla.com/elon-musk",
+          "source": "Tesla"
+        },
+        {
+          "title": "埃隆·马斯克 — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://zh.wikipedia.org/wiki/%E5%9F%83%E9%9A%86%C2%B7%E9%A9%AC%E6%96%AF%E5%85%8B",
+          "source": "Wikipedia (zh)"
+        },
+        {
+          "title": "Elon Musk — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q111725317",
+          "source": "Wikidata"
+        },
+        {
+          "title": "马斯克旗下隧道公司The Boring Company洽谈新一轮融资 目标估值200亿美元",
+          "date": "2026-07-25",
+          "type": "article",
+          "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-25/doc-iniiyptr1277184.shtml",
+          "source": "新浪财经"
+        },
+        {
+          "title": "埃隆·马斯克：Flight 13 of Starship launch attempt in 10 minutes!",
+          "date": "2026-07-24",
+          "type": "public_post",
+          "url": "https://x.com/elonmusk/status/2080785172622868516",
+          "source": "埃隆·马斯克 on X"
+        }
       ],
-      "sources": ["https://x.com/elonmusk", "https://www.spacex.com/", "https://www.tesla.com/elon-musk"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E5%9F%83%E9%9A%86%C2%B7%E9%A9%AC%E6%96%AF%E5%85%8B",
+        "https://www.wikidata.org/wiki/Q111725317",
+        "https://x.com/elonmusk",
+        "https://www.spacex.com/",
+        "https://www.tesla.com/elon-musk"
+      ],
+      "status": "complete",
+      "updatedAt": "2026-07-25T15:06:24+00:00"
     },
     {
       "slug": "fei-fei-li",
       "name": "李飞飞",
       "englishName": "Fei-Fei Li",
-      "aliases": ["李飞飞", "Fei-Fei Li"],
-      "handles": ["drfeifei"],
-      "sectors": ["AI / AGI"],
+      "aliases": [
+        "李飞飞",
+        "Fei-Fei Li"
+      ],
+      "handles": [
+        "drfeifei"
+      ],
+      "sectors": [
+        "AI / AGI"
+      ],
       "role": "斯坦福大学教授、计算机视觉研究者",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["ImageNet", "World Labs", "AI / AGI"],
-      "organizations": ["Stanford University", "Stanford HAI"],
-      "products": ["ImageNet", "World Labs"],
+      "summary": "Fei-Fei Li (Chinese: 李飞飞; pinyin: Lǐ Fēifēi; born July 3, 1976) is a Chinese-born American computer scientist best known for establishing ImageNet, the dataset that enabled rapid advances in computer vision in the 2010s. She is a professor of computer science at Stanford University, with research expertise in artificial intelligence, machine learning, deep learning, computer vision, and cognitive neuroscience.",
+      "background": "Fei-Fei Li (Chinese: 李飞飞; pinyin: Lǐ Fēifēi; born July 3, 1976) is a Chinese-born American computer scientist best known for establishing ImageNet, the dataset that enabled rapid advances in computer vision in the 2010s. She is a professor of computer science at Stanford University, with research expertise in artificial intelligence, machine learning, deep learning, computer vision, and cognitive neuroscience.\nLi is a co-director of the Stanford Institute for Human-Centered Artificial Intelligence and a co-director of the Stanford Vision and Learning Lab, and served as Chief Scientist of AI/ML at Google Cloud and the director of the Stanford Artificial Intelligence Laboratory from 2013 to 2018. In 2017, she co-founded AI4ALL, a nonprofit organization working to increase diversity in the field of artificial intelligence. In 2023, Li was named one of the Time 100 AI Most Influential People. \nLi received the Intel Lifetime Achievements Innovation Award in 2017 for her contributions to artificial intelligence, and was elected member of the National Academy of Engineering, the National Academy of Medicine in 2020 and the American Academy of Arts and Sciences in 2021. In 2025, she was named as one of the \"Architects of AI\" for Time's Person of the Year.\nOn August 3, 2023, Li was appointed to the United Nations Scientific Advisory Board, established by Secretary-General Antonio Guterres. In 2024, Li was included on the Gold House's most influential Asian A100 list. In 2024, she raised $230 million for a startup called World Labs, which she and three colleagues founded to develop a \"spatial intelligence\" AI technology that can understand how the three-dimensional physical world works. In 2026, World Labs raised $1 Billion.",
+      "concepts": [
+        "ImageNet",
+        "World Labs",
+        "AI / AGI"
+      ],
+      "organizations": [
+        "Stanford University",
+        "Stanford HAI",
+        "史丹佛大學",
+        "伊利诺伊大学厄巴纳-香槟分校",
+        "Radical Ventures",
+        "Stanford University Computer Science Department",
+        "Institute for Human-Centered Artificial Intelligence"
+      ],
+      "products": [
+        "ImageNet",
+        "World Labs"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
       "materials": [
-        {"title": "Fei-Fei Li at Stanford", "date": "持续更新", "type": "official_profile", "url": "https://profiles.stanford.edu/fei-fei-li", "source": "Stanford University"},
-        {"title": "Fei-Fei Li on X", "date": "持续更新", "type": "public_post", "url": "https://x.com/drfeifei", "source": "X"}
+        {
+          "title": "Fei-Fei Li at Stanford",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://profiles.stanford.edu/fei-fei-li",
+          "source": "Stanford University"
+        },
+        {
+          "title": "Fei-Fei Li on X",
+          "date": "持续更新",
+          "type": "public_post",
+          "url": "https://x.com/drfeifei",
+          "source": "X"
+        },
+        {
+          "title": "Fei-Fei Li — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://en.wikipedia.org/wiki/Fei-Fei_Li",
+          "source": "Wikipedia (en)"
+        },
+        {
+          "title": "Fei-Fei Li — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q18686107",
+          "source": "Wikidata"
+        }
       ],
-      "sources": ["https://profiles.stanford.edu/fei-fei-li", "https://x.com/drfeifei"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
-    },
-    {
-      "slug": "liang-wenfeng",
-      "name": "梁文峰",
-      "englishName": "Liang Wenfeng",
-      "aliases": ["梁文峰", "Liang Wenfeng"],
-      "handles": [],
-      "sectors": ["AI / AGI"],
-      "role": "DeepSeek 创始人",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["DeepSeek-V3", "DeepSeek-R1", "AI / AGI"],
-      "organizations": ["DeepSeek", "幻方量化"],
-      "products": ["DeepSeek-V3", "DeepSeek-R1"],
-      "works": [],
-      "books": [],
-      "speeches": [],
-      "materials": [{"title": "DeepSeek", "date": "持续更新", "type": "official_profile", "url": "https://www.deepseek.com/", "source": "DeepSeek"}],
-      "sources": ["https://www.deepseek.com/"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "sources": [
+        "https://en.wikipedia.org/wiki/Fei-Fei_Li",
+        "https://www.wikidata.org/wiki/Q18686107",
+        "https://profiles.stanford.edu/fei-fei-li",
+        "https://x.com/drfeifei"
+      ],
+      "status": "complete",
+      "updatedAt": "2026-07-25T15:06:25+00:00"
     },
     {
       "slug": "jie-tang",
       "name": "唐杰",
       "englishName": "Jie Tang",
-      "aliases": ["唐杰", "Jie Tang"],
+      "aliases": [
+        "唐杰",
+        "Jie Tang"
+      ],
       "handles": [],
-      "sectors": ["AI / AGI"],
+      "sectors": [
+        "AI / AGI"
+      ],
       "role": "清华大学教授、人工智能研究者",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["AMiner", "智谱AI", "AI / AGI"],
-      "organizations": ["清华大学", "智谱AI"],
-      "products": ["AMiner", "智谱AI"],
-      "works": [],
-      "books": [],
-      "speeches": [],
-      "materials": [{"title": "Jie Tang academic homepage", "date": "持续更新", "type": "official_profile", "url": "https://keg.cs.tsinghua.edu.cn/jietang/", "source": "清华大学"}],
-      "sources": ["https://keg.cs.tsinghua.edu.cn/jietang/"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
-    },
-    {
-      "slug": "frank-wang",
-      "name": "汪滔",
-      "englishName": "Frank Wang",
-      "aliases": ["汪滔", "Frank Wang", "Frank Wang Tao"],
-      "handles": [],
-      "sectors": ["机器人"],
-      "role": "大疆创新创始人",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["DJI 无人机", "飞行影像系统", "机器人"],
-      "organizations": ["大疆创新", "DJI"],
-      "products": ["DJI 无人机", "飞行影像系统"],
-      "works": [],
-      "books": [],
-      "speeches": [],
-      "materials": [{"title": "DJI company profile", "date": "持续更新", "type": "official_profile", "url": "https://www.dji.com/company", "source": "DJI"}],
-      "sources": ["https://www.dji.com/company"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
-    },
-    {
-      "slug": "li-zexiang",
-      "name": "李泽湘",
-      "englishName": "Li Zexiang",
-      "aliases": ["李泽湘", "Li Zexiang"],
-      "handles": [],
-      "sectors": ["机器人"],
-      "role": "机器人学者、创业教育与产业孵化推动者",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["机器人创业孵化", "机器人"],
-      "organizations": ["香港科技大学", "XbotPark 机器人基地"],
-      "products": ["机器人创业孵化"],
+      "summary": "唐杰忠（1932年9月14日—2017年6月18日），男，山东黄县人，中国相声、影视演员。常常同马季、姜昆登台演出。",
+      "background": "唐杰忠（1932年9月14日—2017年6月18日），男，山东黄县人，中国相声、影视演员。常常同马季、姜昆登台演出。",
+      "concepts": [
+        "AMiner",
+        "智谱AI",
+        "AI / AGI"
+      ],
+      "organizations": [
+        "清华大学",
+        "智谱AI",
+        "南方医科大学"
+      ],
+      "products": [
+        "AMiner",
+        "智谱AI"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
       "materials": [
-        {"title": "HKUST faculty profile", "date": "持续更新", "type": "official_profile", "url": "https://ece.hkust.edu.hk/", "source": "香港科技大学"},
-        {"title": "XbotPark", "date": "持续更新", "type": "official_profile", "url": "https://www.xbotpark.com/", "source": "XbotPark"}
+        {
+          "title": "Jie Tang academic homepage",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://keg.cs.tsinghua.edu.cn/jietang/",
+          "source": "清华大学"
+        },
+        {
+          "title": "唐杰忠 — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://zh.wikipedia.org/wiki/%E5%94%90%E6%9D%B0%E5%BF%A0",
+          "source": "Wikipedia (zh)"
+        },
+        {
+          "title": "Jie Tang — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q43147100",
+          "source": "Wikidata"
+        }
       ],
-      "sources": ["https://ece.hkust.edu.hk/", "https://www.xbotpark.com/"],
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E5%94%90%E6%9D%B0%E5%BF%A0",
+        "https://www.wikidata.org/wiki/Q43147100",
+        "https://keg.cs.tsinghua.edu.cn/jietang/"
+      ],
       "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "updatedAt": "2026-07-25T15:06:24+00:00"
     },
     {
-      "slug": "wang-xingxing",
-      "name": "王兴兴",
-      "englishName": "Wang Xingxing",
-      "aliases": ["王兴兴", "Wang Xingxing"],
+      "slug": "kaiming-he",
+      "name": "何恺明",
+      "englishName": "Kaiming He",
+      "aliases": [
+        "何恺明",
+        "Kaiming He",
+        "何凯明"
+      ],
       "handles": [],
-      "sectors": ["机器人"],
-      "role": "宇树科技创始人、机器人研发负责人",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["Unitree H1", "Unitree G1", "四足机器人", "机器人"],
-      "organizations": ["宇树科技", "Unitree Robotics"],
-      "products": ["Unitree H1", "Unitree G1", "四足机器人"],
+      "sectors": [
+        "AI / AGI"
+      ],
+      "role": "MIT 教授、计算机视觉研究者",
+      "summary": "何恺明（1984年—），男，中华人民共和国计算机科学家，残差神经网络主要发明人，主要研究领域为计算机视觉、深度学习，现任麻省理工学院副教授。",
+      "background": "何恺明（1984年—），男，中华人民共和国计算机科学家，残差神经网络主要发明人，主要研究领域为计算机视觉、深度学习，现任麻省理工学院副教授。",
+      "concepts": [
+        "ResNet",
+        "Mask R-CNN",
+        "MAE",
+        "AI / AGI"
+      ],
+      "organizations": [
+        "MIT",
+        "MIT CSAIL",
+        "微软亚洲研究院",
+        "麻省理工學院",
+        "Facebook"
+      ],
+      "products": [
+        "ResNet",
+        "Mask R-CNN",
+        "MAE"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
-      "materials": [{"title": "Unitree Robotics", "date": "持续更新", "type": "official_profile", "url": "https://www.unitree.com/", "source": "宇树科技"}],
-      "sources": ["https://www.unitree.com/"],
-      "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "materials": [
+        {
+          "title": "Kaiming He academic homepage",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://people.csail.mit.edu/kaiming/",
+          "source": "MIT CSAIL"
+        },
+        {
+          "title": "Kaiming He publications",
+          "date": "持续更新",
+          "type": "research_paper",
+          "url": "https://people.csail.mit.edu/kaiming/publications.html",
+          "source": "MIT CSAIL"
+        },
+        {
+          "title": "Kaiming He on X",
+          "date": "持续更新",
+          "type": "public_post",
+          "url": "https://x.com/kaiminghe",
+          "source": "X"
+        },
+        {
+          "title": "何恺明 — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://zh.wikipedia.org/wiki/%E4%BD%95%E6%81%BA%E6%98%8E",
+          "source": "Wikipedia (zh)"
+        },
+        {
+          "title": "Kaiming He — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q94960976",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E4%BD%95%E6%81%BA%E6%98%8E",
+        "https://www.wikidata.org/wiki/Q94960976",
+        "https://people.csail.mit.edu/kaiming/",
+        "https://people.csail.mit.edu/kaiming/publications.html",
+        "https://x.com/kaiminghe"
+      ],
+      "status": "complete",
+      "updatedAt": "2026-07-25T15:06:24+00:00"
     },
     {
-      "slug": "yang-zhao-fusion",
-      "name": "杨钊",
-      "englishName": "Yang Zhao",
-      "aliases": ["杨钊", "Yang Zhao"],
+      "slug": "liang-wenfeng",
+      "name": "梁文峰",
+      "englishName": "Liang Wenfeng",
+      "aliases": [
+        "梁文峰",
+        "Liang Wenfeng"
+      ],
       "handles": [],
-      "sectors": ["可控核聚变"],
-      "role": "能量奇点创始人、聚变能源创业者",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["洪荒70", "高温超导托卡马克", "可控核聚变"],
-      "organizations": ["能量奇点"],
-      "products": ["洪荒70", "高温超导托卡马克"],
+      "sectors": [
+        "AI / AGI"
+      ],
+      "role": "DeepSeek 创始人",
+      "summary": "Liang Wenfeng (Chinese: 梁文锋; pinyin: Liáng Wénfēng; born 1985) is a Chinese entrepreneur and businessman who is the co-founder of the quantitative hedge fund High-Flyer, as well as the founder and CEO of its artificial intelligence company DeepSeek.",
+      "background": "Liang Wenfeng (Chinese: 梁文锋; pinyin: Liáng Wénfēng; born 1985) is a Chinese entrepreneur and businessman who is the co-founder of the quantitative hedge fund High-Flyer, as well as the founder and CEO of its artificial intelligence company DeepSeek.\nLiang attended Zhejiang University, and began his career by applying machine learning methods to quantitative finance. Through High-Flyer, he built large-scale computing infrastructure that was later used to support artificial intelligence research, leading to the creation of DeepSeek in 2023. DeepSeek gained international attention following the release of DeepSeek-R1, which analysts described as demonstrating high-level performance with comparatively limited compute resources.\nIn 2025, Liang was named to Time magazine's list of 100 Most Influential People in AI and Fortune's list of the Most Powerful People in Business.\nIn July 2026, Bloomberg News reported that Liang had become the world's wealthiest founder of an AI-model company, with a net worth of $36 billion, according to the Bloomberg Billionaires Index.",
+      "concepts": [
+        "DeepSeek-V3",
+        "DeepSeek-R1",
+        "AI / AGI"
+      ],
+      "organizations": [
+        "DeepSeek",
+        "幻方量化",
+        "High-Flyer"
+      ],
+      "products": [
+        "DeepSeek-V3",
+        "DeepSeek-R1"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
-      "materials": [{"title": "Energy Singularity", "date": "持续更新", "type": "official_profile", "url": "https://www.energy-singularity.com/", "source": "能量奇点"}],
-      "sources": ["https://www.energy-singularity.com/"],
+      "materials": [
+        {
+          "title": "DeepSeek",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.deepseek.com/",
+          "source": "DeepSeek"
+        },
+        {
+          "title": "Liang Wenfeng — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://en.wikipedia.org/wiki/Liang_Wenfeng",
+          "source": "Wikipedia (en)"
+        },
+        {
+          "title": "Liang Wenfeng — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q131847088",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Liang_Wenfeng",
+        "https://www.wikidata.org/wiki/Q131847088",
+        "https://www.deepseek.com/"
+      ],
       "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "updatedAt": "2026-07-25T15:06:26+00:00"
+    },
+    {
+      "slug": "sam-altman",
+      "name": "Sam Altman",
+      "englishName": "Sam Altman",
+      "aliases": [
+        "Sam Altman",
+        "Samuel Altman"
+      ],
+      "handles": [],
+      "sectors": [
+        "AI / AGI"
+      ],
+      "role": "OpenAI 首席执行官、创业者",
+      "summary": "Samuel Harris Altman (born April 22, 1985) is an American entrepreneur and investor who has been the chief executive officer (CEO) of the artificial intelligence company OpenAI since 2019.",
+      "background": "Samuel Harris Altman (born April 22, 1985) is an American entrepreneur and investor who has been the chief executive officer (CEO) of the artificial intelligence company OpenAI since 2019.\nAltman attended Stanford University for two years before he dropped out and co-founded Loopt, a smartphone geosocial networking application. Loopt was acquired by Green Dot Corporation for $43.4 million in March 2012. In 2011, Altman joined Y Combinator, a technology startup accelerator and venture capital firm, and was the company's president from 2014 to 2019. He is a billionaire, due to investments in over 400 companies including Reddit, Worldcoin, Helion Energy and Instacart.\nAltman co-founded OpenAI in 2015 and became its CEO in 2019, a role that made him a prominent figure of the AI boom. He supervised the launch of ChatGPT in November 2022. In 2023, he was ousted by the organization's board of directors for not being \"consistently candid\". The move was met with significant backlash from employees and investors, resulting in Altman's reinstatement five days later and the formation of a new board.",
+      "concepts": [
+        "ChatGPT",
+        "OpenAI API",
+        "AI / AGI"
+      ],
+      "organizations": [
+        "OpenAI"
+      ],
+      "products": [
+        "ChatGPT",
+        "OpenAI API"
+      ],
+      "works": [],
+      "books": [],
+      "speeches": [],
+      "materials": [
+        {
+          "title": "Sam Altman on X",
+          "date": "持续更新",
+          "type": "public_post",
+          "url": "https://x.com/sama",
+          "source": "X"
+        },
+        {
+          "title": "OpenAI",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://openai.com/",
+          "source": "OpenAI"
+        },
+        {
+          "title": "Sam Altman — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://en.wikipedia.org/wiki/Sam_Altman",
+          "source": "Wikipedia (en)"
+        },
+        {
+          "title": "Sam Altman — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q116467032",
+          "source": "Wikidata"
+        },
+        {
+          "title": "Sam Altman’s biometric startup World raises $52.5M via crypto sale",
+          "date": "2026-07-24",
+          "type": "article",
+          "url": "https://techcrunch.com/2026/07/24/sam-altmans-biometric-startup-world-raises-52-5-million-via-crypto-sale",
+          "source": "TechCrunch Venture"
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Sam_Altman",
+        "https://www.wikidata.org/wiki/Q116467032",
+        "https://x.com/sama",
+        "https://openai.com/"
+      ],
+      "status": "complete",
+      "updatedAt": "2026-07-25T15:06:26+00:00"
+    },
+    {
+      "slug": "shunyu-yao",
+      "name": "姚顺雨",
+      "englishName": "Shunyu Yao",
+      "aliases": [
+        "姚顺雨",
+        "Shunyu Yao"
+      ],
+      "handles": [],
+      "sectors": [
+        "AI / AGI"
+      ],
+      "role": "AI 研究者",
+      "summary": "Shunyu Yao (Chinese: 姚顺雨; born 1998) is a computer scientist specializing in artificial intelligence. He currently serves as a Chief AI Scientist at Tencent.",
+      "background": "Shunyu Yao (Chinese: 姚顺雨; born 1998) is a computer scientist specializing in artificial intelligence. He currently serves as a Chief AI Scientist at Tencent.",
+      "concepts": [
+        "ReAct",
+        "Tree of Thoughts",
+        "SWE-bench",
+        "AI / AGI"
+      ],
+      "organizations": [],
+      "products": [
+        "ReAct",
+        "Tree of Thoughts",
+        "SWE-bench"
+      ],
+      "works": [],
+      "books": [],
+      "speeches": [],
+      "materials": [
+        {
+          "title": "Shunyu Yao homepage",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://ysymyth.github.io/",
+          "source": "个人学术主页"
+        },
+        {
+          "title": "Shunyu Yao on X",
+          "date": "持续更新",
+          "type": "public_post",
+          "url": "https://x.com/ShunyuYao12",
+          "source": "X"
+        },
+        {
+          "title": "Shunyu Yao — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://en.wikipedia.org/wiki/Shunyu_Yao",
+          "source": "Wikipedia (en)"
+        },
+        {
+          "title": "Shunyu Yao — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q130797685",
+          "source": "Wikidata"
+        },
+        {
+          "title": "腾讯混元组织架构再升级：合并大语言模型和多模态团队，统一由姚顺雨管理",
+          "date": "2026-07-24",
+          "type": "article",
+          "url": "https://news.pedaily.cn/202607/566803.shtml",
+          "source": "投资界"
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Shunyu_Yao",
+        "https://www.wikidata.org/wiki/Q130797685",
+        "https://ysymyth.github.io/",
+        "https://x.com/ShunyuYao12"
+      ],
+      "status": "complete",
+      "updatedAt": "2026-07-25T15:06:26+00:00"
     },
     {
       "slug": "bob-mumgaard",
       "name": "Bob Mumgaard",
       "englishName": "Bob Mumgaard",
-      "aliases": ["Bob Mumgaard"],
+      "aliases": [
+        "Bob Mumgaard"
+      ],
       "handles": [],
-      "sectors": ["可控核聚变"],
+      "sectors": [
+        "可控核聚变"
+      ],
       "role": "Commonwealth Fusion Systems 联合创始人、首席执行官",
       "summary": "人物背景资料待统一爬虫补充。",
       "background": "",
-      "concepts": ["SPARC", "ARC", "可控核聚变"],
-      "organizations": ["Commonwealth Fusion Systems"],
-      "products": ["SPARC", "ARC"],
+      "concepts": [
+        "SPARC",
+        "ARC",
+        "可控核聚变"
+      ],
+      "organizations": [
+        "Commonwealth Fusion Systems"
+      ],
+      "products": [
+        "SPARC",
+        "ARC"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
-      "materials": [{"title": "CFS leadership", "date": "持续更新", "type": "official_profile", "url": "https://cfs.energy/", "source": "Commonwealth Fusion Systems"}],
-      "sources": ["https://cfs.energy/"],
+      "materials": [
+        {
+          "title": "CFS leadership",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://cfs.energy/",
+          "source": "Commonwealth Fusion Systems"
+        },
+        {
+          "title": "Bob Mumgaard — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q117251496",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://www.wikidata.org/wiki/Q117251496",
+        "https://cfs.energy/"
+      ],
       "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "updatedAt": "2026-07-25T15:06:25+00:00"
     },
     {
       "slug": "david-kirtley",
       "name": "David Kirtley",
       "englishName": "David Kirtley",
-      "aliases": ["David Kirtley"],
+      "aliases": [
+        "David Kirtley"
+      ],
       "handles": [],
-      "sectors": ["可控核聚变"],
+      "sectors": [
+        "可控核聚变"
+      ],
       "role": "Helion Energy 联合创始人、首席执行官",
       "summary": "人物背景资料待统一爬虫补充。",
       "background": "",
-      "concepts": ["Helion 聚变发电系统", "可控核聚变"],
-      "organizations": ["Helion Energy"],
-      "products": ["Helion 聚变发电系统"],
+      "concepts": [
+        "Helion 聚变发电系统",
+        "可控核聚变"
+      ],
+      "organizations": [
+        "Helion Energy"
+      ],
+      "products": [
+        "Helion 聚变发电系统"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
-      "materials": [{"title": "Helion Energy", "date": "持续更新", "type": "official_profile", "url": "https://www.helionenergy.com/", "source": "Helion Energy"}],
-      "sources": ["https://www.helionenergy.com/"],
+      "materials": [
+        {
+          "title": "Helion Energy",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.helionenergy.com/",
+          "source": "Helion Energy"
+        }
+      ],
+      "sources": [
+        "https://www.helionenergy.com/"
+      ],
       "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "updatedAt": "2026-07-25T15:06:25+00:00"
     },
     {
       "slug": "michl-binderbauer",
       "name": "Michl Binderbauer",
       "englishName": "Michl Binderbauer",
-      "aliases": ["Michl Binderbauer"],
+      "aliases": [
+        "Michl Binderbauer"
+      ],
       "handles": [],
-      "sectors": ["可控核聚变"],
+      "sectors": [
+        "可控核聚变"
+      ],
       "role": "TAE Technologies 首席执行官、聚变研究者",
-      "summary": "人物背景资料待统一爬虫补充。",
-      "background": "",
-      "concepts": ["Norman", "Copernicus", "可控核聚变"],
-      "organizations": ["TAE Technologies"],
-      "products": ["Norman", "Copernicus"],
+      "summary": "Michl Binderbauer is an Austrian-American physicist, and businessman. He is the CEO of TAE Technologies. He holds 40 issued and pending U.S. patents, along with multiple international technology patents. He has published papers on plasma, physics, and fusion.",
+      "background": "Michl Binderbauer is an Austrian-American physicist, and businessman. He is the CEO of TAE Technologies. He holds 40 issued and pending U.S. patents, along with multiple international technology patents. He has published papers on plasma, physics, and fusion.",
+      "concepts": [
+        "Norman",
+        "Copernicus",
+        "可控核聚变"
+      ],
+      "organizations": [
+        "TAE Technologies"
+      ],
+      "products": [
+        "Norman",
+        "Copernicus"
+      ],
       "works": [],
       "books": [],
       "speeches": [],
-      "materials": [{"title": "TAE Technologies leadership", "date": "持续更新", "type": "official_profile", "url": "https://tae.com/", "source": "TAE Technologies"}],
-      "sources": ["https://tae.com/"],
+      "materials": [
+        {
+          "title": "TAE Technologies leadership",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://tae.com/",
+          "source": "TAE Technologies"
+        },
+        {
+          "title": "Michl Binderbauer — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://en.wikipedia.org/wiki/Michl_Binderbauer",
+          "source": "Wikipedia (en)"
+        },
+        {
+          "title": "Michl Binderbauer — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q66011261",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://en.wikipedia.org/wiki/Michl_Binderbauer",
+        "https://www.wikidata.org/wiki/Q66011261",
+        "https://tae.com/"
+      ],
       "status": "partial",
-      "updatedAt": "2026-07-25T13:30:00+00:00"
+      "updatedAt": "2026-07-25T15:06:26+00:00"
+    },
+    {
+      "slug": "yang-zhao-fusion",
+      "name": "杨钊",
+      "englishName": "Yang Zhao",
+      "aliases": [
+        "杨钊",
+        "Yang Zhao"
+      ],
+      "handles": [],
+      "sectors": [
+        "可控核聚变"
+      ],
+      "role": "能量奇点创始人、聚变能源创业者",
+      "summary": "杨钊煊（1995年2月11日—），中国女子网球运动员。她于2014年深圳公开赛完成自己的WTA巡回赛首秀，曾获得2018年亚洲运动会网球比赛女子双打金牌。",
+      "background": "杨钊煊（1995年2月11日—），中国女子网球运动员。她于2014年深圳公开赛完成自己的WTA巡回赛首秀，曾获得2018年亚洲运动会网球比赛女子双打金牌。",
+      "concepts": [
+        "洪荒70",
+        "高温超导托卡马克",
+        "可控核聚变"
+      ],
+      "organizations": [
+        "能量奇点"
+      ],
+      "products": [
+        "洪荒70",
+        "高温超导托卡马克"
+      ],
+      "works": [],
+      "books": [],
+      "speeches": [],
+      "materials": [
+        {
+          "title": "Energy Singularity",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.energy-singularity.com/",
+          "source": "能量奇点"
+        },
+        {
+          "title": "杨钊煊 — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://zh.wikipedia.org/wiki/%E6%9D%A8%E9%92%8A%E7%85%8A",
+          "source": "Wikipedia (zh)"
+        },
+        {
+          "title": "Yang Zhao — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q15478936",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E6%9D%A8%E9%92%8A%E7%85%8A",
+        "https://www.wikidata.org/wiki/Q15478936",
+        "https://www.energy-singularity.com/"
+      ],
+      "status": "partial",
+      "updatedAt": "2026-07-25T15:06:26+00:00"
+    },
+    {
+      "slug": "frank-wang",
+      "name": "汪滔",
+      "englishName": "Frank Wang",
+      "aliases": [
+        "汪滔",
+        "Frank Wang",
+        "Frank Wang Tao"
+      ],
+      "handles": [],
+      "sectors": [
+        "机器人"
+      ],
+      "role": "大疆创新创始人",
+      "summary": "汪滔（1980年—），浙江杭州人，中華人民共和國工程師，無人飛機公司大疆創新的創辦人。",
+      "background": "汪滔（1980年—），浙江杭州人，中華人民共和國工程師，無人飛機公司大疆創新的創辦人。",
+      "concepts": [
+        "DJI 无人机",
+        "飞行影像系统",
+        "机器人"
+      ],
+      "organizations": [
+        "大疆创新",
+        "DJI"
+      ],
+      "products": [
+        "DJI 无人机",
+        "飞行影像系统"
+      ],
+      "works": [],
+      "books": [],
+      "speeches": [],
+      "materials": [
+        {
+          "title": "DJI company profile",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.dji.com/company",
+          "source": "DJI"
+        },
+        {
+          "title": "汪滔 (工程師) — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://zh.wikipedia.org/wiki/%E6%B1%AA%E6%BB%94_(%E5%B7%A5%E7%A8%8B%E5%B8%AB)",
+          "source": "Wikipedia (zh)"
+        },
+        {
+          "title": "Frank Wang — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q112629173",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E6%B1%AA%E6%BB%94_(%E5%B7%A5%E7%A8%8B%E5%B8%AB)",
+        "https://www.wikidata.org/wiki/Q112629173",
+        "https://www.dji.com/company"
+      ],
+      "status": "partial",
+      "updatedAt": "2026-07-25T15:06:26+00:00"
+    },
+    {
+      "slug": "li-zexiang",
+      "name": "李泽湘",
+      "englishName": "Li Zexiang",
+      "aliases": [
+        "李泽湘",
+        "Li Zexiang"
+      ],
+      "handles": [],
+      "sectors": [
+        "机器人"
+      ],
+      "role": "机器人学者、创业教育与产业孵化推动者",
+      "summary": "人物背景资料待统一爬虫补充。",
+      "background": "",
+      "concepts": [
+        "机器人创业孵化",
+        "机器人"
+      ],
+      "organizations": [
+        "香港科技大学",
+        "XbotPark 机器人基地"
+      ],
+      "products": [
+        "机器人创业孵化"
+      ],
+      "works": [],
+      "books": [],
+      "speeches": [],
+      "materials": [
+        {
+          "title": "HKUST faculty profile",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://ece.hkust.edu.hk/",
+          "source": "香港科技大学"
+        },
+        {
+          "title": "XbotPark",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.xbotpark.com/",
+          "source": "XbotPark"
+        },
+        {
+          "title": "Li Zexiang — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q66436059",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://www.wikidata.org/wiki/Q66436059",
+        "https://ece.hkust.edu.hk/",
+        "https://www.xbotpark.com/"
+      ],
+      "status": "partial",
+      "updatedAt": "2026-07-25T15:06:29+00:00"
+    },
+    {
+      "slug": "wang-xingxing",
+      "name": "王兴兴",
+      "englishName": "Wang Xingxing",
+      "aliases": [
+        "王兴兴",
+        "Wang Xingxing"
+      ],
+      "handles": [],
+      "sectors": [
+        "机器人"
+      ],
+      "role": "宇树科技创始人、机器人研发负责人",
+      "summary": "王興興（1990年—），浙江余姚人。中华人民共和国企業家、机器人专家。杭州宇樹科技的创始人兼首席执行官。",
+      "background": "王興興（1990年—），浙江余姚人。中华人民共和国企業家、机器人专家。杭州宇樹科技的创始人兼首席执行官。\n浙江理工大学机电专业本科，上海大学机械工程专业硕士。2015年毕业后入职大疆公司。2016年創立杭州宇樹科技。2023年獲選為《財富》中國40位40歲以下的商界精英。2025年3月，列入“浙江青年五四奖章”拟表彰人选。4月，获得中国青年五四奖章。2025年6月，獲香港特別行政區行政長官李家超委任為特首顧問團成員。",
+      "concepts": [
+        "Unitree H1",
+        "Unitree G1",
+        "四足机器人",
+        "机器人"
+      ],
+      "organizations": [
+        "宇树科技",
+        "Unitree Robotics"
+      ],
+      "products": [
+        "Unitree H1",
+        "Unitree G1",
+        "四足机器人"
+      ],
+      "works": [
+        "宇树科技"
+      ],
+      "books": [],
+      "speeches": [],
+      "materials": [
+        {
+          "title": "Unitree Robotics",
+          "date": "持续更新",
+          "type": "official_profile",
+          "url": "https://www.unitree.com/",
+          "source": "宇树科技"
+        },
+        {
+          "title": "王兴兴 — Wikipedia",
+          "date": "持续更新",
+          "type": "biography",
+          "url": "https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%85%B4%E5%85%B4",
+          "source": "Wikipedia (zh)"
+        },
+        {
+          "title": "Wang Xingxing — Wikidata",
+          "date": "持续更新",
+          "type": "public_document",
+          "url": "https://www.wikidata.org/wiki/Q132794691",
+          "source": "Wikidata"
+        }
+      ],
+      "sources": [
+        "https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%85%B4%E5%85%B4",
+        "https://www.wikidata.org/wiki/Q132794691",
+        "https://www.unitree.com/"
+      ],
+      "status": "partial",
+      "updatedAt": "2026-07-25T15:06:27+00:00"
     }
   ]
 }
