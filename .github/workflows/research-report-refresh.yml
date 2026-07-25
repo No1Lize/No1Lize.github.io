@@ -1,4 +1,4 @@
-name: Refresh public research report PDFs
+name: Refresh public research report PDFs v2
 
 on:
   schedule:
@@ -31,47 +31,111 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Crawl validated public PDFs
-        run: python tools/crawl_research_reports.py
-      - name: Run crawler safeguards
-        run: python -m unittest tests.test_research_reports
-      - name: Install frontend dependencies
-        run: npm install
-      - name: Validate report metadata and static routes
+      - name: Run observable PDF refresh
+        id: check
+        shell: bash
         run: |
-          node --import tsx --test tests/research-report-data.test.ts
-          GITHUB_PAGES=true npx next build
-      - name: Commit report index and bounded PDF archive
+          set +e
+          mkdir -p .github/diagnostics
+          python tools/crawl_research_reports.py > .github/diagnostics/research-report-crawl.log 2>&1
+          CRAWL=$?
+          python -m unittest tests.test_research_reports > .github/diagnostics/research-report-python-tests.log 2>&1
+          PYTEST=$?
+          npm install > .github/diagnostics/research-report-npm.log 2>&1
+          NPM=$?
+          if [ "$NPM" -eq 0 ]; then
+            node --import tsx --test tests/research-report-data.test.ts > .github/diagnostics/research-report-ts-tests.log 2>&1
+            TSTEST=$?
+            GITHUB_PAGES=true npx next build > .github/diagnostics/research-report-build-full.log 2>&1
+            BUILD=$?
+            tail -n 220 .github/diagnostics/research-report-build-full.log > .github/diagnostics/research-report-build.log
+            rm .github/diagnostics/research-report-build-full.log
+          else
+            TSTEST=125
+            BUILD=125
+            printf 'npm install failed; TypeScript test skipped\n' > .github/diagnostics/research-report-ts-tests.log
+            printf 'npm install failed; Next build skipped\n' > .github/diagnostics/research-report-build.log
+          fi
+          REPORTS=$(python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('public/data/research_reports.json')
+          try:
+              print(len(json.loads(path.read_text(encoding='utf-8')).get('reports', [])))
+          except Exception:
+              print(0)
+          PY
+          )
+          cat > .github/diagnostics/research-report-refresh.json <<EOF
+          {
+            "crawl": $CRAWL,
+            "pythonTests": $PYTEST,
+            "npmInstall": $NPM,
+            "typescriptTests": $TSTEST,
+            "pagesBuild": $BUILD,
+            "reports": $REPORTS,
+            "commit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID"
+          }
+          EOF
+          echo "crawl=$CRAWL" >> "$GITHUB_OUTPUT"
+          echo "pytest=$PYTEST" >> "$GITHUB_OUTPUT"
+          echo "npm=$NPM" >> "$GITHUB_OUTPUT"
+          echo "tstest=$TSTEST" >> "$GITHUB_OUTPUT"
+          echo "build=$BUILD" >> "$GITHUB_OUTPUT"
+          echo "reports=$REPORTS" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Commit diagnostics and validated PDF archive
         id: publish
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/research_reports.json public/research-reports
+          git add .github/diagnostics/research-report-refresh.json \
+            .github/diagnostics/research-report-crawl.log \
+            .github/diagnostics/research-report-python-tests.log \
+            .github/diagnostics/research-report-npm.log \
+            .github/diagnostics/research-report-ts-tests.log \
+            .github/diagnostics/research-report-build.log
+          VALID=false
+          if [ "${{ steps.check.outputs.crawl }}" = "0" ] && \
+             [ "${{ steps.check.outputs.pytest }}" = "0" ] && \
+             [ "${{ steps.check.outputs.npm }}" = "0" ] && \
+             [ "${{ steps.check.outputs.tstest }}" = "0" ] && \
+             [ "${{ steps.check.outputs.build }}" = "0" ] && \
+             [ "${{ steps.check.outputs.reports }}" -gt "0" ]; then
+            git add public/data/research_reports.json
+            if [ -d public/research-reports ]; then
+              git add public/research-reports
+            fi
+            VALID=true
+          else
+            git checkout -- public/data/research_reports.json
+            if [ -d public/research-reports ]; then
+              git clean -fd public/research-reports
+            fi
+          fi
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "valid=$VALID" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git commit -m "data: refresh public research report PDFs"
+          git commit -m "ci: record research report PDF refresh result"
           for attempt in 1 2 3; do
-            if git pull --rebase origin main; then
-              python tools/crawl_research_reports.py
-              python -m unittest tests.test_research_reports
-              git add public/data/research_reports.json public/research-reports
-              if ! git diff --cached --quiet; then
-                git commit --amend --no-edit
-              fi
-              if git push origin HEAD:main; then
-                echo "changed=true" >> "$GITHUB_OUTPUT"
-                exit 0
-              fi
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              echo "valid=$VALID" >> "$GITHUB_OUTPUT"
+              exit 0
             fi
             git rebase --abort 2>/dev/null || true
             sleep 4
           done
           exit 1
       - name: Trigger Pages
-        if: steps.publish.outputs.changed == 'true'
+        if: steps.publish.outputs.changed == 'true' && steps.publish.outputs.valid == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run pages.yml --ref main
+      - name: Fail when PDF archive is invalid
+        if: steps.check.outputs.crawl != '0' || steps.check.outputs.pytest != '0' || steps.check.outputs.npm != '0' || steps.check.outputs.tstest != '0' || steps.check.outputs.build != '0' || steps.check.outputs.reports == '0'
+        run: exit 1
