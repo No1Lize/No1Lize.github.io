@@ -1,0 +1,113 @@
+name: One-time user source publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/one-time-user-source-publish.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: one-time-user-source-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh and publish user sources
+        shell: bash
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          run_pipeline() {
+            local report="diagnostics/one-time-user-source-publish.txt"
+            mkdir -p diagnostics
+            {
+              echo "commit=$(git rev-parse HEAD)"
+              echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              echo
+              echo "===== crawl_user_sources ====="
+              python tools/crawl_with_source_categories.py --source feeds
+              echo
+              echo "===== migrate ====="
+              python tools/migrate_article_entities.py
+              echo
+              echo "===== refine_eastmoney ====="
+              python tools/refine_eastmoney_snapshot.py
+              echo
+              echo "===== enrich_tracking ====="
+              python tools/enrich_tracking_snapshot.py
+              echo
+              echo "===== validate_quality ====="
+              python tools/crawl_articles.py --validate-only
+              echo
+              echo "===== validate_eastmoney ====="
+              python tools/validate_eastmoney_snapshot.py
+              echo
+              echo "===== validate_user_source_coverage ====="
+              python tools/validate_user_source_coverage.py
+              echo
+              echo "===== full_unittest ====="
+              python -m unittest discover -s tests -p "test_*.py"
+              echo
+              echo "===== snapshot ====="
+              python - <<'PY'
+              import json
+              from pathlib import Path
+              payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
+              quality = payload.get("qualityGate", {}).get("checks", {})
+              statuses = [
+                  item for item in payload.get("sourceStatus", [])
+                  if str(item.get("id", "")).startswith("user-source-")
+              ]
+              print(json.dumps({
+                  "generatedAt": payload.get("generatedAt"),
+                  "articleCount": payload.get("articleCount"),
+                  "minimumArticlesActual": quality.get("minimumArticles", {}).get("actual"),
+                  "uniqueUrlsActual": quality.get("uniqueUrls", {}).get("actual"),
+                  "uniqueUrlsRequired": quality.get("uniqueUrls", {}).get("required"),
+                  "userSourceStatuses": len(statuses),
+                  "productiveUserSources": sum(
+                      int(item.get("accepted", 0) or 0) > 0
+                      or int(item.get("discoveredAccepted", 0) or 0) > 0
+                      for item in statuses
+                  ),
+              }, ensure_ascii=False, indent=2))
+              PY
+            } 2>&1 | tee "$report"
+          }
+
+          git pull --rebase origin main
+          run_pipeline
+          git add public/data/articles.json diagnostics/one-time-user-source-publish.txt
+          git commit -m "data: publish current user source snapshot"
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              gh workflow run pages.yml --ref main
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+            git pull --rebase origin main
+            run_pipeline
+            git add public/data/articles.json diagnostics/one-time-user-source-publish.txt
+            git commit --amend --no-edit
+          done
