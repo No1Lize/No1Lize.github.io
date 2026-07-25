@@ -1,6 +1,12 @@
 {
-  "schemaVersion": 1,
-  "generatedAt": "2026-07-25T15:05:45+00:00",
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-25T15:50:51+00:00",
+  "trackedCompanies": 15,
+  "marketCounts": {
+    "A股": 3,
+    "港股": 2,
+    "美股": 10
+  },
   "reports": [
     {
       "id": "AP202604281821702568",
@@ -25,7 +31,7 @@
       "originalPdfUrl": "https://pdf.dfcfw.com/pdf/H3_AP202604281821702568_1.pdf",
       "localPdfUrl": "/research-reports/eastmoney-ap202604281821702568.pdf",
       "fileSizeBytes": 434437,
-      "archivedAt": "2026-07-25T15:05:40+00:00"
+      "archivedAt": "2026-07-25T15:50:44+00:00"
     },
     {
       "id": "AP202604231821483907",
@@ -51,7 +57,7 @@
       "originalPdfUrl": "https://pdf.dfcfw.com/pdf/H3_AP202604231821483907_1.pdf",
       "localPdfUrl": "/research-reports/eastmoney-ap202604231821483907.pdf",
       "fileSizeBytes": 340478,
-      "archivedAt": "2026-07-25T15:05:43+00:00"
+      "archivedAt": "2026-07-25T15:50:45+00:00"
     },
     {
       "id": "AP202604221821434869",
@@ -77,7 +83,33 @@
       "originalPdfUrl": "https://pdf.dfcfw.com/pdf/H3_AP202604221821434869_1.pdf",
       "localPdfUrl": "/research-reports/eastmoney-ap202604221821434869.pdf",
       "fileSizeBytes": 626087,
-      "archivedAt": "2026-07-25T15:05:44+00:00"
+      "archivedAt": "2026-07-25T15:50:45+00:00"
+    },
+    {
+      "id": "AP202604171821298291",
+      "slug": "eastmoney-ap202604171821298291",
+      "title": "盈利能力表现稳健，市场份额稳中有升",
+      "publishedAt": "2026-04-17",
+      "institution": "国信证券",
+      "analysts": [
+        "王蔚祺",
+        "李全"
+      ],
+      "reportType": "个股研报",
+      "companySlug": "catl",
+      "companyName": "宁德时代",
+      "ticker": "300750",
+      "market": "A股",
+      "sector": "新能源",
+      "rating": "增持",
+      "ratingChange": "3",
+      "summary": "国信证券 · 关联 宁德时代（300750） · 评级 增持。点击进入站内 PDF 阅读。",
+      "sourceName": "东方财富研报中心",
+      "sourcePageUrl": "https://data.eastmoney.com/report/stock.jshtml?stockcode=300750",
+      "originalPdfUrl": "https://pdf.dfcfw.com/pdf/H3_AP202604171821298291_1.pdf",
+      "localPdfUrl": "/research-reports/eastmoney-ap202604171821298291.pdf",
+      "fileSizeBytes": 528151,
+      "archivedAt": "2026-07-25T15:50:45+00:00"
     },
     {
       "id": "AP202603181820630825",
@@ -102,27 +134,254 @@
       "originalPdfUrl": "https://pdf.dfcfw.com/pdf/H3_AP202603181820630825_1.pdf",
       "localPdfUrl": "/research-reports/eastmoney-ap202603181820630825.pdf",
       "fileSizeBytes": 406333,
-      "archivedAt": "2026-07-25T15:05:40+00:00"
+      "archivedAt": "2026-07-25T15:50:44+00:00"
+    },
+    {
+      "id": "AP202602271820091032",
+      "slug": "eastmoney-ap202602271820091032",
+      "title": "中国AI需求高速增长，国产芯片龙头受益",
+      "publishedAt": "2026-02-27",
+      "institution": "群益证券",
+      "analysts": [
+        "朱吉翔"
+      ],
+      "reportType": "个股研报",
+      "companySlug": "cambricon",
+      "companyName": "寒武纪",
+      "ticker": "688256",
+      "market": "A股",
+      "sector": "半导体",
+      "rating": "增持",
+      "ratingChange": null,
+      "summary": "群益证券 · 关联 寒武纪（688256） · 评级 增持。点击进入站内 PDF 阅读。",
+      "sourceName": "东方财富研报中心",
+      "sourcePageUrl": "https://data.eastmoney.com/report/stock.jshtml?stockcode=688256",
+      "originalPdfUrl": "https://pdf.dfcfw.com/pdf/H3_AP202602271820091032_1.pdf",
+      "localPdfUrl": "/research-reports/eastmoney-ap202602271820091032.pdf",
+      "fileSizeBytes": 459473,
+      "archivedAt": "2026-07-25T15:50:45+00:00"
+    },
+    {
+      "id": "AP202402051620574559",
+      "slug": "eastmoney-ap202402051620574559",
+      "title": "常规业务稳健增长，海外本地化平台逐渐发力",
+      "publishedAt": "2024-02-05",
+      "institution": "西南证券",
+      "analysts": [
+        "杜向阳"
+      ],
+      "reportType": "个股研报",
+      "companySlug": "bgi-genomics",
+      "companyName": "华大基因",
+      "ticker": "300676",
+      "market": "A股",
+      "sector": "生物科技",
+      "rating": "增持",
+      "ratingChange": "3",
+      "summary": "西南证券 · 关联 华大基因（300676） · 评级 增持。点击进入站内 PDF 阅读。",
+      "sourceName": "东方财富研报中心",
+      "sourcePageUrl": "https://data.eastmoney.com/report/stock.jshtml?stockcode=300676",
+      "originalPdfUrl": "https://pdf.dfcfw.com/pdf/H3_AP202402051620574559_1.pdf",
+      "localPdfUrl": "/research-reports/eastmoney-ap202402051620574559.pdf",
+      "fileSizeBytes": 1378148,
+      "archivedAt": "2026-07-25T15:50:45+00:00"
     }
   ],
   "sourceStatus": [
     {
-      "source": "东方财富 · 寒武纪 688256",
+      "source": "多源公开 PDF · 华大基因 300676",
+      "companySlug": "bgi-genomics",
+      "market": "A股",
       "status": "ok",
-      "fetched": 27,
-      "archived": 2
+      "fetched": 1,
+      "archived": 1,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
     },
     {
-      "source": "东方财富 · 宁德时代 300750",
+      "source": "多源公开 PDF · 宁德时代 300750",
+      "companySlug": "catl",
+      "market": "A股",
       "status": "ok",
       "fetched": 40,
-      "archived": 2
+      "archived": 3,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
     },
     {
-      "source": "东方财富 · 华大基因 300676",
+      "source": "多源公开 PDF · 寒武纪 688256",
+      "companySlug": "cambricon",
+      "market": "A股",
       "status": "ok",
+      "fetched": 28,
+      "archived": 3,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · 地平线机器人 09660",
+      "companySlug": "horizon-robotics",
+      "market": "港股",
+      "status": "empty",
       "fetched": 0,
-      "archived": 0
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · 晶泰科技 02228",
+      "companySlug": "xtalpi",
+      "market": "港股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · Aurora Innovation AUR",
+      "companySlug": "aurora",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · IonQ IONQ",
+      "companySlug": "ionq",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · Joby Aviation JOBY",
+      "companySlug": "joby",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · Mobileye MBLY",
+      "companySlug": "mobileye",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · Recursion Pharmaceuticals RXRX",
+      "companySlug": "recursion",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · Rigetti Computing RGTI",
+      "companySlug": "rigetti",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · Rocket Lab RKLB",
+      "companySlug": "rocket-lab",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · Tempus AI TEM",
+      "companySlug": "tempus-ai",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · 小马智行 PONY",
+      "companySlug": "pony-ai",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
+    },
+    {
+      "source": "多源公开 PDF · 文远知行 WRD",
+      "companySlug": "weride",
+      "market": "美股",
+      "status": "empty",
+      "fetched": 0,
+      "archived": 0,
+      "retained": 0,
+      "adapters": [
+        "Eastmoney",
+        "public-web"
+      ]
     }
   ]
 }
