@@ -36,6 +36,9 @@ BROWSER_USER_AGENT = (
     "Chrome/124.0 Safari/537.36 No1LizePublicResearch/1.0"
 )
 DEFAULT_HISTORY_LIMIT = 20
+MAX_ADAPTIVE_TIMEOUT = 12
+MAX_ADAPTIVE_ATTEMPTS = 2
+MIN_USEFUL_YIELD = 3
 YAHOO_VOLATILE_QUERY_KEYS = {
     "guccounter",
     "guce_referrer",
@@ -242,16 +245,18 @@ def decode_public_bytes(
 def fetch_public_text(
     url: str,
     user_agent: str,
-    timeout: int = 18,
-    attempts: int = 3,
+    timeout: int = MAX_ADAPTIVE_TIMEOUT,
+    attempts: int = MAX_ADAPTIVE_ATTEMPTS,
 ) -> str:
-    """Fetch one public page with browser-compatible, profile-aware transport."""
+    """Fetch one public page with a globally bounded request budget."""
 
+    timeout = max(3, min(int(timeout), MAX_ADAPTIVE_TIMEOUT))
+    attempts = max(1, min(int(attempts), MAX_ADAPTIVE_ATTEMPTS))
     profile = profile_for(url)
     parts = urlsplit(url)
     referer = f"{parts.scheme}://{parts.netloc}/" if parts.scheme and parts.netloc else url
     last_error: Exception | None = None
-    for attempt in range(max(1, attempts)):
+    for attempt in range(attempts):
         request = Request(
             url,
             headers={
@@ -272,7 +277,7 @@ def fetch_public_text(
                 )
         except (HTTPError, URLError, TimeoutError, OSError) as exc:
             last_error = exc
-            if attempt + 1 < max(1, attempts):
+            if attempt + 1 < attempts:
                 time.sleep(0.5 * (2**attempt))
     assert last_error is not None
     raise last_error
@@ -291,8 +296,8 @@ class CrawlerProxy:
         self,
         url: str,
         user_agent: str,
-        timeout: int = 18,
-        attempts: int = 3,
+        timeout: int = MAX_ADAPTIVE_TIMEOUT,
+        attempts: int = MAX_ADAPTIVE_ATTEMPTS,
     ) -> str:
         return fetch_public_text(url, user_agent, timeout=timeout, attempts=attempts)
 
@@ -410,20 +415,23 @@ def crawl_adaptive_source(
     profile = profile_for(canonical)
     proxy = CrawlerProxy(crawler)
     max_items = max(1, int(spec.get("maxItems", 10)))
+    useful_yield = 1 if profile.publisher_handoff else min(MIN_USEFUL_YIELD, max_items)
+    seed_limit = 2 if profile.publisher_handoff else 6
+    seed_max_items = min(max_items, MIN_USEFUL_YIELD) if profile.publisher_handoff else max_items
     all_items: list[dict[str, Any]] = []
     statuses: list[dict[str, Any]] = []
     strategies: list[str] = []
-    seeds = source_seed_urls(canonical)
+    seeds = source_seed_urls(canonical)[:seed_limit]
 
     for seed in seeds:
-        if len(_dedupe_articles(all_items, crawler)) >= max_items:
+        if len(_dedupe_articles(all_items, crawler)) >= useful_yield:
             break
         seed_spec = {
             **spec,
             "url": seed,
             "sourceUrl": seed,
             "sourceLanguage": spec.get("sourceLanguage") or profile.default_language,
-            "maxItems": max_items,
+            "maxItems": seed_max_items,
         }
         items, status = robust.crawl_with_second_stage(
             seed_spec,
@@ -475,6 +483,12 @@ def crawl_adaptive_source(
             "attemptedSeeds": seeds,
             "strategies": strategies,
             "historyLimit": max(DEFAULT_HISTORY_LIMIT, max_items),
+            "requestBudget": {
+                "timeoutSeconds": MAX_ADAPTIVE_TIMEOUT,
+                "attempts": MAX_ADAPTIVE_ATTEMPTS,
+                "seedLimit": seed_limit,
+                "stopAfterAccepted": useful_yield,
+            },
         }
     )
 
