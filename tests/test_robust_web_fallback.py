@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 from unittest.mock import patch
+from urllib.parse import parse_qs, urlsplit
 
 from tools import crawl_articles as crawler
 from tools import generic_web_sources as generic
@@ -20,6 +21,16 @@ class RobustWebFallbackTests(unittest.TestCase):
         self.assertEqual(
             candidates,
             ["https://www.youtube.com/watch?v=abc123def45"],
+        )
+
+    def test_embedded_candidates_extract_bilibili_bvid(self) -> None:
+        body = '<script>window.__INITIAL_STATE__={"bvid":"BV1Ab411c7De"};</script>'
+        candidates = robust.embedded_candidates(
+            "https://www.bilibili.com/", body, generic
+        )
+        self.assertEqual(
+            candidates,
+            ["https://www.bilibili.com/video/BV1Ab411c7De"],
         )
 
     def test_search_redirect_unwraps_direct_destination(self) -> None:
@@ -62,6 +73,54 @@ class RobustWebFallbackTests(unittest.TestCase):
             ["https://example.com/news/2026/ai-chip-launch"],
         )
 
+    def test_social_video_sources_skip_sitemap_requests(self) -> None:
+        def fail_fetch(*_args, **_kwargs) -> str:
+            raise AssertionError("social source must not request a sitemap")
+
+        with patch.object(crawler, "fetch_text", side_effect=fail_fetch):
+            youtube = robust.sitemap_candidates(
+                "https://www.youtube.com/",
+                ["AI"],
+                "test-agent",
+                crawler,
+                generic,
+            )
+            bilibili = robust.sitemap_candidates(
+                "https://www.bilibili.com/",
+                ["人工智能"],
+                "test-agent",
+                crawler,
+                generic,
+            )
+
+        self.assertEqual(youtube, ([], 0, []))
+        self.assertEqual(bilibili, ([], 0, []))
+
+    def test_platform_native_search_uses_compact_query(self) -> None:
+        requested: list[str] = []
+
+        class RecordingCrawler:
+            @staticmethod
+            def fetch_text(url: str, *_args, **_kwargs) -> str:
+                requested.append(url)
+                return '<script>{"videoId":"abc123def45"}</script>'
+
+        urls, scanned, errors = robust.native_search_candidates(
+            "https://www.youtube.com/",
+            ["半导体", "AI 芯片", "推理芯片", "多模态", "大模型"],
+            "zh-Hans",
+            "test-agent",
+            RecordingCrawler(),
+            generic,
+        )
+
+        self.assertEqual(scanned, 1)
+        self.assertEqual(errors, [])
+        self.assertEqual(urls, ["https://www.youtube.com/watch?v=abc123def45"])
+        query = parse_qs(urlsplit(requested[0]).query)["search_query"][0]
+        self.assertNotIn(" OR ", query)
+        self.assertEqual(query, "半导体 AI 芯片 推理芯片 多模态")
+
     def test_second_stage_recovers_js_only_youtube_video(self) -> None:
         source_url = "https://www.youtube.com/"
         video_url = "https://www.youtube.com/watch?v=abc123def45"
@@ -97,7 +156,7 @@ class RobustWebFallbackTests(unittest.TestCase):
             if url == video_url:
                 return video_page
             if "sitemap" in url:
-                return "<urlset></urlset>"
+                raise AssertionError("YouTube must not request a sitemap")
             raise AssertionError(f"unexpected URL: {url}")
 
         empty_status = crawler._status(
@@ -120,6 +179,7 @@ class RobustWebFallbackTests(unittest.TestCase):
         self.assertEqual(status["status"], "ok")
         self.assertEqual(status["detectedLanguage"], "en")
         self.assertIn("search-page", status["strategies"])
+        self.assertNotIn("sitemap", status["strategies"])
 
 
 if __name__ == "__main__":
