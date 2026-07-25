@@ -34,6 +34,7 @@ export function TrackingRecommendations({
 }) {
   const [pending, setPending] = useState<string>("");
   const [hidden, setHidden] = useState<Record<string, boolean>>({});
+  const [error, setError] = useState("");
 
   const sections = useMemo(
     () =>
@@ -50,9 +51,12 @@ export function TrackingRecommendations({
   async function add(type: RecommendationType, item: AnyTrackingRecommendation) {
     const key = `${type}-${item.value}`;
     setPending(key);
+    setError("");
     try {
       await onAdd?.(type, item);
       setHidden((current) => ({ ...current, [key]: true }));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
     } finally {
       setPending("");
     }
@@ -64,6 +68,12 @@ export function TrackingRecommendations({
         <strong>{onlyType ? labels[onlyType] : "智能推荐"}</strong>
         <span>根据当前赛道情报自动生成</span>
       </div>
+
+      {error ? (
+        <p className={styles.error} role="alert">
+          添加失败：{error}
+        </p>
+      ) : null}
 
       {sections.map((section) => {
         const visibleItems = section.items.filter(
@@ -84,7 +94,7 @@ export function TrackingRecommendations({
                     <button
                       className={styles.item}
                       key={key}
-                      disabled={pending === key}
+                      disabled={Boolean(pending)}
                       onClick={() => void add(section.type, item)}
                       title={item.reason}
                       type="button"
