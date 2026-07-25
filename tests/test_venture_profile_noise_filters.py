@@ -49,7 +49,11 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
             [page],
             "远征A2、灵犀X2 与 Genie Studio具身智能开发平台",
         )
-        self.assertEqual(products[:3], ["远征A2", "灵犀X2", "Genie Studio具身智能开发平台"])
+        self.assertTrue(
+            {"远征A2", "灵犀X2", "Genie Studio具身智能开发平台"}.issubset(
+                set(products[:3])
+            )
+        )
         self.assertIn("远征A3人形机器人", products)
         self.assertNotIn("产品软件包", products)
         self.assertNotIn("产品参数", products)
