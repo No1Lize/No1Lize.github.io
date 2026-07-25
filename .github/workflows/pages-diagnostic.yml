@@ -1,6 +1,6 @@
 name: One-time Pages build diagnostic
 
-# Diagnostic run 4: narrow the generated source category before verification.
+# Diagnostic run 5: verify current main exactly as committed.
 on:
   push:
     branches: [main]
@@ -20,23 +20,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Apply confirmed source category type fix
-        shell: bash
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path("lib/tracking-recommendations.ts")
-          text = path.read_text(encoding="utf-8")
-          old = '      const category = isCompanySource ? "company" : "media";'
-          new = (
-              '      const category: TrackingSourceRecommendation["source"]["sourceCategory"] =\n'
-              '        isCompanySource ? "company" : "media";'
-          )
-          if old not in text:
-              raise SystemExit("expected source category line was not found")
-          path.write_text(text.replace(old, new, 1), encoding="utf-8")
-          PY
       - name: Run the same checks as Pages
         shell: bash
         run: |
@@ -66,8 +49,9 @@ jobs:
           import os
           from pathlib import Path
 
-          log_path = Path("pages-build-diagnostic.log")
-          lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+          lines = Path("pages-build-diagnostic.log").read_text(
+              encoding="utf-8", errors="replace"
+          ).splitlines()
           install_status = int(os.environ["INSTALL_STATUS"])
           unit_status = int(os.environ["UNIT_STATUS"])
           build_status = int(os.environ["BUILD_STATUS"])
@@ -84,12 +68,12 @@ jobs:
           target.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
           PY
 
-      - name: Commit source fix and diagnostic result
+      - name: Commit diagnostic result
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add lib/tracking-recommendations.ts diagnostics/pages-build-status.json
-          git commit -m "fix: narrow recommended source category and record Pages diagnostic" || exit 0
+          git add diagnostics/pages-build-status.json
+          git commit -m "ci: record current-main Pages diagnostic" || exit 0
           git pull --rebase origin main
           git push origin HEAD:main
