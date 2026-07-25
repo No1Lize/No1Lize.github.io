@@ -1,6 +1,6 @@
-commit=7bfb02d31fce77bf5f28a4c485b5c7c0aaebb82a
-generated_at=2026-07-25T05:44:33Z
-exit_code=1
+commit=b939533113c91be12ebcb6645dc38f1696daaed4
+generated_at=2026-07-25T05:47:13Z
+exit_code=0
 
 ===== migrate =====
 {"clearedFakeCompanies": 0, "recoveredSpecializedStatuses": 1, "relabelledSources": 7, "removedFakeCompanySlugs": 0, "removedLegacyStatuses": 0, "removedNonArticles": 0}
@@ -42,44 +42,17 @@ exit_code=0
 
 ===== full_unittest =====
 ...........official=two fatal=RuntimeError: blocked
-.............................................................................E.EE............
-======================================================================
-ERROR: test_generic_crawler_excludes_company_sources (test_source_categories.SourceCategoryTests.test_generic_crawler_excludes_company_sources)
+.............................................................................................
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 57, in test_generic_crawler_excludes_company_sources
-    filtered = generic_categories.filter_sources(sources)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: module 'tools.crawl_with_source_categories' has no attribute 'filter_sources'
+Ran 104 tests in 0.072s
 
-======================================================================
-ERROR: test_official_crawler_keeps_company_sources (test_source_categories.SourceCategoryTests.test_official_crawler_keeps_company_sources)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 82, in test_official_crawler_keeps_company_sources
-    filtered = official_categories._filtered_tracking_payload(tracking)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: module 'tools.crawl_official_with_source_categories' has no attribute '_filtered_tracking_payload'
-
-======================================================================
-ERROR: test_official_crawler_keeps_eastmoney_media_exception (test_source_categories.SourceCategoryTests.test_official_crawler_keeps_eastmoney_media_exception)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 107, in test_official_crawler_keeps_eastmoney_media_exception
-    filtered = official_categories._filtered_tracking_payload(tracking)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AttributeError: module 'tools.crawl_official_with_source_categories' has no attribute '_filtered_tracking_payload'
-
-----------------------------------------------------------------------
-Ran 104 tests in 0.152s
-
-FAILED (errors=3)
+OK
 No snapshot changes (1 articles).
-exit_code=1
+exit_code=0
 
 ===== final_snapshot_summary =====
 {
-  "generatedAt": "2026-07-25T05:44:31+00:00",
+  "generatedAt": "2026-07-25T05:47:11+00:00",
   "articleCount": 432,
   "eastmoneyDetailCount": 7,
   "internalMarkerCount": 0,
