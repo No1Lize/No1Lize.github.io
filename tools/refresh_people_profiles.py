@@ -409,11 +409,16 @@ def enrich_candidate(candidate: dict[str, Any], previous: dict[str, Any] | None,
         })
 
     article_materials = matching_articles(candidate, articles)
+    previous_materials = [
+        item for item in (previous.get("materials") or [])
+        if "wikipedia.org" not in str(item.get("url") or "").casefold()
+        and "wikidata.org" not in str(item.get("url") or "").casefold()
+    ]
     materials = dedupe_materials([
         *official_materials,
         *reference_materials,
         *article_materials,
-        *(previous.get("materials") or []),
+        *previous_materials,
     ])
 
     wiki_extract = str((wikipedia or {}).get("extract") or "").strip()

@@ -44,6 +44,14 @@ class PeopleProfilePipelineTest(unittest.TestCase):
         self.assertEqual(set(musk["sectors"]), {"AI / AGI", "商业航天"})
         self.assertIn("elonmusk", musk["handles"])
 
+    def test_profile_snapshot_has_single_verified_identity_reference(self):
+        payload = json.loads((ROOT / "public" / "data" / "people.json").read_text(encoding="utf-8"))
+        for person in payload["people"]:
+            wikipedia = [item for item in person["materials"] if "wikipedia.org" in item["url"]]
+            wikidata = [item for item in person["materials"] if "wikidata.org" in item["url"]]
+            self.assertLessEqual(len(wikipedia), 1, person["slug"])
+            self.assertLessEqual(len(wikidata), 1, person["slug"])
+
     def test_offline_generation_keeps_every_real_tracked_person(self):
         payload = MODULE.build_payload(offline=True, workers=1)
         self.assertGreaterEqual(payload["personCount"], 15)
