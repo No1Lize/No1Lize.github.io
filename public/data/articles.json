@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T14:13:40+00:00",
-  "articleCount": 483,
+  "generatedAt": "2026-07-25T14:28:13+00:00",
+  "articleCount": 482,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -165,11 +165,11 @@
     },
     {
       "id": "x-openai-b913404590ad590a",
-      "sourceId": "user-x-openai",
+      "sourceId": "x-openai",
       "title": "OpenAI：@huggingface We recognize there are a lot of questions and speculative details circulating related to the Hugging Face incident. This is an unpreceden",
       "summary": "@huggingface We recognize there are a lot of questions and speculative details circulating related to the Hugging Face incident. This is an unprecedented incident, and we think it marks an important moment for AI safety. We are still conducting a thorough review along with external",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "OpenAI",
       "publishedAt": "2026-07-25",
@@ -190,6 +190,27 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "official-user-东方财富-ee4130184a379723",
+      "sourceId": "official-user-东方财富",
+      "title": "国家数据局党组书记、局长刘烈宏赴上海市调研数据要素市场化配置改革工作",
+      "summary": "7月16日—18日，国家数据局党组书记、局长刘烈宏带队赴上海市，实地调研上海数据集团、上海数据交易所、上海申康 医院 发展中心、智元创新（上海）、它石智航、零数科技、无问芯穹、优咔网络、灵犀云、垣信卫星、 国泰海通 证券、松鼠云上技术等公司，围绕数据基础设施建设、数据资源开发利用、数据流通交易、具身智能、脑机接口等，深入了解 数据要素 市场化配置改革工作推进情况。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "商业航天",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253821161997.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
+      },
+      "trackSlugs": [
+        "space"
       ]
     },
     {
@@ -341,10 +362,10 @@
       ]
     },
     {
-      "id": "user-track-quantum-google-us-6675a8584927c2b2",
+      "id": "user-track-quantum-google-us-cce6a567e2e4ec81",
       "sourceId": "user-track-quantum-google-us",
-      "title": "Intel vs. IonQ: Comparing Revenue Trends Between Artificial Intelligence and Quantum Computing Chipmakers - The Motley Fool",
-      "summary": "Intel vs. IonQ: Comparing Revenue Trends Between Artificial Intelligence and Quantum Computing Chipmakers The Motley Fool",
+      "title": "Intel vs. IonQ: Comparing Revenue Trends Between Artificial Intelligence and Quantum Computing Chipmakers - The Globe and Mail",
+      "summary": "Intel vs. IonQ: Comparing Revenue Trends Between Artificial Intelligence and Quantum Computing Chipmakers The Globe and Mail",
       "type": "公司动态",
       "region": "美国",
       "sector": "半导体",
@@ -353,7 +374,7 @@
       "importance": 76,
       "source": {
         "name": "量子计算 · Google News 英文",
-        "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxQVmVUcjgzSnpXVk1LRldHeDJfNHYyZ24yR1V5S0ZLajVibFVWcHBGUHBRSGtFUUVKZFRLUlI3LXd0UVUxNEV4TFZNWVZHN19xSmt2NHFOeXkxcy1SRUFVWTlpejM3R2FRT3pqMHpiQ2hLTE8tbmJqU3VtOWNzUnYwaE5MSHdNRUx5MDgzMGFNbjJRckNvR0FvNVh3dTVmZ2tmdXZlaTJuVGlPR3ZCYkMtY1BBakt5Y2NoOWhPSUc0TnJUQldZX0lROXZTNGR3bm1xSXhGNjBEWUlsV0ZZaElBU1Fhd1NwTnc?oc=5",
+        "url": "https://news.google.com/rss/articles/CBMijwJBVV95cUxQSGdGX1RsbWlyV05weGhEVXhVZjhPNmdfQllQc2hESk5xVnl1NnVKOTlsQlJ4ckxMSk5oeS05aEN2OVBKVUsycHhEVlgtRWs0cTVlSm9TbmhHUnhmWlBnYWEtQ3JhNE8xSlJuSy1SWTRiMEdUU0h3VUVTcC0yZE5jR3U5ZmxVNGVqZ2FWdUJ5ZFNvNVFWSzZscHVfWFhENG9FRmxLM2NmcEdQS0RxMDFrZDFIWnNzTFVSM0R0emRkbmNiTk5FaENKc3NpbUNkZWNFZ3lURGw0Z0R5c0xmYmM4eW43SHE2bEdqUEo4Vm85Y2twZUFNZFBTM2dvVklpOW1kU1NBM3FTNG1qT2o1RHl3?oc=5",
         "level": "待交叉验证",
         "platform": "Google News"
       },
@@ -364,6 +385,18 @@
         "标题命中公司/账号"
       ],
       "qualityStatus": "低可信",
+      "relatedSources": [
+        {
+          "name": "量子计算 · Google News 英文",
+          "url": "https://news.google.com/rss/articles/CBMi5wFBVV95cUxQVmVUcjgzSnpXVk1LRldHeDJfNHYyZ24yR1V5S0ZLajVibFVWcHBGUHBRSGtFUUVKZFRLUlI3LXd0UVUxNEV4TFZNWVZHN19xSmt2NHFOeXkxcy1SRUFVWTlpejM3R2FRT3pqMHpiQ2hLTE8tbmJqU3VtOWNzUnYwaE5MSHdNRUx5MDgzMGFNbjJRckNvR0FvNVh3dTVmZ2tmdXZlaTJuVGlPR3ZCYkMtY1BBakt5Y2NoOWhPSUc0TnJUQldZX0lROXZTNGR3bm1xSXhGNjBEWUlsV0ZZaElBU1Fhd1NwTnc?oc=5",
+          "level": "待交叉验证",
+          "platform": "Google News",
+          "title": "Intel vs. IonQ: Comparing Revenue Trends Between Artificial Intelligence and Quantum Computing Chipmakers - The Motley Fool",
+          "publishedAt": "2026-07-25"
+        }
+      ],
+      "duplicateCount": 1,
+      "eventClusterId": "6864016b3771efee",
       "trackSlugs": [
         "semiconductor",
         "quantum"
@@ -610,6 +643,33 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-80037f9fc6dfe41e",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "下班國際線》「台灣若被攻陷，就代表我失敗！」Anduril創辦人拉奇打造AI無人軍團：台海戰爭竟成公司KPI！",
+      "summary": "頂著爆炸頭、穿著花襯衫，Anduril創辦人帕爾默・拉奇（Palmer Luckey）看起來不像傳統軍火商，更像還沒離開遊戲世界的矽谷玩家。拉奇21歲就以高達20億美元的價格把虛擬實境頭盔公司Oculus賣給了臉書（Facebook），卻在幾年後被馬克·祖克柏掃地出門，隨後徹底轉向，在2017年創辦了一家當時所有矽谷朋友都覺得他瘋了的軍火公司。這名創業家並 ......",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E4%B8%8B%E7%8F%AD%E5%9C%8B%E9%9A%9B%E7%B7%9A-%E5%8F%B0%E7%81%A3%E8%8B%A5%E8%A2%AB%E6%94%BB%E9%99%B7-%E5%B0%B1%E4%BB%A3%E8%A1%A8%E6%88%91%E5%A4%B1%E6%95%97-anduril%E5%89%B5%E8%BE%A6%E4%BA%BA%E6%8B%89%E5%A5%87%E6%89%93%E9%80%A0ai%E7%84%A1%E4%BA%BA%E8%BB%8D%E5%9C%98-%E5%8F%B0%E6%B5%B7%E6%88%B0%E7%88%AD%E7%AB%9F%E6%88%90%E5%85%AC%E5%8F%B8kpi-140000397.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "manufacturing"
       ]
     },
     {
@@ -1310,6 +1370,29 @@
       ]
     },
     {
+      "id": "prnewswire-tech-e58e4355ef751850",
+      "sourceId": "prnewswire-tech",
+      "title": "Shanghai Electric präsentiert auf der WAIC 2026 sein Portfolio an Robotern mit verkörperter Intelligenz sowie KI-native Lösungen für intelligente Fabriken",
+      "summary": "Mit humanoiden Robotern, die über 41 Freiheitsgrade verfügen, Rohrinspektionsrobotern mit einer Positioniergenauigkeit von ±1 mm sowie 51 industrietauglichen KI-Agenten SHANGHAI, 25. Juli 2026 /PRNewswire/ -- Arbeitsabläufe bei der Fertigung hochwertiger Ausrüstung finden häufig auf engem...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/shanghai-electric-prasentiert-auf-der-waic-2026-sein-portfolio-an-robotern-mit-verkorperter-intelligenz-sowie-ki-native-losungen-fur-intelligente-fabriken-302834515.html",
+        "level": "媒体报道",
+        "platform": "新闻稿"
+      },
+      "trackSlugs": [
+        "robotics",
+        "web3",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "prnewswire-tech-dcf86ade37a2941f",
       "sourceId": "prnewswire-tech",
       "title": "Tencent Brings Together AI and Games to Help Preserve and Share Cultural Heritage of New UNESCO Site in Jingdezhen",
@@ -1688,6 +1771,32 @@
       ]
     },
     {
+      "id": "user-track-robotics-google-cn-de20e57499668400",
+      "sourceId": "user-track-robotics-google-cn",
+      "title": "宇树科技基础教育具身智能实验室落地成都锦江区 - 中国科技网",
+      "summary": "宇树科技基础教育具身智能实验室落地成都锦江区 中国科技网",
+      "type": "商业进展",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 84,
+      "source": {
+        "name": "机器人 · Google News 中文",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1SNG9OQzNiUHBvSU1YSFppVzRMREtHUThhWU1iRHNHV0pfRzZUc1djUXB1SUFBX1pndFRQcy0wLW1fbERISHF6RjB5OXdzNG52d29FLUNzX2JEUUZRcE1UVXpMRDUwS3d4UHp5eXdhNUY?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "qualityScore": 35,
+      "qualitySignals": [
+        "标题命中 2 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "robotics"
+      ]
+    },
+    {
       "id": "user-track-fusion-bing-08522c1588fb889a",
       "sourceId": "user-track-fusion-bing",
       "title": "2026年可控核聚变行业深度分析报告：中国聚变项目总投资超200亿元，托卡马克装置占比达46% - 热点洞察 - 周知报告",
@@ -1798,11 +1907,11 @@
     },
     {
       "id": "x-anthropic-538ad0ffbc0eb505",
-      "sourceId": "user-x-anthropicai",
+      "sourceId": "x-anthropic",
       "title": "Anthropic：RT @claudeai: Introducing Claude Opus 5. It's a thoughtful and proactive model that comes close to the frontier intelligence of Fable 5 at…",
       "summary": "RT @claudeai: Introducing Claude Opus 5. It's a thoughtful and proactive model that comes close to the frontier intelligence of Fable 5 at…",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "产品发布",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-24",
@@ -2267,33 +2376,6 @@
         "ai",
         "space",
         "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-track-quantum-google-us-f33d4b84096fbb9b",
-      "sourceId": "user-track-quantum-google-us",
-      "title": "Rigetti Computing, Inc. (RGTI) Stock Sinks As Market Gains: What You Should Know - Yahoo Finance",
-      "summary": "Rigetti Computing, Inc. (RGTI) Stock Sinks As Market Gains: What You Should Know Yahoo Finance",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "量子计算 · Google News 英文",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOTG9kWFk1RlBkRklGckY3N3JiMkZCX3FVVUtPRFQxSWJvQ21ySU9YdEJRVnJNZFo4dThqSHdQMXZIOUZ4UlFEcEdlM1hqTDd2cjRublM0UlJyc1RQeldfNDRlTXJxOGJmaUZBZzdOX3JacC05Ri1URW9MbXhuanZnNjRlTTYxY01MNWFjTVF6OV93Q0RvWmtZRFpxTU1QUQ?oc=5",
-        "level": "待交叉验证",
-        "platform": "Google News"
-      },
-      "qualityScore": 39,
-      "qualitySignals": [
-        "标题命中 2 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "quantum"
       ]
     },
     {
@@ -2845,6 +2927,223 @@
       "qualityScore": 19,
       "qualitySignals": [
         "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-f03ad3c04fb9d53e",
+      "sourceId": "user-source-source-perplexity",
+      "title": "Economic Impacts of AI on Enterprise IT Organizations",
+      "summary": "We analyzed 85.5 million Perplexity Enterprise queries over twelve months to understand what AI usage reveals about hidden IT demand.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/economic-impact-of-ai-on-enterprise-it-organizations",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "qualityScore": 25,
+      "qualitySignals": [
+        "摘要命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-deaf56d95044bc9b",
+      "sourceId": "user-source-source-perplexity",
+      "title": "Perplexity Enterprise vs. ChatGPT | Why Teams Switch",
+      "summary": "Choose Perplexity Enterprise for real-time, accurate answers. Don't make business decisions based off of hallucinations.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/versus/chatgpt",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "companySlug": "openai",
+      "qualityScore": 49,
+      "qualitySignals": [
+        "标题命中 2 个追踪词"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-c01582666f30b228",
+      "sourceId": "user-source-source-perplexity",
+      "title": "Perplexity Trainings & Webinars",
+      "summary": "Trainings and webinars covering product updates, enterprise use cases, and expert strategies.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/trainingsandwebinars",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-75c759d4ef6f4698",
+      "sourceId": "user-source-source-perplexity",
+      "title": "AI Adoption in the Enterprise",
+      "summary": "How to increase team adoption of AI across your organization.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/ai-adoption-in-the-enterprise",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-53104643c0804eab",
+      "sourceId": "user-source-source-perplexity",
+      "title": "Managing User Permissions - Perplexity Enterprise",
+      "summary": "Perplexity Enterprise enables knowledge workers to research smarter with real-time, cited insights for confident decisions–all backed with enterprise-grade security.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/videos/managing-user-permissions",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-15a8bf5816c17d3f",
+      "sourceId": "user-source-source-perplexity",
+      "title": "Perplexity Computer at Work Guide",
+      "summary": "A practical guide for knowledge workers who want to get more done across files, apps, and the web using Computer.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/perplexity-computer-at-work",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-0bb5e37ede27a847",
+      "sourceId": "user-source-source-perplexity",
+      "title": "How Perplexity Uses Computer",
+      "summary": "A guide to automating workflows with Computer across different teams like Recruiting, Design, Growth Marketing, and User Research.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/how-perplexity-uses-computer",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-perplexity-04e44bd290db90c2",
+      "sourceId": "user-source-source-perplexity",
+      "title": "Perplexity Enterprise for Finance - Perplexity Enterprise",
+      "summary": "Perplexity Enterprise enables knowledge workers to research smarter with real-time, cited insights for confident decisions–all backed with enterprise-grade security.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Perplexity 官方来源",
+        "url": "https://www.perplexity.ai/enterprise/videos/perplexity-enterprise-pro-for-finance",
+        "level": "媒体报道",
+        "platform": "Perplexity 官方来源"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
       ],
       "qualityStatus": "低可信",
       "trackSlugs": [
@@ -3572,11 +3871,11 @@
     },
     {
       "id": "x-openai-f17c4d61f3a3e518",
-      "sourceId": "user-x-openai",
+      "sourceId": "x-openai",
       "title": "OpenAI：More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond. We work w",
       "summary": "More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond. We work with hundreds of physicians around the world to measure and improve accuracy, safety, communication, context awareness, https://t.co/j8BwEkn14b",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "OpenAI",
       "publishedAt": "2026-07-23",
@@ -3601,11 +3900,11 @@
     },
     {
       "id": "x-openai-1ac01250205b68d7",
-      "sourceId": "user-x-openai",
+      "sourceId": "x-openai",
       "title": "OpenAI：We built this experience based on feedback from early testers and physicians. With your permission, ChatGPT can use relevant context you’ve connected",
       "summary": "We built this experience based on feedback from early testers and physicians. With your permission, ChatGPT can use relevant context you’ve connected in Health across your conversations — to help you compare a new result with prior tests, summarize changes since your last https://t.co/joWXUxjQjO",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "OpenAI",
       "publishedAt": "2026-07-23",
@@ -3630,11 +3929,11 @@
     },
     {
       "id": "x-openai-144e78fa8aa235c2",
-      "sourceId": "user-x-openai",
+      "sourceId": "x-openai",
       "title": "OpenAI：ChatGPT Voice is now in the desktop app. Control your computer and direct multiple agents running in ChatGPT Work or Codex, using just your voice. It'",
       "summary": "ChatGPT Voice is now in the desktop app. Control your computer and direct multiple agents running in ChatGPT Work or Codex, using just your voice. It's powered by GPT-Live, so it can speak, listen, and coordinate work in the app at the same time. Rolling out globally today https://t.co/ODZWKqecCf",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "OpenAI",
       "publishedAt": "2026-07-23",
@@ -3659,11 +3958,11 @@
     },
     {
       "id": "x-openai-097485f348179ef5",
-      "sourceId": "user-x-openai",
+      "sourceId": "x-openai",
       "title": "OpenAI：You can also use ChatGPT Voice in Codex from the iOS app with paired remote access. Android support is coming soon.",
       "summary": "You can also use ChatGPT Voice in Codex from the iOS app with paired remote access. Android support is coming soon.",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "OpenAI",
       "publishedAt": "2026-07-23",
@@ -3688,11 +3987,11 @@
     },
     {
       "id": "x-deepmind-ebde8274b5a570a0",
-      "sourceId": "user-x-googledeepmind",
+      "sourceId": "x-deepmind",
       "title": "Google DeepMind：To ensure this model is deployed responsibly, we’re starting with a limited-access pilot for governments and trusted partners. → https://t.co/7DwOw7OK",
       "summary": "To ensure this model is deployed responsibly, we’re starting with a limited-access pilot for governments and trusted partners. → https://t.co/7DwOw7OKN8",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "科技产业",
       "publishedAt": "2026-07-23",
@@ -3716,11 +4015,11 @@
     },
     {
       "id": "x-deepmind-7920b3fa8a5c097d",
-      "sourceId": "user-x-googledeepmind",
+      "sourceId": "x-deepmind",
       "title": "Google DeepMind：By combining speed and efficiency, 3.5 Flash Cyber lets defense specialists check significantly more code paths. In testing on our own codebases – inc",
       "summary": "By combining speed and efficiency, 3.5 Flash Cyber lets defense specialists check significantly more code paths. In testing on our own codebases – including @googlechrome and @Android – it consistently caught complex, unique vulnerabilities that standard models missed. https://t.co/JKvamuRevz",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "科技产业",
       "publishedAt": "2026-07-23",
@@ -3744,11 +4043,11 @@
     },
     {
       "id": "x-deepmind-55a46105e3f6568f",
-      "sourceId": "user-x-googledeepmind",
+      "sourceId": "x-deepmind",
       "title": "Google DeepMind：Gemini 3.5 Flash Cyber is our specialized, lightweight model built to help security teams spot and patch vulnerabilities before they can be exploited.",
       "summary": "Gemini 3.5 Flash Cyber is our specialized, lightweight model built to help security teams spot and patch vulnerabilities before they can be exploited. 🧵 https://t.co/XpiKcvwjeI",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "科技产业",
       "publishedAt": "2026-07-23",
@@ -4096,9 +4395,9 @@
         "platform": "OpenAI 官方来源"
       },
       "companySlug": "openai",
-      "qualityScore": 65,
+      "qualityScore": 73,
       "qualitySignals": [
-        "标题命中 2 个追踪词",
+        "标题命中 3 个追踪词",
         "摘要命中 1 个追踪词"
       ],
       "qualityStatus": "高可信",
@@ -4506,11 +4805,11 @@
     },
     {
       "id": "x-deepmind-418b2a4920222053",
-      "sourceId": "user-x-googledeepmind",
+      "sourceId": "x-deepmind",
       "title": "Google DeepMind：We’re expanding our work with the US Dept. of @ENERGY on the Genesis Mission – an initiative to double the pace of scientific discovery within a decad",
       "summary": "We’re expanding our work with the US Dept. of @ENERGY on the Genesis Mission – an initiative to double the pace of scientific discovery within a decade. 🧪 By committing $40M in AI tokens and @GoogleCloud credits, more lab researchers will gain access to Gemini and other AI https://t.co/jsHtsiUNJC",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "新能源",
       "company": "科技产业",
       "publishedAt": "2026-07-22",
@@ -4534,11 +4833,11 @@
     },
     {
       "id": "x-anthropic-cad6ab8846e32e75",
-      "sourceId": "user-x-anthropicai",
+      "sourceId": "x-anthropic",
       "title": "Anthropic：RT @claudeai: You can now ask Claude about the Anthropic Economic Index, our public dataset measuring how AI is used across the economy. A…",
       "summary": "RT @claudeai: You can now ask Claude about the Anthropic Economic Index, our public dataset measuring how AI is used across the economy. A…",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-22",
@@ -4852,6 +5151,34 @@
       ]
     },
     {
+      "id": "user-track-track-1ccjq49-google-us-ffa88a51f47c5abd",
+      "sourceId": "user-track-track-1ccjq49-google-us",
+      "title": "Goldman creates unified alts arm, aims to boost pre-IPO offering - Citywire",
+      "summary": "Goldman creates unified alts arm, aims to boost pre-IPO offering Citywire",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "风险投资 · Google News 英文",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQRGpSam9DZllVR3EwRTZlMkpRZ1g0Q3hxdE1oRi1BZkRhQ2hyNTZ2UFA0aWl6WVZjajhfdVA2NjhPUm9VZUJmUV85X2NiQVlndTVOTEtUb0ZCNTlFRkFpd2M3OEpNV1V2M1JsS0lZU2RBUUxlZFNRQng5UW5qNWNod0RzaHM2aUhiVFBYb2NMV2djQVJEOVRwaE5qQmlkNXBvbnZiZEZqSkE4dGVL?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "qualityScore": 45,
+      "qualitySignals": [
+        "标题命中 2 个追踪词",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-track-quantum-google-us-928149ff7803c1bf",
       "sourceId": "user-track-quantum-google-us",
       "title": "Cramer's lightning round: 'I am going to steer clear' of IonQ - CNBC",
@@ -5123,33 +5450,6 @@
       ]
     },
     {
-      "id": "user-source-source-yahoo-0b8da7880e212e6b",
-      "sourceId": "user-source-source-yahoo-tw",
-      "title": "台積電上看3000元！外媒驚曝「上車好時機」全說了",
-      "summary": "財經中心／綜合報導人工智慧（AI）浪潮持續發威，身為全球半導體代工龍頭的台積電（TSMC）成為長期投資者眼中的熱門標的。雖然近期因公司宣布上調 2026 年資本支出計畫，導致股價出現短線拉回，但近日有外媒指出，這波疲軟反而是長期投資者逢低布局的絕佳時機。",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-22",
-      "importance": 76,
-      "source": {
-        "name": "Yahoo奇摩",
-        "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%B8%8A%E7%9C%8B3000%E5%85%83-%E5%A4%96%E5%AA%92%E9%A9%9A%E6%9B%9D-%E4%B8%8A%E8%BB%8A%E5%A5%BD%E6%99%82%E6%A9%9F-%E5%85%A8%E8%AA%AA%E4%BA%86-093744157.html",
-        "level": "媒体报道",
-        "platform": "Yahoo奇摩"
-      },
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "user-source-source-track-1r4ht2r-dcfa251f01186d39",
       "sourceId": "user-source-source-track-1r4ht2r",
       "title": "Manhattan University Announces Minor in Artificial Intelligence - Manhattan University",
@@ -5326,9 +5626,10 @@
         "level": "媒体报道",
         "platform": "Harvey 官方来源"
       },
-      "qualityScore": 34,
+      "qualityScore": 40,
       "qualitySignals": [
-        "标题命中 1 个追踪词"
+        "标题命中 1 个追踪词",
+        "摘要命中 1 个追踪词"
       ],
       "qualityStatus": "低可信",
       "trackSlugs": [
@@ -5655,11 +5956,11 @@
     },
     {
       "id": "x-deepmind-516885163694548c",
-      "sourceId": "user-x-googledeepmind",
+      "sourceId": "x-deepmind",
       "title": "Google DeepMind：We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale: 🔵 Gemini 3.6 Flash: It uses fewer tokens than 3.5 Flash to",
       "summary": "We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale: 🔵 Gemini 3.6 Flash: It uses fewer tokens than 3.5 Flash to deliver higher quality work at the exact same cost. 🔵 Gemini 3.5 Flash-Lite: A fast, cost-effective option for everyday tasks https://t.co/SP1eU3FCW5",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "科技产业",
       "publishedAt": "2026-07-21",
@@ -5819,6 +6120,35 @@
       ]
     },
     {
+      "id": "user-track-track-1ccjq49-google-us-50bb592a60d7cd9c",
+      "sourceId": "user-track-track-1ccjq49-google-us",
+      "title": "China's Moonshot AI is seeking a $50 billion valuation in pre-IPO funding talks - qz.com",
+      "summary": "China's Moonshot AI is seeking a $50 billion valuation in pre-IPO funding talks qz.com",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "月之暗面",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "风险投资 · Google News 英文",
+        "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5ScEY1eG5BS2tja281dzA4al9aRHZOaGdORURDZlZoYmJuTkZ5aF9GLVNGM0k4WUlEeGtRM3NXX2lBcENxTkw0Q2VpakJqYTQ4a0FKTlVhRHJvSFJHTkhLUzFKS3prYXgzM1FZbmtMRkxSRVZyWThwTGp3?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "companySlug": "moonshot-ai",
+      "qualityScore": 32,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-source-source-google-ai-875528da785d51d2",
       "sourceId": "user-source-source-google-ai",
       "title": "Gemini Models",
@@ -5835,9 +6165,9 @@
         "level": "媒体报道",
         "platform": "Google AI"
       },
-      "qualityScore": 25,
+      "qualityScore": 31,
       "qualitySignals": [
-        "摘要命中 1 个追踪词"
+        "摘要命中 2 个追踪词"
       ],
       "qualityStatus": "低可信",
       "trackSlugs": [
@@ -6003,11 +6333,11 @@
     },
     {
       "id": "x-anthropic-a56e2e1b8de6e480",
-      "sourceId": "user-x-anthropicai",
+      "sourceId": "x-anthropic",
       "title": "Anthropic：We're offering grants of up to $50,000 in Claude usage credits to researchers accelerating cures for rare diseases. This is our first focused call wit",
       "summary": "We're offering grants of up to $50,000 in Claude usage credits to researchers accelerating cures for rare diseases. This is our first focused call within AI for Science, our program supporting scientists using Claude to speed up discovery. https://t.co/rZEmwh07cd",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "技术突破",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-20",
@@ -6930,11 +7260,11 @@
     },
     {
       "id": "x-anthropic-47d0c6863d19bb83",
-      "sourceId": "user-x-anthropicai",
+      "sourceId": "x-anthropic",
       "title": "Anthropic：New Anthropic research: Agentic misalignment in Summer 2026. A year after our blackmail experiments, we found four more ways that today’s autonomous A",
       "summary": "New Anthropic research: Agentic misalignment in Summer 2026. A year after our blackmail experiments, we found four more ways that today’s autonomous AI agents misbehave in simulations. Read more: https://t.co/MMDuJapeV6 https://t.co/ZuZeX3uHDx",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "技术突破",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-15",
@@ -7033,11 +7363,11 @@
     },
     {
       "id": "x-anthropic-3c4995a0689e4cc7",
-      "sourceId": "user-x-anthropicai",
+      "sourceId": "x-anthropic",
       "title": "Anthropic：We tested many AI models, including Claude, in the four scenarios. Even though these weren’t real incidents, they demonstrate clear misaligned behavio",
       "summary": "We tested many AI models, including Claude, in the four scenarios. Even though these weren’t real incidents, they demonstrate clear misaligned behavior that should be studied further and mitigated. Find all the transcripts from the scenarios here: https://t.co/ihd6Ch437y",
-      "type": "人物观点",
-      "region": "全球",
+      "type": "公司动态",
+      "region": "美国",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-15",
@@ -7533,6 +7863,35 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-openai-078f0d540d88f110",
+      "sourceId": "user-source-source-openai",
+      "title": "Introducing GPT-Rosalind for life sciences research",
+      "summary": "OpenAI introduces GPT-Rosalind, a frontier reasoning model built to accelerate drug discovery, genomics analysis, protein reasoning, and scientific research workflows.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "生物科技",
+      "company": "科技产业",
+      "publishedAt": "2026-07-09",
+      "importance": 82,
+      "source": {
+        "name": "OpenAI 官方来源",
+        "url": "https://openai.com/index/introducing-gpt-rosalind",
+        "level": "媒体报道",
+        "platform": "OpenAI 官方来源"
+      },
+      "qualityScore": 50,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "摘要命中 1 个追踪词"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai",
+        "biotech",
         "track-1ccjq49"
       ]
     },
@@ -9113,7 +9472,6 @@
       },
       "trackSlugs": [
         "energy",
-        "fusion",
         "track-1ccjq49"
       ]
     },
@@ -9136,8 +9494,7 @@
         "platform": "官方网站"
       },
       "trackSlugs": [
-        "energy",
-        "fusion"
+        "energy"
       ]
     },
     {
@@ -9181,8 +9538,7 @@
         "platform": "官方网站"
       },
       "trackSlugs": [
-        "energy",
-        "fusion"
+        "energy"
       ]
     },
     {
@@ -9204,8 +9560,7 @@
         "platform": "官方网站"
       },
       "trackSlugs": [
-        "energy",
-        "fusion"
+        "energy"
       ]
     },
     {
@@ -9990,96 +10345,6 @@
       ]
     },
     {
-      "id": "rocket-lab-f990acd19ff658f2",
-      "sourceId": "rocket-lab",
-      "title": "Rocket Lab Adds Mars-Proven Robotics Capabilities with Completion of Motiv Space Systems Acquisition",
-      "summary": "Acquisition brings Mars heritage for complex planetary missions, as well as precision mechanisms essential for next-generation space infrastructure including orbital data centers and constellations LONG BEACH, Calif., May 26, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global",
-      "type": "并购",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "Rocket Lab",
-      "companySlug": "rocket-lab",
-      "publishedAt": "2026-05-26",
-      "importance": 89,
-      "source": {
-        "name": "Rocket Lab Investor Relations",
-        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-adds-mars-proven-robotics-capabilities-completion",
-        "level": "官方披露",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "space"
-      ]
-    },
-    {
-      "id": "pony-ai-f7c1d407aad50058",
-      "sourceId": "pony-ai",
-      "title": "PONY AI Inc. Reports First Quarter 2026 Financial Results with Continued Growth in Robotaxi Revenues and Expanding Fleet Deployment",
-      "summary": "Robotaxi revenues growth — Robotaxi revenues grew by 395.4% year-over-year in Q1, with fare-charging revenues rising by 456.5%. Updating 2026 growth targets — We raise our 2026 Robotaxi revenues target from 3 times to more than 3.5 times the level in 2025 and year-end Robotaxi fleet size target",
-      "type": "财报",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "小马智行",
-      "companySlug": "pony-ai",
-      "publishedAt": "2026-05-26",
-      "importance": 84,
-      "source": {
-        "name": "Pony.ai Investor Relations",
-        "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-reports-first-quarter-2026-financial-results",
-        "level": "官方披露",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "figure-0708b7e94d92fdac",
-      "sourceId": "figure",
-      "title": "Figure Signs Agreement with Catalyst Brands to Scale Humanoid Operations",
-      "summary": "Today we are announcing a commercial agreement with Catalyst Brands to deploy Figure humanoids into their distribution and logistics network.",
-      "type": "商业进展",
-      "region": "美国",
-      "sector": "机器人",
-      "company": "Figure AI",
-      "companySlug": "figure-ai",
-      "publishedAt": "2026-05-26",
-      "importance": 84,
-      "source": {
-        "name": "Figure AI",
-        "url": "https://www.figure.ai/news/figure-signs-agreement-with-catalyst-brands",
-        "level": "官方披露",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "sec-4397d8c56fa33010",
-      "sourceId": "sec",
-      "title": "Aurora Innovation 提交 8-K（重大事项报告）",
-      "summary": "SEC EDGAR 于 2026-05-26 收录 Aurora Innovation 的 8-K 文件。原始文件包含本次披露的完整正文、附件和财务口径。",
-      "type": "监管文件",
-      "region": "美国",
-      "sector": "机器人",
-      "company": "Aurora Innovation",
-      "companySlug": "aurora",
-      "publishedAt": "2026-05-26",
-      "importance": 80,
-      "source": {
-        "name": "SEC EDGAR",
-        "url": "https://www.sec.gov/Archives/edgar/data/1828108/000182810826000057/aur-20260521.htm",
-        "level": "监管文件",
-        "platform": "SEC"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
-    },
-    {
       "id": "official-pony-ai-92dd1826175eaebc",
       "sourceId": "official-pony-ai",
       "title": "Investor Events | Pony AI Inc.",
@@ -10126,99 +10391,6 @@
       ]
     },
     {
-      "id": "catl-67feef48e652bd57",
-      "sourceId": "catl",
-      "title": "CATL and Solarpro Technology AD recently commissioned Bulgaria’s largest battery energy storage",
-      "summary": "CATL, in collaboration with Solarpro Technology AD, has successfully connected a 602 MWh large-scale battery energy storage project in Bulgaria to the country's electricity grid. Located in Burgas, Bulgaria, the new facility marks a major milestone in the country's energy transition and increases its total energy storage capacity by 10%. It also strengthens the integration of renewable energy sources such as wind and solar while supportinContemporary Amperex Technology Co., Limited (CATL) is a g",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-05-26",
-      "importance": 76,
-      "source": {
-        "name": "CATL",
-        "url": "https://www.catl.com/en/news/6851.html",
-        "level": "官方披露",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "energy"
-      ]
-    },
-    {
-      "id": "user-source-source-minimax-1cdf2d4a43c46f21",
-      "sourceId": "user-source-source-minimax",
-      "title": "为什么MiniMax大模型不认识\"马嘉祺\"？Minimax内部排查稀疏 Token 遗忘问题的记录 - MiniMax Research",
-      "summary": "MiniMax M2 系列受到了开发者社区的广泛关注，不少用户在深度使用中发现了一些 corner case——其中\"模型无法说出马嘉祺\"这个问题引发了较多讨论。本文详细记录了Minimax团队的内部排查过程，从 tokenizer 对齐到 lm_head 退化分析，揭示了稀疏 Token 遗忘的机制及修复方案。",
-      "type": "技术突破",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-05-25",
-      "importance": 85,
-      "source": {
-        "name": "MiniMax 官方来源",
-        "url": "https://minimaxi.com/blog/sparse-token-forgetting-investigation",
-        "level": "媒体报道",
-        "platform": "MiniMax 官方来源"
-      },
-      "qualityScore": 49,
-      "qualitySignals": [
-        "标题命中 2 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "rocket-lab-d683a0b838e82612",
-      "sourceId": "rocket-lab",
-      "title": "Mission Success: Rocket Lab Completes 9th Electron Launch for Synspective",
-      "summary": "MAHIA, New Zealand, May 22, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today announced the successful deployment of the latest satellite for Synspective, marking the ninth dedicated mission Rocket Lab has completed for the",
-      "type": "产品发布",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "Rocket Lab",
-      "companySlug": "rocket-lab",
-      "publishedAt": "2026-05-22",
-      "importance": 82,
-      "source": {
-        "name": "Rocket Lab Investor Relations",
-        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/mission-success-rocket-lab-completes-9th-electron-launch",
-        "level": "官方披露",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "space",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "sec-38a68f8113806607",
-      "sourceId": "sec",
-      "title": "Tempus AI 提交 8-K（重大事项报告）",
-      "summary": "SEC EDGAR 于 2026-05-22 收录 Tempus AI 的 8-K 文件。原始文件包含本次披露的完整正文、附件和财务口径。",
-      "type": "监管文件",
-      "region": "美国",
-      "sector": "生物科技",
-      "company": "Tempus AI",
-      "companySlug": "tempus-ai",
-      "publishedAt": "2026-05-22",
-      "importance": 80,
-      "source": {
-        "name": "SEC EDGAR",
-        "url": "https://www.sec.gov/Archives/edgar/data/1717115/000119312526236814/d109019d8k.htm",
-        "level": "监管文件",
-        "platform": "SEC"
-      },
-      "trackSlugs": [
-        "biotech"
-      ]
-    },
-    {
       "id": "official-rigetti-421927cd0e15792b",
       "sourceId": "official-rigetti",
       "title": "Rigetti Signs Letter of Intent with U.S. Government for Quantum Computing Research | Rigetti & Co, LLC",
@@ -10238,50 +10410,6 @@
       },
       "trackSlugs": [
         "quantum"
-      ]
-    },
-    {
-      "id": "sec-a8cf69ce0fadf1a7",
-      "sourceId": "sec",
-      "title": "Rigetti Computing 提交 8-K（重大事项报告）",
-      "summary": "SEC EDGAR 于 2026-05-21 收录 Rigetti Computing 的 8-K 文件。原始文件包含本次披露的完整正文、附件和财务口径。",
-      "type": "监管文件",
-      "region": "美国",
-      "sector": "量子计算",
-      "company": "Rigetti Computing",
-      "companySlug": "rigetti",
-      "publishedAt": "2026-05-21",
-      "importance": 80,
-      "source": {
-        "name": "SEC EDGAR",
-        "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926064861/tm2615300d1_8k.htm",
-        "level": "监管文件",
-        "platform": "SEC"
-      },
-      "trackSlugs": [
-        "quantum"
-      ]
-    },
-    {
-      "id": "sec-2e1f795aafdd56fb",
-      "sourceId": "sec",
-      "title": "Rocket Lab 提交 8-K（重大事项报告）",
-      "summary": "SEC EDGAR 于 2026-05-21 收录 Rocket Lab 的 8-K 文件。原始文件包含本次披露的完整正文、附件和财务口径。",
-      "type": "监管文件",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "Rocket Lab",
-      "companySlug": "rocket-lab",
-      "publishedAt": "2026-05-21",
-      "importance": 80,
-      "source": {
-        "name": "SEC EDGAR",
-        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000048/rklb-20260520.htm",
-        "level": "监管文件",
-        "platform": "SEC"
-      },
-      "trackSlugs": [
-        "space"
       ]
     },
     {
@@ -10307,79 +10435,6 @@
       ]
     },
     {
-      "id": "ionq-063b9511f4cdb7cc",
-      "sourceId": "ionq",
-      "title": "IonQ to Announce First Quarter 2026 Financial Results on May 6",
-      "summary": "IonQ (NYSE: IONQ) will release its Q1 2026 financial results after market close on Wednesday, May 6, 2026, followed by a conference call at 4:30 PM ET.",
-      "type": "财报",
-      "region": "美国",
-      "sector": "量子计算",
-      "company": "IonQ",
-      "companySlug": "ionq",
-      "publishedAt": "2026-05-20",
-      "importance": 84,
-      "source": {
-        "name": "IonQ",
-        "url": "https://ionq.com/news/ionq-to-report-first-quarter-2026-financial-results-on-may-6-2026",
-        "level": "官方披露",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "quantum",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "sec-7782515b318f1c4f",
-      "sourceId": "sec",
-      "title": "Rocket Lab 提交 8-K（重大事项报告）",
-      "summary": "SEC EDGAR 于 2026-05-20 收录 Rocket Lab 的 8-K 文件。原始文件包含本次披露的完整正文、附件和财务口径。",
-      "type": "监管文件",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "Rocket Lab",
-      "companySlug": "rocket-lab",
-      "publishedAt": "2026-05-20",
-      "importance": 80,
-      "source": {
-        "name": "SEC EDGAR",
-        "url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000045/rklb-20260520.htm",
-        "level": "监管文件",
-        "platform": "SEC"
-      },
-      "trackSlugs": [
-        "space"
-      ]
-    },
-    {
-      "id": "user-source-source-google-deepmind-0e095a915d6bcb34",
-      "sourceId": "user-source-source-google-deepmind",
-      "title": "Co-Scientist: A multi-agent AI partner to accelerate research",
-      "summary": "Introducing Co-Scientist, a multi-agent AI partner built with Gemini to help researchers generate and evolve hypotheses to accelerate scientific breakthroughs.",
-      "type": "技术突破",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-05-19",
-      "importance": 85,
-      "source": {
-        "name": "Google DeepMind",
-        "url": "https://deepmind.google/blog/co-scientist-a-multi-agent-ai-partner-to-accelerate-research",
-        "level": "媒体报道",
-        "platform": "Google DeepMind"
-      },
-      "qualityScore": 61,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
       "id": "official-moore-threads-dd8aed953dbdbf01",
       "sourceId": "official-moore-threads",
       "title": "摩尔线程重磅发布 MTT AICUBE：搭载全域智能体“小麦”，打造家庭 AI 中枢",
@@ -10399,27 +10454,6 @@
       },
       "trackSlugs": [
         "semiconductor"
-      ]
-    },
-    {
-      "id": "venturebeat-ai-4b0b581f96fdff4b",
-      "sourceId": "venturebeat-ai",
-      "title": "Google just redesigned the search box for the first time in 25 years — here’s why it matters more than you think.",
-      "summary": "For a quarter century, the Google search box has been one of the most recognizable interfaces in computing: a thin white rectangle, a blinking cursor, a few typed words, and a list of blue links. On Tuesday, Google will formally retire that paradigm. At its annual I/O developer conference , Google announced a sweeping redesign of the search box itself — the literal text field where billions of queries begin every day — transforming it from a simple keyword input into a dynamic, AI-driven convers",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "publishedAt": "2026-05-19",
-      "importance": 76,
-      "source": {
-        "name": "VentureBeat AI",
-        "url": "https://venturebeat.com/technology/google-just-redesigned-the-search-box-for-the-first-time-in-25-years-heres-why-it-matters-more-than-you-think",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "space"
       ]
     },
     {
@@ -13153,7 +13187,7 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 23,
+      "discovered": 22,
       "scanned": 18,
       "accepted": 0,
       "failed": 0,
@@ -13167,12 +13201,12 @@
       "coverage": "attempted",
       "status": "ok",
       "configuredIndexes": 5,
-      "discovered": 180,
-      "scanned": 19,
-      "accepted": 7,
+      "discovered": 181,
+      "scanned": 21,
+      "accepted": 8,
       "failed": 0,
       "platform": "官方网站",
-      "newAccepted": 0,
+      "newAccepted": 1,
       "retainedPrevious": true,
       "retainedPreviousCount": 7
     },
@@ -13293,8 +13327,8 @@
       "id": "prnewswire-tech",
       "name": "PR Newswire Consumer Technology",
       "status": "ok",
-      "scanned": 7,
-      "accepted": 7,
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "新闻稿"
     },
@@ -13354,10 +13388,10 @@
     {
       "id": "user-source-source-ai",
       "name": "智谱AI 官方来源",
-      "status": "partial",
-      "scanned": 17,
+      "status": "ok",
+      "scanned": 18,
       "accepted": 3,
-      "failed": 1,
+      "failed": 0,
       "platform": "智谱AI 官方来源",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -13598,7 +13632,7 @@
       "id": "user-source-source-google-deepmind",
       "name": "Google DeepMind",
       "status": "ok",
-      "scanned": 20,
+      "scanned": 21,
       "accepted": 9,
       "failed": 0,
       "platform": "Google DeepMind",
@@ -13688,9 +13722,9 @@
       "id": "user-source-source-openai",
       "name": "OpenAI 官方来源",
       "status": "partial",
-      "scanned": 11,
-      "accepted": 14,
-      "failed": 18,
+      "scanned": 9,
+      "accepted": 17,
+      "failed": 20,
       "platform": "OpenAI 官方来源",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -13712,16 +13746,16 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 6,
+      "newAccepted": 5,
       "retainedPrevious": true,
-      "retainedPreviousCount": 8
+      "retainedPreviousCount": 12
     },
     {
       "id": "user-source-source-perplexity",
       "name": "Perplexity 官方来源",
       "status": "partial",
-      "scanned": 16,
-      "accepted": 10,
+      "scanned": 13,
+      "accepted": 9,
       "failed": 16,
       "platform": "Perplexity 官方来源",
       "adapter": "adaptive-public-v1",
@@ -13746,7 +13780,9 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 10
+      "newAccepted": 8,
+      "retainedPrevious": true,
+      "retainedPreviousCount": 1
     },
     {
       "id": "user-source-source-pr-newswire-consumer-technology",
@@ -13916,7 +13952,7 @@
       "id": "user-source-source-track-1r4ht2r",
       "name": "谷歌新闻",
       "status": "ok",
-      "scanned": 9,
+      "scanned": 5,
       "accepted": 12,
       "failed": 0,
       "platform": "谷歌新闻",
@@ -13980,7 +14016,7 @@
       "id": "user-source-source-track-1sp7gkg",
       "name": "东方财富",
       "status": "partial",
-      "scanned": 4,
+      "scanned": 6,
       "accepted": 0,
       "failed": 0,
       "platform": "东方财富",
@@ -14421,8 +14457,8 @@
       "id": "user-track-energy-google-us",
       "name": "新能源 · Google News 英文",
       "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "scanned": 5,
+      "accepted": 5,
       "failed": 0,
       "platform": "Google News"
     },
@@ -14483,9 +14519,9 @@
     {
       "id": "user-track-materials-bing",
       "name": "新材料 · Bing 发现",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "Bing 搜索"
     },
@@ -14636,9 +14672,9 @@
     {
       "id": "user-track-track-1ccjq49-google-us",
       "name": "风险投资 · Google News 英文",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "Google News"
     },
@@ -14677,7 +14713,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "X returned HTTP 429 after delayed retry; circuit opened and previous snapshot retained"
     },
     {
       "id": "user-x-drfeifei",
@@ -14692,12 +14728,11 @@
     {
       "id": "user-x-elonmusk",
       "name": "埃隆·马斯克",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "user-x-googledeepmind",
@@ -14712,6 +14747,16 @@
     {
       "id": "user-x-openai",
       "name": "OpenAI",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "X",
+      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+    },
+    {
+      "id": "user-x-washingtonpost",
+      "name": "The Washington Post",
       "status": "error",
       "scanned": 0,
       "accepted": 0,
@@ -14749,102 +14794,92 @@
     {
       "id": "x-anthropic",
       "name": "Anthropic",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-deepmind",
       "name": "Google DeepMind",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-demis",
       "name": "Demis Hassabis",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-feifei-li",
       "name": "李飞飞",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-kaiming-he",
       "name": "何恺明",
-      "status": "error",
+      "status": "empty",
       "scanned": 0,
       "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-karpathy",
       "name": "Andrej Karpathy",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-lecun",
       "name": "Yann LeCun",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-openai",
       "name": "OpenAI",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X returned HTTP 429 after delayed retry; circuit opened and previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-sam-altman",
       "name": "Sam Altman",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-shunyu-yao",
       "name": "姚顺雨",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "xai",
@@ -14860,12 +14895,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 483,
+        "actual": 482,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 113,
+        "actual": 125,
         "required": 6,
         "passed": true
       },
@@ -14890,17 +14925,17 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 134,
+        "actual": 132,
         "required": 8,
         "passed": true
       },
       "minimumUsArticles": {
-        "actual": 254,
+        "actual": 268,
         "required": 20,
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.058,
+        "actual": 0.0477,
         "required": 0.45,
         "passed": true
       },
@@ -14910,22 +14945,22 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 483,
-        "required": 483,
+        "actual": 482,
+        "required": 482,
         "passed": true
       }
     },
     "invalidArticles": [],
     "trackingQuality": {
-      "scoredUserArticles": 356,
-      "acceptedUserArticles": 189,
-      "rejectedUserArticles": 167,
-      "clusteredDuplicates": 6,
+      "scoredUserArticles": 360,
+      "acceptedUserArticles": 184,
+      "rejectedUserArticles": 176,
+      "clusteredDuplicates": 7,
       "minimumScore": 31
     }
   },
-  "trackingConfigHash": "9bb2f373199c4d810f31445143f0f37227f1d05ebbf56d0b52471c825b6a5807",
-  "trackingEnrichedAt": "2026-07-25T14:13:41+00:00",
+  "trackingConfigHash": "b0cfc58267fffbcb8ffca44dc396b77d70bc9c4d8cdfa141917e1d84f49db05e",
+  "trackingEnrichedAt": "2026-07-25T14:28:14+00:00",
   "trackCoverage": {
     "ai": {
       "slug": "ai",
@@ -14938,11 +14973,11 @@
       "failedSources": 0,
       "scanned": 24,
       "accepted": 24,
-      "matchedArticles": 274,
-      "backfilledArticles": 14,
-      "independentSources": 274,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 274 条公开事件。"
+      "matchedArticles": 282,
+      "backfilledArticles": 15,
+      "independentSources": 282,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 282 条公开事件。"
     },
     "robotics": {
       "slug": "robotics",
@@ -14955,11 +14990,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 70,
+      "matchedArticles": 69,
       "backfilledArticles": 8,
-      "independentSources": 70,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 70 条公开事件。"
+      "independentSources": 69,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 69 条公开事件。"
     },
     "semiconductor": {
       "slug": "semiconductor",
@@ -14975,7 +15010,7 @@
       "matchedArticles": 46,
       "backfilledArticles": 0,
       "independentSources": 46,
-      "lastRun": "2026-07-25T14:13:40+00:00",
+      "lastRun": "2026-07-25T14:28:13+00:00",
       "message": "三路发现均已尝试，当前匹配 46 条公开事件。"
     },
     "energy": {
@@ -14987,13 +15022,13 @@
       "completedSources": 3,
       "healthySources": 2,
       "failedSources": 0,
-      "scanned": 16,
-      "accepted": 16,
-      "matchedArticles": 32,
+      "scanned": 13,
+      "accepted": 13,
+      "matchedArticles": 31,
       "backfilledArticles": 0,
-      "independentSources": 32,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 32 条公开事件。"
+      "independentSources": 31,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 31 条公开事件。"
     },
     "biotech": {
       "slug": "biotech",
@@ -15009,7 +15044,7 @@
       "matchedArticles": 14,
       "backfilledArticles": 0,
       "independentSources": 14,
-      "lastRun": "2026-07-25T14:13:40+00:00",
+      "lastRun": "2026-07-25T14:28:13+00:00",
       "message": "三路发现均已尝试，当前匹配 14 条公开事件。"
     },
     "quantum": {
@@ -15023,11 +15058,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 21,
-      "backfilledArticles": 2,
-      "independentSources": 21,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 21 条公开事件。"
+      "matchedArticles": 18,
+      "backfilledArticles": 1,
+      "independentSources": 18,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 18 条公开事件。"
     },
     "space": {
       "slug": "space",
@@ -15040,11 +15075,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 42,
+      "matchedArticles": 38,
       "backfilledArticles": 0,
-      "independentSources": 42,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 42 条公开事件。"
+      "independentSources": 38,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 38 条公开事件。"
     },
     "web3": {
       "slug": "web3",
@@ -15057,11 +15092,11 @@
       "failedSources": 0,
       "scanned": 24,
       "accepted": 24,
-      "matchedArticles": 3,
-      "backfilledArticles": 2,
-      "independentSources": 3,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 3 条公开事件。"
+      "matchedArticles": 4,
+      "backfilledArticles": 3,
+      "independentSources": 4,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 4 条公开事件。"
     },
     "materials": {
       "slug": "materials",
@@ -15070,14 +15105,14 @@
       "label": "已运行但无命中",
       "expectedSources": 3,
       "completedSources": 3,
-      "healthySources": 2,
+      "healthySources": 3,
       "failedSources": 0,
-      "scanned": 10,
-      "accepted": 10,
+      "scanned": 18,
+      "accepted": 18,
       "matchedArticles": 0,
       "backfilledArticles": 0,
       "independentSources": 0,
-      "lastRun": "2026-07-25T14:13:40+00:00",
+      "lastRun": "2026-07-25T14:28:13+00:00",
       "message": "三路发现均已尝试，但当前快照没有满足匹配条件的文章。"
     },
     "manufacturing": {
@@ -15091,11 +15126,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 5,
-      "backfilledArticles": 0,
-      "independentSources": 5,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 5 条公开事件。"
+      "matchedArticles": 6,
+      "backfilledArticles": 1,
+      "independentSources": 6,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 6 条公开事件。"
     },
     "fusion": {
       "slug": "fusion",
@@ -15108,11 +15143,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 5,
-      "backfilledArticles": 4,
-      "independentSources": 5,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 5 条公开事件。"
+      "matchedArticles": 1,
+      "backfilledArticles": 0,
+      "independentSources": 1,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 1 条公开事件。"
     },
     "track-1ccjq49": {
       "slug": "track-1ccjq49",
@@ -15121,15 +15156,15 @@
       "label": "已完成",
       "expectedSources": 3,
       "completedSources": 3,
-      "healthySources": 1,
+      "healthySources": 2,
       "failedSources": 0,
-      "scanned": 8,
-      "accepted": 8,
-      "matchedArticles": 208,
-      "backfilledArticles": 208,
-      "independentSources": 208,
-      "lastRun": "2026-07-25T14:13:40+00:00",
-      "message": "三路发现均已尝试，当前匹配 208 条公开事件。"
+      "scanned": 16,
+      "accepted": 16,
+      "matchedArticles": 215,
+      "backfilledArticles": 215,
+      "independentSources": 215,
+      "lastRun": "2026-07-25T14:28:13+00:00",
+      "message": "三路发现均已尝试，当前匹配 215 条公开事件。"
     }
   }
 }
