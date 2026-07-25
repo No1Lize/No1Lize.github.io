@@ -77,10 +77,22 @@
   white-space: nowrap;
 }
 
-.empty {
+.empty,
+.error {
   margin: 0;
-  color: var(--faint);
   font-size: 12px;
+}
+
+.empty {
+  color: var(--faint);
+}
+
+.error {
+  margin-bottom: 9px;
+  padding: 7px 9px;
+  border-left: 2px solid var(--red);
+  background: color-mix(in srgb, var(--red) 8%, transparent);
+  color: var(--red);
 }
 
 @media (max-width: 720px) {
