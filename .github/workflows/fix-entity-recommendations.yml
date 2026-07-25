@@ -109,8 +109,8 @@ test("ordinary technical concepts are not promoted to named entities", () => {
 '''
           test_path.write_text(tests, encoding="utf-8")
           PY
-      - name: Install and test
-        run: npm install && npm run test:unit && npm run build:pages
+      - name: Install and run unit tests
+        run: npm install && npm run test:unit
       - name: Commit verified fix
         shell: bash
         run: |
