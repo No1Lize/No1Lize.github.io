@@ -1,0 +1,69 @@
+name: One-time publish verified WeChat articles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-verified-wechat.yml
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify WeChat implementation
+        run: |
+          python -m py_compile tools/refresh_wechat_snapshot.py tools/wechat_public_sources.py tools/wechat_sogou_index.py tools/wechat_sogou_bridge.py
+          python -m unittest tests.test_wechat_public_sources tests.test_wechat_source_registry tests.test_wechat_sogou_index tests.test_refresh_wechat_snapshot
+      - name: Refresh verified account
+        run: |
+          python tools/refresh_wechat_snapshot.py --account qbitai
+          python tools/migrate_article_entities.py
+          python tools/enrich_tracking_snapshot.py
+          python tools/crawl_articles.py --validate-only
+      - name: Commit refreshed snapshot
+        id: publish
+        shell: bash
+        run: |
+          if git diff --quiet -- public/data/articles.json; then
+            echo "No verified WeChat data changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/articles.json
+          git commit -m "data: publish verified WeChat intelligence"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            python tools/refresh_wechat_snapshot.py --account qbitai
+            python tools/migrate_article_entities.py
+            python tools/enrich_tracking_snapshot.py
+            python tools/crawl_articles.py --validate-only
+            git add public/data/articles.json
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+            if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+      - name: Publish website
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
