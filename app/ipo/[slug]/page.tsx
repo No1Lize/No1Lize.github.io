@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ResearchReportLibrary } from "@/components/research-report-library";
 import {
   FinancialSeriesChart,
   MarketLineChart,
@@ -20,6 +22,7 @@ import {
   type MarketMetric,
 } from "@/lib/market-profile-data";
 import { ipoProfiles } from "@/lib/research-content";
+import { relatedResearchReports } from "@/lib/research-report-data";
 
 export function generateStaticParams() {
   return listedCompaniesForDisplay.map((item) => ({ slug: item.slug }));
@@ -83,6 +86,12 @@ export default async function IpoDetail({
   const heroDescription = clipAtSentence(detailDescription, 140);
   const region = marketData?.company.region || inferDisplayRegion(company.market);
   const marketCap = metricValue(marketData?.metrics, "marketCap");
+  const relatedReports = relatedResearchReports({
+    companySlug: slug,
+    ticker: company.ticker,
+    sector: company.sector,
+    limit: 8,
+  });
   const marketSections = ["行情走势", "基本资料", "新闻公告", "财务分析", "经营分析"];
   const archiveSections = ["上市概览", "状态时间线", "经营观察", "来源", "研报与行业研究"];
 
@@ -333,35 +342,15 @@ export default async function IpoDetail({
 
           <Section id="研报与行业研究" title="研报与行业研究">
             <p className="research-directory-intro">
-              使用公司名称“{displayName}”、代码“{company.ticker}”或行业“{marketData?.company.industry || company.sector}”检索。
-              以下为第三方公开入口，部分全文可能需要登录或受平台权限限制。
+              这里直接展示与“{displayName}”、代码“{company.ticker}”及行业“{marketData?.company.industry || company.sector}”相关的已归档 PDF。
+              点击卡片进入站内阅读，不再跳转到第三方研报首页。
             </p>
-            <div className="research-directory-grid">
-              <ResearchLink
-                platform="萝卜投研"
-                title="个股深度研究"
-                description={`检索 ${displayName} 的券商观点、公司研究、财务预测与产业链信息。`}
-                href="https://robo.datayes.com/"
-              />
-              <ResearchLink
-                platform="萝卜投研"
-                title="行业与产业链分析"
-                description={`以“${marketData?.company.industry || company.sector}”为关键词查看行业数据和深度研究。`}
-                href="https://robo.datayes.com/"
-              />
-              <ResearchLink
-                platform="慧博投研"
-                title="全市场券商研报"
-                description="浏览券商公司调研、行业分析、投资策略、港美研究和新股研究。"
-                href="https://p.hibor.com.cn/"
-              />
-              <ResearchLink
-                platform="慧博投研"
-                title="高级研报搜索"
-                description={`在研究报告高级搜索中输入“${displayName}”或“${company.ticker}”。`}
-                href="https://www.hibor.com.cn/supersearch.html"
-              />
-            </div>
+            <ResearchReportLibrary reports={relatedReports} compact />
+            <Link className="source-card" href="/reports">
+              <span>06 / RESEARCH</span>
+              <strong>查看全部公开研报 PDF</strong>
+              <small>按公司、代码、机构和行业统一检索 →</small>
+            </Link>
           </Section>
         </article>
 
@@ -499,27 +488,6 @@ function DataPending({ text }: { text: string }) {
       <strong>等待数据同步</strong>
       <p>{text}</p>
     </div>
-  );
-}
-
-function ResearchLink({
-  platform,
-  title,
-  description,
-  href,
-}: {
-  platform: string;
-  title: string;
-  description: string;
-  href: string;
-}) {
-  return (
-    <a className="research-directory-card" href={href} target="_blank" rel="noreferrer">
-      <span>{platform}</span>
-      <strong>{title}</strong>
-      <p>{description}</p>
-      <small>打开公开入口 →</small>
-    </a>
   );
 }
 
