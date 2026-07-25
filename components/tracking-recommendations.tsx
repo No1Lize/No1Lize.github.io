@@ -50,11 +50,18 @@ function keywordBelongsToDisplayedSector(
 export function TrackingRecommendations({
   recommendations,
   onlyType,
+  sector,
   onAdd,
+  onDismiss,
 }: {
   recommendations: TrackingRecommendationSet;
   onlyType?: RecommendationType;
+  sector?: string;
   onAdd?: (
+    type: RecommendationType,
+    item: AnyTrackingRecommendation,
+  ) => Promise<void> | void;
+  onDismiss?: (
     type: RecommendationType,
     item: AnyTrackingRecommendation,
   ) => Promise<void> | void;
@@ -62,7 +69,7 @@ export function TrackingRecommendations({
   const [pending, setPending] = useState<string>("");
   const [hidden, setHidden] = useState<Record<string, boolean>>({});
   const [error, setError] = useState("");
-  const selectedSector = currentDisplayedSector();
+  const selectedSector = sector || currentDisplayedSector();
 
   const sections = useMemo(
     () =>
@@ -100,15 +107,26 @@ export function TrackingRecommendations({
     })
     .filter((section) => Boolean(section.current));
 
-  function dismiss(type: RecommendationType, item: AnyTrackingRecommendation) {
+  async function dismiss(
+    type: RecommendationType,
+    item: AnyTrackingRecommendation,
+  ) {
     const key = `${type}-${item.value}`;
+    setPending(`dismiss:${key}`);
     setError("");
-    setHidden((current) => ({ ...current, [key]: true }));
+    try {
+      await onDismiss?.(type, item);
+      setHidden((current) => ({ ...current, [key]: true }));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setPending("");
+    }
   }
 
   async function add(type: RecommendationType, item: AnyTrackingRecommendation) {
     const key = `${type}-${item.value}`;
-    setPending(key);
+    setPending(`add:${key}`);
     setError("");
     const previousStatus = currentAdminStatus();
     try {
@@ -133,7 +151,7 @@ export function TrackingRecommendations({
 
       {error ? (
         <p className={styles.error} role="alert">
-          添加失败：{error}
+          操作失败：{error}
         </p>
       ) : null}
 
@@ -156,14 +174,14 @@ export function TrackingRecommendations({
               </div>
               <div className={styles.controls}>
                 <button
-                  aria-label={`忽略推荐：${item.label}`}
+                  aria-label={`忽略并不再推荐：${item.label}`}
                   className={styles.dismiss}
                   disabled={Boolean(pending)}
-                  onClick={() => dismiss(section.type, item)}
-                  title="忽略并显示下一条"
+                  onClick={() => void dismiss(section.type, item)}
+                  title="忽略并永久停止推荐此项"
                   type="button"
                 >
-                  ×
+                  {pending === `dismiss:${key}` ? "…" : "×"}
                 </button>
                 <button
                   className={styles.add}
@@ -171,7 +189,7 @@ export function TrackingRecommendations({
                   onClick={() => void add(section.type, item)}
                   type="button"
                 >
-                  {pending === key ? "添加中" : "+ 添加"}
+                  {pending === `add:${key}` ? "添加中" : "+ 添加"}
                 </button>
               </div>
             </article>
