@@ -29,8 +29,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Apply entity-label patch
-        run: python tools/patch_venture_entity_labels_v1.py
+      - name: Apply venture semantic patches
+        run: |
+          python tools/patch_venture_entity_labels_v1.py
+          python tools/patch_venture_short_summary_fallback.py
       - name: Run semantic and terminal regressions
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
@@ -77,6 +79,7 @@ jobs:
           rm -f .venture-entity-label-trigger
           rm -rf diagnostics
           rm -f tools/patch_venture_entity_labels_v1.py
+          rm -f tools/patch_venture_short_summary_fallback.py
           rm -f .github/workflows/patch-venture-entity-labels-v1.yml
           rm -f .github/workflows/venture-entity-label-pr.yml
           git add -A
