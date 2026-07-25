@@ -65,6 +65,44 @@ const articles: LiveIntelligenceEvent[] = [
     },
   },
   {
+    id: "grpo-paper-1",
+    sourceId: "research-lab-a",
+    title: "GRPO training algorithm improves reasoning efficiency",
+    summary: "The GRPO method changes reinforcement-learning optimization for reasoning models.",
+    type: "论文",
+    region: "全球",
+    sector: "AI / AGI",
+    company: "AI 研究",
+    publishedAt: "2099-01-05",
+    importance: 79,
+    qualityScore: 84,
+    source: {
+      name: "Research Lab A",
+      url: "https://lab-a.example.org/research/grpo",
+      level: "原始材料",
+      platform: "官方网站",
+    },
+  },
+  {
+    id: "grpo-paper-2",
+    sourceId: "research-media-b",
+    title: "GRPO benchmark compares reinforcement-learning algorithms",
+    summary: "Independent results evaluate GRPO training across reasoning model benchmarks.",
+    type: "论文",
+    region: "全球",
+    sector: "AI / AGI",
+    company: "AI 研究",
+    publishedAt: "2099-01-06",
+    importance: 75,
+    qualityScore: 78,
+    source: {
+      name: "Research Media B",
+      url: "https://research-b.example.com/analysis/grpo",
+      level: "媒体报道",
+      platform: "网站",
+    },
+  },
+  {
     id: "noise-1",
     sourceId: "noise-media",
     title: "US CEO discusses UK STEM AI AGI LLM RT K3 outlook",
@@ -99,6 +137,14 @@ test("tracking recommendations derive useful additions from sector intelligence"
   assert.ok(result.companies.some((item) => item.value === "OpenAI"));
   assert.ok(result.sources.some((item) => new URL(item.source.url).hostname === "openai.com"));
   assert.ok(!result.sources.some((item) => new URL(item.source.url).hostname === "x.com"));
+});
+
+test("unseen technical entities emerge from independent multi-source evidence", () => {
+  const result = recommendTrackingAdditions(articles, "AI / AGI");
+  const grpo = result.keywords.find((item) => item.value === "GRPO");
+
+  assert.ok(grpo, "GRPO should be dynamically discovered without seed configuration");
+  assert.match(grpo.reason, /动态发现/);
 });
 
 test("country codes, roles and isolated acronyms are never recommended as entities", () => {
