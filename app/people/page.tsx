@@ -1,6 +1,50 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { people } from "@/lib/catalog-data";
+import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
 
-export const metadata: Metadata={title:"人物研究",description:"重要投资人物的原始材料、概念与观点演化。"};
-export default function PeoplePage(){return <main className="page-shell subpage"><header className="page-header"><p className="eyebrow">07 / PEOPLE</p><h1>人物研究</h1><p>以股东信、演讲、论文、文章和公开发文为时间轴，研究重要投资者与 AI 研究者的核心概念和方法演进。</p></header><div className="people-grid">{people.map(p=><Link href={`/people/${p.slug}`} key={p.slug}><div className="person-monogram">{p.name.slice(0,1)}</div><p>{p.englishName}</p><h2>{p.name}</h2><span>{p.role}</span><strong>{p.summary}</strong><div>{p.concepts.map(c=><i key={c}>{c}</i>)}</div><small>{p.materials.length} 条可追溯材料</small></Link>)}</div></main>}
+export const metadata: Metadata = {
+  title: "人物研究",
+  description: "汇总所有赛道关注人物，并以统一资料管线整理其背景、公司、产品、作品、著作、演讲与公开材料。",
+};
+
+const statusLabels = {
+  complete: "资料较完整",
+  partial: "持续补充",
+  pending: "等待抓取",
+} as const;
+
+export default function PeoplePage() {
+  const trackedCount = researchPeople.filter((person) => person.tracked).length;
+  return (
+    <main className="page-shell subpage">
+      <header className="page-header">
+        <p className="eyebrow">07 / PEOPLE</p>
+        <h1>人物研究</h1>
+        <p>
+          汇总所有赛道配置中的真实人物，统一抓取 Wikipedia、Wikidata、个人主页、公司官网、论文、著作、演讲与站内情报；组织账号不会被误建成人物档案。
+        </p>
+        <div className="hero-chips">
+          <span>{trackedCount} 位赛道人物</span>
+          <span>{researchPeople.length} 位人物总计</span>
+          <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
+        </div>
+      </header>
+      <div className="people-grid">
+        {researchPeople.map((person) => (
+          <Link href={`/people/${person.slug}`} key={person.slug}>
+            <div className="person-monogram">{person.name.slice(0, 1)}</div>
+            <p>{person.englishName}</p>
+            <h2>{person.name}</h2>
+            <span>{person.role}</span>
+            <strong>{person.summary}</strong>
+            <div>
+              {person.sectors.map((sector) => <i key={sector}>{sector}</i>)}
+              {person.concepts.slice(0, Math.max(0, 4 - person.sectors.length)).map((concept) => <i key={concept}>{concept}</i>)}
+            </div>
+            <small>{statusLabels[person.status]} · {person.materials.length} 条可追溯材料</small>
+          </Link>
+        ))}
+      </div>
+    </main>
+  );
+}
