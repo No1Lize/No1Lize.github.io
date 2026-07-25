@@ -1,0 +1,222 @@
+name: Patch venture narrative noise filters v2
+
+on:
+  push:
+    branches:
+      - feature/venture-narrative-noise-v2-20260726
+    paths:
+      - .github/workflows/patch-venture-narrative-noise-v2.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/venture-narrative-noise-v2-20260726
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch narrative rules and tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("tools/sanitize_venture_narratives.py")
+          text = path.read_text(encoding="utf-8")
+
+          old_labels_tail = '''    "投资项目",
+              "更多",
+          }
+          '''
+          new_labels_tail = '''    "投资项目",
+              "更多",
+              "investor relations",
+              "transfer agent",
+              "toll-free",
+              "featured",
+              "locations",
+              "media kit",
+              "latest news and events",
+              "投资者关系",
+              "联系方式",
+          }
+          '''
+          if old_labels_tail not in text:
+              raise RuntimeError("navigation labels anchor not found")
+          text = text.replace(old_labels_tail, new_labels_tail, 1)
+
+          old_regexes = '''NAVIGATION_TERMS = tuple(sorted(NAVIGATION_LABELS, key=len, reverse=True))
+          CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\\n]+|(?<=\\.)\\s+(?=[A-Z\\u3400-\\u9fff])")
+          CJK_RE = re.compile(r"[\\u3400-\\u9fff]")
+          WORD_RE = re.compile(r"[A-Za-z0-9]+|[\\u3400-\\u9fff]")
+          '''
+          new_regexes = '''NAVIGATION_TERMS = tuple(sorted(NAVIGATION_LABELS, key=len, reverse=True))
+          CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\\n]+|(?<=\\.)\\s+(?=[A-Z0-9\\u3400-\\u9fff])")
+          CJK_RE = re.compile(r"[\\u3400-\\u9fff]")
+          WORD_RE = re.compile(r"[A-Za-z0-9]+|[\\u3400-\\u9fff]")
+          DATE_TOKEN_RE = re.compile(
+              r"\\b(?:20\\d{2}[-/.]\\d{1,2}(?:[-/.]\\d{1,2})?|"
+              r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
+              r"\\s+\\d{1,2},\\s+20\\d{2})\\b",
+              re.IGNORECASE,
+          )
+          ADDRESS_RE = re.compile(
+              r"\\b\\d{2,6}\\s+[A-Z][^.;]{0,90}\\b(?:Street|St|Road|Rd|Avenue|Ave|"
+              r"Boulevard|Blvd|Drive|Dr|Lane|Ln|Way)\\b",
+              re.IGNORECASE,
+          )
+          PHONE_RE = re.compile(
+              r"(?:toll[- ]?free|phone|tel(?:ephone)?|传真|电话)\\s*[:：]?\\s*"
+              r"(?:\\+?\\d[\\d() .-]{7,}\\d)",
+              re.IGNORECASE,
+          )
+          PAGE_CHROME_TERMS = (
+              "investor relations",
+              "transfer agent",
+              "toll-free",
+              "featured",
+              "media kit",
+              "locations",
+              "latest news and events",
+              "privacy policy",
+              "cookie settings",
+              "投资者关系",
+              "联系方式",
+          )
+          '''
+          if old_regexes not in text:
+              raise RuntimeError("narrative regex anchor not found")
+          text = text.replace(old_regexes, new_regexes, 1)
+
+          navigation_anchor = '''def _looks_like_navigation(value: str) -> bool:
+          '''
+          helper = '''def _trim_page_chrome(value: str) -> str:
+              text = clean_text(value, 1600)
+              if not text:
+                  return ""
+              lowered = text.casefold()
+              cut_points = [
+                  index
+                  for term in PAGE_CHROME_TERMS
+                  if (index := lowered.find(term.casefold())) >= 0
+              ]
+              address = ADDRESS_RE.search(text)
+              if address:
+                  cut_points.append(address.start())
+              phone = PHONE_RE.search(text)
+              if phone:
+                  cut_points.append(phone.start())
+              if not cut_points:
+                  return text
+              prefix = text[: min(cut_points)].strip(" .。|｜\\-")
+              return prefix if len(prefix) >= 24 else ""
+
+
+          '''
+          if navigation_anchor not in text:
+              raise RuntimeError("navigation function anchor not found")
+          text = text.replace(navigation_anchor, helper + navigation_anchor, 1)
+
+          old_navigation_checks = '''    if re.search(r"all rights reserved|cookie settings|版权所有|备案号", lowered):
+                  return True
+
+              hits = _navigation_hits(text)
+          '''
+          new_navigation_checks = '''    if re.search(r"all rights reserved|cookie settings|版权所有|备案号", lowered):
+                  return True
+              if ADDRESS_RE.search(text) or PHONE_RE.search(text):
+                  return True
+              if len(DATE_TOKEN_RE.findall(text)) >= 2:
+                  return True
+              if "::" in text and len(text) <= 200:
+                  return True
+
+              hits = _navigation_hits(text)
+          '''
+          if old_navigation_checks not in text:
+              raise RuntimeError("navigation checks anchor not found")
+          text = text.replace(old_navigation_checks, new_navigation_checks, 1)
+
+          old_clause = '''    for raw in CLAUSE_SPLIT_RE.split(text):
+                  clause = clean_text(raw, 900).strip(" .。|｜\\-")
+                  if len(clause) < 18:
+          '''
+          new_clause = '''    for raw in CLAUSE_SPLIT_RE.split(text):
+                  clause = _trim_page_chrome(raw).strip(" .。|｜\\-")
+                  if len(clause) < 18:
+          '''
+          if old_clause not in text:
+              raise RuntimeError("clause sanitation anchor not found")
+          text = text.replace(old_clause, new_clause, 1)
+          path.write_text(text, encoding="utf-8")
+
+          tests = Path("tests/test_venture_narrative_sanitizer.py")
+          test_text = tests.read_text(encoding="utf-8")
+          anchor = '''    def test_snapshot_sanitation_is_idempotent(self) -> None:
+          '''
+          additions = '''    def test_trims_contact_address_and_date_tail(self) -> None:
+                  value = (
+                      "We work with urgency and focus on the work that will accelerate our "
+                      "progress towards our mission and strengthen our company. "
+                      "1654 Smallman Street Pittsburgh, PA 15222 Toll-Free: (888) 583-9506 "
+                      "Investor Relations Email Transfer Agent Equiniti Trust Company, LLC. "
+                      "Featured July 22, 2026 August 7, 2025 May 1, 2025 Locations Our Company."
+                  )
+                  cleaned = sanitizer.sanitize_narrative(value)
+                  self.assertIn("accelerate our progress towards our mission", cleaned)
+                  self.assertNotIn("1654 Smallman Street", cleaned)
+                  self.assertNotIn("Investor Relations", cleaned)
+                  self.assertNotIn("July 22, 2026", cleaned)
+
+              def test_removes_headline_fragment_but_keeps_technology_claims(self) -> None:
+                  value = (
+                      "Consumers’ Pockets Annually by 2035 :: Aurora Innovation, Inc. "
+                      "We are building a technology and a company to serve all people and all communities. "
+                      "We are committed to safely developing and deploying transformational self-driving technology."
+                  )
+                  cleaned = sanitizer.sanitize_narrative(value)
+                  self.assertNotIn("Consumers’ Pockets", cleaned)
+                  self.assertIn("serve all people and all communities", cleaned)
+                  self.assertIn("transformational self-driving technology", cleaned)
+
+          '''
+          if anchor not in test_text:
+              raise RuntimeError("narrative test anchor not found")
+          test_text = test_text.replace(anchor, additions + anchor, 1)
+          tests.write_text(test_text, encoding="utf-8")
+          PY
+
+          mkdir -p diagnostics
+          set +e
+          {
+            echo "commit=$(git rev-parse HEAD)"
+            echo "checkedAt=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            python -m py_compile tools/sanitize_venture_narratives.py tools/finalize_venture_profiles.py
+            COMPILE_STATUS=$?
+            echo "compile=$COMPILE_STATUS"
+            python -m unittest -v tests.test_venture_narrative_sanitizer tests.test_finalize_venture_profiles
+            TEST_STATUS=$?
+            echo "tests=$TEST_STATUS"
+          } > diagnostics/venture-narrative-noise-v2.txt 2>&1
+          STATUS=$((COMPILE_STATUS || TEST_STATUS))
+          set -e
+          cat diagnostics/venture-narrative-noise-v2.txt
+
+          if [ "$STATUS" -eq 0 ]; then
+            rm .github/workflows/patch-venture-narrative-noise-v2.yml
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/sanitize_venture_narratives.py tests/test_venture_narrative_sanitizer.py diagnostics/venture-narrative-noise-v2.txt .github/workflows/patch-venture-narrative-noise-v2.yml
+          git commit -m "fix: strip venture narrative page chrome"
+          git push origin HEAD:feature/venture-narrative-noise-v2-20260726
+          exit "$STATUS"
