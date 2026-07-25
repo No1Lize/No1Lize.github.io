@@ -386,7 +386,8 @@ function sourceCandidates(
         sourceWeight(representative) >= 1 &&
         Boolean(company) &&
         !GENERIC_COMPANIES.has(company);
-      const category = isCompanySource ? "company" : "media";
+      const category: TrackingSourceRecommendation["source"]["sourceCategory"] =
+        isCompanySource ? "company" : "media";
       const sourceName = normalize(
         representative.source.name || representative.source.platform || host,
       );
