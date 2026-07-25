@@ -1,4 +1,4 @@
-name: Refresh public research report PDFs v2
+name: Refresh all listed-company research PDFs
 
 on:
   schedule:
@@ -8,6 +8,14 @@ on:
     branches: [main]
     paths:
       - .github/workflows/research-report-refresh.yml
+      - config/user_tracking.json
+      - tools/crawl_research_reports.py
+      - tests/test_research_reports.py
+      - tests/research-report-data.test.ts
+      - lib/research-report-data.ts
+      - components/research-report-library.tsx
+      - app/reports/**
+      - app/ipo/**
 
 permissions:
   contents: write
@@ -20,7 +28,13 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
+    env:
+      RESEARCH_REPORTS_PER_COMPANY: "3"
+      RESEARCH_REPORTS_MAX_TOTAL: "48"
+      RESEARCH_REPORT_MAX_BYTES: "10485760"
+      RESEARCH_REPORT_SEARCH_RESULTS: "10"
+      RESEARCH_REPORT_WORKERS: "4"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,7 +45,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Run observable PDF refresh
+      - name: Run observable all-market PDF refresh
         id: check
         shell: bash
         run: |
@@ -56,16 +70,26 @@ jobs:
             printf 'npm install failed; TypeScript test skipped\n' > .github/diagnostics/research-report-ts-tests.log
             printf 'npm install failed; Next build skipped\n' > .github/diagnostics/research-report-build.log
           fi
-          REPORTS=$(python - <<'PY'
+          read -r REPORTS TRACKED ASTOCK HKSTOCK USSTOCK <<EOF
+          $(python - <<'PY'
           import json
           from pathlib import Path
           path = Path('public/data/research_reports.json')
           try:
-              print(len(json.loads(path.read_text(encoding='utf-8')).get('reports', [])))
+              payload = json.loads(path.read_text(encoding='utf-8'))
+              counts = payload.get('marketCounts', {})
+              print(
+                  len(payload.get('reports', [])),
+                  payload.get('trackedCompanies', 0),
+                  counts.get('A股', 0),
+                  counts.get('港股', 0),
+                  counts.get('美股', 0),
+              )
           except Exception:
-              print(0)
+              print(0, 0, 0, 0, 0)
           PY
           )
+          EOF
           cat > .github/diagnostics/research-report-refresh.json <<EOF
           {
             "crawl": $CRAWL,
@@ -74,6 +98,8 @@ jobs:
             "typescriptTests": $TSTEST,
             "pagesBuild": $BUILD,
             "reports": $REPORTS,
+            "trackedCompanies": $TRACKED,
+            "marketCounts": {"A股": $ASTOCK, "港股": $HKSTOCK, "美股": $USSTOCK},
             "commit": "$GITHUB_SHA",
             "runId": "$GITHUB_RUN_ID"
           }
@@ -84,6 +110,7 @@ jobs:
           echo "tstest=$TSTEST" >> "$GITHUB_OUTPUT"
           echo "build=$BUILD" >> "$GITHUB_OUTPUT"
           echo "reports=$REPORTS" >> "$GITHUB_OUTPUT"
+          echo "tracked=$TRACKED" >> "$GITHUB_OUTPUT"
           exit 0
       - name: Commit diagnostics and validated PDF archive
         id: publish
@@ -103,7 +130,7 @@ jobs:
              [ "${{ steps.check.outputs.npm }}" = "0" ] && \
              [ "${{ steps.check.outputs.tstest }}" = "0" ] && \
              [ "${{ steps.check.outputs.build }}" = "0" ] && \
-             [ "${{ steps.check.outputs.reports }}" -gt "0" ]; then
+             [ "${{ steps.check.outputs.tracked }}" -gt "0" ]; then
             git add public/data/research_reports.json
             if [ -d public/research-reports ]; then
               git add public/research-reports
@@ -120,7 +147,7 @@ jobs:
             echo "valid=$VALID" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git commit -m "ci: record research report PDF refresh result"
+          git commit -m "data: refresh research PDFs for all listed companies"
           for attempt in 1 2 3; do
             if git pull --rebase origin main && git push origin HEAD:main; then
               echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -136,6 +163,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run pages.yml --ref main
-      - name: Fail when PDF archive is invalid
-        if: steps.check.outputs.crawl != '0' || steps.check.outputs.pytest != '0' || steps.check.outputs.npm != '0' || steps.check.outputs.tstest != '0' || steps.check.outputs.build != '0' || steps.check.outputs.reports == '0'
+      - name: Fail when all-market PDF archive is invalid
+        if: steps.check.outputs.crawl != '0' || steps.check.outputs.pytest != '0' || steps.check.outputs.npm != '0' || steps.check.outputs.tstest != '0' || steps.check.outputs.build != '0' || steps.check.outputs.tracked == '0'
         run: exit 1
