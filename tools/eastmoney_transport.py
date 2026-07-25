@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Run the tracking-aware official crawler with Eastmoney-safe HTTP decoding.
+"""Run the category-aware official crawler with Eastmoney-safe HTTP decoding.
 
 Some Eastmoney channel templates still declare GBK/GB2312 only inside the HTML
 rather than in the HTTP Content-Type header. The shared crawler deliberately
 keeps a small UTF-8-first transport, so this module patches only Eastmoney
-requests and leaves every other source on the existing implementation.
+requests and then delegates to the category-aware wrapper. Every other source
+continues through the existing transport and source-category rules.
 """
 
 from __future__ import annotations
@@ -17,8 +18,10 @@ from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
 
 try:
+    from . import crawl_official_with_source_categories as category_crawler
     from . import crawl_official_with_tracking as tracking_crawler
 except ImportError:
+    import crawl_official_with_source_categories as category_crawler
     import crawl_official_with_tracking as tracking_crawler
 
 
@@ -140,7 +143,7 @@ def install_transport() -> None:
 
 def main() -> int:
     install_transport()
-    return tracking_crawler.main()
+    return category_crawler.main()
 
 
 if __name__ == "__main__":
