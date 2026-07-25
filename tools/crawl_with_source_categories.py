@@ -218,6 +218,16 @@ def _install_strict_tracking_validation() -> None:
     tracking._parse_person_label = strict_tracking_config.parse_person_label
 
 
+def _direct_only_generic_source(spec: dict[str, Any]) -> bool:
+    source_url = str(spec.get("sourceUrl") or spec.get("url") or "")
+    parts = urlsplit(source_url)
+    host = (parts.hostname or "").casefold()
+    return (
+        generic_web_sources.source_kind(source_url) == "x"
+        or (host.endswith("google.com") and parts.path.rstrip("/") == "/alerts")
+    )
+
+
 def _install_generic_adapter() -> None:
     original_install = tracking._install_runtime_overrides
     if getattr(original_install, "_generic_web_adapter", False):
@@ -234,14 +244,31 @@ def _install_generic_adapter() -> None:
         def crawl_source(
             spec: dict[str, Any], user_agent: str
         ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-            if spec.get("adapter") == "generic_web":
-                return robust_web_fallback.crawl_with_second_stage(
-                    spec,
-                    user_agent,
-                    tracking.crawler,
-                    generic_web_sources,
+            if spec.get("adapter") != "generic_web":
+                return original_crawl_source(spec, user_agent)
+            if _direct_only_generic_source(spec):
+                return generic_web_sources.crawl_generic_source(
+                    spec, user_agent, tracking.crawler
                 )
-            return original_crawl_source(spec, user_agent)
+
+            articles, status = robust_web_fallback.crawl_with_second_stage(
+                spec,
+                user_agent,
+                tracking.crawler,
+                generic_web_sources,
+            )
+            if not articles and status.get("status") == "empty":
+                # An arbitrary portal returning no static candidates is not a
+                # verified empty dataset. Mark it as a transient failure so the
+                # shared batch replacement logic retains the previous snapshot.
+                status = dict(status)
+                status["status"] = "error"
+                status["failed"] = max(1, int(status.get("failed", 0) or 0))
+                status["error"] = (
+                    "No verifiable dated articles discovered; previous snapshot retained"
+                )
+                status["retainedPrevious"] = True
+            return articles, status
 
         tracking.crawler._crawl_config_source = crawl_source
 
