@@ -30,11 +30,9 @@ EASTMONEY_INDEX_URLS = (
     "https://fund.eastmoney.com/a/cjjgd.html",
     "https://finance.eastmoney.com/",
 )
+# Eastmoney's first-party news detail pages use /a/<long timestamp-id>.html.
+# Channel pages such as /news/cjjxx.html and wealth-account posts are excluded.
 EASTMONEY_ARTICLE_PATTERN = r"/a/20\d{12,}\.html$"
-EASTMONEY_INDEX_PATTERN = re.compile(
-    r"/(?:a|news)/(?:cjjyw|cjjgd|cjjyj)(?:_\d+)?\.html$",
-    flags=re.IGNORECASE,
-)
 EASTMONEY_BODY_IDS = {
     "contentbody",
     "articlebody",
@@ -149,6 +147,17 @@ def _is_eastmoney_article_url(url: str) -> bool:
     )
 
 
+def _clean_eastmoney_title(title: Any) -> str:
+    cleaned = _clean(title, 240)
+    cleaned = re.sub(
+        r"\s*[_|｜]\s*(?:天天基金网\s*[_|｜]\s*)?东方财富网\s*$",
+        "",
+        cleaned,
+        flags=re.IGNORECASE,
+    )
+    return cleaned.strip()
+
+
 def _useful_eastmoney_paragraph(text: str) -> bool:
     folded = official.clean_text(text).casefold()
     return (
@@ -201,11 +210,11 @@ def _is_probable_non_article(article: dict[str, Any]) -> bool:
     host = _normalized_host(url)
     path = urlsplit(url).path.casefold().rstrip("/")
 
-    if host.endswith("eastmoney.com"):
-        if EASTMONEY_INDEX_PATTERN.search(path):
-            return True
-        if title.startswith(("基金要闻", "基金观点", "基金研究")):
-            return True
+    # Eastmoney exposes many category, product, fund-school and wealth-account
+    # pages under paths that look article-like. Use a strict positive allowlist
+    # rather than trying to enumerate every current and future channel code.
+    if host.endswith("eastmoney.com") and not _is_eastmoney_article_url(url):
+        return True
 
     title_markers = (
         "的文章_",
@@ -235,6 +244,30 @@ def _sanitize_user_article(article: dict[str, Any]) -> dict[str, Any]:
     cleaned = dict(article)
     cleaned.pop("companySlug", None)
     return cleaned
+
+
+def _finalize_eastmoney_article(
+    article: dict[str, Any],
+    body: str,
+    listed_entities: list[dict[str, str]],
+) -> dict[str, Any]:
+    """Apply body extraction, media metadata and tracked-company attribution."""
+
+    cleaned = _sanitize_user_article(article)
+    cleaned["title"] = _clean_eastmoney_title(cleaned.get("title"))
+    summary = _eastmoney_summary(body)
+    if summary:
+        cleaned["summary"] = summary
+    source = (
+        dict(cleaned.get("source"))
+        if isinstance(cleaned.get("source"), dict)
+        else {}
+    )
+    source["name"] = "东方财富"
+    source["level"] = "媒体报道"
+    source["platform"] = "东方财富"
+    cleaned["source"] = source
+    return attribute_eastmoney_article(cleaned, listed_entities)
 
 
 def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
@@ -289,10 +322,8 @@ def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
 
         is_eastmoney = _is_eastmoney_source(company, urls)
         if is_eastmoney:
-            # The configured Eastmoney homepage is a portal. Add the fund/news
-            # indexes that expose concrete article links and permit their related
-            # finance subdomain. The article pattern below gives those detail URLs
-            # priority while channel pages are discarded by the sanitizer.
+            # The configured homepage is a portal. These index pages expose links
+            # to concrete /a/<timestamp-id>.html stories on trusted subdomains.
             for seed_url in EASTMONEY_INDEX_URLS:
                 normalized = official.normalize_url(seed_url)
                 if normalized not in urls:
@@ -309,14 +340,17 @@ def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
             )
         )
         entity_aliases = tuple(dict.fromkeys([*aliases, *keywords]))
-        article_url_patterns = [
-            r"/(?:news|newsroom|press|blog|updates?)/",
-            r"/(?:investors?|investor-relations|ir)/",
-            r"/(?:announcements?|filings?|financials?)/",
-            r"/20\d{2}/",
-        ]
         if is_eastmoney:
-            article_url_patterns.insert(0, EASTMONEY_ARTICLE_PATTERN)
+            article_url_patterns = (EASTMONEY_ARTICLE_PATTERN,)
+            max_candidate_links = 48
+        else:
+            article_url_patterns = (
+                r"/(?:news|newsroom|press|blog|updates?)/",
+                r"/(?:investors?|investor-relations|ir)/",
+                r"/(?:announcements?|filings?|financials?)/",
+                r"/20\d{2}/",
+            )
+            max_candidate_links = 24
 
         specs.append(
             official.CompanySpec(
@@ -329,10 +363,10 @@ def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
                 sitemap_urls=sitemap_urls,
                 aliases=tuple(dict.fromkeys(alias for alias in aliases if alias != company)),
                 entity_aliases=entity_aliases,
-                article_url_patterns=tuple(article_url_patterns),
+                article_url_patterns=article_url_patterns,
                 require_entity_match=False,
                 max_items=6,
-                max_candidate_links=24,
+                max_candidate_links=max_candidate_links,
                 max_age_days=730,
                 request_timeout=10,
             )
@@ -367,12 +401,7 @@ def install_overrides(
         source = article.get("source") if isinstance(article.get("source"), dict) else {}
         article_url = _clean(source.get("url"), 500) or candidate_url
         if _is_eastmoney_article_url(article_url):
-            summary = _eastmoney_summary(body)
-            if summary:
-                article["summary"] = summary
-            return attribute_eastmoney_article(
-                _sanitize_user_article(article), listed_entities
-            )
+            return _finalize_eastmoney_article(article, body, listed_entities)
         return _sanitize_user_article(article)
 
     def load_payload(path: Path = official.OUTPUT_PATH) -> dict[str, Any]:
@@ -385,8 +414,7 @@ def install_overrides(
             source_url = _clean(source.get("url"), 500)
 
             # Eastmoney listing-search used to run through both the generic Bing
-            # adapter and this direct crawler. Keep the direct article crawl and
-            # remove the generic portal/index duplicate batch from the snapshot.
+            # adapter and this direct crawler. Keep only the direct detail crawl.
             if (
                 source_id.startswith("user-source-")
                 and _normalized_host(source_url).endswith("eastmoney.com")
@@ -398,6 +426,12 @@ def install_overrides(
                     continue
                 article = _sanitize_user_article(article)
                 if _is_eastmoney_article_url(source_url):
+                    article["title"] = _clean_eastmoney_title(article.get("title"))
+                    normalized_source = dict(source)
+                    normalized_source["name"] = "东方财富"
+                    normalized_source["level"] = "媒体报道"
+                    normalized_source["platform"] = "东方财富"
+                    article["source"] = normalized_source
                     article = attribute_eastmoney_article(article, listed_entities)
             retained_articles.append(article)
         payload["articles"] = retained_articles
