@@ -49,9 +49,12 @@ jobs:
               return p.read_text(errors='replace')[-12000:] if p.exists() else ''
           data = {
               'sourceCommit': '${{ github.sha }}',
+              'runId': '${{ github.run_id }}',
               'install': '${{ steps.install.outcome }}',
               'tests': '${{ steps.tests.outcome }}',
               'build': '${{ steps.build.outcome }}',
+              'deployOutcome': 'not-started',
+              'pageUrl': '',
               'deployed': False,
               'installLog': tail('/tmp/install.log'),
               'testLog': tail('/tmp/tests.log'),
@@ -86,23 +89,26 @@ jobs:
     steps:
       - name: Deploy Pages
         id: deployment
+        continue-on-error: true
         uses: actions/deploy-pages@v4
-
-  record-deployment:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v4
-      - name: Mark deployed revision
+        if: always()
+        with:
+          ref: main
+      - name: Record deployment outcome
+        if: always()
         run: |
           python - <<'PY'
           import json, pathlib
           path = pathlib.Path('diagnostics/home-source-link-deploy.json')
           data = json.loads(path.read_text()) if path.exists() else {}
+          outcome = '${{ steps.deployment.outcome }}'
           data.update({
               'sourceCommit': '${{ github.sha }}',
-              'deployed': True,
-              'deployedAt': '${{ github.event.head_commit.timestamp }}',
+              'runId': '${{ github.run_id }}',
+              'deployOutcome': outcome,
+              'pageUrl': '${{ steps.deployment.outputs.page_url }}',
+              'deployed': outcome == 'success',
           })
           path.parent.mkdir(parents=True, exist_ok=True)
           path.write_text(json.dumps(data, ensure_ascii=False, indent=2))
@@ -110,6 +116,9 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add diagnostics/home-source-link-deploy.json
-          git commit -m 'ci: confirm homepage source-link deployment' || true
+          git commit -m 'ci: record homepage source-link deployment outcome' || true
           git pull --rebase origin main
           git push origin HEAD:main
+      - name: Fail when deployment failed
+        if: always()
+        run: test '${{ steps.deployment.outcome }}' = 'success'
