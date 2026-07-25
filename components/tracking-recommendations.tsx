@@ -43,10 +43,29 @@ export function TrackingRecommendations({
         .map((type) => ({
           type,
           title: labels[type],
-          items: recommendations[type].slice(0, 8) as AnyTrackingRecommendation[],
+          items: recommendations[type] as AnyTrackingRecommendation[],
         })),
     [onlyType, recommendations],
   );
+
+  const activeSections = sections
+    .map((section) => {
+      const visibleItems = section.items.filter(
+        (item) => !hidden[`${section.type}-${item.value}`],
+      );
+      return {
+        ...section,
+        current: visibleItems[0],
+        remaining: visibleItems.length,
+      };
+    })
+    .filter((section) => Boolean(section.current));
+
+  function dismiss(type: RecommendationType, item: AnyTrackingRecommendation) {
+    const key = `${type}-${item.value}`;
+    setError("");
+    setHidden((current) => ({ ...current, [key]: true }));
+  }
 
   async function add(type: RecommendationType, item: AnyTrackingRecommendation) {
     const key = `${type}-${item.value}`;
@@ -62,11 +81,13 @@ export function TrackingRecommendations({
     }
   }
 
+  if (!activeSections.length) return null;
+
   return (
     <section aria-label="智能推荐添加" className={styles.panel}>
       <div className={styles.header}>
         <strong>{onlyType ? labels[onlyType] : "智能推荐"}</strong>
-        <span>根据当前赛道情报自动生成</span>
+        <span>按相关度排序 · 逐条处理</span>
       </div>
 
       {error ? (
@@ -75,40 +96,44 @@ export function TrackingRecommendations({
         </p>
       ) : null}
 
-      {sections.map((section) => {
-        const visibleItems = section.items.filter(
-          (item) => !hidden[`${section.type}-${item.value}`],
-        );
+      {activeSections.map((section) => {
+        const item = section.current;
+        if (!item) return null;
+        const key = `${section.type}-${item.value}`;
         return (
           <div key={section.type}>
             {!onlyType && (
-              <div className={styles.header}>
+              <div className={styles.sectionTitle}>
                 <strong>{section.title}</strong>
+                <span>剩余 {section.remaining} 条</span>
               </div>
             )}
-            {visibleItems.length ? (
-              <div className={styles.actions}>
-                {visibleItems.map((item) => {
-                  const key = `${section.type}-${item.value}`;
-                  return (
-                    <button
-                      className={styles.item}
-                      key={key}
-                      disabled={Boolean(pending)}
-                      onClick={() => void add(section.type, item)}
-                      title={item.reason}
-                      type="button"
-                    >
-                      <strong>{item.label}</strong>
-                      <small>{item.reason}</small>
-                      <b>{pending === key ? "添加中" : "+添加"}</b>
-                    </button>
-                  );
-                })}
+            <article className={styles.item} key={key} title={item.reason}>
+              <div className={styles.itemText}>
+                <strong>{item.label}</strong>
+                <small>{item.reason}</small>
               </div>
-            ) : (
-              <p className={styles.empty}>当前没有新的高置信推荐</p>
-            )}
+              <div className={styles.controls}>
+                <button
+                  aria-label={`忽略推荐：${item.label}`}
+                  className={styles.dismiss}
+                  disabled={Boolean(pending)}
+                  onClick={() => dismiss(section.type, item)}
+                  title="忽略并显示下一条"
+                  type="button"
+                >
+                  ×
+                </button>
+                <button
+                  className={styles.add}
+                  disabled={Boolean(pending)}
+                  onClick={() => void add(section.type, item)}
+                  type="button"
+                >
+                  {pending === key ? "添加中" : "+ 添加"}
+                </button>
+              </div>
+            </article>
           </div>
         );
       })}
