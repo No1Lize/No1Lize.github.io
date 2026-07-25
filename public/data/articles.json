@@ -1,8 +1,38 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T11:00:30+00:00",
-  "articleCount": 435,
+  "generatedAt": "2026-07-25T11:22:09+00:00",
+  "articleCount": 457,
   "articles": [
+    {
+      "id": "user-track-quantum-google-cn-2cddc7877d7142a6",
+      "sourceId": "user-track-quantum-google-cn",
+      "title": "DeepSeek 巨额融资落地，物理 AI、量子计算抢占风口 | 创投周报 - 手机新浪网",
+      "summary": "DeepSeek 巨额融资落地，物理 AI、量子计算抢占风口 | 创投周报 手机新浪网",
+      "type": "融资",
+      "region": "中国",
+      "sector": "量子计算",
+      "company": "DeepSeek",
+      "publishedAt": "2026-07-25",
+      "importance": 91,
+      "source": {
+        "name": "量子计算 · Google News 中文",
+        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOQjNhNnVqaHZ5MkdPNDFjTGdfS2VCRXA0LUpMbG9OTUlIOFpDUmMwT3hmWlhKbi1PRUFxSGF2S0J6Y0ZDR2ZrcFA5OVRnSzg3eTFaUVc5ZFNtTXJXUTdHcmsyZzRfSmQzVXRwY2lIcndSQUliT0JBU21YQmc3czFVWnRxUkdDd3pJcnZZblVTOFhSR0d6MUxoRXhBWmRNb0NaZ2kzdk9tWXpzRnZOQ1ZfRQ?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "companySlug": "deepseek",
+      "qualityScore": 37,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "quantum"
+      ]
+    },
     {
       "id": "sina-finance-af9d99698a928c81",
       "sourceId": "sina-finance",
@@ -208,6 +238,34 @@
       ]
     },
     {
+      "id": "x-openai-b913404590ad590a",
+      "sourceId": "user-x-openai",
+      "title": "OpenAI：@huggingface We recognize there are a lot of questions and speculative details circulating related to the Hugging Face incident. This is an unpreceden",
+      "summary": "@huggingface We recognize there are a lot of questions and speculative details circulating related to the Hugging Face incident. This is an unprecedented incident, and we think it marks an important moment for AI safety. We are still conducting a thorough review along with external",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-25",
+      "importance": 81,
+      "source": {
+        "name": "OpenAI on X",
+        "url": "https://x.com/OpenAI/status/2080815626113954288",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "openai",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
       "id": "official-user-东方财富-c8e4dd022db9750d",
       "sourceId": "official-user-东方财富",
       "title": "SK集团将向包括英伟达在内的美国科技公司供应价值7500亿美元的芯片",
@@ -380,28 +438,6 @@
       ]
     },
     {
-      "id": "x-openai-b913404590ad590a",
-      "sourceId": "x-openai",
-      "title": "OpenAI：@huggingface We recognize there are a lot of questions and speculative details circulating related to the Hugging Face incident. This is an unpreceden",
-      "summary": "@huggingface We recognize there are a lot of questions and speculative details circulating related to the Hugging Face incident. This is an unprecedented incident, and we think it marks an important moment for AI safety. We are still conducting a thorough review along with external",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-25",
-      "importance": 76,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2080815626113954288",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
       "id": "user-track-energy-google-cn-d1d818049ce94f0b",
       "sourceId": "user-track-energy-google-cn",
       "title": "“喜羊羊之父”转行和宁德时代抢生意，携奥动新能源又要IPO了！ - 新浪财经",
@@ -538,6 +574,33 @@
       ]
     },
     {
+      "id": "user-source-source-yahoo-tw-85a8f1466d42b3f9",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "才剛過10天！ChatGPT又當機 官方證實「搶修中」",
+      "summary": "即時中心／廖予瑄報導ChatGPT又當機！人工智慧（AI）聊天機器人Chat GPT日前才傳出一波當機災情，沒想到才過10天，今（25）日下午ChatGPT又發生故障。根據數據監控網站Downdetector網站數據顯示，下午4時37分起，Chat GPT陸續湧現大量錯誤回報。據了解，目前官方證實，系統已在搶修中。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E6%89%8D%E5%89%9B%E9%81%8E10%E5%A4%A9-chatgpt%E5%8F%88%E7%95%B6%E6%A9%9F-%E5%AE%98%E6%96%B9%E8%AD%89%E5%AF%A6-%E6%90%B6%E4%BF%AE%E4%B8%AD-105624805.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "companySlug": "openai",
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
       "id": "user-source-source-yahoo-tw-387cc1e7e0df227e",
       "sourceId": "user-source-source-yahoo-tw",
       "title": "AI熱潮 人工智慧正如何改變你我的世界？ - Yahoo新聞",
@@ -590,6 +653,292 @@
       ]
     },
     {
+      "id": "user-source-source-track-1r4ht2r-f92da97e3d1027b7",
+      "sourceId": "user-source-source-track-1r4ht2r",
+      "title": "Nvidia CEO: How AI could actually create jobs - Axios",
+      "summary": "Nvidia CEO: How AI could actually create jobs Axios",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "谷歌新闻",
+        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5UUVg4bTZpUEo4T1dOYndNWTFXMXF2Tnp0MGhZT29PSjl4MnliNk5LQ2dUaGc4Yk1qaWJwTUxWVEV6eXhJMWRJUEV0anc1VTZaeHpiTmtqSUhUdHVmT3I3aWhtbmdMeFdSLU9wcg?oc=5",
+        "level": "媒体报道",
+        "platform": "谷歌新闻"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-c638dfd73a33d187",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：The CDC linked four more states to a cyclosporiasis outbreak traced to shredded iceberg lettuce from Mexico, expanding the outbreak to nine states. Re",
+      "summary": "The CDC linked four more states to a cyclosporiasis outbreak traced to shredded iceberg lettuce from Mexico, expanding the outbreak to nine states. Read the latest on the outbreak here: https://t.co/YMdWJ7ZdqP https://t.co/PWtmoishfZ",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080850560744305006",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-c4a300b4debf334c",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：President Trump leaned hard into what he said were negotiations with Iranian officials, seeming to emphasize diplomacy over military escalation after",
+      "summary": "President Trump leaned hard into what he said were negotiations with Iranian officials, seeming to emphasize diplomacy over military escalation after days of attacks by both sides and warnings that the White House was considering escalating the war. https://t.co/9vppR95wKF",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080842986556936584",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-c153a25b0dbc29a6",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：Column by R. Eric Thomas: Husband never apologizes to the letter writer when he makes mistakes. https://t.co/54jQV3Ilmk",
+      "summary": "Column by R. Eric Thomas: Husband never apologizes to the letter writer when he makes mistakes. https://t.co/54jQV3Ilmk",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080926087400305143",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-a9b8cc43236c6a04",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：Homicide rates in U.S. cities have dropped 18 percent since last year, with carjackings down 47 percent, according to a new report. https://t.co/Vy4yw",
+      "summary": "Homicide rates in U.S. cities have dropped 18 percent since last year, with carjackings down 47 percent, according to a new report. https://t.co/Vy4ywW6SCf https://t.co/3drmVqBNQe",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080911014824972794",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-9a35452fb3429d6f",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：One morning, you wake up and your ear feels plugged. Or maybe you hear a loud “pop.” These experiences may seem harmless or temporary. But they could",
+      "summary": "One morning, you wake up and your ear feels plugged. Or maybe you hear a loud “pop.” These experiences may seem harmless or temporary. But they could also signal a medical emergency — known as sudden sensorineural hearing loss. https://t.co/vIKK22cdgU",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080895864889917861",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-8042f4911f838146",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：Record-breaking heat domes have dominated the summer, with Europe and the U.S. experiencing extreme temperatures. A powerful heat dome is set to inten",
+      "summary": "Record-breaking heat domes have dominated the summer, with Europe and the U.S. experiencing extreme temperatures. A powerful heat dome is set to intensify over the Plains and Rockies, threatening more records. https://t.co/ULn31CcCXI https://t.co/M1XNz007h8",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080941172160070105",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-73929a613eac9bce",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：As free Chinese AI models have got closer to matching paid American offerings, some tech executives and national security leaders have accused Chinese",
+      "summary": "As free Chinese AI models have got closer to matching paid American offerings, some tech executives and national security leaders have accused Chinese firms of creating security risks or unfairly using U.S. technology to train their own. https://t.co/iQ0v8sZco5",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080880751323590710",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-5822729fda6d538b",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：San Diego Comic-Con opened its doors on Thursday, drawing thousands of fans in elaborate costumes. Organizers expect more than 135,000 attendees at th",
+      "summary": "San Diego Comic-Con opened its doors on Thursday, drawing thousands of fans in elaborate costumes. Organizers expect more than 135,000 attendees at the convention, which has evolved over the years from its comic book roots into a major showcase for entertainment franchises. https://t.co/zC6DGVZeKh",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080865794469105999",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-2ad67179e261fb66",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：Americans give President Trump broadly negative reviews for his handling of key issues, citing rising costs and pessimism towards whether the administ",
+      "summary": "Americans give President Trump broadly negative reviews for his handling of key issues, citing rising costs and pessimism towards whether the administration’s negotiations with Iran will lower gas prices, according to a Washington Post-Ipsos poll. https://t.co/KHFlNCRBq7 https://t.co/rTE0clkbuc",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080971377427796132",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-the-washington-post-0a3e701e8ce4c460",
+      "sourceId": "user-source-source-the-washington-post",
+      "title": "The Washington Post：The Trump administration is planning to dispatch two senior officials to Brazil on a mission to cast doubt on the fairness and integrity of the countr",
+      "summary": "The Trump administration is planning to dispatch two senior officials to Brazil on a mission to cast doubt on the fairness and integrity of the country’s electoral system before millions of Brazilians vote in a presidential election, according to officials.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "The Washington Post on X",
+        "url": "https://x.com/washingtonpost/status/2080858087922028781",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 38,
+      "qualitySignals": [
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
       "id": "tmtpost-d5bbebfa3978596b",
       "sourceId": "tmtpost",
       "title": "Opus 5 反超 Fable 5，Anthropic 的定价牌局被打乱了？",
@@ -630,6 +979,69 @@
       },
       "trackSlugs": [
         "ai"
+      ]
+    },
+    {
+      "id": "tmtpost-8b80c8c5f261b97b",
+      "sourceId": "tmtpost",
+      "title": "赛马结束，大厂各寻Agent主心骨",
+      "summary": "大厂Agent，不再养蛊。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8078733.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      },
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "tmtpost-396927f2b7f30338",
+      "sourceId": "tmtpost",
+      "title": "苹果压价20%、英伟达涨价、Meta烧120亿：AI产业链正陷入\"三明治陷阱\"",
+      "summary": "英伟达涨价、苹果压价、Meta烧钱——AI产业链正形成危险的三明治结构：上游存储/GPU吸走利润，下游云厂商锁定需求，夹在中间的精密制造被上下挤压。这不是芯片通胀，是利润分配权的结构性掠夺。英特尔\"高双位数增长\"预言，更可能是制造端产能过剩的死亡预告。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8078916.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      },
+      "trackSlugs": [
+        "semiconductor"
+      ]
+    },
+    {
+      "id": "tmtpost-2ce0c001df3cdd98",
+      "sourceId": "tmtpost",
+      "title": "被迫跨界汽车与机器人赛道，家电上游的躺赚时代结束了",
+      "summary": "吃不到肉的家电上游，开始去新赛道找“汤”喝。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8079365.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      },
+      "trackSlugs": [
+        "robotics"
       ]
     },
     {
@@ -735,36 +1147,6 @@
       },
       "trackSlugs": [
         "manufacturing"
-      ]
-    },
-    {
-      "id": "user-track-quantum-google-cn-1a15e41abce05887",
-      "sourceId": "user-track-quantum-google-cn",
-      "title": "DeepSeek 巨额融资落地，物理 AI、量子计算抢占风口 | 创投周报 - 手机新浪网",
-      "summary": "DeepSeek 巨额融资落地，物理 AI、量子计算抢占风口 | 创投周报 手机新浪网",
-      "type": "融资",
-      "region": "中国",
-      "sector": "量子计算",
-      "company": "DeepSeek",
-      "publishedAt": "2026-07-24",
-      "importance": 91,
-      "source": {
-        "name": "量子计算 · Google News 中文",
-        "url": "https://news.google.com/rss/articles/CBMi2ARBVV95cUxNZkNpRUoySHZmVWF6U0hKbldfYXVfOVFYOVVLY0ZublBmbkZmaDRyaEVhRVExMFRqRlBpREpZRFpDV2VtWVM0SVhzSzBMeGUzUlB0SGZ3cFJzWjExbjlCYlhOaTVKZlJQMXpQYjh6LTRNUVd1ak16WkFiRHBnRmxVYU1oRF8xVkpYLTBjQW04TGJyajFQUTlvNkJpa0wtNjZVUUZTZkxoc2NrSlN5MUxVQlBKaWhRWVFEbFZnQlAwRWQ0VTVQbVh3M0FHbGdLNXdCNHN1Y0ZwU2NTR1MzbzZycjhwTVpObm1OcDUwb09maU5fSm9rMnhZXzNjWHh6Z0NDcmUtcGtCRVBpUkplX3MtZmZMV3pvYTNqWHVKLUIwaW94alZqak9TNXlOOVFoVFNOczlYZVhOSlpNOWw3ejZBWHpGZHZ1eHFVNG9heXBrQ3hlbDNFQmJhOUV6cUdQSnZDbHNId2c1QURvaXF1cUlGOEtZUGc0TWVwNVVIUTZJNm9KS1Fia1JfOUI0bDFfVmpiNmZVTkxsYkFPQzZNZ0gwQjQwSHdZanZzemVVRzhEV3p6Q3RoV1RxMFItRzR6QlVkei0xb2M3YWIwUk1IVlVQZzc1bEFlZHpNTlFJQllVdGFmOWd0Q3hhakdyRTVEV0dBd1B0NmV3TWRwUHg2YUQ5YnN1eGNpUnpTekJqYS11SXREM2ltSEpyQUU4SkU3REg1aThhc3poMzdtdGlXYXBqbXBnV0RFR0t3WVRlYkR1YW5icUoxaXd4S09NLU80V2hsaWRvRXE5MW0?oc=5",
-        "level": "待交叉验证",
-        "platform": "Google News"
-      },
-      "companySlug": "deepseek",
-      "qualityScore": 37,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "quantum"
       ]
     },
     {
@@ -1023,11 +1405,11 @@
     },
     {
       "id": "x-anthropic-538ad0ffbc0eb505",
-      "sourceId": "x-anthropic",
+      "sourceId": "user-x-anthropicai",
       "title": "Anthropic：RT @claudeai: Introducing Claude Opus 5. It's a thoughtful and proactive model that comes close to the frontier intelligence of Fable 5 at…",
       "summary": "RT @claudeai: Introducing Claude Opus 5. It's a thoughtful and proactive model that comes close to the frontier intelligence of Fable 5 at…",
-      "type": "产品发布",
-      "region": "美国",
+      "type": "人物观点",
+      "region": "全球",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-24",
@@ -1039,6 +1421,12 @@
         "platform": "X"
       },
       "companySlug": "anthropic",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
       "trackSlugs": [
         "ai"
       ]
@@ -1454,33 +1842,6 @@
       ]
     },
     {
-      "id": "user-track-robotics-google-cn-70de5c5b2189b55d",
-      "sourceId": "user-track-robotics-google-cn",
-      "title": "智元机器人已启动赴港IPO流程，具身智能赛道“抢滩”港股 - 奥一网",
-      "summary": "智元机器人已启动赴港IPO流程，具身智能赛道“抢滩”港股 奥一网",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "机器人 · Google News 中文",
-        "url": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE9FcEtWUXRwTEZaVXRrS0JRYUNiV0VkeW82U2NqS3d1eDdacDItZms2R2ZIQTRxejlHYzlIQjZYTjU3LVRCMVZqcVMtLVdWbGxqZ1NvdDBoeTNQOXBHUmJxbEl6RFB1UQ?oc=5",
-        "level": "待交叉验证",
-        "platform": "Google News"
-      },
-      "qualityScore": 41,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "robotics"
-      ]
-    },
-    {
       "id": "user-source-source-yahoo-tw-78790cf2e81ac36b",
       "sourceId": "user-source-source-yahoo-tw",
       "title": "家長曬兒超強手繪《灌籃高手》吸3000萬觀看 卻引質疑是AI生成",
@@ -1787,32 +2148,6 @@
         "摘要命中 4 个追踪词"
       ],
       "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "user-source-source-track-1r4ht2r-f92da97e3d1027b7",
-      "sourceId": "user-source-source-track-1r4ht2r",
-      "title": "Nvidia CEO: How AI could actually create jobs - Axios",
-      "summary": "Nvidia CEO: How AI could actually create jobs Axios",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "谷歌新闻",
-        "url": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5UUVg4bTZpUEo4T1dOYndNWTFXMXF2Tnp0MGhZT29PSjl4MnliNk5LQ2dUaGc4Yk1qaWJwTUxWVEV6eXhJMWRJUEV0anc1VTZaeHpiTmtqSUhUdHVmT3I3aWhtbmdMeFdSLU9wcg?oc=5",
-        "level": "媒体报道",
-        "platform": "谷歌新闻"
-      },
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
       "trackSlugs": [
         "ai"
       ]
@@ -2299,6 +2634,199 @@
       ]
     },
     {
+      "id": "x-openai-f17c4d61f3a3e518",
+      "sourceId": "user-x-openai",
+      "title": "OpenAI：More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond. We work w",
+      "summary": "More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond. We work with hundreds of physicians around the world to measure and improve accuracy, safety, communication, context awareness, https://t.co/j8BwEkn14b",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-23",
+      "importance": 81,
+      "source": {
+        "name": "OpenAI on X",
+        "url": "https://x.com/OpenAI/status/2080339986717790394",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "openai",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "x-openai-1ac01250205b68d7",
+      "sourceId": "user-x-openai",
+      "title": "OpenAI：We built this experience based on feedback from early testers and physicians. With your permission, ChatGPT can use relevant context you’ve connected",
+      "summary": "We built this experience based on feedback from early testers and physicians. With your permission, ChatGPT can use relevant context you’ve connected in Health across your conversations — to help you compare a new result with prior tests, summarize changes since your last https://t.co/joWXUxjQjO",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-23",
+      "importance": 81,
+      "source": {
+        "name": "OpenAI on X",
+        "url": "https://x.com/OpenAI/status/2080339983962181983",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "openai",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "x-openai-144e78fa8aa235c2",
+      "sourceId": "user-x-openai",
+      "title": "OpenAI：ChatGPT Voice is now in the desktop app. Control your computer and direct multiple agents running in ChatGPT Work or Codex, using just your voice. It'",
+      "summary": "ChatGPT Voice is now in the desktop app. Control your computer and direct multiple agents running in ChatGPT Work or Codex, using just your voice. It's powered by GPT-Live, so it can speak, listen, and coordinate work in the app at the same time. Rolling out globally today https://t.co/ODZWKqecCf",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-23",
+      "importance": 81,
+      "source": {
+        "name": "OpenAI on X",
+        "url": "https://x.com/OpenAI/status/2080378182469857576",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "openai",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "x-openai-097485f348179ef5",
+      "sourceId": "user-x-openai",
+      "title": "OpenAI：You can also use ChatGPT Voice in Codex from the iOS app with paired remote access. Android support is coming soon.",
+      "summary": "You can also use ChatGPT Voice in Codex from the iOS app with paired remote access. Android support is coming soon.",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-23",
+      "importance": 81,
+      "source": {
+        "name": "OpenAI on X",
+        "url": "https://x.com/OpenAI/status/2080392280549253392",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "openai",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "x-deepmind-ebde8274b5a570a0",
+      "sourceId": "user-x-googledeepmind",
+      "title": "Google DeepMind：To ensure this model is deployed responsibly, we’re starting with a limited-access pilot for governments and trusted partners. → https://t.co/7DwOw7OK",
+      "summary": "To ensure this model is deployed responsibly, we’re starting with a limited-access pilot for governments and trusted partners. → https://t.co/7DwOw7OKN8",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "Google DeepMind",
+      "publishedAt": "2026-07-23",
+      "importance": 81,
+      "source": {
+        "name": "Google DeepMind on X",
+        "url": "https://x.com/GoogleDeepMind/status/2080321522040807769",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "x-deepmind-7920b3fa8a5c097d",
+      "sourceId": "user-x-googledeepmind",
+      "title": "Google DeepMind：By combining speed and efficiency, 3.5 Flash Cyber lets defense specialists check significantly more code paths. In testing on our own codebases – inc",
+      "summary": "By combining speed and efficiency, 3.5 Flash Cyber lets defense specialists check significantly more code paths. In testing on our own codebases – including @googlechrome and @Android – it consistently caught complex, unique vulnerabilities that standard models missed. https://t.co/JKvamuRevz",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "Google DeepMind",
+      "publishedAt": "2026-07-23",
+      "importance": 81,
+      "source": {
+        "name": "Google DeepMind on X",
+        "url": "https://x.com/GoogleDeepMind/status/2080321519952056441",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "x-deepmind-55a46105e3f6568f",
+      "sourceId": "user-x-googledeepmind",
+      "title": "Google DeepMind：Gemini 3.5 Flash Cyber is our specialized, lightweight model built to help security teams spot and patch vulnerabilities before they can be exploited.",
+      "summary": "Gemini 3.5 Flash Cyber is our specialized, lightweight model built to help security teams spot and patch vulnerabilities before they can be exploited. 🧵 https://t.co/XpiKcvwjeI",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "Google DeepMind",
+      "publishedAt": "2026-07-23",
+      "importance": 81,
+      "source": {
+        "name": "Google DeepMind on X",
+        "url": "https://x.com/GoogleDeepMind/status/2080321516814647630",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
       "id": "sec-8fba148a0f812784",
       "sourceId": "sec",
       "title": "Mobileye 提交 8-K（重大事项报告）",
@@ -2404,157 +2932,6 @@
         "url": "https://x.ai/news/workflows",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-openai-f17c4d61f3a3e518",
-      "sourceId": "x-openai",
-      "title": "OpenAI：More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond. We work w",
-      "summary": "More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond. We work with hundreds of physicians around the world to measure and improve accuracy, safety, communication, context awareness, https://t.co/j8BwEkn14b",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2080339986717790394",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-openai-1ac01250205b68d7",
-      "sourceId": "x-openai",
-      "title": "OpenAI：We built this experience based on feedback from early testers and physicians. With your permission, ChatGPT can use relevant context you’ve connected",
-      "summary": "We built this experience based on feedback from early testers and physicians. With your permission, ChatGPT can use relevant context you’ve connected in Health across your conversations — to help you compare a new result with prior tests, summarize changes since your last https://t.co/joWXUxjQjO",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2080339983962181983",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-openai-144e78fa8aa235c2",
-      "sourceId": "x-openai",
-      "title": "OpenAI：ChatGPT Voice is now in the desktop app. Control your computer and direct multiple agents running in ChatGPT Work or Codex, using just your voice. It'",
-      "summary": "ChatGPT Voice is now in the desktop app. Control your computer and direct multiple agents running in ChatGPT Work or Codex, using just your voice. It's powered by GPT-Live, so it can speak, listen, and coordinate work in the app at the same time. Rolling out globally today https://t.co/ODZWKqecCf",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2080378182469857576",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-openai-097485f348179ef5",
-      "sourceId": "x-openai",
-      "title": "OpenAI：You can also use ChatGPT Voice in Codex from the iOS app with paired remote access. Android support is coming soon.",
-      "summary": "You can also use ChatGPT Voice in Codex from the iOS app with paired remote access. Android support is coming soon.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2080392280549253392",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-deepmind-ebde8274b5a570a0",
-      "sourceId": "x-deepmind",
-      "title": "Google DeepMind：To ensure this model is deployed responsibly, we’re starting with a limited-access pilot for governments and trusted partners. → https://t.co/7DwOw7OK",
-      "summary": "To ensure this model is deployed responsibly, we’re starting with a limited-access pilot for governments and trusted partners. → https://t.co/7DwOw7OKN8",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Google DeepMind",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2080321522040807769",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-deepmind-7920b3fa8a5c097d",
-      "sourceId": "x-deepmind",
-      "title": "Google DeepMind：By combining speed and efficiency, 3.5 Flash Cyber lets defense specialists check significantly more code paths. In testing on our own codebases – inc",
-      "summary": "By combining speed and efficiency, 3.5 Flash Cyber lets defense specialists check significantly more code paths. In testing on our own codebases – including @googlechrome and @Android – it consistently caught complex, unique vulnerabilities that standard models missed. https://t.co/JKvamuRevz",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Google DeepMind",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2080321519952056441",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-deepmind-55a46105e3f6568f",
-      "sourceId": "x-deepmind",
-      "title": "Google DeepMind：Gemini 3.5 Flash Cyber is our specialized, lightweight model built to help security teams spot and patch vulnerabilities before they can be exploited.",
-      "summary": "Gemini 3.5 Flash Cyber is our specialized, lightweight model built to help security teams spot and patch vulnerabilities before they can be exploited. 🧵 https://t.co/XpiKcvwjeI",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Google DeepMind",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2080321516814647630",
-        "level": "原始材料",
-        "platform": "X"
       },
       "trackSlugs": [
         "ai"
@@ -2893,6 +3270,62 @@
       ]
     },
     {
+      "id": "x-deepmind-418b2a4920222053",
+      "sourceId": "user-x-googledeepmind",
+      "title": "Google DeepMind：We’re expanding our work with the US Dept. of @ENERGY on the Genesis Mission – an initiative to double the pace of scientific discovery within a decad",
+      "summary": "We’re expanding our work with the US Dept. of @ENERGY on the Genesis Mission – an initiative to double the pace of scientific discovery within a decade. 🧪 By committing $40M in AI tokens and @GoogleCloud credits, more lab researchers will gain access to Gemini and other AI https://t.co/jsHtsiUNJC",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "新能源",
+      "company": "Google DeepMind",
+      "publishedAt": "2026-07-22",
+      "importance": 81,
+      "source": {
+        "name": "Google DeepMind on X",
+        "url": "https://x.com/GoogleDeepMind/status/2079925576077324552",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai",
+        "energy"
+      ]
+    },
+    {
+      "id": "x-anthropic-cad6ab8846e32e75",
+      "sourceId": "user-x-anthropicai",
+      "title": "Anthropic：RT @claudeai: You can now ask Claude about the Anthropic Economic Index, our public dataset measuring how AI is used across the economy. A…",
+      "summary": "RT @claudeai: You can now ask Claude about the Anthropic Economic Index, our public dataset measuring how AI is used across the economy. A…",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-22",
+      "importance": 81,
+      "source": {
+        "name": "Anthropic on X",
+        "url": "https://x.com/AnthropicAI/status/2079980981264544017",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "anthropic",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
       "id": "official-weride-e38bb778c9d53f6b",
       "sourceId": "official-weride",
       "title": "新聞發佈 | 文遠知行",
@@ -3179,45 +3612,242 @@
       ]
     },
     {
-      "id": "x-deepmind-418b2a4920222053",
-      "sourceId": "x-deepmind",
-      "title": "Google DeepMind：We’re expanding our work with the US Dept. of @ENERGY on the Genesis Mission – an initiative to double the pace of scientific discovery within a decad",
-      "summary": "We’re expanding our work with the US Dept. of @ENERGY on the Genesis Mission – an initiative to double the pace of scientific discovery within a decade. 🧪 By committing $40M in AI tokens and @GoogleCloud credits, more lab researchers will gain access to Gemini and other AI https://t.co/jsHtsiUNJC",
+      "id": "user-source-source-yahoo-tw-f68a1588aae3bb2d",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "卸任經長後首度接受專訪! 郭智輝主打\"AI數據化\"拚選棒協理事長",
+      "summary": "財經中心／葉為襄、胡崇恩 台北報導前經濟部長郭智輝，宣布參選第十四屆中華民國棒球協會理事長後，首度接受媒體專訪，除了現場模擬投球，更細數自己70年與棒球的情緣。他強調自己是台灣日本關係協會理事，要借鑑日本模式，導入管理思維，完善棒球人才培育制度。 左腳高高抬起，模擬投球，動作一氣呵成。郭智輝卸任經長後首度接受專訪 主打AI、數據棒球拚選上棒協理事長。(圖/民視財經網) 第十四屆棒協理事長參選人郭智輝：「這個你看，這個從這個腕手腕，然後手肘到肩部都一起動。」 前經濟部長郭智輝，拋出投入棒球協會理事長選舉震撼彈後，首度接受媒體專訪，訪問這天他帶來前身為崇越棒球隊的安永鮮物棒球隊，成軍15年，郭智輝端出棒協下一步藍圖。 第十四屆棒協理事長參選人郭智輝：「數據最重要的就是能夠情蒐的系統，情蒐能夠幫助我們知己知彼，所以可以百戰不殆，這個就是我講數據化最棒的部分，棒球隊投手vs.郭智輝，你做投手嘛，棒球隊投手vs.郭智輝，你這個腳的穩定度，棒球隊投手vs.郭智輝，跟你投球的那個速度有正相關，棒球隊投手vs.郭智輝，沒錯。」郭智輝卸任經長後首度接受專訪 主打AI、數據棒球拚選上棒協理事長。(圖/民視",
       "type": "公司动态",
-      "region": "美国",
-      "sector": "新能源",
-      "company": "Google DeepMind",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
       "publishedAt": "2026-07-22",
       "importance": 76,
       "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2079925576077324552",
-        "level": "原始材料",
-        "platform": "X"
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E5%8D%B8%E4%BB%BB%E7%B6%93%E9%95%B7%E5%BE%8C%E9%A6%96%E5%BA%A6%E6%8E%A5%E5%8F%97%E5%B0%88%E8%A8%AA-%E9%83%AD%E6%99%BA%E8%BC%9D%E4%B8%BB%E6%89%93-ai%E6%95%B8%E6%93%9A%E5%8C%96-%E6%8B%9A%E9%81%B8%E6%A3%92%E5%8D%94%E7%90%86%E4%BA%8B%E9%95%B7-111003272.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
       },
+      "qualityScore": 11,
+      "qualitySignals": [
+        "营销措辞惩罚 1 项",
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
       "trackSlugs": [
-        "ai",
-        "energy"
+        "ai"
       ]
     },
     {
-      "id": "x-anthropic-cad6ab8846e32e75",
-      "sourceId": "x-anthropic",
-      "title": "Anthropic：RT @claudeai: You can now ask Claude about the Anthropic Economic Index, our public dataset measuring how AI is used across the economy. A…",
-      "summary": "RT @claudeai: You can now ask Claude about the Anthropic Economic Index, our public dataset measuring how AI is used across the economy. A…",
+      "id": "user-source-source-yahoo-tw-f0e4029d3f877fe2",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "三星發表會》摺疊手機出貨估增21%！Galaxy Z Fold8 Ultra展開僅4.1mm，支援AirDrop跨系統互傳",
+      "summary": "摺疊手機戰火再升級，競爭焦點不只比誰更薄，也開始延伸至代理式AI與跨系統生態圈。三星電子（Samsung Electronics，KRX：005930）今（22）日在英國倫敦舉行Galaxy Unpacked 2026發表會，一口氣推出Galaxy Z Fold8、Galaxy Z Fold8 Ultra與Galaxy Z Flip8三款摺疊手機，其中Fol......",
       "type": "公司动态",
-      "region": "美国",
+      "region": "全球",
       "sector": "AI / AGI",
-      "company": "Anthropic",
+      "company": "科技产业",
       "publishedAt": "2026-07-22",
       "importance": 76,
       "source": {
-        "name": "Anthropic on X",
-        "url": "https://x.com/AnthropicAI/status/2079980981264544017",
-        "level": "原始材料",
-        "platform": "X"
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E4%B8%89%E6%98%9F%E7%99%BC%E8%A1%A8%E6%9C%83-%E6%91%BA%E7%96%8A%E6%89%8B%E6%A9%9F%E5%87%BA%E8%B2%A8%E4%BC%B0%E5%A2%9E21-galaxy-z-fold8-154706898.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
       },
-      "companySlug": "anthropic",
+      "qualityScore": 25,
+      "qualitySignals": [
+        "包含明确事件动作",
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-tw-d2592145eab5ab65",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "張凌赫新作用「粗糙AI」挨批 劇組連夜撤換急滅火",
+      "summary": "娛樂中心／陳韋如報導中國藝人張凌赫、王楚然主演的新劇《這一秒過火》，自開播以來話題不斷，其中片頭畫面因採用AI製作，連中國網友看不下去，遭批評「好像短劇」、「敷衍」、「粗製濫造」引發爭議。製作單位於昨（21）日發文致歉，並連夜製作全新真人版片頭替換，企圖挽回口碑。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E5%BC%B5%E5%87%8C%E8%B5%AB%E6%96%B0%E4%BD%9C%E7%94%A8-%E7%B2%97%E7%B3%99ai-%E6%8C%A8%E6%89%B9-%E5%8A%87%E7%B5%84%E9%80%A3%E5%A4%9C%E6%92%A4%E6%8F%9B%E6%80%A5%E6%BB%85%E7%81%AB-075619952.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-tw-c706b457fa5bdd0b",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "韓美輝達兆元宴將登場？韓媒：24日於矽谷舉行圓桌會議、OpenAI及Anthropic可能加入",
+      "summary": "以輝達執行長黃仁勳為中心的「韓版兆元宴」成員，可能將於24日在美國矽谷舉行圓桌會議。據稱生成式人工智慧（AI）巨頭OpenAI及Anthropic也可能加入，將是AI各領域領袖首次齊聚一堂。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E9%9F%93%E7%BE%8E%E8%BC%9D%E9%81%94%E5%85%86%E5%85%83%E5%AE%B4%E5%B0%87%E7%99%BB%E5%A0%B4-%E9%9F%93%E5%AA%92-24%E6%97%A5%E6%96%BC%E7%9F%BD%E8%B0%B7%E8%88%89%E8%A1%8C%E5%9C%93%E6%A1%8C%E6%9C%83%E8%AD%B0-openai%E5%8F%8Aanthropic%E5%8F%AF%E8%83%BD%E5%8A%A0%E5%85%A5-080033996.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 57,
+      "qualitySignals": [
+        "标题命中 3 个追踪词"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-tw-ab46d01c695018cc",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "20年前《機械公敵》成真？OpenAI先進模型「自主發動駭客攻擊」 成功入侵Hugging Face",
+      "summary": "[FTNN新聞網]記者陳雅婷／綜合報導OpenAI於昨（21）日證實，旗下先進人工智慧（AI）模型在一次內部安全測試中意外突破原本的隔離環境，自主連上網際網路，並...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.stock.yahoo.com/news/20%E5%B9%B4%E5%89%8D-%E6%A9%9F%E6%A2%B0%E5%85%AC%E6%95%B5-%E6%88%90%E7%9C%9F-openai%E5%85%88%E9%80%B2%E6%A8%A1%E5%9E%8B-%E8%87%AA%E4%B8%BB%E7%99%BC%E5%8B%95%E9%A7%AD%E5%AE%A2%E6%94%BB%E6%93%8A-141500664.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "companySlug": "openai",
+      "qualityScore": 62,
+      "qualitySignals": [
+        "标题命中 2 个追踪词",
+        "标题命中公司/账号",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-tw-693a208646300996",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "近半青少年接觸過AI生成色情內容！ 專家籲家長、監護人持續開放式溝通",
+      "summary": "[Newtalk新聞] 近年來，人工智慧 ( AI ) 技術蓬勃發展，生成式 AI 相關的工具也逐漸走進人們的日常生活中。與此同時， AI 生成的色情內容也開始在網路上大規模傳播，並對世界各國的青少年們產生深遠的影響。有專家分析認為， AI 生成的色情內容可能扭曲青少年對性與身體形象的看法，呼籲家長或監護人持續進行開放式的溝通，進一步減緩相關問題可能造成的衝擊。 根據美國《有線電視新聞網》( CNN ) 報導，一項由美國非營利組織「Common Sense Media」公布的最新研究結果顯示，在超過 1,300 名受訪的美國青少年中，有接近 75% 的受訪者曾透過網路接觸過色情內容，承認自己在 12 歲以前就已透過網路看過色情內容的受訪者也超過 50% 。另外，有近半數青少年坦承，自己曾在使用網路或社群媒體時，看過那些很可能是由 AI 生成的色情影片或圖片。 報導稱，雖然「Common Sense Media」自 2023 年起就持續關注網路色情內容可能對青少年造成的影響，但在最近幾年的時間內，青少年們獲取的色情內容發生了顯著的變化，越來越多由 AI 生成的虛假色情圖像、影片走進了他們",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E8%BF%91%E5%8D%8A%E9%9D%92%E5%B0%91%E5%B9%B4%E6%8E%A5%E8%A7%B8%E9%81%8Eai%E7%94%9F%E6%88%90%E8%89%B2%E6%83%85%E5%85%A7%E5%AE%B9-%E5%B0%88%E5%AE%B6%E7%B1%B2%E5%AE%B6%E9%95%B7-%E7%9B%A3%E8%AD%B7%E4%BA%BA%E6%8C%81%E7%BA%8C%E9%96%8B%E6%94%BE%E5%BC%8F%E6%BA%9D%E9%80%9A-100213842.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 25,
+      "qualitySignals": [
+        "包含明确事件动作",
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-tw-60d91c2405abd0ff",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "中國出生率降至清朝乾隆年水準 政府封禁陪伴型AI聊天機器人搶救 傳中國實際人口剩5億甚至更少｜鏡轉全球｜#鏡新聞",
+      "summary": "鏡電視推出個人廣告囉！ 讓你也能成為廣告主Show Yourself👉https://mnews.oen.tw/ 《鏡好買》電商平台全新上線🔥 鏡好買是鏡電視全新推出的官方選物平台，精選日常生活中真正好用、安心、有品質的商品，從美食、生活用品到居家好物，幫你把關品質好生活❤️ 現在加入就送購物優惠券👉 https://lihi.cc/keGMC 加入頻道會員支持鏡新聞🩷： https://www.youtube.com/channel/UC4LjkybVKXCDlneVXlKAbmw/join 鏡好買MirrorLife👉https://lihi.cc/keGMC 鏡電視綜合台YouTube👉http://pse.is/59enw2 鏡電視直播台YouTube👉https://pse.is/4w3gts",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E4%B8%AD%E5%9C%8B%E5%87%BA%E7%94%9F%E7%8E%87%E9%99%8D%E8%87%B3%E6%B8%85%E6%9C%9D%E4%B9%BE%E9%9A%86%E5%B9%B4%E6%B0%B4%E6%BA%96-%E6%94%BF%E5%BA%9C%E5%B0%81%E7%A6%81%E9%99%AA%E4%BC%B4%E5%9E%8Bai%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA%E6%90%B6%E6%95%91-%E5%82%B3%E4%B8%AD%E5%9C%8B%E5%AF%A6%E9%9A%9B%E4%BA%BA%E5%8F%A3%E5%89%A95%E5%84%84%E7%94%9A%E8%87%B3%E6%9B%B4%E5%B0%91-%E9%8F%A1%E8%BD%89%E5%85%A8%E7%90%83-%E9%8F%A1%E6%96%B0%E8%81%9E-170315863.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 25,
+      "qualitySignals": [
+        "包含明确事件动作",
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-tw-2ee9da180d64200f",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "中國AI涉「偷老師」 貝森特：違規就制裁",
+      "summary": "貝森特接受福斯財經新聞訪問時表示，美國支持開源AI發展，但絕不接受智慧財產遭竊取。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E4%B8%AD%E5%9C%8Bai%E6%B6%89-%E5%81%B7%E8%80%81%E5%B8%AB-%E8%B2%9D%E6%A3%AE%E7%89%B9-%E9%81%95%E8%A6%8F%E5%B0%B1%E5%88%B6%E8%A3%81-060627192.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-yahoo-tw-0b8da7880e212e6b",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "台積電上看3000元！外媒驚曝「上車好時機」全說了",
+      "summary": "財經中心／綜合報導人工智慧（AI）浪潮持續發威，身為全球半導體代工龍頭的台積電（TSMC）成為長期投資者眼中的熱門標的。雖然近期因公司宣布上調 2026 年資本支出計畫，導致股價出現短線拉回，但近日有外媒指出，這波疲軟反而是長期投資者逢低布局的絕佳時機。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.stock.yahoo.com/news/%E5%8F%B0%E7%A9%8D%E9%9B%BB%E4%B8%8A%E7%9C%8B3000%E5%85%83-%E5%A4%96%E5%AA%92%E9%A9%9A%E6%9B%9D-%E4%B8%8A%E8%BB%8A%E5%A5%BD%E6%99%82%E6%A9%9F-%E5%85%A8%E8%AA%AA%E4%BA%86-093744157.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
       "trackSlugs": [
         "ai"
       ]
@@ -3421,6 +4051,34 @@
       ]
     },
     {
+      "id": "x-deepmind-516885163694548c",
+      "sourceId": "user-x-googledeepmind",
+      "title": "Google DeepMind：We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale: 🔵 Gemini 3.6 Flash: It uses fewer tokens than 3.5 Flash to",
+      "summary": "We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale: 🔵 Gemini 3.6 Flash: It uses fewer tokens than 3.5 Flash to deliver higher quality work at the exact same cost. 🔵 Gemini 3.5 Flash-Lite: A fast, cost-effective option for everyday tasks https://t.co/SP1eU3FCW5",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "Google DeepMind",
+      "publishedAt": "2026-07-21",
+      "importance": 81,
+      "source": {
+        "name": "Google DeepMind on X",
+        "url": "https://x.com/GoogleDeepMind/status/2079589698490572961",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "qualityScore": 59,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
       "id": "official-xtalpi-b57012b82692a54e",
       "sourceId": "official-xtalpi",
       "title": "从“看得见的AI”到深度应用，晶泰科技AI for Science进展、生态成果集体亮相WAIC",
@@ -3553,27 +4211,6 @@
       ]
     },
     {
-      "id": "x-deepmind-516885163694548c",
-      "sourceId": "x-deepmind",
-      "title": "Google DeepMind：We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale: 🔵 Gemini 3.6 Flash: It uses fewer tokens than 3.5 Flash to",
-      "summary": "We’re rolling out three new models to make AI agents faster, smarter, and cheaper at scale: 🔵 Gemini 3.6 Flash: It uses fewer tokens than 3.5 Flash to deliver higher quality work at the exact same cost. 🔵 Gemini 3.5 Flash-Lite: A fast, cost-effective option for everyday tasks https://t.co/SP1eU3FCW5",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Google DeepMind",
-      "publishedAt": "2026-07-21",
-      "importance": 76,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2079589698490572961",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
       "id": "user-source-source-yahoo-tw-a3f0fe05b549bed8",
       "sourceId": "user-source-source-yahoo-tw",
       "title": "臺股「璞玉三大指數」到位 證交所挖寶AI熱門股外的潛力黑馬",
@@ -3643,11 +4280,11 @@
     },
     {
       "id": "x-anthropic-a56e2e1b8de6e480",
-      "sourceId": "x-anthropic",
+      "sourceId": "user-x-anthropicai",
       "title": "Anthropic：We're offering grants of up to $50,000 in Claude usage credits to researchers accelerating cures for rare diseases. This is our first focused call wit",
       "summary": "We're offering grants of up to $50,000 in Claude usage credits to researchers accelerating cures for rare diseases. This is our first focused call within AI for Science, our program supporting scientists using Claude to speed up discovery. https://t.co/rZEmwh07cd",
-      "type": "技术突破",
-      "region": "美国",
+      "type": "人物观点",
+      "region": "全球",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-20",
@@ -3659,6 +4296,12 @@
         "platform": "X"
       },
       "companySlug": "anthropic",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
       "trackSlugs": [
         "ai"
       ]
@@ -4391,11 +5034,11 @@
     },
     {
       "id": "x-anthropic-47d0c6863d19bb83",
-      "sourceId": "x-anthropic",
+      "sourceId": "user-x-anthropicai",
       "title": "Anthropic：New Anthropic research: Agentic misalignment in Summer 2026. A year after our blackmail experiments, we found four more ways that today’s autonomous A",
       "summary": "New Anthropic research: Agentic misalignment in Summer 2026. A year after our blackmail experiments, we found four more ways that today’s autonomous AI agents misbehave in simulations. Read more: https://t.co/MMDuJapeV6 https://t.co/ZuZeX3uHDx",
-      "type": "技术突破",
-      "region": "美国",
+      "type": "人物观点",
+      "region": "全球",
       "sector": "AI / AGI",
       "company": "Anthropic",
       "publishedAt": "2026-07-15",
@@ -4407,6 +5050,12 @@
         "platform": "X"
       },
       "companySlug": "anthropic",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
       "trackSlugs": [
         "ai"
       ]
@@ -4454,6 +5103,34 @@
       "trackSlugs": [
         "ai",
         "biotech"
+      ]
+    },
+    {
+      "id": "x-anthropic-3c4995a0689e4cc7",
+      "sourceId": "user-x-anthropicai",
+      "title": "Anthropic：We tested many AI models, including Claude, in the four scenarios. Even though these weren’t real incidents, they demonstrate clear misaligned behavio",
+      "summary": "We tested many AI models, including Claude, in the four scenarios. Even though these weren’t real incidents, they demonstrate clear misaligned behavior that should be studied further and mitigated. Find all the transcripts from the scenarios here: https://t.co/ihd6Ch437y",
+      "type": "人物观点",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-15",
+      "importance": 81,
+      "source": {
+        "name": "Anthropic on X",
+        "url": "https://x.com/AnthropicAI/status/2077452649000042614",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "anthropic",
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai"
       ]
     },
     {
@@ -4518,28 +5195,6 @@
         "level": "官方披露",
         "platform": "官方网站"
       },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "x-anthropic-3c4995a0689e4cc7",
-      "sourceId": "x-anthropic",
-      "title": "Anthropic：We tested many AI models, including Claude, in the four scenarios. Even though these weren’t real incidents, they demonstrate clear misaligned behavio",
-      "summary": "We tested many AI models, including Claude, in the four scenarios. Even though these weren’t real incidents, they demonstrate clear misaligned behavior that should be studied further and mitigated. Find all the transcripts from the scenarios here: https://t.co/ihd6Ch437y",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-07-15",
-      "importance": 76,
-      "source": {
-        "name": "Anthropic on X",
-        "url": "https://x.com/AnthropicAI/status/2077452649000042614",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "anthropic",
       "trackSlugs": [
         "ai"
       ]
@@ -6539,6 +7194,34 @@
         "level": "监管文件",
         "platform": "SEC"
       },
+      "trackSlugs": [
+        "robotics"
+      ]
+    },
+    {
+      "id": "user-track-robotics-google-us-26e089c4b78366ef",
+      "sourceId": "user-track-robotics-google-us",
+      "title": "“The Robot Version of Saylor”: This Company Buys Figure AI at a Premium to Bring the MSTR Flywheel into Embodied AI - 深潮TechFlow",
+      "summary": "“The Robot Version of Saylor”: This Company Buys Figure AI at a Premium to Bring the MSTR Flywheel into Embodied AI 深潮TechFlow",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "Figure AI",
+      "publishedAt": "2026-06-04",
+      "importance": 76,
+      "source": {
+        "name": "机器人 · Google News 英文",
+        "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE1JM3JEcDFIY040endNUDZXWU5wWnVGaFRqamhvbnRHcHU2b0xmNXhqTXNiLThCa1ZSZFhVb2ZnRkJmRURBQk56THZnSEQ3RkJwZ2c?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "companySlug": "figure-ai",
+      "qualityScore": 31,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
       "trackSlugs": [
         "robotics"
       ]
@@ -9182,11 +9865,11 @@
     },
     {
       "id": "x-feifei-li-24f666483c91d0e2",
-      "sourceId": "x-feifei-li",
+      "sourceId": "user-x-drfeifei",
       "title": "李飞飞：AI’s next frontier is Spatial Intelligence, a technology that will turn seeing into reasoning, perception into action, and imagination into creation.",
       "summary": "AI’s next frontier is Spatial Intelligence, a technology that will turn seeing into reasoning, perception into action, and imagination into creation. But what is it? Why does it matter? How do we build it? And how can we use it? Today, I want to share with you my thoughts on https://t.co/L0bnJcCUqc",
       "type": "人物观点",
-      "region": "美国",
+      "region": "全球",
       "sector": "AI / AGI",
       "company": "李飞飞",
       "publishedAt": "2025-11-10",
@@ -9197,6 +9880,12 @@
         "level": "原始材料",
         "platform": "X"
       },
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
       "trackSlugs": [
         "ai"
       ]
@@ -9334,11 +10023,11 @@
     },
     {
       "id": "x-feifei-li-87898975eab9070d",
-      "sourceId": "x-feifei-li",
+      "sourceId": "user-x-drfeifei",
       "title": "李飞飞：This is an insanely large world created using our 3D world generation model. It blew my mind!",
       "summary": "This is an insanely large world created using our 3D world generation model. It blew my mind!",
       "type": "人物观点",
-      "region": "美国",
+      "region": "全球",
       "sector": "AI / AGI",
       "company": "李飞飞",
       "publishedAt": "2025-09-16",
@@ -9349,26 +10038,12 @@
         "level": "原始材料",
         "platform": "X"
       },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "anthropic-series-f",
-      "title": "Anthropic 完成 130 亿美元 Series F",
-      "summary": "Anthropic 官方披露 Series F 融资 130 亿美元，投后估值 1,830 亿美元，ICONIQ 领投。",
-      "type": "融资",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "companySlug": "anthropic",
-      "publishedAt": "2025-09-02",
-      "importance": 94,
-      "source": {
-        "name": "Anthropic",
-        "url": "https://www.anthropic.com/news/anthropic-raises-series-f-at-usd183b-post-money-valuation",
-        "level": "官方披露"
-      },
+      "qualityScore": 53,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
       "trackSlugs": [
         "ai"
       ]
@@ -10727,14 +11402,13 @@
       "company": "Form Energy",
       "companySlug": "form-energy",
       "coverage": "attempted",
-      "status": "empty",
+      "status": "ok",
       "configuredIndexes": 2,
-      "discovered": 0,
-      "scanned": 3,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "官方网站",
-      "error": "official indexes returned no dated article pages"
+      "discovered": 27,
+      "scanned": 19,
+      "accepted": 4,
+      "failed": 0,
+      "platform": "官方网站"
     },
     {
       "id": "official-fourier-intelligence",
@@ -10970,10 +11644,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 1,
-      "scanned": 2,
+      "discovered": 0,
+      "scanned": 1,
       "accepted": 0,
-      "failed": 3,
+      "failed": 2,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -11000,10 +11674,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 0,
-      "scanned": 1,
+      "discovered": 1,
+      "scanned": 2,
       "accepted": 0,
-      "failed": 8,
+      "failed": 9,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -11228,7 +11902,7 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 22,
+      "discovered": 23,
       "scanned": 18,
       "accepted": 0,
       "failed": 0,
@@ -11243,13 +11917,13 @@
       "status": "ok",
       "configuredIndexes": 5,
       "discovered": 181,
-      "scanned": 14,
+      "scanned": 18,
       "accepted": 8,
       "failed": 0,
       "platform": "官方网站",
-      "newAccepted": 1,
+      "newAccepted": 0,
       "retainedPrevious": true,
-      "retainedPreviousCount": 7
+      "retainedPreviousCount": 8
     },
     {
       "id": "official-varda",
@@ -11314,12 +11988,12 @@
       "company": "晶泰科技",
       "companySlug": "xtalpi",
       "coverage": "attempted",
-      "status": "ok",
+      "status": "partial",
       "configuredIndexes": 2,
       "discovered": 14,
-      "scanned": 6,
+      "scanned": 5,
       "accepted": 4,
-      "failed": 0,
+      "failed": 1,
       "platform": "官方网站"
     },
     {
@@ -11421,8 +12095,8 @@
       "id": "tmtpost",
       "name": "钛媒体",
       "status": "ok",
-      "scanned": 3,
-      "accepted": 3,
+      "scanned": 6,
+      "accepted": 6,
       "failed": 0,
       "platform": "专业媒体"
     },
@@ -11430,20 +12104,22 @@
       "id": "user-source-source-b",
       "name": "b站",
       "status": "error",
-      "scanned": 33,
+      "scanned": 4,
       "accepted": 0,
-      "failed": 6,
+      "failed": 1,
       "platform": "b站",
-      "error": "sitemap HTTPError: HTTP Error 404: Not Found; sitemap HTTPError: HTTP Error 404: Not Found; sitemap HTTPError: HTTP Error 404: Not Found",
       "adapter": "adaptive-public-v1",
       "profile": "default",
       "canonicalSourceUrl": "https://www.bilibili.com/",
+      "configuredSeeds": [
+        "https://www.bilibili.com/"
+      ],
       "attemptedSeeds": [
         "https://www.bilibili.com/"
       ],
+      "nativeSearchSeeds": [],
       "strategies": [
-        "primary",
-        "sitemap"
+        "primary"
       ],
       "historyLimit": 20,
       "requestBudget": {
@@ -11451,33 +12127,38 @@
         "attempts": 2,
         "seedLimit": 6,
         "stopAfterAccepted": 3
-      }
+      },
+      "error": "No verifiable dated articles discovered; previous snapshot retained",
+      "retainedPrevious": true
     },
     {
       "id": "user-source-source-the-washington-post",
       "name": "The Washington Post",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "HTTPError: HTTP Error 429: Too Many Requests"
+      "status": "ok",
+      "scanned": 10,
+      "accepted": 10,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "user-source-source-track-1r4ht2r",
       "name": "谷歌新闻",
       "status": "ok",
-      "scanned": 6,
+      "scanned": 9,
       "accepted": 10,
       "failed": 0,
       "platform": "谷歌新闻",
       "adapter": "adaptive-public-v1",
       "profile": "default",
       "canonicalSourceUrl": "https://news.google.com/home?ceid=US%3Aen&gl=US&hl=en-US",
-      "attemptedSeeds": [
+      "configuredSeeds": [
         "https://news.google.com/home?ceid=US%3Aen&gl=US&hl=en-US",
         "https://news.google.com/"
       ],
+      "attemptedSeeds": [
+        "https://news.google.com/home?ceid=US%3Aen&gl=US&hl=en-US"
+      ],
+      "nativeSearchSeeds": [],
       "strategies": [
         "primary"
       ],
@@ -11494,17 +12175,21 @@
       "id": "user-source-source-track-1sp7gkg",
       "name": "东方财富",
       "status": "partial",
-      "scanned": 5,
+      "scanned": 4,
       "accepted": 0,
       "failed": 0,
       "platform": "东方财富",
       "adapter": "adaptive-public-v1",
       "profile": "eastmoney",
       "canonicalSourceUrl": "https://www.eastmoney.com/",
-      "attemptedSeeds": [
+      "configuredSeeds": [
         "https://www.eastmoney.com/",
         "https://finance.eastmoney.com/"
       ],
+      "attemptedSeeds": [
+        "https://www.eastmoney.com/"
+      ],
+      "nativeSearchSeeds": [],
       "strategies": [
         "primary"
       ],
@@ -11540,9 +12225,13 @@
       "adapter": "adaptive-public-v1",
       "profile": "default",
       "canonicalSourceUrl": "https://www.pedaily.cn/",
+      "configuredSeeds": [
+        "https://www.pedaily.cn/"
+      ],
       "attemptedSeeds": [
         "https://www.pedaily.cn/"
       ],
+      "nativeSearchSeeds": [],
       "strategies": [
         "primary"
       ],
@@ -11561,17 +12250,24 @@
       "id": "user-source-source-yahoo-tw",
       "name": "Yahoo奇摩",
       "status": "ok",
-      "scanned": 30,
-      "accepted": 10,
+      "scanned": 11,
+      "accepted": 20,
       "failed": 0,
       "platform": "Yahoo奇摩",
       "adapter": "adaptive-public-v1",
       "profile": "yahoo-tw",
       "canonicalSourceUrl": "https://tw.yahoo.com/",
-      "attemptedSeeds": [
+      "configuredSeeds": [
+        "https://tw.news.yahoo.com/search?p=AI",
         "https://tw.yahoo.com/",
         "https://tw.news.yahoo.com/",
         "https://tw.stock.yahoo.com/"
+      ],
+      "attemptedSeeds": [
+        "https://tw.news.yahoo.com/search?p=AI"
+      ],
+      "nativeSearchSeeds": [
+        "https://tw.news.yahoo.com/search?p=AI"
       ],
       "strategies": [
         "primary"
@@ -11583,9 +12279,9 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 5,
+      "newAccepted": 10,
       "retainedPrevious": true,
-      "retainedPreviousCount": 5
+      "retainedPreviousCount": 10
     },
     {
       "id": "user-source-source-youtube",
@@ -11593,15 +12289,18 @@
       "status": "error",
       "scanned": 28,
       "accepted": 0,
-      "failed": 5,
+      "failed": 1,
       "platform": "YOUTUBE",
-      "error": "sitemap HTTPError: HTTP Error 404: Not Found; sitemap HTTPError: HTTP Error 404: Not Found; sitemap HTTPError: HTTP Error 404: Not Found",
       "adapter": "adaptive-public-v1",
       "profile": "default",
       "canonicalSourceUrl": "https://www.youtube.com/",
+      "configuredSeeds": [
+        "https://www.youtube.com/"
+      ],
       "attemptedSeeds": [
         "https://www.youtube.com/"
       ],
+      "nativeSearchSeeds": [],
       "strategies": [
         "primary",
         "search-page"
@@ -11612,7 +12311,9 @@
         "attempts": 2,
         "seedLimit": 6,
         "stopAfterAccepted": 3
-      }
+      },
+      "error": "No verifiable dated articles discovered; previous snapshot retained",
+      "retainedPrevious": true
     },
     {
       "id": "user-track-ai-bing",
@@ -11914,52 +12615,47 @@
     {
       "id": "user-x-anthropicai",
       "name": "Anthropic",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "user-x-drfeifei",
       "name": "李飞飞",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "user-x-elonmusk",
       "name": "埃隆·马斯克",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "user-x-googledeepmind",
       "name": "Google DeepMind",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "user-x-openai",
       "name": "OpenAI",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "venturebeat-ai",
@@ -11991,102 +12687,92 @@
     {
       "id": "x-anthropic",
       "name": "Anthropic",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-deepmind",
       "name": "Google DeepMind",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-demis",
       "name": "Demis Hassabis",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-feifei-li",
       "name": "李飞飞",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-kaiming-he",
       "name": "何恺明",
-      "status": "error",
+      "status": "empty",
       "scanned": 0,
       "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-karpathy",
       "name": "Andrej Karpathy",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-lecun",
       "name": "Yann LeCun",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-openai",
       "name": "OpenAI",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X returned HTTP 429 after delayed retry; circuit opened and previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-sam-altman",
       "name": "Sam Altman",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "x-shunyu-yao",
       "name": "姚顺雨",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "status": "ok",
+      "scanned": 5,
+      "accepted": 5,
+      "failed": 0,
+      "platform": "X"
     },
     {
       "id": "xai",
@@ -12102,12 +12788,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 435,
+        "actual": 457,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 89,
+        "actual": 105,
         "required": 6,
         "passed": true
       },
@@ -12132,17 +12818,17 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 114,
+        "actual": 116,
         "required": 8,
         "passed": true
       },
       "minimumUsArticles": {
-        "actual": 264,
+        "actual": 247,
         "required": 20,
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1333,
+        "actual": 0.1269,
         "required": 0.45,
         "passed": true
       },
@@ -12152,22 +12838,22 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 435,
-        "required": 435,
+        "actual": 457,
+        "required": 457,
         "passed": true
       }
     },
     "invalidArticles": [],
     "trackingQuality": {
-      "scoredUserArticles": 216,
-      "acceptedUserArticles": 52,
-      "rejectedUserArticles": 164,
+      "scoredUserArticles": 250,
+      "acceptedUserArticles": 89,
+      "rejectedUserArticles": 161,
       "clusteredDuplicates": 1,
       "minimumScore": 31
     }
   },
   "trackingConfigHash": "c18863c4b8539ac2f78e40351cbf7c26adfa11d5553f0ef956047a0b7aeeed11",
-  "trackingEnrichedAt": "2026-07-25T11:00:31+00:00",
+  "trackingEnrichedAt": "2026-07-25T11:22:10+00:00",
   "trackCoverage": {
     "ai": {
       "slug": "ai",
@@ -12180,11 +12866,11 @@
       "failedSources": 0,
       "scanned": 23,
       "accepted": 23,
-      "matchedArticles": 175,
+      "matchedArticles": 195,
       "backfilledArticles": 14,
-      "independentSources": 175,
-      "lastRun": "2026-07-25T11:00:30+00:00",
-      "message": "三路发现均已尝试，当前匹配 175 条公开事件。"
+      "independentSources": 195,
+      "lastRun": "2026-07-25T11:22:09+00:00",
+      "message": "三路发现均已尝试，当前匹配 195 条公开事件。"
     },
     "robotics": {
       "slug": "robotics",
@@ -12197,11 +12883,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 87,
+      "matchedArticles": 88,
       "backfilledArticles": 8,
-      "independentSources": 87,
-      "lastRun": "2026-07-25T11:00:30+00:00",
-      "message": "三路发现均已尝试，当前匹配 87 条公开事件。"
+      "independentSources": 88,
+      "lastRun": "2026-07-25T11:22:09+00:00",
+      "message": "三路发现均已尝试，当前匹配 88 条公开事件。"
     },
     "semiconductor": {
       "slug": "semiconductor",
@@ -12214,11 +12900,11 @@
       "failedSources": 0,
       "scanned": 16,
       "accepted": 16,
-      "matchedArticles": 46,
+      "matchedArticles": 47,
       "backfilledArticles": 0,
-      "independentSources": 46,
-      "lastRun": "2026-07-25T11:00:30+00:00",
-      "message": "三路发现均已尝试，当前匹配 46 条公开事件。"
+      "independentSources": 47,
+      "lastRun": "2026-07-25T11:22:09+00:00",
+      "message": "三路发现均已尝试，当前匹配 47 条公开事件。"
     },
     "energy": {
       "slug": "energy",
@@ -12234,7 +12920,7 @@
       "matchedArticles": 34,
       "backfilledArticles": 0,
       "independentSources": 34,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 34 条公开事件。"
     },
     "biotech": {
@@ -12251,7 +12937,7 @@
       "matchedArticles": 22,
       "backfilledArticles": 0,
       "independentSources": 22,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 22 条公开事件。"
     },
     "quantum": {
@@ -12268,7 +12954,7 @@
       "matchedArticles": 34,
       "backfilledArticles": 0,
       "independentSources": 34,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 34 条公开事件。"
     },
     "space": {
@@ -12285,7 +12971,7 @@
       "matchedArticles": 51,
       "backfilledArticles": 1,
       "independentSources": 51,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 51 条公开事件。"
     },
     "web3": {
@@ -12302,7 +12988,7 @@
       "matchedArticles": 2,
       "backfilledArticles": 1,
       "independentSources": 2,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 2 条公开事件。"
     },
     "materials": {
@@ -12319,7 +13005,7 @@
       "matchedArticles": 1,
       "backfilledArticles": 0,
       "independentSources": 1,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 1 条公开事件。"
     },
     "manufacturing": {
@@ -12336,7 +13022,7 @@
       "matchedArticles": 6,
       "backfilledArticles": 0,
       "independentSources": 6,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 6 条公开事件。"
     },
     "fusion": {
@@ -12353,7 +13039,7 @@
       "matchedArticles": 5,
       "backfilledArticles": 4,
       "independentSources": 5,
-      "lastRun": "2026-07-25T11:00:30+00:00",
+      "lastRun": "2026-07-25T11:22:09+00:00",
       "message": "三路发现均已尝试，当前匹配 5 条公开事件。"
     }
   }
