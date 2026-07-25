@@ -38,6 +38,30 @@ def main() -> None:
         '    )\n',
         "short catalog summary fallback",
     )
+    text = replace_once(
+        text,
+        '''        if CAPITAL_MARKET_RE.search(text):
+            capital.append(row)
+        elif FINANCING_RE.search(text) or row.get("amount") or row.get("round") or row.get("investors"):
+            financing.append(row)
+''',
+        '''        if CAPITAL_MARKET_RE.search(text):
+            normalized = copy.deepcopy(row)
+            normalized["type"] = (
+                "并购/退出"
+                if re.search(
+                    r"acquired|acquisition|merger|并购|收购|退出",
+                    text,
+                    re.IGNORECASE,
+                )
+                else "上市"
+            )
+            capital.append(normalized)
+        elif FINANCING_RE.search(text) or row.get("amount") or row.get("round") or row.get("investors"):
+            financing.append(row)
+''',
+        "rerouted capital event type",
+    )
     REFINER.write_text(text, encoding="utf-8")
 
     tests = TESTS.read_text(encoding="utf-8")
