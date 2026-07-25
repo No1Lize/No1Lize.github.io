@@ -418,10 +418,13 @@ def install_overrides(
             source_url = _clean(source.get("url"), 500)
 
             # Eastmoney listing-search used to run through both the generic Bing
-            # adapter and this direct crawler. Keep only the direct detail crawl.
+            # adapter and this direct crawler. Remove only generic portal/channel
+            # records; a concrete detail fallback remains usable and is validated
+            # by the same strict /a/<timestamp-id>.html allowlist.
             if (
                 source_id.startswith("user-source-")
                 and _normalized_host(source_url).endswith("eastmoney.com")
+                and not _is_eastmoney_article_url(source_url)
             ):
                 continue
 
