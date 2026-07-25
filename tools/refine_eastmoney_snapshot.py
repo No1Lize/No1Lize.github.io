@@ -43,6 +43,9 @@ except ImportError:
 
 
 TRACKING_PATH = ROOT / "config" / "user_tracking.json"
+EASTMONEY_ORIGIN_FIELD = "_eastmoneyBatchOrigin"
+EASTMONEY_ORIGIN_NEW = "new"
+EASTMONEY_ORIGIN_RETAINED = "retained"
 GENERIC_COMPANIES = {"", "科技产业", "东方财富", "未识别", "unknown"}
 ROUNDUP_PATTERNS = (
     r"(?:东方财富|财经|市场|全球市场|A股|港股|美股).{0,8}(?:早报|早餐|晚报|日报|周报)",
@@ -189,6 +192,48 @@ def is_relevant_eastmoney_article(
     return False, "unrelated"
 
 
+def _update_eastmoney_status(
+    status: dict[str, Any],
+    *,
+    kept: int,
+    new_kept: int,
+    retained_kept: int,
+    unknown_kept: int,
+) -> None:
+    status["accepted"] = kept
+    had_rolling_metadata = (
+        "newAccepted" in status
+        or "retainedPreviousCount" in status
+        or new_kept > 0
+        or retained_kept > 0
+    )
+
+    if had_rolling_metadata:
+        status["newAccepted"] = new_kept
+        status["retainedPreviousCount"] = retained_kept
+        if retained_kept:
+            status["retainedPrevious"] = True
+        else:
+            status.pop("retainedPrevious", None)
+    elif status.get("retainedPrevious"):
+        # Clean-but-empty discovery carries no per-article marker because the old
+        # batch bypasses the successful-history merge. Every surviving article is
+        # therefore a retained article.
+        status["newAccepted"] = 0
+        status["retainedPreviousCount"] = kept
+    elif unknown_kept:
+        status.pop("newAccepted", None)
+        status.pop("retainedPreviousCount", None)
+
+    if kept == 0:
+        status.pop("retainedPrevious", None)
+        status.pop("retainedPreviousCount", None)
+        if "newAccepted" in status:
+            status["newAccepted"] = 0
+        if status.get("status") in {"ok", "partial"}:
+            status["status"] = "empty"
+
+
 def refine_snapshot(
     snapshot: dict[str, Any],
     tracking: dict[str, Any],
@@ -201,11 +246,15 @@ def refine_snapshot(
     removed_unrelated: list[str] = []
     eastmoney_seen = 0
     eastmoney_kept = 0
+    eastmoney_new_kept = 0
+    eastmoney_retained_kept = 0
+    eastmoney_unknown_kept = 0
 
     for raw in snapshot.get("articles", []):
         if not isinstance(raw, dict):
             continue
         article = dict(raw)
+        origin = _clean(article.pop(EASTMONEY_ORIGIN_FIELD, ""), 20)
         if not is_eastmoney_article(article):
             kept.append(article)
             continue
@@ -214,6 +263,12 @@ def refine_snapshot(
         if relevant:
             kept.append(article)
             eastmoney_kept += 1
+            if origin == EASTMONEY_ORIGIN_NEW:
+                eastmoney_new_kept += 1
+            elif origin == EASTMONEY_ORIGIN_RETAINED:
+                eastmoney_retained_kept += 1
+            else:
+                eastmoney_unknown_kept += 1
         elif reason == "roundup":
             removed_roundups.append(_clean(article.get("title"), 300))
         else:
@@ -227,9 +282,13 @@ def refine_snapshot(
     for status in source_status:
         status_id = _clean(status.get("id"), 120)
         if status_id.startswith("official-user-东方财富"):
-            status["accepted"] = eastmoney_kept
-            if eastmoney_kept == 0 and status.get("status") in {"ok", "partial"}:
-                status["status"] = "empty"
+            _update_eastmoney_status(
+                status,
+                kept=eastmoney_kept,
+                new_kept=eastmoney_new_kept,
+                retained_kept=eastmoney_retained_kept,
+                unknown_kept=eastmoney_unknown_kept,
+            )
 
     result = dict(snapshot)
     result["articles"] = kept
@@ -254,6 +313,8 @@ def refine_snapshot(
     report = {
         "eastmoneySeen": eastmoney_seen,
         "eastmoneyKept": eastmoney_kept,
+        "eastmoneyNewKept": eastmoney_new_kept,
+        "eastmoneyRetainedKept": eastmoney_retained_kept,
         "removedRoundups": removed_roundups,
         "removedUnrelated": removed_unrelated,
     }
