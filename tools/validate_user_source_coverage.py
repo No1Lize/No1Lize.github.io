@@ -10,7 +10,7 @@ website must return articles on every run.
 from __future__ import annotations
 
 import json
-from pathlib import Path
+import re
 from typing import Any
 
 try:
@@ -37,13 +37,22 @@ def _enabled_raw_sources(config: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def _runtime_id(raw: dict[str, Any], index: int) -> str:
+    name = tracking._clean(raw.get("name"), 80)
+    return f"user-source-{tracking._slug(raw.get('id') or name or index)}"
+
+
 def evaluate_coverage(
     tracking_config: dict[str, Any],
     snapshot: dict[str, Any],
 ) -> dict[str, Any]:
     sanitized = strict_tracking_config.sanitize_tracking_config(tracking_config)
+    enabled_sources = _enabled_raw_sources(sanitized)
     tracks = tracking._enabled_tracks(sanitized)
     runtime_specs, sec_specs = categories._custom_sources(sanitized, tracks)
+    runtime_by_id = {
+        str(spec.get("id")): spec for spec in runtime_specs if spec.get("id")
+    }
     status_by_id = {
         str(status.get("id")): status
         for status in snapshot.get("sourceStatus", [])
@@ -52,9 +61,40 @@ def evaluate_coverage(
 
     expected_ids: list[str] = []
     missing_statuses: list[str] = []
+    unroutable_sources: list[dict[str, str]] = []
     adapter_mismatches: list[dict[str, str]] = []
     attempted = 0
     productive = 0
+
+    for index, raw in enumerate(enabled_sources):
+        source_type = tracking._clean(raw.get("sourceType"), 30) or "listing-search"
+        if source_type == "sec":
+            ticker = tracking._clean(raw.get("ticker"), 30).upper()
+            if not ticker and not tracking._clean(raw.get("listedCompanyId"), 100):
+                unroutable_sources.append(
+                    {
+                        "id": str(raw.get("id") or index),
+                        "reason": "SEC source requires a ticker or listedCompanyId",
+                    }
+                )
+            continue
+        source_id = _runtime_id(raw, index)
+        url = tracking._clean(raw.get("url"), 500)
+        if not re.match(r"^https?://", url, flags=re.IGNORECASE):
+            unroutable_sources.append(
+                {
+                    "id": str(raw.get("id") or index),
+                    "reason": "public source requires an http(s) URL",
+                }
+            )
+            continue
+        if source_id not in runtime_by_id:
+            unroutable_sources.append(
+                {
+                    "id": str(raw.get("id") or index),
+                    "reason": "enabled source did not produce a runtime adapter spec",
+                }
+            )
 
     for spec in runtime_specs:
         source_id = str(spec.get("id") or "")
@@ -93,8 +133,9 @@ def evaluate_coverage(
     duplicates = sorted(
         source_id for source_id in set(expected_ids) if expected_ids.count(source_id) > 1
     )
-    enabled_count = len(_enabled_raw_sources(sanitized))
     errors: list[str] = []
+    if unroutable_sources:
+        errors.append("enabled sources could not be converted into runtime adapters")
     if missing_statuses:
         errors.append("enabled sources missing sourceStatus records")
     if adapter_mismatches:
@@ -104,10 +145,11 @@ def evaluate_coverage(
 
     return {
         "passed": not errors,
-        "enabledConfiguredSources": enabled_count,
+        "enabledConfiguredSources": len(enabled_sources),
         "expectedRuntimeStatuses": len(set(expected_ids)),
         "attemptedRuntimeStatuses": attempted,
         "productiveRuntimeStatuses": productive,
+        "unroutableSources": unroutable_sources,
         "missingStatuses": sorted(set(missing_statuses)),
         "adapterMismatches": adapter_mismatches,
         "duplicateRuntimeIds": duplicates,
