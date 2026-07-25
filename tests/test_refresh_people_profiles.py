@@ -75,7 +75,7 @@ class PeopleProfilePipelineTest(unittest.TestCase):
                 identity_terms=["Example Lab", "artificial intelligence researcher"],
             )
         self.assertEqual(result, {"id": "Q2"})
-        fetch_entity.assert_called_once_with("Q2", "en")
+        fetch_entity.assert_called_once_with("Q2", "zh")
 
     def test_profile_snapshot_has_single_verified_identity_reference(self):
         payload = json.loads((ROOT / "public" / "data" / "people.json").read_text(encoding="utf-8"))
