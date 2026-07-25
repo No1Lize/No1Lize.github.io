@@ -15,10 +15,12 @@ export function TrackingAdminRecommendation<T extends AdminRecommendationItem>({
   title,
   items,
   onAdd,
+  onDismiss,
 }: {
   title: string;
   items: T[];
   onAdd: (item: T) => Promise<void> | void;
+  onDismiss?: (item: T) => Promise<void> | void;
 }) {
   const [hidden, setHidden] = useState<Record<string, boolean>>({});
   const [pending, setPending] = useState("");
@@ -31,13 +33,21 @@ export function TrackingAdminRecommendation<T extends AdminRecommendationItem>({
   const current = visible[0];
   if (!current) return null;
 
-  function dismiss() {
+  async function dismiss() {
+    setPending(`dismiss:${current.value}`);
     setError("");
-    setHidden((state) => ({ ...state, [current.value]: true }));
+    try {
+      await onDismiss?.(current);
+      setHidden((state) => ({ ...state, [current.value]: true }));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : String(reason));
+    } finally {
+      setPending("");
+    }
   }
 
   async function add() {
-    setPending(current.value);
+    setPending(`add:${current.value}`);
     setError("");
     const previousStatus = currentAdminStatus();
     try {
@@ -59,7 +69,7 @@ export function TrackingAdminRecommendation<T extends AdminRecommendationItem>({
       </div>
       {error ? (
         <p className={styles.error} role="alert">
-          添加失败：{error}
+          操作失败：{error}
         </p>
       ) : null}
       <article className={styles.item} title={current.reason}>
@@ -69,14 +79,14 @@ export function TrackingAdminRecommendation<T extends AdminRecommendationItem>({
         </div>
         <div className={styles.controls}>
           <button
-            aria-label={`忽略推荐：${current.label}`}
+            aria-label={`忽略并不再推荐：${current.label}`}
             className={styles.dismiss}
             disabled={Boolean(pending)}
-            onClick={dismiss}
-            title="忽略并显示下一条"
+            onClick={() => void dismiss()}
+            title="忽略并永久停止推荐此项"
             type="button"
           >
-            ×
+            {pending === `dismiss:${current.value}` ? "…" : "×"}
           </button>
           <button
             className={styles.add}
@@ -84,7 +94,7 @@ export function TrackingAdminRecommendation<T extends AdminRecommendationItem>({
             onClick={() => void add()}
             type="button"
           >
-            {pending === current.value ? "添加中" : "+ 添加"}
+            {pending === `add:${current.value}` ? "添加中" : "+ 添加"}
           </button>
         </div>
       </article>
