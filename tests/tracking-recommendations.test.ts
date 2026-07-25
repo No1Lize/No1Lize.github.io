@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
+import { isAllowedDisplayedKeywordRecommendation } from "../lib/tracking-recommendation-policy";
 import { recommendTrackingAdditions } from "../lib/tracking-recommendations";
 import type { LiveIntelligenceEvent } from "../lib/use-articles";
 
@@ -155,6 +156,34 @@ test("country codes, roles and isolated acronyms are never recommended as entiti
   for (const noise of forbiddenNoise) {
     assert.ok(!keywordValues.has(noise), `${noise} should not be a keyword recommendation`);
     assert.ok(!peopleValues.has(noise), `${noise} should not be a person recommendation`);
+  }
+});
+
+test("common technical nouns are hidden while named entities remain visible", () => {
+  for (const value of ["Inference", "Rocket", "Agent", "Training", "Model"]) {
+    assert.equal(
+      isAllowedDisplayedKeywordRecommendation({
+        value,
+        label: value,
+        reason: "动态发现：4 条情报、2 个独立来源",
+        score: 80,
+      }),
+      false,
+      `${value} is a generic concept, not a named entity`,
+    );
+  }
+
+  for (const value of ["GRPO", "GPT-5", "DeepSeek-R1", "Llama Model"]) {
+    assert.equal(
+      isAllowedDisplayedKeywordRecommendation({
+        value,
+        label: value,
+        reason: "动态发现：2 条情报、2 个独立来源",
+        score: 90,
+      }),
+      true,
+      `${value} should remain as a named technical entity`,
+    );
   }
 });
 
