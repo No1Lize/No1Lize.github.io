@@ -72,23 +72,27 @@ def _is_eastmoney_status(status: dict[str, Any]) -> bool:
     )
 
 
-def _is_eastmoney_detail_status(status: dict[str, Any]) -> bool:
-    status_id = _clean(status.get("id"))
+def _has_detail_accounting(status: dict[str, Any]) -> bool:
     return (
-        status_id.startswith("official-user-")
-        or "newAccepted" in status
-        or "retainedPreviousCount" in status
-        or bool(status.get("retainedPrevious"))
-    )
-
-
-def _status_accounting_error(status: dict[str, Any]) -> str:
-    has_accounting = (
         "newAccepted" in status
         or "retainedPreviousCount" in status
         or bool(status.get("retainedPrevious"))
     )
-    if not has_accounting:
+
+
+def _is_eastmoney_detail_status(
+    status: dict[str, Any], detail_source_ids: set[str]
+) -> bool:
+    status_id = _clean(status.get("id"))
+    return (
+        status_id in detail_source_ids
+        or status_id.startswith("official-user-")
+        or _has_detail_accounting(status)
+    )
+
+
+def _status_accounting_error(status: dict[str, Any]) -> str:
+    if not _has_detail_accounting(status):
         return ""
 
     accepted = _as_nonnegative_int(status.get("accepted"))
@@ -126,9 +130,6 @@ def validate_snapshot(
         for raw in snapshot.get("sourceStatus", [])
         if isinstance(raw, dict) and _is_eastmoney_status(raw)
     ]
-    detail_statuses = [
-        status for status in attempt_statuses if _is_eastmoney_detail_status(status)
-    ]
 
     detail_articles: list[dict[str, Any]] = []
     bad_urls: list[str] = []
@@ -160,6 +161,19 @@ def validate_snapshot(
         elif company and company not in {"科技产业", "未识别", "unknown"}:
             attributed_companies.add(company)
 
+    detail_source_ids = {
+        _clean(article.get("sourceId"))
+        for article in detail_articles
+        if _clean(article.get("sourceId"))
+    }
+    detail_statuses = [
+        status
+        for status in attempt_statuses
+        if _is_eastmoney_detail_status(status, detail_source_ids)
+    ]
+    status_ids = {_clean(status.get("id")) for status in detail_statuses}
+    missing_detail_status_ids = sorted(detail_source_ids - status_ids)
+
     accepted = sum(
         _as_nonnegative_int(status.get("accepted")) for status in detail_statuses
     )
@@ -189,8 +203,11 @@ def validate_snapshot(
         errors.append(f"东方财富滚动历史计数不闭合：{len(accounting_errors)} 个来源")
     if require_attempt and enabled and not attempted:
         errors.append("东方财富来源已启用，但快照中没有对应抓取状态")
-    if detail_articles and not detail_statuses:
-        errors.append("快照中存在东方财富详情文章，但缺少专用详情抓取状态")
+    if missing_detail_status_ids:
+        errors.append(
+            "东方财富详情文章缺少同 sourceId 抓取状态："
+            + ", ".join(missing_detail_status_ids[:6])
+        )
     if accepted > 0 and not detail_articles:
         errors.append("抓取状态显示已接受文章，但快照中没有东方财富详情页")
     if detail_statuses and accepted != len(detail_articles):
@@ -207,6 +224,8 @@ def validate_snapshot(
         "acceptedByCrawler": accepted,
         "eastmoneyRecords": len(articles),
         "detailArticles": len(detail_articles),
+        "detailSourceIds": sorted(detail_source_ids),
+        "missingDetailStatusIds": missing_detail_status_ids,
         "attributedArticles": sum(
             1
             for article in detail_articles
