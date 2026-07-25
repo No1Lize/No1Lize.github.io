@@ -98,6 +98,7 @@ export type CompanyVentureProfile = {
   background: string;
   projectBackground?: VentureProjectBackground;
   technology: string;
+  researchTechnology?: string;
   products: string[];
   technologyProducts?: VentureTechnologyProduct[];
   team: VentureTeamMember[];
@@ -607,9 +608,10 @@ function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProf
     name: clean(raw.name, 120),
     updatedAt: clean(raw.updatedAt, 40),
     status: raw.status || "fallback",
-    background: projectBackground?.summary || fallbackBackground,
+    background: fallbackBackground,
     projectBackground,
     technology: sanitizeVentureNarrative(raw.technology, 900),
+    researchTechnology: sanitizeVentureNarrative(raw.researchTechnology, 900) || undefined,
     products: sanitizeVentureProducts(raw.products),
     technologyProducts: normalizeTechnologyProducts(raw.technologyProducts),
     team: normalizeTeam(raw.team, [raw.name, raw.slug]),

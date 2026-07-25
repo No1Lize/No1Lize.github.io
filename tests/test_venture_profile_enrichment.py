@@ -100,6 +100,18 @@ class VentureProfileEnrichmentTests(unittest.TestCase):
                     "source": {"url": "https://example.com/openai-funding"},
                 },
                 {
+                    "id": "infinity-funding",
+                    "company": "Infinity",
+                    "companySlug": "infinity",
+                    "title": "Infinity raises a new round",
+                    "summary": "Infinity raised funding with researchers from OpenAI and Anthropic; a Sequoia Capital observer commented on the market.",
+                    "type": "融资",
+                    "sector": "AI / AGI",
+                    "publishedAt": "2026-07-20",
+                    "institutions": ["Touring Capital"],
+                    "source": {"url": "https://example.com/infinity-funding"},
+                },
+                {
                     "id": "openai-product",
                     "company": "OpenAI",
                     "companySlug": "openai",
@@ -128,6 +140,9 @@ class VentureProfileEnrichmentTests(unittest.TestCase):
             {"GPT 模型", "ChatGPT", "API"},
         )
         self.assertEqual(company["capitalSummary"]["eventCount"], 1)
+        self.assertNotIn("Infinity", company["projectBackground"]["summary"])
+        self.assertNotIn("Anthropic", company["researchTechnology"])
+        self.assertEqual(company["researchModelVersion"], 3)
         self.assertEqual(company["capitalSummary"]["majorInvestors"], ["Sequoia Capital"])
         self.assertEqual(company["exitPerformance"]["status"], "暂无公开退出信息")
 

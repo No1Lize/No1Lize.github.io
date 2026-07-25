@@ -50,7 +50,7 @@ export default async function CompanyDetail({
     snapshotDate;
   const background = venture?.projectBackground?.summary || venture?.background || company.summary;
   const projectBackground = venture?.projectBackground;
-  const technology = venture?.technology || research.technology;
+  const technology = venture?.researchTechnology || venture?.technology || research.technology;
   const products = venture?.products?.length
     ? venture.products
     : [company.product];

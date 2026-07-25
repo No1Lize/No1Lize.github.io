@@ -144,18 +144,26 @@ def _article_institutions(article: dict[str, Any]) -> list[str]:
     return [clean_text(item, 120) for item in values if clean_text(item, 120)]
 
 
+def _entity_key(value: Any) -> str:
+    return re.sub(
+        r"[^a-z0-9\u3400-\u9fff]+",
+        "",
+        clean_text(value, 160).casefold(),
+    )
+
 def _company_articles(
     company: CatalogCompany, articles: Sequence[dict[str, Any]]
 ) -> list[dict[str, Any]]:
-    aliases = [alias.casefold() for alias in company.aliases if len(alias) >= 2]
+    alias_keys = {_entity_key(item) for item in company.aliases if _entity_key(item)}
     matched: list[dict[str, Any]] = []
     for article in articles:
-        text = _article_text(article).casefold()
-        if (
-            clean_text(article.get("companySlug"), 100) == company.slug
-            or clean_text(article.get("company"), 120) == company.name
-            or any(alias in text for alias in aliases)
-        ):
+        article_slug = clean_text(article.get("companySlug"), 100)
+        company_name = clean_text(article.get("company"), 120)
+        if article_slug:
+            if article_slug == company.slug:
+                matched.append(article)
+            continue
+        if company_name and _entity_key(company_name) in alias_keys:
             matched.append(article)
     return sorted(
         matched,
@@ -163,23 +171,24 @@ def _company_articles(
         reverse=True,
     )
 
-
 def _institution_articles(
     institution: CatalogInstitution, articles: Sequence[dict[str, Any]]
 ) -> list[dict[str, Any]]:
-    aliases = [alias.casefold() for alias in institution.aliases if len(alias) >= 2]
+    alias_keys = {_entity_key(item) for item in institution.aliases if _entity_key(item)}
     result: list[dict[str, Any]] = []
     for article in articles:
-        named = [value.casefold() for value in _article_institutions(article)]
-        text = _article_text(article).casefold()
-        if any(alias in named or alias in text for alias in aliases):
+        named_keys = {
+            _entity_key(item)
+            for item in _article_institutions(article)
+            if _entity_key(item)
+        }
+        if alias_keys & named_keys:
             result.append(article)
     return sorted(
         result,
         key=lambda item: clean_text(item.get("publishedAt"), 20),
         reverse=True,
     )
-
 
 def _select_required_sentence(
     values: Iterable[Any],
@@ -214,17 +223,17 @@ def _clean_project_background(
     profile: dict[str, Any],
     articles: Sequence[dict[str, Any]],
 ) -> dict[str, str]:
-    current = profile.get("projectBackground")
-    current = current if isinstance(current, dict) else {}
-    candidate_summary = sanitize_narrative(current.get("summary", ""), limit=760)
-    catalog_summary = sanitize_narrative(company.summary, limit=760)
-    if not candidate_summary or CAPITAL_MARKET_RE.search(candidate_summary) or FINANCING_RE.search(candidate_summary):
-        summary = catalog_summary
-    else:
-        summary = candidate_summary
-    if not summary:
-        summary = catalog_summary or "当前公开来源未提供可核对的项目背景说明。"
-
+    catalog_summary = (
+        sanitize_narrative(company.summary, limit=760)
+        or clean_text(company.summary, 760)
+    )
+    official_summary = _select_required_sentence(
+        (profile.get("background", ""),),
+        required_aliases=company.aliases,
+        excluded_pattern=CAPITAL_MARKET_RE,
+        limit=760,
+    )
+    summary = official_summary or catalog_summary or "当前公开来源未提供可核对的项目背景说明。"
     non_capital_articles = [
         _article_text(article)
         for article in articles[:30]
@@ -233,7 +242,12 @@ def _clean_project_background(
         and clean_text(article.get("type"), 60)
         not in {"融资", "产业投资", "IPO", "并购", "监管文件"}
     ]
-    evidence = [profile.get("background", ""), profile.get("technology", ""), *non_capital_articles]
+    evidence = [
+        profile.get("background", ""),
+        profile.get("technology", ""),
+        profile.get("researchTechnology", ""),
+        *non_capital_articles,
+    ]
     problem = _select_required_sentence(
         evidence,
         required_terms=PROBLEM_TERMS,
@@ -251,7 +265,6 @@ def _clean_project_background(
         "problemSolved": problem,
         "marketOpportunity": market,
     }
-
 
 def _product_aliases(product: str) -> list[str]:
     aliases = [clean_text(product, 160)]
@@ -272,6 +285,7 @@ def _refine_products(
         if isinstance(row, dict) and _compact(row.get("name"))
     }
     evidence_values = [
+        profile.get("researchTechnology", ""),
         profile.get("technology", ""),
         profile.get("background", ""),
         *(_article_text(article) for article in articles[:40]),

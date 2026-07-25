@@ -1,0 +1,45 @@
+branch_commit=2e8581dff8805702b77883d578410abcc711000a
+checked_at=2026-07-25T18:01:46Z
+enricher imports and model version: applied
+def _entity_key(: inserted
+_company_articles: replaced
+_institution_articles: replaced
+_company_project_background: replaced
+research technology product evidence: applied
+canonical and research company layers: applied
+def _entity_key(: inserted
+_company_articles: replaced
+_institution_articles: replaced
+_clean_project_background: replaced
+refiner research technology evidence: applied
+research-aware crawler retention: applied
+research-aware scalar source: applied
+research-aware list source: applied
+research technology finalization: applied
+research technology type: applied
+research technology normalization: applied
+canonical background normalization: applied
+research technology rendering: applied
+strict attribution regressions: applied
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/patch_refine_venture_evidence_regressions.py", line 623, in <module>
+    main()
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/patch_refine_venture_evidence_regressions.py", line 619, in main
+    reset_snapshot()
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/patch_refine_venture_evidence_regressions.py", line 540, in reset_snapshot
+    from tools.venture_profile_extraction import clean_text, parse_catalog
+ModuleNotFoundError: No module named 'tools'
+patch_status=1
+compile_status=1
+test_status=1
+enrich_status=1
+refine_status=1
+refine_check_status=1
+normalize_status=1
+finalize_status=1
+finalize_check_status=1
+entity_status=1
+entity_check_status=1
+crawl_validate_status=1
+enrich_validate_status=1
+diff_status=1
