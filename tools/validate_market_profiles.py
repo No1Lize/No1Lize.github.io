@@ -60,9 +60,20 @@ def validate() -> tuple[list[str], list[str]]:
             errors.append(f"{slug}: ticker mismatch")
         if profile.get("status") not in ALLOWED_STATUS:
             errors.append(f"{slug}: invalid status {profile.get('status')!r}")
+
         company = profile.get("company")
         if not isinstance(company, dict) or not str(company.get("name") or "").strip():
             errors.append(f"{slug}: missing company name")
+            company = {}
+        region = str(company.get("region") or "").strip()
+        if not region:
+            errors.append(f"{slug}: missing normalized company region")
+        description = str(company.get("description") or "").strip()
+        if len(description) > 420:
+            errors.append(f"{slug}: company description exceeds 420 characters")
+        elif description and len(description) < 40:
+            warnings.append(f"{slug}: company description is shorter than 40 characters")
+
         sources = profile.get("sources")
         if not isinstance(sources, dict):
             errors.append(f"{slug}: missing sources")
@@ -74,12 +85,27 @@ def validate() -> tuple[list[str], list[str]]:
         metrics = profile.get("metrics", [])
         if not isinstance(metrics, list):
             errors.append(f"{slug}: metrics must be an array")
-        else:
-            for metric in metrics:
-                if isinstance(metric, dict) and "%%" in str(metric.get("value") or ""):
-                    errors.append(f"{slug}: duplicate percent marker")
+            metrics = []
+        metric_ids: set[str] = set()
+        market_cap_value = ""
+        for metric in metrics:
+            if not isinstance(metric, dict):
+                continue
+            metric_id = str(metric.get("id") or "")
+            if metric_id in metric_ids:
+                errors.append(f"{slug}: duplicate metric id {metric_id}")
+            metric_ids.add(metric_id)
+            value = str(metric.get("value") or "")
+            if "%%" in value:
+                errors.append(f"{slug}: duplicate percent marker")
+            if metric_id == "marketCap":
+                market_cap_value = value
+        if market_cap_value and not re.search(r"\d", market_cap_value):
+            errors.append(f"{slug}: market cap contains no numeric value")
+        if not market_cap_value:
+            warnings.append(f"{slug}: total market cap is unavailable")
 
-        listed_at = str(company.get("listedAt") or "") if isinstance(company, dict) else ""
+        listed_at = str(company.get("listedAt") or "")
         dates: list[str] = []
         seen: set[str] = set()
         points = profile.get("priceHistory", [])
