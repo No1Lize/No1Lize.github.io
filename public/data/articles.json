@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T03:31:29+00:00",
-  "articleCount": 411,
+  "generatedAt": "2026-07-25T03:33:51+00:00",
+  "articleCount": 410,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -57,24 +57,6 @@
         "platform": "专业媒体"
       },
       "companySlug": "anthropic"
-    },
-    {
-      "id": "official-user-东方财富-456a6b67c23de1f2",
-      "sourceId": "official-user-东方财富",
-      "title": "英伟达与SK集团推出5000亿美元AI计划",
-      "summary": "据报道， 英伟达 表示，将协助海力士设计未来的 高带宽内存 芯片，此举将有助于确保内存供应。 英伟达 还表示，与SK集团合作的“ 人工智能 计划”总价值将超过5000亿美元。黄仁勋在采访中表示，这个数字包括 英伟达 购买内存芯片的资金，以及SK集团购买英伟达超级 计算机 的资金。“所以，我们双方的交易额将达到5000亿美元。”他说道。 SK电讯计划使用英伟达Vera Rubin芯片和 SK海力士 HBM4内存构建2吉瓦AI 数据中心 。这大约相当于150万户家庭的用电量。 英伟达表示，首批由SK电信公司建造的所谓“ 人工智能 工厂”将于明年投入使用。",
-      "type": "产品发布",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-25",
-      "importance": 82,
-      "source": {
-        "name": "东方财富",
-        "url": "https://finance.eastmoney.com/a/202607253820995926.html",
-        "level": "媒体报道",
-        "platform": "东方财富"
-      }
     },
     {
       "id": "anthropic-c34a327604b5be4a",
@@ -9726,12 +9708,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 415,
+        "actual": 410,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 68,
+        "actual": 67,
         "required": 6,
         "passed": true
       },
@@ -9766,7 +9748,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1398,
+        "actual": 0.1415,
         "required": 0.45,
         "passed": true
       },
@@ -9776,18 +9758,11 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 415,
-        "required": 415,
+        "actual": 410,
+        "required": 410,
         "passed": true
       }
     },
-    "invalidArticles": [],
-    "trackingQuality": {
-      "scoredUserArticles": 49,
-      "acceptedUserArticles": 12,
-      "rejectedUserArticles": 37,
-      "clusteredDuplicates": 0,
-      "minimumScore": 31
-    }
+    "invalidArticles": []
   }
 }
