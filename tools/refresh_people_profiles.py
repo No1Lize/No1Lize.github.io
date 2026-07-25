@@ -127,8 +127,8 @@ def candidate_score(title: str, aliases: list[str]) -> float:
     return best
 
 
-def fetch_wikipedia(aliases: list[str]) -> dict[str, str] | None:
-    queries = unique(aliases)
+def fetch_wikipedia(aliases: list[str], queries: list[str] | None = None) -> dict[str, str] | None:
+    queries = unique(queries or aliases)
     for language in ("zh", "en"):
         for query in queries[:3]:
             params = urllib.parse.urlencode({
@@ -162,6 +162,7 @@ def fetch_wikipedia(aliases: list[str]) -> dict[str, str] | None:
                 "extract": str(page.get("extract") or "").strip(),
                 "url": str(page.get("fullurl") or ""),
                 "language": language,
+                "wikidataId": str((page.get("pageprops") or {}).get("wikibase_item") or ""),
             }
     return None
 
@@ -198,9 +199,41 @@ def claim_ids(entity: dict[str, Any], property_id: str) -> list[str]:
     return result
 
 
-def fetch_wikidata(aliases: list[str]) -> dict[str, Any] | None:
+def fetch_wikidata_entity(entity_id: str, language: str = "zh") -> dict[str, Any] | None:
+    if not entity_id:
+        return None
+    entity_payload = request_json(f"https://www.wikidata.org/wiki/Special:EntityData/{entity_id}.json") or {}
+    entity = (entity_payload.get("entities") or {}).get(entity_id)
+    if not entity:
+        return None
+    descriptions = entity.get("descriptions") or {}
+    description = str(((descriptions.get(language) or descriptions.get("en") or {}).get("value")) or "")
+    grouped_ids = {
+        "roles": claim_ids(entity, "P106"),
+        "organizations": claim_ids(entity, "P108") + claim_ids(entity, "P1416"),
+        "works": claim_ids(entity, "P800"),
+        "education": claim_ids(entity, "P69"),
+    }
+    labels = wikidata_labels(unique(value for values in grouped_ids.values() for value in values), language)
+    return {
+        "id": entity_id,
+        "url": f"https://www.wikidata.org/wiki/{entity_id}",
+        "description": description,
+        **{key: unique(labels.get(value, "") for value in values) for key, values in grouped_ids.items()},
+    }
+
+
+def fetch_wikidata(
+    aliases: list[str],
+    preferred_id: str = "",
+    queries: list[str] | None = None,
+    identity_terms: list[str] | None = None,
+) -> dict[str, Any] | None:
+    if preferred_id:
+        return fetch_wikidata_entity(preferred_id)
+    expected = [normalize(value) for value in unique(identity_terms or []) if len(normalize(value)) >= 3]
     for language in ("zh", "en"):
-        for query in unique(aliases)[:3]:
+        for query in unique(queries or aliases)[:4]:
             params = urllib.parse.urlencode({
                 "action": "wbsearchentities",
                 "search": query,
@@ -215,34 +248,19 @@ def fetch_wikidata(aliases: list[str]) -> dict[str, Any] | None:
             ranked: list[tuple[float, dict[str, Any]]] = []
             for item in payload.get("search") or []:
                 score = candidate_score(str(item.get("label") or ""), aliases)
-                description = str(item.get("description") or "").casefold()
-                if any(marker in description for marker in ("company", "organization", "organisation", "公司", "组织")):
+                description = str(item.get("description") or "")
+                normalized_description = normalize(description)
+                identity_hits = sum(1 for term in expected if term and term in normalized_description)
+                lowered_description = description.casefold()
+                if any(marker in lowered_description for marker in ("company", "organization", "organisation", "公司", "组织")):
                     score -= 60
-                if score >= 55:
-                    ranked.append((score, item))
+                if score >= 55 and identity_hits > 0:
+                    ranked.append((score + min(identity_hits, 3) * 8, item))
             if not ranked:
                 continue
             _, item = max(ranked, key=lambda pair: pair[0])
-            entity_id = str(item.get("id") or "")
-            entity_payload = request_json(f"https://www.wikidata.org/wiki/Special:EntityData/{entity_id}.json") or {}
-            entity = (entity_payload.get("entities") or {}).get(entity_id)
-            if not entity:
-                continue
-            grouped_ids = {
-                "roles": claim_ids(entity, "P106"),
-                "organizations": claim_ids(entity, "P108") + claim_ids(entity, "P1416"),
-                "works": claim_ids(entity, "P800"),
-                "education": claim_ids(entity, "P69"),
-            }
-            labels = wikidata_labels(unique(value for values in grouped_ids.values() for value in values), language)
-            return {
-                "id": entity_id,
-                "url": f"https://www.wikidata.org/wiki/{entity_id}",
-                "description": str(item.get("description") or ""),
-                **{key: unique(labels.get(value, "") for value in values) for key, values in grouped_ids.items()},
-            }
+            return fetch_wikidata_entity(str(item.get("id") or ""), language)
     return None
-
 
 def material_type(title: str, event_type: str = "") -> str:
     lowered = title.casefold()
@@ -346,8 +364,20 @@ def collect_candidates(tracking: dict[str, Any], overrides: dict[str, Any]) -> t
 def enrich_candidate(candidate: dict[str, Any], previous: dict[str, Any] | None, articles: list[dict[str, Any]], offline: bool) -> dict[str, Any]:
     override = candidate["override"]
     aliases = unique([candidate["name"], candidate["englishName"], *candidate["aliases"]])
-    wikipedia = None if offline else fetch_wikipedia(aliases)
-    wikidata = None if offline else fetch_wikidata(aliases)
+    identity_queries = unique([*(override.get("wikipediaQueries") or []), *aliases])
+    identity_terms = unique([
+        *(override.get("organizationHints") or []),
+        str(override.get("roleHint") or ""),
+        *(override.get("productHints") or []),
+        *candidate.get("sectors", []),
+    ])
+    wikipedia = None if offline else fetch_wikipedia(aliases, identity_queries)
+    wikidata = None if offline else fetch_wikidata(
+        aliases,
+        preferred_id=str((wikipedia or {}).get("wikidataId") or ""),
+        queries=identity_queries,
+        identity_terms=identity_terms,
+    )
 
     previous = previous or {}
     official_materials = [
