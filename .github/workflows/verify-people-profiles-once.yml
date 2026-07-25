@@ -35,6 +35,7 @@ jobs:
         id: verify
         continue-on-error: true
         run: |
+          # Final verification rerun after identity and material classification fixes.
           set +e
           python -m py_compile tools/refresh_people_profiles.py > /tmp/python.log 2>&1
           python_compile=$?
