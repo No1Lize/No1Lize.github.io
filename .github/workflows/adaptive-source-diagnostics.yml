@@ -9,9 +9,7 @@ on:
       - tools/crawl_with_source_categories.py
       - tools/eastmoney_transport.py
       - tools/validate_user_source_coverage.py
-      - tests/test_adaptive_public_sources.py
-      - tests/test_source_categories.py
-      - tests/test_user_source_coverage.py
+      - tests/**/*.py
 
 permissions:
   contents: write
