@@ -41,18 +41,28 @@ class TrackingTaxonomyTests(unittest.TestCase):
         sources = taxonomy.generated_track_sources(tracks, tracking)
         by_id = {source["id"]: source for source in sources}
 
-        energy_terms = by_id["user-track-energy"]["keywords"]
-        fusion_terms = by_id["user-track-fusion"]["keywords"]
-        self.assertIn("长时储能", energy_terms)
-        self.assertIn("托卡马克", fusion_terms)
-        self.assertIn("宁德时代", energy_terms)
-        self.assertIn("Commonwealth Fusion Systems", fusion_terms)
-        self.assertNotIn("聚变能源", energy_terms)
-        self.assertNotIn("聚变能源", fusion_terms)
-        self.assertNotIn("Helion Energy", energy_terms)
-        self.assertNotIn("Helion Energy", fusion_terms)
-        self.assertIn("新能源", energy_terms)
-        self.assertIn("可控核聚变", fusion_terms)
+        self.assertEqual(len(sources), 6)
+        self.assertEqual(
+            set(taxonomy.expected_source_ids("fusion")),
+            {
+                "user-track-fusion-bing",
+                "user-track-fusion-google-cn",
+                "user-track-fusion-google-us",
+            },
+        )
+        for suffix in taxonomy.TRACK_SOURCE_SUFFIXES:
+            energy_terms = by_id[f"user-track-energy-{suffix}"]["keywords"]
+            fusion_terms = by_id[f"user-track-fusion-{suffix}"]["keywords"]
+            self.assertIn("长时储能", energy_terms)
+            self.assertIn("托卡马克", fusion_terms)
+            self.assertIn("宁德时代", energy_terms)
+            self.assertIn("Commonwealth Fusion Systems", fusion_terms)
+            self.assertNotIn("聚变能源", energy_terms)
+            self.assertNotIn("聚变能源", fusion_terms)
+            self.assertNotIn("Helion Energy", energy_terms)
+            self.assertNotIn("Helion Energy", fusion_terms)
+            self.assertIn("新能源", energy_terms)
+            self.assertIn("可控核聚变", fusion_terms)
 
     def test_install_replaces_legacy_track_term_generation(self) -> None:
         original_track_terms = tracking._track_terms
@@ -71,6 +81,18 @@ class TrackingTaxonomyTests(unittest.TestCase):
             self.assertIn("脑机接口", terms)
             self.assertIn("BCI", terms)
             self.assertIn("神经信号解码", terms)
+            generated = tracking._generated_track_sources(
+                [
+                    {
+                        "slug": "bci",
+                        "name": "脑机接口（BCI）",
+                        "keywords": ["神经信号解码"],
+                        "people": [],
+                        "sampleCompanies": [],
+                    }
+                ]
+            )
+            self.assertEqual(len(generated), 3)
         finally:
             tracking._track_terms = original_track_terms
             tracking._generated_track_sources = original_generated
