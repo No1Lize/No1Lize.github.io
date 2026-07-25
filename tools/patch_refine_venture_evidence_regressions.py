@@ -23,28 +23,50 @@ OLD = '''    evidence = [profile.get("background", ""), profile.get("technology"
     )
 '''
 
-NEW = '''    # Only stable, entity-bound inputs may feed derived project fields.
-    # ``profile.background`` is overwritten by this function, so using it as
-    # evidence creates a two-pass oscillation on the production snapshot.
+NEW = '''    # Keep an existing field when it remains both entity-bound and
+    # semantically valid. Otherwise derive it from stable inputs only.
+    # ``profile.background`` is overwritten by this function, so feeding it
+    # back into selection creates a two-pass oscillation on production data.
     stable_evidence = [
         company.summary,
         profile.get("technology", ""),
         *non_capital_articles,
     ]
-    problem = _select_required_sentence(
-        stable_evidence,
-        required_aliases=company.aliases,
-        required_terms=PROBLEM_TERMS,
-        excluded_pattern=CAPITAL_MARKET_RE,
-        limit=460,
+    existing_problem = sanitize_narrative(
+        current.get("problemSolved", ""), limit=460
     )
-    market = _select_required_sentence(
-        stable_evidence,
-        required_aliases=company.aliases,
-        required_terms=MARKET_TERMS,
-        excluded_pattern=CAPITAL_MARKET_RE,
-        limit=460,
+    if (
+        existing_problem
+        and _contains_any(existing_problem, PROBLEM_TERMS)
+        and _contains_any(existing_problem, company.aliases)
+    ):
+        problem = existing_problem
+    else:
+        problem = _select_required_sentence(
+            stable_evidence,
+            required_aliases=company.aliases,
+            required_terms=PROBLEM_TERMS,
+            excluded_pattern=CAPITAL_MARKET_RE,
+            limit=460,
+        )
+
+    existing_market = sanitize_narrative(
+        current.get("marketOpportunity", ""), limit=460
     )
+    if (
+        existing_market
+        and _contains_any(existing_market, MARKET_TERMS)
+        and _contains_any(existing_market, company.aliases)
+    ):
+        market = existing_market
+    else:
+        market = _select_required_sentence(
+            stable_evidence,
+            required_aliases=company.aliases,
+            required_terms=MARKET_TERMS,
+            excluded_pattern=CAPITAL_MARKET_RE,
+            limit=460,
+        )
 '''
 
 
