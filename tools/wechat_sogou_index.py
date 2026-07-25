@@ -102,15 +102,25 @@ def _request(url: str, *, referer: str = "", timeout: int = 16) -> str:
 
 
 def _query_term(spec: dict[str, Any]) -> str:
-    expected = spec.get("expectedAccounts") or [spec.get("name", "")]
-    name = _clean(expected[0] if expected else spec.get("name", ""), 40)
+    expected = spec.get("expectedAccounts") or []
+    sector = _clean(spec.get("sector"), 30)
+    if spec.get("genericDiscovery"):
+        identity = _clean(spec.get("queryIdentity") or sector, 30)
+    else:
+        identity = _clean(
+            spec.get("queryIdentity")
+            or (expected[0] if expected else spec.get("name", "")),
+            30,
+        )
     keywords = [
         _clean(value, 30)
         for value in spec.get("keywords", [])
-        if _clean(value, 30).casefold() not in GENERIC_QUERY_TERMS and len(_clean(value, 30)) >= 2
+        if _clean(value, 30).casefold() not in GENERIC_QUERY_TERMS
+        and len(_clean(value, 30)) >= 2
+        and _clean(value, 30).casefold() != identity.casefold()
     ]
-    topic = keywords[0] if keywords else _clean(spec.get("sector"), 20)
-    return _clean(f"{name} {topic}", 38) or _clean(spec.get("sector"), 38)
+    topic = keywords[0] if keywords else sector
+    return _clean(f"{identity} {topic}", 38) or sector
 
 
 def build_search_url(spec: dict[str, Any], page: int = 1) -> str:
