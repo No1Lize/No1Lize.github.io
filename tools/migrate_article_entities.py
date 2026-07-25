@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import re
+from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -127,6 +128,37 @@ def article_category(article: dict[str, Any], index: dict[str, dict[str, str]]) 
     return index["by_host"].get(host, "")
 
 
+def _recovered_status(
+    source_id: str,
+    articles: list[dict[str, Any]],
+    category: str,
+) -> dict[str, Any]:
+    first = articles[0]
+    source = first.get("source") if isinstance(first.get("source"), dict) else {}
+    source_name = clean(source.get("name"), 100) or source_id
+    platform = clean(source.get("platform"), 80) or source_name
+    accepted = len(articles)
+    return {
+        "id": source_id,
+        "name": f"{source_name} 专用详情",
+        "company": source_name,
+        "coverage": "retained",
+        "status": "partial",
+        "accepted": accepted,
+        "scanned": accepted,
+        "failed": 0,
+        "platform": platform,
+        "sourceCategory": category,
+        "newAccepted": 0,
+        "retainedPrevious": True,
+        "retainedPreviousCount": accepted,
+        "recoveredStatus": True,
+        "error": (
+            "Recovered from surviving detail articles after a legacy status migration"
+        ),
+    }
+
+
 def migrate(payload: dict[str, Any], tracking: dict[str, Any]) -> tuple[dict[str, Any], dict[str, int]]:
     index = build_non_company_index(tracking)
     report = {
@@ -135,6 +167,7 @@ def migrate(payload: dict[str, Any], tracking: dict[str, Any]) -> tuple[dict[str
         "removedFakeCompanySlugs": 0,
         "relabelledSources": 0,
         "removedLegacyStatuses": 0,
+        "recoveredSpecializedStatuses": 0,
     }
     migrated: list[dict[str, Any]] = []
 
@@ -197,6 +230,33 @@ def migrate(payload: dict[str, Any], tracking: dict[str, Any]) -> tuple[dict[str
             report["removedLegacyStatuses"] += 1
             continue
         statuses.append(status)
+
+    existing_status_ids = {
+        clean(status.get("id"), 160)
+        for status in statuses
+        if clean(status.get("id"), 160)
+    }
+    specialized_articles: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for article in migrated:
+        source_id = clean(article.get("sourceId"), 160)
+        if (
+            source_id.startswith("official-user-")
+            and source_id in index["by_id"]
+        ):
+            specialized_articles[source_id].append(article)
+
+    for source_id, articles in specialized_articles.items():
+        if source_id in existing_status_ids:
+            continue
+        statuses.append(
+            _recovered_status(
+                source_id,
+                articles,
+                index["by_id"].get(source_id, "media"),
+            )
+        )
+        existing_status_ids.add(source_id)
+        report["recoveredSpecializedStatuses"] += 1
 
     result = dict(payload)
     result["articles"] = migrated
