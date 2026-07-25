@@ -36,6 +36,7 @@ on:
       - tests/**/*.py
       - config/intelligence_sources.json
       - config/wechat_sources.json
+      - config/wechat_public_indexes.json
       - config/official_company_sources.json
       - config/person_profile_overrides.json
       - config/user_tracking.json
