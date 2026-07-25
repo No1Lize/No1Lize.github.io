@@ -31,16 +31,15 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           path = Path("tools/normalize_venture_profiles.py")
-          text = path.read_text(encoding="utf-8")
-          old = '''            "summary": clean_text(member.get("summary"), 360),
-                      "background": clean_text(member.get("background"), 360),
-                      "previousExperience": clean_text(member.get("previousExperience"), 360),
-                      "sourceUrl": clean_text(member.get("sourceUrl"), 2000),'''
-          new = '''            "summary": clean_text(member.get("summary"), 360),
-                      "sourceUrl": clean_text(member.get("sourceUrl"), 2000),'''
-          if old not in text:
-              raise SystemExit("expected team-shape block not found")
-          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          lines = path.read_text(encoding="utf-8").splitlines()
+          remove_terms = (
+              '"background": clean_text(member.get("background")',
+              '"previousExperience": clean_text(member.get("previousExperience")',
+          )
+          filtered = [line for line in lines if not any(term in line for term in remove_terms)]
+          if len(filtered) != len(lines) - 2:
+              raise SystemExit(f"expected to remove 2 team-shape lines, removed {len(lines) - len(filtered)}")
+          path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
           PY
           python -m py_compile \
             tools/venture_profile_extraction.py \
@@ -53,7 +52,7 @@ jobs:
             tests.test_venture_profile_enrichment \
             tests.test_normalize_venture_profiles
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "41898282+users.noreply.github.com"
           git add tools/normalize_venture_profiles.py
           git commit -m "fix: keep venture team records compatible with quality validation"
           git pull --rebase origin main
