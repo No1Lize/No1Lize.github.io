@@ -1,4 +1,4 @@
-name: Enriched three-market profile refresh v3
+name: Enriched three-market profile refresh v4
 
 on:
   push:
@@ -55,6 +55,8 @@ jobs:
           else
             UNIT=125
             BUILD=125
+            printf 'npm install failed\n' > .github/diagnostics/market-refresh-unit.log
+            printf 'npm install failed\n' > .github/diagnostics/market-refresh-build.log
           fi
           cat > .github/diagnostics/market-refresh-validation.json <<EOF
           {
@@ -84,6 +86,8 @@ jobs:
             .github/diagnostics/market-refresh.log \
             .github/diagnostics/market-refresh-tests.log \
             .github/diagnostics/market-refresh-validator.log \
+            .github/diagnostics/market-refresh-npm.log \
+            .github/diagnostics/market-refresh-unit.log \
             .github/diagnostics/market-refresh-build.log
           if [ "${{ steps.refresh.outputs.crawl }}" = "0" ] && \
              [ "${{ steps.refresh.outputs.tests }}" = "0" ] && \
