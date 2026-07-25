@@ -17,8 +17,10 @@ from urllib.parse import quote_plus, urlsplit
 
 try:  # Imported by tests as tools.crawl_with_tracking.
     from . import crawl_articles as crawler
+    from . import tracking_quality
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_articles as crawler
+    import tracking_quality
 
 
 TRACKING_PATH = crawler.ROOT / "config" / "user_tracking.json"
@@ -392,6 +394,9 @@ def _install_runtime_overrides(
     original_load_config = crawler.load_config
     original_load_payload = crawler.load_existing_payload
     original_external_article = crawler._external_article
+    original_repair_attribution = crawler.repair_media_company_attribution
+    original_evaluate_quality = crawler.evaluate_quality
+    tracking_report: dict[str, Any] = {}
 
     def load_config(path: Path = crawler.CONFIG_PATH) -> dict[str, Any]:
         if Path(path) == crawler.CONFIG_PATH:
@@ -419,9 +424,30 @@ def _install_runtime_overrides(
         kwargs.setdefault("company_slug", spec.get("companySlug") or None)
         return original_external_article(spec, **kwargs)
 
+    def repair_media_company_attribution(
+        articles: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        repaired = original_repair_attribution(articles)
+        filtered, report = tracking_quality.apply_tracking_quality(repaired, merged)
+        tracking_report.clear()
+        tracking_report.update(report)
+        print(f"Tracking quality: {json.dumps(report, ensure_ascii=False)}")
+        return filtered
+
+    def evaluate_quality(
+        articles: list[dict[str, Any]],
+        source_status: list[dict[str, Any]],
+        settings: dict[str, Any],
+    ) -> dict[str, Any]:
+        quality = original_evaluate_quality(articles, source_status, settings)
+        quality["trackingQuality"] = dict(tracking_report)
+        return quality
+
     crawler.load_config = load_config
     crawler.load_existing_payload = load_payload
     crawler._external_article = external_article
+    crawler.repair_media_company_attribution = repair_media_company_attribution
+    crawler.evaluate_quality = evaluate_quality
     crawler.SEC_TRACKED.update(sec_specs)
 
 
