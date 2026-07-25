@@ -122,7 +122,8 @@ def _unique_strings(values: Iterable[Any], limit: int, item_limit: int) -> list[
 
 
 def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
-    products = sanitize_products(values, catalog_product)
+    normalized_catalog = re.sub(r"\s*与\s*", "、", catalog_product)
+    products = sanitize_products(values, normalized_catalog)
     return [
         item
         for item in products
@@ -236,7 +237,7 @@ def finalize_classic_cases(
         analysis = clean_text(raw.get("analysis"), 760)
         source_url = normalize_url(raw.get("sourceUrl", ""))
         key = name.casefold()
-        if not name or len(analysis) < 60 or key in seen or (not slug and not source_url):
+        if not name or len(analysis) < 24 or key in seen or (not slug and not source_url):
             continue
         company_profile = company_profiles.get(slug, {})
         has_linked_evidence = bool(
