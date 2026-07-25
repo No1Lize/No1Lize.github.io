@@ -68,7 +68,9 @@ class SourceCategoryRoutingTests(unittest.TestCase):
         self.assertEqual(sec, {})
         self.assertEqual(len(feeds), 1)
         self.assertEqual(feeds[0]["sourceCategory"], "media")
-        self.assertEqual(feeds[0]["platform"], "用户媒体来源")
+        self.assertEqual(feeds[0]["adapter"], "generic_web")
+        self.assertEqual(feeds[0]["platform"], "投资界")
+        self.assertEqual(feeds[0]["sourceUrl"], "https://www.pedaily.cn/")
         self.assertNotIn("company", feeds[0])
         self.assertNotIn("companySlug", feeds[0])
 
@@ -95,7 +97,8 @@ class SourceCategoryRoutingTests(unittest.TestCase):
 
         self.assertEqual(sec, {})
         self.assertEqual(feeds[0]["sourceCategory"], "person")
-        self.assertEqual(feeds[0]["platform"], "用户人物来源")
+        self.assertEqual(feeds[0]["adapter"], "generic_web")
+        self.assertEqual(feeds[0]["platform"], "Andrej Karpathy Blog")
         self.assertNotIn("company", feeds[0])
         self.assertNotIn("companySlug", feeds[0])
 
