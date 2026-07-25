@@ -33,6 +33,30 @@ class VentureNarrativeSanitizerTests(unittest.TestCase):
         self.assertNotIn("产品资料与下载", cleaned)
         self.assertNotIn("新闻资讯", cleaned)
 
+    def test_removes_address_and_investor_relations_tail(self) -> None:
+        value = (
+            "We work with urgency and focus on the work that advances our mission. "
+            "1654 Smallman Street Pittsburgh, PA 15222 Toll-Free: (888) 583-9506 "
+            "Investor Relations Stacy Feit Transfer Agent Equiniti Trust Company "
+            "Featured (06) Aurora media kit Locations Our Company."
+        )
+        cleaned = sanitizer.sanitize_narrative(value)
+        self.assertIn("advances our mission", cleaned)
+        self.assertNotIn("Smallman Street", cleaned)
+        self.assertNotIn("Investor Relations", cleaned)
+        self.assertNotIn("Transfer Agent", cleaned)
+
+    def test_removes_ir_page_title_prefix(self) -> None:
+        value = (
+            "Consumers’ Pockets Annually by 2035 :: Aurora Innovation, Inc. "
+            "Aurora develops self-driving technology for commercial trucking."
+        )
+        cleaned = sanitizer.sanitize_narrative(value)
+        self.assertEqual(
+            cleaned,
+            "Aurora develops self-driving technology for commercial trucking.",
+        )
+
     def test_snapshot_sanitation_is_idempotent(self) -> None:
         payload = {
             "companies": {
@@ -58,6 +82,7 @@ class VentureNarrativeSanitizerTests(unittest.TestCase):
         self.assertGreaterEqual(changed, 2)
         self.assertEqual(cleaned["institutions"]["fund"]["strategy"], "")
         self.assertTrue(cleaned["qualityGate"]["checks"]["narrativeNoise"]["passed"])
+        self.assertEqual(cleaned["qualityGate"]["narrativeErrors"], [])
         second, changed_again = sanitizer.sanitize_snapshot_payload(cleaned)
         self.assertEqual(second, cleaned)
         self.assertEqual(changed_again, 0)
