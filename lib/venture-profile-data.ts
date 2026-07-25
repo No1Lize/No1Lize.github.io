@@ -3,7 +3,7 @@ import rawVentureProfiles from "@/public/data/venture_profiles.json";
 export type VentureSource = {
   name: string;
   url: string;
-  level: "官方披露" | "监管文件" | "媒体报道" | "数据库记录" | "待交叉验证";
+  level: "官方披露" | "原始材料" | "监管文件" | "媒体报道" | "数据库记录" | "待交叉验证";
   section?: string;
   title?: string;
   publishedAt?: string;
@@ -98,6 +98,7 @@ type VentureProfileSnapshot = {
 
 const VALID_SOURCE_LEVELS = new Set([
   "官方披露",
+  "原始材料",
   "监管文件",
   "媒体报道",
   "数据库记录",

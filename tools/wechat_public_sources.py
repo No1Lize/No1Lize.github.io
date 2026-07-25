@@ -306,7 +306,10 @@ def _contains_phrase(text: str, phrase: str, crawler: Any) -> bool:
 
 
 def _matched(values: Sequence[str], text: str, crawler: Any) -> list[str]:
-    return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+    return _unique(
+        (value for value in values if _contains_phrase(text, value, crawler)),
+        40,
+    )
 
 
 def _event_context(text: str) -> bool:
