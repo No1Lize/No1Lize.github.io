@@ -3,6 +3,7 @@ import unittest
 
 from tools import crawl_market_profiles as market
 from tools import market_profile_enrichment as enrichment
+from tools import refresh_market_profiles_enriched as enriched_runner
 
 
 class MarketProfileEnrichmentTests(unittest.TestCase):
@@ -44,6 +45,17 @@ class MarketProfileEnrichmentTests(unittest.TestCase):
         )
         self.assertEqual(enrichment.infer_region({"company": {}}, hk_identity), "中国香港")
         self.assertEqual(enrichment.infer_region({"company": {}}, us_identity), "美国")
+
+    def test_explicit_region_is_read_from_merged_company_page(self):
+        identity = market.company_identity("A股", "688256")
+        parsed = enriched_runner.parse_tonghuashun_html(
+            "<html><head><title>寒武纪(688256)</title></head>"
+            "<body><table><tr><td>公司名称</td><td>中科寒武纪科技股份有限公司</td></tr>"
+            "<tr><td>所属地域</td><td>北京</td></tr></table></body></html>",
+            identity,
+            "寒武纪",
+        )
+        self.assertEqual(parsed["company"]["region"], "北京")
 
     def test_description_removes_award_tail_and_closes_sentence(self):
         raw = (
