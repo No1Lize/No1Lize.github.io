@@ -1,0 +1,62 @@
+name: Verify live person video links
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-live-person-videos-pr.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Wait for deployed video links
+        run: |
+          success=false
+          for attempt in $(seq 1 24); do
+            curl --fail --location --silent --show-error --max-time 20 \
+              "https://no1lize.github.io/people/sam-altman/?verify=${GITHUB_RUN_ID}-${attempt}" \
+              --output /tmp/person.html || true
+            if grep -q "youtube.com/watch" /tmp/person.html && grep -q "bilibili.com/video" /tmp/person.html; then
+              success=true
+              break
+            fi
+            sleep 10
+          done
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          html = Path('/tmp/person.html').read_text(encoding='utf-8', errors='replace') if Path('/tmp/person.html').exists() else ''
+          result = {
+              'live': os.environ.get('LIVE_SUCCESS') == 'true',
+              'youtube': 'youtube.com/watch' in html,
+              'bilibili': 'bilibili.com/video' in html,
+              'page': 'https://no1lize.github.io/people/sam-altman/',
+          }
+          Path('diagnostics/live-person-video-check.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(result)
+          PY
+          if [ "$success" != "true" ]; then
+            exit 1
+          fi
+        env:
+          LIVE_SUCCESS: "true"
+      - name: Persist verification result
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          rm .github/workflows/verify-live-person-videos-pr.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/live-person-video-check.json .github/workflows/verify-live-person-videos-pr.yml
+          git commit -m "ci: record live person video verification"
+          git push origin "HEAD:${HEAD_REF}"
