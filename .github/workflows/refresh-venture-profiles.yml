@@ -54,7 +54,7 @@ jobs:
           python-version: "3.12"
       - name: Verify crawler syntax and focused tests
         run: |
-          # semantic-profile-refresh-v16
+          # semantic-profile-refresh-v17
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
