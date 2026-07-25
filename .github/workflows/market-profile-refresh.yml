@@ -26,35 +26,64 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Crawl A-share Hong Kong and US profiles with Yahoo Eastmoney and Stooq fallbacks
-        run: python tools/refresh_market_profiles.py
-      - name: Verify three-market parsers routes and fallback behavior
-        run: python -m unittest tests.test_market_profiles tests.test_market_profile_transport
-      - name: Validate generated market snapshot
-        run: python tools/validate_market_profiles.py
-      - name: Commit market snapshot
+      - name: Run observable market refresh
+        id: refresh
+        shell: bash
+        run: |
+          set +e
+          mkdir -p .github/diagnostics
+          python tools/refresh_market_profiles.py > .github/diagnostics/market-refresh-full.log 2>&1
+          CRAWL=$?
+          tail -n 200 .github/diagnostics/market-refresh-full.log > .github/diagnostics/market-refresh.log
+          rm .github/diagnostics/market-refresh-full.log
+          python -m unittest tests.test_market_profiles tests.test_market_profile_transport > .github/diagnostics/market-refresh-tests.log 2>&1
+          TESTS=$?
+          python tools/validate_market_profiles.py > .github/diagnostics/market-refresh-validator.log 2>&1
+          VALIDATOR=$?
+          cat > .github/diagnostics/market-refresh-validation.json <<EOF
+          {
+            "crawl": $CRAWL,
+            "tests": $TESTS,
+            "validator": $VALIDATOR,
+            "commit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID"
+          }
+          EOF
+          echo "crawl=$CRAWL" >> "$GITHUB_OUTPUT"
+          echo "tests=$TESTS" >> "$GITHUB_OUTPUT"
+          echo "validator=$VALIDATOR" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Commit diagnostics and valid market snapshot
         id: snapshot
         run: |
-          if git diff --quiet -- public/data/market_profiles.json; then
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/diagnostics/market-refresh-validation.json \
+            .github/diagnostics/market-refresh.log \
+            .github/diagnostics/market-refresh-tests.log \
+            .github/diagnostics/market-refresh-validator.log
+          if [ "${{ steps.refresh.outputs.crawl }}" = "0" ] && \
+             [ "${{ steps.refresh.outputs.tests }}" = "0" ] && \
+             [ "${{ steps.refresh.outputs.validator }}" = "0" ]; then
+            git add public/data/market_profiles.json
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            git checkout -- public/data/market_profiles.json
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+          fi
+          if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/market_profiles.json
-          git commit -m "data: initialize three-market company profiles"
+          git commit -m "data: refresh validated three-market company profiles"
           git pull --rebase origin main
-          python tools/refresh_market_profiles.py
-          python -m unittest tests.test_market_profiles tests.test_market_profile_transport
-          python tools/validate_market_profiles.py
-          git add public/data/market_profiles.json
-          if ! git diff --cached --quiet; then
-            git commit --amend --no-edit
-          fi
           git push origin HEAD:main
           echo "changed=true" >> "$GITHUB_OUTPUT"
       - name: Trigger Pages
-        if: steps.snapshot.outputs.changed == 'true'
+        if: steps.snapshot.outputs.changed == 'true' && steps.snapshot.outputs.valid == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run pages.yml --ref main
+      - name: Fail when market refresh is invalid
+        if: steps.refresh.outputs.crawl != '0' || steps.refresh.outputs.tests != '0' || steps.refresh.outputs.validator != '0'
+        run: exit 1
