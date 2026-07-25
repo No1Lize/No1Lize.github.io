@@ -504,10 +504,14 @@ def main() -> int:
     if payload["personCount"] < 1:
         print("No tracked people were generated.", file=sys.stderr)
         return 1
-    invalid = [item["slug"] for item in payload["people"] if not item.get("name") or not item.get("materials")]
+    invalid = [
+        str(item.get("slug") or item.get("name") or "unknown")
+        for item in payload["people"]
+        if not item.get("slug") or not item.get("name") or not item.get("sectors")
+    ]
     if args.validate_only:
         if invalid:
-            print(f"Profiles missing required identity/materials: {invalid}", file=sys.stderr)
+            print(f"Profiles missing required identity/sector fields: {invalid}", file=sys.stderr)
             return 1
         print(f"Validated {payload['personCount']} tracked people profiles.")
         return 0

@@ -52,6 +52,21 @@ class PeopleProfilePipelineTest(unittest.TestCase):
             self.assertLessEqual(len(wikipedia), 1, person["slug"])
             self.assertLessEqual(len(wikidata), 1, person["slug"])
 
+    def test_unknown_person_without_sources_still_gets_pending_profile(self):
+        candidate = {
+            "slug": "future-researcher",
+            "name": "Future Researcher",
+            "englishName": "Future Researcher",
+            "aliases": ["Future Researcher"],
+            "handles": [],
+            "sectors": ["未来赛道"],
+            "override": {},
+        }
+        person = MODULE.enrich_candidate(candidate, None, [], offline=True)
+        self.assertEqual(person["status"], "pending")
+        self.assertEqual(person["materials"], [])
+        self.assertEqual(person["sectors"], ["未来赛道"])
+
     def test_offline_generation_keeps_every_real_tracked_person(self):
         payload = MODULE.build_payload(offline=True, workers=1)
         self.assertGreaterEqual(payload["personCount"], 15)
@@ -59,7 +74,8 @@ class PeopleProfilePipelineTest(unittest.TestCase):
             self.assertTrue(person["slug"])
             self.assertTrue(person["name"])
             self.assertTrue(person["sectors"])
-            self.assertTrue(person["materials"])
+            self.assertIn(person["status"], {"complete", "partial", "pending"})
+            self.assertIsInstance(person["materials"], list)
 
 
 if __name__ == "__main__":
