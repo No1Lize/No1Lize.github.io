@@ -18,11 +18,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Record latest validation status
+      - name: Record latest workflow status
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # final-status-v3
           mkdir -p diagnostics
           gh run list \
             --workflow one-time-validate-venture-research.yml \
@@ -30,14 +29,14 @@ jobs:
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
             > diagnostics/venture-research-validation-status.json
           gh run list \
-            --workflow one-time-fix-venture-team-shape.yml \
-            --limit 5 \
+            --workflow refresh-venture-profiles.yml \
+            --limit 8 \
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
-            > diagnostics/venture-project-background-status.json
+            > diagnostics/venture-refresh-status.json
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add diagnostics/venture-research-validation-status.json \
-            diagnostics/venture-project-background-status.json
-          git commit -m "ci: record fallback patch status"
+            diagnostics/venture-refresh-status.json
+          git commit -m "ci: record venture refresh and validation status"
           git pull --rebase origin main
           git push origin HEAD:main
