@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { isAllowedDisplayedKeywordRecommendation } from "@/lib/tracking-recommendation-policy";
 import type {
   TrackingRecommendation,
   TrackingRecommendationSet,
@@ -40,11 +41,21 @@ export function TrackingRecommendations({
     () =>
       (Object.keys(labels) as RecommendationType[])
         .filter((type) => !onlyType || type === onlyType)
-        .map((type) => ({
-          type,
-          title: labels[type],
-          items: recommendations[type] as AnyTrackingRecommendation[],
-        })),
+        .map((type) => {
+          const items = recommendations[type] as AnyTrackingRecommendation[];
+          return {
+            type,
+            title: labels[type],
+            items:
+              type === "keywords"
+                ? items.filter((item) =>
+                    isAllowedDisplayedKeywordRecommendation(
+                      item as TrackingRecommendation,
+                    ),
+                  )
+                : items,
+          };
+        }),
     [onlyType, recommendations],
   );
 
