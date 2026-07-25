@@ -12,8 +12,8 @@ permissions:
   actions: write
 
 concurrency:
-  group: apply-layered-venture-evidence-v4
-  cancel-in-progress: false
+  group: apply-layered-venture-evidence-v4-r2
+  cancel-in-progress: true
 
 jobs:
   migrate:
@@ -35,8 +35,15 @@ jobs:
           {
             echo "branch_commit=$(git rev-parse HEAD)"
             echo "checked_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            python tools/patch_refine_venture_evidence_regressions.py
-            PATCH_STATUS=$?
+            python tools/patch_layered_venture_compat.py
+            COMPAT_STATUS=$?
+            echo "compat_status=$COMPAT_STATUS"
+            if [ "$COMPAT_STATUS" -eq 0 ]; then
+              python tools/patch_refine_venture_evidence_regressions.py
+              PATCH_STATUS=$?
+            else
+              PATCH_STATUS=1
+            fi
             echo "patch_status=$PATCH_STATUS"
             if [ "$PATCH_STATUS" -eq 0 ]; then
               python -m py_compile \
@@ -118,13 +125,14 @@ jobs:
             echo "enrich_validate_status=$ENRICH_VALIDATE_STATUS"
             echo "diff_status=$DIFF_STATUS"
           } > diagnostics/layered-venture-evidence-v4.txt 2>&1
-          STATUS=$((PATCH_STATUS || COMPILE_STATUS || TEST_STATUS || ENRICH_STATUS || REFINE_STATUS || REFINE_CHECK_STATUS || NORMALIZE_STATUS || FINALIZE_STATUS || FINALIZE_CHECK_STATUS || ENTITY_STATUS || ENTITY_CHECK_STATUS || CRAWL_VALIDATE_STATUS || ENRICH_VALIDATE_STATUS || DIFF_STATUS))
+          STATUS=$((COMPAT_STATUS || PATCH_STATUS || COMPILE_STATUS || TEST_STATUS || ENRICH_STATUS || REFINE_STATUS || REFINE_CHECK_STATUS || NORMALIZE_STATUS || FINALIZE_STATUS || FINALIZE_CHECK_STATUS || ENTITY_STATUS || ENTITY_CHECK_STATUS || CRAWL_VALIDATE_STATUS || ENRICH_VALIDATE_STATUS || DIFF_STATUS))
           cat diagnostics/layered-venture-evidence-v4.txt
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if [ "$STATUS" -eq 0 ]; then
             rm -f .venture-sanitize-trigger
+            rm -f tools/patch_layered_venture_compat.py
             rm -f tools/patch_refine_venture_evidence_regressions.py
             rm -rf diagnostics
             git add -A
