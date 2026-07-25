@@ -592,13 +592,22 @@ function normalizeRecentYearSummary(value: unknown): VentureRecentYearSummary | 
 }
 
 function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
-  const projectBackground = normalizeProjectBackground(raw.projectBackground);
+  const fallbackBackground = sanitizeVentureNarrative(raw.background, 900);
+  const projectBackground =
+    normalizeProjectBackground(raw.projectBackground) ??
+    (Number(raw.researchModelVersion) >= 2
+      ? {
+          summary:
+            fallbackBackground ||
+            "当前公开来源未提供可核对的项目背景说明。",
+        }
+      : undefined);
   return {
     slug: clean(raw.slug, 100),
     name: clean(raw.name, 120),
     updatedAt: clean(raw.updatedAt, 40),
     status: raw.status || "fallback",
-    background: projectBackground?.summary || sanitizeVentureNarrative(raw.background, 900),
+    background: projectBackground?.summary || fallbackBackground,
     projectBackground,
     technology: sanitizeVentureNarrative(raw.technology, 900),
     products: sanitizeVentureProducts(raw.products),
