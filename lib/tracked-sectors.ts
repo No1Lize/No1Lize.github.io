@@ -11,6 +11,12 @@ import {
   sectorCompleteness,
 } from "@/lib/sector-profile-generator";
 import {
+  eventTrackSlugs,
+  fallbackTrackCoverage,
+  trackCoverage,
+  type TrackCoverage,
+} from "@/lib/tracking-snapshot";
+import {
   normalizeTaxonomyTerm,
   uniqueIdentityTermsByTrack,
 } from "@/lib/tracking-taxonomy";
@@ -30,6 +36,7 @@ export type TrackedSector = SectorDefinition & {
   fundingLabel: string;
   tracking: TrackingTrack;
   aliases: string[];
+  coverage: TrackCoverage;
   baseName?: string;
   profileMode: "curated" | "generated";
 };
@@ -39,6 +46,7 @@ type SectorRaw = {
   base?: SectorDefinition;
   aliases: string[];
   events: IntelligenceEvent[];
+  coverage: TrackCoverage;
   financing: number;
   institutions: number;
   weightedEvents: number;
@@ -72,6 +80,16 @@ function normalizer(values: number[]): (value: number) => number {
   return (value) => (maximum > 0 ? Math.round((value / maximum) * 100) : 0);
 }
 
+function eventBelongsToTrack(
+  event: IntelligenceEvent,
+  slug: string,
+  aliasKeys: Set<string>,
+): boolean {
+  const assignedSlugs = eventTrackSlugs(event);
+  if (assignedSlugs.length) return assignedSlugs.includes(slug);
+  return aliasKeys.has(normalizeTaxonomyTerm(event.sector));
+}
+
 function buildRaw(): SectorRaw[] {
   const baseBySlug = new Map(
     sectorDefinitions.map((sector) => [sector.slug, sector]),
@@ -93,15 +111,21 @@ function buildRaw(): SectorRaw[] {
     const base =
       baseBySlug.get(tracking.slug) ?? baseByName.get(tracking.name);
     const aliases = unique(
-      [...(ownedIdentityTerms.get(tracking.slug) ?? [tracking.name]), base?.name ?? ""],
+      [
+        ...(ownedIdentityTerms.get(tracking.slug) ?? [tracking.name]),
+        base?.name ?? "",
+      ],
       24,
     );
     const aliasKeys = new Set(aliases.map(normalizeTaxonomyTerm));
     const events = intelligenceEvents.filter(
       (event) =>
-        aliasKeys.has(normalizeTaxonomyTerm(event.sector)) &&
+        eventBelongsToTrack(event, tracking.slug, aliasKeys) &&
         dateValue(event.publishedAt) >= yearAgo,
     );
+    const coverage =
+      trackCoverage[tracking.slug] ??
+      fallbackTrackCoverage(tracking.slug, tracking.name);
     const financing = events.filter((event) => event.type === "融资").length;
     const institutions = new Set(
       events.flatMap((event) => event.institutions ?? []),
@@ -128,6 +152,7 @@ function buildRaw(): SectorRaw[] {
       base,
       aliases,
       events,
+      coverage,
       financing,
       institutions,
       weightedEvents,
@@ -148,7 +173,7 @@ function buildTrackedSectors(): TrackedSector[] {
   const normalizeResearch = normalizer(raw.map((item) => item.research));
 
   return raw.map((item) => {
-    const { tracking, base, aliases, events } = item;
+    const { tracking, base, aliases, events, coverage } = item;
     const sourceCount = new Set(events.map((event) => event.source.url)).size;
     const definition = resolveSectorDefinition(tracking, events, base);
     const heat = Math.round(
@@ -178,6 +203,7 @@ function buildTrackedSectors(): TrackedSector[] {
       fundingLabel: `${item.financing} 笔融资披露`,
       tracking,
       aliases,
+      coverage,
       baseName: base?.name,
       profileMode: base ? "curated" : "generated",
     };
@@ -191,10 +217,10 @@ export function getTrackedSector(slug: string): TrackedSector | undefined {
 }
 
 export function eventsForTrackedSector(
-  sector: Pick<TrackedSector, "aliases">,
+  sector: Pick<TrackedSector, "aliases" | "slug">,
 ): IntelligenceEvent[] {
   const aliasKeys = new Set(sector.aliases.map(normalizeTaxonomyTerm));
   return intelligenceEvents.filter((event) =>
-    aliasKeys.has(normalizeTaxonomyTerm(event.sector)),
+    eventBelongsToTrack(event, sector.slug, aliasKeys),
   );
 }
