@@ -125,6 +125,13 @@ def _host(url: str) -> str:
     return host[4:] if host.startswith("www.") else host
 
 
+def _nonnegative_int(value: Any) -> int:
+    try:
+        return max(0, int(value or 0))
+    except (TypeError, ValueError):
+        return 0
+
+
 def is_eastmoney_article(article: dict[str, Any]) -> bool:
     source = article.get("source") if isinstance(article.get("source"), dict) else {}
     source_id = _clean(article.get("sourceId"), 120)
@@ -192,6 +199,17 @@ def is_relevant_eastmoney_article(
     return False, "unrelated"
 
 
+def _set_history_counts(
+    status: dict[str, Any], new_count: int, retained_count: int
+) -> None:
+    status["newAccepted"] = new_count
+    status["retainedPreviousCount"] = retained_count
+    if retained_count:
+        status["retainedPrevious"] = True
+    else:
+        status.pop("retainedPrevious", None)
+
+
 def _update_eastmoney_status(
     status: dict[str, Any],
     *,
@@ -201,30 +219,6 @@ def _update_eastmoney_status(
     unknown_kept: int,
 ) -> None:
     status["accepted"] = kept
-    had_rolling_metadata = (
-        "newAccepted" in status
-        or "retainedPreviousCount" in status
-        or new_kept > 0
-        or retained_kept > 0
-    )
-
-    if had_rolling_metadata:
-        status["newAccepted"] = new_kept
-        status["retainedPreviousCount"] = retained_kept
-        if retained_kept:
-            status["retainedPrevious"] = True
-        else:
-            status.pop("retainedPrevious", None)
-    elif status.get("retainedPrevious"):
-        # Clean-but-empty discovery carries no per-article marker because the old
-        # batch bypasses the successful-history merge. Every surviving article is
-        # therefore a retained article.
-        status["newAccepted"] = 0
-        status["retainedPreviousCount"] = kept
-    elif unknown_kept:
-        status.pop("newAccepted", None)
-        status.pop("retainedPreviousCount", None)
-
     if kept == 0:
         status.pop("retainedPrevious", None)
         status.pop("retainedPreviousCount", None)
@@ -232,6 +226,49 @@ def _update_eastmoney_status(
             status["newAccepted"] = 0
         if status.get("status") in {"ok", "partial"}:
             status["status"] = "empty"
+        return
+
+    marked_total = new_kept + retained_kept
+    has_existing_counts = (
+        "newAccepted" in status or "retainedPreviousCount" in status
+    )
+    existing_new = _nonnegative_int(status.get("newAccepted"))
+    existing_retained = _nonnegative_int(status.get("retainedPreviousCount"))
+
+    if marked_total:
+        # First refinement after a successful rolling merge. All normal history
+        # articles carry an origin marker. Any unmarked survivor is assigned to
+        # the most plausible side so the public accounting remains closed.
+        final_new = new_kept
+        final_retained = retained_kept
+        if unknown_kept:
+            if status.get("retainedPrevious") or existing_retained:
+                final_retained += unknown_kept
+            else:
+                final_new += unknown_kept
+        _set_history_counts(status, final_new, final_retained)
+        return
+
+    if has_existing_counts and existing_new + existing_retained == kept:
+        # Rebase-time validation runs refinement again after the internal markers
+        # were already stripped. Preserve previously closed public accounting.
+        _set_history_counts(status, existing_new, existing_retained)
+        return
+
+    if status.get("retainedPrevious"):
+        # Clean-but-empty discovery bypasses the successful-history merge, so the
+        # retained articles have no origin marker. Count all survivors as cached,
+        # while preserving any already-known new count that still fits.
+        final_new = min(existing_new, kept) if has_existing_counts else 0
+        _set_history_counts(status, final_new, kept - final_new)
+        return
+
+    if unknown_kept:
+        # A legacy/fallback batch without rolling metadata should remain usable,
+        # but must not invent new-vs-retained provenance.
+        status.pop("newAccepted", None)
+        status.pop("retainedPrevious", None)
+        status.pop("retainedPreviousCount", None)
 
 
 def refine_snapshot(
