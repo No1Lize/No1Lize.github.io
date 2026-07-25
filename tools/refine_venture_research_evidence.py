@@ -69,7 +69,7 @@ FINANCING_RE = re.compile(
 )
 INVESTMENT_ACTION_RE = re.compile(
     r"(?:\binvest(?:ed|s|ing)?\s+(?:in|into)\b|\bbacks?\b|\bleads?\b|"
-    r"投资|领投|跟投|参投|加码)",
+    r"投资|融资|领投|跟投|参投|参与.{0,24}融资|加码)",
     re.IGNORECASE,
 )
 BIOGRAPHY_RE = re.compile(

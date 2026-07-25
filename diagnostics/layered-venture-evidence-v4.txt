@@ -1,25 +1,29 @@
-branch_commit=2e8581dff8805702b77883d578410abcc711000a
-checked_at=2026-07-25T18:01:46Z
+branch_commit=0dd84b24ce3bfa1e9ffa727f77ad813d653990af
+checked_at=2026-07-25T18:03:33Z
+explicit investment participation: applied
+typed company fixture: applied
+typed institution fixture: applied
+compat_status=0
 enricher imports and model version: applied
-def _entity_key(: inserted
-_company_articles: replaced
-_institution_articles: replaced
-_company_project_background: replaced
-research technology product evidence: applied
-canonical and research company layers: applied
-def _entity_key(: inserted
-_company_articles: replaced
-_institution_articles: replaced
-_clean_project_background: replaced
-refiner research technology evidence: applied
-research-aware crawler retention: applied
-research-aware scalar source: applied
-research-aware list source: applied
-research technology finalization: applied
-research technology type: applied
-research technology normalization: applied
-canonical background normalization: applied
-research technology rendering: applied
+def _entity_key(: already applied
+_company_articles: already applied
+_institution_articles: already applied
+_company_project_background: already applied
+research technology product evidence: already applied
+canonical and research company layers: already applied
+def _entity_key(: already applied
+_company_articles: already applied
+_institution_articles: already applied
+_clean_project_background: already applied
+refiner research technology evidence: already applied
+research-aware crawler retention: already applied
+research-aware scalar source: already applied
+research-aware list source: already applied
+research technology finalization: already applied
+research technology type: already applied
+research technology normalization: already applied
+canonical background normalization: already applied
+research technology rendering: already applied
 strict attribution regressions: applied
 Traceback (most recent call last):
   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/patch_refine_venture_evidence_regressions.py", line 623, in <module>

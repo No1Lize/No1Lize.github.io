@@ -7,11 +7,12 @@ from tools.refine_venture_research_evidence import refine_snapshot
 
 
 CATALOG = '''
-export const companies = [
+export type Company = {};
+export const companies: Company[] = [
 { slug:"agibot", name:"智元机器人", englishName:"AgiBot", region:"中国", sector:"机器人", stage:"成长期", status:"运营中", headquarters:"上海", founded:"2023", summary:"研发具身智能机器人与软硬件平台。", product:"远征、灵犀、A2 旗舰版", source:official("智元机器人","https://example.com/") },
 ];
 export type Institution = {};
-export const institutionCatalog = [
+export const institutionCatalog: Institution[] = [
 { slug:"sequoia-capital", name:"Sequoia Capital", englishName:"Sequoia Capital", region:"美国", type:"风险投资", stages:"全阶段", sectors:["AI","企业科技"], source:official("Sequoia Capital","https://capital.example.com/") },
 ];
 export type IpoCompany = {};
