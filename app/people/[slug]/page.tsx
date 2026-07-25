@@ -137,7 +137,7 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
           <div className="confidence-box">
             <span>公开材料</span>
             <strong>{person.materials.length}</strong>
-            <p>Wikipedia、Wikidata、官方网站、论文、演讲与公开发文</p>
+            <p>Wikipedia、Wikidata、官方网站、论文、B 站、微信视频号、YouTube 与公开发文</p>
           </div>
           <div className="confidence-box">
             <span>所属赛道</span>
