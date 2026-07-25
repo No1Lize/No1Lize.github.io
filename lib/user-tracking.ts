@@ -52,9 +52,33 @@ export type UserTrackingConfig = {
   sources: TrackingSource[];
 };
 
+export type PersonLabelValidation = {
+  valid: boolean;
+  normalized: string;
+  displayName: string;
+  handle: string;
+  searchTerms: string[];
+  xEnabled: boolean;
+  message: string;
+};
+
 const REGIONS: TrackingRegion[] = ["中国", "美国", "全球"];
 const MARKETS: TrackingMarket[] = ["A股", "港股", "美股"];
 const SOURCE_TYPES: TrackingSourceType[] = ["rss", "listing-search", "sec"];
+const GENERIC_PERSON_LABELS = new Set([
+  "人物",
+  "专家",
+  "研究员",
+  "科学家",
+  "创始人",
+  "创业者",
+  "投资人",
+  "ceo",
+  "cto",
+  "founder",
+  "researcher",
+  "scientist",
+]);
 
 function cleanText(value: unknown, maxLength = 120): string {
   return typeof value === "string"
@@ -64,10 +88,104 @@ function cleanText(value: unknown, maxLength = 120): string {
 
 function uniqueStrings(value: unknown, maxItems = 80): string[] {
   if (!Array.isArray(value)) return [];
-  return [...new Set(value.map((item) => cleanText(item)).filter(Boolean))].slice(
-    0,
-    maxItems,
-  );
+  const result: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of value) {
+    const item = cleanText(raw);
+    const key = item.toLocaleLowerCase("zh-CN");
+    if (!item || seen.has(key)) continue;
+    result.push(item);
+    seen.add(key);
+    if (result.length >= maxItems) break;
+  }
+  return result;
+}
+
+function trimPersonSeparators(value: string): string {
+  return value
+    .replace(/^[\s|｜·•:：,，;；/\\\-—–()（）\[\]【】]+/, "")
+    .replace(/[\s|｜·•:：,，;；/\\\-—–()（）\[\]【】]+$/, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function validatePersonLabel(value: unknown): PersonLabelValidation {
+  const raw = cleanText(value, 100).replace(/＠/g, "@");
+  const invalid = (message: string): PersonLabelValidation => ({
+    valid: false,
+    normalized: "",
+    displayName: "",
+    handle: "",
+    searchTerms: [],
+    xEnabled: false,
+    message,
+  });
+
+  if (!raw) return invalid("人物或账号标签不能为空。");
+  if (/^https?:\/\//i.test(raw) || /(?:x|twitter)\.com\//i.test(raw)) {
+    return invalid("请填写“显示名 @handle”，不要直接粘贴 X 链接。");
+  }
+
+  const atCount = (raw.match(/@/g) ?? []).length;
+  const handleMatch = raw.match(/@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])/);
+  if (atCount > 1) return invalid("一个标签只能包含一个 X handle。");
+  if (atCount === 1 && !handleMatch) {
+    return invalid("X handle 只能包含 1–15 位英文字母、数字或下划线。");
+  }
+
+  if (handleMatch) {
+    const handle = handleMatch[1];
+    const displayName = trimPersonSeparators(raw.replace(handleMatch[0], ""));
+    if (displayName && !/[A-Za-z0-9\u3400-\u9fff]/.test(displayName)) {
+      return invalid("显示名至少需要包含一个中文、英文或数字字符。");
+    }
+    const normalized = displayName ? `${displayName} @${handle}` : `@${handle}`;
+    const searchTerms = [...new Set([displayName, handle, `@${handle}`].filter(Boolean))];
+    return {
+      valid: true,
+      normalized,
+      displayName,
+      handle,
+      searchTerms,
+      xEnabled: true,
+      message: "格式有效：会抓取该 X 账号，并将显示名和 handle 分别用于公开搜索。",
+    };
+  }
+
+  const displayName = trimPersonSeparators(raw);
+  if (
+    displayName.length < 2 ||
+    !/[A-Za-z0-9\u3400-\u9fff]/.test(displayName) ||
+    GENERIC_PERSON_LABELS.has(displayName.toLocaleLowerCase("zh-CN"))
+  ) {
+    return invalid("标签过于宽泛。请填写具体姓名、组织名，最好补充 @handle。");
+  }
+
+  return {
+    valid: true,
+    normalized: displayName,
+    displayName,
+    handle: "",
+    searchTerms: [displayName],
+    xEnabled: false,
+    message: "标签有效，但没有 @handle，只会参与新闻、论文和公开网页搜索。",
+  };
+}
+
+function uniquePeople(value: unknown, maxItems = 40): string[] {
+  if (!Array.isArray(value)) return [];
+  const result: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of value) {
+    const parsed = validatePersonLabel(raw);
+    if (!parsed.valid) continue;
+    const key = parsed.normalized.toLocaleLowerCase("zh-CN");
+    if (seen.has(key)) continue;
+    result.push(parsed.normalized);
+    seen.add(key);
+    if (result.length >= maxItems) break;
+  }
+  return result;
 }
 
 function stableHash(value: string): string {
@@ -105,7 +223,7 @@ function normalizeTrack(value: unknown, index: number): TrackingTrack | null {
     enabled: raw.enabled !== false,
     custom,
     keywords: uniqueStrings(raw.keywords),
-    people: uniqueStrings(raw.people),
+    people: uniquePeople(raw.people),
     sampleCompanies: uniqueStrings(raw.sampleCompanies),
   };
 }
