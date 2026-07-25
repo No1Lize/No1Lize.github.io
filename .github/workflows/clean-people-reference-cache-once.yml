@@ -1,0 +1,57 @@
+name: Clean stale people identity references once
+
+on:
+  push:
+    branches: [feature/tracked-people-research-20260725]
+    paths:
+      - '.github/workflows/clean-people-reference-cache-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/tracked-people-research-20260725
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Patch cache merge and validation
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tools/refresh_people_profiles.py')
+          text = path.read_text()
+          old = '''    article_materials = matching_articles(candidate, articles)\n    materials = dedupe_materials([\n        *official_materials,\n        *reference_materials,\n        *article_materials,\n        *(previous.get("materials") or []),\n    ])\n'''
+          new = '''    article_materials = matching_articles(candidate, articles)\n    previous_materials = [\n        item for item in (previous.get("materials") or [])\n        if "wikipedia.org" not in str(item.get("url") or "").casefold()\n        and "wikidata.org" not in str(item.get("url") or "").casefold()\n    ]\n    materials = dedupe_materials([\n        *official_materials,\n        *reference_materials,\n        *article_materials,\n        *previous_materials,\n    ])\n'''
+          if old not in text:
+              raise SystemExit('material merge block not found')
+          path.write_text(text.replace(old, new))
+
+          test_path = Path('tests/test_refresh_people_profiles.py')
+          test = test_path.read_text()
+          marker = '''    def test_offline_generation_keeps_every_real_tracked_person(self):\n'''
+          addition = '''    def test_profile_snapshot_has_single_verified_identity_reference(self):\n        payload = json.loads((ROOT / "public" / "data" / "people.json").read_text(encoding="utf-8"))\n        for person in payload["people"]:\n            wikipedia = [item for item in person["materials"] if "wikipedia.org" in item["url"]]\n            wikidata = [item for item in person["materials"] if "wikidata.org" in item["url"]]\n            self.assertLessEqual(len(wikipedia), 1, person["slug"])\n            self.assertLessEqual(len(wikidata), 1, person["slug"])\n\n'''
+          if addition not in test:
+              test = test.replace(marker, addition + marker)
+          test_path.write_text(test)
+          PY
+      - name: Refresh and validate clean identities
+        run: |
+          python -m py_compile tools/refresh_people_profiles.py
+          python tools/refresh_people_profiles.py --workers 6
+          python tools/refresh_people_profiles.py --offline --validate-only
+          python -m unittest discover -s tests -p 'test_*.py'
+      - name: Commit clean identity references
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add tools/refresh_people_profiles.py tests/test_refresh_people_profiles.py public/data/people.json
+          git commit -m 'fix: discard stale person identity references' || true
+          git pull --rebase origin feature/tracked-people-research-20260725
+          git push origin HEAD:feature/tracked-people-research-20260725
