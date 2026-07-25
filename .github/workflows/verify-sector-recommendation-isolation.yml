@@ -1,5 +1,6 @@
 name: One-time verify recommendation sector isolation
 
+# rerun after creating the diagnostic directory
 on:
   push:
     branches: [main]
@@ -37,11 +38,7 @@ jobs:
           else
             TYPE_STATUS=99
           fi
-          node - <<'NODE'
-          const fs = require('fs');
-          const log = fs.readFileSync('/tmp/sector-recommendation.log', 'utf8');
-          const installStatus = Number(process.env.INSTALL_STATUS ?? 0);
-          NODE
+          mkdir -p diagnostics
           printf '{\n  "installStatus": %s,\n  "testStatus": %s,\n  "typeStatus": %s,\n  "passed": %s,\n  "logTail": %s\n}\n' \
             "$INSTALL_STATUS" "$TEST_STATUS" "$TYPE_STATUS" \
             "$([ "$INSTALL_STATUS" -eq 0 ] && [ "$TEST_STATUS" -eq 0 ] && [ "$TYPE_STATUS" -eq 0 ] && echo true || echo false)" \
