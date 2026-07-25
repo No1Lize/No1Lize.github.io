@@ -25,7 +25,7 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: |
-          # diagnostic revision: user-sources-only-v3
+          # diagnostic revision: native-search-v4
           set +e
           REPORT="diagnostics/adaptive-source-pipeline-report.txt"
           mkdir -p diagnostics
