@@ -433,7 +433,17 @@ def _route_capital_events(
             continue
         text = clean_text(f"{row.get('title', '')} {row.get('summary', '')}", 1200)
         if CAPITAL_MARKET_RE.search(text):
-            capital.append(row)
+            capital_row = copy.deepcopy(row)
+            capital_row["type"] = (
+                "并购/退出"
+                if re.search(
+                    r"acquired|acquisition|merger|并购|收购|退出",
+                    text,
+                    re.IGNORECASE,
+                )
+                else "上市"
+            )
+            capital.append(capital_row)
         elif FINANCING_RE.search(text) or row.get("amount") or row.get("round") or row.get("investors"):
             financing.append(row)
     for article in articles:

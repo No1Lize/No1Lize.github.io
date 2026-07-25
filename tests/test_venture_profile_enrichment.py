@@ -130,7 +130,7 @@ class VentureProfileEnrichmentTests(unittest.TestCase):
 
         company = result["companies"]["openai"]
         self.assertEqual(result["schemaVersion"], 2)
-        self.assertEqual(result["researchModelVersion"], 2)
+        self.assertEqual(result["researchModelVersion"], 3)
         self.assertEqual(
             company["projectBackground"]["summary"],
             "研发并商业化通用人工智能模型与开发者平台。",

@@ -1,7 +1,5 @@
-branch_commit=35d2168f6c6a9638e7ca99dd255248062430586b
-checked_at=2026-07-25T18:05:15Z
-script-local venture extraction import: fixed
-compat_status=0
+research model version assertion: applied
+capital event type normalization: applied
 enricher imports and model version: applied
 def _entity_key(: already applied
 _company_articles: already applied
@@ -24,41 +22,19 @@ canonical background normalization: already applied
 research technology rendering: already applied
 strict attribution regressions: applied
 contaminated derived snapshot fields: reset
-patch_status=0
-compile_status=0
-............F.F............................
+............F..............................
 ======================================================================
 FAIL: test_enriches_every_company_and_institution_with_shared_schema (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enriches_every_company_and_institution_with_shared_schema)
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_enrichment.py", line 133, in test_enriches_every_company_and_institution_with_shared_schema
-    self.assertEqual(result["researchModelVersion"], 2)
-AssertionError: 3 != 2
-
-======================================================================
-FAIL: test_aligns_background_products_team_and_capital_events (tests.test_refine_venture_research_evidence.VentureEvidenceAlignmentTests.test_aligns_background_products_team_and_capital_events)
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_refine_venture_research_evidence.py", line 191, in test_aligns_background_products_team_and_capital_events
-    self.assertEqual(company["capitalMarkets"][0]["type"], "上市")
-AssertionError: '产业投资' != '上市'
-- 产业投资
-+ 上市
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_enrichment.py", line 134, in test_enriches_every_company_and_institution_with_shared_schema
+    self.assertEqual(
+AssertionError: 'OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型训练和企业部署。' != '研发并商业化通用人工智能模型与开发者平台。'
+- OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型训练和企业部署。
++ 研发并商业化通用人工智能模型与开发者平台。
 
 
 ----------------------------------------------------------------------
-Ran 43 tests in 0.065s
+Ran 43 tests in 0.063s
 
-FAILED (failures=2)
-test_status=1
-enrich_status=1
-refine_status=1
-refine_check_status=1
-normalize_status=1
-finalize_status=1
-finalize_check_status=1
-entity_status=1
-entity_check_status=1
-crawl_validate_status=1
-enrich_validate_status=1
-diff_status=1
+FAILED (failures=1)
