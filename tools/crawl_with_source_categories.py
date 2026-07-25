@@ -10,13 +10,18 @@ company entity.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
 try:  # Imported by tests as tools.crawl_with_source_categories.
     from . import crawl_with_tracking as tracking
+    from . import strict_tracking_config
+    from . import x_rate_limit
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_with_tracking as tracking
+    import strict_tracking_config
+    import x_rate_limit
 
 
 VALID_SOURCE_CATEGORIES = {"company", "media", "person"}
@@ -173,7 +178,23 @@ def _custom_sources(
     return feed_specs[:60], sec_specs
 
 
+def _install_strict_tracking_validation() -> None:
+    original_load_tracking = tracking.load_tracking
+    if getattr(original_load_tracking, "_strict_tracking_validation", False):
+        return
+
+    def load_tracking(path: Path = tracking.TRACKING_PATH) -> dict[str, Any]:
+        raw = original_load_tracking(path)
+        return strict_tracking_config.sanitize_tracking_config(raw)
+
+    setattr(load_tracking, "_strict_tracking_validation", True)
+    tracking.load_tracking = load_tracking
+    tracking._parse_person_label = strict_tracking_config.parse_person_label
+
+
 def main() -> int:
+    _install_strict_tracking_validation()
+    x_rate_limit.install(tracking.crawler)
     tracking._custom_sources = _custom_sources
     return tracking.main()
 
