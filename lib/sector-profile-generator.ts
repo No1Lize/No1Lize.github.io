@@ -135,24 +135,24 @@ function buildResearchFocus(
   const types = new Set(events.map((event) => event.type));
   const result: string[] = [];
 
-  for (const keyword of unique(track.keywords, 2)) {
+  for (const keyword of unique(track.keywords, 1)) {
     result.push(`${keyword}的技术进展与产业影响`);
   }
   result.push(`${track.name}核心性能指标与技术里程碑`);
   result.push("工程化成本、可靠性与规模化能力");
-  if (["融资", "产业投资", "并购", "IPO"].some((type) => types.has(type))) {
-    result.push("融资节奏、资本开支与项目兑现");
-  }
-  if (["政策", "监管文件"].some((type) => types.has(type))) {
-    result.push("政策、监管、安全边界与许可进度");
-  }
   if (track.sampleCompanies.length || topCompanies(events).length) {
     result.push("样本公司工程节点与商业化进度");
   }
   if (track.people.length) {
     result.push("关键人物观点与研究路线变化");
   }
-  return unique(result, 6);
+  if (["融资", "产业投资", "并购", "IPO"].some((type) => types.has(type))) {
+    result.push("融资节奏、资本开支与项目兑现");
+  }
+  if (["政策", "监管文件"].some((type) => types.has(type))) {
+    result.push("政策、监管、安全边界与许可进度");
+  }
+  return unique(result, 7);
 }
 
 function buildRisks(track: TrackingTrack, events: IntelligenceEvent[]): string[] {
@@ -210,7 +210,7 @@ export function resolveSectorDefinition(
     usLens: curated.usLens || generated.usLens,
     researchFocus: unique(
       [...track.keywords, ...curated.researchFocus, ...generated.researchFocus],
-      6,
+      7,
     ),
     risks: unique([...curated.risks, ...generated.risks], 6),
   };
