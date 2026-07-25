@@ -512,12 +512,12 @@ function normalizeClassicCases(values: unknown): VentureClassicCase[] {
 function normalizeProjectBackground(value: unknown): VentureProjectBackground | undefined {
   if (!value || typeof value !== "object") return undefined;
   const row = value as Record<string, unknown>;
-  const summary = clean(row.summary, 900);
+  const summary = sanitizeVentureNarrative(row.summary, 900);
   if (!summary) return undefined;
   return {
     summary,
-    problemSolved: clean(row.problemSolved, 520) || undefined,
-    marketOpportunity: clean(row.marketOpportunity, 520) || undefined,
+    problemSolved: sanitizeVentureNarrative(row.problemSolved, 520) || undefined,
+    marketOpportunity: sanitizeVentureNarrative(row.marketOpportunity, 520) || undefined,
   };
 }
 
