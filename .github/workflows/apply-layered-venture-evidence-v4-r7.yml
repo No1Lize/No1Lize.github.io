@@ -1,0 +1,108 @@
+name: Apply layered venture evidence v4 r7
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-layered-venture-evidence-v4-r7.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: apply-layered-venture-evidence-v4-r7
+  cancel-in-progress: true
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/venture-layered-evidence-v4
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run migration and publication gates
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          (
+            set -euo pipefail
+            python tools/patch_refine_venture_evidence_regressions.py
+            python tools/patch_layered_venture_compat.py
+            python -m py_compile \
+              tools/venture_profile_extraction.py \
+              tools/crawl_venture_profiles.py \
+              tools/enrich_venture_profiles.py \
+              tools/refine_venture_research_evidence.py \
+              tools/normalize_venture_profiles.py \
+              tools/sanitize_venture_profiles.py \
+              tools/sanitize_venture_narratives.py \
+              tools/finalize_venture_profiles.py \
+              tools/enforce_venture_entity_semantics.py
+            python -m unittest \
+              tests.test_venture_profile_extraction \
+              tests.test_venture_profile_noise_filters \
+              tests.test_venture_profile_enrichment \
+              tests.test_refine_venture_research_evidence \
+              tests.test_normalize_venture_profiles \
+              tests.test_venture_profile_postprocess \
+              tests.test_venture_narrative_sanitizer \
+              tests.test_finalize_venture_profiles \
+              tests.test_venture_entity_semantics
+            python tools/enrich_venture_profiles.py
+            python tools/refine_venture_research_evidence.py
+            python tools/refine_venture_research_evidence.py --check
+            python tools/normalize_venture_profiles.py
+            python tools/finalize_venture_profiles.py
+            python tools/finalize_venture_profiles.py --check
+            python tools/enforce_venture_entity_semantics.py
+            python tools/enforce_venture_entity_semantics.py --check
+            python tools/crawl_venture_profiles.py --validate-only
+            python tools/enrich_venture_profiles.py --validate-only
+            git diff --check
+          ) > diagnostics/layered-venture-evidence-v4.txt 2>&1
+          STATUS=$?
+          cat diagnostics/layered-venture-evidence-v4.txt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "$STATUS" -eq 0 ]; then
+            rm -f .venture-sanitize-trigger
+            rm -f tools/patch_layered_venture_compat.py
+            rm -f tools/patch_refine_venture_evidence_regressions.py
+            rm -rf diagnostics
+            git add -A
+            git commit -m "data: separate canonical and research venture evidence"
+          else
+            git add -A
+            git commit -m "ci: record layered venture evidence failure"
+          fi
+          git push origin HEAD:feature/venture-layered-evidence-v4
+          exit "$STATUS"
+      - name: Remove one-time dispatcher
+        if: success()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin main
+          git checkout -B cleanup-layered-v4-r7 origin/main
+          git rm .github/workflows/apply-layered-venture-evidence-v4-r7.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore: remove layered venture migration dispatcher"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
