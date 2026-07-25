@@ -404,17 +404,42 @@ def retain_richer_profile(
         return current, False
 
     merged = copy.deepcopy(current)
+    previous_is_enriched = bool(previous.get("researchModelVersion"))
+    previous_for_retention = copy.deepcopy(previous)
+    if previous_is_enriched:
+        retained_team = []
+        for item in previous_for_retention.get("team", []):
+            if not isinstance(item, dict):
+                continue
+            retained_team.append(
+                {
+                    "name": clean_text(item.get("name"), 120),
+                    "role": clean_text(item.get("role"), 160),
+                    "summary": "",
+                    "sourceUrl": normalize_url(item.get("sourceUrl", "")),
+                }
+            )
+        previous_for_retention["team"] = retained_team
+
     if kind == "company":
-        scalar_fields = ("background", "technology")
-        list_fields = ("products", "team", "financing", "capitalMarkets", "sources")
+        scalar_fields = () if previous_is_enriched else ("background", "technology")
+        list_fields = (
+            ("products", "team", "sources")
+            if previous_is_enriched
+            else ("products", "team", "financing", "capitalMarkets", "sources")
+        )
     else:
         scalar_fields = ("overview", "strategy")
-        list_fields = ("team", "recentInvestments", "portfolio", "classicCases", "sources")
+        list_fields = (
+            ("team", "sources")
+            if previous_is_enriched
+            else ("team", "recentInvestments", "portfolio", "classicCases", "sources")
+        )
     for field in scalar_fields:
         if len(clean_text(merged.get(field), 2000)) < len(clean_text(previous.get(field), 2000)):
-            merged[field] = previous.get(field)
+            merged[field] = previous_for_retention.get(field)
     for field in list_fields:
-        merged[field] = _merge_lists(merged.get(field), previous.get(field))
+        merged[field] = _merge_lists(merged.get(field), previous_for_retention.get(field))
     merged["status"] = "retained"
     merged["evidenceScore"] = max(current_score, previous_score)
     merged["warnings"] = [

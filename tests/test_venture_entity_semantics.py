@@ -4,6 +4,7 @@ import copy
 import unittest
 
 from tools import enforce_venture_entity_semantics as semantics
+from tools import finalize_venture_profiles as finalizer
 
 
 CATALOG = '''
@@ -109,6 +110,60 @@ class VentureEntitySemanticTests(unittest.TestCase):
         self.assertNotIn("Toll-Free", background)
         self.assertNotIn("Investor Relations", background)
 
+    def test_catalog_fallback_and_research_technology_filter(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "",
+                    "technology": "Claude 模型与 Claude Platform。",
+                    "researchTechnology": (
+                        "Looped world models are a generic research direction. "
+                        "Anthropic expands Claude Platform for enterprise agents."
+                    ),
+                    "products": ["Claude 模型", "Claude Platform"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "technologyProducts": [],
+                    "projectBackground": {
+                        "summary": "Stale summary.",
+                        "problemSolved": "",
+                        "marketOpportunity": "",
+                    },
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, _ = semantics.enforce_snapshot(payload, CATALOG)
+        profile = cleaned["companies"]["anthropic"]
+        self.assertEqual(profile["background"], "Anthropic builds reliable AI systems.")
+        self.assertNotIn("Looped world models", profile["researchTechnology"])
+        self.assertIn("Anthropic expands Claude Platform", profile["researchTechnology"])
+        self.assertEqual(profile["projectBackground"]["summary"], profile["background"])
+
+    def test_capital_summary_matches_structural_finalizer(self) -> None:
+        events = [
+            {
+                "date": "2026-07-20",
+                "title": "Anthropic raises a new round",
+                "amount": "$2 billion",
+                "round": "Growth",
+                "investors": ["Example Capital"],
+            }
+        ]
+        self.assertEqual(
+            semantics._capital_summary(events),
+            finalizer._capital_summary(events),
+        )
+        self.assertEqual(
+            semantics._capital_summary([]),
+            finalizer._capital_summary([]),
+        )
+
     def test_keeps_entity_subject_financing(self) -> None:
         row = {
             "title": "Anthropic raises $2 billion in new funding",
@@ -123,6 +178,49 @@ class VentureEntitySemanticTests(unittest.TestCase):
                 semantics.FINANCING_ACTION_RE,
             )
         )
+
+    def test_complex_snapshot_reaches_fixed_point_in_one_call(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems. Investor Relations Transfer Agent.",
+                    "technology": "OpenAI models are discussed. Anthropic develops Claude models.",
+                    "products": ["Claude 模型", "2025"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "technologyProducts": [
+                        {
+                            "name": "Claude 模型",
+                            "description": "Unrelated OpenAI product description.",
+                            "technicalHighlights": [],
+                            "sourceUrl": "",
+                        }
+                    ],
+                    "projectBackground": {
+                        "summary": "Stale derived summary.",
+                        "problemSolved": "Unrelated exercise collection.",
+                        "marketOpportunity": "Anthropic serves enterprise AI users.",
+                    },
+                    "capitalSummary": {
+                        "eventCount": 9,
+                        "summary": "Stale capital summary.",
+                    },
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        first, diagnostics = semantics.enforce_snapshot(copy.deepcopy(payload), CATALOG)
+        second, second_diagnostics = semantics.enforce_snapshot(copy.deepcopy(first), CATALOG)
+        self.assertEqual(first, second)
+        self.assertGreaterEqual(diagnostics["internalPasses"], 2)
+        self.assertEqual(second_diagnostics["changedCompanies"], 0)
+        self.assertEqual(first["companies"]["anthropic"]["products"], ["Claude 模型"])
+        self.assertEqual(first["companies"]["anthropic"]["capitalSummary"]["eventCount"], 0)
 
     def test_is_idempotent(self) -> None:
         payload = {

@@ -305,16 +305,40 @@ def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
         key=lambda row: clean_text(row.get("date"), 20),
         reverse=True,
     )[0] if events else {}
-    amounts = list(dict.fromkeys(clean_text(row.get("amount"), 80) for row in events if clean_text(row.get("amount"), 80)))[:12]
-    rounds = list(dict.fromkeys(clean_text(row.get("round"), 80) for row in events if clean_text(row.get("round"), 80)))[:12]
+    amounts = list(
+        dict.fromkeys(
+            clean_text(row.get("amount"), 80)
+            for row in events
+            if clean_text(row.get("amount"), 80)
+        )
+    )[:12]
+    rounds = list(
+        dict.fromkeys(
+            clean_text(row.get("round"), 80)
+            for row in events
+            if clean_text(row.get("round"), 80)
+        )
+    )[:12]
     investors = list(
         dict.fromkeys(
             clean_text(item, 120)
             for row in events
-            for item in (row.get("investors", []) if isinstance(row.get("investors"), list) else [])
+            for item in (
+                row.get("investors", [])
+                if isinstance(row.get("investors"), list)
+                else []
+            )
             if clean_text(item, 120)
         )
     )[:20]
+    if events:
+        summary = (
+            f"共识别到{len(events)}条可追溯融资记录；"
+            f"最新记录为{clean_text(latest.get('date'), 20) or '日期未披露'}的"
+            f"{clean_text(latest.get('title'), 180)}。"
+        )
+    else:
+        summary = "当前公开来源未提供可核对的融资轮次、金额和投资方记录。"
     return {
         "eventCount": len(events),
         "disclosedAmounts": amounts,
@@ -322,15 +346,10 @@ def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
         "majorInvestors": investors,
         "latestDate": clean_text(latest.get("date"), 20),
         "latestRound": clean_text(latest.get("round"), 80),
-        "summary": (
-            f"共识别到{len(events)}条主体归属明确的融资记录。"
-            if events
-            else "当前公开来源未提供主体归属明确且可核对的融资记录。"
-        ),
+        "summary": summary,
     }
 
-
-def enforce_snapshot(
+def _enforce_snapshot_once(
     payload: dict[str, Any], catalog_text: str
 ) -> tuple[dict[str, Any], dict[str, int]]:
     company_specs, institution_specs = parse_catalog(catalog_text)
@@ -379,6 +398,8 @@ def enforce_snapshot(
         profile["products"] = products
 
         background = _sanitize_background(profile.get("background", ""))
+        if not background and spec:
+            background = sanitize_narrative(spec.summary, limit=900)
         profile["background"] = background
         technology = _relevant_clauses(
             profile.get("technology", ""), aliases, products, limit=900
@@ -386,6 +407,10 @@ def enforce_snapshot(
         if not technology and products:
             technology = f"核心技术与产品包括{'、'.join(products[:8])}。"
         profile["technology"] = technology
+        research_technology = _relevant_clauses(
+            profile.get("researchTechnology", ""), aliases, products, limit=900
+        )
+        profile["researchTechnology"] = research_technology or technology
 
         project = profile.get("projectBackground")
         if isinstance(project, dict):
@@ -472,6 +497,30 @@ def enforce_snapshot(
         if isinstance(check, dict) and "passed" in check
     )
     return cleaned, diagnostics
+
+
+def enforce_snapshot(
+    payload: dict[str, Any], catalog_text: str
+) -> tuple[dict[str, Any], dict[str, int]]:
+    """Return the terminal semantic fixed point in one public invocation.
+
+    Individual field transforms are deterministic and information-reducing, but
+    some derived fields depend on values normalized earlier in the same pass.
+    Iterating the private single pass prevents callers from having to invoke the
+    publication gate repeatedly and makes ``--check`` a true terminal check.
+    """
+    current = copy.deepcopy(payload)
+    aggregate: dict[str, int] = {}
+    for pass_index in range(1, 6):
+        next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+        for key, value in diagnostics.items():
+            if isinstance(value, int):
+                aggregate[key] = aggregate.get(key, 0) + value
+        aggregate["internalPasses"] = pass_index
+        if next_payload == current:
+            return next_payload, aggregate
+        current = next_payload
+    raise RuntimeError("entity-semantic enforcement did not converge within five passes")
 
 
 def main() -> int:

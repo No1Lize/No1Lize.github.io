@@ -413,6 +413,11 @@ def finalize_snapshot(
         events_before = len(profile.get("financing", [])) + len(profile.get("capitalMarkets", []))
         profile["background"] = sanitize_narrative(profile.get("background", ""), limit=900)
         profile["technology"] = sanitize_narrative(profile.get("technology", ""), limit=900)
+        profile["researchTechnology"] = sanitize_narrative(
+            profile.get("researchTechnology", ""),
+            fallback=profile.get("technology", ""),
+            limit=900,
+        )
         if isinstance(profile.get("projectBackground"), dict):
             project = profile["projectBackground"]
             project["summary"] = sanitize_narrative(project.get("summary", ""), limit=900)

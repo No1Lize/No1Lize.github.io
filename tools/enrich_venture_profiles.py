@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 try:
+    from .sanitize_venture_narratives import sanitize_narrative
     from .venture_profile_extraction import (
         CatalogCompany,
         CatalogInstitution,
@@ -28,6 +29,7 @@ try:
         sanitize_team_members,
     )
 except ImportError:
+    from sanitize_venture_narratives import sanitize_narrative
     from venture_profile_extraction import (
         CatalogCompany,
         CatalogInstitution,
@@ -43,7 +45,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 PROFILE_PATH = ROOT / "public" / "data" / "venture_profiles.json"
 ARTICLE_PATH = ROOT / "public" / "data" / "articles.json"
-RESEARCH_MODEL_VERSION = 2
+RESEARCH_MODEL_VERSION = 3
 
 GENERIC_COMPANIES = {"", "科技产业", "未识别", "unknown"}
 NAVIGATION_TERMS = (
@@ -213,49 +215,54 @@ def _article_institutions(article: dict[str, Any]) -> list[str]:
     return [clean_text(item, 120) for item in values if clean_text(item, 120)]
 
 
+def _entity_key(value: Any) -> str:
+    return re.sub(
+        r"[^a-z0-9\u3400-\u9fff]+",
+        "",
+        clean_text(value, 160).casefold(),
+    )
+
 def _company_articles(
     slug: str,
     company: CatalogCompany,
     articles: Sequence[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    aliases = [item.casefold() for item in company.aliases if len(item) >= 2]
+    alias_keys = {_entity_key(item) for item in company.aliases if _entity_key(item)}
     result: list[dict[str, Any]] = []
     for article in articles:
         article_slug = clean_text(article.get("companySlug"), 100)
         company_name = clean_text(article.get("company"), 120)
-        text = clean_text(
-            f"{article.get('title', '')} {article.get('summary', '')}", 1600
-        ).casefold()
-        if article_slug == slug or company_name == company.name or any(
-            alias in text for alias in aliases
-        ):
+        if article_slug:
+            if article_slug == slug:
+                result.append(article)
+            continue
+        if company_name and _entity_key(company_name) in alias_keys:
             result.append(article)
     return sorted(
         result,
         key=lambda item: clean_text(item.get("publishedAt"), 20),
         reverse=True,
     )
-
 
 def _institution_articles(
     institution: CatalogInstitution,
     articles: Sequence[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    aliases = [item.casefold() for item in institution.aliases if len(item) >= 2]
+    alias_keys = {_entity_key(item) for item in institution.aliases if _entity_key(item)}
     result: list[dict[str, Any]] = []
     for article in articles:
-        named = [item.casefold() for item in _article_institutions(article)]
-        text = clean_text(
-            f"{article.get('title', '')} {article.get('summary', '')}", 1600
-        ).casefold()
-        if any(alias in named or alias in text for alias in aliases):
+        named_keys = {
+            _entity_key(item)
+            for item in _article_institutions(article)
+            if _entity_key(item)
+        }
+        if alias_keys & named_keys:
             result.append(article)
     return sorted(
         result,
         key=lambda item: clean_text(item.get("publishedAt"), 20),
         reverse=True,
     )
-
 
 def _capital_event_from_article(article: dict[str, Any]) -> dict[str, Any]:
     summary = clean_text(article.get("summary"), 520)
@@ -345,6 +352,7 @@ def _technology_products(
 ) -> list[dict[str, Any]]:
     products = sanitize_product_items(profile.get("products", []))
     evidence_values = [
+        profile.get("researchTechnology", ""),
         profile.get("technology", ""),
         profile.get("background", ""),
         *(
@@ -433,37 +441,39 @@ def _company_project_background(
     profile: dict[str, Any],
     articles: Sequence[dict[str, Any]],
 ) -> dict[str, str]:
-    existing = profile.get("projectBackground")
-    if isinstance(existing, dict) and clean_text(existing.get("summary"), 760):
-        return {
-            "summary": clean_text(existing.get("summary"), 760),
-            "problemSolved": clean_text(existing.get("problemSolved"), 460),
-            "marketOpportunity": clean_text(existing.get("marketOpportunity"), 460),
-        }
     aliases = company.aliases
+    background_articles = []
+    for article in articles[:30]:
+        article_type = clean_text(article.get("type"), 60)
+        article_text = clean_text(
+            f"{article.get('title', '')} {article.get('summary', '')}", 1600
+        )
+        if article_type in {"融资", "产业投资", "IPO", "并购", "监管文件"}:
+            continue
+        if re.search(
+            r"\b(?:funding|financing|raises?|raised|ipo|listing|acquired|acquisition|merger)\b|"
+            r"融资|募资|领投|跟投|上市|挂牌|收购|并购|退出|估值",
+            article_text,
+            re.IGNORECASE,
+        ):
+            continue
+        background_articles.append(article)
     article_values = [
         f"{article.get('title', '')}。{article.get('summary', '')}"
-        for article in articles[:20]
+        for article in background_articles[:20]
     ]
     raw_background = profile.get("background", "")
     summary = _select_sentences(
         [raw_background, *article_values],
         aliases,
         (
-            "founded",
-            "mission",
-            "company",
-            "成立",
-            "使命",
-            "致力于",
-            "总部",
-            "研发",
+            "founded", "mission", "company", "成立", "使命", "致力于", "总部", "研发",
         ),
         maximum=3,
         limit=760,
     )
     if not summary or _navigation_heavy(raw_background):
-        summary = clean_text(company.summary, 760) or summary
+        summary = sanitize_narrative(company.summary, limit=760) or clean_text(company.summary, 760)
     problem = _select_sentences(
         [raw_background, profile.get("technology", ""), *article_values],
         aliases,
@@ -483,7 +493,6 @@ def _company_project_background(
         "problemSolved": problem,
         "marketOpportunity": market,
     }
-
 
 def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
     amounts: list[str] = []
@@ -749,10 +758,19 @@ def enrich_snapshot(
             continue
         matched = _company_articles(slug, company, articles)
         profile = raw_profile
+        profile["background"] = sanitize_narrative(
+            profile.get("background", ""),
+            fallback=company.summary,
+            limit=900,
+        )
+        profile["technology"] = sanitize_narrative(
+            profile.get("technology", ""),
+            fallback=company.product,
+            limit=900,
+        )
         project = _company_project_background(company, profile, matched)
-        profile["background"] = project["summary"]
         profile["projectBackground"] = project
-        technology = _select_sentences(
+        research_technology = _select_sentences(
             [
                 profile.get("technology", ""),
                 *(
@@ -765,9 +783,7 @@ def enrich_snapshot(
             maximum=3,
             limit=760,
         )
-        if not technology or _navigation_heavy(profile.get("technology", "")):
-            technology = clean_text(company.product, 760) or technology
-        profile["technology"] = technology
+        profile["researchTechnology"] = research_technology or profile.get("technology", "")
         profile["products"] = sanitize_product_items(profile.get("products", []))
         profile["technologyProducts"] = _technology_products(profile, matched)
         profile["team"] = _enrich_team(profile, company.aliases, matched)
