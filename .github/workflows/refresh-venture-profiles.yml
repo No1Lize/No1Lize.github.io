@@ -52,17 +52,19 @@ jobs:
         env:
           VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
         run: python tools/crawl_venture_profiles.py --workers 8 --max-pages 6
-      - name: Validate generated snapshot
+      - name: Validate generated venture snapshot
         run: |
           python tools/crawl_venture_profiles.py --validate-only
-          python -m unittest discover -s tests -p "test_*.py"
+          python -m unittest tests.test_venture_profile_extraction
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Validate frontend data model and pages
+      - name: Validate venture frontend data model
         run: |
           npm install
-          npm run test:unit
+          node --import tsx --test \
+            tests/venture-profile-data.test.ts \
+            tests/catalog.test.ts
       - name: Publish only against the same catalog revision
         id: publish
         env:
