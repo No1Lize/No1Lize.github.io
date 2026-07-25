@@ -1,8 +1,6 @@
-branch_commit=0dd84b24ce3bfa1e9ffa727f77ad813d653990af
-checked_at=2026-07-25T18:03:33Z
-explicit investment participation: applied
-typed company fixture: applied
-typed institution fixture: applied
+branch_commit=35d2168f6c6a9638e7ca99dd255248062430586b
+checked_at=2026-07-25T18:05:15Z
+script-local venture extraction import: fixed
 compat_status=0
 enricher imports and model version: applied
 def _entity_key(: already applied
@@ -25,16 +23,33 @@ research technology normalization: already applied
 canonical background normalization: already applied
 research technology rendering: already applied
 strict attribution regressions: applied
+contaminated derived snapshot fields: reset
+patch_status=0
+compile_status=0
+............F.F............................
+======================================================================
+FAIL: test_enriches_every_company_and_institution_with_shared_schema (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enriches_every_company_and_institution_with_shared_schema)
+----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/patch_refine_venture_evidence_regressions.py", line 623, in <module>
-    main()
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/patch_refine_venture_evidence_regressions.py", line 619, in main
-    reset_snapshot()
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/patch_refine_venture_evidence_regressions.py", line 540, in reset_snapshot
-    from tools.venture_profile_extraction import clean_text, parse_catalog
-ModuleNotFoundError: No module named 'tools'
-patch_status=1
-compile_status=1
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_enrichment.py", line 133, in test_enriches_every_company_and_institution_with_shared_schema
+    self.assertEqual(result["researchModelVersion"], 2)
+AssertionError: 3 != 2
+
+======================================================================
+FAIL: test_aligns_background_products_team_and_capital_events (tests.test_refine_venture_research_evidence.VentureEvidenceAlignmentTests.test_aligns_background_products_team_and_capital_events)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_refine_venture_research_evidence.py", line 191, in test_aligns_background_products_team_and_capital_events
+    self.assertEqual(company["capitalMarkets"][0]["type"], "上市")
+AssertionError: '产业投资' != '上市'
+- 产业投资
++ 上市
+
+
+----------------------------------------------------------------------
+Ran 43 tests in 0.065s
+
+FAILED (failures=2)
 test_status=1
 enrich_status=1
 refine_status=1

@@ -537,7 +537,7 @@ def domain(value: str) -> str:
 
 
 def reset_snapshot() -> None:
-    from tools.venture_profile_extraction import clean_text, parse_catalog
+    from venture_profile_extraction import clean_text, parse_catalog
 
     payload = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     companies, institutions = parse_catalog(CATALOG.read_text(encoding="utf-8"))
