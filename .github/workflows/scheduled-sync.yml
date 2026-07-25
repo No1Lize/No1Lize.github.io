@@ -11,6 +11,7 @@ on:
       - tools/generic_web_sources.py
       - tools/robust_web_fallback.py
       - tools/tracking_taxonomy.py
+      - tools/enrich_tracking_snapshot.py
       - tools/tracking_quality.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
@@ -68,6 +69,8 @@ jobs:
         run: python tools/migrate_article_entities.py
       - name: Refine Eastmoney snapshot
         run: python tools/refine_eastmoney_snapshot.py
+      - name: Backfill tracking sectors and coverage
+        run: python tools/enrich_tracking_snapshot.py
       - name: Validate data quality
         run: python tools/crawl_articles.py --validate-only
       - name: Validate Eastmoney snapshot
@@ -91,10 +94,10 @@ jobs:
 
             # A run may have started before newer crawler/refinement commits landed.
             # Re-process and validate with the code now at the rebased HEAD so a
-            # stale run cannot publish internal fields, missing source statuses or
-            # outdated accounting.
+            # stale run cannot publish old track membership or coverage metadata.
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
+            python tools/enrich_tracking_snapshot.py
             python tools/crawl_articles.py --validate-only
             python tools/validate_eastmoney_snapshot.py
             python -m unittest discover -s tests -p "test_*.py"
