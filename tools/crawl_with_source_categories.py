@@ -3,7 +3,8 @@
 
 This module wraps ``crawl_with_tracking`` and replaces only the browser-managed
 source conversion and runtime adapter dispatch. RSS and SEC retain their native
-adapters; arbitrary public websites use a generic multi-strategy crawler.
+adapters; arbitrary public websites use a generic multi-strategy crawler with a
+bounded second-stage fallback for JS-heavy pages.
 """
 
 from __future__ import annotations
@@ -16,12 +17,14 @@ from urllib.parse import urlsplit
 try:  # Imported by tests as tools.crawl_with_source_categories.
     from . import crawl_with_tracking as tracking
     from . import generic_web_sources
+    from . import robust_web_fallback
     from . import strict_tracking_config
     from . import x_rate_limit
     from .crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_with_tracking as tracking
     import generic_web_sources
+    import robust_web_fallback
     import strict_tracking_config
     import x_rate_limit
     from crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
@@ -230,8 +233,11 @@ def _install_generic_adapter() -> None:
             spec: dict[str, Any], user_agent: str
         ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
             if spec.get("adapter") == "generic_web":
-                return generic_web_sources.crawl_generic_source(
-                    spec, user_agent, tracking.crawler
+                return robust_web_fallback.crawl_with_second_stage(
+                    spec,
+                    user_agent,
+                    tracking.crawler,
+                    generic_web_sources,
                 )
             return original_crawl_source(spec, user_agent)
 
