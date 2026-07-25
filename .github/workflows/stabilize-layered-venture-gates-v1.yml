@@ -15,7 +15,7 @@ concurrency:
   group: stabilize-layered-venture-gates-v1
   cancel-in-progress: true
 
-# trigger-layered-gate-stabilization
+# trigger-layered-gate-stabilization-v2
 jobs:
   stabilize:
     runs-on: ubuntu-latest
