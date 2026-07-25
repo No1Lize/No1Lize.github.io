@@ -10,6 +10,7 @@ import {
   resolveSectorDefinition,
   sectorCompleteness,
 } from "@/lib/sector-profile-generator";
+import { trackIdentityTerms } from "@/lib/tracking-taxonomy";
 import {
   userTrackingConfig,
   type TrackingTrack,
@@ -88,10 +89,16 @@ function buildRaw(): SectorRaw[] {
     .map((tracking) => {
       const base =
         baseBySlug.get(tracking.slug) ?? baseByName.get(tracking.name);
-      const aliases = unique([tracking.name, base?.name ?? ""], 4);
+      const aliases = unique(
+        [...trackIdentityTerms(tracking), base?.name ?? ""],
+        24,
+      );
+      const aliasKeys = new Set(
+        aliases.map((alias) => alias.toLocaleLowerCase("zh-CN")),
+      );
       const events = intelligenceEvents.filter(
         (event) =>
-          aliases.includes(event.sector) &&
+          aliasKeys.has(event.sector.toLocaleLowerCase("zh-CN")) &&
           dateValue(event.publishedAt) >= yearAgo,
       );
       const financing = events.filter((event) => event.type === "融资").length;
@@ -185,7 +192,10 @@ export function getTrackedSector(slug: string): TrackedSector | undefined {
 export function eventsForTrackedSector(
   sector: Pick<TrackedSector, "aliases">,
 ): IntelligenceEvent[] {
+  const aliasKeys = new Set(
+    sector.aliases.map((alias) => alias.toLocaleLowerCase("zh-CN")),
+  );
   return intelligenceEvents.filter((event) =>
-    sector.aliases.includes(event.sector),
+    aliasKeys.has(event.sector.toLocaleLowerCase("zh-CN")),
   );
 }
