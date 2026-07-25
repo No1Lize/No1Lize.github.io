@@ -1,0 +1,119 @@
+name: One-time recommendation sector isolation fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-recommendation-sector-isolation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply strict sector isolation
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('lib/tracking-recommendations.ts')
+          source = path.read_text(encoding='utf-8')
+
+          def replace_once(old: str, new: str) -> None:
+              global source
+              if old not in source:
+                  raise SystemExit(f'missing patch marker:\n{old[:240]}')
+              source = source.replace(old, new, 1)
+
+          replace_once(
+              'import type { LiveIntelligenceEvent } from "@/lib/use-articles";\n',
+              'import {\n  isKnownTrackingSeedTerm,\n  isTrackingTermAllowedForSector,\n  trackingSectorSeedTerms,\n  trackingSectorsMatch,\n} from "@/lib/tracking-sector-policy";\nimport type { LiveIntelligenceEvent } from "@/lib/use-articles";\n',
+          )
+
+          replace_once(
+              'const GLOBAL_TECH_TERMS = ENTITY_SEEDS.globalTerms;\nconst SECTOR_FALLBACKS = ENTITY_SEEDS.sectorTerms;\n',
+              '',
+          )
+
+          replace_once(
+              '''function sectorMatches(articleSector: string, selectedSector: string): boolean {
+  const article = normalizedKey(articleSector);
+  const selected = normalizedKey(selectedSector);
+  if (!article || !selected) return false;
+  return article === selected || article.includes(selected) || selected.includes(article);
+}''',
+              '''function sectorMatches(articleSector: string, selectedSector: string): boolean {
+  return trackingSectorsMatch(articleSector, selectedSector);
+}''',
+          )
+
+          replace_once(
+              '''function dynamicKeywordCandidates(
+  articles: LiveIntelligenceEvent[],
+  existing: Set<string>,
+): TrackingRecommendation[] {''',
+              '''function dynamicKeywordCandidates(
+  articles: LiveIntelligenceEvent[],
+  selectedSector: string,
+  existing: Set<string>,
+): TrackingRecommendation[] {''',
+          )
+
+          replace_once(
+              '''      const key = normalizedKey(extracted.label);
+      if (existing.has(key) || blockedEntities.has(key)) continue;
+      if (!mentionHasTechnicalContext(text, extracted.label)) continue;''',
+              '''      const key = normalizedKey(extracted.label);
+      if (existing.has(key) || blockedEntities.has(key)) continue;
+      if (
+        isKnownTrackingSeedTerm(extracted.label) &&
+        !isTrackingTermAllowedForSector(extracted.label, selectedSector)
+      ) {
+        continue;
+      }
+      if (!mentionHasTechnicalContext(text, extracted.label)) continue;''',
+          )
+
+          replace_once(
+              '''  const terms = new Set([
+    ...GLOBAL_TECH_TERMS,
+    ...(SECTOR_FALLBACKS[normalizedKey(selectedSector)] ?? []),
+  ]);''',
+              '''  const terms = new Set(trackingSectorSeedTerms(selectedSector));''',
+          )
+
+          replace_once(
+              '''  for (const item of [...seeded, ...dynamicKeywordCandidates(articles, existing)]) {''',
+              '''  for (const item of [
+    ...seeded,
+    ...dynamicKeywordCandidates(articles, selectedSector, existing),
+  ]) {''',
+          )
+
+          replace_once(
+              '''  const fallback = SECTOR_FALLBACKS[normalizedKey(selectedSector)] ?? [];''',
+              '''  const fallback = trackingSectorSeedTerms(selectedSector);''',
+          )
+
+          path.write_text(source, encoding='utf-8')
+          PY
+      - name: Install and verify
+        run: npm install && npm run test:unit && npx tsc --noEmit
+      - name: Commit verified fix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/tracking-recommendations.ts
+          git commit -m "fix: isolate recommendations by selected sector"
+          git pull --rebase origin main
+          git push origin HEAD:main
