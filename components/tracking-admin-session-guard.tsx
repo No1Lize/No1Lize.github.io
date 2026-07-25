@@ -14,10 +14,15 @@ function nativeSetInputValue(input: HTMLInputElement, value: string) {
 export function TrackingAdminSessionGuard() {
   useEffect(() => {
     let attempted = false;
+    let lastInput: HTMLInputElement | null = null;
 
     const sync = () => {
       const input = document.querySelector<HTMLInputElement>("#github-token");
       if (!input) return;
+      if (input !== lastInput) {
+        lastInput = input;
+        attempted = false;
+      }
 
       const saved = window.sessionStorage.getItem(TOKEN_SESSION_KEY) ?? "";
       const loginButton = Array.from(
@@ -30,10 +35,10 @@ export function TrackingAdminSessionGuard() {
         requestAnimationFrame(() => loginButton.click());
       }
 
-      const security = input
-        .closest("div")
-        ?.parentElement?.querySelector<HTMLElement>("p");
-      if (security?.textContent?.includes("Token 仅存在当前页面内存中")) {
+      const security = Array.from(
+        input.closest("div")?.parentElement?.querySelectorAll<HTMLElement>("p") ?? [],
+      ).find((paragraph) => paragraph.textContent?.includes("Token 仅存在当前页面内存中"));
+      if (security) {
         security.textContent =
           "Token 仅保存在当前标签页的 sessionStorage 中；关闭标签页或点击退出后清除，不写入仓库或长期 localStorage。";
       }
@@ -53,6 +58,7 @@ export function TrackingAdminSessionGuard() {
       if (target.textContent?.trim() === "退出") {
         window.sessionStorage.removeItem(TOKEN_SESSION_KEY);
         attempted = false;
+        lastInput = null;
       }
     };
 
