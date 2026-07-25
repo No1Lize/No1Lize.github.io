@@ -216,6 +216,158 @@
       "sampleCompanies": []
     }
   ],
+  "listedCompanies": [
+    {
+      "id": "catalog-cambricon",
+      "name": "寒武纪",
+      "ticker": "688256",
+      "market": "A股",
+      "sector": "半导体",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "cambricon"
+    },
+    {
+      "id": "catalog-catl",
+      "name": "宁德时代",
+      "ticker": "300750",
+      "market": "A股",
+      "sector": "新能源",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "catl"
+    },
+    {
+      "id": "catalog-bgi-genomics",
+      "name": "华大基因",
+      "ticker": "300676",
+      "market": "A股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "bgi-genomics"
+    },
+    {
+      "id": "catalog-horizon-robotics",
+      "name": "地平线机器人",
+      "ticker": "09660",
+      "market": "港股",
+      "sector": "半导体",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "horizon-robotics"
+    },
+    {
+      "id": "catalog-xtalpi",
+      "name": "晶泰科技",
+      "ticker": "02228",
+      "market": "港股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "xtalpi"
+    },
+    {
+      "id": "catalog-pony-ai",
+      "name": "小马智行",
+      "ticker": "PONY",
+      "market": "美股",
+      "sector": "机器人",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "pony-ai"
+    },
+    {
+      "id": "catalog-weride",
+      "name": "文远知行",
+      "ticker": "WRD",
+      "market": "美股",
+      "sector": "机器人",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "weride"
+    },
+    {
+      "id": "catalog-rigetti",
+      "name": "Rigetti Computing",
+      "ticker": "RGTI",
+      "market": "美股",
+      "sector": "量子计算",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "rigetti"
+    },
+    {
+      "id": "catalog-ionq",
+      "name": "IonQ",
+      "ticker": "IONQ",
+      "market": "美股",
+      "sector": "量子计算",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "ionq"
+    },
+    {
+      "id": "catalog-rocket-lab",
+      "name": "Rocket Lab",
+      "ticker": "RKLB",
+      "market": "美股",
+      "sector": "商业航天",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "rocket-lab"
+    },
+    {
+      "id": "catalog-tempus-ai",
+      "name": "Tempus AI",
+      "ticker": "TEM",
+      "market": "美股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "tempus-ai"
+    },
+    {
+      "id": "catalog-recursion",
+      "name": "Recursion Pharmaceuticals",
+      "ticker": "RXRX",
+      "market": "美股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "recursion"
+    },
+    {
+      "id": "catalog-mobileye",
+      "name": "Mobileye",
+      "ticker": "MBLY",
+      "market": "美股",
+      "sector": "半导体",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "mobileye"
+    },
+    {
+      "id": "catalog-aurora",
+      "name": "Aurora Innovation",
+      "ticker": "AUR",
+      "market": "美股",
+      "sector": "机器人",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "aurora"
+    },
+    {
+      "id": "catalog-joby",
+      "name": "Joby Aviation",
+      "ticker": "JOBY",
+      "market": "美股",
+      "sector": "商业航天",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "joby"
+    }
+  ],
   "sources": [
     {
       "id": "source-https-sg-yahoo-com-p-us-guccounter-1",
