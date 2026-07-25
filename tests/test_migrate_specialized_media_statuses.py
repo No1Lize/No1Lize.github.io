@@ -68,7 +68,43 @@ class SpecializedMediaStatusMigrationTests(unittest.TestCase):
 
         self.assertEqual(migrated["sourceStatus"], [status()])
         self.assertEqual(report["removedLegacyStatuses"], 0)
+        self.assertEqual(report["recoveredSpecializedStatuses"], 0)
         self.assertEqual(migrated["articles"][0]["sourceId"], SOURCE_ID)
+
+    def test_missing_status_is_recovered_from_surviving_articles(self) -> None:
+        payload = {
+            "articleCount": 1,
+            "articles": [article()],
+            "sourceStatus": [],
+        }
+
+        migrated, report = migrate(payload, tracking())
+        recovered = migrated["sourceStatus"][0]
+
+        self.assertEqual(report["recoveredSpecializedStatuses"], 1)
+        self.assertEqual(recovered["id"], SOURCE_ID)
+        self.assertEqual(recovered["status"], "partial")
+        self.assertEqual(recovered["accepted"], 1)
+        self.assertEqual(recovered["newAccepted"], 0)
+        self.assertEqual(recovered["retainedPreviousCount"], 1)
+        self.assertTrue(recovered["retainedPrevious"])
+        self.assertTrue(recovered["recoveredStatus"])
+        self.assertIn("legacy status migration", recovered["error"])
+
+    def test_recovery_is_idempotent(self) -> None:
+        payload = {
+            "articleCount": 1,
+            "articles": [article()],
+            "sourceStatus": [],
+        }
+
+        first, first_report = migrate(payload, tracking())
+        second, second_report = migrate(first, tracking())
+
+        self.assertEqual(first["sourceStatus"], second["sourceStatus"])
+        self.assertEqual(first_report["recoveredSpecializedStatuses"], 1)
+        self.assertEqual(second_report["recoveredSpecializedStatuses"], 0)
+        self.assertEqual(len(second["sourceStatus"]), 1)
 
     def test_orphaned_legacy_status_is_removed(self) -> None:
         payload = {
@@ -81,6 +117,7 @@ class SpecializedMediaStatusMigrationTests(unittest.TestCase):
 
         self.assertEqual(migrated["sourceStatus"], [])
         self.assertEqual(report["removedLegacyStatuses"], 1)
+        self.assertEqual(report["recoveredSpecializedStatuses"], 0)
 
     def test_unrelated_status_is_not_removed(self) -> None:
         unrelated = {
@@ -102,6 +139,7 @@ class SpecializedMediaStatusMigrationTests(unittest.TestCase):
             {SOURCE_ID, "official-anthropic"},
         )
         self.assertEqual(report["removedLegacyStatuses"], 0)
+        self.assertEqual(report["recoveredSpecializedStatuses"], 0)
 
     def test_internal_origin_marker_survives_migration_for_refinement(self) -> None:
         payload = {
