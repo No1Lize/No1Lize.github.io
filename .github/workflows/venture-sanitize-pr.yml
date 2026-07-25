@@ -38,15 +38,18 @@ jobs:
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py
-      - name: Run venture unit tests
-        run: |
-          python -m unittest \
-            tests.test_venture_profile_extraction \
-            tests.test_venture_profile_noise_filters \
-            tests.test_venture_profile_enrichment \
-            tests.test_normalize_venture_profiles \
-            tests.test_venture_profile_postprocess \
-            tests.test_venture_narrative_sanitizer
+      - name: Test profile extraction
+        run: python -m unittest tests.test_venture_profile_extraction
+      - name: Test profile noise filters
+        run: python -m unittest tests.test_venture_profile_noise_filters
+      - name: Test profile enrichment
+        run: python -m unittest tests.test_venture_profile_enrichment
+      - name: Test consistency normalizer
+        run: python -m unittest tests.test_normalize_venture_profiles
+      - name: Test structured postprocess
+        run: python -m unittest tests.test_venture_profile_postprocess
+      - name: Test narrative sanitizer
+        run: python -m unittest tests.test_venture_narrative_sanitizer
       - name: Enrich current snapshot
         run: python tools/enrich_venture_profiles.py
       - name: Normalize cross-entity consistency
