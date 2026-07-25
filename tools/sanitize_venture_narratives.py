@@ -76,6 +76,34 @@ CJK_RE = re.compile(r"[\u3400-\u9fff]")
 WORD_RE = re.compile(r"[A-Za-z0-9]+|[\u3400-\u9fff]")
 
 
+PAGE_TITLE_PREFIX_RE = re.compile(
+    r"^[^.!?。！？\n]{8,180}\s+::\s+[^.!?。！？\n]{2,100}[.!?。！？]\s*",
+    re.IGNORECASE,
+)
+PAGE_TAIL_RE = re.compile(
+    r"\b(?:investor relations|transfer agent|toll[- ]?free|media kit|"
+    r"featured\s*\(\d+\)|cookie settings|all rights reserved)\b|"
+    r"(?:投资者关系|联系我们|加入我们|媒体资料|版权所有|备案号)",
+    re.IGNORECASE,
+)
+STREET_ADDRESS_RE = re.compile(
+    r"\b\d{2,6}\s+[A-Z][A-Za-z.-]+(?:\s+[A-Z][A-Za-z.-]+){0,4}\s+"
+    r"(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Boulevard|Blvd\.?|"
+    r"Drive|Dr\.?|Lane|Ln\.?|Way)\b",
+    re.IGNORECASE,
+)
+PHONE_RE = re.compile(
+    r"(?:toll[- ]?free|phone|tel(?:ephone)?|传真|电话)\s*[:：]?\s*"
+    r"(?:\+?\d[\d() .-]{7,}\d)",
+    re.IGNORECASE,
+)
+DATE_TOKEN_RE = re.compile(
+    r"\b(?:20\d{2}[-/.]\d{1,2}(?:[-/.]\d{1,2})?|"
+    r"(?:January|February|March|April|May|June|July|August|September|October|November|December)"
+    r"\s+\d{1,2},\s+20\d{2})\b",
+    re.IGNORECASE,
+)
+
 def _compact(value: Any) -> str:
     return re.sub(
         r"[^a-z0-9\u3400-\u9fff]+",
@@ -120,21 +148,38 @@ def _looks_like_navigation(value: str) -> bool:
     return False
 
 
+def _trim_page_chrome(value: str) -> str:
+    text = PAGE_TITLE_PREFIX_RE.sub("", clean_text(value, 5000), count=1)
+    candidates = [
+        match.start()
+        for pattern in (PAGE_TAIL_RE, STREET_ADDRESS_RE, PHONE_RE)
+        if (match := pattern.search(text)) is not None
+        and match.start() >= 18
+    ]
+    dates = list(DATE_TOKEN_RE.finditer(text))
+    if len(dates) >= 2 and dates[0].start() >= 18:
+        candidates.append(dates[0].start())
+    if candidates:
+        text = text[: min(candidates)]
+    return clean_text(text, 5000)
+
+
 def _split_clauses(value: str) -> list[str]:
-    text = clean_text(value, 5000)
+    text = _trim_page_chrome(value)
     if not text:
         return []
     text = text.replace("\u00a0", " ")
     result: list[str] = []
     for raw in CLAUSE_SPLIT_RE.split(text):
-        clause = clean_text(raw, 900).strip(" .。|｜\\-")
+        clause = clean_text(raw, 900).strip(" .。|｜\-")
         if len(clause) < 18:
+            continue
+        if "::" in clause and len(clause) <= 240:
             continue
         if len(clause) > 520:
             clause = clause[:520].rsplit(" ", 1)[0] or clause[:520]
         result.append(clause)
     return result
-
 
 def _deduplicate(clauses: Iterable[str]) -> list[str]:
     result: list[str] = []

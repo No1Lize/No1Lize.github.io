@@ -86,6 +86,28 @@ class VentureProfileFinalizerTests(unittest.TestCase):
         )
         self.assertEqual([item["title"] for item in rows], ["Example went public"])
 
+    def test_catalog_series_suffix_is_normalized(self) -> None:
+        products = finalizer.finalize_products(
+            ["灵犀等机器人系列。", "Q1 2026", "Transfer Agent"],
+            "远征、灵犀等机器人系列。",
+        )
+        self.assertEqual(products, ["远征", "灵犀"])
+
+    def test_final_semantic_audit_reports_navigation_noise(self) -> None:
+        errors = finalizer._final_semantic_errors(
+            {
+                "example": {
+                    "products": ["Example API"],
+                    "team": [],
+                    "capitalMarkets": [],
+                    "background": "Investor Relations Transfer Agent",
+                    "technology": "Verified platform technology.",
+                }
+            },
+            {},
+        )
+        self.assertIn("company:example:background-navigation", errors)
+
     def test_financing_rejects_round_like_product_copy(self) -> None:
         rows = finalizer.finalize_financing(
             [

@@ -83,6 +83,20 @@ PRODUCT_PERIOD_RE = re.compile(
     r"^(?:q[1-4]|fy)\s*20\d{2}$|^20\d{2}\s*(?:q[1-4]|年度|年报)$",
     re.IGNORECASE,
 )
+PRODUCT_SUFFIX_RE = re.compile(
+    r"(?:等)?(?:机器人|产品|解决方案)?系列$|(?:等产品|等解决方案)$",
+    re.IGNORECASE,
+)
+LATIN_PERSON_PARTICLES = {"de", "del", "da", "di", "van", "von", "la", "le"}
+LATIN_PERSON_TOKEN_RE = re.compile(r"^[A-Z][A-Za-z'’.-]*$")
+CJK_PERSON_RE = re.compile(r"^[\u3400-\u9fff·]{2,8}$")
+FINAL_NARRATIVE_NOISE_RE = re.compile(
+    r"\b(?:investor relations|transfer agent|toll[- ]?free|media kit|"
+    r"cookie settings|all rights reserved)\b|"
+    r"(?:投资者关系|联系我们|媒体资料|版权所有|备案号)",
+    re.IGNORECASE,
+)
+
 TEAM_NAME_NOISE_TERMS = (
     "investor relations",
     "transfer agent",
@@ -154,21 +168,25 @@ def _unique_strings(values: Iterable[Any], limit: int, item_limit: int) -> list[
     return result
 
 
+def _normalize_product_label(value: Any) -> str:
+    item = clean_text(value, 180).strip(" >›→-|｜。.!！")
+    item = PRODUCT_SUFFIX_RE.sub("", item).strip(" >›→-|｜。.!！")
+    return clean_text(item, 180)
+
+
 def _split_product_values(values: Sequence[Any]) -> list[str]:
     result: list[str] = []
     for raw in values:
         value = clean_text(raw, 800)
-        result.extend(
-            clean_text(part, 180).strip(" >›→-|｜。.!！")
-            for part in re.split(
-                r"[、，,;/]|\s*与\s*|\s+and\s+",
-                value,
-                flags=re.IGNORECASE,
-            )
-            if clean_text(part, 180).strip(" >›→-|｜。.!！")
-        )
+        for part in re.split(
+            r"[、，,;/]|\s*与\s*|\s+and\s+",
+            value,
+            flags=re.IGNORECASE,
+        ):
+            item = _normalize_product_label(part)
+            if item:
+                result.append(item)
     return result
-
 
 def _product_noise(value: Any) -> bool:
     item = clean_text(value, 240).strip()
@@ -188,15 +206,37 @@ def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
     return [item for item in products if not _product_noise(item)][:10]
 
 
+def _person_like_name(value: Any) -> bool:
+    name = clean_text(value, 120).strip(" ,，:：;；-|｜")
+    lowered = name.casefold()
+    if not name or any(term in lowered for term in TEAM_NAME_NOISE_TERMS):
+        return False
+    if CJK_PERSON_RE.fullmatch(name):
+        return True
+    tokens = [token for token in name.split() if token]
+    if not 2 <= len(tokens) <= 6:
+        return False
+    if not LATIN_PERSON_TOKEN_RE.fullmatch(tokens[0]):
+        return False
+    if not LATIN_PERSON_TOKEN_RE.fullmatch(tokens[-1]):
+        return False
+    return all(
+        LATIN_PERSON_TOKEN_RE.fullmatch(token)
+        or token.casefold() in LATIN_PERSON_PARTICLES
+        for token in tokens[1:-1]
+    )
+
+
 def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[str, str]]:
     originals = {
         clean_text(row.get("name"), 120).casefold(): row
-        for row in values if isinstance(row, dict) and clean_text(row.get("name"), 120)
+        for row in values
+        if isinstance(row, dict) and clean_text(row.get("name"), 120)
     }
     result: list[dict[str, str]] = []
     for row in sanitize_team_members(values, aliases):
         name = clean_text(row.get("name"), 120)
-        if any(term in name.casefold() for term in TEAM_NAME_NOISE_TERMS):
+        if not _person_like_name(name):
             continue
         original = originals.get(name.casefold(), {})
         result.append(
@@ -205,12 +245,13 @@ def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[st
                 "role": clean_text(row.get("role"), 160),
                 "summary": clean_text(row.get("summary"), 360),
                 "background": clean_text(original.get("background"), 420),
-                "previousExperience": clean_text(original.get("previousExperience"), 420),
+                "previousExperience": clean_text(
+                    original.get("previousExperience"), 420
+                ),
                 "sourceUrl": normalize_url(row.get("sourceUrl", "")),
             }
         )
     return result[:20]
-
 
 def finalize_financing(values: Sequence[Any]) -> list[dict[str, Any]]:
     candidates = sanitize_capital_events(values, capital_market=False)
@@ -383,6 +424,55 @@ def _recent_summary(
     }
 
 
+def _final_semantic_errors(
+    companies: dict[str, dict[str, Any]],
+    institutions: dict[str, dict[str, Any]],
+) -> list[str]:
+    errors: list[str] = []
+    for slug, profile in companies.items():
+        products = profile.get("products", [])
+        for product in products if isinstance(products, list) else []:
+            if (
+                _normalize_product_label(product) != clean_text(product, 180)
+                or _product_noise(product)
+            ):
+                errors.append(
+                    f"company:{slug}:product:{clean_text(product, 80)}"
+                )
+        team = profile.get("team", [])
+        for member in team if isinstance(team, list) else []:
+            if not isinstance(member, dict) or not _person_like_name(
+                member.get("name")
+            ):
+                name = member.get("name") if isinstance(member, dict) else ""
+                errors.append(f"company:{slug}:team:{clean_text(name, 80)}")
+        events = profile.get("capitalMarkets", [])
+        for event in events if isinstance(events, list) else []:
+            if not isinstance(event, dict) or not CAPITAL_EVIDENCE_RE.search(
+                f"{event.get('title', '')} {event.get('summary', '')}"
+            ):
+                errors.append(f"company:{slug}:capital-market")
+        for field in ("background", "technology"):
+            if FINAL_NARRATIVE_NOISE_RE.search(
+                clean_text(profile.get(field), 2000)
+            ):
+                errors.append(f"company:{slug}:{field}-navigation")
+
+    for slug, profile in institutions.items():
+        team = profile.get("team", [])
+        for member in team if isinstance(team, list) else []:
+            if not isinstance(member, dict) or not _person_like_name(
+                member.get("name")
+            ):
+                name = member.get("name") if isinstance(member, dict) else ""
+                errors.append(f"institution:{slug}:team:{clean_text(name, 80)}")
+        for field in ("overview", "strategy"):
+            if FINAL_NARRATIVE_NOISE_RE.search(
+                clean_text(profile.get(field), 2000)
+            ):
+                errors.append(f"institution:{slug}:{field}-navigation")
+    return errors
+
 def finalize_snapshot(
     payload: dict[str, Any], catalog_text: str
 ) -> tuple[dict[str, Any], dict[str, int]]:
@@ -470,11 +560,13 @@ def finalize_snapshot(
 
     quality = cleaned.setdefault("qualityGate", {})
     checks = quality.setdefault("checks", {})
+    final_errors = _final_semantic_errors(companies, institutions)
     checks["finalSemanticConsistency"] = {
-        "actual": 0,
+        "actual": len(final_errors),
         "required": 0,
-        "passed": True,
+        "passed": not final_errors,
     }
+    quality["finalSemanticErrors"] = final_errors[:50]
     quality["passed"] = all(
         bool(check.get("passed"))
         for check in checks.values()

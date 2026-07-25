@@ -33,6 +33,31 @@ class VentureNarrativeSanitizerTests(unittest.TestCase):
         self.assertNotIn("产品资料与下载", cleaned)
         self.assertNotIn("新闻资讯", cleaned)
 
+    def test_trims_contact_address_and_date_tail(self) -> None:
+        value = (
+            "We work with urgency and focus on the work that will accelerate our "
+            "progress towards our mission and strengthen our company. "
+            "1654 Smallman Street Pittsburgh, PA 15222 Toll-Free: (888) 583-9506 "
+            "Investor Relations Email Transfer Agent Equiniti Trust Company, LLC. "
+            "Featured July 22, 2026 August 7, 2025 May 1, 2025 Locations Our Company."
+        )
+        cleaned = sanitizer.sanitize_narrative(value)
+        self.assertIn("accelerate our progress towards our mission", cleaned)
+        self.assertNotIn("1654 Smallman Street", cleaned)
+        self.assertNotIn("Investor Relations", cleaned)
+        self.assertNotIn("July 22, 2026", cleaned)
+
+    def test_removes_headline_fragment_but_keeps_technology_claims(self) -> None:
+        value = (
+            "Consumers’ Pockets Annually by 2035 :: Aurora Innovation, Inc. "
+            "We are building a technology and a company to serve all people and all communities. "
+            "We are committed to safely developing and deploying transformational self-driving technology."
+        )
+        cleaned = sanitizer.sanitize_narrative(value)
+        self.assertNotIn("Consumers’ Pockets", cleaned)
+        self.assertIn("serve all people and all communities", cleaned)
+        self.assertIn("transformational self-driving technology", cleaned)
+
     def test_snapshot_sanitation_is_idempotent(self) -> None:
         payload = {
             "companies": {
