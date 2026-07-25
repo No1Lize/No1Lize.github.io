@@ -72,6 +72,16 @@ def _is_eastmoney_status(status: dict[str, Any]) -> bool:
     )
 
 
+def _is_eastmoney_detail_status(status: dict[str, Any]) -> bool:
+    status_id = _clean(status.get("id"))
+    return (
+        status_id.startswith("official-user-")
+        or "newAccepted" in status
+        or "retainedPreviousCount" in status
+        or bool(status.get("retainedPrevious"))
+    )
+
+
 def _status_accounting_error(status: dict[str, Any]) -> str:
     has_accounting = (
         "newAccepted" in status
@@ -111,10 +121,13 @@ def validate_snapshot(
         if isinstance(raw, dict)
     ]
     articles = [article for article in all_articles if _is_eastmoney_record(article)]
-    statuses = [
+    attempt_statuses = [
         dict(raw)
         for raw in snapshot.get("sourceStatus", [])
         if isinstance(raw, dict) and _is_eastmoney_status(raw)
+    ]
+    detail_statuses = [
+        status for status in attempt_statuses if _is_eastmoney_detail_status(status)
     ]
 
     detail_articles: list[dict[str, Any]] = []
@@ -147,13 +160,15 @@ def validate_snapshot(
         elif company and company not in {"科技产业", "未识别", "unknown"}:
             attributed_companies.add(company)
 
-    accepted = sum(_as_nonnegative_int(status.get("accepted")) for status in statuses)
+    accepted = sum(
+        _as_nonnegative_int(status.get("accepted")) for status in detail_statuses
+    )
     accounting_errors = [
         error
-        for status in statuses
+        for status in detail_statuses
         if (error := _status_accounting_error(status))
     ]
-    attempted = bool(statuses)
+    attempted = bool(attempt_statuses)
     errors: list[str] = []
 
     if leaked_internal_fields:
@@ -176,7 +191,7 @@ def validate_snapshot(
         errors.append("东方财富来源已启用，但快照中没有对应抓取状态")
     if accepted > 0 and not detail_articles:
         errors.append("抓取状态显示已接受文章，但快照中没有东方财富详情页")
-    if statuses and accepted != len(detail_articles):
+    if detail_statuses and accepted != len(detail_articles):
         errors.append(
             "东方财富来源 accepted 与最终详情文章数不一致："
             f"accepted={accepted}, detailArticles={len(detail_articles)}"
@@ -185,6 +200,8 @@ def validate_snapshot(
     report = {
         "enabled": enabled,
         "attempted": attempted,
+        "attemptStatusCount": len(attempt_statuses),
+        "detailStatusCount": len(detail_statuses),
         "acceptedByCrawler": accepted,
         "eastmoneyRecords": len(articles),
         "detailArticles": len(detail_articles),
