@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from urllib.parse import unquote_plus
 
 from tools import wechat_source_registry as registry
 
@@ -73,7 +74,7 @@ class WeChatSourceRegistryTest(unittest.TestCase):
         source = sources[0]
         self.assertEqual(source["sector"], "脑机接口")
         self.assertIn("脑机接口", source["keywords"])
-        self.assertIn("脑机接口", source["url"])
+        self.assertIn("脑机接口", unquote_plus(source["url"]))
         self.assertTrue(source["genericDiscovery"])
 
     def test_all_tracks_receive_a_generic_source_without_global_truncation(self) -> None:
