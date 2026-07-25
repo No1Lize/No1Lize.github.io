@@ -10,6 +10,7 @@ on:
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
       - tools/crawl_official_with_source_categories.py
+      - tools/migrate_article_entities.py
       - tools/eastmoney_transport.py
       - tools/eastmoney_entities.py
       - tools/validate_eastmoney_snapshot.py
@@ -57,6 +58,8 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/eastmoney_transport.py
+      - name: Migrate legacy entity attribution
+        run: python tools/migrate_article_entities.py
       - name: Validate data quality
         run: python tools/crawl_articles.py --validate-only
       - name: Validate Eastmoney snapshot
