@@ -3,7 +3,9 @@
 
 Eastmoney still has stricter detail-page, attribution and rolling-history rules,
 but HTTP headers, retries and charset decoding now come from the same adaptive
-kernel used by every user-added public website.
+kernel used by every user-added public website. The adaptive layer performs
+shared discovery and diagnostics; this plugin exclusively owns the published
+Eastmoney article batch so the two stages cannot double-count the same stories.
 """
 
 from __future__ import annotations
@@ -89,6 +91,35 @@ def install_transport() -> None:
 
     setattr(fetch_text, "_eastmoney_aware", True)
     official.fetch_text = fetch_text
+
+
+def install_handoff_cleanup() -> None:
+    """Remove generic Eastmoney articles before the strict publisher merges data.
+
+    The generic adaptive status remains in ``sourceStatus`` as proof that common
+    discovery ran. Only its article batch is removed; the strict detail crawler
+    publishes validated ``/a/<id>.html`` records under its own source identity.
+    """
+
+    official = tracking_crawler.official
+    original_load_payload = official.load_existing_payload
+    if getattr(original_load_payload, "_eastmoney_handoff_cleanup", False):
+        return
+
+    def load_existing_payload(path=official.OUTPUT_PATH) -> dict[str, Any]:
+        payload = original_load_payload(path)
+        payload["articles"] = [
+            article
+            for article in payload.get("articles", [])
+            if not (
+                str(article.get("sourceId", "")).startswith("user-source-")
+                and is_eastmoney_url(_article_source_url(article))
+            )
+        ]
+        return payload
+
+    setattr(load_existing_payload, "_eastmoney_handoff_cleanup", True)
+    official.load_existing_payload = load_existing_payload
 
 
 def _is_eastmoney_status(status: dict[str, Any]) -> bool:
@@ -309,6 +340,7 @@ def install_quality_preservation() -> None:
 
 def main() -> int:
     install_transport()
+    install_handoff_cleanup()
     install_snapshot_retention()
     install_quality_preservation()
     return category_crawler.main()
