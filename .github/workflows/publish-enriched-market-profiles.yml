@@ -1,0 +1,66 @@
+name: Publish enriched market profiles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-enriched-market-profiles.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: publish-enriched-market-profiles
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh market cap region descriptions and price data
+        run: python tools/refresh_market_profiles_enriched.py
+      - name: Run dedicated three-market regression tests
+        run: python -m unittest tests.test_market_profiles tests.test_market_profile_transport tests.test_market_profile_enrichment
+      - name: Validate market snapshot
+        run: python tools/validate_market_profiles.py
+      - name: Commit validated snapshot
+        id: data
+        run: |
+          if git diff --quiet -- public/data/market_profiles.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/market_profiles.json
+          git commit -m "data: publish market cap region and description fixes"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            python tools/refresh_market_profiles_enriched.py
+            python -m unittest tests.test_market_profiles tests.test_market_profile_transport tests.test_market_profile_enrichment
+            python tools/validate_market_profiles.py
+            git add public/data/market_profiles.json
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+            if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 1
+      - name: Trigger Pages
+        if: steps.data.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
