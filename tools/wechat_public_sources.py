@@ -10,8 +10,8 @@ and configured company/person mentions for downstream attribution.
 from __future__ import annotations
 
 import html
-import json
 import re
+import sys
 import time
 import xml.etree.ElementTree as ET
 from datetime import UTC, datetime
@@ -79,10 +79,6 @@ def _clean(value: Any, limit: int = 500) -> str:
     return re.sub(r"\s+", " ", html.unescape(str(value or ""))).strip()[:limit]
 
 
-def _key(value: Any) -> str:
-    return _clean(value, 200).normalize("NFKC") if False else _clean(value, 200).casefold()
-
-
 def _unique(values: Iterable[Any], limit: int = 120) -> list[str]:
     result: list[str] = []
     seen: set[str] = set()
@@ -121,13 +117,19 @@ def generated_wechat_sources(
 ) -> list[dict[str, Any]]:
     """Create one independent WeChat discovery query for every enabled track."""
 
+    del tracking
     sources: list[dict[str, Any]] = []
     event_query = _quoted_terms(list(EVENT_TERMS), 12)
     for track in tracks:
         companies = _unique(track.get("sampleCompanies", []), 20)
         people = _unique(
-            _person_name(value) for value in track.get("people", []) if _person_name(value)
-        , 20)
+            (
+                _person_name(value)
+                for value in track.get("people", [])
+                if _person_name(value)
+            ),
+            20,
+        )
         keywords = _unique(track.get("keywords", []), 40)
         discovery_terms = _unique(
             [*companies[:6], *people[:5], *keywords[:10], track.get("name")],
@@ -206,6 +208,7 @@ class WeChatPageParser(HTMLParser):
             self.content_parts.append(" ")
 
     def handle_endtag(self, tag: str) -> None:
+        del tag
         if self._capture_depth:
             self._capture_depth -= 1
             if self._capture_depth == 0:
@@ -299,9 +302,7 @@ def _published_at(parser: WeChatPageParser, body: str, crawler: Any) -> str | No
 
 def _contains_phrase(text: str, phrase: str, crawler: Any) -> bool:
     phrase = _clean(phrase, 120)
-    if not phrase:
-        return False
-    return crawler._keyword_in_text(phrase, text.casefold())
+    return bool(phrase and crawler._keyword_in_text(phrase, text.casefold()))
 
 
 def _matched(values: Sequence[str], text: str, crawler: Any) -> list[str]:
@@ -318,11 +319,12 @@ def _specific_keywords(values: Sequence[str]) -> list[str]:
         value
         for value in _unique(values, 80)
         if value.casefold() not in GENERIC_DISCOVERY_TERMS
-        and not (re.fullmatch(r"[A-Za-z]{1,2}", value) or len(value) < 2)
+        and not re.fullmatch(r"[A-Za-z]{1,2}", value)
+        and len(value) >= 2
     ]
 
 
-def _is_relevant(
+def _relevance_entities(
     title: str,
     summary: str,
     content: str,
@@ -357,7 +359,8 @@ def _company_attribution(
     account_matches = [
         company
         for company in matched_companies
-        if account and (
+        if account
+        and (
             _contains_phrase(account, company, crawler)
             or _contains_phrase(company, account, crawler)
         )
@@ -436,7 +439,7 @@ def parse_wechat_article(
     if not title or len(title) < 6 or not published_at or not summary:
         return None
 
-    matched_companies, matched_people, matched_keywords = _is_relevant(
+    matched_companies, matched_people, matched_keywords = _relevance_entities(
         title, summary, content, spec, crawler
     )
     if not (matched_companies or matched_people or matched_keywords):
@@ -515,7 +518,7 @@ def crawl_wechat_source(
             failures += 1
             print(
                 f"WeChat article warning: {url} ({type(exc).__name__}: {exc})",
-                file=getattr(crawler, "sys", __import__("sys")).stderr,
+                file=sys.stderr,
             )
             continue
         if article:
@@ -525,26 +528,19 @@ def crawl_wechat_source(
             break
         time.sleep(0.12)
 
-    status = (
-        "ok"
-        if accepted and failures == 0
-        else "partial"
-        if accepted
-        else "error"
-        if failures
-        else "empty"
-    )
+    status = "ok" if accepted and failures == 0 else "partial" if accepted else "error"
+    effective_failures = failures if accepted else max(1, failures)
     return accepted, crawler._status(
         spec["id"],
         spec["name"],
         status,
         scanned,
         len(accepted),
-        failed=failures,
+        failed=effective_failures,
         platform="微信",
         error=(
-            "Public WeChat pages could not be read; previous snapshot retained"
-            if failures and not accepted
+            "No verified public WeChat articles discovered; previous snapshot retained"
+            if not accepted
             else None
         ),
     )
@@ -588,6 +584,23 @@ def install(tracking: Any) -> None:
     ) -> None:
         original_install(merged, sec_specs, active_ids)
         original_crawl_source = tracking.crawler._crawl_config_source
+        original_load_payload = tracking.crawler.load_existing_payload
+
+        def load_existing_payload(*args: Any, **kwargs: Any) -> dict[str, Any]:
+            payload = original_load_payload(*args, **kwargs)
+            payload["articles"] = [
+                article
+                for article in payload.get("articles", [])
+                if str(article.get("sourceId", "")) != "wechat-public-index"
+            ]
+            payload["sourceStatus"] = [
+                status
+                for status in payload.get("sourceStatus", [])
+                if str(status.get("id", "")) != "wechat-public-index"
+            ]
+            return payload
+
+        tracking.crawler.load_existing_payload = load_existing_payload
         if getattr(original_crawl_source, "_wechat_source_dispatch", False):
             return
 
