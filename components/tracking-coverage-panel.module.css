@@ -1,0 +1,135 @@
+.panel {
+  margin-bottom: 2rem;
+  padding: clamp(1.25rem, 2vw, 2rem);
+  border: 1px solid var(--line, rgba(123, 255, 204, 0.18));
+  background: rgba(7, 21, 18, 0.74);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.header h1 {
+  margin: 0.25rem 0 0.75rem;
+}
+
+.header p {
+  max-width: 52rem;
+  margin: 0;
+  color: var(--muted, #8ca69d);
+  line-height: 1.7;
+}
+
+.summary {
+  min-width: 9rem;
+  padding: 1rem;
+  border: 1px solid var(--line, rgba(123, 255, 204, 0.18));
+  text-align: right;
+}
+
+.summary span,
+.summary small {
+  display: block;
+  color: var(--muted, #8ca69d);
+}
+
+.summary strong {
+  display: block;
+  margin: 0.25rem 0;
+  font-size: 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0.9rem;
+}
+
+.card {
+  padding: 1rem;
+  border: 1px solid var(--line, rgba(123, 255, 204, 0.18));
+  background: rgba(8, 25, 21, 0.82);
+}
+
+.card[data-status="error"] {
+  border-color: rgba(255, 116, 116, 0.5);
+}
+
+.card[data-status="partial"],
+.card[data-status="empty"],
+.card[data-status="pending"] {
+  border-color: rgba(246, 201, 91, 0.42);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cardHeader h2 {
+  margin: 0.35rem 0 0;
+  font-size: 1.1rem;
+}
+
+.cardHeader > strong {
+  font-size: 1.35rem;
+}
+
+.status {
+  color: var(--accent, #70e6b2);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
+.card > p {
+  min-height: 3.4rem;
+  margin: 0.85rem 0;
+  color: var(--muted, #8ca69d);
+  line-height: 1.55;
+}
+
+.card dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.card dl div {
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--line, rgba(123, 255, 204, 0.14));
+}
+
+.card dt {
+  color: var(--muted, #8ca69d);
+  font-size: 0.72rem;
+}
+
+.card dd {
+  margin: 0.25rem 0 0;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.footer {
+  margin: 1rem 0 0;
+  color: var(--muted, #8ca69d);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 720px) {
+  .header {
+    flex-direction: column;
+  }
+
+  .summary {
+    width: 100%;
+    text-align: left;
+  }
+}
