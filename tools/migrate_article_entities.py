@@ -179,12 +179,21 @@ def migrate(payload: dict[str, Any], tracking: dict[str, Any]) -> tuple[dict[str
 
         migrated.append(article)
 
+    active_source_ids = {
+        clean(article.get("sourceId"), 160)
+        for article in migrated
+        if clean(article.get("sourceId"), 160)
+    }
     statuses: list[dict[str, Any]] = []
     for status in payload.get("sourceStatus", []):
         if not isinstance(status, dict):
             continue
         status_id = clean(status.get("id"), 160)
-        if status_id.startswith("official-user-") and status_id in index["by_id"]:
+        is_legacy_non_company_status = (
+            status_id.startswith("official-user-")
+            and status_id in index["by_id"]
+        )
+        if is_legacy_non_company_status and status_id not in active_source_ids:
             report["removedLegacyStatuses"] += 1
             continue
         statuses.append(status)
