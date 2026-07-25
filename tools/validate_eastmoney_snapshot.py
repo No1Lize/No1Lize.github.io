@@ -189,6 +189,8 @@ def validate_snapshot(
         errors.append(f"东方财富滚动历史计数不闭合：{len(accounting_errors)} 个来源")
     if require_attempt and enabled and not attempted:
         errors.append("东方财富来源已启用，但快照中没有对应抓取状态")
+    if detail_articles and not detail_statuses:
+        errors.append("快照中存在东方财富详情文章，但缺少专用详情抓取状态")
     if accepted > 0 and not detail_articles:
         errors.append("抓取状态显示已接受文章，但快照中没有东方财富详情页")
     if detail_statuses and accepted != len(detail_articles):
