@@ -76,6 +76,9 @@ def _compact(value: Any) -> str:
     )
 
 
+NAVIGATION_COMPACTS = {_compact(item) for item in NAVIGATION_LABELS}
+
+
 def _navigation_hits(value: str) -> list[str]:
     lowered = value.casefold()
     return [term for term in NAVIGATION_TERMS if term.casefold() in lowered]
@@ -87,7 +90,7 @@ def _looks_like_navigation(value: str) -> bool:
     compact = _compact(text)
     if not text or not compact:
         return True
-    if compact in {_compact(item) for item in NAVIGATION_LABELS}:
+    if compact in NAVIGATION_COMPACTS:
         return True
     if re.search(r"all rights reserved|cookie settings|版权所有|备案号", lowered):
         return True
@@ -181,7 +184,7 @@ def sanitize_snapshot_payload(payload: dict[str, Any]) -> tuple[dict[str, Any], 
             continue
         for field in COMPANY_NARRATIVE_FIELDS:
             original = clean_text(profile.get(field), 5000)
-            normalized = sanitize_narrative(original, original)
+            normalized = sanitize_narrative(original)
             if normalized != original:
                 changed_fields += 1
             profile[field] = normalized
@@ -191,7 +194,7 @@ def sanitize_snapshot_payload(payload: dict[str, Any]) -> tuple[dict[str, Any], 
             continue
         for field in INSTITUTION_NARRATIVE_FIELDS:
             original = clean_text(profile.get(field), 5000)
-            normalized = sanitize_narrative(original, original)
+            normalized = sanitize_narrative(original)
             if normalized != original:
                 changed_fields += 1
             profile[field] = normalized
