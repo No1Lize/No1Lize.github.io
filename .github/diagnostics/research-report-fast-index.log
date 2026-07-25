@@ -8,12 +8,18 @@
   "reportCounts": {
     "A股": 7,
     "港股": 0,
-    "美股": 0
+    "美股": 8
   },
-  "reports": 7,
-  "archiveBytes": 4173107,
+  "reports": 15,
+  "archiveBytes": 26465163,
   "statuses": {
-    "ok": 3,
-    "empty": 12
+    "ok": 7,
+    "retained": 0,
+    "empty": 8,
+    "failed": 0
+  },
+  "adapterCoverage": {
+    "SEC": 10,
+    "company-domain": 15
   }
 }
