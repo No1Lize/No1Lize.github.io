@@ -1,0 +1,106 @@
+patch	Patch, test and commit	﻿2026-07-25T16:54:23.1131954Z ##[group]Run set -euo pipefail
+patch	Patch, test and commit	2026-07-25T16:54:23.1133577Z ^[[36;1mset -euo pipefail^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1135053Z ^[[36;1mgit pull --rebase origin main^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1136297Z ^[[36;1mpython - <<'PY'^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1138200Z ^[[36;1mfrom pathlib import Path^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1140397Z ^[[36;1mpath = Path("tools/normalize_venture_profiles.py")^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1143106Z ^[[36;1mlines = path.read_text(encoding="utf-8").splitlines()^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1144973Z ^[[36;1mremove_terms = (^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1146282Z ^[[36;1m    '"background": clean_text(member.get("background")',^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1148875Z ^[[36;1m    '"previousExperience": clean_text(member.get("previousExperience")',^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1150601Z ^[[36;1m)^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1153677Z ^[[36;1mfiltered = [line for line in lines if not any(term in line for term in remove_terms)]^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1156689Z ^[[36;1mif len(filtered) != len(lines) - 2:^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1159363Z ^[[36;1m    raise SystemExit(f"expected to remove 2 team-shape lines, removed {len(lines) - len(filtered)}")^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1161902Z ^[[36;1mpath.write_text("\n".join(filtered) + "\n", encoding="utf-8")^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1163400Z ^[[36;1mPY^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1164477Z ^[[36;1mpython -m py_compile \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1166290Z ^[[36;1m  tools/venture_profile_extraction.py \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1168477Z ^[[36;1m  tools/crawl_venture_profiles.py \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1170051Z ^[[36;1m  tools/enrich_venture_profiles.py \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1171742Z ^[[36;1m  tools/normalize_venture_profiles.py^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1173043Z ^[[36;1mpython -m unittest \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1174206Z ^[[36;1m  tests.test_venture_profile_extraction \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1175888Z ^[[36;1m  tests.test_venture_profile_noise_filters \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1178382Z ^[[36;1m  tests.test_venture_profile_enrichment \^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1180581Z ^[[36;1m  tests.test_normalize_venture_profiles^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1182317Z ^[[36;1mgit config user.name "github-actions[bot]"^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1184266Z ^[[36;1mgit config user.email "41898282+users.noreply.github.com"^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1186501Z ^[[36;1mgit add tools/normalize_venture_profiles.py^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1188974Z ^[[36;1mgit commit -m "fix: keep venture team records compatible with quality validation"^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1190862Z ^[[36;1mgit pull --rebase origin main^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1192046Z ^[[36;1mgit push origin HEAD:main^[[0m
+patch	Patch, test and commit	2026-07-25T16:54:23.1390802Z shell: /usr/bin/bash -e {0}
+patch	Patch, test and commit	2026-07-25T16:54:23.1391966Z env:
+patch	Patch, test and commit	2026-07-25T16:54:23.1393038Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+patch	Patch, test and commit	2026-07-25T16:54:23.1394848Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+patch	Patch, test and commit	2026-07-25T16:54:23.1396667Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+patch	Patch, test and commit	2026-07-25T16:54:23.1398518Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+patch	Patch, test and commit	2026-07-25T16:54:23.1400229Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+patch	Patch, test and commit	2026-07-25T16:54:23.1401932Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+patch	Patch, test and commit	2026-07-25T16:54:23.1403321Z ##[endgroup]
+patch	Patch, test and commit	2026-07-25T16:54:23.4688536Z From https://github.com/No1Lize/No1Lize.github.io
+patch	Patch, test and commit	2026-07-25T16:54:23.4689687Z  * branch            main       -> FETCH_HEAD
+patch	Patch, test and commit	2026-07-25T16:54:23.4690270Z    a77d4b3..7d98cb3  main       -> origin/main
+patch	Patch, test and commit	2026-07-25T16:54:23.4802676Z Updating a77d4b3..7d98cb3
+patch	Patch, test and commit	2026-07-25T16:54:23.4803209Z Fast-forward
+patch	Patch, test and commit	2026-07-25T16:54:23.4877167Z  diagnostics/wechat-publish.json | 174 ++++++++++++++
+patch	Patch, test and commit	2026-07-25T16:54:23.4878467Z  public/data/articles.json       | 520 ++++++++++++++++++++++++++++++++++++----
+patch	Patch, test and commit	2026-07-25T16:54:23.4879328Z  2 files changed, 647 insertions(+), 47 deletions(-)
+patch	Patch, test and commit	2026-07-25T16:54:23.4879975Z  create mode 100644 diagnostics/wechat-publish.json
+patch	Patch, test and commit	2026-07-25T16:54:25.1340138Z .............F.FF..
+patch	Patch, test and commit	2026-07-25T16:54:25.1341150Z ======================================================================
+patch	Patch, test and commit	2026-07-25T16:54:25.1343173Z FAIL: test_enrichment_is_idempotent (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enrichment_is_idempotent)
+patch	Patch, test and commit	2026-07-25T16:54:25.1345915Z ----------------------------------------------------------------------
+patch	Patch, test and commit	2026-07-25T16:54:25.1346845Z Traceback (most recent call last):
+patch	Patch, test and commit	2026-07-25T16:54:25.1354313Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_enrichment.py", line 148, in test_enrichment_is_idempotent
+patch	Patch, test and commit	2026-07-25T16:54:25.1355496Z     self.assertEqual(first, second)
+patch	Patch, test and commit	2026-07-25T16:54:25.1357485Z AssertionError: {'sch[194 chars]d': '研发并商业化通用人工智能模型与开发者平台。', 'technology': 'GP[3945 chars]': 2} != {'sch[194 chars]d': 'OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型[4001 chars]': 2}
+patch	Patch, test and commit	2026-07-25T16:54:25.1358843Z Diff is 11015 characters long. Set self.maxDiff to None to see it.
+patch	Patch, test and commit	2026-07-25T16:54:25.1359141Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1359275Z ======================================================================
+patch	Patch, test and commit	2026-07-25T16:54:25.1360143Z FAIL: test_false_policy_and_homepage_events_are_removed (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_false_policy_and_homepage_events_are_removed)
+patch	Patch, test and commit	2026-07-25T16:54:25.1361087Z ----------------------------------------------------------------------
+patch	Patch, test and commit	2026-07-25T16:54:25.1361471Z Traceback (most recent call last):
+patch	Patch, test and commit	2026-07-25T16:54:25.1362329Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_normalize_venture_profiles.py", line 68, in test_false_policy_and_homepage_events_are_removed
+patch	Patch, test and commit	2026-07-25T16:54:25.1363312Z     self.assertEqual([item["title"] for item in financing], ["公司完成B轮融资"])
+patch	Patch, test and commit	2026-07-25T16:54:25.1364076Z AssertionError: Lists differ: ['Announcing our updated Responsible Scaling Policy', '公司完成B轮融资'] != ['公司完成B轮融资']
+patch	Patch, test and commit	2026-07-25T16:54:25.1364546Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1364657Z First differing element 0:
+patch	Patch, test and commit	2026-07-25T16:54:25.1364955Z 'Announcing our updated Responsible Scaling Policy'
+patch	Patch, test and commit	2026-07-25T16:54:25.1365369Z '公司完成B轮融资'
+patch	Patch, test and commit	2026-07-25T16:54:25.1365494Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1365610Z First list contains 1 additional elements.
+patch	Patch, test and commit	2026-07-25T16:54:25.1365946Z First extra element 1:
+patch	Patch, test and commit	2026-07-25T16:54:25.1366228Z '公司完成B轮融资'
+patch	Patch, test and commit	2026-07-25T16:54:25.1366348Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1366596Z - ['Announcing our updated Responsible Scaling Policy', '公司完成B轮融资']
+patch	Patch, test and commit	2026-07-25T16:54:25.1367026Z + ['公司完成B轮融资']
+patch	Patch, test and commit	2026-07-25T16:54:25.1367153Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1367295Z ======================================================================
+patch	Patch, test and commit	2026-07-25T16:54:25.1368599Z FAIL: test_payload_normalization_updates_all_entity_types_and_quality_gate (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_payload_normalization_updates_all_entity_types_and_quality_gate)
+patch	Patch, test and commit	2026-07-25T16:54:25.1369642Z ----------------------------------------------------------------------
+patch	Patch, test and commit	2026-07-25T16:54:25.1369996Z Traceback (most recent call last):
+patch	Patch, test and commit	2026-07-25T16:54:25.1370856Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_normalize_venture_profiles.py", line 184, in test_payload_normalization_updates_all_entity_types_and_quality_gate
+patch	Patch, test and commit	2026-07-25T16:54:25.1371696Z     self.assertEqual(company["financing"], [])
+patch	Patch, test and commit	2026-07-25T16:54:25.1372249Z AssertionError: Lists differ: [{'date': '', 'type': '融资', 'title': '安全政策[111 chars]cy'}] != []
+patch	Patch, test and commit	2026-07-25T16:54:25.1372602Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1372722Z First list contains 1 additional elements.
+patch	Patch, test and commit	2026-07-25T16:54:25.1373010Z First extra element 0:
+patch	Patch, test and commit	2026-07-25T16:54:25.1373649Z {'date': '', 'type': '融资', 'title': '安全政策更新', 'summary': '公司更新安全政策。', 'amount': '', 'round': '', 'investors': [], 'sourceUrl': 'https://example.com/policy'}
+patch	Patch, test and commit	2026-07-25T16:54:25.1374150Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1374227Z + []
+patch	Patch, test and commit	2026-07-25T16:54:25.1374410Z - [{'amount': '',
+patch	Patch, test and commit	2026-07-25T16:54:25.1374615Z -   'date': '',
+patch	Patch, test and commit	2026-07-25T16:54:25.1374817Z -   'investors': [],
+patch	Patch, test and commit	2026-07-25T16:54:25.1375030Z -   'round': '',
+patch	Patch, test and commit	2026-07-25T16:54:25.1375270Z -   'sourceUrl': 'https://example.com/policy',
+patch	Patch, test and commit	2026-07-25T16:54:25.1375609Z -   'summary': '公司更新安全政策。',
+patch	Patch, test and commit	2026-07-25T16:54:25.1375871Z -   'title': '安全政策更新',
+patch	Patch, test and commit	2026-07-25T16:54:25.1376326Z -   'type': '融资'}]
+patch	Patch, test and commit	2026-07-25T16:54:25.1376460Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1376609Z ----------------------------------------------------------------------
+patch	Patch, test and commit	2026-07-25T16:54:25.1376943Z Ran 19 tests in 0.049s
+patch	Patch, test and commit	2026-07-25T16:54:25.1377083Z 
+patch	Patch, test and commit	2026-07-25T16:54:25.1377171Z FAILED (failures=3)
+patch	Patch, test and commit	2026-07-25T16:54:25.1549038Z ##[error]Process completed with exit code 1.
