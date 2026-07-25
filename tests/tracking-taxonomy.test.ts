@@ -6,6 +6,7 @@ import {
   trackIdentityTerms,
   trackNameAliases,
   uniqueActorTermsByTrack,
+  uniqueIdentityTermsByTrack,
 } from "../lib/tracking-taxonomy";
 import type { TrackingTrack } from "../lib/user-tracking";
 
@@ -79,6 +80,18 @@ test("shared companies and keywords are warnings rather than hard failures", () 
     ),
   );
   assert.equal(overlaps.some((item) => item.severity === "error"), false);
+});
+
+test("shared keywords do not own event matching for multiple sectors", () => {
+  const energy = track("energy", "新能源", {
+    keywords: ["聚变能源", "长时储能"],
+  });
+  const fusion = track("fusion", "可控核聚变", {
+    keywords: ["聚变能源", "托卡马克"],
+  });
+  const identities = uniqueIdentityTermsByTrack([energy, fusion]);
+  assert.deepEqual(identities.get("energy"), ["新能源", "长时储能"]);
+  assert.deepEqual(identities.get("fusion"), ["可控核聚变", "托卡马克"]);
 });
 
 test("only sector-unique actors expand standalone crawler discovery", () => {
