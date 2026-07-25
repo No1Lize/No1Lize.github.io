@@ -1,0 +1,63 @@
+name: Venture entity-label PR runner
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - .venture-entity-label-trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: venture-entity-label-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  patch:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == github.repository_owner &&
+      github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply entity-label patch
+        run: python tools/patch_venture_entity_labels_v1.py
+      - name: Run semantic and terminal regressions
+        run: |
+          python -m py_compile \
+            tools/enforce_venture_entity_semantics.py \
+            tools/stabilize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
+      - name: Regenerate terminal venture snapshot
+        run: |
+          python tools/stabilize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          git diff --check
+      - name: Commit validated fix to PR branch
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .venture-entity-label-trigger
+          rm -f tools/patch_venture_entity_labels_v1.py
+          rm -f .github/workflows/patch-venture-entity-labels-v1.yml
+          rm -f .github/workflows/venture-entity-label-pr.yml
+          git add -A
+          git commit -m "fix: reject venture editorial labels as entities"
+          git push origin "HEAD:${HEAD_REF}"
