@@ -1,48 +1,403 @@
-"""Runtime bridge between the WeChat parser and the account registry."""
+"""Runtime bridge between the WeChat parser and the account registry.
+
+Public aggregation pages are used only as link-discovery fallbacks. An item is
+accepted only after the original ``mp.weixin.qq.com`` page is fetched, the
+configured public-account name is verified, and the existing entity relevance
+rules pass.
+"""
 
 from __future__ import annotations
 
-from typing import Any
+import json
+import re
+from html.parser import HTMLParser
+from pathlib import Path
+from typing import Any, Iterable
+from urllib.parse import urljoin, urlsplit
 
 try:
     from . import wechat_source_registry
 except ImportError:
     import wechat_source_registry
 
+ROOT = Path(__file__).resolve().parents[1]
+PUBLIC_INDEX_PATH = ROOT / "config" / "wechat_public_indexes.json"
+_INDEX_CACHE: dict[str, str] = {}
+_GENERIC_ANCHOR_TEXT = {
+    "",
+    "打开原文",
+    "查看详情",
+    "详情",
+    "阅读原文",
+    "获取内容",
+    "image",
+}
+
+
+def _clean(value: Any, limit: int = 500) -> str:
+    return re.sub(r"\s+", " ", str(value or "")).strip()[:limit]
+
+
+def _unique(values: Iterable[str], limit: int = 100) -> list[str]:
+    result: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        item = _clean(value, 1000)
+        key = item.casefold()
+        if not item or key in seen:
+            continue
+        result.append(item)
+        seen.add(key)
+        if len(result) >= limit:
+            break
+    return result
+
+
+def _load_public_indexes(path: Path = PUBLIC_INDEX_PATH) -> dict[str, list[str]]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(payload, dict) or int(payload.get("schemaVersion", 0)) != 1:
+        return {}
+    accounts = payload.get("accounts", {})
+    if not isinstance(accounts, dict):
+        return {}
+    return {
+        str(account_id): _unique(
+            str(url)
+            for url in urls
+            if isinstance(urls, list)
+            and str(url).startswith(("https://", "http://"))
+        )
+        for account_id, urls in accounts.items()
+        if isinstance(urls, list)
+    }
+
+
+class PublicIndexParser(HTMLParser):
+    """Collect direct WeChat links and resolvable article-detail links."""
+
+    def __init__(self, base_url: str) -> None:
+        super().__init__(convert_charrefs=True)
+        self.base_url = base_url
+        self.text_parts: list[str] = []
+        self.links: list[dict[str, Any]] = []
+        self._href = ""
+        self._anchor_parts: list[str] = []
+        self._anchor_position = 0
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        if tag.casefold() != "a":
+            return
+        values = {key.casefold(): value or "" for key, value in attrs}
+        self._href = urljoin(self.base_url, values.get("href", ""))
+        self._anchor_parts = []
+        self._anchor_position = len(self.text_parts)
+
+    def handle_data(self, data: str) -> None:
+        value = _clean(data, 600)
+        if not value:
+            return
+        self.text_parts.append(value)
+        if self._href:
+            self._anchor_parts.append(value)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.casefold() != "a" or not self._href:
+            return
+        self.links.append(
+            {
+                "url": self._href,
+                "title": _clean(" ".join(self._anchor_parts), 260),
+                "position": self._anchor_position,
+            }
+        )
+        self._href = ""
+        self._anchor_parts = []
+
+
+def _context(parser: PublicIndexParser, position: int) -> str:
+    start = max(0, position - 4)
+    end = min(len(parser.text_parts), position + 10)
+    return _clean(" ".join(parser.text_parts[start:end]), 1200)
+
+
+def _fallback_title(
+    parser: PublicIndexParser, position: int, anchor_title: str
+) -> str:
+    title = _clean(anchor_title, 240)
+    if title.casefold() not in _GENERIC_ANCHOR_TEXT and len(title) >= 6:
+        return title
+    for item in reversed(parser.text_parts[max(0, position - 5) : position]):
+        candidate = _clean(item, 240)
+        if candidate.casefold() not in _GENERIC_ANCHOR_TEXT and len(candidate) >= 6:
+            return candidate
+    return ""
+
+
+def _date_from_context(context: str, crawler: Any) -> str | None:
+    match = re.search(r"20\d{2}[-/.年]\d{1,2}[-/.月]\d{1,2}", context)
+    return crawler.normalize_date(match.group(0)) if match else None
+
+
+def _is_wechat_article_url(url: str) -> bool:
+    parts = urlsplit(url)
+    return (
+        (parts.hostname or "").casefold() == "mp.weixin.qq.com"
+        and parts.path.rstrip("/") == "/s"
+    )
+
+
+def _is_resolvable_detail_url(url: str) -> bool:
+    parts = urlsplit(url)
+    host = (parts.hostname or "").casefold().removeprefix("www.")
+    return host in {"jintiankansha.com", "jintiankansha.me"} and parts.path.startswith(
+        "/t/"
+    )
+
+
+def _extract_index_rows(
+    body: str,
+    index_url: str,
+    spec: dict[str, Any],
+    crawler: Any,
+    *,
+    require_account_context: bool = True,
+) -> list[dict[str, str]]:
+    parser = PublicIndexParser(index_url)
+    parser.feed(body or "")
+    rows: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for link in parser.links:
+        url = crawler.normalize_url(str(link.get("url", "")))
+        if not (_is_wechat_article_url(url) or _is_resolvable_detail_url(url)):
+            continue
+        context = _context(parser, int(link.get("position", 0)))
+        if require_account_context and not wechat_source_registry.account_matches(
+            spec, context
+        ):
+            continue
+        title = _fallback_title(
+            parser, int(link.get("position", 0)), str(link.get("title", ""))
+        )
+        if not title or url in seen:
+            continue
+        companies, people, keywords = spec["_wechat"]._relevance_entities(
+            title,
+            context,
+            "",
+            spec,
+            crawler,
+        )
+        if not (companies or people or keywords):
+            continue
+        rows.append(
+            {
+                "url": url,
+                "title": title,
+                "summary": context,
+                "date": _date_from_context(context, crawler) or "",
+                "kind": "wechat" if _is_wechat_article_url(url) else "detail",
+            }
+        )
+        seen.add(url)
+    return rows
+
+
+def _fetch_cached(url: str, user_agent: str, crawler: Any) -> str:
+    if url not in _INDEX_CACHE:
+        _INDEX_CACHE[url] = crawler.fetch_text(url, user_agent)
+    return _INDEX_CACHE[url]
+
+
+def _resolve_detail_row(
+    row: dict[str, str],
+    spec: dict[str, Any],
+    user_agent: str,
+    crawler: Any,
+) -> list[dict[str, str]]:
+    if row.get("kind") != "detail":
+        return [row]
+    try:
+        body = _fetch_cached(row["url"], user_agent, crawler)
+    except Exception:  # noqa: BLE001 - the caller records aggregate failures.
+        return []
+    resolved = _extract_index_rows(
+        body,
+        row["url"],
+        spec,
+        crawler,
+        require_account_context=False,
+    )
+    result: list[dict[str, str]] = []
+    for item in resolved:
+        if item.get("kind") != "wechat":
+            continue
+        result.append(
+            {
+                **item,
+                "title": item.get("title") or row.get("title", ""),
+                "summary": item.get("summary") or row.get("summary", ""),
+                "date": item.get("date") or row.get("date", ""),
+            }
+        )
+    return result
+
+
+def _fallback_index_rows(
+    spec: dict[str, Any], user_agent: str, crawler: Any
+) -> tuple[list[dict[str, str]], int]:
+    rows: list[dict[str, str]] = []
+    failures = 0
+    for index_url in spec.get("publicIndexUrls", []):
+        try:
+            body = _fetch_cached(index_url, user_agent, crawler)
+            discovered = _extract_index_rows(body, index_url, spec, crawler)
+        except Exception:  # noqa: BLE001 - reported through the source status.
+            failures += 1
+            continue
+        for row in discovered:
+            resolved = _resolve_detail_row(row, spec, user_agent, crawler)
+            if row.get("kind") == "detail" and not resolved:
+                failures += 1
+            rows.extend(resolved)
+    deduped: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for row in rows:
+        url = crawler.normalize_url(row.get("url", ""))
+        if not url or url in seen:
+            continue
+        deduped.append({**row, "url": url})
+        seen.add(url)
+    return deduped, failures
+
 
 def install(wechat: Any) -> None:
-    """Apply whitelist-first discovery and strict account verification."""
+    """Apply whitelist-first discovery, account verification, and fallbacks."""
 
-    wechat.generated_wechat_sources = wechat_source_registry.generated_wechat_sources
+    index_map = _load_public_indexes()
+    original_generate = wechat_source_registry.generated_wechat_sources
+
+    def generated_wechat_sources(tracks: Any, tracking: Any) -> list[dict[str, Any]]:
+        specs = original_generate(tracks, tracking)
+        for spec in specs:
+            account_id = str(spec.get("accountConfigId") or "")
+            spec["publicIndexUrls"] = list(index_map.get(account_id, []))
+            spec["_wechat"] = wechat
+        return specs
+
+    setattr(generated_wechat_sources, "_wechat_registry_indexed", True)
+    wechat.generated_wechat_sources = generated_wechat_sources
 
     original_parse = wechat.parse_wechat_article
-    if getattr(original_parse, "_wechat_registry_verified", False):
+    if not getattr(original_parse, "_wechat_registry_verified", False):
+
+        def parse_wechat_article(
+            spec: dict[str, Any],
+            url: str,
+            body: str,
+            crawler: Any,
+            **kwargs: Any,
+        ) -> dict[str, Any] | None:
+            if spec.get("expectedAccounts"):
+                parser = wechat.WeChatPageParser()
+                parser.feed(body or "")
+                observed_account = parser.account or wechat._js_value(
+                    body or "",
+                    ("nickname", "profile_nickname", "account_name"),
+                )
+                if not wechat_source_registry.account_matches(
+                    spec, observed_account
+                ):
+                    return None
+
+            article = original_parse(spec, url, body, crawler, **kwargs)
+            if article and isinstance(article.get("source"), dict):
+                article["source"]["level"] = spec.get(
+                    "sourceLevel", "媒体报道"
+                )
+                article["source"]["platform"] = "微信"
+                if spec.get("accountConfigId"):
+                    article["wechatAccountConfigId"] = spec["accountConfigId"]
+            return article
+
+        setattr(parse_wechat_article, "_wechat_registry_verified", True)
+        wechat.parse_wechat_article = parse_wechat_article
+
+    original_crawl = wechat.crawl_wechat_source
+    if getattr(original_crawl, "_wechat_public_index_fallback", False):
         return
 
-    def parse_wechat_article(
-        spec: dict[str, Any],
-        url: str,
-        body: str,
-        crawler: Any,
-        **kwargs: Any,
-    ) -> dict[str, Any] | None:
-        if spec.get("expectedAccounts"):
-            parser = wechat.WeChatPageParser()
-            parser.feed(body or "")
-            observed_account = parser.account or wechat._js_value(
-                body or "",
-                ("nickname", "profile_nickname", "account_name"),
+    def crawl_wechat_source(
+        spec: dict[str, Any], user_agent: str, crawler: Any
+    ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+        try:
+            articles, status = original_crawl(spec, user_agent, crawler)
+        except Exception as exc:  # noqa: BLE001 - fallback may still recover.
+            articles = []
+            status = crawler._status(
+                spec["id"],
+                spec["name"],
+                "error",
+                0,
+                0,
+                failed=1,
+                platform="微信",
+                error=f"{type(exc).__name__}: {exc}",
             )
-            if not wechat_source_registry.account_matches(spec, observed_account):
-                return None
+        if articles or not spec.get("publicIndexUrls"):
+            return articles, status
 
-        article = original_parse(spec, url, body, crawler, **kwargs)
-        if article and isinstance(article.get("source"), dict):
-            article["source"]["level"] = spec.get("sourceLevel", "媒体报道")
-            article["source"]["platform"] = "微信"
-            if spec.get("accountConfigId"):
-                article["wechatAccountConfigId"] = spec["accountConfigId"]
-        return article
+        rows, index_failures = _fallback_index_rows(spec, user_agent, crawler)
+        accepted: list[dict[str, Any]] = []
+        failures = index_failures
+        max_items = int(spec.get("maxItems", 6))
+        for row in rows[: max_items * 5]:
+            try:
+                body = wechat.fetch_public_wechat_page(row["url"])
+                article = wechat.parse_wechat_article(
+                    spec,
+                    row["url"],
+                    body,
+                    crawler,
+                    fallback_title=row.get("title", ""),
+                    fallback_summary=row.get("summary", ""),
+                    fallback_date=row.get("date") or None,
+                )
+            except Exception:  # noqa: BLE001 - aggregated below.
+                failures += 1
+                continue
+            if article:
+                accepted.append(article)
+            if len(accepted) >= max_items:
+                break
 
-    setattr(parse_wechat_article, "_wechat_registry_verified", True)
-    wechat.parse_wechat_article = parse_wechat_article
+        if not accepted:
+            return [], crawler._status(
+                spec["id"],
+                spec["name"],
+                "error",
+                len(rows),
+                0,
+                failed=max(1, failures),
+                platform="微信",
+                error=(
+                    "No verified public WeChat articles discovered from Bing or "
+                    "configured public indexes; previous snapshot retained"
+                ),
+            )
+        return accepted, crawler._status(
+            spec["id"],
+            spec["name"],
+            "partial" if failures else "ok",
+            len(rows),
+            len(accepted),
+            failed=failures,
+            platform="微信",
+        )
+
+    setattr(crawl_wechat_source, "_wechat_public_index_fallback", True)
+    wechat.crawl_wechat_source = crawl_wechat_source
