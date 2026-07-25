@@ -47,6 +47,19 @@ except ModuleNotFoundError:  # direct execution: python tools/crawl_research_rep
         load_sec_ticker_map,
     )
 
+try:
+    from tools.research_report_registry import (
+        load_local_cik_map,
+        load_official_websites,
+        merge_source_maps,
+    )
+except ModuleNotFoundError:  # direct execution
+    from research_report_registry import (
+        load_local_cik_map,
+        load_official_websites,
+        merge_source_maps,
+    )
+
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 MARKET_PROFILE_PATH = ROOT / "public" / "data" / "market_profiles.json"
@@ -672,8 +685,14 @@ def crawl_company(
 def main() -> int:
     config = read_json(CONFIG_PATH, {})
     previous = read_json(INDEX_PATH, {"reports": []})
-    websites = load_company_websites()
-    sec_tickers = load_sec_ticker_map(request_bytes)
+    websites = merge_source_maps(
+        load_company_websites(),
+        load_official_websites(ROOT),
+    )
+    sec_tickers = merge_source_maps(
+        load_sec_ticker_map(request_bytes),
+        load_local_cik_map(ROOT),
+    )
     companies = [
         company
         for raw in config.get("listedCompanies", [])
