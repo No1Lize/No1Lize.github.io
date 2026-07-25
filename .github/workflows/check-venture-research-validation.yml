@@ -22,6 +22,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # final-status-v2
           mkdir -p diagnostics
           gh run list \
             --workflow one-time-validate-venture-research.yml \
@@ -37,6 +38,6 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add diagnostics/venture-research-validation-status.json \
             diagnostics/venture-project-background-status.json
-          git commit -m "ci: record project background sanitation status"
+          git commit -m "ci: record final venture validation status"
           git pull --rebase origin main
           git push origin HEAD:main
