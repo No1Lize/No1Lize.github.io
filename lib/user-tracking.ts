@@ -8,6 +8,7 @@ export const TRACKING_OWNER = "No1Lize";
 
 export type TrackingRegion = "中国" | "美国" | "全球";
 export type TrackingSourceType = "rss" | "listing-search" | "sec";
+export type TrackingSourceCategory = "company" | "media" | "person";
 export type TrackingMarket = "A股" | "港股" | "美股";
 
 export type TrackingTrack = {
@@ -36,6 +37,7 @@ export type TrackingSource = {
   name: string;
   url: string;
   sourceType: TrackingSourceType;
+  sourceCategory: TrackingSourceCategory;
   region: TrackingRegion;
   sector: string;
   company: string;
@@ -72,6 +74,7 @@ export type TrackingKeywordValidation = {
 const REGIONS: TrackingRegion[] = ["中国", "美国", "全球"];
 const MARKETS: TrackingMarket[] = ["A股", "港股", "美股"];
 const SOURCE_TYPES: TrackingSourceType[] = ["rss", "listing-search", "sec"];
+const SOURCE_CATEGORIES: TrackingSourceCategory[] = ["company", "media", "person"];
 const GENERIC_PERSON_LABELS = new Set([
   "人物",
   "专家",
@@ -386,6 +389,22 @@ function normalizeListedCompany(
   };
 }
 
+function inferSourceCategory(
+  raw: Record<string, unknown>,
+  sourceType: TrackingSourceType,
+): TrackingSourceCategory {
+  const explicit = raw.sourceCategory as TrackingSourceCategory;
+  if (SOURCE_CATEGORIES.includes(explicit)) return explicit;
+  if (
+    sourceType === "sec" ||
+    cleanText(raw.ticker, 30) ||
+    cleanText(raw.listedCompanyId, 100)
+  ) {
+    return "company";
+  }
+  return "media";
+}
+
 function normalizeSource(value: unknown, index: number): TrackingSource | null {
   if (!value || typeof value !== "object") return null;
   const raw = value as Record<string, unknown>;
@@ -393,6 +412,7 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
   const sourceType = SOURCE_TYPES.includes(raw.sourceType as TrackingSourceType)
     ? (raw.sourceType as TrackingSourceType)
     : "listing-search";
+  const sourceCategory = inferSourceCategory(raw, sourceType);
   const ticker = cleanText(raw.ticker, 30).toUpperCase();
   const suppliedUrl = cleanText(raw.url, 500);
   const url =
@@ -402,7 +422,7 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
   if (
     !name ||
     !/^https?:\/\//i.test(url) ||
-    (sourceType === "sec" && !ticker)
+    (sourceType === "sec" && (!ticker || sourceCategory !== "company"))
   ) {
     return null;
   }
@@ -417,13 +437,14 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
     name,
     url,
     sourceType,
+    sourceCategory,
     region,
     sector: cleanText(raw.sector, 60) || "AI / AGI",
-    company: cleanText(raw.company, 80),
-    ticker,
+    company: sourceCategory === "company" ? cleanText(raw.company, 80) : "",
+    ticker: sourceCategory === "company" ? ticker : "",
     keywords: uniqueStrings(raw.keywords),
     enabled: raw.enabled !== false,
-    ...(listedCompanyId ? { listedCompanyId } : {}),
+    ...(sourceCategory === "company" && listedCompanyId ? { listedCompanyId } : {}),
   };
 }
 
