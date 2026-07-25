@@ -23,7 +23,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          # status revision: catalog-filter-v3
+          # status revision: isolated-validation-v4
           mkdir -p diagnostics
           gh run list \
             --workflow refresh-venture-profiles.yml \
@@ -31,7 +31,7 @@ jobs:
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
             > diagnostics/venture-profile-refresh-status.json
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '41898282+users.noreply.github.com'
           git add diagnostics/venture-profile-refresh-status.json
           git commit -m 'ci: record venture profile refresh status'
           git pull --rebase origin main
