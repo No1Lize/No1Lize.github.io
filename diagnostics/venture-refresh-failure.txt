@@ -1,39 +1,223 @@
-refresh	Validate generated snapshot	﻿2026-07-25T15:34:22.8987982Z ##[group]Run python tools/crawl_venture_profiles.py --validate-only
-refresh	Validate generated snapshot	2026-07-25T15:34:22.8988922Z ^[[36;1mpython tools/crawl_venture_profiles.py --validate-only^[[0m
-refresh	Validate generated snapshot	2026-07-25T15:34:22.8989434Z ^[[36;1mpython -m unittest discover -s tests -p "test_*.py"^[[0m
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9018076Z shell: /usr/bin/bash -e {0}
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9018416Z env:
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9019142Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9019785Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9020277Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9020751Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9021210Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9021653Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9022056Z ##[endgroup]
-refresh	Validate generated snapshot	2026-07-25T15:34:22.9996252Z {"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "productiveCompanies": 52, "productiveInstitutions": 18}
-refresh	Validate generated snapshot	2026-07-25T15:34:23.8512487Z ......................official=two fatal=RuntimeError: blocked
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9449478Z ..........................................................................................................................................E
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9451101Z ======================================================================
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9452572Z ERROR: test_wechat_public_sources (unittest.loader._FailedTest.test_wechat_public_sources)
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9453833Z ----------------------------------------------------------------------
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9454966Z ImportError: Failed to import test module: test_wechat_public_sources
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9456032Z Traceback (most recent call last):
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9465900Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9466937Z     module = self._get_module_from_name(name)
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9467406Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9468205Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9469276Z     __import__(name)
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9470025Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_wechat_public_sources.py", line 6, in <module>
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9470941Z     from tools import wechat_public_sources as wechat
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9471781Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 129
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9472647Z     _person_name(value) for value in track.get("people", []) if _person_name(value)
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9473386Z     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9473961Z SyntaxError: Generator expression must be parenthesized
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9474334Z 
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9474345Z 
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9474622Z ----------------------------------------------------------------------
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9475195Z Ran 161 tests in 0.187s
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9475465Z 
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9475609Z FAILED (errors=1)
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9476084Z No snapshot changes (1 articles).
-refresh	Validate generated snapshot	2026-07-25T15:34:23.9674891Z ##[error]Process completed with exit code 1.
+refresh	Validate generated snapshot	﻿2026-07-25T15:43:15.6986793Z ##[group]Run python tools/crawl_venture_profiles.py --validate-only
+refresh	Validate generated snapshot	2026-07-25T15:43:15.6987328Z ^[[36;1mpython tools/crawl_venture_profiles.py --validate-only^[[0m
+refresh	Validate generated snapshot	2026-07-25T15:43:15.6988062Z ^[[36;1mpython -m unittest discover -s tests -p "test_*.py"^[[0m
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7033893Z shell: /usr/bin/bash -e {0}
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7034138Z env:
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7034409Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7035018Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7035446Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7035817Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7036180Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7036546Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
+refresh	Validate generated snapshot	2026-07-25T15:43:15.7036856Z ##[endgroup]
+refresh	Validate generated snapshot	2026-07-25T15:43:15.8129333Z {"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "productiveCompanies": 51, "productiveInstitutions": 18}
+refresh	Validate generated snapshot	2026-07-25T15:43:16.3592559Z ......................official=two fatal=RuntimeError: blocked
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4547195Z ............E...............E......EEE...........E.....................................E...E................E.....
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4548770Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4550144Z ERROR: test_eastmoney_adaptive_handoff (unittest.loader._FailedTest.test_eastmoney_adaptive_handoff)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4551617Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4552784Z ImportError: Failed to import test module: test_eastmoney_adaptive_handoff
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4553868Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4561026Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4561764Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4562056Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4562648Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4563198Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4563717Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_eastmoney_adaptive_handoff.py", line 6, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4564307Z     from tools import eastmoney_transport as transport
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4564876Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/eastmoney_transport.py", line 18, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4565492Z     from . import crawl_official_with_source_categories as category_crawler
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4566208Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_official_with_source_categories.py", line 17, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4566840Z     from .crawl_with_source_categories import source_category
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4567452Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4568271Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4568791Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4569421Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4569938Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4570560Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4570799Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4570806Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4570921Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4571744Z ERROR: test_eastmoney_origin_accounting (unittest.loader._FailedTest.test_eastmoney_origin_accounting)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4572277Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4572714Z ImportError: Failed to import test module: test_eastmoney_origin_accounting
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4573240Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4573785Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4574296Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4574573Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4575098Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4575622Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4576174Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_eastmoney_origin_accounting.py", line 5, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4576768Z     from tools.eastmoney_transport import (
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4577298Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/eastmoney_transport.py", line 18, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4578151Z     from . import crawl_official_with_source_categories as category_crawler
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4578868Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_official_with_source_categories.py", line 17, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4579500Z     from .crawl_with_source_categories import source_category
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4580109Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4580651Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4581168Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4581791Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4582247Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4582618Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4582854Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4582859Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4582966Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4583459Z ERROR: test_eastmoney_rolling_history (unittest.loader._FailedTest.test_eastmoney_rolling_history)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4583967Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4584385Z ImportError: Failed to import test module: test_eastmoney_rolling_history
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4584762Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4585263Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4585778Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4586048Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4586583Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4587080Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4587580Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_eastmoney_rolling_history.py", line 5, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4588387Z     from tools.eastmoney_transport import merge_eastmoney_history
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4588996Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/eastmoney_transport.py", line 18, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4589600Z     from . import crawl_official_with_source_categories as category_crawler
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4590317Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_official_with_source_categories.py", line 17, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4590963Z     from .crawl_with_source_categories import source_category
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4591750Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4592292Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4592807Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4593549Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4594016Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4594439Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4594674Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4594679Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4594786Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4595297Z ERROR: test_eastmoney_snapshot_pipeline (unittest.loader._FailedTest.test_eastmoney_snapshot_pipeline)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4595840Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4596278Z ImportError: Failed to import test module: test_eastmoney_snapshot_pipeline
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4596671Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4597183Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4597706Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4598120Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4598650Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4599160Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4618894Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_eastmoney_snapshot_pipeline.py", line 5, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4619585Z     from tools.eastmoney_transport import merge_eastmoney_history
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4620247Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/eastmoney_transport.py", line 18, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4620893Z     from . import crawl_official_with_source_categories as category_crawler
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4621594Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_official_with_source_categories.py", line 17, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4622232Z     from .crawl_with_source_categories import source_category
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4622845Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4623391Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4623907Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4624533Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4624989Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4625367Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4625609Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4625616Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4625724Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4626238Z ERROR: test_eastmoney_snapshot_retention (unittest.loader._FailedTest.test_eastmoney_snapshot_retention)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4626781Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4627225Z ImportError: Failed to import test module: test_eastmoney_snapshot_retention
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4627637Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4628418Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4628947Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4629226Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4629790Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4630514Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4631046Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_eastmoney_snapshot_retention.py", line 6, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4631709Z     from tools.eastmoney_transport import replacement_statuses_for_eastmoney
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4632466Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/eastmoney_transport.py", line 18, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4633065Z     from . import crawl_official_with_source_categories as category_crawler
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4633753Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_official_with_source_categories.py", line 17, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4634380Z     from .crawl_with_source_categories import source_category
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4634996Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4635557Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4636071Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4636686Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4637137Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4637512Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4637738Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4637743Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4637985Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4638418Z ERROR: test_generic_web_sources (unittest.loader._FailedTest.test_generic_web_sources)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4638876Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4639281Z ImportError: Failed to import test module: test_generic_web_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4639645Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4640151Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4640661Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4640937Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4641452Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4641961Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4642433Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_generic_web_sources.py", line 7, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4643022Z     from tools import crawl_with_source_categories as categories
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4643643Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4644191Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4644719Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4645336Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4645780Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4646140Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4646372Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4646377Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4646478Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4646902Z ERROR: test_source_categories (unittest.loader._FailedTest.test_source_categories)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4647348Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4647864Z ImportError: Failed to import test module: test_source_categories
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4648224Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4648874Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4649382Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4649655Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4650173Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4650799Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4651273Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 5, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4651906Z     from tools import crawl_official_with_source_categories as official_categories
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4652612Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_official_with_source_categories.py", line 17, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4653233Z     from .crawl_with_source_categories import source_category
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4653834Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4654376Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4654883Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4655500Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4655950Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4656318Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4656549Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4656554Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4656665Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4657104Z ERROR: test_user_source_coverage (unittest.loader._FailedTest.test_user_source_coverage)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4657572Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4658259Z ImportError: Failed to import test module: test_user_source_coverage
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4658626Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4659134Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4659646Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4659916Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4660439Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4660940Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4661416Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_user_source_coverage.py", line 5, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4662014Z     from tools.validate_user_source_coverage import evaluate_coverage
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4662646Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/validate_user_source_coverage.py", line 19, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4663243Z     from . import crawl_with_source_categories as categories
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4663847Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/crawl_with_source_categories.py", line 24, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4664385Z     from . import wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4664898Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4665513Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4665962Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4666323Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4666548Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4666553Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4666663Z ======================================================================
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4667109Z ERROR: test_wechat_public_sources (unittest.loader._FailedTest.test_wechat_public_sources)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4667871Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4668284Z ImportError: Failed to import test module: test_wechat_public_sources
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4668648Z Traceback (most recent call last):
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4669161Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4669839Z     module = self._get_module_from_name(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4670111Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4670627Z   File "/opt/hostedtoolcache/Python/3.12.13/x64/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4671128Z     __import__(name)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4671608Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_wechat_public_sources.py", line 6, in <module>
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4672173Z     from tools import wechat_public_sources as wechat
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4672722Z   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/wechat_public_sources.py", line 309
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4673329Z     return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4673777Z                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4674140Z SyntaxError: Generator expression must be parenthesized
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4674377Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4674382Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4674523Z ----------------------------------------------------------------------
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4674855Z Ran 136 tests in 0.172s
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4674990Z 
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4675081Z FAILED (errors=9)
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4675305Z No snapshot changes (1 articles).
+refresh	Validate generated snapshot	2026-07-25T15:43:16.4765730Z ##[error]Process completed with exit code 1.
