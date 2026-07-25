@@ -336,7 +336,12 @@ def _relevance_entities(
 ) -> tuple[list[str], list[str], list[str]]:
     text = f"{title} {summary} {content}"
     companies = _matched(spec.get("trackedCompanies", []), text, crawler)
-    people = _matched(spec.get("trackedPeople", []), text, crawler)
+    company_keys = {_clean(value, 120).casefold() for value in companies}
+    people = [
+        value
+        for value in _matched(spec.get("trackedPeople", []), text, crawler)
+        if _clean(value, 120).casefold() not in company_keys
+    ]
     keywords = _matched(_specific_keywords(spec.get("keywords", [])), text, crawler)
     if companies or people:
         return companies, people, keywords
@@ -431,13 +436,16 @@ def parse_wechat_article(
         fallback_date
     )
     content = parser.content
-    summary = _clean(
+    meta_summary = _clean(
         parser.meta.get("description")
         or parser.meta.get("og:description")
-        or parser.meta.get("twitter:description")
-        or content[:650]
-        or fallback_summary,
+        or parser.meta.get("twitter:description"),
         500,
+    )
+    summary = (
+        meta_summary
+        if len(meta_summary) >= 80
+        else _clean(content[:650] or fallback_summary or meta_summary, 500)
     )
     if not title or len(title) < 6 or not published_at or not summary:
         return None
@@ -464,6 +472,10 @@ def parse_wechat_article(
         authors=[author] if author else None,
     )
     article["sector"] = spec.get("sector") or article.get("sector")
+    if isinstance(article.get("source"), dict):
+        # Preserve the signed public URL exactly. The generic normalizer treats
+        # ``&timestamp`` as the HTML entity ``&times`` when no semicolon is present.
+        article["source"]["url"] = url
     article["wechatAccount"] = account
     article["mentionedCompanies"] = matched_companies
     article["mentionedPeople"] = matched_people

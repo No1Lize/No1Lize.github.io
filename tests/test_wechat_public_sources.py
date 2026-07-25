@@ -55,7 +55,7 @@ class WeChatPublicSourcesTest(unittest.TestCase):
             "region": "中国",
             "keywords": ["可复用火箭", "卫星互联网"],
             "trackedCompanies": ["SpaceX", "Rocket Lab"],
-            "trackedPeople": ["埃隆·马斯克"],
+            "trackedPeople": ["埃隆·马斯克", "SpaceX"],
             "sourceLevel": "原始材料",
             "platform": "微信",
         }
@@ -75,6 +75,7 @@ class WeChatPublicSourcesTest(unittest.TestCase):
         self.assertEqual(article["authors"], ["张航"])
         self.assertIn("SpaceX", article["mentionedCompanies"])
         self.assertIn("埃隆·马斯克", article["mentionedPeople"])
+        self.assertNotIn("SpaceX", article["mentionedPeople"])
         self.assertEqual(article["source"]["platform"], "微信")
         self.assertLessEqual(len(article["summary"]), 500)
 

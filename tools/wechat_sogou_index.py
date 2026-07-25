@@ -114,7 +114,7 @@ def _query_term(spec: dict[str, Any]) -> str:
 
 
 def build_search_url(spec: dict[str, Any], page: int = 1) -> str:
-    return f"https://weixin.sogou.com/weixin?type=2&query={quote(_query_term(spec))}&page={max(1, page)}&ie=utf8"
+    return f"https://weixin.sogou.com/weixin?type=2&query={quote(_query_term(spec))}&page={max(1, page)}&ie=utf8&tsn=1"
 
 
 def _result_blocks(body: str) -> list[str]:
