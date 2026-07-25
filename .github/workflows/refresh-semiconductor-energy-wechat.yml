@@ -12,7 +12,7 @@ permissions:
   actions: write
 
 concurrency:
-  group: public-article-refresh
+  group: semiconductor-energy-wechat-refresh
   cancel-in-progress: false
 
 jobs:
@@ -34,6 +34,54 @@ jobs:
             --account ijiwei \
             --account gg-lithium \
             --account cbea-battery
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          targets = {"icbank", "ijiwei", "gg-lithium", "cbea-battery"}
+          payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
+          statuses = [
+              item
+              for item in payload.get("sourceStatus", [])
+              if any(target in str(item.get("id", "")) for target in targets)
+          ]
+          articles = [
+              item
+              for item in payload.get("articles", [])
+              if any(target in str(item.get("sourceId", "")) for target in targets)
+          ]
+          report = {
+              "snapshotGeneratedAt": payload.get("generatedAt"),
+              "targetAccounts": sorted(targets),
+              "statusCount": len(statuses),
+              "statuses": statuses,
+              "articleCount": len(articles),
+              "sectorCounts": dict(Counter(str(item.get("sector", "")) for item in articles)),
+              "fullTextArticles": sum(
+                  1 for item in articles if item.get("wechatContentMode") != "index-only"
+              ),
+              "indexOnlyArticles": sum(
+                  1 for item in articles if item.get("wechatContentMode") == "index-only"
+              ),
+              "articles": [
+                  {
+                      "title": item.get("title"),
+                      "sector": item.get("sector"),
+                      "wechatAccount": item.get("wechatAccount"),
+                      "contentMode": item.get("wechatContentMode", "full-text"),
+                      "sourceId": item.get("sourceId"),
+                      "url": item.get("source", {}).get("url"),
+                  }
+                  for item in articles
+              ],
+          }
+          Path("diagnostics/wechat-semiconductor-energy-refresh.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
 
       - name: Verify crawler, fallback, and snapshot quality
         run: |
@@ -49,17 +97,21 @@ jobs:
             tests.test_refresh_wechat_snapshot
           python tools/crawl_articles.py --validate-only
 
-      - name: Commit refreshed snapshot
+      - name: Commit refreshed snapshot and diagnostics
         id: update
         shell: bash
         run: |
-          if git diff --quiet -- public/data/articles.json; then
+          if git diff --quiet -- \
+            public/data/articles.json \
+            diagnostics/wechat-semiconductor-energy-refresh.json; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/articles.json
+          git add \
+            public/data/articles.json \
+            diagnostics/wechat-semiconductor-energy-refresh.json
           git commit -m "data: refresh semiconductor and energy WeChat coverage"
           for attempt in 1 2 3; do
             git pull --rebase origin main
@@ -68,13 +120,62 @@ jobs:
               --account ijiwei \
               --account gg-lithium \
               --account cbea-battery
+            python - <<'PY'
+            import json
+            from collections import Counter
+            from pathlib import Path
+
+            targets = {"icbank", "ijiwei", "gg-lithium", "cbea-battery"}
+            payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
+            statuses = [
+                item
+                for item in payload.get("sourceStatus", [])
+                if any(target in str(item.get("id", "")) for target in targets)
+            ]
+            articles = [
+                item
+                for item in payload.get("articles", [])
+                if any(target in str(item.get("sourceId", "")) for target in targets)
+            ]
+            report = {
+                "snapshotGeneratedAt": payload.get("generatedAt"),
+                "targetAccounts": sorted(targets),
+                "statusCount": len(statuses),
+                "statuses": statuses,
+                "articleCount": len(articles),
+                "sectorCounts": dict(Counter(str(item.get("sector", "")) for item in articles)),
+                "fullTextArticles": sum(
+                    1 for item in articles if item.get("wechatContentMode") != "index-only"
+                ),
+                "indexOnlyArticles": sum(
+                    1 for item in articles if item.get("wechatContentMode") == "index-only"
+                ),
+                "articles": [
+                    {
+                        "title": item.get("title"),
+                        "sector": item.get("sector"),
+                        "wechatAccount": item.get("wechatAccount"),
+                        "contentMode": item.get("wechatContentMode", "full-text"),
+                        "sourceId": item.get("sourceId"),
+                        "url": item.get("source", {}).get("url"),
+                    }
+                    for item in articles
+                ],
+            }
+            Path("diagnostics/wechat-semiconductor-energy-refresh.json").write_text(
+                json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            PY
             python -m unittest \
               tests.test_wechat_public_sources \
               tests.test_wechat_public_index_fallback \
               tests.test_wechat_snapshot_quality \
               tests.test_refresh_wechat_snapshot
             python tools/crawl_articles.py --validate-only
-            git add public/data/articles.json
+            git add \
+              public/data/articles.json \
+              diagnostics/wechat-semiconductor-energy-refresh.json
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
