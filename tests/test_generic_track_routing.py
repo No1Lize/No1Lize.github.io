@@ -43,26 +43,39 @@ class GenericTrackRoutingTests(unittest.TestCase):
         }
 
         tracks = tracking._enabled_tracks(payload)
-        taxonomy.install(tracking)
-        sources = tracking._generated_track_sources(tracks)
+        original_track_terms = tracking._track_terms
+        original_generated = tracking._generated_track_sources
+        try:
+            taxonomy.install(tracking)
+            sources = tracking._generated_track_sources(tracks)
 
-        self.assertEqual(len(tracks), 3)
-        self.assertEqual(len(sources), 9)
-        self.assertEqual(
-            {source["sector"] for source in sources},
-            {"可控核聚变", "脑机接口", "低空经济"},
-        )
-        for track in tracks:
-            expected_ids = set(taxonomy.expected_source_ids(track["slug"]))
-            actual = [source for source in sources if source["sector"] == track["name"]]
-            self.assertEqual({source["id"] for source in actual}, expected_ids)
-            self.assertTrue(any("bing.com/search" in source["url"] for source in actual))
+            self.assertEqual(len(tracks), 3)
+            self.assertEqual(len(sources), 9)
             self.assertEqual(
-                sum("news.google.com/rss/search" in source["url"] for source in actual),
-                2,
+                {source["sector"] for source in sources},
+                {"可控核聚变", "脑机接口", "低空经济"},
             )
-            for source in actual:
-                self.assertIn(source["sector"], source["keywords"])
+            for track in tracks:
+                expected_ids = set(taxonomy.expected_source_ids(track["slug"]))
+                actual = [
+                    source for source in sources if source["sector"] == track["name"]
+                ]
+                self.assertEqual({source["id"] for source in actual}, expected_ids)
+                self.assertTrue(
+                    any("bing.com/search" in source["url"] for source in actual)
+                )
+                self.assertEqual(
+                    sum(
+                        "news.google.com/rss/search" in source["url"]
+                        for source in actual
+                    ),
+                    2,
+                )
+                for source in actual:
+                    self.assertIn(source["sector"], source["keywords"])
+        finally:
+            tracking._track_terms = original_track_terms
+            tracking._generated_track_sources = original_generated
 
     def test_disabled_and_malformed_tracks_are_ignored(self) -> None:
         payload = {
