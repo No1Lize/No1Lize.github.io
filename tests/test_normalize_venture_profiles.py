@@ -46,7 +46,7 @@ class VentureProfileConsistencyTests(unittest.TestCase):
 
     def test_payload_normalization_updates_all_entity_types_and_quality_gate(self) -> None:
         payload = {
-            "schemaVersion": 1,
+            "schemaVersion": 2,
             "generatedAt": "2026-07-25T00:00:00+00:00",
             "companies": {
                 "agibot": {
@@ -86,7 +86,21 @@ class VentureProfileConsistencyTests(unittest.TestCase):
                 {"kind": "company", "slug": "agibot"},
                 {"kind": "institution", "slug": "sample-capital"},
             ],
-            "qualityGate": {},
+            "qualityGate": {
+                "checks": {
+                    "companyResearchEnrichment": {
+                        "actual": 1,
+                        "required": 1,
+                        "passed": True,
+                    },
+                    "institutionResearchEnrichment": {
+                        "actual": 1,
+                        "required": 1,
+                        "passed": True,
+                    },
+                },
+                "passed": True,
+            },
         }
         normalized, stats = normalizer.normalize_payload(payload, CATALOG)
         self.assertEqual(normalized["companies"]["agibot"]["products"], ["灵犀"])
@@ -99,7 +113,10 @@ class VentureProfileConsistencyTests(unittest.TestCase):
             ["张三"],
         )
         self.assertEqual(stats["companyProducts"], 1)
-        self.assertTrue(normalized["qualityGate"]["checks"]["profileConsistency"]["passed"])
+        checks = normalized["qualityGate"]["checks"]
+        self.assertTrue(checks["profileConsistency"]["passed"])
+        self.assertTrue(checks["companyResearchEnrichment"]["passed"])
+        self.assertTrue(checks["institutionResearchEnrichment"]["passed"])
         self.assertTrue(normalized["qualityGate"]["passed"])
 
 
