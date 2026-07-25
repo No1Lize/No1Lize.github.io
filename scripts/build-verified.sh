@@ -26,3 +26,4 @@ timeout \
   "${vinext}" build
 
 "${script_dir}/validate-artifact.sh"
+node "${script_dir}/validate-static-links.mjs"
