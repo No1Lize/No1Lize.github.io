@@ -1,0 +1,58 @@
+name: Apply venture evidence regression fixes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/patch_refine_venture_evidence_regressions.py
+      - .github/workflows/patch-refine-venture-evidence.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: patch-refine-venture-evidence
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply deterministic source patch
+        run: python tools/patch_refine_venture_evidence_regressions.py
+      - name: Verify focused regressions
+        run: |
+          python -m py_compile \
+            tools/refine_venture_research_evidence.py \
+            tools/enforce_venture_entity_semantics.py
+          python -m unittest \
+            tests.test_refine_venture_research_evidence \
+            tests.test_venture_entity_semantics
+          git diff --check
+      - name: Commit permanent fix and remove migration
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm tools/patch_refine_venture_evidence_regressions.py
+          rm .github/workflows/patch-refine-venture-evidence.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: stabilize venture evidence alignment"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
