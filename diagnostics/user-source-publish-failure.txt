@@ -1,95 +1,43 @@
-publish	Refresh and publish user sources	﻿2026-07-25T13:06:22.9018172Z ##[group]Run set -euo pipefail
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9019638Z ^[[36;1mset -euo pipefail^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9020890Z ^[[36;1mgit config user.name "github-actions[bot]"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9022810Z ^[[36;1mgit config user.email "41898282+github-actions[bot]@users.noreply.github.com"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9024964Z ^[[36;1m^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9025843Z ^[[36;1mrun_pipeline() {^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9027257Z ^[[36;1m  local report="diagnostics/one-time-user-source-publish.txt"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9028855Z ^[[36;1m  mkdir -p diagnostics^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9029939Z ^[[36;1m  {^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9030932Z ^[[36;1m    echo "commit=$(git rev-parse HEAD)"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9032429Z ^[[36;1m    echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9034084Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9035122Z ^[[36;1m    echo "===== crawl_user_sources ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9036788Z ^[[36;1m    python tools/crawl_with_source_categories.py --source feeds^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9038409Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9039382Z ^[[36;1m    echo "===== migrate ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9040704Z ^[[36;1m    python tools/migrate_article_entities.py^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9042012Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9043256Z ^[[36;1m    echo "===== refine_eastmoney ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9044709Z ^[[36;1m    python tools/refine_eastmoney_snapshot.py^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9046008Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9047012Z ^[[36;1m    echo "===== enrich_tracking ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9048435Z ^[[36;1m    python tools/enrich_tracking_snapshot.py^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9049729Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9050724Z ^[[36;1m    echo "===== validate_quality ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9052182Z ^[[36;1m    python tools/crawl_articles.py --validate-only^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9053755Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9054787Z ^[[36;1m    echo "===== validate_eastmoney ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9056268Z ^[[36;1m    python tools/validate_eastmoney_snapshot.py^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9058062Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9059197Z ^[[36;1m    echo "===== validate_user_source_coverage ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9060789Z ^[[36;1m    python tools/validate_user_source_coverage.py^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9062473Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9064208Z ^[[36;1m    echo "===== full_unittest ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9066399Z ^[[36;1m    python -m unittest discover -s tests -p "test_*.py"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9068670Z ^[[36;1m    echo^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9069969Z ^[[36;1m    echo "===== snapshot ====="^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9071573Z ^[[36;1m    python - <<'PY'^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9072644Z ^[[36;1m    import json^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9074094Z ^[[36;1m    from pathlib import Path^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9076048Z ^[[36;1m    payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9178932Z ^[[36;1m    quality = payload.get("qualityGate", {}).get("checks", {})^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9181931Z ^[[36;1m    statuses = [^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9194610Z ^[[36;1m        item for item in payload.get("sourceStatus", [])^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9197573Z ^[[36;1m        if str(item.get("id", "")).startswith("user-source-")^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9200095Z ^[[36;1m    ]^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9201573Z ^[[36;1m    print(json.dumps({^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9203778Z ^[[36;1m        "generatedAt": payload.get("generatedAt"),^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9205584Z ^[[36;1m        "articleCount": payload.get("articleCount"),^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9207684Z ^[[36;1m        "minimumArticlesActual": quality.get("minimumArticles", {}).get("actual"),^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9209925Z ^[[36;1m        "uniqueUrlsActual": quality.get("uniqueUrls", {}).get("actual"),^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9212023Z ^[[36;1m        "uniqueUrlsRequired": quality.get("uniqueUrls", {}).get("required"),^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9214190Z ^[[36;1m        "userSourceStatuses": len(statuses),^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9215571Z ^[[36;1m        "productiveUserSources": sum(^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9217463Z ^[[36;1m            int(item.get("accepted", 0) or 0) > 0^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9219009Z ^[[36;1m            or int(item.get("discoveredAccepted", 0) or 0) > 0^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9220474Z ^[[36;1m            for item in statuses^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9221610Z ^[[36;1m        ),^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9222626Z ^[[36;1m    }, ensure_ascii=False, indent=2))^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9224073Z ^[[36;1m    PY^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9224987Z ^[[36;1m  } 2>&1 | tee "$report"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9226044Z ^[[36;1m}^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9226877Z ^[[36;1m^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9227773Z ^[[36;1mgit pull --rebase origin main^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9228918Z ^[[36;1mrun_pipeline^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9230470Z ^[[36;1mgit add public/data/articles.json diagnostics/one-time-user-source-publish.txt^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9232564Z ^[[36;1mgit commit -m "data: publish current user source snapshot"^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9234268Z ^[[36;1m^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9235147Z ^[[36;1mfor attempt in 1 2 3; do^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9236338Z ^[[36;1m  if git push origin HEAD:main; then^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9237672Z ^[[36;1m    gh workflow run pages.yml --ref main^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9238909Z ^[[36;1m    exit 0^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9239801Z ^[[36;1m  fi^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9240715Z ^[[36;1m  if [ "$attempt" -eq 3 ]; then^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9241865Z ^[[36;1m    exit 1^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9242772Z ^[[36;1m  fi^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9244010Z ^[[36;1m  git pull --rebase origin main^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9245193Z ^[[36;1m  run_pipeline^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9246812Z ^[[36;1m  git add public/data/articles.json diagnostics/one-time-user-source-publish.txt^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9248645Z ^[[36;1m  git commit --amend --no-edit^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9249784Z ^[[36;1mdone^[[0m
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9662598Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9664680Z env:
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9665986Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.13/x64
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9668425Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib/pkgconfig
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9670552Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9672459Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9674538Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.13/x64
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9676481Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.13/x64/lib
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9678147Z   SEC_USER_AGENT: 
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9689093Z   GH_TOKEN: ***
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9690011Z ##[endgroup]
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9848937Z /home/runner/work/_temp/87043f20-91ea-4416-984b-cd23c695242b.sh: line 80: warning: here-document at line 37 delimited by end-of-file (wanted `PY')
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9853803Z /home/runner/work/_temp/87043f20-91ea-4416-984b-cd23c695242b.sh: line 81: syntax error: unexpected end of file
-publish	Refresh and publish user sources	2026-07-25T13:06:22.9869440Z ##[error]Process completed with exit code 2.
+build	Run npm run build:pages	﻿2026-07-25T13:50:49.4160103Z ##[group]Run npm run build:pages
+build	Run npm run build:pages	2026-07-25T13:50:49.4160802Z ^[[36;1mnpm run build:pages^[[0m
+build	Run npm run build:pages	2026-07-25T13:50:49.4220532Z shell: /usr/bin/bash -e {0}
+build	Run npm run build:pages	2026-07-25T13:50:49.4220980Z ##[endgroup]
+build	Run npm run build:pages	2026-07-25T13:50:49.5252253Z 
+build	Run npm run build:pages	2026-07-25T13:50:49.5253158Z > lize-road-one@0.1.0 build:pages
+build	Run npm run build:pages	2026-07-25T13:50:49.5255421Z > npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && GITHUB_PAGES=true next build && npm run verify:tracking-pages && node scripts/validate-static-links.mjs
+build	Run npm run build:pages	2026-07-25T13:50:49.5256916Z 
+build	Run npm run build:pages	2026-07-25T13:50:49.6290677Z 
+build	Run npm run build:pages	2026-07-25T13:50:49.6291469Z > lize-road-one@0.1.0 validate:tracking
+build	Run npm run build:pages	2026-07-25T13:50:49.6292185Z > node scripts/validate-tracking-pages.mjs
+build	Run npm run build:pages	2026-07-25T13:50:49.6292567Z 
+build	Run npm run build:pages	2026-07-25T13:50:49.6630543Z Tracking configuration valid: 11 unique tracks, 11 enabled.
+build	Run npm run build:pages	2026-07-25T13:50:49.6631907Z   /technology/ai/  <- AI / AGI
+build	Run npm run build:pages	2026-07-25T13:50:49.6633312Z   /technology/robotics/  <- 机器人
+build	Run npm run build:pages	2026-07-25T13:50:49.6634524Z   /technology/semiconductor/  <- 半导体
+build	Run npm run build:pages	2026-07-25T13:50:49.6635668Z   /technology/energy/  <- 新能源
+build	Run npm run build:pages	2026-07-25T13:50:49.6636309Z   /technology/biotech/  <- 生物科技
+build	Run npm run build:pages	2026-07-25T13:50:49.6637153Z   /technology/quantum/  <- 量子计算
+build	Run npm run build:pages	2026-07-25T13:50:49.6638231Z   /technology/space/  <- 商业航天
+build	Run npm run build:pages	2026-07-25T13:50:49.6639121Z   /technology/web3/  <- Web3
+build	Run npm run build:pages	2026-07-25T13:50:49.6640116Z   /technology/materials/  <- 新材料
+build	Run npm run build:pages	2026-07-25T13:50:49.6640925Z   /technology/manufacturing/  <- 智能制造
+build	Run npm run build:pages	2026-07-25T13:50:49.6641525Z   /technology/fusion/  <- 可控核聚变
+build	Run npm run build:pages	2026-07-25T13:50:49.7761033Z 
+build	Run npm run build:pages	2026-07-25T13:50:49.7761831Z > lize-road-one@0.1.0 validate:taxonomy
+build	Run npm run build:pages	2026-07-25T13:50:49.7762791Z > node --import tsx scripts/validate-tracking-taxonomy.ts
+build	Run npm run build:pages	2026-07-25T13:50:49.7763257Z 
+build	Run npm run build:pages	2026-07-25T13:50:49.9443998Z TRACKING_TAXONOMY_WARNING: company “宁德时代” 同时属于 新材料、新能源；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9447693Z TRACKING_TAXONOMY_WARNING: keyword “强化学习” 同时属于 机器人、AI / AGI；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9449585Z TRACKING_TAXONOMY_WARNING: keyword “自动驾驶” 同时属于 半导体、机器人；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9451134Z TRACKING_TAXONOMY_WARNING: keyword “AI agent” 同时属于 半导体、AI / AGI；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9452570Z TRACKING_TAXONOMY_WARNING: company “Anthropic” 同时属于 半导体、AI / AGI；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9454004Z TRACKING_TAXONOMY_WARNING: company “DeepSeek” 同时属于 量子计算、AI / AGI；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9455635Z TRACKING_TAXONOMY_WARNING: person “Google DeepMind @GoogleDeepMind” 同时属于 新能源、AI / AGI；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9457153Z TRACKING_TAXONOMY_WARNING: company “OpenAI” 同时属于 生物科技、AI / AGI；爬虫不会把共享公司或人物作为无约束的独立搜索词。
+build	Run npm run build:pages	2026-07-25T13:50:49.9458459Z Tracking taxonomy valid: 11 tracks, 8 non-blocking overlaps.
+build	Run npm run build:pages	2026-07-25T13:50:50.0618235Z 
+build	Run npm run build:pages	2026-07-25T13:50:50.0619073Z > lize-road-one@0.1.0 validate:tracking-snapshot
+build	Run npm run build:pages	2026-07-25T13:50:50.0619926Z > node scripts/validate-tracking-snapshot.mjs
+build	Run npm run build:pages	2026-07-25T13:50:50.0620330Z 
+build	Run npm run build:pages	2026-07-25T13:50:50.1059378Z TRACKING_SNAPSHOT_ERROR: tracking configuration is newer than the article snapshot; wait for Refresh public intelligence
+build	Run npm run build:pages	2026-07-25T13:50:50.1246720Z ##[error]Process completed with exit code 1.
