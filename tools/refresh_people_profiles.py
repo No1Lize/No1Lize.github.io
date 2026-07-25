@@ -127,8 +127,13 @@ def candidate_score(title: str, aliases: list[str]) -> float:
     return best
 
 
-def fetch_wikipedia(aliases: list[str], queries: list[str] | None = None) -> dict[str, str] | None:
+def fetch_wikipedia(
+    aliases: list[str],
+    queries: list[str] | None = None,
+    identity_terms: list[str] | None = None,
+) -> dict[str, str] | None:
     queries = unique(queries or aliases)
+    expected = [normalize(value) for value in unique(identity_terms or []) if len(normalize(value)) >= 3]
     for language in ("zh", "en"):
         for query in queries[:3]:
             params = urllib.parse.urlencode({
@@ -152,8 +157,10 @@ def fetch_wikipedia(aliases: list[str], queries: list[str] | None = None) -> dic
                 if "disambiguation" in props or not extract:
                     continue
                 score = candidate_score(str(page.get("title") or ""), aliases)
-                if score >= 55:
-                    ranked.append((score, page))
+                context = normalize(f"{page.get('title') or ''} {extract}")
+                identity_hits = sum(1 for term in expected if term and term in context)
+                if score >= 55 and (not expected or identity_hits > 0):
+                    ranked.append((score + min(identity_hits, 3) * 8, page))
             if not ranked:
                 continue
             _, page = max(ranked, key=lambda item: item[0])
@@ -371,7 +378,7 @@ def enrich_candidate(candidate: dict[str, Any], previous: dict[str, Any] | None,
         *(override.get("productHints") or []),
         *candidate.get("sectors", []),
     ])
-    wikipedia = None if offline else fetch_wikipedia(aliases, identity_queries)
+    wikipedia = None if offline else fetch_wikipedia(aliases, identity_queries, identity_terms)
     wikidata = None if offline else fetch_wikidata(
         aliases,
         preferred_id=str((wikipedia or {}).get("wikidataId") or ""),

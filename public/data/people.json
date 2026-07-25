@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-25T15:11:48+00:00",
+  "generatedAt": "2026-07-25T15:39:01+00:00",
   "personCount": 15,
   "excludedOrganizationAccounts": [
     "Anthropic @AnthropicAI",
@@ -70,7 +70,7 @@
         "https://deepmind.google/about/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:45+00:00"
+      "updatedAt": "2026-07-25T15:38:54+00:00"
     },
     {
       "slug": "elon-musk",
@@ -179,7 +179,7 @@
         "https://www.tesla.com/elon-musk"
       ],
       "status": "complete",
-      "updatedAt": "2026-07-25T15:11:45+00:00"
+      "updatedAt": "2026-07-25T15:38:54+00:00"
     },
     {
       "slug": "fei-fei-li",
@@ -256,7 +256,7 @@
         "https://x.com/drfeifei"
       ],
       "status": "complete",
-      "updatedAt": "2026-07-25T15:11:47+00:00"
+      "updatedAt": "2026-07-25T15:38:54+00:00"
     },
     {
       "slug": "jie-tang",
@@ -271,8 +271,8 @@
         "AI / AGI"
       ],
       "role": "清华大学教授、人工智能研究者",
-      "summary": "唐杰忠（1932年9月14日—2017年6月18日），男，山东黄县人，中国相声、影视演员。常常同马季、姜昆登台演出。",
-      "background": "唐杰忠（1932年9月14日—2017年6月18日），男，山东黄县人，中国相声、影视演员。常常同马季、姜昆登台演出。",
+      "summary": "Jie Tang (born 1977) is a full-time professor at the Department of Computer Science of Tsinghua University. He received a PhD in computer science from the same university in 2006. He is known for building the academic social network search system AMiner (formerly known as ArnetMiner), which was launched in March 2006 and now has attracted 2,766,356 independent IP accesses from 220 countries.",
+      "background": "Jie Tang (born 1977) is a full-time professor at the Department of Computer Science of Tsinghua University. He received a PhD in computer science from the same university in 2006. He is known for building the academic social network search system AMiner (formerly known as ArnetMiner), which was launched in March 2006 and now has attracted 2,766,356 independent IP accesses from 220 countries.\nHis research interests include social networks and data mining.\nHe was elevated to IEEE Fellow in 2021 \"for contributions to knowledge discovery from data and social network mining\".\nHe was elevated to ACM Fellow in 2022 \"for contributions to information and social network mining\". He was elected AAAI Fellow in 2023.\nHe is also a co-founder of Z.ai. As of March 2026, Forbes has estimated his net worth to be $1.9 billion.",
       "concepts": [
         "AMiner",
         "智谱AI",
@@ -281,13 +281,16 @@
       "organizations": [
         "清华大学",
         "智谱AI",
+        "Aminer",
         "南方医科大学"
       ],
       "products": [
         "AMiner",
         "智谱AI"
       ],
-      "works": [],
+      "works": [
+        "Aminer"
+      ],
       "books": [],
       "speeches": [],
       "materials": [
@@ -299,27 +302,27 @@
           "source": "清华大学"
         },
         {
-          "title": "唐杰忠 — Wikipedia",
+          "title": "Jie Tang — Wikipedia",
           "date": "持续更新",
           "type": "biography",
-          "url": "https://zh.wikipedia.org/wiki/%E5%94%90%E6%9D%B0%E5%BF%A0",
-          "source": "Wikipedia (zh)"
+          "url": "https://en.wikipedia.org/wiki/Jie_Tang",
+          "source": "Wikipedia (en)"
         },
         {
           "title": "Jie Tang — Wikidata",
           "date": "持续更新",
           "type": "public_document",
-          "url": "https://www.wikidata.org/wiki/Q9051216",
+          "url": "https://www.wikidata.org/wiki/Q6192187",
           "source": "Wikidata"
         }
       ],
       "sources": [
-        "https://zh.wikipedia.org/wiki/%E5%94%90%E6%9D%B0%E5%BF%A0",
-        "https://www.wikidata.org/wiki/Q9051216",
+        "https://en.wikipedia.org/wiki/Jie_Tang",
+        "https://www.wikidata.org/wiki/Q6192187",
         "https://keg.cs.tsinghua.edu.cn/jietang/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:45+00:00"
+      "updatedAt": "2026-07-25T15:38:54+00:00"
     },
     {
       "slug": "kaiming-he",
@@ -335,8 +338,8 @@
         "AI / AGI"
       ],
       "role": "MIT 教授、计算机视觉研究者",
-      "summary": "何恺明（1984年—），男，中华人民共和国计算机科学家，残差神经网络主要发明人，主要研究领域为计算机视觉、深度学习，现任麻省理工学院副教授。",
-      "background": "何恺明（1984年—），男，中华人民共和国计算机科学家，残差神经网络主要发明人，主要研究领域为计算机视觉、深度学习，现任麻省理工学院副教授。",
+      "summary": "Kaiming He (Chinese: 何恺明; pinyin: Hé Kǎimíng) is a Chinese computer scientist who primarily researches computer vision and deep learning. He is an associate professor at Massachusetts Institute of Technology and works part-time as a Distinguished Scientist at Google DeepMind. He is known as one of the creators of the residual neural network (ResNet) architecture.",
+      "background": "Kaiming He (Chinese: 何恺明; pinyin: Hé Kǎimíng) is a Chinese computer scientist who primarily researches computer vision and deep learning. He is an associate professor at Massachusetts Institute of Technology and works part-time as a Distinguished Scientist at Google DeepMind. He is known as one of the creators of the residual neural network (ResNet) architecture.",
       "concepts": [
         "ResNet",
         "Mask R-CNN",
@@ -381,11 +384,11 @@
           "source": "X"
         },
         {
-          "title": "何恺明 — Wikipedia",
+          "title": "Kaiming He — Wikipedia",
           "date": "持续更新",
           "type": "biography",
-          "url": "https://zh.wikipedia.org/wiki/%E4%BD%95%E6%81%BA%E6%98%8E",
-          "source": "Wikipedia (zh)"
+          "url": "https://en.wikipedia.org/wiki/Kaiming_He",
+          "source": "Wikipedia (en)"
         },
         {
           "title": "Kaiming He — Wikidata",
@@ -396,14 +399,14 @@
         }
       ],
       "sources": [
-        "https://zh.wikipedia.org/wiki/%E4%BD%95%E6%81%BA%E6%98%8E",
+        "https://en.wikipedia.org/wiki/Kaiming_He",
         "https://www.wikidata.org/wiki/Q94960976",
         "https://people.csail.mit.edu/kaiming/",
         "https://people.csail.mit.edu/kaiming/publications.html",
         "https://x.com/kaiminghe"
       ],
       "status": "complete",
-      "updatedAt": "2026-07-25T15:11:45+00:00"
+      "updatedAt": "2026-07-25T15:38:56+00:00"
     },
     {
       "slug": "liang-wenfeng",
@@ -468,7 +471,7 @@
         "https://www.deepseek.com/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:45+00:00"
+      "updatedAt": "2026-07-25T15:38:56+00:00"
     },
     {
       "slug": "sam-altman",
@@ -549,7 +552,7 @@
         "https://openai.com/"
       ],
       "status": "complete",
-      "updatedAt": "2026-07-25T15:11:46+00:00"
+      "updatedAt": "2026-07-25T15:38:56+00:00"
     },
     {
       "slug": "shunyu-yao",
@@ -597,20 +600,6 @@
           "source": "X"
         },
         {
-          "title": "Shunyu Yao — Wikipedia",
-          "date": "持续更新",
-          "type": "biography",
-          "url": "https://en.wikipedia.org/wiki/Shunyu_Yao",
-          "source": "Wikipedia (en)"
-        },
-        {
-          "title": "Shunyu Yao — Wikidata",
-          "date": "持续更新",
-          "type": "public_document",
-          "url": "https://www.wikidata.org/wiki/Q140606516",
-          "source": "Wikidata"
-        },
-        {
           "title": "腾讯混元组织架构再升级：合并大语言模型和多模态团队，统一由姚顺雨管理",
           "date": "2026-07-24",
           "type": "article",
@@ -619,13 +608,11 @@
         }
       ],
       "sources": [
-        "https://en.wikipedia.org/wiki/Shunyu_Yao",
-        "https://www.wikidata.org/wiki/Q140606516",
         "https://ysymyth.github.io/",
         "https://x.com/ShunyuYao12"
       ],
-      "status": "complete",
-      "updatedAt": "2026-07-25T15:11:46+00:00"
+      "status": "partial",
+      "updatedAt": "2026-07-25T15:38:57+00:00"
     },
     {
       "slug": "bob-mumgaard",
@@ -677,7 +664,7 @@
         "https://cfs.energy/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:46+00:00"
+      "updatedAt": "2026-07-25T15:38:57+00:00"
     },
     {
       "slug": "david-kirtley",
@@ -719,7 +706,7 @@
         "https://www.helionenergy.com/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:46+00:00"
+      "updatedAt": "2026-07-25T15:39:01+00:00"
     },
     {
       "slug": "michl-binderbauer",
@@ -779,7 +766,7 @@
         "https://tae.com/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:46+00:00"
+      "updatedAt": "2026-07-25T15:38:57+00:00"
     },
     {
       "slug": "yang-zhao-fusion",
@@ -818,29 +805,13 @@
           "type": "official_profile",
           "url": "https://www.energy-singularity.com/",
           "source": "能量奇点"
-        },
-        {
-          "title": "杨钊煊 — Wikipedia",
-          "date": "持续更新",
-          "type": "biography",
-          "url": "https://zh.wikipedia.org/wiki/%E6%9D%A8%E9%92%8A%E7%85%8A",
-          "source": "Wikipedia (zh)"
-        },
-        {
-          "title": "Yang Zhao — Wikidata",
-          "date": "持续更新",
-          "type": "public_document",
-          "url": "https://www.wikidata.org/wiki/Q15478936",
-          "source": "Wikidata"
         }
       ],
       "sources": [
-        "https://zh.wikipedia.org/wiki/%E6%9D%A8%E9%92%8A%E7%85%8A",
-        "https://www.wikidata.org/wiki/Q15478936",
         "https://www.energy-singularity.com/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:46+00:00"
+      "updatedAt": "2026-07-25T15:39:00+00:00"
     },
     {
       "slug": "frank-wang",
@@ -856,8 +827,8 @@
         "机器人"
       ],
       "role": "大疆创新创始人",
-      "summary": "汪滔（1980年—），浙江杭州人，中華人民共和國工程師，無人飛機公司大疆創新的創辦人。",
-      "background": "汪滔（1980年—），浙江杭州人，中華人民共和國工程師，無人飛機公司大疆創新的創辦人。",
+      "summary": "Wang Tao (Chinese: 汪滔; pinyin: Wāng Tāo; born 1980), better known as Frank Wang, is a  Chinese aerospace engineer and businessman. He is the founder and CEO of the Shenzhen-based technology company DJI, the world's largest manufacturer of commercial drones. As of December 2020, he has a net worth of US$4.8 billion.",
+      "background": "Wang Tao (Chinese: 汪滔; pinyin: Wāng Tāo; born 1980), better known as Frank Wang, is a  Chinese aerospace engineer and businessman. He is the founder and CEO of the Shenzhen-based technology company DJI, the world's largest manufacturer of commercial drones. As of December 2020, he has a net worth of US$4.8 billion.",
       "concepts": [
         "DJI 无人机",
         "飞行影像系统",
@@ -883,11 +854,11 @@
           "source": "DJI"
         },
         {
-          "title": "汪滔 (工程師) — Wikipedia",
+          "title": "Frank Wang — Wikipedia",
           "date": "持续更新",
           "type": "biography",
-          "url": "https://zh.wikipedia.org/wiki/%E6%B1%AA%E6%BB%94_(%E5%B7%A5%E7%A8%8B%E5%B8%AB)",
-          "source": "Wikipedia (zh)"
+          "url": "https://en.wikipedia.org/wiki/Frank_Wang",
+          "source": "Wikipedia (en)"
         },
         {
           "title": "Frank Wang — Wikidata",
@@ -898,12 +869,12 @@
         }
       ],
       "sources": [
-        "https://zh.wikipedia.org/wiki/%E6%B1%AA%E6%BB%94_(%E5%B7%A5%E7%A8%8B%E5%B8%AB)",
+        "https://en.wikipedia.org/wiki/Frank_Wang",
         "https://www.wikidata.org/wiki/Q27126937",
         "https://www.dji.com/company"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:46+00:00"
+      "updatedAt": "2026-07-25T15:38:59+00:00"
     },
     {
       "slug": "li-zexiang",
@@ -955,7 +926,7 @@
         "https://www.xbotpark.com/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:48+00:00"
+      "updatedAt": "2026-07-25T15:39:00+00:00"
     },
     {
       "slug": "wang-xingxing",
@@ -1021,7 +992,7 @@
         "https://www.unitree.com/"
       ],
       "status": "partial",
-      "updatedAt": "2026-07-25T15:11:47+00:00"
+      "updatedAt": "2026-07-25T15:38:59+00:00"
     }
   ]
 }
