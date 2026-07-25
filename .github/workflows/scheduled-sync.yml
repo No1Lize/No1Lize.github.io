@@ -10,6 +10,7 @@ on:
       - tools/crawl_with_source_categories.py
       - tools/adaptive_public_sources.py
       - tools/generic_web_sources.py
+      - tools/wechat_public_sources.py
       - tools/robust_web_fallback.py
       - tools/validate_user_source_coverage.py
       - tools/tracking_taxonomy.py
