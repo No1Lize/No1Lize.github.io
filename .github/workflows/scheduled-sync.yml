@@ -38,7 +38,7 @@ permissions:
 
 concurrency:
   group: public-article-refresh
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   crawl:
@@ -84,6 +84,19 @@ jobs:
           git commit -m "data: refresh public articles"
           for attempt in 1 2 3; do
             git pull --rebase origin main
+
+            # A run may have started before newer crawler/refinement commits landed.
+            # Re-process and validate with the code now at the rebased HEAD so a
+            # stale run cannot publish internal fields or outdated accounting.
+            python tools/refine_eastmoney_snapshot.py
+            python tools/crawl_articles.py --validate-only
+            python tools/validate_eastmoney_snapshot.py
+            python -m unittest discover -s tests -p "test_*.py"
+            git add public/data/articles.json
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+
             if git push origin HEAD:main; then
               break
             fi
