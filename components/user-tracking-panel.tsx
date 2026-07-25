@@ -12,10 +12,12 @@ import {
   normalizeTrackingConfig,
   slugifyTrack,
   validatePersonLabel,
+  validateTrackingKeyword,
   type TrackingListedCompany,
   type TrackingMarket,
   type TrackingRegion,
   type TrackingSource,
+  type TrackingSourceCategory,
   type TrackingSourceType,
   type UserTrackingConfig,
 } from "@/lib/user-tracking";
@@ -31,6 +33,7 @@ type SourceDraft = {
   name: string;
   url: string;
   sourceType: TrackingSourceType;
+  sourceCategory: TrackingSourceCategory;
   region: TrackingRegion;
   sector: string;
   company: string;
@@ -49,6 +52,7 @@ const EMPTY_SOURCE: SourceDraft = {
   name: "",
   url: "",
   sourceType: "listing-search",
+  sourceCategory: "media",
   region: "全球",
   sector: "AI / AGI",
   company: "",
@@ -72,13 +76,19 @@ const LABELS: Record<ListField, { title: string; placeholder: string; help: stri
   people: {
     title: "关键人物 / 关键账号",
     placeholder: "例如：SpaceX @SpaceX、埃隆·马斯克 @elonmusk",
-    help: "推荐填写“显示名 @handle”。个人、组织或项目账号均可；有 handle 时会抓取 X 公开时间线。",
+    help: "推荐填写“显示名 @handle”。有 handle 时会抓取 X 公开时间线。",
   },
   sampleCompanies: {
     title: "样本公司",
     placeholder: "例如：OpenAI、宇树科技",
     help: "会进入该赛道的公司与事件搜索词。",
   },
+};
+
+const SOURCE_CATEGORY_LABELS: Record<TrackingSourceCategory, string> = {
+  company: "公司 / 监管披露",
+  media: "媒体 / 资讯平台",
+  person: "人物 / 账号 / 博客",
 };
 
 function encodeBase64(value: string): string {
@@ -127,6 +137,7 @@ function disclosureSource(company: TrackingListedCompany): TrackingSource {
     name: `${company.name} 公告披露`,
     url,
     sourceType: isUs ? "sec" : "listing-search",
+    sourceCategory: "company",
     region: isUs ? "美国" : "中国",
     sector: company.sector,
     company: company.name,
@@ -167,6 +178,10 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
     const value = listInputs.people.trim();
     return value ? validatePersonLabel(value) : null;
   }, [listInputs.people]);
+  const keywordPreview = useMemo(() => {
+    const value = listInputs.keywords.trim();
+    return value ? validateTrackingKeyword(value) : null;
+  }, [listInputs.keywords]);
 
   useEffect(() => {
     if (active >= config.tracks.length) {
@@ -291,6 +306,10 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
   function addTrack() {
     const name = newTrackName.trim();
     if (!name) return;
+    if (config.tracks.some((item) => item.name.toLocaleLowerCase("zh-CN") === name.toLocaleLowerCase("zh-CN"))) {
+      setMessage(`赛道“${name}”已经存在。`, "error");
+      return;
+    }
     const base = slugifyTrack(name);
     let slug = base;
     let suffix = 2;
@@ -343,6 +362,14 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
       const parsed = validatePersonLabel(rawValue);
       if (!parsed.valid) {
         setMessage(`人物标签无效：${parsed.message}`, "error");
+        return;
+      }
+      value = parsed.normalized;
+    }
+    if (field === "keywords") {
+      const parsed = validateTrackingKeyword(rawValue);
+      if (!parsed.valid) {
+        setMessage(`关键词无效：${parsed.message}`, "error");
         return;
       }
       value = parsed.normalized;
@@ -439,21 +466,41 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
     });
   }
 
+  function updateSourceCategory(sourceCategory: TrackingSourceCategory) {
+    setSourceDraft((current) => ({
+      ...current,
+      sourceCategory,
+      sourceType: sourceCategory !== "company" && current.sourceType === "sec" ? "listing-search" : current.sourceType,
+      company: sourceCategory === "company" ? current.company : "",
+      ticker: sourceCategory === "company" ? current.ticker : "",
+    }));
+  }
+
   function addSource() {
     const draft = sourceDraft;
-    if (!draft.name.trim()) {
+    const name = draft.name.trim();
+    if (!name) {
       setMessage("信息源名称不能为空。", "error");
       return;
     }
     if (draft.sourceType !== "sec" && !/^https?:\/\//i.test(draft.url.trim())) {
-      setMessage("RSS 或公司官网来源必须填写完整的 http(s) URL。", "error");
+      setMessage("网页、RSS 或账号来源必须填写完整的 http(s) URL。", "error");
+      return;
+    }
+    if (draft.sourceType === "sec" && draft.sourceCategory !== "company") {
+      setMessage("SEC EDGAR 只能作为公司来源。", "error");
+      return;
+    }
+    if (draft.sourceCategory === "company" && !draft.company.trim()) {
+      setMessage("公司来源必须填写公司名称。", "error");
       return;
     }
     if (draft.sourceType === "sec" && !draft.ticker.trim()) {
       setMessage("SEC 来源必须填写股票代码。", "error");
       return;
     }
-    const base = `source-${slugifyTrack(draft.name)}`;
+
+    const base = `source-${slugifyTrack(name)}`;
     let id = base;
     let suffix = 2;
     while (config.sources.some((source) => source.id === id)) {
@@ -462,16 +509,17 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
     }
     const source: TrackingSource = {
       id,
-      name: draft.name.trim(),
+      name,
       url:
         draft.sourceType === "sec" && !draft.url.trim()
           ? "https://www.sec.gov/edgar/search/"
           : draft.url.trim(),
       sourceType: draft.sourceType,
+      sourceCategory: draft.sourceCategory,
       region: draft.region,
       sector: draft.sector || enabledTracks[0]?.name || "未分类",
-      company: draft.company.trim() || draft.name.trim(),
-      ticker: draft.ticker.trim().toUpperCase(),
+      company: draft.sourceCategory === "company" ? draft.company.trim() : "",
+      ticker: draft.sourceCategory === "company" ? draft.ticker.trim().toUpperCase() : "",
       keywords: draft.keywords.split(/[,，\n]/).map((value) => value.trim()).filter(Boolean),
       enabled: true,
     };
@@ -567,43 +615,36 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
                     </div>
                   </div>
                   <div className={styles.trackSections}>
-                    {LIST_FIELDS.map((field) => (
-                      <div className={styles.listEditor} key={field}>
-                        <h3>{LABELS[field].title}</h3>
-                        <p className={styles.help}>{LABELS[field].help}</p>
-                        <div className={styles.tags}>
-                          {track[field].map((value) => <button className={styles.tag} key={value} onClick={() => removeListItem(field, value)}>{value} ×</button>)}
-                          {!track[field].length && <span className={styles.empty}>暂无条目</span>}
+                    {LIST_FIELDS.map((field) => {
+                      const preview = field === "people" ? personPreview : field === "keywords" ? keywordPreview : null;
+                      return (
+                        <div className={styles.listEditor} key={field}>
+                          <h3>{LABELS[field].title}</h3>
+                          <p className={styles.help}>{LABELS[field].help}</p>
+                          <div className={styles.tags}>
+                            {track[field].map((value) => <button className={styles.tag} key={value} onClick={() => removeListItem(field, value)}>{value} ×</button>)}
+                            {!track[field].length && <span className={styles.empty}>暂无条目</span>}
+                          </div>
+                          <div className={styles.inlineForm}>
+                            <input
+                              value={listInputs[field]}
+                              onChange={(event) => setListInputs((current) => ({ ...current, [field]: event.target.value }))}
+                              onKeyDown={(event) => { if (event.key === "Enter") addListItem(field); }}
+                              placeholder={LABELS[field].placeholder}
+                              aria-invalid={Boolean(preview && !preview.valid)}
+                            />
+                            <button className={styles.secondary} disabled={Boolean(preview && !preview.valid)} onClick={() => addListItem(field)}>
+                              添加并同步
+                            </button>
+                          </div>
+                          {preview && (
+                            <p className={styles.status} data-kind={preview.valid ? "success" : "error"} aria-live="polite">
+                              {preview.message}
+                            </p>
+                          )}
                         </div>
-                        <div className={styles.inlineForm}>
-                          <input
-                            value={listInputs[field]}
-                            onChange={(event) => setListInputs((current) => ({ ...current, [field]: event.target.value }))}
-                            onKeyDown={(event) => { if (event.key === "Enter") addListItem(field); }}
-                            placeholder={LABELS[field].placeholder}
-                            aria-invalid={field === "people" && Boolean(personPreview && !personPreview.valid)}
-                          />
-                          <button
-                            className={styles.secondary}
-                            disabled={field === "people" && Boolean(personPreview && !personPreview.valid)}
-                            onClick={() => addListItem(field)}
-                          >
-                            添加并同步
-                          </button>
-                        </div>
-                        {field === "people" && personPreview && (
-                          <p
-                            className={styles.status}
-                            data-kind={personPreview.valid ? (personPreview.xEnabled ? "success" : "neutral") : "error"}
-                            aria-live="polite"
-                          >
-                            {personPreview.valid && personPreview.normalized !== listInputs.people.trim()
-                              ? `将规范化为“${personPreview.normalized}”。${personPreview.message}`
-                              : personPreview.message}
-                          </p>
-                        )}
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </>
               ) : <p className={styles.empty}>先添加一个赛道。</p>}
@@ -644,25 +685,28 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
               <div><p className="section-index">CUSTOM SOURCES</p><h2>补充信息源</h2></div>
               <span className={styles.muted}>{config.sources.length} 个</span>
             </div>
+            <p className={styles.help}>先选择来源归属。媒体和人物来源不会生成公司详情链接；只有公司来源可以绑定公司名称、股票代码和 SEC。</p>
             <div className={styles.sourceForm}>
-              <label>来源名称<input value={sourceDraft.name} onChange={(event) => setSourceDraft({ ...sourceDraft, name: event.target.value })} placeholder="例如：Example Corp IR" /></label>
-              <label>来源类型<select value={sourceDraft.sourceType} onChange={(event) => setSourceDraft({ ...sourceDraft, sourceType: event.target.value as TrackingSourceType })}><option value="listing-search">公司官网 / IR 搜索</option><option value="rss">RSS / Atom</option><option value="sec">SEC EDGAR</option></select></label>
-              <label>公司名称<input value={sourceDraft.company} onChange={(event) => setSourceDraft({ ...sourceDraft, company: event.target.value })} /></label>
-              <label>股票代码<input value={sourceDraft.ticker} onChange={(event) => setSourceDraft({ ...sourceDraft, ticker: event.target.value })} /></label>
+              <label>来源归属<select value={sourceDraft.sourceCategory} onChange={(event) => updateSourceCategory(event.target.value as TrackingSourceCategory)}><option value="media">媒体 / 资讯平台</option><option value="company">公司 / 监管披露</option><option value="person">人物 / 账号 / 博客</option></select></label>
+              <label>来源名称<input value={sourceDraft.name} onChange={(event) => setSourceDraft({ ...sourceDraft, name: event.target.value })} placeholder={sourceDraft.sourceCategory === "company" ? "例如：NVIDIA IR" : sourceDraft.sourceCategory === "person" ? "例如：Andrej Karpathy Blog" : "例如：投资界"} /></label>
+              <label>抓取方式<select value={sourceDraft.sourceType} onChange={(event) => setSourceDraft({ ...sourceDraft, sourceType: event.target.value as TrackingSourceType, sourceCategory: event.target.value === "sec" ? "company" : sourceDraft.sourceCategory })}><option value="listing-search">网页 / 站内检索</option><option value="rss">RSS / Atom</option><option value="sec">SEC EDGAR</option></select></label>
+              {sourceDraft.sourceCategory === "company" && <label>公司名称<input value={sourceDraft.company} onChange={(event) => setSourceDraft({ ...sourceDraft, company: event.target.value })} placeholder="公司正式名称" /></label>}
+              {sourceDraft.sourceCategory === "company" && <label>股票代码<input value={sourceDraft.ticker} onChange={(event) => setSourceDraft({ ...sourceDraft, ticker: event.target.value })} placeholder="SEC 时必填" /></label>}
               <label>所属赛道<select value={sourceDraft.sector} onChange={(event) => setSourceDraft({ ...sourceDraft, sector: event.target.value })}>{(enabledTracks.length ? enabledTracks : config.tracks).map((item) => <option value={item.name} key={item.slug}>{item.name}</option>)}<option value="未分类">未分类</option></select></label>
               <label>地区<select value={sourceDraft.region} onChange={(event) => setSourceDraft({ ...sourceDraft, region: event.target.value as TrackingRegion })}><option value="中国">中国</option><option value="美国">美国</option><option value="全球">全球</option></select></label>
-              <label className={styles.wide}>官网、IR 或 RSS 地址<input value={sourceDraft.url} onChange={(event) => setSourceDraft({ ...sourceDraft, url: event.target.value })} placeholder={sourceDraft.sourceType === "sec" ? "SEC 类型可留空" : "https://example.com/investors/news"} /></label>
-              <label className={styles.wide}>附加关键词<input value={sourceDraft.keywords} onChange={(event) => setSourceDraft({ ...sourceDraft, keywords: event.target.value })} placeholder="逗号分隔" /></label>
+              <label className={styles.wide}>{sourceDraft.sourceCategory === "person" ? "账号、博客或主页地址" : sourceDraft.sourceCategory === "media" ? "媒体、栏目或 RSS 地址" : "官网、IR、公告或 RSS 地址"}<input value={sourceDraft.url} onChange={(event) => setSourceDraft({ ...sourceDraft, url: event.target.value })} placeholder={sourceDraft.sourceType === "sec" ? "SEC 类型可留空" : "https://example.com/"} /></label>
+              <label className={styles.wide}>附加关键词<input value={sourceDraft.keywords} onChange={(event) => setSourceDraft({ ...sourceDraft, keywords: event.target.value })} placeholder="逗号分隔；用于筛选该来源中的相关内容" /></label>
               <div className={styles.wide}><button className={styles.button} onClick={addSource}>添加信息源并自动同步</button></div>
             </div>
             <div className={styles.sourceList}>
               {config.sources.map((source) => (
                 <article className={styles.sourceItem} data-disabled={!source.enabled} key={source.id}>
                   <div className={styles.sectionHeader}>
-                    <div><strong>{source.name}</strong><div className={styles.sourceMeta}>{source.sourceType} · {source.region} · {source.sector}{source.ticker ? ` · ${source.ticker}` : ""}{source.listedCompanyId ? " · 上市公司关联源" : ""}</div></div>
+                    <div><strong>{source.name}</strong><div className={styles.sourceMeta}>{SOURCE_CATEGORY_LABELS[source.sourceCategory]} · {source.sourceType} · {source.region} · {source.sector}{source.ticker ? ` · ${source.ticker}` : ""}{source.listedCompanyId ? " · 上市公司关联源" : ""}</div></div>
                     <div className={styles.sourceActions}><button className={styles.secondary} onClick={() => toggleSource(source.id)}>{source.enabled ? "停用" : "启用"}</button><button className={styles.danger} onClick={() => removeSource(source.id)}>删除</button></div>
                   </div>
                   <span>{source.url}</span>
+                  {source.keywords.length > 0 && <span className={styles.sourceMeta}>关键词：{source.keywords.join(" / ")}</span>}
                 </article>
               ))}
             </div>
