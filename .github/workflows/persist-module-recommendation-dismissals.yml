@@ -1,0 +1,164 @@
+name: One-time persistent module recommendation dismissals
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/persist-module-recommendation-dismissals.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply exact patch
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('components/tracking-admin-module-recommendations.tsx')
+          s = p.read_text()
+          old = 'import { sourceBrandKey } from "@/lib/source-brand";\n'
+          new = old + '''import {
+            DISMISSAL_EVENT,
+            dismissTrackingRecommendation,
+            hydrateTrackingRecommendationDismissals,
+            isRecommendationDismissed,
+          } from "@/lib/tracking-recommendation-dismissal";
+          '''
+          assert old in s
+          s = s.replace(old, new, 1)
+
+          old = '''  const [mounted, setMounted] = useState(false);
+            const [snapshot, setSnapshot] = useState<Snapshot>({
+          '''
+          new = '''  const [mounted, setMounted] = useState(false);
+            const [dismissalVersion, setDismissalVersion] = useState(0);
+            const [snapshot, setSnapshot] = useState<Snapshot>({
+          '''
+          assert old in s
+          s = s.replace(old, new, 1)
+
+          marker = '''  const listedRecommendations = useMemo(
+          '''
+          effect = '''  useEffect(() => {
+            const refresh = () => setDismissalVersion((value) => value + 1);
+            window.addEventListener(DISMISSAL_EVENT, refresh);
+            void hydrateTrackingRecommendationDismissals();
+            return () => window.removeEventListener(DISMISSAL_EVENT, refresh);
+          }, []);
+
+          '''
+          assert marker in s
+          s = s.replace(marker, effect + marker, 1)
+
+          old = '''  const listedRecommendations = useMemo(
+            () =>
+              snapshot.sector
+                ? recommendListedCompanies(
+                    articles,
+                    snapshot.sector,
+                    ipoCompanies,
+                    existingListedCompanies(snapshot.listedKeys),
+                  )
+                : [],
+            [articles, snapshot.listedKeys, snapshot.sector],
+          );
+          '''
+          new = '''  const listedRecommendations = useMemo(() => {
+            if (!snapshot.sector) return [];
+            return recommendListedCompanies(
+              articles,
+              snapshot.sector,
+              ipoCompanies,
+              existingListedCompanies(snapshot.listedKeys),
+            ).filter(
+              (item) =>
+                !isRecommendationDismissed(
+                  snapshot.sector,
+                  "listedCompanies",
+                  item.value,
+                ),
+            );
+          }, [articles, dismissalVersion, snapshot.listedKeys, snapshot.sector]);
+          '''
+          assert old in s
+          s = s.replace(old, new, 1)
+
+          old = '''    return mergeSources(
+              discovered,
+              fallbackSourceRecommendations(snapshot.sector, snapshot.sourceUrls),
+              snapshot.sourceUrls,
+            );
+          }, [articles, snapshot.sector, snapshot.sourceUrls]);
+          '''
+          new = '''    return mergeSources(
+              discovered,
+              fallbackSourceRecommendations(snapshot.sector, snapshot.sourceUrls),
+              snapshot.sourceUrls,
+            ).filter(
+              (item) =>
+                !isRecommendationDismissed(
+                  snapshot.sector,
+                  "sources",
+                  item.value,
+                ),
+            );
+          }, [articles, dismissalVersion, snapshot.sector, snapshot.sourceUrls]);
+          '''
+          assert old in s
+          s = s.replace(old, new, 1)
+
+          old = '''          items={listedRecommendations}
+                    onAdd={addListed}
+          '''
+          new = '''          items={listedRecommendations}
+                    onAdd={addListed}
+                    onDismiss={(item) =>
+                      dismissTrackingRecommendation(
+                        snapshot.sector,
+                        "listedCompanies",
+                        item.value,
+                      )
+                    }
+          '''
+          assert old in s
+          s = s.replace(old, new, 1)
+
+          old = '''          onAdd={addSource}
+                  />
+          '''
+          new = '''          onAdd={addSource}
+                    onDismiss={(item) =>
+                      dismissTrackingRecommendation(
+                        snapshot.sector,
+                        "sources",
+                        item.value,
+                      )
+                    }
+                  />
+          '''
+          assert old in s
+          s = s.replace(old, new, 1)
+          p.write_text(s)
+          PY
+      - name: Verify
+        run: |
+          npm install
+          npm run test:unit
+          npx tsc --noEmit
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components/tracking-admin-module-recommendations.tsx
+          git commit -m "fix: persist listed and source recommendation dismissals"
+          git pull --rebase origin main
+          git push origin HEAD:main
