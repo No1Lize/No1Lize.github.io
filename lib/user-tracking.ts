@@ -62,6 +62,13 @@ export type PersonLabelValidation = {
   message: string;
 };
 
+export type TrackingKeywordValidation = {
+  valid: boolean;
+  normalized: string;
+  level: "good" | "warning" | "error";
+  message: string;
+};
+
 const REGIONS: TrackingRegion[] = ["中国", "美国", "全球"];
 const MARKETS: TrackingMarket[] = ["A股", "港股", "美股"];
 const SOURCE_TYPES: TrackingSourceType[] = ["rss", "listing-search", "sec"];
@@ -78,6 +85,61 @@ const GENERIC_PERSON_LABELS = new Set([
   "founder",
   "researcher",
   "scientist",
+]);
+const GENERIC_TRACKING_KEYWORDS = new Set([
+  "ai",
+  "ml",
+  "人工智能",
+  "技术",
+  "科技",
+  "公司",
+  "企业",
+  "行业",
+  "产业",
+  "研究",
+  "论文",
+  "新闻",
+  "资讯",
+  "产品",
+  "项目",
+  "模型",
+  "系统",
+  "平台",
+  "创新",
+  "投资",
+  "融资",
+  "上市",
+  "发布",
+  "突破",
+  "发展",
+  "市场",
+  "应用",
+  "机器人",
+  "半导体",
+  "新能源",
+  "生物科技",
+  "量子计算",
+  "商业航天",
+  "web3",
+  "新材料",
+  "智能制造",
+  "tech",
+  "technology",
+  "company",
+  "industry",
+  "research",
+  "paper",
+  "news",
+  "product",
+  "project",
+  "model",
+  "system",
+  "platform",
+  "innovation",
+  "investment",
+  "funding",
+  "launch",
+  "update",
 ]);
 
 function cleanText(value: unknown, maxLength = 120): string {
@@ -107,6 +169,75 @@ function trimPersonSeparators(value: string): string {
     .replace(/[\s|｜·•:：,，;；/\\\-—–()（）\[\]【】]+$/, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+export function validateTrackingKeyword(value: unknown): TrackingKeywordValidation {
+  const raw = cleanText(value, 80)
+    .normalize("NFKC")
+    .replace(/^["'“”‘’`]+|["'“”‘’`]+$/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const invalid = (message: string): TrackingKeywordValidation => ({
+    valid: false,
+    normalized: "",
+    level: "error",
+    message,
+  });
+
+  if (!raw) return invalid("关键词不能为空。");
+  if (raw.length > 40) return invalid("关键词过长，请保留核心技术、产品或事件术语。");
+  if (/^https?:\/\//i.test(raw) || /\b(?:www\.)?[^\s]+\.(?:com|cn|org|net)\b/i.test(raw)) {
+    return invalid("这里填写搜索关键词，不要粘贴网页地址。");
+  }
+  if (/@/.test(raw)) return invalid("账号应添加到“关键人物 / 关键账号”，不要作为关键词保存。");
+  if (/^site\s*:/i.test(raw) || /(^|\s)(?:AND|OR|NOT)(\s|$)/i.test(raw)) {
+    return invalid("不要填写 site:、AND、OR 等搜索语法，系统会自动构造查询。");
+  }
+  if (!/[A-Za-z0-9\u3400-\u9fff]/.test(raw)) {
+    return invalid("关键词至少需要包含中文、英文或数字。");
+  }
+
+  const normalizedKey = raw.toLocaleLowerCase("zh-CN");
+  if (GENERIC_TRACKING_KEYWORDS.has(normalizedKey)) {
+    return invalid(`“${raw}”范围过宽。请改为更具体的技术、产品、公司动作或研究术语。`);
+  }
+
+  const cjkCount = (raw.match(/[\u3400-\u9fff]/g) ?? []).length;
+  const alphanumericCount = (raw.match(/[A-Za-z0-9]/g) ?? []).length;
+  if (cjkCount === 1 && alphanumericCount === 0) {
+    return invalid("单个汉字无法形成稳定搜索条件，请使用更具体的词组。");
+  }
+  if (cjkCount === 0 && alphanumericCount < 2) {
+    return invalid("英文或数字关键词至少需要两个有效字符。");
+  }
+
+  const shortTerm =
+    (cjkCount > 0 && cjkCount <= 2 && alphanumericCount === 0) ||
+    (cjkCount === 0 && alphanumericCount <= 2);
+  return {
+    valid: true,
+    normalized: raw,
+    level: shortTerm ? "warning" : "good",
+    message: shortTerm
+      ? "关键词可用，但较短，可能产生较多噪声；可考虑补充更具体的限定词。"
+      : "关键词具体且可用于新闻、论文和公开网页筛选。",
+  };
+}
+
+function uniqueTrackingKeywords(value: unknown, maxItems = 80): string[] {
+  if (!Array.isArray(value)) return [];
+  const result: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of value) {
+    const parsed = validateTrackingKeyword(raw);
+    if (!parsed.valid) continue;
+    const key = parsed.normalized.toLocaleLowerCase("zh-CN");
+    if (seen.has(key)) continue;
+    result.push(parsed.normalized);
+    seen.add(key);
+    if (result.length >= maxItems) break;
+  }
+  return result;
 }
 
 export function validatePersonLabel(value: unknown): PersonLabelValidation {
@@ -222,7 +353,7 @@ function normalizeTrack(value: unknown, index: number): TrackingTrack | null {
     name,
     enabled: raw.enabled !== false,
     custom,
-    keywords: uniqueStrings(raw.keywords),
+    keywords: uniqueTrackingKeywords(raw.keywords),
     people: uniquePeople(raw.people),
     sampleCompanies: uniqueStrings(raw.sampleCompanies),
   };
