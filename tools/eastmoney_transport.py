@@ -141,6 +141,82 @@ def install_transport() -> None:
     official.fetch_text = fetch_text
 
 
+def _is_eastmoney_status(status: dict[str, Any]) -> bool:
+    text = " ".join(
+        str(status.get(key, "")) for key in ("id", "name", "company")
+    )
+    return "东方财富" in text
+
+
+def _has_existing_eastmoney_details(
+    existing: list[dict[str, Any]], source_id: str
+) -> bool:
+    for article in existing:
+        if str(article.get("sourceId", "")) != source_id:
+            continue
+        source = article.get("source") if isinstance(article.get("source"), dict) else {}
+        if tracking_crawler._is_eastmoney_article_url(str(source.get("url", ""))):
+            return True
+    return False
+
+
+def replacement_statuses_for_eastmoney(
+    existing: list[dict[str, Any]],
+    statuses: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Build replacement statuses while retaining a valid prior Eastmoney batch.
+
+    Eastmoney portal pages can load successfully while exposing no static detail
+    links during a transient template or cache change. Treating that as a verified
+    empty result deletes valid articles. The shared crawler still receives an
+    error shadow status for replacement decisions, while the public status remains
+    partial and records that the previous detail snapshot was retained.
+    """
+
+    replacement_statuses: list[dict[str, Any]] = []
+    for status in statuses:
+        shadow = dict(status)
+        source_id = str(status.get("id", ""))
+        should_retain = (
+            _is_eastmoney_status(status)
+            and int(status.get("accepted", 0) or 0) == 0
+            and _has_existing_eastmoney_details(existing, source_id)
+        )
+        if should_retain:
+            status["status"] = "partial"
+            status["retainedPrevious"] = True
+            status["error"] = (
+                "No new Eastmoney detail pages discovered; previous detail snapshot retained"
+            )
+            shadow["status"] = "error"
+        replacement_statuses.append(shadow)
+    return replacement_statuses
+
+
+def install_snapshot_retention() -> None:
+    """Prevent clean-but-empty Eastmoney discovery from clearing valid details."""
+
+    official = tracking_crawler.official
+    original_replace = official.replace_official_source_batches
+    if getattr(original_replace, "_retains_eastmoney_snapshot", False):
+        return
+
+    def replace_official_source_batches(
+        existing: list[dict[str, Any]],
+        incoming: list[dict[str, Any]],
+        statuses: list[dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        replacement_statuses = replacement_statuses_for_eastmoney(existing, statuses)
+        return original_replace(existing, incoming, replacement_statuses)
+
+    setattr(
+        replace_official_source_batches,
+        "_retains_eastmoney_snapshot",
+        True,
+    )
+    official.replace_official_source_batches = replace_official_source_batches
+
+
 def install_quality_preservation() -> None:
     """Keep user-tracking metrics when the official crawl rewrites qualityGate."""
 
@@ -182,6 +258,7 @@ def install_quality_preservation() -> None:
 
 def main() -> int:
     install_transport()
+    install_snapshot_retention()
     install_quality_preservation()
     return category_crawler.main()
 
