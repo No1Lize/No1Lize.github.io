@@ -4,6 +4,7 @@ import copy
 import unittest
 
 from tools import enforce_venture_entity_semantics as semantics
+from tools import finalize_venture_profiles as finalizer
 
 
 CATALOG = '''
@@ -143,6 +144,25 @@ class VentureEntitySemanticTests(unittest.TestCase):
         self.assertNotIn("Looped world models", profile["researchTechnology"])
         self.assertIn("Anthropic expands Claude Platform", profile["researchTechnology"])
         self.assertEqual(profile["projectBackground"]["summary"], profile["background"])
+
+    def test_capital_summary_matches_structural_finalizer(self) -> None:
+        events = [
+            {
+                "date": "2026-07-20",
+                "title": "Anthropic raises a new round",
+                "amount": "$2 billion",
+                "round": "Growth",
+                "investors": ["Example Capital"],
+            }
+        ]
+        self.assertEqual(
+            semantics._capital_summary(events),
+            finalizer._capital_summary(events),
+        )
+        self.assertEqual(
+            semantics._capital_summary([]),
+            finalizer._capital_summary([]),
+        )
 
     def test_keeps_entity_subject_financing(self) -> None:
         row = {

@@ -305,16 +305,40 @@ def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
         key=lambda row: clean_text(row.get("date"), 20),
         reverse=True,
     )[0] if events else {}
-    amounts = list(dict.fromkeys(clean_text(row.get("amount"), 80) for row in events if clean_text(row.get("amount"), 80)))[:12]
-    rounds = list(dict.fromkeys(clean_text(row.get("round"), 80) for row in events if clean_text(row.get("round"), 80)))[:12]
+    amounts = list(
+        dict.fromkeys(
+            clean_text(row.get("amount"), 80)
+            for row in events
+            if clean_text(row.get("amount"), 80)
+        )
+    )[:12]
+    rounds = list(
+        dict.fromkeys(
+            clean_text(row.get("round"), 80)
+            for row in events
+            if clean_text(row.get("round"), 80)
+        )
+    )[:12]
     investors = list(
         dict.fromkeys(
             clean_text(item, 120)
             for row in events
-            for item in (row.get("investors", []) if isinstance(row.get("investors"), list) else [])
+            for item in (
+                row.get("investors", [])
+                if isinstance(row.get("investors"), list)
+                else []
+            )
             if clean_text(item, 120)
         )
     )[:20]
+    if events:
+        summary = (
+            f"共识别到{len(events)}条可追溯融资记录；"
+            f"最新记录为{clean_text(latest.get('date'), 20) or '日期未披露'}的"
+            f"{clean_text(latest.get('title'), 180)}。"
+        )
+    else:
+        summary = "当前公开来源未提供可核对的融资轮次、金额和投资方记录。"
     return {
         "eventCount": len(events),
         "disclosedAmounts": amounts,
@@ -322,13 +346,8 @@ def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
         "majorInvestors": investors,
         "latestDate": clean_text(latest.get("date"), 20),
         "latestRound": clean_text(latest.get("round"), 80),
-        "summary": (
-            f"共识别到{len(events)}条主体归属明确的融资记录。"
-            if events
-            else "当前公开来源未提供主体归属明确且可核对的融资记录。"
-        ),
+        "summary": summary,
     }
-
 
 def _enforce_snapshot_once(
     payload: dict[str, Any], catalog_text: str
