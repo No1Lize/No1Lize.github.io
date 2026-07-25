@@ -17,6 +17,8 @@ on:
       - tools/tracking_quality.py
       - tools/crawl_market_profiles.py
       - tools/refresh_market_profiles.py
+      - tools/refresh_market_profiles_enriched.py
+      - tools/market_profile_enrichment.py
       - tools/validate_market_profiles.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
@@ -70,8 +72,8 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/eastmoney_transport.py
-      - name: Crawl listed market profiles and trends
-        run: python tools/refresh_market_profiles.py
+      - name: Crawl listed market profiles trends and quote metrics
+        run: python tools/refresh_market_profiles_enriched.py
       - name: Migrate legacy entity attribution
         run: python tools/migrate_article_entities.py
       - name: Refine Eastmoney snapshot
@@ -103,10 +105,9 @@ jobs:
           for attempt in 1 2 3; do
             git pull --rebase origin main
 
-            # A run may have started before newer crawler/refinement commits landed.
-            # Re-process and validate with the code now at the rebased HEAD so a
-            # stale run cannot publish old tracking or market-profile semantics.
-            python tools/refresh_market_profiles.py
+            # Re-run enrichment at the rebased HEAD so stale jobs cannot publish
+            # obsolete market-cap, region or description semantics.
+            python tools/refresh_market_profiles_enriched.py
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
             python tools/enrich_tracking_snapshot.py
