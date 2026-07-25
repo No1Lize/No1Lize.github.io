@@ -1,0 +1,324 @@
+===== py_compile =====
+exit=0
+
+===== enrich =====
+{"companies": 58, "institutions": 20, "researchModelVersion": 2, "qualityPassed": true}
+exit=0
+
+===== normalize =====
+{"stats": {"companyTeams": 0, "companyProducts": 0, "companyFinancing": 0, "companyCapitalMarkets": 95, "institutionTeams": 0}, "passed": false, "changed": true}
+exit=1
+
+===== crawler_validate =====
+{"passed": false, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 32, "required": 0, "passed": false}}, "invalidSourceUrls": [], "semanticErrors": ["company:agibot:team-noise", "company:aurora:team-noise", "company:cerebras:team-noise", "company:databricks:team-noise", "company:glean:team-noise", "company:harvey:team-noise", "company:helion:team-noise", "company:ionq:team-noise", "company:mobileye:team-noise", "company:moore-threads:team-noise", "company:pony-ai:team-noise", "company:psiquantum:team-noise", "company:redwood-materials:team-noise", "company:relativity-space:team-noise", "company:rocket-lab:team-noise", "company:sambanova:team-noise", "company:shield-ai:team-noise", "company:sierra:team-noise", "company:svlot:team-noise", "company:unitree:team-noise", "company:varda:team-noise", "institution:a16z:team-noise", "institution:founders-fund:team-noise", "institution:hongshan:team-noise", "institution:idg-capital:team-noise", "institution:kleiner-perkins:team-noise", "institution:legend-capital:team-noise", "institution:lightspeed:team-noise", "institution:matrix-china:team-noise", "institution:qiming:team-noise"], "productiveCompanies": 58, "productiveInstitutions": 20}
+exit=1
+
+===== enrich_validate =====
+{"passed": false, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 32, "required": 0, "passed": false}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": ["company:agibot:team-noise", "company:aurora:team-noise", "company:cerebras:team-noise", "company:databricks:team-noise", "company:glean:team-noise", "company:harvey:team-noise", "company:helion:team-noise", "company:ionq:team-noise", "company:mobileye:team-noise", "company:moore-threads:team-noise", "company:pony-ai:team-noise", "company:psiquantum:team-noise", "company:redwood-materials:team-noise", "company:relativity-space:team-noise", "company:rocket-lab:team-noise", "company:sambanova:team-noise", "company:shield-ai:team-noise", "company:sierra:team-noise", "company:svlot:team-noise", "company:unitree:team-noise", "company:varda:team-noise", "institution:a16z:team-noise", "institution:founders-fund:team-noise", "institution:hongshan:team-noise", "institution:idg-capital:team-noise", "institution:kleiner-perkins:team-noise", "institution:legend-capital:team-noise", "institution:lightspeed:team-noise", "institution:matrix-china:team-noise", "institution:qiming:team-noise"], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}
+exit=1
+
+===== normalize_check =====
+{"passed": false, "alreadyNormalized": true, "stats": {"companyTeams": 0, "companyProducts": 0, "companyFinancing": 0, "companyCapitalMarkets": 0, "institutionTeams": 0}, "qualityGate": {"passed": false, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 32, "required": 0, "passed": false}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": ["company:agibot:team-noise", "company:aurora:team-noise", "company:cerebras:team-noise", "company:databricks:team-noise", "company:glean:team-noise", "company:harvey:team-noise", "company:helion:team-noise", "company:ionq:team-noise", "company:mobileye:team-noise", "company:moore-threads:team-noise", "company:pony-ai:team-noise", "company:psiquantum:team-noise", "company:redwood-materials:team-noise", "company:relativity-space:team-noise", "company:rocket-lab:team-noise", "company:sambanova:team-noise", "company:shield-ai:team-noise", "company:sierra:team-noise", "company:svlot:team-noise", "company:unitree:team-noise", "company:varda:team-noise", "institution:a16z:team-noise", "institution:founders-fund:team-noise", "institution:hongshan:team-noise", "institution:idg-capital:team-noise", "institution:kleiner-perkins:team-noise", "institution:legend-capital:team-noise", "institution:lightspeed:team-noise", "institution:matrix-china:team-noise", "institution:qiming:team-noise"], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}}
+exit=1
+
+===== python_tests =====
+.............F.FF..
+======================================================================
+FAIL: test_enrichment_is_idempotent (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enrichment_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_enrichment.py", line 148, in test_enrichment_is_idempotent
+    self.assertEqual(first, second)
+AssertionError: {'sch[194 chars]d': '研发并商业化通用人工智能模型与开发者平台。', 'technology': 'GP[3945 chars]': 2} != {'sch[194 chars]d': 'OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型[4001 chars]': 2}
+Diff is 11015 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_false_policy_and_homepage_events_are_removed (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_false_policy_and_homepage_events_are_removed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_normalize_venture_profiles.py", line 68, in test_false_policy_and_homepage_events_are_removed
+    self.assertEqual([item["title"] for item in financing], ["公司完成B轮融资"])
+AssertionError: Lists differ: ['Announcing our updated Responsible Scaling Policy', '公司完成B轮融资'] != ['公司完成B轮融资']
+
+First differing element 0:
+'Announcing our updated Responsible Scaling Policy'
+'公司完成B轮融资'
+
+First list contains 1 additional elements.
+First extra element 1:
+'公司完成B轮融资'
+
+- ['Announcing our updated Responsible Scaling Policy', '公司完成B轮融资']
++ ['公司完成B轮融资']
+
+======================================================================
+FAIL: test_payload_normalization_updates_all_entity_types_and_quality_gate (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_payload_normalization_updates_all_entity_types_and_quality_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_normalize_venture_profiles.py", line 184, in test_payload_normalization_updates_all_entity_types_and_quality_gate
+    self.assertEqual(company["financing"], [])
+AssertionError: Lists differ: [{'date': '', 'type': '融资', 'title': '安全政策[111 chars]cy'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'date': '', 'type': '融资', 'title': '安全政策更新', 'summary': '公司更新安全政策。', 'amount': '', 'round': '', 'investors': [], 'sourceUrl': 'https://example.com/policy'}
+
++ []
+- [{'amount': '',
+-   'date': '',
+-   'investors': [],
+-   'round': '',
+-   'sourceUrl': 'https://example.com/policy',
+-   'summary': '公司更新安全政策。',
+-   'title': '安全政策更新',
+-   'type': '融资'}]
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.041s
+
+FAILED (failures=3)
+exit=1
+
+===== npm_install =====
+npm warn deprecated tsconfck@3.1.6: unmaintained
+
+added 506 packages in 39s
+exit=0
+
+===== node_tests =====
+TAP version 13
+# Subtest: production catalog meets the initial coverage floor
+ok 1 - production catalog meets the initial coverage floor
+  ---
+  duration_ms: 1.208163
+  type: 'test'
+  ...
+# Subtest: every production entity has a real source URL
+ok 2 - every production entity has a real source URL
+  ---
+  duration_ms: 0.555197
+  type: 'test'
+  ...
+# Subtest: person pages expose at least five traceable materials
+ok 3 - person pages expose at least five traceable materials
+  ---
+  duration_ms: 0.301081
+  type: 'test'
+  ...
+# Subtest: slugs are unique within each route collection
+ok 4 - slugs are unique within each route collection
+  ---
+  duration_ms: 0.218916
+  type: 'test'
+  ...
+# Subtest: every linked event company has a generated company route
+ok 5 - every linked event company has a generated company route
+  ---
+  duration_ms: 0.451643
+  type: 'test'
+  ...
+# Subtest: venture profile snapshot only contains catalog entities
+ok 6 - venture profile snapshot only contains catalog entities
+  ---
+  duration_ms: 0.87841
+  type: 'test'
+  ...
+# Subtest: venture profile getters are safe before and after the first crawl
+ok 7 - venture profile getters are safe before and after the first crawl
+  ---
+  duration_ms: 0.327892
+  type: 'test'
+  ...
+# Subtest: venture profile sources are traceable public URLs
+ok 8 - venture profile sources are traceable public URLs
+  ---
+  duration_ms: 0.550638
+  type: 'test'
+  ...
+# Subtest: runtime sanitation removes navigation and editorial labels
+ok 9 - runtime sanitation removes navigation and editorial labels
+  ---
+  duration_ms: 0.924335
+  type: 'test'
+  ...
+# Subtest: current snapshot is clean at the frontend boundary
+not ok 10 - current snapshot is clean at the frontend boundary
+  ---
+  duration_ms: 2.132204
+  type: 'test'
+  location: '/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:1:2716'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input was expected to not match the regular expression /Policy Commitments Learn News/u. Input:
+    
+    "Anthropic is an AI safety and research company with a mission of ensuring the world safely makes the transition through transformative AI. Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems. Company \\ Anthropic Research Policy Commitments Learn News Making AI systems you can rely on Anthropic is an AI safety and research company."
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: "Anthropic is an AI safety and research company with a mission of ensuring the world safely makes the transition through transformative AI. Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems. Company \\ Anthropic Research Policy Commitments Learn News Making AI systems you can rely on Anthropic is an AI safety and research company."
+  operator: 'doesNotMatch'
+  stack: |-
+    TestContext.<anonymous> (/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:100:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: research model v2 exposes the same structured fields for every entity
+ok 11 - research model v2 exposes the same structured fields for every entity
+  ---
+  duration_ms: 0.494911
+  type: 'test'
+  ...
+# Subtest: venture profile runtime statuses use unique entity keys
+ok 12 - venture profile runtime statuses use unique entity keys
+  ---
+  duration_ms: 0.184196
+  type: 'test'
+  ...
+# Subtest: venture profile quality gate has internally consistent checks
+ok 13 - venture profile quality gate has internally consistent checks
+  ---
+  duration_ms: 0.116837
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 12
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 419.065504
+exit=1
+
+===== next_build =====
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+▲ Next.js 16.2.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 8.5s
+  Running TypeScript ...
+  Finished TypeScript in 6.0s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/160) ...
+  Generating static pages using 3 workers (40/160) 
+  Generating static pages using 3 workers (80/160) 
+  Generating static pages using 3 workers (120/160) 
+✓ Generating static pages using 3 workers (160/160) in 1601ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /companies
+├ ● /companies/[slug]
+│ ├ /companies/openai
+│ ├ /companies/anthropic
+│ ├ /companies/figure-ai
+│ └ [+55 more paths]
+├ ○ /institutions
+├ ● /institutions/[slug]
+│ ├ /institutions/sequoia-capital
+│ ├ /institutions/a16z
+│ ├ /institutions/benchmark
+│ └ [+17 more paths]
+├ ○ /ipo
+├ ● /ipo/[slug]
+│ ├ /ipo/cambricon
+│ ├ /ipo/catl
+│ ├ /ipo/bgi-genomics
+│ └ [+12 more paths]
+├ ○ /people
+├ ● /people/[slug]
+│ ├ /people/frank-wang
+│ ├ /people/li-zexiang
+│ ├ /people/wang-xingxing
+│ └ [+16 more paths]
+├ ○ /reports
+├ ● /reports/[slug]
+│ ├ /reports/ai-capital-2026
+│ ├ /reports/humanoid-robotics
+│ ├ /reports/ai-chips
+│ └ [+2 more paths]
+├ ● /reports/pdf/[slug]
+│ ├ /reports/pdf/public-0e4e95508281159628b5
+│ ├ /reports/pdf/public-41208f4b84d15716c3cd
+│ ├ /reports/pdf/public-168e6e6ee9e6a314bf12
+│ └ [+15 more paths]
+├ ○ /robots.txt
+├ ○ /search
+├ ○ /sitemap.xml
+├ ○ /technology
+├ ● /technology/[slug]
+│ ├ /technology/ai
+│ ├ /technology/robotics
+│ ├ /technology/semiconductor
+│ └ [+9 more paths]
+└ ○ /tracking
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+exit=0
+
+===== final_snapshot =====
+{
+  "schemaVersion": 2,
+  "researchModelVersion": 2,
+  "companies": 58,
+  "institutions": 20,
+  "qualityPassed": false,
+  "qualityChecks": {
+    "companyCoverage": {
+      "actual": 58,
+      "required": 58,
+      "passed": true
+    },
+    "institutionCoverage": {
+      "actual": 20,
+      "required": 20,
+      "passed": true
+    },
+    "runtimeStatusCoverage": {
+      "actual": 78,
+      "required": 78,
+      "passed": true
+    },
+    "invalidSourceUrls": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    },
+    "semanticNoise": {
+      "actual": 32,
+      "required": 0,
+      "passed": false
+    },
+    "companyResearchEnrichment": {
+      "actual": 58,
+      "required": 58,
+      "passed": true
+    },
+    "institutionResearchEnrichment": {
+      "actual": 20,
+      "required": 20,
+      "passed": true
+    },
+    "profileConsistency": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    }
+  }
+}
