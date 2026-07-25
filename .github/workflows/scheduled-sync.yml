@@ -8,6 +8,8 @@ on:
       - tools/crawl_with_tracking.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
+      - tools/eastmoney_entities.py
+      - tests/**/*.py
       - config/intelligence_sources.json
       - config/official_company_sources.json
       - config/user_tracking.json
@@ -54,7 +56,7 @@ jobs:
       - name: Validate data quality
         run: python tools/crawl_articles.py --validate-only
       - name: Test crawler
-        run: python -m unittest tests/test_crawler.py
+        run: python -m unittest discover -s tests -p "test_*.py"
       - name: Commit changed public data
         id: data-update
         run: |
