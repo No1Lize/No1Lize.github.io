@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { currentAdminStatus, waitForAdminSave } from "@/lib/tracking-admin-sync";
 import { isAllowedDisplayedKeywordRecommendation } from "@/lib/tracking-recommendation-policy";
 import type {
   TrackingRecommendation,
@@ -82,8 +83,10 @@ export function TrackingRecommendations({
     const key = `${type}-${item.value}`;
     setPending(key);
     setError("");
+    const previousStatus = currentAdminStatus();
     try {
       await onAdd?.(type, item);
+      await waitForAdminSave(previousStatus);
       setHidden((current) => ({ ...current, [key]: true }));
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : String(reason));
