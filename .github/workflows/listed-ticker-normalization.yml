@@ -1,0 +1,55 @@
+name: Apply listed ticker normalization
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/listed-ticker-normalization.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: listed-ticker-normalization
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply guarded source patch
+        run: python tools/apply_listed_ticker_normalization_patch.py
+      - name: Verify Python market tests
+        run: python -m unittest tests.test_market_profiles tests.test_market_profile_transport
+      - name: Verify TypeScript normalization tests and Next build
+        run: |
+          npm install
+          npm run test:unit
+          GITHUB_PAGES=true npx next build
+      - name: Commit normalized backend behavior
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/user-tracking.ts components/user-tracking-panel.tsx
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "fix: normalize listed tickers before backend sync"
+          git pull --rebase origin main
+          python tools/apply_listed_ticker_normalization_patch.py || true
+          git add lib/user-tracking.ts components/user-tracking-panel.tsx
+          if ! git diff --cached --quiet; then
+            git commit --amend --no-edit
+          fi
+          git push origin HEAD:main
