@@ -31,7 +31,7 @@ const articles: LiveIntelligenceEvent[] = [
     sourceId: "quantum-media",
     title: "IonQ expands its quantum computing roadmap",
     summary: "An independent report covers IonQ's latest roadmap.",
-    type: "媒体报道",
+    type: "公司动态",
     region: "美国",
     sector: "量子计算",
     company: "IonQ",
