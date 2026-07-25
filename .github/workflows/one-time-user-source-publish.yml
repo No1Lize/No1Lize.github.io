@@ -32,82 +32,72 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --ff-only origin main
+          REPORT="diagnostics/one-time-user-source-publish.txt"
+          mkdir -p diagnostics
 
-          run_pipeline() {
-            local report="diagnostics/one-time-user-source-publish.txt"
-            mkdir -p diagnostics
-            {
-              echo "commit=$(git rev-parse HEAD)"
-              echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-              echo
-              echo "===== crawl_user_sources ====="
-              python tools/crawl_with_source_categories.py --source feeds
-              echo
-              echo "===== migrate ====="
-              python tools/migrate_article_entities.py
-              echo
-              echo "===== refine_eastmoney ====="
-              python tools/refine_eastmoney_snapshot.py
-              echo
-              echo "===== enrich_tracking ====="
-              python tools/enrich_tracking_snapshot.py
-              echo
-              echo "===== validate_quality ====="
-              python tools/crawl_articles.py --validate-only
-              echo
-              echo "===== validate_eastmoney ====="
-              python tools/validate_eastmoney_snapshot.py
-              echo
-              echo "===== validate_user_source_coverage ====="
-              python tools/validate_user_source_coverage.py
-              echo
-              echo "===== full_unittest ====="
-              python -m unittest discover -s tests -p "test_*.py"
-              echo
-              echo "===== snapshot ====="
-              python - <<'PY'
-              import json
-              from pathlib import Path
-              payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
-              quality = payload.get("qualityGate", {}).get("checks", {})
-              statuses = [
-                  item for item in payload.get("sourceStatus", [])
-                  if str(item.get("id", "")).startswith("user-source-")
-              ]
-              print(json.dumps({
-                  "generatedAt": payload.get("generatedAt"),
-                  "articleCount": payload.get("articleCount"),
-                  "minimumArticlesActual": quality.get("minimumArticles", {}).get("actual"),
-                  "uniqueUrlsActual": quality.get("uniqueUrls", {}).get("actual"),
-                  "uniqueUrlsRequired": quality.get("uniqueUrls", {}).get("required"),
-                  "userSourceStatuses": len(statuses),
-                  "productiveUserSources": sum(
-                      int(item.get("accepted", 0) or 0) > 0
-                      or int(item.get("discoveredAccepted", 0) or 0) > 0
-                      for item in statuses
-                  ),
-              }, ensure_ascii=False, indent=2))
-              PY
-            } 2>&1 | tee "$report"
+          {
+            echo "commit=$(git rev-parse HEAD)"
+            echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            echo "===== crawl_user_sources ====="
+            python tools/crawl_with_source_categories.py --source feeds
+            echo
+            echo "===== migrate ====="
+            python tools/migrate_article_entities.py
+            echo
+            echo "===== refine_eastmoney ====="
+            python tools/refine_eastmoney_snapshot.py
+            echo
+            echo "===== enrich_tracking ====="
+            python tools/enrich_tracking_snapshot.py
+            echo
+            echo "===== validate_quality ====="
+            python tools/crawl_articles.py --validate-only
+            echo
+            echo "===== validate_eastmoney ====="
+            python tools/validate_eastmoney_snapshot.py
+            echo
+            echo "===== validate_user_source_coverage ====="
+            python tools/validate_user_source_coverage.py
+            echo
+            echo "===== full_unittest ====="
+            python -m unittest discover -s tests -p "test_*.py"
+            echo
+            echo "===== snapshot ====="
+            python -c 'import json; from pathlib import Path; p=json.loads(Path("public/data/articles.json").read_text(encoding="utf-8")); q=p.get("qualityGate",{}).get("checks",{}); s=[x for x in p.get("sourceStatus",[]) if str(x.get("id","")).startswith("user-source-")]; print(json.dumps({"generatedAt":p.get("generatedAt"),"articleCount":p.get("articleCount"),"minimumArticlesActual":q.get("minimumArticles",{}).get("actual"),"uniqueUrlsActual":q.get("uniqueUrls",{}).get("actual"),"uniqueUrlsRequired":q.get("uniqueUrls",{}).get("required"),"userSourceStatuses":len(s),"productiveUserSources":sum(int(x.get("accepted",0) or 0)>0 or int(x.get("discoveredAccepted",0) or 0)>0 for x in s)},ensure_ascii=False,indent=2))'
+          } 2>&1 | tee "$REPORT"
+
+          publish_file() {
+            local repo_path="$1"
+            local local_path="$2"
+            local message="$3"
+            local endpoint="repos/${GITHUB_REPOSITORY}/contents/${repo_path}"
+            local request_file
+            request_file="$(mktemp)"
+
+            for attempt in 1 2 3; do
+              local current_sha
+              current_sha="$(gh api "$endpoint" --jq .sha 2>/dev/null || true)"
+              python -c 'import base64,json,sys; local_path,sha,message,out=sys.argv[1:]; payload={"message":message,"content":base64.b64encode(open(local_path,"rb").read()).decode(),"branch":"main"}; payload.update({"sha":sha} if sha else {}); open(out,"w",encoding="utf-8").write(json.dumps(payload))' "$local_path" "$current_sha" "$message" "$request_file"
+              if gh api --method PUT "$endpoint" --input "$request_file" >/dev/null; then
+                rm -f "$request_file"
+                return 0
+              fi
+              sleep $((attempt * 2))
+            done
+
+            rm -f "$request_file"
+            return 1
           }
 
-          git pull --rebase origin main
-          run_pipeline
-          git add public/data/articles.json diagnostics/one-time-user-source-publish.txt
-          git commit -m "data: publish current user source snapshot"
+          publish_file \
+            "public/data/articles.json" \
+            "public/data/articles.json" \
+            "data: publish current user source snapshot"
+          publish_file \
+            "diagnostics/one-time-user-source-publish.txt" \
+            "$REPORT" \
+            "ci: record user source publish result"
 
-          for attempt in 1 2 3; do
-            if git push origin HEAD:main; then
-              gh workflow run pages.yml --ref main
-              exit 0
-            fi
-            if [ "$attempt" -eq 3 ]; then
-              exit 1
-            fi
-            git pull --rebase origin main
-            run_pipeline
-            git add public/data/articles.json diagnostics/one-time-user-source-publish.txt
-            git commit --amend --no-edit
-          done
+          gh workflow run pages.yml --ref main
