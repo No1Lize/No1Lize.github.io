@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - .github/workflows/research-report-fast-refresh.yml
+      - tools/crawl_research_reports.py
+      - tools/research_report_adapters.py
+      - tools/research_report_registry.py
+      - tests/test_research_reports.py
   workflow_dispatch:
 
 permissions:
@@ -69,7 +73,11 @@ jobs:
               },
               'reports': len(payload.get('reports', [])),
               'archiveBytes': payload.get('archiveBytes', 0),
-              'statuses': {status.get('status'): sum(1 for item in statuses if item.get('status') == status.get('status')) for status in statuses},
+              'statuses': {kind: sum(1 for item in statuses if item.get('status') == kind) for kind in ('ok', 'retained', 'empty', 'failed')},
+              'adapterCoverage': {
+                  'SEC': sum(1 for item in statuses if 'SEC' in item.get('adapters', [])),
+                  'company-domain': sum(1 for item in statuses if 'company-domain' in item.get('adapters', [])),
+              },
           }, ensure_ascii=False, indent=2))
           PY
           INDEX=$?
