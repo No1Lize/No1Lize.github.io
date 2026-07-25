@@ -14,9 +14,14 @@ from urllib.parse import urlsplit, urlunsplit
 try:  # Imported by tests as tools.crawl_official_with_tracking.
     from . import crawl_official_companies as official
     from .crawl_with_tracking import TRACKING_PATH, load_tracking
+    from .eastmoney_entities import (
+        attribute_eastmoney_article,
+        build_listed_entity_index,
+    )
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_official_companies as official
     from crawl_with_tracking import TRACKING_PATH, load_tracking
+    from eastmoney_entities import attribute_eastmoney_article, build_listed_entity_index
 
 
 USER_OFFICIAL_PREFIX = "official-user-"
@@ -336,7 +341,9 @@ def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
 
 
 def install_overrides(
-    base_specs: list[official.CompanySpec], user_specs: list[official.CompanySpec]
+    base_specs: list[official.CompanySpec],
+    user_specs: list[official.CompanySpec],
+    listed_entities: list[dict[str, str]],
 ) -> None:
     original_load_payload = official.load_existing_payload
     original_article_from_page = official._article_from_page
@@ -363,6 +370,9 @@ def install_overrides(
             summary = _eastmoney_summary(body)
             if summary:
                 article["summary"] = summary
+            return attribute_eastmoney_article(
+                _sanitize_user_article(article), listed_entities
+            )
         return _sanitize_user_article(article)
 
     def load_payload(path: Path = official.OUTPUT_PATH) -> dict[str, Any]:
@@ -387,6 +397,8 @@ def install_overrides(
                 if source_id not in active_ids or _is_probable_non_article(article):
                     continue
                 article = _sanitize_user_article(article)
+                if _is_eastmoney_article_url(source_url):
+                    article = attribute_eastmoney_article(article, listed_entities)
             retained_articles.append(article)
         payload["articles"] = retained_articles
 
@@ -407,12 +419,14 @@ def main() -> int:
     base_specs = official.load_registry()
     tracking = load_tracking(TRACKING_PATH)
     user_specs = build_user_specs(tracking)
-    install_overrides(base_specs, user_specs)
+    listed_entities = build_listed_entity_index(tracking)
+    install_overrides(base_specs, user_specs, listed_entities)
     print(
         json.dumps(
             {
                 "fixedOfficialCompanies": len(base_specs),
                 "userWebsiteSources": len(user_specs),
+                "trackedListedEntities": len(listed_entities),
             },
             ensure_ascii=False,
         )
