@@ -29,6 +29,7 @@ BROWSER_USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/124.0 Safari/537.36 No1LizePublicResearch/1.0"
 )
+DEFAULT_HISTORY_LIMIT = 20
 YAHOO_VOLATILE_QUERY_KEYS = {
     "guccounter",
     "guce_referrer",
@@ -129,12 +130,22 @@ def canonical_source_url(url: str) -> str:
     )
 
 
+def _origin_url(url: str) -> str:
+    parts = urlsplit(url)
+    if parts.scheme not in {"http", "https"} or not parts.netloc:
+        return ""
+    return urlunsplit((parts.scheme, parts.netloc, "/", "", ""))
+
+
 def source_seed_urls(url: str) -> list[str]:
     """Return bounded public entry points for the selected site profile."""
 
     canonical = canonical_source_url(url)
     profile = profile_for(canonical)
     seeds = [canonical]
+    root = _origin_url(canonical)
+    if root and root != canonical:
+        seeds.append(root)
     if profile.id == "yahoo-tw":
         seeds.extend(
             (
@@ -276,17 +287,102 @@ class CrawlerProxy:
         return fetch_public_text(url, user_agent, timeout=timeout, attempts=attempts)
 
 
+def _article_url(article: dict[str, Any]) -> str:
+    source = article.get("source") if isinstance(article.get("source"), dict) else {}
+    return str(source.get("url") or "").strip()
+
+
 def _dedupe_articles(items: Iterable[dict[str, Any]], crawler: Any) -> list[dict[str, Any]]:
     result: list[dict[str, Any]] = []
     seen: set[str] = set()
     for item in items:
-        source = item.get("source") if isinstance(item.get("source"), dict) else {}
-        url = crawler.normalize_url(str(source.get("url") or ""))
+        url = crawler.normalize_url(_article_url(item))
         if not url or url in seen:
             continue
         result.append(item)
         seen.add(url)
     return result
+
+
+def _article_sort_key(article: dict[str, Any]) -> tuple[str, int, str]:
+    try:
+        importance = int(article.get("importance", 0) or 0)
+    except (TypeError, ValueError):
+        importance = 0
+    return (
+        str(article.get("publishedAt") or ""),
+        importance,
+        str(article.get("id") or ""),
+    )
+
+
+def merge_adaptive_history(
+    existing: list[dict[str, Any]],
+    incoming: list[dict[str, Any]],
+    statuses: list[dict[str, Any]],
+    crawler: Any,
+    default_limit: int = DEFAULT_HISTORY_LIMIT,
+) -> list[dict[str, Any]]:
+    """Keep a bounded history for successful adaptive website batches."""
+
+    adaptive_statuses = {
+        str(status.get("id") or ""): status
+        for status in statuses
+        if status.get("adapter") == "adaptive-public-v1"
+        and status.get("status") in {"ok", "partial"}
+        and int(status.get("accepted", 0) or 0) > 0
+    }
+    if not adaptive_statuses:
+        return list(incoming)
+
+    source_ids = set(adaptive_statuses)
+    merged_incoming = [
+        article
+        for article in incoming
+        if str(article.get("sourceId") or "") not in source_ids
+    ]
+    for source_id, status in adaptive_statuses.items():
+        new_group = [
+            article for article in incoming if str(article.get("sourceId") or "") == source_id
+        ]
+        old_group = [
+            article for article in existing if str(article.get("sourceId") or "") == source_id
+        ]
+        new_urls = {
+            crawler.normalize_url(_article_url(article)) for article in new_group
+        }
+        by_url: dict[str, dict[str, Any]] = {}
+        for article in old_group:
+            key = crawler.normalize_url(_article_url(article))
+            if key:
+                by_url[key] = article
+        for article in new_group:
+            key = crawler.normalize_url(_article_url(article))
+            if key:
+                by_url[key] = article
+        try:
+            limit = int(status.get("historyLimit", default_limit) or default_limit)
+        except (TypeError, ValueError):
+            limit = default_limit
+        history = sorted(
+            by_url.values(),
+            key=_article_sort_key,
+            reverse=True,
+        )[: max(1, min(60, limit))]
+        retained = sum(
+            crawler.normalize_url(_article_url(article)) not in new_urls
+            for article in history
+        )
+        status["newAccepted"] = len(new_group)
+        status["accepted"] = len(history)
+        if retained:
+            status["retainedPrevious"] = True
+            status["retainedPreviousCount"] = retained
+        else:
+            status.pop("retainedPrevious", None)
+            status.pop("retainedPreviousCount", None)
+        merged_incoming.extend(history)
+    return merged_incoming
 
 
 def crawl_adaptive_source(
@@ -367,6 +463,7 @@ def crawl_adaptive_source(
             "canonicalSourceUrl": canonical,
             "attemptedSeeds": seeds,
             "strategies": strategies,
+            "historyLimit": max(DEFAULT_HISTORY_LIMIT, max_items),
         }
     )
     return items, result
