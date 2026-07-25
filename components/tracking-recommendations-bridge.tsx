@@ -38,6 +38,18 @@ const EMPTY_RECOMMENDATIONS: TrackingRecommendationSet = {
   sources: [],
 };
 
+function normalizedKey(value: string): string {
+  return value.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase("zh-CN");
+}
+
+function sourceHost(value: string): string {
+  try {
+    return new URL(value).hostname.toLocaleLowerCase("en-US").replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
 function fieldInput(type: ListRecommendationType): HTMLInputElement | null {
   return document.querySelector<HTMLInputElement>(
     `input[placeholder^="${LIST_FIELD_META[type].placeholder}"]`,
@@ -134,6 +146,19 @@ function nextFrame(): Promise<void> {
   return new Promise((resolve) => requestAnimationFrame(() => resolve()));
 }
 
+async function waitForCondition(
+  condition: () => boolean,
+  message: string,
+  timeoutMs = 2200,
+): Promise<void> {
+  const started = performance.now();
+  while (performance.now() - started < timeoutMs) {
+    if (condition()) return;
+    await new Promise<void>((resolve) => window.setTimeout(resolve, 50));
+  }
+  throw new Error(message);
+}
+
 async function addListRecommendation(
   type: ListRecommendationType,
   rawValue: string,
@@ -156,6 +181,12 @@ async function addListRecommendation(
     throw new Error("当前推荐未通过输入校验，未执行添加。");
   }
   button.click();
+
+  const expected = normalizedKey(value);
+  await waitForCondition(
+    () => existingValues(type).some((entry) => normalizedKey(entry) === expected),
+    "原管理面板未确认新增条目，请手动重试。",
+  );
 }
 
 function isSourceRecommendation(
@@ -207,6 +238,12 @@ async function addSourceRecommendation(item: TrackingSourceRecommendation) {
     throw new Error("推荐信息源未通过表单校验，未执行添加。");
   }
   button.click();
+
+  const expectedHost = sourceHost(item.source.url);
+  await waitForCondition(
+    () => existingSourceUrls().some((value) => sourceHost(value) === expectedHost),
+    "原管理面板未确认新增信息源，请手动重试。",
+  );
 }
 
 async function addThroughExistingEditor(
