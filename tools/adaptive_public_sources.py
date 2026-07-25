@@ -18,7 +18,7 @@ import html
 import re
 import time
 from dataclasses import dataclass
-from typing import Any, Callable, Iterable
+from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
@@ -29,7 +29,7 @@ BROWSER_USER_AGENT = (
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/124.0 Safari/537.36 No1LizePublicResearch/1.0"
 )
-VOLATILE_QUERY_KEYS = {
+YAHOO_VOLATILE_QUERY_KEYS = {
     "guccounter",
     "guce_referrer",
     "guce_referrer_sig",
@@ -87,6 +87,12 @@ def _host(url: str) -> str:
 
 def profile_for(url: str) -> SourceProfile:
     host = _host(url)
+    if host.endswith(".yahoo.com"):
+        labels = host.split(".")
+        if "tw" in labels[:-2]:
+            return next(profile for profile in PROFILES if profile.id == "yahoo-tw")
+        if "sg" in labels[:-2]:
+            return next(profile for profile in PROFILES if profile.id == "yahoo-sg")
     for profile in PROFILES:
         if any(host == suffix or host.endswith(f".{suffix}") for suffix in profile.host_suffixes):
             return profile
@@ -94,16 +100,18 @@ def profile_for(url: str) -> SourceProfile:
 
 
 def canonical_source_url(url: str) -> str:
-    """Remove consent/tracking noise while preserving the selected public host."""
+    """Remove tracking noise without breaking unknown-site route parameters."""
 
     parts = urlsplit(html.unescape(str(url or "")).strip())
     if parts.scheme.casefold() not in {"http", "https"} or not parts.netloc:
         return str(url or "").strip()
+    profile = profile_for(url)
+    removable = YAHOO_VOLATILE_QUERY_KEYS if profile.id.startswith("yahoo-") else set()
     query = urlencode(
         sorted(
             (key, value)
             for key, value in parse_qsl(parts.query, keep_blank_values=True)
-            if key.casefold() not in VOLATILE_QUERY_KEYS
+            if key.casefold() not in removable
             and not key.casefold().startswith("utm_")
         )
     )
