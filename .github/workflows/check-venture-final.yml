@@ -20,7 +20,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # final semantic status v2
+          # retained-history status v3
           gh run list \
             --workflow refresh-venture-profiles.yml \
             --limit 12 \
