@@ -44,6 +44,21 @@ jobs:
         run: python -m unittest tests.test_venture_profile_noise_filters
       - name: Test profile enrichment
         run: python -m unittest tests.test_venture_profile_enrichment
+      - name: Persist enrichment test failure
+        if: failure()
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostics
+          python -m unittest -v tests.test_venture_profile_enrichment \
+            > diagnostics/venture-pr-enrichment-test.txt 2>&1 || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/venture-pr-enrichment-test.txt
+          git commit -m "ci: record venture enrichment test failure"
+          git push origin "HEAD:${HEAD_REF}"
       - name: Test consistency normalizer
         run: python -m unittest tests.test_normalize_venture_profiles
       - name: Test structured postprocess
@@ -79,6 +94,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm .venture-sanitize-trigger
+          git rm -f diagnostics/venture-pr-enrichment-test.txt
           git add public/data/venture_profiles.json
           git commit -m "data: normalize startup and institution profiles"
           git push origin "HEAD:${HEAD_REF}"
