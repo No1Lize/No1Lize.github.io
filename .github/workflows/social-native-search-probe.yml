@@ -1,0 +1,68 @@
+name: Social native search probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/social-native-search-probe.yml
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe YouTube and Bilibili
+        shell: bash
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: |
+          set +e
+          mkdir -p diagnostics
+          python tools/probe_user_sources.py \
+            --source-id user-source-source-youtube \
+            --output diagnostics/social-youtube.json
+          YOUTUBE_EXIT=$?
+          python tools/probe_user_sources.py \
+            --source-id user-source-source-b \
+            --output diagnostics/social-bilibili.json
+          BILIBILI_EXIT=$?
+          python - <<'PY' > diagnostics/social-native-search-report.txt 2>&1
+          import json
+          from pathlib import Path
+
+          outputs = {}
+          for name in ("youtube", "bilibili"):
+              payload = json.loads(
+                  Path(f"diagnostics/social-{name}.json").read_text(encoding="utf-8")
+              )
+              status = payload["results"][0]["status"]
+              strategies = [str(value) for value in status.get("strategies", [])]
+              error = str(status.get("error", ""))
+              assert status.get("adapter") == "adaptive-public-v1", status
+              assert "sitemap" not in strategies, status
+              assert "sitemap" not in error.casefold(), status
+              outputs[name] = payload
+          print(json.dumps(outputs, ensure_ascii=False, indent=2))
+          PY
+          ASSERT_EXIT=$?
+          {
+            echo
+            echo "youtube_exit=$YOUTUBE_EXIT"
+            echo "bilibili_exit=$BILIBILI_EXIT"
+            echo "assert_exit=$ASSERT_EXIT"
+          } >> diagnostics/social-native-search-report.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/social-native-search-report.txt
+          git commit -m "ci: record social native search probe"
+          git pull --rebase origin main
+          git push origin HEAD:main
