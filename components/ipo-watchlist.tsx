@@ -35,7 +35,7 @@ export function IpoWatchlist({ companies }: IpoWatchlistProps) {
             <p className="eyebrow">REPOSITORY-BACKED WATCHLIST</p>
             <h2 id="watchlist-title">上市公司关注列表</h2>
             <p>
-              当前页面只展示齿轮后台中已启用的公司。添加、删除和停用操作统一写入仓库配置。
+              当前页面只展示齿轮后台中已启用的公司。添加后立即生成静态详情页，行情与公司数据由定时任务补齐。
             </p>
           </div>
           <div>
@@ -72,13 +72,7 @@ export function IpoWatchlist({ companies }: IpoWatchlistProps) {
               {companies.map((company) => (
                 <tr key={company.id}>
                   <td>
-                    {company.catalogSlug ? (
-                      <Link href={`/ipo/${company.catalogSlug}`}>
-                        {company.name}
-                      </Link>
-                    ) : (
-                      <strong>{company.name}</strong>
-                    )}
+                    <Link href={`/ipo/${company.slug}`}>{company.name}</Link>
                     {company.custom && (
                       <small className={styles.storageNote}>自定义关注</small>
                     )}
