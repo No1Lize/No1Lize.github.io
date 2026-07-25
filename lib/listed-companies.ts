@@ -100,11 +100,20 @@ export function resolveListedCompany(
   };
 }
 
+const resolvedCompanies = configuredListedCompanies
+  .filter((company) => company.enabled)
+  .map(resolveListedCompany)
+  .filter((company) => Boolean(company.slug));
+
 export const listedCompaniesForDisplay: ListedCompanyView[] =
-  configuredListedCompanies
-    .filter((company) => company.enabled)
-    .map(resolveListedCompany)
-    .filter((company) => Boolean(company.slug));
+  resolvedCompanies.filter(
+    (company, index) =>
+      resolvedCompanies.findIndex(
+        (candidate) =>
+          candidate.market === company.market &&
+          candidate.ticker === company.ticker,
+      ) === index,
+  );
 
 export const listedCompanyBySlug = new Map(
   listedCompaniesForDisplay.map((company) => [company.slug, company]),
