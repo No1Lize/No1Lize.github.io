@@ -213,49 +213,64 @@ def _article_institutions(article: dict[str, Any]) -> list[str]:
     return [clean_text(item, 120) for item in values if clean_text(item, 120)]
 
 
+def _entity_key(value: Any) -> str:
+    return re.sub(
+        r"[^a-z0-9\u3400-\u9fff]+",
+        "",
+        clean_text(value, 160).casefold(),
+    )
+
+
 def _company_articles(
     slug: str,
     company: CatalogCompany,
     articles: Sequence[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    aliases = [item.casefold() for item in company.aliases if len(item) >= 2]
+    alias_keys = {_entity_key(item) for item in company.aliases if _entity_key(item)}
     result: list[dict[str, Any]] = []
     for article in articles:
         article_slug = clean_text(article.get("companySlug"), 100)
         company_name = clean_text(article.get("company"), 120)
-        text = clean_text(
-            f"{article.get('title', '')} {article.get('summary', '')}", 1600
-        ).casefold()
-        if article_slug == slug or company_name == company.name or any(
-            alias in text for alias in aliases
-        ):
-            result.append(article)
+
+        # Structured attribution is authoritative. A reference to OpenAI,
+        # Anthropic or an investor inside another company's article must not
+        # reassign that article to the mentioned entity.
+        if article_slug:
+            if article_slug == slug:
+                result.append(article)
+            continue
+        if company_name:
+            if _entity_key(company_name) in alias_keys:
+                result.append(article)
+            continue
+
+        # Precision is preferred over recall when legacy rows lack a primary
+        # entity. Such rows remain in the news feed but do not alter profiles.
     return sorted(
         result,
         key=lambda item: clean_text(item.get("publishedAt"), 20),
         reverse=True,
     )
-
 
 def _institution_articles(
     institution: CatalogInstitution,
     articles: Sequence[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    aliases = [item.casefold() for item in institution.aliases if len(item) >= 2]
+    alias_keys = {_entity_key(item) for item in institution.aliases if _entity_key(item)}
     result: list[dict[str, Any]] = []
     for article in articles:
-        named = [item.casefold() for item in _article_institutions(article)]
-        text = clean_text(
-            f"{article.get('title', '')} {article.get('summary', '')}", 1600
-        ).casefold()
-        if any(alias in named or alias in text for alias in aliases):
+        named_keys = {
+            _entity_key(item)
+            for item in _article_institutions(article)
+            if _entity_key(item)
+        }
+        if alias_keys & named_keys:
             result.append(article)
     return sorted(
         result,
         key=lambda item: clean_text(item.get("publishedAt"), 20),
         reverse=True,
     )
-
 
 def _capital_event_from_article(article: dict[str, Any]) -> dict[str, Any]:
     summary = clean_text(article.get("summary"), 520)
