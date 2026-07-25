@@ -24,7 +24,7 @@ exit=0
 ===== python_tests =====
 ...................
 ----------------------------------------------------------------------
-Ran 19 tests in 0.042s
+Ran 19 tests in 0.041s
 
 OK
 exit=0
@@ -32,7 +32,7 @@ exit=0
 ===== npm_install =====
 npm warn deprecated tsconfck@3.1.6: unmaintained
 
-added 506 packages in 45s
+added 506 packages in 34s
 exit=0
 
 ===== node_tests =====
@@ -40,76 +40,81 @@ TAP version 13
 # Subtest: production catalog meets the initial coverage floor
 ok 1 - production catalog meets the initial coverage floor
   ---
-  duration_ms: 0.910396
+  duration_ms: 0.835524
   type: 'test'
   ...
 # Subtest: every production entity has a real source URL
 ok 2 - every production entity has a real source URL
   ---
-  duration_ms: 0.356524
+  duration_ms: 0.384428
   type: 'test'
   ...
 # Subtest: person pages expose at least five traceable materials
 ok 3 - person pages expose at least five traceable materials
   ---
-  duration_ms: 0.226633
+  duration_ms: 0.216119
   type: 'test'
   ...
 # Subtest: slugs are unique within each route collection
 ok 4 - slugs are unique within each route collection
   ---
-  duration_ms: 0.169916
+  duration_ms: 0.14895
   type: 'test'
   ...
 # Subtest: every linked event company has a generated company route
 ok 5 - every linked event company has a generated company route
   ---
-  duration_ms: 0.315237
+  duration_ms: 0.282767
   type: 'test'
   ...
 # Subtest: venture profile snapshot only contains catalog entities
 ok 6 - venture profile snapshot only contains catalog entities
   ---
-  duration_ms: 1.081355
+  duration_ms: 0.992917
   type: 'test'
   ...
 # Subtest: venture profile getters are safe before and after the first crawl
 ok 7 - venture profile getters are safe before and after the first crawl
   ---
-  duration_ms: 0.349291
+  duration_ms: 0.346121
   type: 'test'
   ...
 # Subtest: venture profile sources are traceable public URLs
 ok 8 - venture profile sources are traceable public URLs
   ---
-  duration_ms: 0.628
+  duration_ms: 0.701105
   type: 'test'
   ...
 # Subtest: runtime sanitation removes navigation and editorial labels
 ok 9 - runtime sanitation removes navigation and editorial labels
   ---
-  duration_ms: 1.007827
+  duration_ms: 0.953227
   type: 'test'
   ...
 # Subtest: current snapshot is clean at the frontend boundary
-not ok 10 - current snapshot is clean at the frontend boundary
+ok 10 - current snapshot is clean at the frontend boundary
   ---
-  duration_ms: 2.305975
+  duration_ms: 0.492778
   type: 'test'
-  location: '/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:1:2716'
+  ...
+# Subtest: research model v2 exposes the same structured fields for every entity
+not ok 11 - research model v2 exposes the same structured fields for every entity
+  ---
+  duration_ms: 7.879325
+  type: 'test'
+  location: '/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:1:3686'
   failureType: 'testCodeFailure'
   error: |-
-    The input was expected to not match the regular expression /Policy Commitments Learn News/u. Input:
+    The expression evaluated to a falsy value:
     
-    "Anthropic is an AI safety and research company with a mission of ensuring the world safely makes the transition through transformative AI. Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems. Company \\ Anthropic Research Policy Commitments Learn News Making AI systems you can rely on Anthropic is an AI safety and research company."
+      assert.ok(profile.projectBackground?.summary)
     
   code: 'ERR_ASSERTION'
   name: 'AssertionError'
-  expected:
-  actual: "Anthropic is an AI safety and research company with a mission of ensuring the world safely makes the transition through transformative AI. Anthropic is an AI safety and research company that's working to build reliable, interpretable, and steerable AI systems. Company \\ Anthropic Research Policy Commitments Learn News Making AI systems you can rely on Anthropic is an AI safety and research company."
-  operator: 'doesNotMatch'
+  expected: true
+  operator: '=='
   stack: |-
-    TestContext.<anonymous> (/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:100:12)
+    TestContext.<anonymous> (/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:108:12)
     Test.runInAsyncScope (node:async_hooks:214:14)
     Test.run (node:internal/test_runner/test:1047:25)
     Test.processPendingSubtests (node:internal/test_runner/test:744:18)
@@ -117,22 +122,16 @@ not ok 10 - current snapshot is clean at the frontend boundary
     Test.run (node:internal/test_runner/test:1101:12)
     async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
   ...
-# Subtest: research model v2 exposes the same structured fields for every entity
-ok 11 - research model v2 exposes the same structured fields for every entity
-  ---
-  duration_ms: 0.519868
-  type: 'test'
-  ...
 # Subtest: venture profile runtime statuses use unique entity keys
 ok 12 - venture profile runtime statuses use unique entity keys
   ---
-  duration_ms: 0.214339
+  duration_ms: 0.295436
   type: 'test'
   ...
 # Subtest: venture profile quality gate has internally consistent checks
 ok 13 - venture profile quality gate has internally consistent checks
   ---
-  duration_ms: 0.142976
+  duration_ms: 0.229088
   type: 'test'
   ...
 1..13
@@ -143,7 +142,7 @@ ok 13 - venture profile quality gate has internally consistent checks
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 434.490397
+# duration_ms 432.180795
 exit=1
 
 ===== next_build =====
@@ -156,15 +155,15 @@ https://nextjs.org/telemetry
 ▲ Next.js 16.2.6 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 9.2s
+✓ Compiled successfully in 9.3s
   Running TypeScript ...
-  Finished TypeScript in 6.6s ...
+  Finished TypeScript in 6.2s ...
   Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/160) ...
-  Generating static pages using 3 workers (40/160) 
-  Generating static pages using 3 workers (80/160) 
-  Generating static pages using 3 workers (120/160) 
-✓ Generating static pages using 3 workers (160/160) in 1726ms
+  Generating static pages using 3 workers (0/162) ...
+  Generating static pages using 3 workers (40/162) 
+  Generating static pages using 3 workers (80/162) 
+  Generating static pages using 3 workers (121/162) 
+✓ Generating static pages using 3 workers (162/162) in 1617ms
   Finalizing page optimization ...
 
 Route (app)
@@ -201,10 +200,10 @@ Route (app)
 │ ├ /reports/ai-chips
 │ └ [+2 more paths]
 ├ ● /reports/pdf/[slug]
+│ ├ /reports/pdf/public-c901c5ad7c8680a84300
+│ ├ /reports/pdf/public-99650e337832e3626abf
 │ ├ /reports/pdf/public-0e4e95508281159628b5
-│ ├ /reports/pdf/public-41208f4b84d15716c3cd
-│ ├ /reports/pdf/public-168e6e6ee9e6a314bf12
-│ └ [+15 more paths]
+│ └ [+17 more paths]
 ├ ○ /robots.txt
 ├ ○ /search
 ├ ○ /sitemap.xml
