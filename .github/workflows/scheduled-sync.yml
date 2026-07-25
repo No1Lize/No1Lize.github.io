@@ -8,14 +8,17 @@ on:
       - tools/crawl_with_tracking.py
       - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
+      - tools/crawl_with_wechat_registry.py
       - tools/adaptive_public_sources.py
       - tools/generic_web_sources.py
+      - tools/wechat_public_sources.py
+      - tools/wechat_registry_bridge.py
+      - tools/wechat_source_registry.py
       - tools/robust_web_fallback.py
       - tools/validate_user_source_coverage.py
       - tools/tracking_taxonomy.py
       - tools/enrich_tracking_snapshot.py
       - tools/tracking_quality.py
-      - tools/refresh_people_profiles.py
       - tools/crawl_market_profiles.py
       - tools/refresh_market_profiles.py
       - tools/refresh_market_profiles_enriched.py
@@ -31,8 +34,8 @@ on:
       - tools/migrate_article_entities.py
       - tests/**/*.py
       - config/intelligence_sources.json
+      - config/wechat_sources.json
       - config/official_company_sources.json
-      - config/person_profile_overrides.json
       - config/user_tracking.json
       - .github/workflows/scheduled-sync.yml
   schedule:
@@ -68,7 +71,7 @@ jobs:
       - name: Crawl public sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/crawl_with_source_categories.py --source "${{ inputs.source || 'all' }}"
+        run: python tools/crawl_with_wechat_registry.py --source "${{ inputs.source || 'all' }}"
       - name: Crawl official company sources with category filter
         if: ${{ inputs.source == '' || inputs.source == 'all' || inputs.source == 'news' || inputs.source == 'company' }}
         env:
@@ -82,8 +85,6 @@ jobs:
         run: python tools/refine_eastmoney_snapshot.py
       - name: Backfill tracking sectors and coverage
         run: python tools/enrich_tracking_snapshot.py
-      - name: Refresh tracked people profiles
-        run: python tools/refresh_people_profiles.py
       - name: Validate data quality
         run: python tools/crawl_articles.py --validate-only
       - name: Validate Eastmoney snapshot
@@ -92,39 +93,35 @@ jobs:
         run: python tools/validate_user_source_coverage.py
       - name: Validate listed market profiles
         run: python tools/validate_market_profiles.py
-      - name: Validate tracked people profiles
-        run: python tools/refresh_people_profiles.py --offline --validate-only
       - name: Test crawler
         run: python -m unittest discover -s tests -p "test_*.py"
       - name: Commit changed public data
         id: data-update
         run: |
-          if git diff --quiet -- public/data/articles.json public/data/market_profiles.json public/data/people.json; then
+          if git diff --quiet -- public/data/articles.json public/data/market_profiles.json; then
             echo "No public data changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/articles.json public/data/market_profiles.json public/data/people.json
-          git commit -m "data: refresh public articles, market and people profiles"
+          git add public/data/articles.json public/data/market_profiles.json
+          git commit -m "data: refresh public articles and market profiles"
           for attempt in 1 2 3; do
             git pull --rebase origin main
 
             # Re-run enrichment at the rebased HEAD so stale jobs cannot publish
-            # obsolete profile or entity semantics.
+            # obsolete market-cap, region or description semantics.
             python tools/refresh_market_profiles_enriched.py
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
             python tools/enrich_tracking_snapshot.py
-            python tools/refresh_people_profiles.py
             python tools/crawl_articles.py --validate-only
             python tools/validate_eastmoney_snapshot.py
             python tools/validate_user_source_coverage.py
             python tools/validate_market_profiles.py
-            python tools/refresh_people_profiles.py --offline --validate-only
             python -m unittest discover -s tests -p "test_*.py"
-            git add public/data/articles.json public/data/market_profiles.json public/data/people.json
+            git add public/data/articles.json public/data/market_profiles.json
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
