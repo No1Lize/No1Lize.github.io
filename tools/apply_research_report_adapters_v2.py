@@ -28,12 +28,14 @@ except ModuleNotFoundError:  # direct execution: python tools/crawl_research_rep
 REGISTRY_IMPORT = '''
 try:
     from tools.research_report_registry import (
+        load_curated_pdf_candidates,
         load_local_cik_map,
         load_official_websites,
         merge_source_maps,
     )
 except ModuleNotFoundError:  # direct execution
     from research_report_registry import (
+        load_curated_pdf_candidates,
         load_local_cik_map,
         load_official_websites,
         merge_source_maps,
@@ -59,7 +61,14 @@ def normalize_adapter_import(text: str) -> str:
         text = text.replace(DIRECT_IMPORT, FALLBACK_IMPORT, 1)
     else:
         raise RuntimeError("cannot find research report adapter import")
-    if REGISTRY_IMPORT.strip() not in text:
+
+    registry_start = "try:\n    from tools.research_report_registry import ("
+    if registry_start in text:
+        start = text.index(registry_start)
+        end_marker = "    )\n\nROOT = Path(__file__).resolve().parents[1]"
+        end = text.index(end_marker, start) + len("    )\n")
+        text = text[:start] + REGISTRY_IMPORT.strip() + "\n\n" + text[end:]
+    else:
         text = text.replace(FALLBACK_IMPORT, f"{FALLBACK_IMPORT}{REGISTRY_IMPORT}", 1)
     return text
 
@@ -111,6 +120,7 @@ def main() -> int:
         '''def crawl_company(
     company: dict[str, str],
     website: str,
+    cik: str,
     previous_reports: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
 ''',
@@ -118,10 +128,36 @@ def main() -> int:
     company: dict[str, str],
     website: str,
     cik: str,
+    curated_candidates: list[dict[str, str]],
     previous_reports: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
 ''',
-        "crawl signature",
+        "curated crawl signature",
+    )
+    text = replace_once(
+        text,
+        '''    fetched = 0
+
+    try:
+        eastmoney_records = fetch_eastmoney_reports(company)
+''',
+        '''    fetched = 0
+
+    for candidate in curated_candidates:
+        fetched += 1
+        try:
+            report = archive_public_report(candidate, company)
+        except Exception as error:
+            errors.append(f"curated PDF {candidate.get('url', '')}: {error}")
+            continue
+        new_reports.append(report)
+        if len(new_reports) >= MAX_REPORTS_PER_COMPANY:
+            break
+
+    try:
+        eastmoney_records = fetch_eastmoney_reports(company)
+''',
+        "curated PDF block",
     )
     marker = '''    if len(new_reports) < MAX_REPORTS_PER_COMPANY:
         candidates = discover_public_pdf_candidates(company, website)
@@ -145,62 +181,44 @@ def main() -> int:
     text = replace_once(text, marker, sec_block, "SEC discovery block")
     text = replace_once(
         text,
-        '''        "adapters": ["Eastmoney", "public-web", *( ["company-domain"] if website else [] )],
+        '''            "Eastmoney",
+            *( ["SEC"] if cik else [] ),
 ''',
-        '''        "adapters": [
+        '''            *( ["verified-direct"] if curated_candidates else [] ),
             "Eastmoney",
             *( ["SEC"] if cik else [] ),
-            "public-web",
-            *( ["company-domain"] if website else [] ),
-        ],
 ''',
-        "adapter status",
+        "curated adapter status",
     )
     text = replace_once(
         text,
-        '''    websites = load_company_websites()
-    sec_tickers = load_sec_ticker_map(request_bytes)
-    companies = [
-''',
         '''    websites = merge_source_maps(
         load_company_websites(),
         load_official_websites(ROOT),
     )
     sec_tickers = merge_source_maps(
-        load_sec_ticker_map(request_bytes),
-        load_local_cik_map(ROOT),
-    )
-    companies = [
-''',
-        "repository source registry merge",
-    )
-    text = replace_once(
-        text,
-        '''    websites = load_company_websites()
-    companies = [
 ''',
         '''    websites = merge_source_maps(
         load_company_websites(),
         load_official_websites(ROOT),
     )
+    curated_candidates = load_curated_pdf_candidates()
     sec_tickers = merge_source_maps(
-        load_sec_ticker_map(request_bytes),
-        load_local_cik_map(ROOT),
-    )
-    companies = [
 ''',
-        "repository source registry initial merge",
+        "curated candidate map",
     )
     text = replace_once(
         text,
-        '''                websites.get(company["slug"], ""),
-                previous_by_company.get(company["slug"], []),
-''',
         '''                websites.get(company["slug"], ""),
                 sec_tickers.get(company["ticker"], ""),
                 previous_by_company.get(company["slug"], []),
 ''',
-        "executor CIK",
+        '''                websites.get(company["slug"], ""),
+                sec_tickers.get(company["ticker"], ""),
+                curated_candidates.get(company["slug"], []),
+                previous_by_company.get(company["slug"], []),
+''',
+        "executor curated candidates",
     )
     text = replace_once(
         text,
