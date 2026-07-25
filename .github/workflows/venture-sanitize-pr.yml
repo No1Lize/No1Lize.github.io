@@ -37,6 +37,9 @@ jobs:
           if [ -f tools/patch_venture_structured_products.py ]; then
             python tools/patch_venture_structured_products.py
           fi
+          if [ -f tools/patch_venture_finalizer_products.py ]; then
+            python tools/patch_venture_finalizer_products.py
+          fi
       - name: Compile venture pipeline
         run: |
           python -m py_compile \
@@ -112,6 +115,7 @@ jobs:
           rm -f diagnostics/venture-pr-normalizer-check.txt
           rm -f tools/patch_venture_enrichment_idempotence.py
           rm -f tools/patch_venture_structured_products.py
+          rm -f tools/patch_venture_finalizer_products.py
           rm -f tools/patch_venture_narrative_prose.py
           git add -A
           git commit -m "data: normalize startup and institution profiles"
