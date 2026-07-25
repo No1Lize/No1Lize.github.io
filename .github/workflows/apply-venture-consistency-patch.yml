@@ -1,0 +1,383 @@
+name: Apply venture profile consistency patch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-venture-consistency-patch.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Strengthen venture entity normalization
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("tools/venture_profile_extraction.py")
+          text = path.read_text(encoding="utf-8")
+
+          old_products = '''def sanitize_product_items(values: Sequence[Any]) -> list[str]:
+              """Remove generic navigation/document labels from current or retained data."""
+              result: list[str] = []
+              seen: set[str] = set()
+              for raw in values:
+                  item = clean_text(raw, 180).strip(" >›→-|｜")
+                  lowered = item.casefold()
+                  compact = re.sub(r"[^a-z0-9\\u3400-\\u9fff]+", "", lowered)
+                  if not item or lowered in NAVIGATION_NOISE or lowered in GENERIC_PRODUCT_LABELS:
+                      continue
+                  if any(term in lowered for term in PRODUCT_DOCUMENT_TERMS):
+                      continue
+                  if compact in {
+                      re.sub(r"\\W+", "", label).casefold()
+                      for label in GENERIC_PRODUCT_LABELS
+                  }:
+                      continue
+                  if compact in seen:
+                      continue
+                  result.append(item)
+                  seen.add(compact)
+                  if len(result) >= 10:
+                      break
+              return result
+
+
+          def extract_products(pages: Sequence[ParsedPage], fallback: str) -> list[str]:
+              candidates: list[tuple[int, str]] = []
+              # The catalog product description is manually curated and therefore outranks
+              # discovered navigation labels. Web discovery only adds concrete model names.
+              for item in re.split(r"[、，,;/]|\\s+与\\s+|\\s+and\\s+", clean_text(fallback, 600), flags=re.IGNORECASE):
+                  item = clean_text(item, 180).strip(" >›→-|｜")
+                  if item:
+                      candidates.append((5, item))
+              for page in pages:
+                  for value in [page.title, *page.headings, *(text for _, text in page.links)]:
+                      item = clean_text(value, 220).strip(" >›→-|｜")
+                      if not _specific_product_label(item):
+                          continue
+                      lowered = item.casefold()
+                      score = 2 + sum(
+                          2 for keyword in PRODUCT_KEYWORDS if keyword.casefold() in lowered
+                      )
+                      candidates.append((score, item))
+              candidates.sort(key=lambda item: (-item[0], len(item[1]), item[1]))
+              result: list[str] = []
+              seen: set[str] = set()
+              for _, item in candidates:
+                  key = re.sub(r"\\W+", "", item).casefold()
+                  if not key or key in seen:
+                      continue
+                  result.append(item)
+                  seen.add(key)
+                  if len(result) >= 10:
+                      break
+              return result
+          '''
+
+          new_products = '''def _product_parts(value: Any) -> list[str]:
+              return [
+                  clean_text(item, 180)
+                  for item in re.split(
+                      r"[、，,;/]|\\s+与\\s+|\\s+and\\s+",
+                      clean_text(value, 600),
+                      flags=re.IGNORECASE,
+                  )
+                  if clean_text(item, 180)
+              ]
+
+
+          def _normalize_product_item(value: Any) -> str:
+              item = clean_text(value, 180).strip(" >›→-|｜。.!！")
+              item = re.sub(
+                  r"(?:等)?(?:机器人|产品|解决方案)?系列$|(?:等产品|等解决方案)$",
+                  "",
+                  item,
+                  flags=re.IGNORECASE,
+              ).strip(" >›→-|｜。.!！")
+              return clean_text(item, 180)
+
+
+          def sanitize_product_items(values: Sequence[Any]) -> list[str]:
+              """Normalize product names and remove navigation/document labels."""
+              result: list[str] = []
+              seen: set[str] = set()
+              generic_compact = {
+                  re.sub(r"\\W+", "", label).casefold()
+                  for label in GENERIC_PRODUCT_LABELS
+              }
+              generic_compact.update(
+                  {"机器人", "模型", "平台", "系统", "芯片", "引擎", "终端", "助手", "智能体", "api"}
+              )
+              for raw in values:
+                  for part in _product_parts(raw):
+                      item = _normalize_product_item(part)
+                      lowered = item.casefold()
+                      compact = re.sub(r"[^a-z0-9\\u3400-\\u9fff]+", "", lowered)
+                      if not item or lowered in NAVIGATION_NOISE or lowered in GENERIC_PRODUCT_LABELS:
+                          continue
+                      if any(term in lowered for term in PRODUCT_DOCUMENT_TERMS):
+                          continue
+                      if compact in generic_compact or compact in seen:
+                          continue
+                      result.append(item)
+                      seen.add(compact)
+                      if len(result) >= 10:
+                          return result
+              return result
+
+
+          def extract_products(pages: Sequence[ParsedPage], fallback: str) -> list[str]:
+              candidates: list[tuple[int, str]] = []
+              # The catalog product description is manually curated and therefore outranks
+              # discovered navigation labels. Web discovery only adds concrete model names.
+              for item in sanitize_product_items([fallback]):
+                  candidates.append((5, item))
+              for page in pages:
+                  for value in [page.title, *page.headings, *(text for _, text in page.links)]:
+                      item = _normalize_product_item(value)
+                      if not _specific_product_label(item):
+                          continue
+                      lowered = item.casefold()
+                      score = 2 + sum(
+                          2 for keyword in PRODUCT_KEYWORDS if keyword.casefold() in lowered
+                      )
+                      candidates.append((score, item))
+              candidates.sort(key=lambda item: (-item[0], len(item[1]), item[1]))
+              return sanitize_product_items([item for _, item in candidates])
+          '''
+
+          if old_products not in text:
+              raise SystemExit("product normalization block not found")
+          text = text.replace(old_products, new_products, 1)
+
+          old_team = '''def sanitize_team_members(
+              members: Sequence[dict[str, Any]], aliases: Sequence[str]
+          ) -> list[dict[str, str]]:
+              """Apply current person-name rules to newly crawled and retained history."""
+              result: list[dict[str, str]] = []
+              seen: set[str] = set()
+              alias_keys = {clean_text(alias, 120).casefold() for alias in aliases if alias}
+              for member in members:
+                  if not isinstance(member, dict):
+                      continue
+                  name = clean_text(member.get("name"), 120).strip(" ,，:：;；-|｜")
+                  role = clean_text(member.get("role"), 160)
+                  if not _valid_person_name(name):
+                      continue
+                  if any(alias in name.casefold() for alias in alias_keys if len(alias) >= 2):
+                      continue
+                  key = name.casefold()
+                  if key in seen:
+                      existing = next(item for item in result if item["name"].casefold() == key)
+                      if not existing.get("role") and role:
+                          existing["role"] = role
+                      continue
+                  result.append(
+                      {
+                          "name": name,
+                          "role": role,
+                          "summary": clean_text(member.get("summary"), 320),
+                          "sourceUrl": normalize_url(member.get("sourceUrl", "")),
+                      }
+                  )
+                  seen.add(key)
+                  if len(result) >= 16:
+                      break
+              return result
+          '''
+
+          new_team = '''def sanitize_team_members(
+              members: Sequence[dict[str, Any]], aliases: Sequence[str]
+          ) -> list[dict[str, str]]:
+              """Apply person-name rules to new extraction and retained history."""
+              result: list[dict[str, str]] = []
+              seen: set[str] = set()
+              alias_keys = [clean_text(alias, 120).casefold() for alias in aliases if alias]
+              role_fragments = {
+                  "高级副", "执行副", "联席", "首席", "副总裁", "总裁", "董事",
+                  "董事长", "合伙人", "负责人", "管理层", "高级管理层",
+              }
+              for member in members:
+                  if not isinstance(member, dict):
+                      continue
+                  name = clean_text(member.get("name"), 120).strip(" ,，:：;；-|｜")
+                  role = clean_text(member.get("role"), 160)
+                  lowered = name.casefold()
+                  if not _valid_person_name(name) or lowered in role_fragments:
+                      continue
+                  if any(
+                      lowered == alias
+                      or (
+                          len(name) >= 2
+                          and len(name) < len(alias)
+                          and lowered in alias
+                      )
+                      for alias in alias_keys
+                  ):
+                      continue
+                  key = lowered
+                  if key in seen:
+                      existing = next(item for item in result if item["name"].casefold() == key)
+                      if not existing.get("role") and role:
+                          existing["role"] = role
+                      continue
+                  result.append(
+                      {
+                          "name": name,
+                          "role": role,
+                          "summary": clean_text(member.get("summary"), 320),
+                          "sourceUrl": normalize_url(member.get("sourceUrl", "")),
+                      }
+                  )
+                  seen.add(key)
+                  if len(result) >= 16:
+                      break
+              return result
+          '''
+
+          if old_team not in text:
+              raise SystemExit("team sanitizer block not found")
+          text = text.replace(old_team, new_team, 1)
+
+          old_tail = '''    result: list[dict[str, str]] = []
+              seen: set[str] = set()
+              alias_keys = {alias.casefold() for alias in aliases}
+              for member in members:
+                  name = clean_text(member.get("name"), 120)
+                  role = clean_text(member.get("role"), 160)
+                  if not _valid_person_name(name):
+                      continue
+                  if any(alias in name.casefold() for alias in alias_keys if len(alias) >= 2):
+                      continue
+                  key = name.casefold()
+                  if key in seen:
+                      existing = next(item for item in result if item["name"].casefold() == key)
+                      if not existing.get("role") and role:
+                          existing["role"] = role
+                      continue
+                  result.append(
+                      {
+                          "name": name,
+                          "role": role,
+                          "summary": clean_text(member.get("summary"), 320),
+                          "sourceUrl": normalize_url(member.get("sourceUrl", "")),
+                      }
+                  )
+                  seen.add(key)
+                  if len(result) >= 16:
+                      break
+              return result
+          '''
+
+          new_tail = '''    return sanitize_team_members(members, aliases)
+          '''
+
+          if old_tail not in text:
+              raise SystemExit("extract_team tail not found")
+          text = text.replace(old_tail, new_tail, 1)
+          path.write_text(text, encoding="utf-8")
+
+          test_path = Path("tests/test_venture_profile_noise_filters.py")
+          tests = test_path.read_text(encoding="utf-8")
+          marker = '''    def test_retained_history_is_resanitized_after_homepage_timeout(self) -> None:
+          '''
+          addition = '''    def test_alias_fragments_roles_and_product_suffixes_are_normalized(self) -> None:
+              team = extraction.sanitize_team_members(
+                  [
+                      {"name": "智元", "role": "合伙人", "summary": "", "sourceUrl": "https://example.com"},
+                      {"name": "高级副", "role": "总裁", "summary": "", "sourceUrl": "https://example.com"},
+                      {"name": "具身业务部", "role": "总裁", "summary": "", "sourceUrl": "https://example.com"},
+                      {"name": "邓泰华", "role": "创始人", "summary": "", "sourceUrl": "https://example.com"},
+                  ],
+                  ("智元机器人", "AgiBot"),
+              )
+              self.assertEqual([item["name"] for item in team], ["邓泰华"])
+              self.assertEqual(
+                  extraction.sanitize_product_items(
+                      ["远征", "灵犀等机器人系列。", "产品手册", "Genie Studio具身智能开发平台"]
+                  ),
+                  ["远征", "灵犀", "Genie Studio具身智能开发平台"],
+              )
+
+
+          '''
+          if addition not in tests:
+              if marker not in tests:
+                  raise SystemExit("noise-filter test marker not found")
+              tests = tests.replace(marker, addition + marker, 1)
+          test_path.write_text(tests, encoding="utf-8")
+          PY
+
+          python -m py_compile tools/venture_profile_extraction.py tools/crawl_venture_profiles.py
+          python -m unittest tests.test_venture_profile_extraction tests.test_venture_profile_noise_filters
+
+      - name: Sanitize current production snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from datetime import UTC, datetime
+          from pathlib import Path
+
+          from tools.crawl_venture_profiles import CATALOG_PATH, evaluate_quality
+          from tools.venture_profile_extraction import (
+              evidence_score,
+              parse_catalog,
+              sanitize_product_items,
+              sanitize_team_members,
+          )
+
+          path = Path("public/data/venture_profiles.json")
+          payload = json.loads(path.read_text(encoding="utf-8"))
+          company_specs, institution_specs = parse_catalog(CATALOG_PATH.read_text(encoding="utf-8"))
+          company_aliases = {item.slug: item.aliases for item in company_specs}
+          institution_aliases = {item.slug: item.aliases for item in institution_specs}
+
+          companies = payload.get("companies", {})
+          institutions = payload.get("institutions", {})
+          for slug, profile in companies.items():
+              profile["team"] = sanitize_team_members(profile.get("team", []), company_aliases.get(slug, (profile.get("name", ""),)))
+              profile["products"] = sanitize_product_items(profile.get("products", []))
+              profile["evidenceScore"] = evidence_score(profile, "company")
+          for slug, profile in institutions.items():
+              profile["team"] = sanitize_team_members(profile.get("team", []), institution_aliases.get(slug, (profile.get("name", ""),)))
+              profile["evidenceScore"] = evidence_score(profile, "institution")
+
+          payload["generatedAt"] = datetime.now(UTC).replace(microsecond=0).isoformat()
+          payload["qualityGate"] = evaluate_quality(
+              companies,
+              institutions,
+              len(company_specs),
+              len(institution_specs),
+              payload.get("sourceStatus", []),
+          )
+          path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          if not payload["qualityGate"]["checks"]["semanticNoise"]["passed"]:
+              raise SystemExit(payload["qualityGate"].get("semanticErrors", []))
+          PY
+
+      - name: Commit patch and cleaned snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/apply-venture-consistency-patch.yml
+          git add tools/venture_profile_extraction.py tests/test_venture_profile_noise_filters.py public/data/venture_profiles.json
+          git commit -m "fix: normalize venture profile entities"
+          git push origin HEAD:main
