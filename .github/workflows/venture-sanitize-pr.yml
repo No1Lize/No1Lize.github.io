@@ -49,6 +49,9 @@ jobs:
             if [ -f tools/patch_venture_finalizer_products.py ]; then
               python tools/patch_venture_finalizer_products.py
             fi
+            if [ -f tools/migrate_venture_entity_attribution_v1.py ]; then
+              python tools/migrate_venture_entity_attribution_v1.py
+            fi
           } > diagnostics/venture-pr-patch.txt 2>&1
           status=$?
           cat diagnostics/venture-pr-patch.txt
@@ -115,6 +118,7 @@ jobs:
           rm -f tools/patch_venture_structured_products.py
           rm -f tools/patch_venture_finalizer_products.py
           rm -f tools/patch_venture_narrative_prose.py
+          rm -f tools/migrate_venture_entity_attribution_v1.py
           git add -A
           git commit -m "data: normalize startup and institution profiles"
           git push origin "HEAD:${HEAD_REF}"
