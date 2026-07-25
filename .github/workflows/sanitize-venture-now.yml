@@ -15,7 +15,7 @@ concurrency:
   group: sanitize-venture-now
   cancel-in-progress: false
 
-# trigger-immediate-sanitation
+# trigger-structured-and-narrative-sanitation
 jobs:
   sanitize:
     runs-on: ubuntu-latest
@@ -31,7 +31,11 @@ jobs:
         run: |
           python tools/sanitize_venture_profiles.py
           python tools/sanitize_venture_profiles.py --check
-          python -m unittest tests.test_venture_profile_postprocess
+          python tools/sanitize_venture_narratives.py
+          python tools/sanitize_venture_narratives.py --check
+          python -m unittest \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer
           git diff --check
       - name: Commit sanitized snapshot
         env:
@@ -51,6 +55,9 @@ jobs:
           for attempt in 1 2 3; do
             git pull --rebase origin main
             python tools/sanitize_venture_profiles.py
+            python tools/sanitize_venture_narratives.py
+            python tools/sanitize_venture_profiles.py --check
+            python tools/sanitize_venture_narratives.py --check
             git add public/data/venture_profiles.json
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
