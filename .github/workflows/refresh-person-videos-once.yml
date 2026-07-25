@@ -1,0 +1,133 @@
+name: Refresh person videos once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/refresh-person-videos-once.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: initial-person-video-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test person video discovery
+        run: python -m unittest tests.test_person_video_discovery tests.test_refresh_people_profiles_with_video
+      - name: Refresh people and video materials
+        run: python tools/refresh_people_profiles_with_video.py --workers 4
+      - name: Record discovery result
+        run: |
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlsplit
+
+          path = Path("public/data/people.json")
+          payload = json.loads(path.read_text(encoding="utf-8"))
+          counts = {"youtube": 0, "bilibili": 0, "wechatChannels": 0}
+          people = []
+          samples = []
+          for person in payload.get("people", []):
+              found = []
+              for item in person.get("speeches", []):
+                  host = (urlsplit(str(item.get("url") or "")).hostname or "").casefold()
+                  platform = ""
+                  if "youtube.com" in host or "youtu.be" in host:
+                      platform = "youtube"
+                  elif "bilibili.com" in host:
+                      platform = "bilibili"
+                  elif "channels.weixin.qq.com" in host or "weixin.qq.com" in host:
+                      platform = "wechatChannels"
+                  if not platform:
+                      continue
+                  counts[platform] += 1
+                  found.append(platform)
+                  if len(samples) < 12:
+                      samples.append({
+                          "person": person.get("name"),
+                          "platform": platform,
+                          "title": item.get("title"),
+                          "url": item.get("url"),
+                      })
+              if found:
+                  people.append({"name": person.get("name"), "platforms": sorted(set(found))})
+          result = {
+              "generatedAt": payload.get("generatedAt"),
+              "personCount": payload.get("personCount"),
+              "peopleWithVideo": len(people),
+              "platformCounts": counts,
+              "people": people,
+              "samples": samples,
+          }
+          Path("diagnostics/person-video-refresh.json").write_text(
+              json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+          )
+          print(json.dumps(result, ensure_ascii=False))
+          PY
+      - name: Validate refreshed people snapshot
+        run: |
+          python tools/refresh_people_profiles_with_video.py --offline --validate-only
+          python -m unittest tests.test_person_video_discovery tests.test_refresh_people_profiles_with_video
+      - name: Commit refreshed snapshot
+        run: |
+          rm .github/workflows/refresh-person-videos-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/people.json diagnostics/person-video-refresh.json .github/workflows/refresh-person-videos-once.yml
+          git commit -m "data: add public video materials to people profiles"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            python tools/refresh_people_profiles_with_video.py --workers 4
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          payload = json.loads(Path("public/data/people.json").read_text(encoding="utf-8"))
+          counts = {"youtube": 0, "bilibili": 0, "wechatChannels": 0}
+          people = []
+          samples = []
+          for person in payload.get("people", []):
+              found = []
+              for item in person.get("speeches", []):
+                  host = (urlsplit(str(item.get("url") or "")).hostname or "").casefold()
+                  platform = "youtube" if ("youtube.com" in host or "youtu.be" in host) else "bilibili" if "bilibili.com" in host else "wechatChannels" if ("channels.weixin.qq.com" in host or "weixin.qq.com" in host) else ""
+                  if not platform:
+                      continue
+                  counts[platform] += 1
+                  found.append(platform)
+                  if len(samples) < 12:
+                      samples.append({"person": person.get("name"), "platform": platform, "title": item.get("title"), "url": item.get("url")})
+              if found:
+                  people.append({"name": person.get("name"), "platforms": sorted(set(found))})
+          Path("diagnostics/person-video-refresh.json").write_text(json.dumps({"generatedAt": payload.get("generatedAt"), "personCount": payload.get("personCount"), "peopleWithVideo": len(people), "platformCounts": counts, "people": people, "samples": samples}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
+            python tools/refresh_people_profiles_with_video.py --offline --validate-only
+            python -m unittest tests.test_person_video_discovery tests.test_refresh_people_profiles_with_video
+            git add public/data/people.json diagnostics/person-video-refresh.json .github/workflows/refresh-person-videos-once.yml
+            git commit --amend --no-edit
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+      - name: Deploy refreshed people pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
