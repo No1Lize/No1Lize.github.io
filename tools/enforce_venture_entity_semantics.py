@@ -379,6 +379,8 @@ def _enforce_snapshot_once(
         profile["products"] = products
 
         background = _sanitize_background(profile.get("background", ""))
+        if not background and spec:
+            background = sanitize_narrative(spec.summary, limit=900)
         profile["background"] = background
         technology = _relevant_clauses(
             profile.get("technology", ""), aliases, products, limit=900
@@ -386,6 +388,10 @@ def _enforce_snapshot_once(
         if not technology and products:
             technology = f"核心技术与产品包括{'、'.join(products[:8])}。"
         profile["technology"] = technology
+        research_technology = _relevant_clauses(
+            profile.get("researchTechnology", ""), aliases, products, limit=900
+        )
+        profile["researchTechnology"] = research_technology or technology
 
         project = profile.get("projectBackground")
         if isinstance(project, dict):

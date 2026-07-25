@@ -109,6 +109,41 @@ class VentureEntitySemanticTests(unittest.TestCase):
         self.assertNotIn("Toll-Free", background)
         self.assertNotIn("Investor Relations", background)
 
+    def test_catalog_fallback_and_research_technology_filter(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "",
+                    "technology": "Claude 模型与 Claude Platform。",
+                    "researchTechnology": (
+                        "Looped world models are a generic research direction. "
+                        "Anthropic expands Claude Platform for enterprise agents."
+                    ),
+                    "products": ["Claude 模型", "Claude Platform"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "technologyProducts": [],
+                    "projectBackground": {
+                        "summary": "Stale summary.",
+                        "problemSolved": "",
+                        "marketOpportunity": "",
+                    },
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, _ = semantics.enforce_snapshot(payload, CATALOG)
+        profile = cleaned["companies"]["anthropic"]
+        self.assertEqual(profile["background"], "Anthropic builds reliable AI systems.")
+        self.assertNotIn("Looped world models", profile["researchTechnology"])
+        self.assertIn("Anthropic expands Claude Platform", profile["researchTechnology"])
+        self.assertEqual(profile["projectBackground"]["summary"], profile["background"])
+
     def test_keeps_entity_subject_financing(self) -> None:
         row = {
             "title": "Anthropic raises $2 billion in new funding",
