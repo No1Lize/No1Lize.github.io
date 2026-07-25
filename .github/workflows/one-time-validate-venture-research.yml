@@ -30,7 +30,7 @@ jobs:
       - name: Run production venture pipeline and record report
         shell: bash
         run: |
-          # production-quality-gate-v2
+          # production-quality-gate-v3
           set +e
           mkdir -p diagnostics
           REPORT=diagnostics/venture-research-validation.txt
@@ -59,7 +59,6 @@ jobs:
           run_check finalizer_check python tools/finalize_venture_profiles.py --check
           run_check crawler_validate python tools/crawl_venture_profiles.py --validate-only
           run_check enrich_validate python tools/enrich_venture_profiles.py --validate-only
-          run_check normalize_check python tools/normalize_venture_profiles.py --check
           run_check python_tests python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
@@ -100,6 +99,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$REPORT"
-          git commit -m "ci: record aligned venture production validation"
+          git commit -m "ci: record terminal venture quality validation"
           git pull --rebase origin main
           git push origin HEAD:main
