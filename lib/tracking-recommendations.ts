@@ -7,16 +7,32 @@ export type TrackingRecommendation = {
   score: number;
 };
 
+export type TrackingSourceRecommendation = TrackingRecommendation & {
+  source: {
+    name: string;
+    url: string;
+    sourceType: "listing-search";
+    sourceCategory: "company" | "media" | "person";
+    region: "中国" | "美国" | "全球";
+    sector: string;
+    company: string;
+    ticker: string;
+    keywords: string[];
+  };
+};
+
 export type TrackingRecommendationSet = {
   keywords: TrackingRecommendation[];
   people: TrackingRecommendation[];
   companies: TrackingRecommendation[];
+  sources: TrackingSourceRecommendation[];
 };
 
 type ExistingTrackingValues = {
   keywords?: string[];
   people?: string[];
   companies?: string[];
+  sources?: string[];
 };
 
 const GENERIC_COMPANIES = new Set([
@@ -53,6 +69,22 @@ const GENERIC_TERMS = new Set([
   "发布",
   "市场",
   "应用",
+]);
+
+const BLOCKED_RECOMMENDATION_HOSTS = new Set([
+  "x.com",
+  "twitter.com",
+  "syndication.twitter.com",
+  "sec.gov",
+  "www.sec.gov",
+  "openalex.org",
+  "api.openalex.org",
+  "arxiv.org",
+  "export.arxiv.org",
+  "bing.com",
+  "www.bing.com",
+  "google.com",
+  "www.google.com",
 ]);
 
 const GLOBAL_TECH_TERMS = [
@@ -303,6 +335,93 @@ function companyCandidates(
     .slice(0, 18);
 }
 
+function urlHost(value: string): string {
+  try {
+    return new URL(value).hostname.toLocaleLowerCase("en-US").replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+}
+
+function mostCommon<T extends string>(values: T[], fallback: T): T {
+  const counts = new Map<T, number>();
+  values.forEach((value) => counts.set(value, (counts.get(value) ?? 0) + 1));
+  return [...counts.entries()].sort((left, right) => right[1] - left[1])[0]?.[0] ?? fallback;
+}
+
+function sourceCandidates(
+  articles: LiveIntelligenceEvent[],
+  selectedSector: string,
+  existingUrls: string[],
+): TrackingSourceRecommendation[] {
+  const existingHosts = new Set(existingUrls.map(urlHost).filter(Boolean));
+  const groups = new Map<string, LiveIntelligenceEvent[]>();
+
+  for (const article of articles) {
+    const host = urlHost(article.source.url);
+    if (
+      !host ||
+      existingHosts.has(host) ||
+      BLOCKED_RECOMMENDATION_HOSTS.has(host) ||
+      article.source.platform === "X" ||
+      article.source.level === "待交叉验证"
+    ) {
+      continue;
+    }
+    const group = groups.get(host) ?? [];
+    group.push(article);
+    groups.set(host, group);
+  }
+
+  return [...groups.entries()]
+    .filter(([, items]) => items.length >= 2 || items.some((item) => sourceWeight(item) >= 1))
+    .map(([host, items]) => {
+      const representative = [...items].sort(
+        (left, right) =>
+          sourceWeight(right) - sourceWeight(left) ||
+          right.importance - left.importance,
+      )[0];
+      const company = representative.company;
+      const isCompanySource =
+        sourceWeight(representative) >= 1 &&
+        Boolean(company) &&
+        !GENERIC_COMPANIES.has(company);
+      const category = isCompanySource ? "company" : "media";
+      const sourceName = normalize(
+        representative.source.name || representative.source.platform || host,
+      );
+      const name = isCompanySource
+        ? `${company} 官方来源`
+        : sourceName || host;
+      const region = mostCommon(
+        items.map((item) => item.region),
+        "全球" as const,
+      );
+      const authoritative = items.filter((item) => sourceWeight(item) >= 0.8).length;
+      const reason = `${items.length} 条当前赛道情报 · ${authoritative} 条高可信记录`;
+      const url = `https://${host}/`;
+      return {
+        value: url,
+        label: name,
+        reason,
+        score: scoreArticles(items) + authoritative * 5,
+        source: {
+          name,
+          url,
+          sourceType: "listing-search" as const,
+          sourceCategory: category,
+          region,
+          sector: selectedSector,
+          company: isCompanySource ? company : "",
+          ticker: "",
+          keywords: [...new Set([isCompanySource ? company : "", selectedSector].filter(Boolean))],
+        },
+      };
+    })
+    .sort((left, right) => right.score - left.score || left.label.localeCompare(right.label))
+    .slice(0, 12);
+}
+
 export function recommendTrackingAdditions(
   articles: LiveIntelligenceEvent[],
   selectedSector: string,
@@ -317,5 +436,6 @@ export function recommendTrackingAdditions(
     keywords: keywordCandidates(sectorArticles, selectedSector, keywordSet),
     people: peopleCandidates(sectorArticles, peopleSet),
     companies: companyCandidates(sectorArticles, companySet),
+    sources: sourceCandidates(sectorArticles, selectedSector, existing.sources ?? []),
   };
 }
