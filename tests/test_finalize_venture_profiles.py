@@ -16,6 +16,7 @@ class VentureProfileFinalizerTests(unittest.TestCase):
         self.assertEqual(products[:2], ["Claude 模型", "企业 API"])
         self.assertIn("Claude Platform", products)
         self.assertNotIn("安全研究。", products)
+        self.assertNotIn("企业 API 与安全研究。", products)
 
     def test_team_preserves_structured_experience(self) -> None:
         team = finalizer.finalize_team(
@@ -39,6 +40,51 @@ class VentureProfileFinalizerTests(unittest.TestCase):
         self.assertEqual([item["name"] for item in team], ["邓泰华"])
         self.assertEqual(team[0]["background"], "曾负责企业技术战略。")
         self.assertEqual(team[0]["previousExperience"], "曾任大型科技公司高管。")
+
+    def test_products_reject_reporting_and_investor_relations_labels(self) -> None:
+        products = finalizer.finalize_products(
+            ["Q1 2026", "Transfer Agent", "Aurora Driver"],
+            "",
+        )
+        self.assertEqual(products, ["Aurora Driver"])
+
+    def test_team_rejects_investor_relations_fragments(self) -> None:
+        team = finalizer.finalize_team(
+            [
+                {
+                    "name": "Chris Urmson",
+                    "role": "CEO",
+                    "sourceUrl": "https://example.com/company",
+                },
+                {
+                    "name": "Investor Relations Email Transfer",
+                    "role": "President",
+                    "sourceUrl": "https://example.com/investors",
+                },
+            ],
+            ("Aurora Innovation", "Aurora"),
+        )
+        self.assertEqual([item["name"] for item in team], ["Chris Urmson"])
+
+    def test_capital_markets_require_transaction_not_exchange_boilerplate(self) -> None:
+        rows = finalizer.finalize_capital_markets(
+            [
+                {
+                    "type": "资本市场",
+                    "title": "Autonomous trucking report",
+                    "summary": "Aurora (Nasdaq: AUR) develops autonomous driving technology.",
+                    "sourceUrl": "https://example.com/report",
+                },
+                {
+                    "date": "2024-01-01",
+                    "type": "上市",
+                    "title": "Example went public",
+                    "summary": "Example went public through an initial public offering.",
+                    "sourceUrl": "https://example.com/ipo",
+                },
+            ]
+        )
+        self.assertEqual([item["title"] for item in rows], ["Example went public"])
 
     def test_financing_rejects_round_like_product_copy(self) -> None:
         rows = finalizer.finalize_financing(

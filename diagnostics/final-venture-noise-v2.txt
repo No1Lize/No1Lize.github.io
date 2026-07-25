@@ -1,0 +1,18 @@
+commit=57bc8f35c885a512e7a7fe0cadb78809b2ff6eb6
+checkedAt=2026-07-25T17:23:19Z
+compile=0
+test_capital_markets_require_transaction_not_exchange_boilerplate (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_capital_markets_require_transaction_not_exchange_boilerplate) ... ok
+test_classic_cases_preserve_analysis_fields_and_require_evidence (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_classic_cases_preserve_analysis_fields_and_require_evidence) ... ok
+test_financing_rejects_round_like_product_copy (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_financing_rejects_round_like_product_copy) ... ok
+test_products_reject_reporting_and_investor_relations_labels (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_products_reject_reporting_and_investor_relations_labels) ... ok
+test_products_remove_pure_research_but_keep_api (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_products_remove_pure_research_but_keep_api) ... ok
+test_recent_investments_use_actual_one_year_window (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_recent_investments_use_actual_one_year_window) ... ok
+test_snapshot_finalization_is_idempotent (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_snapshot_finalization_is_idempotent) ... ok
+test_team_preserves_structured_experience (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_team_preserves_structured_experience) ... ok
+test_team_rejects_investor_relations_fragments (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_team_rejects_investor_relations_fragments) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.007s
+
+OK
+tests=0
