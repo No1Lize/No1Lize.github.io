@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T04:28:54+00:00",
-  "articleCount": 406,
+  "generatedAt": "2026-07-25T04:36:36+00:00",
+  "articleCount": 408,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -53,6 +53,24 @@
       "source": {
         "name": "东方财富",
         "url": "https://finance.eastmoney.com/a/202607253821110827.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
+      }
+    },
+    {
+      "id": "official-user-东方财富-90ea50be8895edf5",
+      "sourceId": "official-user-东方财富",
+      "title": "三星电子、SK海力士将与美国大型科技公司达成价值1375万亿韩元的芯片合作伙伴关系",
+      "summary": "据报道，三星 电子 、 SK海力士 将与美国大型科技公司达成价值1375万亿韩元的芯片合作伙伴关系。",
+      "type": "商业进展",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 84,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253821110592.html",
         "level": "媒体报道",
         "platform": "东方财富"
       }
@@ -206,6 +224,25 @@
         "level": "媒体报道",
         "platform": "专业媒体"
       }
+    },
+    {
+      "id": "tmtpost-d5bbebfa3978596b",
+      "sourceId": "tmtpost",
+      "title": "Opus 5 反超 Fable 5，Anthropic 的定价牌局被打乱了？",
+      "summary": "半价跑赢旗舰。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8078939.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      },
+      "companySlug": "anthropic"
     },
     {
       "id": "tmtpost-4bae9417a947e86b",
@@ -8833,10 +8870,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 0,
-      "scanned": 1,
+      "discovered": 1,
+      "scanned": 2,
       "accepted": 0,
-      "failed": 2,
+      "failed": 3,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -8863,10 +8900,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 1,
-      "scanned": 2,
+      "discovered": 0,
+      "scanned": 1,
       "accepted": 0,
-      "failed": 9,
+      "failed": 8,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -9267,8 +9304,8 @@
       "id": "tmtpost",
       "name": "钛媒体",
       "status": "ok",
-      "scanned": 3,
-      "accepted": 3,
+      "scanned": 4,
+      "accepted": 4,
       "failed": 0,
       "platform": "专业媒体"
     },
@@ -9383,9 +9420,9 @@
     {
       "id": "user-track-materials",
       "name": "新材料 · 用户追踪",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -9401,18 +9438,18 @@
     {
       "id": "user-track-robotics",
       "name": "机器人 · 用户追踪",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "用户追踪"
     },
     {
       "id": "user-track-semiconductor",
       "name": "半导体 · 用户追踪",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -9594,12 +9631,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 406,
+        "actual": 408,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 64,
+        "actual": 63,
         "required": 6,
         "passed": true
       },
@@ -9624,7 +9661,7 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 116,
+        "actual": 117,
         "required": 8,
         "passed": true
       },
@@ -9634,7 +9671,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1429,
+        "actual": 0.1422,
         "required": 0.45,
         "passed": true
       },
@@ -9644,16 +9681,16 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 406,
-        "required": 406,
+        "actual": 408,
+        "required": 408,
         "passed": true
       }
     },
     "invalidArticles": [],
     "trackingQuality": {
-      "scoredUserArticles": 31,
+      "scoredUserArticles": 23,
       "acceptedUserArticles": 7,
-      "rejectedUserArticles": 24,
+      "rejectedUserArticles": 16,
       "clusteredDuplicates": 0,
       "minimumScore": 31
     }
