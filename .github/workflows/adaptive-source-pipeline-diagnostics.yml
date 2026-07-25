@@ -12,7 +12,7 @@ permissions:
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,12 +20,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run adaptive pipeline diagnostics
+      - name: Run adaptive user-source diagnostics
         shell: bash
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: |
-          # diagnostic revision: adaptive-handoff-v2
+          # diagnostic revision: user-sources-only-v3
           set +e
           REPORT="diagnostics/adaptive-source-pipeline-report.txt"
           mkdir -p diagnostics
@@ -42,7 +42,6 @@ jobs:
             echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           } >"$REPORT"
           run_step "crawl_user_sources" python tools/crawl_with_source_categories.py --source feeds
-          run_step "crawl_eastmoney_official" python tools/eastmoney_transport.py
           run_step "migrate" python tools/migrate_article_entities.py
           run_step "refine_eastmoney" python tools/refine_eastmoney_snapshot.py
           run_step "enrich_tracking" python tools/enrich_tracking_snapshot.py
@@ -60,10 +59,20 @@ jobs:
               status for status in payload.get('sourceStatus', [])
               if any(token in str(status.get('id', '')).casefold() for token in ('yahoo', '东方财富', 'youtube', 'source-b', 'jycfcg', 'washington-post'))
           ]
+          selected_articles = [
+              {
+                  'sourceId': item.get('sourceId'),
+                  'title': item.get('title'),
+                  'url': (item.get('source') or {}).get('url'),
+              }
+              for item in payload.get('articles', [])
+              if 'yahoo' in str(item.get('sourceId', '')).casefold()
+          ]
           print(json.dumps({
               'generatedAt': payload.get('generatedAt'),
               'articleCount': payload.get('articleCount'),
               'statuses': selected,
+              'yahooArticles': selected_articles,
           }, ensure_ascii=False, indent=2))
           PY
           git config user.name "github-actions[bot]"
