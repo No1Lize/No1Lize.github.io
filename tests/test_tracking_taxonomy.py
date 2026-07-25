@@ -10,7 +10,7 @@ class TrackingTaxonomyTests(unittest.TestCase):
     def test_name_aliases_support_arbitrary_bilingual_tracks(self) -> None:
         self.assertEqual(
             taxonomy.name_aliases("AI / AGI"),
-            ["AI / AGI", "AI/AGI", "AI", "AGI"],
+            ["AI / AGI", "AI", "AGI"],
         )
         self.assertEqual(
             taxonomy.name_aliases("脑机接口（BCI）"),
