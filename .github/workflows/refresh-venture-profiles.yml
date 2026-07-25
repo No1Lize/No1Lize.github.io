@@ -1,0 +1,92 @@
+name: Refresh venture profiles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/crawl_venture_profiles.py
+      - tools/venture_profile_extraction.py
+      - lib/catalog-data.ts
+      - lib/venture-profile-data.ts
+      - app/companies/[slug]/page.tsx
+      - app/institutions/[slug]/page.tsx
+      - tests/test_venture_profile_extraction.py
+      - tests/venture-profile-data.test.ts
+      - .github/workflows/refresh-venture-profiles.yml
+  schedule:
+    - cron: "41 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: venture-profile-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify crawler syntax and focused tests
+        run: |
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py
+          python -m unittest tests.test_venture_profile_extraction
+      - name: Record catalog revision
+        id: catalog-before
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "sha=$(gh api "repos/${GITHUB_REPOSITORY}/contents/lib/catalog-data.ts?ref=main" --jq .sha)" >> "$GITHUB_OUTPUT"
+      - name: Crawl all startup and institution profiles
+        env:
+          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
+        run: python tools/crawl_venture_profiles.py --workers 8 --max-pages 6
+      - name: Validate generated snapshot
+        run: |
+          python tools/crawl_venture_profiles.py --validate-only
+          python -m unittest discover -s tests -p "test_*.py"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate frontend data model and pages
+        run: |
+          npm install
+          npm run test:unit
+      - name: Publish only against the same catalog revision
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CATALOG_BEFORE: ${{ steps.catalog-before.outputs.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          CATALOG_AFTER="$(gh api "repos/${GITHUB_REPOSITORY}/contents/lib/catalog-data.ts?ref=main" --jq .sha)"
+          if [ "$CATALOG_AFTER" != "$CATALOG_BEFORE" ]; then
+            echo "Catalog changed during crawl; refusing to publish a stale profile snapshot."
+            exit 1
+          fi
+
+          ENDPOINT="repos/${GITHUB_REPOSITORY}/contents/public/data/venture_profiles.json"
+          CURRENT_SHA="$(gh api "$ENDPOINT?ref=main" --jq .sha)"
+          REQUEST="$(mktemp)"
+          python -c 'import base64,json,sys; path,sha,out=sys.argv[1:]; json.dump({"message":"data: refresh startup and institution profiles","content":base64.b64encode(open(path,"rb").read()).decode(),"sha":sha,"branch":"main"},open(out,"w",encoding="utf-8"))' \
+            public/data/venture_profiles.json "$CURRENT_SHA" "$REQUEST"
+          gh api --method PUT "$ENDPOINT" --input "$REQUEST" >/dev/null
+          rm -f "$REQUEST"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Publish updated site
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
