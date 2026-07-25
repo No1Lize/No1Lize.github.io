@@ -108,7 +108,7 @@ const articles: LiveIntelligenceEvent[] = [
     sourceId: "noise-media",
     title: "US CEO discusses UK STEM AI AGI LLM RT K3 outlook",
     summary: "A generic roundup with country codes, job titles and isolated abbreviations.",
-    type: "媒体报道",
+    type: "公司动态",
     region: "全球",
     sector: "AI / AGI",
     company: "科技产业",
