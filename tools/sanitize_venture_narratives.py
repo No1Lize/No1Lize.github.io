@@ -115,7 +115,7 @@ def _looks_like_navigation(value: str) -> bool:
     tokens = WORD_RE.findall(text)
     short_tokens = sum(len(token) <= 8 for token in tokens)
     if len(tokens) >= 18 and short_tokens / max(1, len(tokens)) >= 0.85:
-        if len(hits) >= 2 and not re.search(r"\d", text):
+        if len(hits) >= 3 and not re.search(r"\d", text):
             return True
     return False
 
