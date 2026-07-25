@@ -5,6 +5,7 @@ on:
     branches: [feature/tracked-people-research-clean-20260725]
     paths:
       - '.github/workflows/replay-people-feature-once.yml'
+      - 'diagnostics/people-replay-trigger.txt'
 
 permissions:
   contents: write
@@ -127,7 +128,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git rm .github/workflows/replay-people-feature-once.yml
+          git rm .github/workflows/replay-people-feature-once.yml diagnostics/people-replay-trigger.txt
           git add \
             .github/workflows/scheduled-sync.yml \
             app/people/page.tsx \
