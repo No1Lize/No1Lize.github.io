@@ -6,8 +6,10 @@ on:
     paths:
       - tools/crawl_articles.py
       - tools/crawl_with_tracking.py
-      - tools/tracking_quality.py
+      - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
+      - tools/generic_web_sources.py
+      - tools/tracking_quality.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
       - tools/crawl_official_with_source_categories.py
