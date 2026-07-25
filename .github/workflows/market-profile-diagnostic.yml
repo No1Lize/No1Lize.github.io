@@ -1,0 +1,82 @@
+name: Verify three-market profiles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/market-profile-diagnostic.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-profile-diagnostic
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run diagnostics and record exit codes
+        id: diagnostics
+        shell: bash
+        run: |
+          set +e
+          python -m unittest tests.test_market_profiles
+          MARKET_TESTS=$?
+          python -m unittest discover -s tests -p "test_*.py"
+          PYTHON_TESTS=$?
+          npm install
+          NPM_INSTALL=$?
+          if [ "$NPM_INSTALL" -eq 0 ]; then
+            npm run test:unit
+            UNIT_TESTS=$?
+            npm run build:pages
+            PAGES_BUILD=$?
+          else
+            UNIT_TESTS=125
+            PAGES_BUILD=125
+          fi
+          mkdir -p .github/diagnostics
+          cat > .github/diagnostics/market-profile-validation.json <<EOF
+          {
+            "marketProfileTests": $MARKET_TESTS,
+            "pythonTests": $PYTHON_TESTS,
+            "npmInstall": $NPM_INSTALL,
+            "unitTests": $UNIT_TESTS,
+            "pagesBuild": $PAGES_BUILD,
+            "commit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID"
+          }
+          EOF
+          echo "market_tests=$MARKET_TESTS" >> "$GITHUB_OUTPUT"
+          echo "python_tests=$PYTHON_TESTS" >> "$GITHUB_OUTPUT"
+          echo "npm_install=$NPM_INSTALL" >> "$GITHUB_OUTPUT"
+          echo "unit_tests=$UNIT_TESTS" >> "$GITHUB_OUTPUT"
+          echo "pages_build=$PAGES_BUILD" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Commit diagnostic report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/diagnostics/market-profile-validation.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "ci: record three-market validation results"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Fail when verification failed
+        if: ${{ steps.diagnostics.outputs.market_tests != '0' || steps.diagnostics.outputs.python_tests != '0' || steps.diagnostics.outputs.npm_install != '0' || steps.diagnostics.outputs.unit_tests != '0' || steps.diagnostics.outputs.pages_build != '0' }}
+        run: exit 1
