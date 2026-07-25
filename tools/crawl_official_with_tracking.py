@@ -19,6 +19,16 @@ except ImportError:  # Executed directly with ``python tools/...``.
 
 
 USER_OFFICIAL_PREFIX = "official-user-"
+EASTMONEY_INDEX_URLS = (
+    "https://fund.eastmoney.com/a/cjjyw.html",
+    "https://fund.eastmoney.com/a/cjjgd.html",
+    "https://finance.eastmoney.com/",
+)
+EASTMONEY_ARTICLE_PATTERN = r"/a/20\d{12,}\.html$"
+EASTMONEY_INDEX_PATTERN = re.compile(
+    r"/(?:a|news)/(?:cjjyw|cjjgd|cjjyj)(?:_\d+)?\.html$",
+    flags=re.IGNORECASE,
+)
 
 
 def _clean(value: Any, limit: int = 160) -> str:
@@ -36,13 +46,31 @@ def _root_url(url: str) -> str:
     return urlunsplit((parts.scheme, parts.netloc, "/", "", ""))
 
 
+def _normalized_host(url: str) -> str:
+    host = (urlsplit(url).hostname or "").casefold()
+    return host[4:] if host.startswith("www.") else host
+
+
+def _is_eastmoney_source(company: str, urls: list[str]) -> bool:
+    return "东方财富" in company or any(
+        _normalized_host(url).endswith("eastmoney.com") for url in urls
+    )
+
+
 def _is_probable_non_article(article: dict[str, Any]) -> bool:
     """Reject author profiles, channel indexes and other pages presented as articles."""
 
     title = _clean(article.get("title"), 240).casefold()
     source = article.get("source") if isinstance(article.get("source"), dict) else {}
     url = _clean(source.get("url"), 500)
+    host = _normalized_host(url)
     path = urlsplit(url).path.casefold().rstrip("/")
+
+    if host.endswith("eastmoney.com"):
+        if EASTMONEY_INDEX_PATTERN.search(path):
+            return True
+        if title.startswith(("基金要闻", "基金观点", "基金研究")):
+            return True
 
     title_markers = (
         "的文章_",
@@ -124,6 +152,17 @@ def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
                 if cleaned:
                     keywords.append(cleaned)
 
+        is_eastmoney = _is_eastmoney_source(company, urls)
+        if is_eastmoney:
+            # The configured Eastmoney homepage is a portal. Add the fund/news
+            # indexes that expose concrete article links and permit their related
+            # finance subdomain. The article pattern below gives those detail URLs
+            # priority while channel pages are discarded by the sanitizer.
+            for seed_url in EASTMONEY_INDEX_URLS:
+                normalized = official.normalize_url(seed_url)
+                if normalized not in urls:
+                    urls.append(normalized)
+
         homepage = _root_url(urls[0])
         region = _clean(first.get("region"), 20)
         if region not in {"中国", "美国", "全球"}:
@@ -135,6 +174,15 @@ def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
             )
         )
         entity_aliases = tuple(dict.fromkeys([*aliases, *keywords]))
+        article_url_patterns = [
+            r"/(?:news|newsroom|press|blog|updates?)/",
+            r"/(?:investors?|investor-relations|ir)/",
+            r"/(?:announcements?|filings?|financials?)/",
+            r"/20\d{2}/",
+        ]
+        if is_eastmoney:
+            article_url_patterns.insert(0, EASTMONEY_ARTICLE_PATTERN)
+
         specs.append(
             official.CompanySpec(
                 slug=slug,
@@ -146,12 +194,7 @@ def build_user_specs(tracking: dict[str, Any]) -> list[official.CompanySpec]:
                 sitemap_urls=sitemap_urls,
                 aliases=tuple(dict.fromkeys(alias for alias in aliases if alias != company)),
                 entity_aliases=entity_aliases,
-                article_url_patterns=(
-                    r"/(?:news|newsroom|press|blog|updates?)/",
-                    r"/(?:investors?|investor-relations|ir)/",
-                    r"/(?:announcements?|filings?|financials?)/",
-                    r"/20\d{2}/",
-                ),
+                article_url_patterns=tuple(article_url_patterns),
                 require_entity_match=False,
                 max_items=6,
                 max_candidate_links=24,
