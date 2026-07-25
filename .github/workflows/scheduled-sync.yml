@@ -29,6 +29,8 @@ on:
       - tools/market_profile_enrichment.py
       - tools/validate_market_profiles.py
       - tools/refresh_people_profiles.py
+      - tools/refresh_people_profiles_with_video.py
+      - tools/person_video_discovery.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
       - tools/crawl_official_with_source_categories.py
@@ -92,8 +94,8 @@ jobs:
         run: python tools/refine_eastmoney_snapshot.py
       - name: Backfill tracking sectors and coverage
         run: python tools/enrich_tracking_snapshot.py
-      - name: Refresh tracked people profiles
-        run: python tools/refresh_people_profiles.py
+      - name: Refresh tracked people profiles and public videos
+        run: python tools/refresh_people_profiles_with_video.py
       - name: Validate data quality
         run: python tools/crawl_articles.py --validate-only
       - name: Validate Eastmoney snapshot
@@ -103,7 +105,7 @@ jobs:
       - name: Validate listed market profiles
         run: python tools/validate_market_profiles.py
       - name: Validate tracked people profiles
-        run: python tools/refresh_people_profiles.py --offline --validate-only
+        run: python tools/refresh_people_profiles_with_video.py --offline --validate-only
       - name: Test crawler
         run: python -m unittest discover -s tests -p "test_*.py"
       - name: Commit changed public data
@@ -127,12 +129,12 @@ jobs:
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
             python tools/enrich_tracking_snapshot.py
-            python tools/refresh_people_profiles.py
+            python tools/refresh_people_profiles_with_video.py
             python tools/crawl_articles.py --validate-only
             python tools/validate_eastmoney_snapshot.py
             python tools/validate_user_source_coverage.py
             python tools/validate_market_profiles.py
-            python tools/refresh_people_profiles.py --offline --validate-only
+            python tools/refresh_people_profiles_with_video.py --offline --validate-only
             python -m unittest discover -s tests -p "test_*.py"
             git add public/data/articles.json public/data/market_profiles.json public/data/people.json
             if ! git diff --cached --quiet; then
