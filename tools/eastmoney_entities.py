@@ -264,12 +264,25 @@ def _quote_tickers_from_url(raw_url: str) -> set[str]:
     return found
 
 
+def _extract_eastmoney_linked_ticker_groups(
+    body: str,
+) -> set[frozenset[str]]:
+    """Return distinct securities, preserving equivalent ticker variants."""
+
+    groups: set[frozenset[str]] = set()
+    for match in HREF_PATTERN.finditer(body or ""):
+        variants = _quote_tickers_from_url(match.group(2))
+        if variants:
+            groups.add(frozenset(variants))
+    return groups
+
+
 def extract_eastmoney_linked_tickers(body: str) -> set[str]:
-    """Return tickers carried by structured Eastmoney quote/data links."""
+    """Return ticker variants carried by structured Eastmoney quote/data links."""
 
     linked: set[str] = set()
-    for match in HREF_PATTERN.finditer(body or ""):
-        linked.update(_quote_tickers_from_url(match.group(2)))
+    for group in _extract_eastmoney_linked_ticker_groups(body):
+        linked.update(group)
     return linked
 
 
@@ -333,13 +346,14 @@ def attribute_eastmoney_article(
         )
         return updated
 
-    linked_tickers = extract_eastmoney_linked_tickers(page_body)
+    linked_groups = _extract_eastmoney_linked_ticker_groups(page_body)
+    linked_tickers = {variant for group in linked_groups for variant in group}
     linked_matches = [
         entity
         for entity in entity_list
         if _entity_matches_linked_ticker(entity, linked_tickers)
     ]
-    if len(linked_matches) == 1:
+    if len(linked_groups) == 1 and len(linked_matches) == 1:
         return _apply_entity(updated, linked_matches[0])
     if len(linked_matches) > 1:
         _clear_primary_entity(updated)
