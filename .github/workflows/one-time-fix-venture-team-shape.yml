@@ -1,4 +1,4 @@
-name: One-time venture research stability fixes
+name: One-time venture project background sanitation
 
 on:
   push:
@@ -10,13 +10,13 @@ permissions:
   contents: write
 
 concurrency:
-  group: one-time-venture-research-stability
+  group: one-time-venture-project-background
   cancel-in-progress: false
 
 jobs:
   patch:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,69 +24,51 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Patch, test and commit
         run: |
           set -euo pipefail
           git pull --rebase origin main
           python - <<'PY'
           from pathlib import Path
-
-          normalizer = Path("tools/normalize_venture_profiles.py")
-          text = normalizer.read_text(encoding="utf-8")
-          lines = text.splitlines()
-          remove_terms = (
-              '"background": clean_text(member.get("background")',
-              '"previousExperience": clean_text(member.get("previousExperience")',
-          )
-          filtered = [line for line in lines if not any(term in line for term in remove_terms)]
-          if len(filtered) != len(lines) - 2:
-              raise SystemExit(f"expected to remove 2 team-shape lines, removed {len(lines) - len(filtered)}")
-          text = "\n".join(filtered) + "\n"
-          old_evidence = '''    text = clean_text(
-                  f"{event.get('type', '')} {event.get('title', '')} {event.get('summary', '')}", 1200
-              )'''
-          new_evidence = '''    text = clean_text(
-                  f"{event.get('title', '')} {event.get('summary', '')}", 1200
-              )'''
-          if old_evidence not in text:
-              raise SystemExit("normalizer event evidence block not found")
-          normalizer.write_text(text.replace(old_evidence, new_evidence, 1), encoding="utf-8")
-
-          enrichment = Path("tools/enrich_venture_profiles.py")
-          text = enrichment.read_text(encoding="utf-8")
-          marker = ''') -> dict[str, str]:
-              aliases = company.aliases'''
-          replacement = ''') -> dict[str, str]:
-              existing = profile.get("projectBackground")
-              if isinstance(existing, dict) and clean_text(existing.get("summary"), 760):
-                  return {
-                      "summary": clean_text(existing.get("summary"), 760),
-                      "problemSolved": clean_text(existing.get("problemSolved"), 460),
-                      "marketOpportunity": clean_text(existing.get("marketOpportunity"), 460),
-                  }
-              aliases = company.aliases'''
-          function_start = text.index("def _company_project_background(")
-          function_end = text.index("\ndef _capital_summary", function_start)
-          before = text[:function_start]
-          block = text[function_start:function_end]
-          after = text[function_end:]
-          if marker not in block:
-              raise SystemExit("company project background insertion point not found")
-          enrichment.write_text(before + block.replace(marker, replacement, 1) + after, encoding="utf-8")
+          path = Path("lib/venture-profile-data.ts")
+          text = path.read_text(encoding="utf-8")
+          old = '''function normalizeProjectBackground(value: unknown): VentureProjectBackground | undefined {
+            if (!value || typeof value !== "object") return undefined;
+            const row = value as Record<string, unknown>;
+            const summary = clean(row.summary, 900);
+            if (!summary) return undefined;
+            return {
+              summary,
+              problemSolved: clean(row.problemSolved, 520) || undefined,
+              marketOpportunity: clean(row.marketOpportunity, 520) || undefined,
+            };
+          }'''
+          new = '''function normalizeProjectBackground(value: unknown): VentureProjectBackground | undefined {
+            if (!value || typeof value !== "object") return undefined;
+            const row = value as Record<string, unknown>;
+            const summary = sanitizeVentureNarrative(row.summary, 900);
+            if (!summary) return undefined;
+            return {
+              summary,
+              problemSolved: sanitizeVentureNarrative(row.problemSolved, 520) || undefined,
+              marketOpportunity: sanitizeVentureNarrative(row.marketOpportunity, 520) || undefined,
+            };
+          }'''
+          if old not in text:
+              raise SystemExit("normalizeProjectBackground block not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
           PY
-          python -m py_compile \
-            tools/venture_profile_extraction.py \
-            tools/crawl_venture_profiles.py \
-            tools/enrich_venture_profiles.py \
-            tools/normalize_venture_profiles.py
-          python -m unittest \
-            tests.test_venture_profile_extraction \
-            tests.test_venture_profile_noise_filters \
-            tests.test_venture_profile_enrichment \
-            tests.test_normalize_venture_profiles
+          npm install
+          node --import tsx --test \
+            tests/venture-profile-data.test.ts \
+            tests/catalog.test.ts
+          GITHUB_PAGES=true npx next build
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add tools/enrich_venture_profiles.py tools/normalize_venture_profiles.py
-          git commit -m "fix: stabilize venture enrichment and capital evidence"
+          git add lib/venture-profile-data.ts
+          git commit -m "fix: sanitize structured project background narratives"
           git pull --rebase origin main
           git push origin HEAD:main
