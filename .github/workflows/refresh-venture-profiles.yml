@@ -8,8 +8,8 @@ on:
       - tools/venture_profile_extraction.py
       - lib/catalog-data.ts
       - lib/venture-profile-data.ts
-      - app/companies/[slug]/page.tsx
-      - app/institutions/[slug]/page.tsx
+      - app/companies/**
+      - app/institutions/**
       - tests/test_venture_profile_extraction.py
       - tests/venture-profile-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
