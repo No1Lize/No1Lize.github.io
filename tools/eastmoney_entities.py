@@ -4,16 +4,18 @@
 The tracking admin owns the listed-company watchlist. When the repository config
 has not persisted that optional array yet, the website intentionally falls back
 to the IPO catalog; this module mirrors the same rule for the Python crawler.
-Only unambiguous title matches are accepted so a comparison article mentioning
-several companies is never assigned to whichever alias happens to appear first.
+Attribution uses ranked, conservative evidence: headline entities first,
+structured Eastmoney quote links second, then a unique company in the extracted
+lead paragraphs. Ambiguous comparison and industry stories remain unassigned.
 """
 
 from __future__ import annotations
 
+import html
 import re
 from pathlib import Path
 from typing import Any, Iterable
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 
 try:  # Imported by tests as tools.eastmoney_entities.
     from .crawl_articles import ROOT, clean_text, infer_company, infer_sector
@@ -24,6 +26,9 @@ except ImportError:  # Executed directly with ``python tools/...``.
 CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 EASTMONEY_ARTICLE_PATH = re.compile(
     r"/a/20\d{12,}\.html$", flags=re.IGNORECASE
+)
+HREF_PATTERN = re.compile(
+    r"\bhref\s*=\s*([\"'])(.*?)\1", flags=re.IGNORECASE | re.DOTALL
 )
 VALID_MARKETS = {"A股", "港股", "美股"}
 
@@ -164,37 +169,53 @@ def build_listed_entity_index(
     return resolved
 
 
-def _latin_alias_match(alias: str, title: str) -> bool:
+def _latin_alias_match(alias: str, text: str) -> bool:
     return bool(
         re.search(
             rf"(?<![a-z0-9]){re.escape(alias.casefold())}(?![a-z0-9])",
-            title.casefold(),
+            text.casefold(),
         )
     )
 
 
-def _name_match(alias: str, title: str) -> bool:
+def _name_match(alias: str, text: str) -> bool:
     cleaned = clean_text(alias)
     if not cleaned:
         return False
     if re.fullmatch(r"[A-Za-z0-9 .&+_-]+", cleaned):
-        return _latin_alias_match(cleaned, title)
-    return cleaned in title
+        return _latin_alias_match(cleaned, text)
+    return cleaned in text
 
 
-def _ticker_match(ticker: str, title: str) -> bool:
-    cleaned = re.sub(r"\s+", "", ticker).upper()
-    if not cleaned:
-        return False
-    escaped = re.escape(cleaned)
+def _ticker_variants(ticker: str) -> set[str]:
+    cleaned = re.sub(r"\s+", "", str(ticker or "")).upper().strip("$()[]（）【】")
+    cleaned = re.sub(r"\.(?:SH|SZ|BJ|HK|US)$", "", cleaned)
+    if re.fullmatch(r"(?:SH|SZ|BJ|HK)\d+", cleaned):
+        cleaned = re.sub(r"^(?:SH|SZ|BJ|HK)", "", cleaned)
+    variants = {cleaned} if cleaned else set()
     if cleaned.isdigit():
-        return bool(
-            re.search(
-                rf"(?:股票|证券|代码|港股|沪市|深市|科创板|创业板)?"
-                rf"\s*[:：]?\s*(?<!\d){escaped}(?!\d)",
-                title,
-                flags=re.IGNORECASE,
-            )
+        variants.add(cleaned.lstrip("0") or "0")
+    return variants
+
+
+def _ticker_match(ticker: str, text: str) -> bool:
+    variants = _ticker_variants(ticker)
+    if not variants:
+        return False
+    canonical = max(variants, key=len)
+    escaped = re.escape(canonical)
+    if canonical.isdigit():
+        # A bare six-digit number can be a date, amount or article id. Numeric
+        # tickers require an explicit stock/code marker, market prefix or brackets.
+        explicit_patterns = (
+            rf"(?:股票|证券|股票代码|证券代码|代码|港股|沪市|深市|科创板|创业板)"
+            rf"\s*[:：]?\s*(?<!\d){escaped}(?!\d)",
+            rf"(?:SH|SZ|BJ|HK)\s*[.:：-]?\s*(?<!\d){escaped}(?!\d)",
+            rf"[\(\[（【]\s*{escaped}\s*[\)\]）】]",
+        )
+        return any(
+            re.search(pattern, text, flags=re.IGNORECASE)
+            for pattern in explicit_patterns
         )
     explicit_patterns = (
         rf"\${escaped}(?![A-Z0-9])",
@@ -202,24 +223,93 @@ def _ticker_match(ticker: str, title: str) -> bool:
         rf"\s*[:：]?\s*{escaped}(?![A-Z0-9])",
         rf"[\(\[（【]\s*{escaped}\s*[\)\]）】]",
     )
-    return any(re.search(pattern, title, flags=re.IGNORECASE) for pattern in explicit_patterns)
+    return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in explicit_patterns)
 
 
-def _entity_matches_title(entity: dict[str, str], title: str) -> bool:
+def _entity_matches_text(entity: dict[str, str], text: str) -> bool:
     aliases = (entity.get("name", ""), entity.get("englishName", ""))
-    return any(_name_match(alias, title) for alias in aliases if alias) or _ticker_match(
-        entity.get("ticker", ""), title
+    return any(_name_match(alias, text) for alias in aliases if alias) or _ticker_match(
+        entity.get("ticker", ""), text
     )
+
+
+def _quote_tickers_from_url(raw_url: str) -> set[str]:
+    href = html.unescape(raw_url).strip()
+    if href.startswith("//"):
+        href = f"https:{href}"
+    parts = urlsplit(href)
+    host = (parts.hostname or "").casefold()
+    if not host.endswith("eastmoney.com"):
+        return set()
+
+    path = unquote(parts.path)
+    found: set[str] = set()
+    path_patterns = (
+        r"/unify/r/\d+\.([A-Za-z0-9.-]{1,20})$",
+        r"/(?:sh|sz|bj)(\d{6})(?:\.html)?$",
+        r"/hk/(\d{4,5})(?:\.html)?$",
+        r"/us/([A-Za-z][A-Za-z0-9.-]{0,14})(?:\.html)?$",
+    )
+    for pattern in path_patterns:
+        match = re.search(pattern, path, flags=re.IGNORECASE)
+        if match:
+            found.update(_ticker_variants(match.group(1)))
+
+    query = parse_qs(parts.query)
+    for key in ("secid", "code", "stockcode", "symbol"):
+        for raw_value in query.get(key, []):
+            value = raw_value.rsplit(".", 1)[-1]
+            if re.fullmatch(r"[A-Za-z0-9.-]{1,20}", value):
+                found.update(_ticker_variants(value))
+    return found
+
+
+def extract_eastmoney_linked_tickers(body: str) -> set[str]:
+    """Return tickers carried by structured Eastmoney quote/data links."""
+
+    linked: set[str] = set()
+    for match in HREF_PATTERN.finditer(body or ""):
+        linked.update(_quote_tickers_from_url(match.group(2)))
+    return linked
+
+
+def _entity_matches_linked_ticker(
+    entity: dict[str, str], linked_tickers: set[str]
+) -> bool:
+    return bool(_ticker_variants(entity.get("ticker", "")) & linked_tickers)
 
 
 def _market_region(market: str) -> str:
     return "美国" if market == "美股" else "中国"
 
 
+def _apply_entity(updated: dict[str, Any], entity: dict[str, str]) -> dict[str, Any]:
+    updated["company"] = entity["name"]
+    updated["ticker"] = entity["ticker"]
+    updated["market"] = entity["market"]
+    updated["region"] = _market_region(entity["market"])
+    if entity.get("sector") and entity["sector"] != "未分类":
+        updated["sector"] = entity["sector"]
+    if entity.get("catalogSlug"):
+        updated["companySlug"] = entity["catalogSlug"]
+    else:
+        updated.pop("companySlug", None)
+    return updated
+
+
+def _clear_primary_entity(updated: dict[str, Any]) -> None:
+    updated["company"] = "科技产业"
+    updated.pop("companySlug", None)
+    updated.pop("ticker", None)
+    updated.pop("market", None)
+
+
 def attribute_eastmoney_article(
-    article: dict[str, Any], entities: Iterable[dict[str, str]]
+    article: dict[str, Any],
+    entities: Iterable[dict[str, str]],
+    page_body: str = "",
 ) -> dict[str, Any]:
-    """Attribute an Eastmoney article only when the title has one clear entity."""
+    """Attribute a detail article using conservative, ranked entity evidence."""
 
     source = article.get("source") if isinstance(article.get("source"), dict) else {}
     source_url = _clean(source.get("url"), 500)
@@ -227,33 +317,53 @@ def attribute_eastmoney_article(
         return article
 
     updated = dict(article)
+    entity_list = list(entities)
     title = clean_text(str(updated.get("title", "")))
     summary = clean_text(str(updated.get("summary", "")))
-    matches = [entity for entity in entities if _entity_matches_title(entity, title)]
 
-    if len(matches) == 1:
-        entity = matches[0]
-        updated["company"] = entity["name"]
-        updated["ticker"] = entity["ticker"]
-        updated["market"] = entity["market"]
-        updated["region"] = _market_region(entity["market"])
-        if entity.get("sector") and entity["sector"] != "未分类":
-            updated["sector"] = entity["sector"]
-        if entity.get("catalogSlug"):
-            updated["companySlug"] = entity["catalogSlug"]
-        else:
-            updated.pop("companySlug", None)
+    title_matches = [
+        entity for entity in entity_list if _entity_matches_text(entity, title)
+    ]
+    if len(title_matches) == 1:
+        return _apply_entity(updated, title_matches[0])
+    if len(title_matches) > 1:
+        _clear_primary_entity(updated)
+        updated["sector"] = infer_sector(
+            title, summary, str(updated.get("sector") or "AI / AGI")
+        )
         return updated
 
-    # Multiple tracked companies in one headline are comparison/industry stories.
-    # With no tracked match, reuse the crawler's conservative core-company map.
+    linked_tickers = extract_eastmoney_linked_tickers(page_body)
+    linked_matches = [
+        entity
+        for entity in entity_list
+        if _entity_matches_linked_ticker(entity, linked_tickers)
+    ]
+    if len(linked_matches) == 1:
+        return _apply_entity(updated, linked_matches[0])
+    if len(linked_matches) > 1:
+        _clear_primary_entity(updated)
+        updated["sector"] = infer_sector(
+            title, summary, str(updated.get("sector") or "AI / AGI")
+        )
+        return updated
+
+    summary_matches = [
+        entity for entity in entity_list if _entity_matches_text(entity, summary)
+    ]
+    if len(summary_matches) == 1:
+        return _apply_entity(updated, summary_matches[0])
+    if len(summary_matches) > 1:
+        _clear_primary_entity(updated)
+        updated["sector"] = infer_sector(
+            title, summary, str(updated.get("sector") or "AI / AGI")
+        )
+        return updated
+
+    # No tracked company matched. Reuse the crawler's conservative core-company
+    # title map, then infer only the sector from the extracted lead paragraphs.
     inferred_name, inferred_slug, inferred_region = infer_company(title, "")
-    if len(matches) > 1:
-        updated["company"] = "科技产业"
-        updated.pop("companySlug", None)
-        updated.pop("ticker", None)
-        updated.pop("market", None)
-    elif inferred_slug or inferred_name != "科技产业":
+    if inferred_slug or inferred_name != "科技产业":
         updated["company"] = inferred_name
         if inferred_slug:
             updated["companySlug"] = inferred_slug
@@ -262,8 +372,7 @@ def attribute_eastmoney_article(
         if inferred_region:
             updated["region"] = inferred_region
     else:
-        updated["company"] = "科技产业"
-        updated.pop("companySlug", None)
+        _clear_primary_entity(updated)
 
     updated["sector"] = infer_sector(
         title,
