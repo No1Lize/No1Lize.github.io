@@ -57,6 +57,19 @@ def status(**updates) -> dict:
     return value
 
 
+def placeholder_status(**updates) -> dict:
+    value = {
+        "id": "user-source-source-track-eastmoney",
+        "name": "东方财富",
+        "status": "empty",
+        "accepted": 0,
+        "failed": 0,
+        "platform": "用户媒体来源",
+    }
+    value.update(updates)
+    return value
+
+
 def snapshot(*, articles: list[dict] | None = None, statuses: list[dict] | None = None) -> dict:
     values = articles if articles is not None else [article()]
     return {
@@ -145,25 +158,38 @@ class EastmoneyPipelineMetadataValidationTests(unittest.TestCase):
 
         self.assertIn("未标记 retainedPrevious", report["accountingErrors"][0])
 
+    def test_placeholder_status_is_not_counted_as_detail_accounting(self) -> None:
+        payload = snapshot(
+            statuses=[
+                placeholder_status(),
+                status(
+                    accepted=1,
+                    newAccepted=1,
+                    retainedPreviousCount=0,
+                ),
+            ]
+        )
+
+        report = validate_snapshot(payload, tracking(), require_attempt=True)
+
+        self.assertEqual(report["attemptStatusCount"], 2)
+        self.assertEqual(report["detailStatusCount"], 1)
+        self.assertEqual(report["acceptedByCrawler"], 1)
+        self.assertEqual(report["detailArticles"], 1)
+
     def test_concrete_user_source_detail_is_not_a_generic_duplicate(self) -> None:
         payload = snapshot(
             articles=[article(source_id="user-source-eastmoney")],
-            statuses=[
-                {
-                    "id": "user-source-eastmoney",
-                    "name": "东方财富",
-                    "status": "ok",
-                    "accepted": 1,
-                    "failed": 0,
-                    "platform": "东方财富",
-                }
-            ],
+            statuses=[placeholder_status(status="ok", accepted=1)],
         )
 
         report = validate_snapshot(payload, tracking(), require_attempt=True)
 
         self.assertEqual(report["genericDuplicates"], [])
         self.assertEqual(report["detailArticles"], 1)
+        self.assertEqual(report["attemptStatusCount"], 1)
+        self.assertEqual(report["detailStatusCount"], 0)
+        self.assertEqual(report["acceptedByCrawler"], 0)
 
 
 if __name__ == "__main__":
