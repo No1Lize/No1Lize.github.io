@@ -36,8 +36,6 @@ NARRATIVE_OLD = '''    if len(tokens) >= 18 and short_tokens / max(1, len(tokens
             return True
 '''
 NARRATIVE_NEW = '''    if len(tokens) >= 18 and short_tokens / max(1, len(tokens)) >= 0.85:
-        # Two ordinary prose words such as "research" and "company" are not
-        # enough to classify a complete sentence as page navigation.
         if len(hits) >= 3 and not re.search(r"\\d", text):
             return True
 '''
