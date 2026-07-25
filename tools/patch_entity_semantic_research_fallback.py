@@ -72,6 +72,11 @@ def main() -> None:
                     "financing": [],
                     "capitalMarkets": [],
                     "technologyProducts": [],
+                    "projectBackground": {
+                        "summary": "Stale summary.",
+                        "problemSolved": "",
+                        "marketOpportunity": "",
+                    },
                     "sources": [],
                 }
             },
@@ -83,7 +88,7 @@ def main() -> None:
         self.assertEqual(profile["background"], "Anthropic builds reliable AI systems.")
         self.assertNotIn("Looped world models", profile["researchTechnology"])
         self.assertIn("Anthropic expands Claude Platform", profile["researchTechnology"])
-        self.assertEqual(profile["projectBackground"]["summary"], profile["background"] if "projectBackground" in profile else profile["background"])
+        self.assertEqual(profile["projectBackground"]["summary"], profile["background"])
 
 '''
     if "def test_catalog_fallback_and_research_technology_filter" not in tests:
