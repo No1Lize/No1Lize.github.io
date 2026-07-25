@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import qualityStyles from "@/components/dashboard-quality.module.css";
-import { companies, institutionCatalog, people } from "@/lib/catalog-data";
+import { institutionCatalog } from "@/lib/catalog-data";
 import {
   focusCompanies,
   heatMethodology,
@@ -41,8 +41,6 @@ const rankedSectors = [...trackedSectors].sort(
   (left, right) =>
     right.heat - left.heat || right.events - left.events || left.name.localeCompare(right.name),
 );
-const knownCompanySlugs = new Set(companies.map((company) => company.slug));
-const knownPersonSlugs = new Set(people.map((person) => person.slug));
 
 export function Dashboard() {
   const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
@@ -268,12 +266,6 @@ export function Dashboard() {
 }
 
 function EventTitle({ item }: { item: IntelligenceEvent }) {
-  if (item.personSlug && knownPersonSlugs.has(item.personSlug)) {
-    return <Link href={`/people/${item.personSlug}`}>{item.title}</Link>;
-  }
-  if (item.companySlug && knownCompanySlugs.has(item.companySlug)) {
-    return <Link href={`/companies/${item.companySlug}`}>{item.title}</Link>;
-  }
   return (
     <a href={item.source.url} target="_blank" rel="noreferrer">
       {item.title}
