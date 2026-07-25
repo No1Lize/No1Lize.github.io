@@ -74,15 +74,31 @@ jobs:
             tools/sanitize_venture_narratives.py \
             tools/finalize_venture_profiles.py
       - name: Run venture unit tests
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
         run: |
-          python -m unittest \
+          set +e
+          mkdir -p diagnostics
+          python -m unittest -v \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
-            tests.test_finalize_venture_profiles
+            tests.test_finalize_venture_profiles \
+            > diagnostics/venture-pr-regressions.txt 2>&1
+          status=$?
+          cat diagnostics/venture-pr-regressions.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-pr-regressions.txt
+            git commit -m "ci: record venture regression failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
       - name: Enrich current snapshot
         run: python tools/enrich_venture_profiles.py
       - name: Normalize cross-entity consistency
@@ -107,6 +123,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           rm -f .venture-sanitize-trigger
           rm -f diagnostics/venture-pr-patch.txt
+          rm -f diagnostics/venture-pr-regressions.txt
           rm -f diagnostics/venture-pr-compile.txt
           rm -f diagnostics/venture-pr-enrichment-test.txt
           rm -f diagnostics/venture-pr-normalizer-test.txt
