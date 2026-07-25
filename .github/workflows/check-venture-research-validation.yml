@@ -16,33 +16,26 @@ jobs:
     timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
-      - name: Record latest patch and refresh status
+      - name: Record latest refresh status and failure log
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          # rerun-after-capital-type-normalization
           set -euo pipefail
           mkdir -p /tmp/venture-status
-          PATCH_STATUS=/tmp/venture-status/venture-patch-status.json
-          PATCH_FAILURE=/tmp/venture-status/venture-patch-failure.txt
-          REFRESH_STATUS=/tmp/venture-status/venture-refresh-status.json
-          gh run list \
-            --workflow patch-refine-venture-evidence.yml \
-            --limit 5 \
-            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
-            > "$PATCH_STATUS"
+          STATUS=/tmp/venture-status/venture-refresh-status.json
+          FAILURE=/tmp/venture-status/venture-refresh-failure.txt
           gh run list \
             --workflow refresh-venture-profiles.yml \
             --limit 8 \
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
-            > "$REFRESH_STATUS"
-          latest_id="$(python -c 'import json,sys; rows=json.load(open(sys.argv[1])); print(rows[0]["databaseId"] if rows else "")' "$PATCH_STATUS")"
-          latest_conclusion="$(python -c 'import json,sys; rows=json.load(open(sys.argv[1])); print(rows[0].get("conclusion","") if rows else "")' "$PATCH_STATUS")"
+            > "$STATUS"
+          latest_id="$(python -c 'import json,sys; rows=json.load(open(sys.argv[1])); print(rows[0]["databaseId"] if rows else "")' "$STATUS")"
+          latest_conclusion="$(python -c 'import json,sys; rows=json.load(open(sys.argv[1])); print(rows[0].get("conclusion","") if rows else "")' "$STATUS")"
           if [ -n "$latest_id" ] && [ "$latest_conclusion" = "failure" ]; then
-            gh run view "$latest_id" --log-failed 2>&1 | tail -n 240 > "$PATCH_FAILURE" || true
+            gh run view "$latest_id" --log-failed 2>&1 | tail -n 260 > "$FAILURE" || true
           else
-            printf 'Latest patch run id=%s conclusion=%s\n' "$latest_id" "$latest_conclusion" > "$PATCH_FAILURE"
+            printf 'Latest refresh run id=%s conclusion=%s\n' "$latest_id" "$latest_conclusion" > "$FAILURE"
           fi
 
           publish_file() {
@@ -59,6 +52,5 @@ jobs:
             rm -f "$request"
           }
 
-          publish_file diagnostics/venture-patch-status.json "$PATCH_STATUS" "ci: record venture evidence patch status"
-          publish_file diagnostics/venture-patch-failure.txt "$PATCH_FAILURE" "ci: record venture evidence patch failure"
-          publish_file diagnostics/venture-refresh-status.json "$REFRESH_STATUS" "ci: record evidence-aligned venture refresh status"
+          publish_file diagnostics/venture-refresh-status.json "$STATUS" "ci: record stabilized venture refresh status"
+          publish_file diagnostics/venture-refresh-failure.txt "$FAILURE" "ci: record stabilized venture refresh failure"
