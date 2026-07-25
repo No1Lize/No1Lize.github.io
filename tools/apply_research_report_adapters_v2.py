@@ -4,26 +4,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PATH = ROOT / "tools" / "crawl_research_reports.py"
 
-
-def replace_once(text: str, old: str, new: str, label: str) -> str:
-    if new in text:
-        return text
-    if old not in text:
-        raise RuntimeError(f"cannot find {label}")
-    return text.replace(old, new, 1)
-
-
-def main() -> int:
-    text = PATH.read_text(encoding="utf-8")
-    text = replace_once(
-        text,
-        '''from tools.research_report_adapters import (
+DIRECT_IMPORT = '''from tools.research_report_adapters import (
     discover_sec_candidates,
     discover_web_candidates,
     load_sec_ticker_map,
 )
-''',
-        '''try:
+'''
+
+FALLBACK_IMPORT = '''try:
     from tools.research_report_adapters import (
         discover_sec_candidates,
         discover_web_candidates,
@@ -35,15 +23,31 @@ except ModuleNotFoundError:  # direct execution: python tools/crawl_research_rep
         discover_web_candidates,
         load_sec_ticker_map,
     )
-''',
-        "direct script adapter import",
-    )
-    text = replace_once(
-        text,
-        "from urllib.request import Request, urlopen\n",
-        "from urllib.request import Request, urlopen\n\nfrom tools.research_report_adapters import (\n    discover_sec_candidates,\n    discover_web_candidates,\n    load_sec_ticker_map,\n)\n",
-        "adapter import",
-    )
+'''
+
+
+def replace_once(text: str, old: str, new: str, label: str) -> str:
+    if new in text:
+        return text
+    if old not in text:
+        raise RuntimeError(f"cannot find {label}")
+    return text.replace(old, new, 1)
+
+
+def normalize_adapter_import(text: str) -> str:
+    duplicate = f"{DIRECT_IMPORT}\n{FALLBACK_IMPORT}"
+    if duplicate in text:
+        return text.replace(duplicate, FALLBACK_IMPORT, 1)
+    if FALLBACK_IMPORT in text:
+        return text
+    if DIRECT_IMPORT in text:
+        return text.replace(DIRECT_IMPORT, FALLBACK_IMPORT, 1)
+    raise RuntimeError("cannot find research report adapter import")
+
+
+def main() -> int:
+    text = PATH.read_text(encoding="utf-8")
+    text = normalize_adapter_import(text)
     text = replace_once(
         text,
         'MAX_PDF_BYTES = int(os.getenv("RESEARCH_REPORT_MAX_BYTES", str(10 * 1024 * 1024)))\n',
