@@ -7,6 +7,7 @@ export const TRACKING_OWNER = "No1Lize";
 
 export type TrackingRegion = "中国" | "美国" | "全球";
 export type TrackingSourceType = "rss" | "listing-search" | "sec";
+export type TrackingMarket = "A股" | "港股" | "美股";
 
 export type TrackingTrack = {
   slug: string;
@@ -16,6 +17,17 @@ export type TrackingTrack = {
   keywords: string[];
   people: string[];
   sampleCompanies: string[];
+};
+
+export type TrackingListedCompany = {
+  id: string;
+  name: string;
+  ticker: string;
+  market: TrackingMarket;
+  sector: string;
+  enabled: boolean;
+  custom: boolean;
+  catalogSlug?: string;
 };
 
 export type TrackingSource = {
@@ -29,15 +41,18 @@ export type TrackingSource = {
   ticker: string;
   keywords: string[];
   enabled: boolean;
+  listedCompanyId?: string;
 };
 
 export type UserTrackingConfig = {
   schemaVersion: 1;
   tracks: TrackingTrack[];
+  listedCompanies: TrackingListedCompany[];
   sources: TrackingSource[];
 };
 
 const REGIONS: TrackingRegion[] = ["中国", "美国", "全球"];
+const MARKETS: TrackingMarket[] = ["A股", "港股", "美股"];
 const SOURCE_TYPES: TrackingSourceType[] = ["rss", "listing-search", "sec"];
 
 function cleanText(value: unknown, maxLength = 120): string {
@@ -94,6 +109,33 @@ function normalizeTrack(value: unknown, index: number): TrackingTrack | null {
   };
 }
 
+function normalizeListedCompany(
+  value: unknown,
+  index: number,
+): TrackingListedCompany | null {
+  if (!value || typeof value !== "object") return null;
+  const raw = value as Record<string, unknown>;
+  const name = cleanText(raw.name, 80);
+  const ticker = cleanText(raw.ticker, 30).toUpperCase().replace(/\s+/g, "");
+  const market = MARKETS.includes(raw.market as TrackingMarket)
+    ? (raw.market as TrackingMarket)
+    : null;
+  if (!name || !ticker || !market) return null;
+  const catalogSlug = cleanText(raw.catalogSlug, 80);
+  return {
+    id:
+      cleanText(raw.id, 100) ||
+      `listed-${market}-${slugifyTrack(ticker || name)}-${index + 1}`,
+    name,
+    ticker,
+    market,
+    sector: cleanText(raw.sector, 60) || "未分类",
+    enabled: raw.enabled !== false,
+    custom: raw.custom === true || !catalogSlug,
+    ...(catalogSlug ? { catalogSlug } : {}),
+  };
+}
+
 function normalizeSource(value: unknown, index: number): TrackingSource | null {
   if (!value || typeof value !== "object") return null;
   const raw = value as Record<string, unknown>;
@@ -117,6 +159,7 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
   const region = REGIONS.includes(raw.region as TrackingRegion)
     ? (raw.region as TrackingRegion)
     : "全球";
+  const listedCompanyId = cleanText(raw.listedCompanyId, 100);
   return {
     id:
       cleanText(raw.id, 80) ||
@@ -130,6 +173,7 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
     ticker,
     keywords: uniqueStrings(raw.keywords),
     enabled: raw.enabled !== false,
+    ...(listedCompanyId ? { listedCompanyId } : {}),
   };
 }
 
@@ -142,6 +186,11 @@ export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
     ? raw.tracks
         .map(normalizeTrack)
         .filter((item): item is TrackingTrack => Boolean(item))
+    : [];
+  const listedCompanies = Array.isArray(raw.listedCompanies)
+    ? raw.listedCompanies
+        .map(normalizeListedCompany)
+        .filter((item): item is TrackingListedCompany => Boolean(item))
     : [];
   const sources = Array.isArray(raw.sources)
     ? raw.sources
@@ -159,6 +208,15 @@ export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
       ) === index
     );
   });
+  const uniqueListedCompanies = listedCompanies.filter(
+    (company, index) =>
+      listedCompanies.findIndex(
+        (candidate) =>
+          candidate.id === company.id ||
+          (candidate.market === company.market &&
+            candidate.ticker === company.ticker),
+      ) === index,
+  );
   const uniqueSources = sources.filter(
     (source, index) =>
       sources.findIndex((candidate) => candidate.id === source.id) === index,
@@ -167,6 +225,7 @@ export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
   return {
     schemaVersion: 1,
     tracks: uniqueTracks,
+    listedCompanies: uniqueListedCompanies,
     sources: uniqueSources,
   };
 }
