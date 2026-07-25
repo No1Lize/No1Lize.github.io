@@ -15,6 +15,7 @@ on:
       - tools/tracking_taxonomy.py
       - tools/enrich_tracking_snapshot.py
       - tools/tracking_quality.py
+      - tools/crawl_market_profiles.py
       - tools/crawl_official_companies.py
       - tools/crawl_official_with_tracking.py
       - tools/crawl_official_with_source_categories.py
@@ -27,6 +28,7 @@ on:
       - config/intelligence_sources.json
       - config/official_company_sources.json
       - config/user_tracking.json
+      - public/data/market_profiles.json
       - .github/workflows/scheduled-sync.yml
   schedule:
     - cron: "17 */2 * * *"
@@ -50,7 +52,7 @@ concurrency:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -67,6 +69,8 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/eastmoney_transport.py
+      - name: Crawl listed market profiles and trends
+        run: python tools/crawl_market_profiles.py
       - name: Migrate legacy entity attribution
         run: python tools/migrate_article_entities.py
       - name: Refine Eastmoney snapshot
@@ -84,21 +88,22 @@ jobs:
       - name: Commit changed public data
         id: data-update
         run: |
-          if git diff --quiet -- public/data/articles.json; then
-            echo "No article changes."
+          if git diff --quiet -- public/data/articles.json public/data/market_profiles.json; then
+            echo "No public data changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/articles.json
-          git commit -m "data: refresh public articles"
+          git add public/data/articles.json public/data/market_profiles.json
+          git commit -m "data: refresh public articles and market profiles"
           for attempt in 1 2 3; do
             git pull --rebase origin main
 
             # A run may have started before newer crawler/refinement commits landed.
             # Re-process and validate with the code now at the rebased HEAD so a
-            # stale run cannot publish old track membership or coverage metadata.
+            # stale run cannot publish old tracking or market-profile semantics.
+            python tools/crawl_market_profiles.py
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
             python tools/enrich_tracking_snapshot.py
@@ -106,7 +111,7 @@ jobs:
             python tools/validate_eastmoney_snapshot.py
             python tools/validate_user_source_coverage.py
             python -m unittest discover -s tests -p "test_*.py"
-            git add public/data/articles.json
+            git add public/data/articles.json public/data/market_profiles.json
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
