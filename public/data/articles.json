@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T04:13:04+00:00",
-  "articleCount": 405,
+  "generatedAt": "2026-07-25T04:18:12+00:00",
+  "articleCount": 406,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -19,24 +19,6 @@
         "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-25/doc-iniiyptr1277184.shtml",
         "level": "媒体报道",
         "platform": "新浪"
-      }
-    },
-    {
-      "id": "official-user-东方财富-0104aa25858eb1c1",
-      "sourceId": "official-user-东方财富",
-      "title": "TCL科技以93.25亿元收购广州华星半导体45%股权事项获深交所审议通过",
-      "summary": "7月24日， TCL科技 以93.25亿元收购广州华星 半导体 45%股权事项获深交所审核通过。根据交易方案，本次收购完成后 TCL科技 将直接及间接持有广州华星 半导体 100%股权。",
-      "type": "并购",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-25",
-      "importance": 89,
-      "source": {
-        "name": "东方财富",
-        "url": "https://finance.eastmoney.com/a/202607253821108344.html",
-        "level": "媒体报道",
-        "platform": "东方财富"
       }
     },
     {
@@ -93,6 +75,42 @@
         "url": "https://www.anthropic.com/news/claude-opus-5",
         "level": "官方披露",
         "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-user-东方财富-c8e4dd022db9750d",
+      "sourceId": "official-user-东方财富",
+      "title": "SK集团将向包括英伟达在内的美国科技公司供应价值7500亿美元的芯片",
+      "summary": "据报道，SK集团将向包括 英伟达 在内的美国科技公司供应价值7500亿美元的芯片。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253821111224.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
+      }
+    },
+    {
+      "id": "official-user-东方财富-790ee1e6117eea65",
+      "sourceId": "official-user-东方财富",
+      "title": "凌晨全线大跌！特朗普重磅发声！美股半导体、存储、光通信集体重挫",
+      "summary": "昨夜今晨，美股 半导体 、存储、光 通信 概念股全线大跌，费城 半导体 指数大跌超4%， 闪迪 大跌超10%， SK海力士 ADR大跌超8%。据 高盛 交易台的数据，美股周五全天几乎未见大量买入指令，科技股的卖压主要来自长线机构。 与此同时，中东紧张局势持续搅动金融市场。当地时间7月24日，美国总统特朗普在白宫谈及对伊朗战争的“退出战略”时表示，美国有两种选择：一是继续当前军事行动，并可能加大打击力度，逐步摧毁伊朗的军事能力；二是通过谈判达成协议。 美东时间7月24日，美股三大指数走势分化，截至收盘，道指涨0.46%，本周累跌0.38%；标普500指数微涨0.05%，本周累跌0.61%；纳指跌0.64%，本周累跌2.13%。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253820914018.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
       }
     },
     {
@@ -9575,7 +9593,7 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 405,
+        "actual": 406,
         "required": 50,
         "passed": true
       },
@@ -9615,7 +9633,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1432,
+        "actual": 0.1429,
         "required": 0.45,
         "passed": true
       },
@@ -9625,8 +9643,8 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 405,
-        "required": 405,
+        "actual": 406,
+        "required": 406,
         "passed": true
       }
     },
