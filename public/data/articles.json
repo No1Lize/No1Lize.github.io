@@ -1,62 +1,282 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T00:00:12+00:00",
-  "articleCount": 481,
+  "generatedAt": "2026-07-25T02:14:35+00:00",
+  "articleCount": 479,
   "articles": [
     {
-      "id": "official-user-投资界-f3a1c7abb3096506",
-      "sourceId": "official-user-投资界",
-      "title": "侃见财经的文章_投资界",
-      "summary": "轻松诙谐，一览财经趣事！",
-      "type": "产业投资",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "投资界",
-      "companySlug": "user-投资界",
-      "publishedAt": "2026-07-25",
-      "importance": 84,
-      "source": {
-        "name": "投资界",
-        "url": "https://www.pedaily.cn/media/m899",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-投资界-64e43f081504bfc3",
-      "sourceId": "official-user-投资界",
-      "title": "极客公园的文章_投资界",
-      "summary": "用极客视角，追踪你最不可错过的科技圈。",
-      "type": "产业投资",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "投资界",
-      "companySlug": "user-投资界",
-      "publishedAt": "2026-07-25",
-      "importance": 84,
-      "source": {
-        "name": "投资界",
-        "url": "https://www.pedaily.cn/media/m351",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "tmtpost-ebc7a2bc79319b28",
-      "sourceId": "tmtpost",
-      "title": "adidas户外线启用中文名「山川里」；雅诗兰黛 2026 雅创未来创新大赛启动招募；AMIRO觅光完成D+轮融资｜消研所周报",
-      "summary": "丝芙兰上海向阳旗舰店焕新升级；FILA AURA“菁英跑”第三站落地深圳。",
+      "id": "sina-finance-af9d99698a928c81",
+      "sourceId": "sina-finance",
+      "title": "马斯克旗下隧道公司The Boring Company洽谈新一轮融资 目标估值200亿美元",
+      "summary": "据知情谈判人士透露，埃隆・马斯克旗下隧道挖掘初创企业The Boring Company正洽谈新一轮融资，投后估值有望达到约200亿美元。",
       "type": "融资",
       "region": "中国",
       "sector": "AI / AGI",
       "company": "科技产业",
-      "publishedAt": "2026-07-24",
+      "publishedAt": "2026-07-25",
       "importance": 91,
       "source": {
+        "name": "新浪财经",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-25/doc-iniiyptr1277184.shtml",
+        "level": "媒体报道",
+        "platform": "新浪"
+      }
+    },
+    {
+      "id": "tmtpost-005adae9b0a0fe1a",
+      "sourceId": "tmtpost",
+      "title": "刚拿菲尔兹奖，他转头就宣布入职OpenAI",
+      "summary": "AI公司争抢数学家。",
+      "type": "技术突破",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-25",
+      "importance": 85,
+      "source": {
         "name": "钛媒体",
-        "url": "https://www.tmtpost.com/8078534.html",
+        "url": "https://www.tmtpost.com/8078707.html",
         "level": "媒体报道",
         "platform": "专业媒体"
+      },
+      "companySlug": "openai"
+    },
+    {
+      "id": "sina-finance-fafa6fb8cb0407de",
+      "sourceId": "sina-finance",
+      "title": "智元机器人启动港股上市，投资人称目标估值400亿至500亿港元",
+      "summary": "（来源：黄思韵等 财经杂志） 智元称，按照，按照2025年全年及206年一季度的营收计算，智元是全球最大的通用AI机器人公司。智元投资人、合作伙伴们表示...",
+      "type": "产业投资",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 84,
+      "source": {
+        "name": "新浪财经",
+        "url": "https://finance.sina.com.cn/wm/2026-07-25/doc-iniiyptt1420151.shtml",
+        "level": "媒体报道",
+        "platform": "新浪"
+      }
+    },
+    {
+      "id": "anthropic-c34a327604b5be4a",
+      "sourceId": "anthropic",
+      "title": "Introducing Claude Opus 5",
+      "summary": "Opus 5 is a step change improvement for the Opus tier powering long-running agents while delivering improvements in coding and professional work.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-25",
+      "importance": 82,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-opus-5",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-user-东方财富-a618a541ca35332a",
+      "sourceId": "official-user-东方财富",
+      "title": "基金观点 _ 天天基金网 _ 东方财富网",
+      "summary": "东方财富网，中国具有影响力的互联网财经媒体，提供全方位的综合财经新闻和金融市场资讯，覆盖股票、财经、证券、金融、港股、行情、基金、债券、期货、外汇、保险、银行、博客、股吧、论坛",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "东方财富",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "东方财富",
+        "url": "http://fund.eastmoney.com/news/cjjgd.html",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-user-东方财富-8ae2576d16ecfcb9",
+      "sourceId": "official-user-东方财富",
+      "title": "基金要闻 _ 天天基金网 _ 东方财富网",
+      "summary": "东方财富网，中国具有影响力的互联网财经媒体，提供全方位的综合财经新闻和金融市场资讯，覆盖股票、财经、证券、金融、港股、行情、基金、债券、期货、外汇、保险、银行、博客、股吧、论坛",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "东方财富",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "东方财富",
+        "url": "https://fund.eastmoney.com/news/cjjyw.html",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-minimax-218aa2e267825583",
+      "sourceId": "official-minimax",
+      "title": "MiniMax Agent，最大的智慧是“靠谱”",
+      "summary": "MiniMax 发布“MiniMax Agent，最大的智慧是“靠谱””；完整事实、数据与附件见官方原文。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "MiniMax",
+      "companySlug": "minimax",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "MiniMax",
+        "url": "https://www.minimaxi.com/news/minimax-agent",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-minimax-0df4d3e7b5633024",
+      "sourceId": "official-minimax",
+      "title": "MiniMax Hailuo 2.3 视频复杂表现新高度 & Media Agent",
+      "summary": "MiniMax 发布“MiniMax Hailuo 2.3 视频复杂表现新高度 & Media Agent”；完整事实、数据与附件见官方原文。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "MiniMax",
+      "companySlug": "minimax",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "MiniMax",
+        "url": "https://www.minimaxi.com/news/minimax-hailuo-23",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-minimax-0896ad4b44f5108b",
+      "sourceId": "official-minimax",
+      "title": "MiniMax Speech 2.8：赋予 AI 语音“人的温度”",
+      "summary": "MiniMax 发布“MiniMax Speech 2.8：赋予 AI 语音“人的温度””；完整事实、数据与附件见官方原文。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "MiniMax",
+      "companySlug": "minimax",
+      "publishedAt": "2026-07-25",
+      "importance": 80,
+      "source": {
+        "name": "MiniMax",
+        "url": "https://www.minimaxi.com/news/minimax-speech-28",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "user-track-robotics-ae47d6d0da48ea38",
+      "sourceId": "user-track-robotics",
+      "title": "越疆协作机器人|机械臂-智能机器人研发-DOBOT越疆科技",
+      "summary": "越疆机器人专注于协作机器人,机械臂,码垛机器人,焊接机器人等智能机器人的研发与应用,拥有CRA,CRAS,Nova,MG400,X-Trainer,M1Pro,Magician系列十余款协作机器人,销售热线:400-800-7266",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "机器人 · 用户追踪",
+        "url": "https://www.dobot.cn/",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-source-source-track-1sp7gkg-28eaa000eb4d6758",
+      "sourceId": "user-source-source-track-1sp7gkg",
+      "title": "东方财富网：财经门户，提供专业的财经、股票、行情、证券、基金、理财、银行、保险、信托、期货、黄金、股吧、博客等各类财经资讯及数据",
+      "summary": "东方财富 手机免费版 iPhone版 Android版 东方财富小程序 电脑免费版 PC经典版 Mac版 电脑增值版 Level-2极速版 决策版 策略版 领航版 操盘密码",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "东方财富",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "东方财富",
+        "url": "https://www.eastmoney.com/?from=onlytext.cn",
+        "level": "待交叉验证",
+        "platform": "用户公司来源"
+      },
+      "companySlug": "东方财富"
+    },
+    {
+      "id": "tmtpost-fc32c343a74270c4",
+      "sourceId": "tmtpost",
+      "title": "英伟达百亿扫货暗光纤，AI算力之战从硅片烧到管线",
+      "summary": "英伟达正在北美隐秘地大规模收购与租赁“暗光纤”（Dark Fiber）资源，未来三年投资规模预计高达 50 亿至 100 亿美元。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8079074.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "tmtpost-bc572fb489465f02",
+      "sourceId": "tmtpost",
+      "title": "Edge AI Daily 早报（7月25日）",
+      "summary": "Anthropic发布Claude Opus 5以Fable 5半价实现性能超越，标志AI竞争从基准战争转向成本效率战争。OpenAI模型自主越狱攻破Hugging Face系统，触发美国国会48小时内提出AI紧急停止法案，推动监管从企业自律转向法律强制。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8078943.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "tmtpost-4bae9417a947e86b",
+      "sourceId": "tmtpost",
+      "title": "2026世界杯：AI改变了足球......吗？",
+      "summary": "数据黑箱、“长不大的独角兽”与“最后的堡垒”。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8078756.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "prnewswire-tech-ad34eef05a465814",
+      "sourceId": "prnewswire-tech",
+      "title": "Spoločnosť Shanghai Electric na veľtrhu WAIC 2026 predstavuje riešenia pre inteligentné továrne na báze AI",
+      "summary": "V hlavnej úlohe s humanoidnými robotmi so 41 stupňami voľnosti, robotmi na kontrolu potrubí s presnosťou polohovania ±1 mm a 51 priemyselnými agentmi s umelou inteligenciou. ŠANGHAJ, 25. júla 2026 /PRNewswire/ -- Operácie v oblasti výroby špičkových zariadení často zahŕňajú stiesnené...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/spolonos-shanghai-electric-na-vetrhu-waic-2026-predstavuje-rieenia-pre-inteligentne-tovarne-na-baze-ai-302834510.html",
+        "level": "官方披露",
+        "platform": "新闻稿"
       }
     },
     {
@@ -262,63 +482,6 @@
       }
     },
     {
-      "id": "official-user-投资界-bf171054508d78b1",
-      "sourceId": "official-user-投资界",
-      "title": "Tech星球的文章_投资界",
-      "summary": "Tech星球，聚焦互联网前沿科技和新商业。",
-      "type": "产业投资",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "投资界",
-      "companySlug": "user-投资界",
-      "publishedAt": "2026-07-24",
-      "importance": 84,
-      "source": {
-        "name": "投资界",
-        "url": "https://www.pedaily.cn/media/m242",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-投资界-aa189093f3ffbbdd",
-      "sourceId": "official-user-投资界",
-      "title": "Gioia观察的文章_投资界",
-      "summary": "以不一样的视角去观察，带你去看一些新风向~",
-      "type": "产业投资",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "投资界",
-      "companySlug": "user-投资界",
-      "publishedAt": "2026-07-24",
-      "importance": 84,
-      "source": {
-        "name": "投资界",
-        "url": "https://www.pedaily.cn/media/m646",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-投资界-6e92b37130235ebd",
-      "sourceId": "official-user-投资界",
-      "title": "经济观察网的文章_投资界",
-      "summary": "理性，建设性",
-      "type": "产业投资",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "投资界",
-      "companySlug": "user-投资界",
-      "publishedAt": "2026-07-24",
-      "importance": 84,
-      "source": {
-        "name": "投资界",
-        "url": "https://www.pedaily.cn/media/m361",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
       "id": "leiphone-f679235d047fabf6",
       "sourceId": "leiphone",
       "title": "Acemate携手2026中国网球公开赛，AI网球训练机器人走进职业赛事场景",
@@ -430,25 +593,6 @@
       }
     },
     {
-      "id": "anthropic-c34a327604b5be4a",
-      "sourceId": "anthropic",
-      "title": "Introducing Claude Opus 5",
-      "summary": "Opus 5 is a step change improvement for the Opus tier powering long-running agents while delivering improvements in coding and professional work.",
-      "type": "产品发布",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "companySlug": "anthropic",
-      "publishedAt": "2026-07-24",
-      "importance": 82,
-      "source": {
-        "name": "Anthropic",
-        "url": "https://www.anthropic.com/news/claude-opus-5",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
       "id": "anthropic-ad504bbdb221cc44",
       "sourceId": "anthropic",
       "title": "Introducing Claude for Teachers",
@@ -506,26 +650,61 @@
       }
     },
     {
-      "id": "official-user-谷歌新闻-a6e6dd4f2320dc85",
+      "id": "official-user-谷歌新闻-defb622e270e1bba",
       "sourceId": "official-user-谷歌新闻",
-      "title": "More headlines & perspectives - Donald Trump administration imposes new tariffs on dozens of countries - Google News",
+      "title": "More headlines & perspectives - Trump's tariffs - Google News",
       "summary": "See the latest updates, context, and perspectives about this story.",
       "type": "公司动态",
       "region": "全球",
       "sector": "AI / AGI",
       "company": "谷歌新闻",
-      "companySlug": "user-谷歌新闻",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
         "name": "谷歌新闻",
-        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2p6NWJmVEVSSHhMVFJSbHJuXzRDZ0FQAQ",
+        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2p6NWJmVEVSRkhkRldsRkowcUlpZ0FQAQ",
         "level": "官方披露",
         "platform": "官方网站"
       }
     },
     {
-      "id": "official-user-谷歌新闻-953eb836f7b27971",
+      "id": "official-user-谷歌新闻-c26a5afafd9217ba",
+      "sourceId": "official-user-谷歌新闻",
+      "title": "More headlines & perspectives - Donald Trump returns to White House Correspondents' Dinner - Google News",
+      "summary": "See the latest updates, context, and perspectives about this story.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "谷歌新闻",
+      "publishedAt": "2026-07-24",
+      "importance": 80,
+      "source": {
+        "name": "谷歌新闻",
+        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2k2eEpyS0VSR1h0SzJid19ZdjB5Z0FQAQ",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-user-谷歌新闻-342cdea2b889dda2",
+      "sourceId": "official-user-谷歌新闻",
+      "title": "More headlines & perspectives - Donald Trump says US and Iran are in talks - Google News",
+      "summary": "See the latest updates, context, and perspectives about this story.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "谷歌新闻",
+      "publishedAt": "2026-07-24",
+      "importance": 80,
+      "source": {
+        "name": "谷歌新闻",
+        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2k4aHBMU0VSSE1BMkdYOUJxWTdDZ0FQAQ",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "official-user-谷歌新闻-04eceaecf154046a",
       "sourceId": "official-user-谷歌新闻",
       "title": "More headlines & perspectives - News about Donald Trump • Smithsonian - Google News",
       "summary": "See the latest updates, context, and perspectives about this story.",
@@ -533,50 +712,11 @@
       "region": "全球",
       "sector": "AI / AGI",
       "company": "谷歌新闻",
-      "companySlug": "user-谷歌新闻",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
         "name": "谷歌新闻",
-        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2l2b1BQTkVSR1F4YzF0aS1XTVBTZ0FQAQ",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-谷歌新闻-3172a05ba40e0400",
-      "sourceId": "official-user-谷歌新闻",
-      "title": "More headlines & perspectives - Corey Ruiz fatally shot by Madison police officer - Google News",
-      "summary": "See the latest updates, context, and perspectives about this story.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "谷歌新闻",
-      "companySlug": "user-谷歌新闻",
-      "publishedAt": "2026-07-24",
-      "importance": 80,
-      "source": {
-        "name": "谷歌新闻",
-        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2lRbm9yVkVSR2w2UWVjTlg4UnRTZ0FQAQ",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-谷歌新闻-020b7c5a49cfd1e7",
-      "sourceId": "official-user-谷歌新闻",
-      "title": "More headlines & perspectives - News about Donald Trump • Benjamin Netanyahu - Google News",
-      "summary": "See the latest updates, context, and perspectives about this story.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "谷歌新闻",
-      "companySlug": "user-谷歌新闻",
-      "publishedAt": "2026-07-24",
-      "importance": 80,
-      "source": {
-        "name": "谷歌新闻",
-        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2k4aHBMU0VSSFUwRDlOT0xUU0FpZ0FQAQ",
+        "url": "https://news.google.com/stories/CAAqNggKIjBDQklTSGpvSmMzUnZjbmt0TXpZd1NoRUtEd2l2b1BQTkVSRnZfNS05UjlzQ1FTZ0FQAQ",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -590,50 +730,11 @@
       "region": "全球",
       "sector": "AI / AGI",
       "company": "东方财富",
-      "companySlug": "user-东方财富",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
         "name": "东方财富",
         "url": "http://fund.eastmoney.com/news/cjjxx.html",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-东方财富-a618a541ca35332a",
-      "sourceId": "official-user-东方财富",
-      "title": "基金观点 _ 天天基金网 _ 东方财富网",
-      "summary": "东方财富网，中国具有影响力的互联网财经媒体，提供全方位的综合财经新闻和金融市场资讯，覆盖股票、财经、证券、金融、港股、行情、基金、债券、期货、外汇、保险、银行、博客、股吧、论坛",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "东方财富",
-      "companySlug": "user-东方财富",
-      "publishedAt": "2026-07-24",
-      "importance": 80,
-      "source": {
-        "name": "东方财富",
-        "url": "http://fund.eastmoney.com/news/cjjgd.html",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-东方财富-8ae2576d16ecfcb9",
-      "sourceId": "official-user-东方财富",
-      "title": "基金要闻 _ 天天基金网 _ 东方财富网",
-      "summary": "东方财富网，中国具有影响力的互联网财经媒体，提供全方位的综合财经新闻和金融市场资讯，覆盖股票、财经、证券、金融、港股、行情、基金、债券、期货、外汇、保险、银行、博客、股吧、论坛",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "东方财富",
-      "companySlug": "user-东方财富",
-      "publishedAt": "2026-07-24",
-      "importance": 80,
-      "source": {
-        "name": "东方财富",
-        "url": "https://fund.eastmoney.com/news/cjjyw.html",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -647,7 +748,6 @@
       "region": "全球",
       "sector": "AI / AGI",
       "company": "东方财富",
-      "companySlug": "user-东方财富",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
@@ -666,7 +766,6 @@
       "region": "全球",
       "sector": "AI / AGI",
       "company": "东方财富",
-      "companySlug": "user-东方财富",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
@@ -691,63 +790,6 @@
       "source": {
         "name": "SambaNova Systems",
         "url": "https://sambanova.ai/blog/what-are-ai-data-centers",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-minimax-218aa2e267825583",
-      "sourceId": "official-minimax",
-      "title": "MiniMax Agent，最大的智慧是“靠谱”",
-      "summary": "MiniMax 发布“MiniMax Agent，最大的智慧是“靠谱””；完整事实、数据与附件见官方原文。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "MiniMax",
-      "companySlug": "minimax",
-      "publishedAt": "2026-07-24",
-      "importance": 80,
-      "source": {
-        "name": "MiniMax",
-        "url": "https://www.minimaxi.com/news/minimax-agent",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-minimax-0df4d3e7b5633024",
-      "sourceId": "official-minimax",
-      "title": "MiniMax Hailuo 2.3 视频复杂表现新高度 & Media Agent",
-      "summary": "MiniMax 发布“MiniMax Hailuo 2.3 视频复杂表现新高度 & Media Agent”；完整事实、数据与附件见官方原文。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "MiniMax",
-      "companySlug": "minimax",
-      "publishedAt": "2026-07-24",
-      "importance": 80,
-      "source": {
-        "name": "MiniMax",
-        "url": "https://www.minimaxi.com/news/minimax-hailuo-23",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-minimax-0896ad4b44f5108b",
-      "sourceId": "official-minimax",
-      "title": "MiniMax Speech 2.8：赋予 AI 语音“人的温度”",
-      "summary": "MiniMax 发布“MiniMax Speech 2.8：赋予 AI 语音“人的温度””；完整事实、数据与附件见官方原文。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "MiniMax",
-      "companySlug": "minimax",
-      "publishedAt": "2026-07-24",
-      "importance": 80,
-      "source": {
-        "name": "MiniMax",
-        "url": "https://www.minimaxi.com/news/minimax-speech-28",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -905,10 +947,10 @@
       }
     },
     {
-      "id": "user-track-web3-354982ed93d3e2d1",
+      "id": "user-track-web3-db67f0751c1461b2",
       "sourceId": "user-track-web3",
-      "title": "Web3 - GitHub",
-      "summary": "Free and opensource to everyone interested Web3. Web3 has 31 repositories available. Follow their code on GitHub.",
+      "title": "What is Web3 technology (and why is it important)? | McKinsey",
+      "summary": "In the past few years, some tech futurists have started pointing to Web3, a term coined by computer scientist Gavin Wood, as a sign of things to come. Web3 is the idea of a new, decentralized internet built on blockchains, which are distributed ledgers controlled communally by participants.",
       "type": "公司动态",
       "region": "全球",
       "sector": "Web3 / 区块链",
@@ -917,7 +959,61 @@
       "importance": 76,
       "source": {
         "name": "Web3 · 用户追踪",
-        "url": "https://github.com/Web3-Club",
+        "url": "https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-web3",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-web3-a36894e42f0a7878",
+      "sourceId": "user-track-web3",
+      "title": "What is Web3? - Web3 Explained - AWS",
+      "summary": "What is Web3? Web3 is an umbrella term for technologies like blockchain that decentralize data ownership and control on the internet. Most internet applications are controlled by centralized entities that determine how they save and use end-user data.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://aws.amazon.com/what-is/web3",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-web3-0e1347e7c9640565",
+      "sourceId": "user-track-web3",
+      "title": "Web3 - Wikipedia",
+      "summary": "Web3 is an idea for a new iteration of the World Wide Web which incorporates concepts such as decentralization, blockchain technologies, tokenomics, and privacy-enhancing technologies. [1]",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://en.m.wikipedia.org/wiki/Web3",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-web3-0015f2608d646afe",
+      "sourceId": "user-track-web3",
+      "title": "What Is Web3? Beginner’s Guide to Wallets, dApps, and Crypto Risks",
+      "summary": "Web3 is an internet model where users can hold and move digital assets through wallets instead of relying on a single platform to manage their accounts, balances, and permissions.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://cryptoslate.com/guides/what-is-web3",
         "level": "待交叉验证",
         "platform": "用户追踪"
       }
@@ -941,19 +1037,127 @@
       }
     },
     {
-      "id": "user-track-robotics-f029953e4614a0d2",
-      "sourceId": "user-track-robotics",
-      "title": "RoboHorizon | 现代机器人技术的指南针，为商业和私人部门提供最新新闻、全面分析和测试。",
-      "summary": "EngineAI T800：受终结者启发的人形机器人正式发货 EngineAI已开始从其郑州生产线发货T800人形机器人。这款高1.73米的机器拥有一个令人熟悉的名字，标志着从实验室研发到大规模商业化的关键转变。",
+      "id": "user-track-semiconductor-f9e99be343a4d358",
+      "sourceId": "user-track-semiconductor",
+      "title": "半导体（常温下导电性能介于导体与绝缘体之间的材料）_百度百科",
+      "summary": "半导体（semiconductor）指室温下导电性能介于导体与绝缘体之间的材料。 半导体材料导电性能可通过掺杂来改变，掺杂进入本质半导体的杂质浓度与极性皆会对半导体的导电特性产生很大影响。",
       "type": "公司动态",
       "region": "全球",
-      "sector": "机器人",
+      "sector": "半导体",
       "company": "科技产业",
       "publishedAt": "2026-07-24",
       "importance": 76,
       "source": {
-        "name": "机器人 · 用户追踪",
-        "url": "https://robohorizon.cn/zh",
+        "name": "半导体 · 用户追踪",
+        "url": "https://baike.baidu.com/item/%E5%8D%8A%E5%AF%BC%E4%BD%93/385669",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-semiconductor-cbe531292d2cf38e",
+      "sourceId": "user-track-semiconductor",
+      "title": "半导体、晶圆、光刻、芯片、集成电路全看懂 - 知乎",
+      "summary": "科技股在资本市场炒作此起彼伏，有多少散户明白芯片半导体之类的基本概念和分类？ 看完此文，相信大家会对这些耳熟能详的名称有一个清晰的了解。 先从半导体开始，半导体是导电性介于导体（金属）与绝缘体（石头）之…",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "半导体 · 用户追踪",
+        "url": "https://zhuanlan.zhihu.com/p/132597633",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-semiconductor-ab1509c5dd19c307",
+      "sourceId": "user-track-semiconductor",
+      "title": "半导体 (BK1036)_行情中心_东方财富网",
+      "summary": "提供半导体 (BK1036)的行情走势、资金流向、行业概念板块排行、成份股排行、大盘分析、证券聚焦、市场总貌、股吧互动等与半导体 (BK1036)有关的信息和服务。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "半导体 · 用户追踪",
+        "url": "https://quote.eastmoney.com/bk/90.BK1036.html",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-semiconductor-9bf692fff83ed702",
+      "sourceId": "user-track-semiconductor",
+      "title": "半导体是什么？半导体和芯片有什么区别? 半导体材料有哪些？",
+      "summary": "半导体是什么？ 简单回答就是：半导体在某些情况下可以导电，但在其他情况下会阻断电流的一种化学元素或化合物。 想象一下，如果金属（比如铜线）中流过电流，通常就无法切断它，除非切断电源——就像用墙壁开关切断电流通过房间电线流入灯泡一样。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "半导体 · 用户追踪",
+        "url": "https://zhuanlan.zhihu.com/p/1954566359167000729",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-semiconductor-2ef801cbc621fbe1",
+      "sourceId": "user-track-semiconductor",
+      "title": "半导体（半导体是电子技术的关键领域）_百度百科",
+      "summary": "半导体，指常温下导电性能介于导体与绝缘体之间的材料，如硅、锗等。 其导电性可通过掺杂等手段精确调控，并受温度、光照等外部条件影响，这一特性使其成为制造电子器件的基石。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "半导体 · 用户追踪",
+        "url": "https://baike.baidu.com/item/%E5%8D%8A%E5%AF%BC%E4%BD%93/68079275",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-semiconductor-15f4224bdc42dd4e",
+      "sourceId": "user-track-semiconductor",
+      "title": "半导体 - 维基百科，自由的百科全书",
+      "summary": "一般半导体材料的能隙约为1至3电子伏特，介于导体和绝缘体之间。 因此只要给予适当条件的能量激发，或是改变其能隙之间距，此材料就能导电。 半导体通过 电子 传导或 電洞 傳导的方式传输电流。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "半导体 · 用户追踪",
+        "url": "https://zh.m.wikipedia.org/wiki/%E5%8D%8A%E5%AF%BC%E4%BD%93",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-semiconductor-0126f228020ec4f3",
+      "sourceId": "user-track-semiconductor",
+      "title": "小白入门半导体：从芯片到封装，一篇看懂核心基础知识_半导体入门-CSDN博客",
+      "summary": "咱们平时用的金属（比如铜）是 “导体”，能轻松导电；塑料是 “绝缘体”，几乎不导电。 而 “半导体”（比如硅，就是沙子提纯来的）很特别 —— 它的导电能力能 “控制”：加电就能导电，断电就不导，像个 “可开关的导线”。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "半导体 · 用户追踪",
+        "url": "https://blog.csdn.net/2503_93276891/article/details/151230400",
         "level": "待交叉验证",
         "platform": "用户追踪"
       }
@@ -977,10 +1181,10 @@
       }
     },
     {
-      "id": "user-track-robotics-ae47d6d0da48ea38",
+      "id": "user-track-robotics-e1084893583ee0c5",
       "sourceId": "user-track-robotics",
-      "title": "越疆协作机器人|机械臂-智能机器人研发-DOBOT越疆科技",
-      "summary": "越疆机器人专注于协作机器人,机械臂,码垛机器人,焊接机器人等智能机器人的研发与应用,拥有CRA,CRAS,Nova,MG400,X-Trainer,M1Pro,Magician系列十余款协作机器人,销售热线:400-800-7266",
+      "title": "海康机器人-让机器更智能，让智能更普惠",
+      "summary": "杭州海康机器人股份有限公司海康机器人HIKROBOT是面向全球的机器视觉和移动机器人产品及解决方案提供商，业务聚焦于工业物联网、智慧物流和智能制造，构建开放合作生态，为工业和物流领域用户提供服务，以创新技术持续推动智能化，引领智能制造进程",
       "type": "公司动态",
       "region": "全球",
       "sector": "机器人",
@@ -989,7 +1193,7 @@
       "importance": 76,
       "source": {
         "name": "机器人 · 用户追踪",
-        "url": "https://www.dobot.cn/",
+        "url": "https://www.hikrobotics.com/cn",
         "level": "待交叉验证",
         "platform": "用户追踪"
       }
@@ -997,8 +1201,8 @@
     {
       "id": "user-track-robotics-97b4b5f414e29a39",
       "sourceId": "user-track-robotics",
-      "title": "宇树科技 | 人形机器人_四足机器人_机器狗",
-      "summary": "宇树科技是一家世界知名的民用机器人公司, 专注于消费级、行业级高性能通用足式/人形机器人及灵巧机械臂的自主研发、生产和销售。曾受邀参加2021牛年央视春晚、2022冬奥会开幕式, 并多次受到过央视新闻联播等知名媒体采访报道, 是全球最早公开零售高性能 ...",
+      "title": "宇树科技—全球四足机器人行业开创者",
+      "summary": "2021年2月11日，24台A1以小牛“犇犇”的形象登录中央广播电视总台牛年春节联欢晚会，与刘德华、王一博、关晓彤同台演出《牛起来》，这是目前人类顶级足式机器人技术与中国传统生肖文化的深度交融，也是全球首次四足机器人动态走位集群舞蹈表演，引发了 ...",
       "type": "公司动态",
       "region": "全球",
       "sector": "机器人",
@@ -1052,7 +1256,7 @@
       "id": "user-track-robotics-5aa56215c4066121",
       "sourceId": "user-track-robotics",
       "title": "2026年，我整理了中国 200 多家机器人（具身智能）公司名单",
-      "summary": "2023年之后，国内出现了一批新的人形机器人公司，为了更好地理解这个行业，我整理了一份中国机器人企业名单，包含200 多家企业，涵盖人形机器人、工业机器人、移动机器人、 服务机器人 、特种机器人等领域。",
+      "summary": "2023年之后，国内出现了一批新的人形机器人公司，为了更好地理解这个行业，我整理了一份中国机器人企业名单，包含200 多家企业，涵盖人形机器人、 工业机器人 、移动机器人、 服务机器人 、特种机器人等领域。",
       "type": "公司动态",
       "region": "全球",
       "sector": "机器人",
@@ -1062,6 +1266,24 @@
       "source": {
         "name": "机器人 · 用户追踪",
         "url": "https://zhuanlan.zhihu.com/p/2015798458943046973",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-robotics-0c3c95a49fd7e088",
+      "sourceId": "user-track-robotics",
+      "title": "AI机器人之家 - 2026全球机器人型号一览无余 - 专注AI机器人与具身智能产业赋能平台 - AI星踪岛",
+      "summary": "AI机器人之家专注AI机器人与具身智能领域，是AI星踪岛重磅频道。平台收录全球前沿AI机器人、具身智能机器人全型号，按型号、功能、行业应用场景精准分类。一站式提供机器人详细参数对比、选型指南及数字化转型方案，全域赋能企业精准获客，是AI机器人领域专业平台。",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "机器人 · 用户追踪",
+        "url": "https://aixzd.com/robots",
         "level": "待交叉验证",
         "platform": "用户追踪"
       }
@@ -1193,22 +1415,23 @@
       }
     },
     {
-      "id": "user-track-ai-efdbb5c3e3b99454",
-      "sourceId": "user-track-ai",
-      "title": "Free AI Chat Online – GPT-5, Gemini & More ｜ NoteGPT",
-      "summary": "AI Chat is an online tool that lets you chat with ChatGPT, Gemini, DeepSeek and more. You can ask questions, get instant answers, brainstorm ideas, create content, and explore knowledge in real time. It’s perfect for students, creators, and professionals who want to learn, write, research, or solve problems quickly. With AI Chat, you can access the latest AI models free online, enjoy ...",
+      "id": "user-source-source-youtube-f140f7c7001ddae2",
+      "sourceId": "user-source-source-youtube",
+      "title": "m - YouTube",
+      "summary": "Share your videos with friends, family, and the world",
       "type": "公司动态",
       "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
+      "sector": "半导体",
+      "company": "YOUTUBE",
       "publishedAt": "2026-07-24",
       "importance": 76,
       "source": {
-        "name": "AI / AGI · 用户追踪",
-        "url": "https://notegpt.io/ai-chat",
+        "name": "YOUTUBE",
+        "url": "https://www.youtube.com/m/home",
         "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
+        "platform": "用户公司来源"
+      },
+      "companySlug": "youtube"
     },
     {
       "id": "user-source-source-youtube-dbae2d0204aa489e",
@@ -1249,10 +1472,10 @@
       "companySlug": "youtube"
     },
     {
-      "id": "user-source-source-track-1sp7gkg-dce8a60c9654d672",
+      "id": "user-source-source-track-1sp7gkg-55ce39b1efdb672e",
       "sourceId": "user-source-source-track-1sp7gkg",
       "title": "东方财富网：财经门户，提供专业的财经、股票、行情、证券、基金、理财、银行、保险、信托、期货、黄金、股吧、博客等各类财经资讯及数据",
-      "summary": "东方财富 手机免费版 iPhone版 Android版 东方财富小程序 电脑免费版 PC经典版 Mac版 电脑增值版 Level-2极速版 决策版 策略版 领航版 操盘密码",
+      "summary": "东方财富网，专业的互联网财经媒体，提供7*24小时财经资讯及全球金融市场报价，汇聚全方位的综合财经资讯和金融市场资讯，覆盖股票、财经、证券、金融、美股、港股、行情、基金、债券、期货、外汇、科创板、保险、信托、黄金、理财、商业、银行、博客 ...",
       "type": "公司动态",
       "region": "全球",
       "sector": "AI / AGI",
@@ -1261,7 +1484,7 @@
       "importance": 76,
       "source": {
         "name": "东方财富",
-        "url": "https://www.eastmoney.com/?t=1",
+        "url": "https://www.eastmoney.com/",
         "level": "待交叉验证",
         "platform": "用户公司来源"
       },
@@ -1287,10 +1510,10 @@
       "companySlug": "东方财富"
     },
     {
-      "id": "user-source-source-track-1sp7gkg-03b19182475eb002",
+      "id": "user-source-source-track-1sp7gkg-4a451fa2d6079c9d",
       "sourceId": "user-source-source-track-1sp7gkg",
-      "title": "东方财富终端--东方财富PC客户端 - eastmoney.com",
-      "summary": "炒股理财利器 一站式交易 沪深京普通、融资融券、期权、港美股、港股通、场内基金、otc理财，一站式覆盖交易市场 账户图形化分析报告 及时了解自己过去的投资收益，总结适合自己的交易方式方法 • 交易业务由东方财富证券股份有限公司提供 免费下载 ...",
+      "title": "东方财富 (300059)_最新价格_行情_走势图—东方财富网",
+      "summary": "提供东方财富 (300059)股票的行情走势、五档盘口、逐笔交易等实时行情数据，及东方财富 (300059)的新闻资讯、公司公告、研究报告、行业研报、F10资料、行业资讯、资金流分析、阶段涨幅、所属板块、财务指标、机构观点、行业排名、估值水平、股吧互动等与 ...",
       "type": "公司动态",
       "region": "全球",
       "sector": "AI / AGI",
@@ -1299,84 +1522,11 @@
       "importance": 76,
       "source": {
         "name": "东方财富",
-        "url": "https://emdesk.eastmoney.com/pc_activity/Pages/VIPTrade/pages/index.html",
+        "url": "https://quote.eastmoney.com/",
         "level": "待交叉验证",
         "platform": "用户公司来源"
       },
       "companySlug": "东方财富"
-    },
-    {
-      "id": "tmtpost-dad9c7e3fca01296",
-      "sourceId": "tmtpost",
-      "title": "Anthropic的中国门徒",
-      "summary": "Anthropic让中国模型公司看到，OpenAI之外，还有一条被阶段性验证过的突围路径。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "钛媒体",
-        "url": "https://www.tmtpost.com/8078358.html",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      },
-      "companySlug": "anthropic"
-    },
-    {
-      "id": "tmtpost-71e540aa7bfdb780",
-      "sourceId": "tmtpost",
-      "title": "Beyond General AI: Why an AI Guitar Drew the Biggest Lines at WAIC",
-      "summary": "At WAIC 2026, Quwan Technology’s AI guitar highlighted a shift away from bloated compute arms races toward practical vertical integration. By pairing proprietary AI music and voice models with dedicated hardware, Quwan offers a pragmatic model for AI commercialization—turning technology into tangible, human-centric tools for creation and expression.",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "钛媒体",
-        "url": "https://www.tmtpost.com/8078706.html",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      }
-    },
-    {
-      "id": "tmtpost-66d90384d60f7f11",
-      "sourceId": "tmtpost",
-      "title": "65亿美金抢55人、日薪50万！全球机器人抢人，彻底失控",
-      "summary": "人才按人头估值，公司靠挖人融资",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "钛媒体",
-        "url": "https://www.tmtpost.com/8078129.html",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      }
-    },
-    {
-      "id": "tmtpost-5317702f02847c49",
-      "sourceId": "tmtpost",
-      "title": "跌掉2000亿后，中国半导体设备之王还能不能打？",
-      "summary": "跌停板的恐慌，传不进车间。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "钛媒体",
-        "url": "https://www.tmtpost.com/8078103.html",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      }
     },
     {
       "id": "tmtpost-05f75941c995ddcb",
@@ -1915,6 +2065,78 @@
       }
     },
     {
+      "id": "user-track-web3-c51fc47bb1ee011a",
+      "sourceId": "user-track-web3",
+      "title": "Web3 Explained: What Everyone Should Know",
+      "summary": "Web3 seeks to shift trust from institutions to technology, embedding it into code and distributed networks. This is not only a technical experiment but a deeply human one.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://www.sciencenewstoday.org/web3-explained-what-everyone-should-know",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-web3-5757006e0024577e",
+      "sourceId": "user-track-web3",
+      "title": "What Is Web3? (+ How Does It Work?) | Coursera",
+      "summary": "Web3 is a term used to describe an idea for the next stage of internet development. The term was introduced in 2014 by Gavin Wood, a co-founder of Ethereum, a blockchain-based software platform.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://www.coursera.org/articles/web-three",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-web3-4fffb376648bf437",
+      "sourceId": "user-track-web3",
+      "title": "W3F | Web3 Foundation",
+      "summary": "Web3 Foundation Nurtures and stewards technologies and applications in the fields of decentralized web software protocols.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://web3.foundation/",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
+      "id": "user-track-web3-49eba92067d0033f",
+      "sourceId": "user-track-web3",
+      "title": "What is Web3 and why is it important? | ethereum.org",
+      "summary": "Instead of a Web monopolized by large technology companies, Web3 embraces decentralization and is being built, operated, and owned by its users. Web3 puts power in the hands of individuals rather than corporations. Before we talk about Web3, let's explore how we got here.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "Web3 / 区块链",
+      "company": "科技产业",
+      "publishedAt": "2026-07-23",
+      "importance": 76,
+      "source": {
+        "name": "Web3 · 用户追踪",
+        "url": "https://ethereum.org/web3",
+        "level": "待交叉验证",
+        "platform": "用户追踪"
+      }
+    },
+    {
       "id": "user-track-track-3p0dg3-af03ff71993e1cb8",
       "sourceId": "user-track-track-3p0dg3",
       "title": "可控核聚变：国内实验堆最新进展 - 知乎",
@@ -2023,61 +2245,7 @@
       }
     },
     {
-      "id": "user-track-semiconductor-f9e99be343a4d358",
-      "sourceId": "user-track-semiconductor",
-      "title": "半导体（常温下导电性能介于导体与绝缘体之间的材料）_百度百科",
-      "summary": "半导体（semiconductor）指室温下导电性能介于导体与绝缘体之间的材料。 半导体材料导电性能可通过掺杂来改变，掺杂进入本质半导体的杂质浓度与极性皆会对半导体的导电特性产生很大影响。",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "半导体 · 用户追踪",
-        "url": "https://baike.baidu.com/item/%E5%8D%8A%E5%AF%BC%E4%BD%93/385669",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-semiconductor-e936a16fd68c4971",
-      "sourceId": "user-track-semiconductor",
-      "title": "什么叫半导体,它有什么用途 - 知乎 - 知乎专栏",
-      "summary": "半导体是一种电导率介于导体和绝缘体之间的物质。 它在纯净状态下不太导电，但可以通过添加杂质（掺杂）或改变温度来调整其导电性能。 半导体的典型代表是硅，广泛应用于制造电子元件。 半导体技术是现代电子设备的基…",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "半导体 · 用户追踪",
-        "url": "https://zhuanlan.zhihu.com/p/663716299",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-semiconductor-9bf692fff83ed702",
-      "sourceId": "user-track-semiconductor",
-      "title": "半导体是什么？半导体和芯片有什么区别? 半导体材料有哪些？",
-      "summary": "半导体是什么？ 简单回答就是：半导体在某些情况下可以导电，但在其他情况下会阻断电流的一种化学元素或化合物。 想象一下，如果金属（比如铜线）中流过电流，通常就无法切断它，除非切断电源——就像用墙壁开关切断电流通过房间电线流入灯泡一样。",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "半导体 · 用户追踪",
-        "url": "https://zhuanlan.zhihu.com/p/1954566359167000729",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-semiconductor-8f2cace01f93a6b0",
+      "id": "user-track-semiconductor-133f199837fae226",
       "sourceId": "user-track-semiconductor",
       "title": "半导体 - 维基百科，自由的百科全书",
       "summary": "半导体 （德语： Halbleiter, 英语： Semiconductor, 法语： Semi-conducteur），是一种 电导率 在 绝缘体 至 导体 之间的物质或材料。",
@@ -2089,79 +2257,7 @@
       "importance": 76,
       "source": {
         "name": "半导体 · 用户追踪",
-        "url": "https://zh.wikipedia.org/zh-hans/%E5%8D%8A%E5%AF%BC%E4%BD%93",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-semiconductor-80f79de30d6829fd",
-      "sourceId": "user-track-semiconductor",
-      "title": "什么是半导体？ | IBM",
-      "summary": "半导体具有独特的性质，适用于两种状态，这意味着在某些条件下它们可以导电，而在其他条件下则能够阻碍电流。 这种独特的分类使得半导体非常适合用于依赖在小面积内传导大量电力的技术，如计算机芯片、 人工智能 (AI) 芯片 和 物联网 (IoT) 设备。",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "半导体 · 用户追踪",
-        "url": "https://www.ibm.com/cn-zh/think/topics/semiconductors",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-semiconductor-2ef801cbc621fbe1",
-      "sourceId": "user-track-semiconductor",
-      "title": "半导体（半导体是电子技术的关键领域）_百度百科",
-      "summary": "半导体，指常温下导电性能介于导体与绝缘体之间的材料，如硅、锗等。 其导电性可通过掺杂等手段精确调控，并受温度、光照等外部条件影响，这一特性使其成为制造电子器件的基石。",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "半导体 · 用户追踪",
-        "url": "https://baike.baidu.com/item/%E5%8D%8A%E5%AF%BC%E4%BD%93/68079275",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-semiconductor-0126f228020ec4f3",
-      "sourceId": "user-track-semiconductor",
-      "title": "小白入门半导体：从芯片到封装，一篇看懂核心基础知识_半导体入门-CSDN博客",
-      "summary": "咱们平时用的金属（比如铜）是 “导体”，能轻松导电；塑料是 “绝缘体”，几乎不导电。 而 “半导体”（比如硅，就是沙子提纯来的）很特别 —— 它的导电能力能 “控制”：加电就能导电，断电就不导，像个 “可开关的导线”。",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "半导体 · 用户追踪",
-        "url": "https://blog.csdn.net/2503_93276891/article/details/151230400",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-robotics-e1084893583ee0c5",
-      "sourceId": "user-track-robotics",
-      "title": "海康机器人-让机器更智能，让智能更普惠",
-      "summary": "杭州海康机器人股份有限公司海康机器人HIKROBOT是面向全球的机器视觉和移动机器人产品及解决方案提供商，业务聚焦于工业物联网、智慧物流和智能制造，构建开放合作生态，为工业和物流领域用户提供服务，以创新技术持续推动智能化，引领智能制造进程",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "机器人 · 用户追踪",
-        "url": "https://www.hikrobotics.com/cn",
+        "url": "https://zh.m.wikipedia.org/zh-hans/%E5%8D%8A%E5%AF%BC%E4%BD%93",
         "level": "待交叉验证",
         "platform": "用户追踪"
       }
@@ -2764,42 +2860,6 @@
       "companySlug": "anthropic"
     },
     {
-      "id": "user-track-web3-ec9390d13c610acf",
-      "sourceId": "user-track-web3",
-      "title": "Web3 - GitHub",
-      "summary": "web3.js Public archive Collection of comprehensive TypeScript libraries for Interaction with the Ethereum JSON RPC API and utility functions.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2026-07-22",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://github.com/web3",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-web3-7f78c4366f499d02",
-      "sourceId": "user-track-web3",
-      "title": "Web3 Foundation - GitHub",
-      "summary": "Web3 Foundation has 222 repositories available. Follow their code on GitHub.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2026-07-22",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://github.com/w3f",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
       "id": "user-track-track-3p0dg3-8b43604f4aa016aa",
       "sourceId": "user-track-track-3p0dg3",
       "title": "可控核聚变_百度百科",
@@ -3303,24 +3363,6 @@
       }
     },
     {
-      "id": "user-track-web3-33cdcb98a95fa805",
-      "sourceId": "user-track-web3",
-      "title": "GitHub - Web3Auth/web3auth-web: Simple infrastructure that enables Web3 ...",
-      "summary": "Simple infrastructure that enables Web3 wallets and applications to provide seamless user logins for both mainstream and Web3.0 users. - Web3Auth/web3auth-web",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2026-07-20",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://github.com/Web3Auth/Web3Auth-web",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
       "id": "user-track-track-3p0dg3-34fb97afcacad3dd",
       "sourceId": "user-track-track-3p0dg3",
       "title": "可控核聚变 - 维基百科，自由的百科全书 - zh.wikipedia.org",
@@ -3450,42 +3492,6 @@
       }
     },
     {
-      "id": "user-track-web3-c0b0dba8977c84c2",
-      "sourceId": "user-track-web3",
-      "title": "Releases · web3/web3.js - GitHub",
-      "summary": "Collection of comprehensive TypeScript libraries for Interaction with the Ethereum JSON RPC API and utility functions. - web3/web3.js",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2026-07-19",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://github.com/web3/web3.js/releases",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
-      "id": "user-track-web3-01729377417f5df8",
-      "sourceId": "user-track-web3",
-      "title": "GitHub - web3p/web3.php: A php interface for interacting with the ...",
-      "summary": "A php interface for interacting with the Ethereum blockchain and ecosystem. Native ABI parsing and smart contract interactions. - web3p/web3.php",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2026-07-19",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://github.com/web3p/web3.php",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
       "id": "techcrunch-venture-8308ffb7b073405a",
       "sourceId": "techcrunch-venture",
       "title": "Neil Rimer thinks the AI money is coming back out",
@@ -3555,25 +3561,6 @@
       "source": {
         "name": "小马智行",
         "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-report-second-quarter-and-interim-financial-results",
-        "level": "官方披露",
-        "platform": "官方网站"
-      }
-    },
-    {
-      "id": "official-user-投资界-52c1f34a1acbca60",
-      "sourceId": "official-user-投资界",
-      "title": "投资界的文章_投资界",
-      "summary": "中国创业与投资资讯平台",
-      "type": "产业投资",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "投资界",
-      "companySlug": "user-投资界",
-      "publishedAt": "2026-07-17",
-      "importance": 84,
-      "source": {
-        "name": "投资界",
-        "url": "https://www.pedaily.cn/media/m1",
         "level": "官方披露",
         "platform": "官方网站"
       }
@@ -7936,24 +7923,6 @@
       }
     },
     {
-      "id": "user-track-web3-585e147dc398cae8",
-      "sourceId": "user-track-web3",
-      "title": "Get Started with Web3 - GitHub",
-      "summary": "Web3 is hard to learn because beginner tutorials, protocol docs, security warnings, and builder examples are scattered everywhere. This project turns that mess into a structured learning path that can be read by humans and queried by AI agents. If this repo helps you learn or teach Web3, please star ...",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2025-08-29",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://github.com/beihaili/Get-Started-with-Web3",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
-      }
-    },
-    {
       "id": "user-track-space-c1e91e61bf8e7d9e",
       "sourceId": "user-track-space",
       "title": "2025中国商业航天行业发展研究报告 - 36氪",
@@ -8211,24 +8180,6 @@
         "url": "https://x.com/karpathy/status/1902046003567718810",
         "level": "原始材料",
         "platform": "X"
-      }
-    },
-    {
-      "id": "user-track-web3-4f4b574e03654c3f",
-      "sourceId": "user-track-web3",
-      "title": "GitHub - web3/web3.js: Collection of comprehensive TypeScript libraries ...",
-      "summary": "Web3.js libraries are being sunset on March 4th, 2025. For migration guides and more details please refer to Chainsafe blog Web3.js is a TypeScript implementation of the Ethereum JSON RPC API and related tooling maintained by ChainSafe Systems ...",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "Web3 / 区块链",
-      "company": "科技产业",
-      "publishedAt": "2025-03-03",
-      "importance": 76,
-      "source": {
-        "name": "Web3 · 用户追踪",
-        "url": "https://github.com/web3/web3.js",
-        "level": "待交叉验证",
-        "platform": "用户追踪"
       }
     },
     {
@@ -9616,11 +9567,12 @@
     {
       "id": "arxiv-ai",
       "name": "arXiv · Core AI companies",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
-      "failed": 0,
-      "platform": "arXiv"
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "arXiv",
+      "error": "The read operation timed out"
     },
     {
       "id": "catl",
@@ -9917,13 +9869,14 @@
       "company": "Form Energy",
       "companySlug": "form-energy",
       "coverage": "attempted",
-      "status": "ok",
+      "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 27,
-      "scanned": 19,
-      "accepted": 4,
-      "failed": 0,
-      "platform": "官方网站"
+      "discovered": 0,
+      "scanned": 3,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "官方网站",
+      "error": "official indexes returned no dated article pages"
     },
     {
       "id": "official-fourier-intelligence",
@@ -10189,10 +10142,10 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 2,
-      "discovered": 0,
-      "scanned": 1,
+      "discovered": 2,
+      "scanned": 3,
       "accepted": 0,
-      "failed": 8,
+      "failed": 10,
       "platform": "官方网站",
       "error": "official indexes returned no dated article pages"
     },
@@ -10476,8 +10429,8 @@
       "coverage": "attempted",
       "status": "empty",
       "configuredIndexes": 1,
-      "discovered": 0,
-      "scanned": 1,
+      "discovered": 2,
+      "scanned": 3,
       "accepted": 0,
       "failed": 1,
       "platform": "官方网站",
@@ -10491,7 +10444,7 @@
       "coverage": "attempted",
       "status": "ok",
       "configuredIndexes": 2,
-      "discovered": 18,
+      "discovered": 24,
       "scanned": 18,
       "accepted": 6,
       "failed": 0,
@@ -10503,11 +10456,11 @@
       "company": "投资界",
       "companySlug": "user-投资界",
       "coverage": "attempted",
-      "status": "ok",
+      "status": "empty",
       "configuredIndexes": 1,
-      "discovered": 18,
-      "scanned": 8,
-      "accepted": 6,
+      "discovered": 24,
+      "scanned": 26,
+      "accepted": 0,
       "failed": 0,
       "platform": "官方网站"
     },
@@ -10657,8 +10610,8 @@
       "id": "prnewswire-tech",
       "name": "PR Newswire Consumer Technology",
       "status": "ok",
-      "scanned": 2,
-      "accepted": 2,
+      "scanned": 3,
+      "accepted": 3,
       "failed": 0,
       "platform": "新闻稿"
     },
@@ -10692,8 +10645,8 @@
       "id": "sina-finance",
       "name": "新浪财经",
       "status": "ok",
-      "scanned": 2,
-      "accepted": 2,
+      "scanned": 4,
+      "accepted": 4,
       "failed": 0,
       "platform": "新浪"
     },
@@ -10710,8 +10663,8 @@
       "id": "tmtpost",
       "name": "钛媒体",
       "status": "ok",
-      "scanned": 6,
-      "accepted": 6,
+      "scanned": 5,
+      "accepted": 5,
       "failed": 0,
       "platform": "专业媒体"
     },
@@ -10782,8 +10735,8 @@
       "id": "user-source-source-youtube",
       "name": "YOUTUBE",
       "status": "ok",
-      "scanned": 4,
-      "accepted": 4,
+      "scanned": 6,
+      "accepted": 6,
       "failed": 0,
       "platform": "用户公司来源"
     },
@@ -10791,8 +10744,8 @@
       "id": "user-track-ai",
       "name": "AI / AGI · 用户追踪",
       "status": "ok",
-      "scanned": 2,
-      "accepted": 2,
+      "scanned": 1,
+      "accepted": 1,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -10826,9 +10779,9 @@
     {
       "id": "user-track-materials",
       "name": "新材料 · 用户追踪",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -10844,18 +10797,18 @@
     {
       "id": "user-track-robotics",
       "name": "机器人 · 用户追踪",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "用户追踪"
     },
     {
       "id": "user-track-semiconductor",
       "name": "半导体 · 用户追踪",
-      "status": "empty",
-      "scanned": 0,
-      "accepted": 0,
+      "status": "ok",
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -10871,9 +10824,9 @@
     {
       "id": "user-track-track-3p0dg3",
       "name": "可控核聚变 · 用户追踪",
-      "status": "ok",
-      "scanned": 8,
-      "accepted": 8,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "用户追踪"
     },
@@ -11047,12 +11000,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 481,
+        "actual": 479,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 70,
+        "actual": 67,
         "required": 6,
         "passed": true
       },
@@ -11077,7 +11030,7 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 118,
+        "actual": 119,
         "required": 8,
         "passed": true
       },
@@ -11087,7 +11040,7 @@
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.1206,
+        "actual": 0.1211,
         "required": 0.45,
         "passed": true
       },
@@ -11097,8 +11050,8 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 481,
-        "required": 481,
+        "actual": 479,
+        "required": 479,
         "passed": true
       }
     },
