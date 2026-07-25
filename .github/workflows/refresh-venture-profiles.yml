@@ -10,6 +10,7 @@ on:
       - tools/normalize_venture_profiles.py
       - tools/sanitize_venture_profiles.py
       - tools/sanitize_venture_narratives.py
+      - tools/finalize_venture_profiles.py
       - lib/catalog-data.ts
       - lib/venture-profile-data.ts
       - public/data/articles.json
@@ -21,6 +22,7 @@ on:
       - tests/test_normalize_venture_profiles.py
       - tests/test_venture_profile_postprocess.py
       - tests/test_venture_narrative_sanitizer.py
+      - tests/test_finalize_venture_profiles.py
       - tests/venture-profile-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
   schedule:
@@ -48,21 +50,23 @@ jobs:
           python-version: "3.12"
       - name: Verify crawler syntax and focused tests
         run: |
-          # semantic-profile-refresh-v12
+          # semantic-profile-refresh-v13
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py \
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
-            tools/sanitize_venture_narratives.py
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
-            tests.test_venture_narrative_sanitizer
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
       - name: Record catalog revision
         id: catalog-before
         env:
@@ -77,28 +81,24 @@ jobs:
         run: python tools/enrich_venture_profiles.py
       - name: Normalize cross-entity profile consistency
         run: python tools/normalize_venture_profiles.py
-      - name: Sanitize structured venture fields
+      - name: Apply final venture quality gate
         run: |
-          python tools/sanitize_venture_profiles.py
-          python tools/sanitize_venture_profiles.py --check
-      - name: Sanitize venture narrative fields
-        run: |
-          python tools/sanitize_venture_narratives.py
-          python tools/sanitize_venture_narratives.py --check
+          python tools/finalize_venture_profiles.py
+          python tools/finalize_venture_profiles.py --check
       - name: Validate generated venture snapshot
         run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
           python tools/normalize_venture_profiles.py --check
-          python tools/sanitize_venture_profiles.py --check
-          python tools/sanitize_venture_narratives.py --check
+          python tools/finalize_venture_profiles.py --check
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
-            tests.test_venture_narrative_sanitizer
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
       - uses: actions/setup-node@v4
         with:
           node-version: 22
