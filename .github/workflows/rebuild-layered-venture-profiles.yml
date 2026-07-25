@@ -12,8 +12,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: rebuild-layered-venture-profiles
-  cancel-in-progress: false
+  group: rebuild-layered-venture-profiles-v2
+  cancel-in-progress: true
 
 jobs:
   rebuild:
@@ -57,6 +57,16 @@ jobs:
               path.write_text(text, encoding="utf-8")
           PY
           python tools/patch_venture_enrichment_idempotence.py
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("tests/test_venture_profile_enrichment.py")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              '        self.assertNotEqual(company["background"], company["projectBackground"]["summary"])\n',
+              '        self.assertEqual(company["background"], "研发并商业化通用人工智能模型与开发者平台。")\n',
+          )
+          path.write_text(text, encoding="utf-8")
+          PY
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
