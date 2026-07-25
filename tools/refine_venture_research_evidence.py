@@ -69,7 +69,7 @@ FINANCING_RE = re.compile(
 )
 INVESTMENT_ACTION_RE = re.compile(
     r"(?:\binvest(?:ed|s|ing)?\s+(?:in|into)\b|\bbacks?\b|\bleads?\b|"
-    r"投资|领投|跟投|参投|加码)",
+    r"投资|融资|领投|跟投|参投|参与.{0,24}融资|加码)",
     re.IGNORECASE,
 )
 BIOGRAPHY_RE = re.compile(
@@ -217,7 +217,10 @@ def _clean_project_background(
     current = profile.get("projectBackground")
     current = current if isinstance(current, dict) else {}
     candidate_summary = sanitize_narrative(current.get("summary", ""), limit=760)
-    catalog_summary = sanitize_narrative(company.summary, limit=760)
+    catalog_summary = (
+        sanitize_narrative(company.summary, limit=760)
+        or clean_text(company.summary, 760)
+    )
     if not candidate_summary or CAPITAL_MARKET_RE.search(candidate_summary) or FINANCING_RE.search(candidate_summary):
         summary = catalog_summary
     else:
@@ -419,7 +422,17 @@ def _route_capital_events(
             continue
         text = clean_text(f"{row.get('title', '')} {row.get('summary', '')}", 1200)
         if CAPITAL_MARKET_RE.search(text):
-            capital.append(row)
+            normalized = copy.deepcopy(row)
+            normalized["type"] = (
+                "并购/退出"
+                if re.search(
+                    r"acquired|acquisition|merger|并购|收购|退出",
+                    text,
+                    re.IGNORECASE,
+                )
+                else "上市"
+            )
+            capital.append(normalized)
         elif FINANCING_RE.search(text) or row.get("amount") or row.get("round") or row.get("investors"):
             financing.append(row)
     for article in articles:
