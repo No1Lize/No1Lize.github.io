@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
+from tools import crawl_venture_profiles as crawler
 from tools import venture_profile_extraction as extraction
 
 
@@ -60,6 +62,51 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
         self.assertNotIn("产品手册", products)
         self.assertNotIn("产品资料与下载", products)
         self.assertNotIn("售后服务政策", products)
+
+    def test_retained_history_is_resanitized_after_homepage_timeout(self) -> None:
+        company = extraction.CatalogCompany(
+            slug="agibot",
+            name="智元机器人",
+            english_name="AgiBot",
+            region="中国",
+            sector="机器人",
+            stage="成长期",
+            status="运营中",
+            summary="研发具身智能机器人。",
+            product="远征A2、灵犀X2",
+            source_name="智元机器人",
+            source_url="https://www.zhiyuan-robot.com/",
+        )
+        previous = {
+            "slug": "agibot",
+            "name": "智元机器人",
+            "updatedAt": "2026-07-24T00:00:00+00:00",
+            "status": "ok",
+            "background": "完整背景。",
+            "technology": "完整技术资料。",
+            "products": ["产品手册", "远征A2"],
+            "team": [
+                {"name": "关于智元", "role": "合伙人", "summary": "", "sourceUrl": company.source_url},
+                {"name": "邓泰华", "role": "创始人", "summary": "", "sourceUrl": company.source_url},
+                {"name": "具身业务部", "role": "总裁", "summary": "", "sourceUrl": company.source_url},
+            ],
+            "financing": [],
+            "capitalMarkets": [],
+            "sources": [{"name": "智元机器人", "url": company.source_url, "level": "官方披露"}],
+            "warnings": [],
+            "evidenceScore": 90,
+        }
+        with patch.object(crawler, "crawl_pages", return_value=([], ["homepage timeout"])):
+            profile, status = crawler.crawl_company(
+                company,
+                crawler.DEFAULT_USER_AGENT,
+                6,
+                previous,
+            )
+        self.assertEqual(status["status"], "retained")
+        self.assertEqual([item["name"] for item in profile["team"]], ["邓泰华"])
+        self.assertNotIn("产品手册", profile["products"])
+        self.assertIn("远征A2", profile["products"])
 
 
 if __name__ == "__main__":
