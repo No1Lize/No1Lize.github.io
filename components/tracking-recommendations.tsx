@@ -10,13 +10,15 @@ const labels = {
   companies: "推荐样本公司",
 } as const;
 
-type RecommendationType = keyof typeof labels;
+export type RecommendationType = keyof typeof labels;
 
 export function TrackingRecommendations({
   recommendations,
+  onlyType,
   onAdd,
 }: {
   recommendations: Record<RecommendationType, TrackingRecommendation[]>;
+  onlyType?: RecommendationType;
   onAdd?: (type: RecommendationType, value: string) => Promise<void> | void;
 }) {
   const [pending, setPending] = useState<string>("");
@@ -24,12 +26,14 @@ export function TrackingRecommendations({
 
   const sections = useMemo(
     () =>
-      (Object.keys(labels) as RecommendationType[]).map((type) => ({
-        type,
-        title: labels[type],
-        items: recommendations[type].slice(0, 8),
-      })),
-    [recommendations],
+      (Object.keys(labels) as RecommendationType[])
+        .filter((type) => !onlyType || type === onlyType)
+        .map((type) => ({
+          type,
+          title: labels[type],
+          items: recommendations[type].slice(0, 8),
+        })),
+    [onlyType, recommendations],
   );
 
   async function add(type: RecommendationType, item: TrackingRecommendation) {
@@ -46,40 +50,47 @@ export function TrackingRecommendations({
   return (
     <section aria-label="智能推荐添加" className={styles.panel}>
       <div className={styles.header}>
-        <strong>智能推荐</strong>
+        <strong>{onlyType ? labels[onlyType] : "智能推荐"}</strong>
         <span>根据当前赛道情报自动生成</span>
       </div>
 
-      {sections.map((section) => (
-        <div key={section.type} className={styles.panel}>
-          <div className={styles.header}>
-            <strong>{section.title}</strong>
+      {sections.map((section) => {
+        const visibleItems = section.items.filter(
+          (item) => !hidden[`${section.type}-${item.value}`],
+        );
+        return (
+          <div key={section.type}>
+            {!onlyType && (
+              <div className={styles.header}>
+                <strong>{section.title}</strong>
+              </div>
+            )}
+            {visibleItems.length ? (
+              <div className={styles.actions}>
+                {visibleItems.map((item) => {
+                  const key = `${section.type}-${item.value}`;
+                  return (
+                    <button
+                      className={styles.item}
+                      key={key}
+                      disabled={pending === key}
+                      onClick={() => void add(section.type, item)}
+                      title={item.reason}
+                      type="button"
+                    >
+                      <strong>{item.label}</strong>
+                      <small>{item.reason}</small>
+                      <b>{pending === key ? "添加中" : "+添加"}</b>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className={styles.empty}>当前没有新的高置信推荐</p>
+            )}
           </div>
-          {section.items.length ? (
-            <div className={styles.actions}>
-              {section.items.map((item) => {
-                const key = `${section.type}-${item.value}`;
-                if (hidden[key]) return null;
-                return (
-                  <button
-                    className={styles.item}
-                    key={key}
-                    disabled={pending === key}
-                    onClick={() => void add(section.type, item)}
-                    title={item.reason}
-                  >
-                    <strong>{item.label}</strong>
-                    <small>{item.reason}</small>
-                    <b>+添加</b>
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            <p className={styles.empty}>暂无推荐</p>
-          )}
-        </div>
-      ))}
+        );
+      })}
     </section>
   );
 }
