@@ -6,33 +6,60 @@ exit=0
 exit=0
 
 ===== normalize =====
-{"stats": {"companyTeams": 0, "companyProducts": 0, "companyFinancing": 82, "companyCapitalMarkets": 101, "institutionTeams": 0}, "passed": true, "changed": true}
+{"stats": {"companyTeams": 0, "companyProducts": 1, "companyFinancing": 1, "companyCapitalMarkets": 2, "institutionTeams": 0}, "passed": true, "changed": true}
+exit=0
+
+===== finalize =====
+{"changedCompanies": 58, "changedInstitutions": 11, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
+Updated public/data/venture_profiles.json.
+exit=0
+
+===== finalizer_check =====
+{"changedCompanies": 0, "changedInstitutions": 0, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
+Venture profile snapshot passed final semantic consistency checks.
 exit=0
 
 ===== crawler_validate =====
-{"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20}
-exit=0
+{"passed": false, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 32, "required": 0, "passed": false}}, "invalidSourceUrls": [], "semanticErrors": ["company:agibot:team-noise", "company:aurora:team-noise", "company:cerebras:team-noise", "company:databricks:team-noise", "company:glean:team-noise", "company:harvey:team-noise", "company:helion:team-noise", "company:ionq:team-noise", "company:mobileye:team-noise", "company:moore-threads:team-noise", "company:pony-ai:team-noise", "company:psiquantum:team-noise", "company:redwood-materials:team-noise", "company:relativity-space:team-noise", "company:rocket-lab:team-noise", "company:sambanova:team-noise", "company:shield-ai:team-noise", "company:sierra:team-noise", "company:svlot:team-noise", "company:unitree:team-noise", "company:varda:team-noise", "institution:a16z:team-noise", "institution:founders-fund:team-noise", "institution:hongshan:team-noise", "institution:idg-capital:team-noise", "institution:kleiner-perkins:team-noise", "institution:legend-capital:team-noise", "institution:lightspeed:team-noise", "institution:matrix-china:team-noise", "institution:qiming:team-noise"], "productiveCompanies": 58, "productiveInstitutions": 20}
+exit=1
 
 ===== enrich_validate =====
-{"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}
+{"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}, "finalSemanticConsistency": {"actual": 0, "required": 0, "passed": true}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}
 exit=0
 
 ===== normalize_check =====
-{"passed": true, "alreadyNormalized": true, "stats": {"companyTeams": 0, "companyProducts": 0, "companyFinancing": 0, "companyCapitalMarkets": 0, "institutionTeams": 0}, "qualityGate": {"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}}
-exit=0
+{"passed": false, "alreadyNormalized": false, "stats": {"companyTeams": 0, "companyProducts": 2, "companyFinancing": 0, "companyCapitalMarkets": 0, "institutionTeams": 0}, "qualityGate": {"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}, "finalSemanticConsistency": {"actual": 0, "required": 0, "passed": true}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}}
+exit=1
 
 ===== python_tests =====
-...................
+.....................F.........
+======================================================================
+FAIL: test_products_preserve_catalog_and_remove_editorial_labels (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_products_preserve_catalog_and_remove_editorial_labels)
 ----------------------------------------------------------------------
-Ran 19 tests in 0.041s
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_postprocess.py", line 21, in test_products_preserve_catalog_and_remove_editorial_labels
+    self.assertEqual(products[:2], ["Claude 模型", "企业 API"])
+AssertionError: Lists differ: ['Claude 模型', '企业 API 与安全研究。'] != ['Claude 模型', '企业 API']
 
-OK
-exit=0
+First differing element 1:
+'企业 API 与安全研究。'
+'企业 API'
+
+- ['Claude 模型', '企业 API 与安全研究。']
+?                      -------
+
++ ['Claude 模型', '企业 API']
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.046s
+
+FAILED (failures=1)
+exit=1
 
 ===== npm_install =====
 npm warn deprecated tsconfck@3.1.6: unmaintained
 
-added 506 packages in 34s
+added 506 packages in 33s
 exit=0
 
 ===== node_tests =====
@@ -40,110 +67,91 @@ TAP version 13
 # Subtest: production catalog meets the initial coverage floor
 ok 1 - production catalog meets the initial coverage floor
   ---
-  duration_ms: 0.835524
+  duration_ms: 0.940411
   type: 'test'
   ...
 # Subtest: every production entity has a real source URL
 ok 2 - every production entity has a real source URL
   ---
-  duration_ms: 0.384428
+  duration_ms: 0.359553
   type: 'test'
   ...
 # Subtest: person pages expose at least five traceable materials
 ok 3 - person pages expose at least five traceable materials
   ---
-  duration_ms: 0.216119
+  duration_ms: 0.315932
   type: 'test'
   ...
 # Subtest: slugs are unique within each route collection
 ok 4 - slugs are unique within each route collection
   ---
-  duration_ms: 0.14895
+  duration_ms: 0.237215
   type: 'test'
   ...
 # Subtest: every linked event company has a generated company route
 ok 5 - every linked event company has a generated company route
   ---
-  duration_ms: 0.282767
+  duration_ms: 0.432991
   type: 'test'
   ...
 # Subtest: venture profile snapshot only contains catalog entities
 ok 6 - venture profile snapshot only contains catalog entities
   ---
-  duration_ms: 0.992917
+  duration_ms: 1.178778
   type: 'test'
   ...
 # Subtest: venture profile getters are safe before and after the first crawl
 ok 7 - venture profile getters are safe before and after the first crawl
   ---
-  duration_ms: 0.346121
+  duration_ms: 0.387637
   type: 'test'
   ...
 # Subtest: venture profile sources are traceable public URLs
 ok 8 - venture profile sources are traceable public URLs
   ---
-  duration_ms: 0.701105
+  duration_ms: 0.704089
   type: 'test'
   ...
 # Subtest: runtime sanitation removes navigation and editorial labels
 ok 9 - runtime sanitation removes navigation and editorial labels
   ---
-  duration_ms: 0.953227
+  duration_ms: 0.979715
   type: 'test'
   ...
 # Subtest: current snapshot is clean at the frontend boundary
 ok 10 - current snapshot is clean at the frontend boundary
   ---
-  duration_ms: 0.492778
+  duration_ms: 0.531676
   type: 'test'
   ...
 # Subtest: research model v2 exposes the same structured fields for every entity
-not ok 11 - research model v2 exposes the same structured fields for every entity
+ok 11 - research model v2 exposes the same structured fields for every entity
   ---
-  duration_ms: 7.879325
+  duration_ms: 0.573625
   type: 'test'
-  location: '/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:1:3686'
-  failureType: 'testCodeFailure'
-  error: |-
-    The expression evaluated to a falsy value:
-    
-      assert.ok(profile.projectBackground?.summary)
-    
-  code: 'ERR_ASSERTION'
-  name: 'AssertionError'
-  expected: true
-  operator: '=='
-  stack: |-
-    TestContext.<anonymous> (/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/venture-profile-data.test.ts:108:12)
-    Test.runInAsyncScope (node:async_hooks:214:14)
-    Test.run (node:internal/test_runner/test:1047:25)
-    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
-    Test.postRun (node:internal/test_runner/test:1173:19)
-    Test.run (node:internal/test_runner/test:1101:12)
-    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
   ...
 # Subtest: venture profile runtime statuses use unique entity keys
 ok 12 - venture profile runtime statuses use unique entity keys
   ---
-  duration_ms: 0.295436
+  duration_ms: 0.287138
   type: 'test'
   ...
 # Subtest: venture profile quality gate has internally consistent checks
 ok 13 - venture profile quality gate has internally consistent checks
   ---
-  duration_ms: 0.229088
+  duration_ms: 0.146985
   type: 'test'
   ...
 1..13
 # tests 13
 # suites 0
-# pass 12
-# fail 1
+# pass 13
+# fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 432.180795
-exit=1
+# duration_ms 505.624649
+exit=0
 
 ===== next_build =====
 ⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
@@ -155,15 +163,15 @@ https://nextjs.org/telemetry
 ▲ Next.js 16.2.6 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 9.3s
+✓ Compiled successfully in 9.1s
   Running TypeScript ...
-  Finished TypeScript in 6.2s ...
+  Finished TypeScript in 6.4s ...
   Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/162) ...
-  Generating static pages using 3 workers (40/162) 
-  Generating static pages using 3 workers (80/162) 
-  Generating static pages using 3 workers (121/162) 
-✓ Generating static pages using 3 workers (162/162) in 1617ms
+  Generating static pages using 3 workers (0/163) ...
+  Generating static pages using 3 workers (40/163) 
+  Generating static pages using 3 workers (81/163) 
+  Generating static pages using 3 workers (122/163) 
+✓ Generating static pages using 3 workers (163/163) in 1782ms
   Finalizing page optimization ...
 
 Route (app)
@@ -192,7 +200,7 @@ Route (app)
 │ ├ /people/frank-wang
 │ ├ /people/li-zexiang
 │ ├ /people/wang-xingxing
-│ └ [+16 more paths]
+│ └ [+17 more paths]
 ├ ○ /reports
 ├ ● /reports/[slug]
 │ ├ /reports/ai-capital-2026
@@ -254,6 +262,11 @@ exit=0
       "required": 0,
       "passed": true
     },
+    "finalSemanticConsistency": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    },
     "companyResearchEnrichment": {
       "actual": 58,
       "required": 58,
@@ -269,5 +282,28 @@ exit=0
       "required": 0,
       "passed": true
     }
-  }
+  },
+  "agibotProducts": [
+    "远征",
+    "灵犀等机器人系列。",
+    "智元AIMA开放平台",
+    "灵心平台LinkSoul",
+    "灵创平台LinkCraft",
+    "Genie Studio具身智能开发平台",
+    "A2 旗舰版",
+    "A2 青春版",
+    "D1 Max",
+    "G1 Max"
+  ],
+  "agibotHasProjectBackground": true,
+  "sequoiaRecentYearSummary": {
+    "periodStart": "2025-07-25",
+    "periodEnd": "2026-07-25",
+    "investmentCount": 0,
+    "companies": [],
+    "sectors": [],
+    "rounds": [],
+    "summary": "统计窗口为2025-07-25至2026-07-25，共识别0条带日期的公开投资记录，涉及0个项目。"
+  },
+  "sequoiaClassicCases": 1
 }
