@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T03:27:21+00:00",
-  "articleCount": 410,
+  "generatedAt": "2026-07-25T03:31:29+00:00",
+  "articleCount": 411,
   "articles": [
     {
       "id": "sina-finance-af9d99698a928c81",
@@ -59,6 +59,24 @@
       "companySlug": "anthropic"
     },
     {
+      "id": "official-user-东方财富-456a6b67c23de1f2",
+      "sourceId": "official-user-东方财富",
+      "title": "英伟达与SK集团推出5000亿美元AI计划",
+      "summary": "据报道， 英伟达 表示，将协助海力士设计未来的 高带宽内存 芯片，此举将有助于确保内存供应。 英伟达 还表示，与SK集团合作的“ 人工智能 计划”总价值将超过5000亿美元。黄仁勋在采访中表示，这个数字包括 英伟达 购买内存芯片的资金，以及SK集团购买英伟达超级 计算机 的资金。“所以，我们双方的交易额将达到5000亿美元。”他说道。 SK电讯计划使用英伟达Vera Rubin芯片和 SK海力士 HBM4内存构建2吉瓦AI 数据中心 。这大约相当于150万户家庭的用电量。 英伟达表示，首批由SK电信公司建造的所谓“ 人工智能 工厂”将于明年投入使用。",
+      "type": "产品发布",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 82,
+      "source": {
+        "name": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202607253820995926.html",
+        "level": "媒体报道",
+        "platform": "东方财富"
+      }
+    },
+    {
       "id": "anthropic-c34a327604b5be4a",
       "sourceId": "anthropic",
       "title": "Introducing Claude Opus 5",
@@ -102,22 +120,25 @@
       "qualityStatus": "可用"
     },
     {
-      "id": "official-user-东方财富-790ee1e6117eea65",
+      "id": "official-user-东方财富-4b308b69f7e59c59",
       "sourceId": "official-user-东方财富",
-      "title": "凌晨全线大跌！特朗普重磅发声！美股半导体、存储、光通信集体重挫",
-      "summary": "昨夜今晨，美股 半导体 、存储、光 通信 概念股全线大跌，费城 半导体 指数大跌超4%， 闪迪 大跌超10%， SK海力士 ADR大跌超8%。据 高盛 交易台的数据，美股周五全天几乎未见大量买入指令，科技股的卖压主要来自长线机构。 与此同时，中东紧张局势持续搅动金融市场。当地时间7月24日，美国总统特朗普在白宫谈及对伊朗战争的“退出战略”时表示，美国有两种选择：一是继续当前军事行动，并可能加大打击力度，逐步摧毁伊朗的军事能力；二是通过谈判达成协议。 美东时间7月24日，美股三大指数走势分化，截至收盘，道指涨0.46%，本周累跌0.38%；标普500指数微涨0.05%，本周累跌0.61%；纳指跌0.64%，本周累跌2.13%。",
+      "title": "芯片巨头跌超30%！抛“硬”买“软” 资金动向变了？",
+      "summary": "三星 电子 、 美光科技 1个月内自高位最大回撤均超30%。科技股“软硬轮动”，AI行情进入验证期。 全球范围的AI浪潮兴起，以芯片为代表的硬科技股在较长时间内独领风骚。今年7月以来，硬科技股一度遭遇抛售，资金似有转向以互联网平台为代表的软科技股的迹象，呈现阶段性的“软硬切换”。 这一市场现象，受多重因素 综合 影响。有专家在接受证券时报记者采访时认为，不存在永久单向、不可逆的风格切换，行情以阶段性“软硬轮动”为核心特征，不同时间维度表现分化。也有市场人士认为，AI大潮并未结束，而是AI交易从只买“卖铲者”进入验证谁能真正赚到钱的阶段。",
       "type": "公司动态",
-      "region": "全球",
+      "region": "中国",
       "sector": "半导体",
-      "company": "科技产业",
+      "company": "寒武纪",
       "publishedAt": "2026-07-25",
       "importance": 80,
       "source": {
         "name": "东方财富",
-        "url": "https://finance.eastmoney.com/a/202607253820914018.html",
+        "url": "https://finance.eastmoney.com/a/202607253821083595.html",
         "level": "媒体报道",
         "platform": "东方财富"
-      }
+      },
+      "ticker": "688256",
+      "market": "A股",
+      "companySlug": "cambricon"
     },
     {
       "id": "official-minimax-218aa2e267825583",
@@ -9735,7 +9756,7 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 116,
+        "actual": 117,
         "required": 8,
         "passed": true
       },
@@ -9760,6 +9781,13 @@
         "passed": true
       }
     },
-    "invalidArticles": []
+    "invalidArticles": [],
+    "trackingQuality": {
+      "scoredUserArticles": 49,
+      "acceptedUserArticles": 12,
+      "rejectedUserArticles": 37,
+      "clusteredDuplicates": 0,
+      "minimumScore": 31
+    }
   }
 }
