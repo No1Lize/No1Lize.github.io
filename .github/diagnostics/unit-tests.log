@@ -6,159 +6,183 @@ TAP version 13
 # Subtest: production catalog meets the initial coverage floor
 ok 1 - production catalog meets the initial coverage floor
   ---
-  duration_ms: 1.28248
+  duration_ms: 1.37589
   type: 'test'
   ...
 # Subtest: every production entity has a real source URL
 ok 2 - every production entity has a real source URL
   ---
-  duration_ms: 0.563889
+  duration_ms: 0.511817
   type: 'test'
   ...
 # Subtest: person pages expose at least five traceable materials
 ok 3 - person pages expose at least five traceable materials
   ---
-  duration_ms: 0.334568
+  duration_ms: 0.333564
   type: 'test'
   ...
 # Subtest: slugs are unique within each route collection
 ok 4 - slugs are unique within each route collection
   ---
-  duration_ms: 0.264387
+  duration_ms: 0.246852
   type: 'test'
   ...
 # Subtest: every linked event company has a generated company route
 ok 5 - every linked event company has a generated company route
   ---
-  duration_ms: 0.48441
+  duration_ms: 0.475027
   type: 'test'
   ...
 # Subtest: normalizes A-share ticker variants
 ok 6 - normalizes A-share ticker variants
   ---
-  duration_ms: 2.653807
+  duration_ms: 2.091146
   type: 'test'
   ...
 # Subtest: normalizes Hong Kong ticker variants to five digits
 ok 7 - normalizes Hong Kong ticker variants to five digits
   ---
-  duration_ms: 0.391355
+  duration_ms: 0.36383
   type: 'test'
   ...
 # Subtest: normalizes US tickers and preserves catalog routes
 ok 8 - normalizes US tickers and preserves catalog routes
   ---
-  duration_ms: 0.487015
+  duration_ms: 0.417489
   type: 'test'
   ...
 # Subtest: arbitrary empty tracks receive a complete generated profile
 ok 9 - arbitrary empty tracks receive a complete generated profile
   ---
-  duration_ms: 2.695365
+  duration_ms: 2.846928
   type: 'test'
   ...
 # Subtest: generated profiles incorporate configured terms and observed evidence
 ok 10 - generated profiles incorporate configured terms and observed evidence
   ---
-  duration_ms: 0.990762
+  duration_ms: 1.137895
   type: 'test'
   ...
 # Subtest: curated definitions enhance rather than gate arbitrary track generation
 ok 11 - curated definitions enhance rather than gate arbitrary track generation
   ---
-  duration_ms: 0.679507
+  duration_ms: 0.747075
+  type: 'test'
+  ...
+# Subtest: listed recommendations prioritize active companies in the selected sector
+ok 12 - listed recommendations prioritize active companies in the selected sector
+  ---
+  duration_ms: 2.308452
+  type: 'test'
+  ...
+# Subtest: already followed market and ticker pairs are removed
+ok 13 - already followed market and ticker pairs are removed
+  ---
+  duration_ms: 0.597035
   type: 'test'
   ...
 # Subtest: ordinary technical concepts are never displayed as named entities
-ok 12 - ordinary technical concepts are never displayed as named entities
+ok 14 - ordinary technical concepts are never displayed as named entities
   ---
-  duration_ms: 1.755318
+  duration_ms: 1.259052
   type: 'test'
   ...
 # Subtest: unseen named technical entities remain eligible
-ok 13 - unseen named technical entities remain eligible
+ok 15 - unseen named technical entities remain eligible
   ---
-  duration_ms: 0.800424
+  duration_ms: 0.71158
   type: 'test'
   ...
 # Subtest: configured compound seed terms remain eligible
-ok 14 - configured compound seed terms remain eligible
+ok 16 - configured compound seed terms remain eligible
   ---
-  duration_ms: 0.7451
+  duration_ms: 0.700088
   type: 'test'
   ...
 # Subtest: tracking recommendations derive useful additions from sector intelligence
-ok 15 - tracking recommendations derive useful additions from sector intelligence
+ok 17 - tracking recommendations derive useful additions from sector intelligence
   ---
-  duration_ms: 35.013715
+  duration_ms: 23.889259
   type: 'test'
   ...
 # Subtest: unseen technical entities emerge from independent multi-source evidence
-ok 16 - unseen technical entities emerge from independent multi-source evidence
+ok 18 - unseen technical entities emerge from independent multi-source evidence
   ---
-  duration_ms: 3.887956
+  duration_ms: 5.885796
   type: 'test'
   ...
 # Subtest: country codes, roles and isolated acronyms are never recommended as entities
-ok 17 - country codes, roles and isolated acronyms are never recommended as entities
+ok 19 - country codes, roles and isolated acronyms are never recommended as entities
   ---
-  duration_ms: 3.473617
+  duration_ms: 4.020782
   type: 'test'
   ...
 # Subtest: common technical nouns are hidden while named entities remain visible
-ok 18 - common technical nouns are hidden while named entities remain visible
+ok 20 - common technical nouns are hidden while named entities remain visible
   ---
-  duration_ms: 0.699725
+  duration_ms: 0.794114
   type: 'test'
   ...
 # Subtest: existing source hosts are removed from recommendations
-ok 19 - existing source hosts are removed from recommendations
+ok 21 - existing source hosts are removed from recommendations
   ---
-  duration_ms: 4.117998
+  duration_ms: 3.337476
   type: 'test'
   ...
 # Subtest: track aliases are derived for bilingual and punctuation-rich names
-ok 20 - track aliases are derived for bilingual and punctuation-rich names
+ok 22 - track aliases are derived for bilingual and punctuation-rich names
   ---
-  duration_ms: 2.014926
+  duration_ms: 3.509343
   type: 'test'
   ...
 # Subtest: identity terms include arbitrary track names and configured keywords
-ok 21 - identity terms include arbitrary track names and configured keywords
+ok 23 - identity terms include arbitrary track names and configured keywords
   ---
-  duration_ms: 0.347252
+  duration_ms: 0.568823
   type: 'test'
   ...
 # Subtest: equivalent track names are blocking taxonomy collisions
-ok 22 - equivalent track names are blocking taxonomy collisions
+ok 24 - equivalent track names are blocking taxonomy collisions
   ---
-  duration_ms: 7.997969
+  duration_ms: 9.395553
   type: 'test'
   ...
 # Subtest: shared companies and keywords are warnings rather than hard failures
-ok 23 - shared companies and keywords are warnings rather than hard failures
+ok 25 - shared companies and keywords are warnings rather than hard failures
   ---
-  duration_ms: 0.437783
+  duration_ms: 0.741175
   type: 'test'
   ...
 # Subtest: shared keywords do not own event matching for multiple sectors
-ok 24 - shared keywords do not own event matching for multiple sectors
+ok 26 - shared keywords do not own event matching for multiple sectors
   ---
-  duration_ms: 0.495501
+  duration_ms: 0.692403
   type: 'test'
   ...
 # Subtest: only sector-unique actors expand standalone crawler discovery
-ok 25 - only sector-unique actors expand standalone crawler discovery
+ok 27 - only sector-unique actors expand standalone crawler discovery
   ---
-  duration_ms: 0.387338
+  duration_ms: 0.390941
   type: 'test'
   ...
-1..25
-# tests 25
+# Subtest: normalizes and deduplicates listed companies before GitHub persistence
+ok 28 - normalizes and deduplicates listed companies before GitHub persistence
+  ---
+  duration_ms: 1.433137
+  type: 'test'
+  ...
+# Subtest: retains enabled flags and catalog slugs while normalizing tickers
+ok 29 - retains enabled flags and catalog slugs while normalizing tickers
+  ---
+  duration_ms: 0.199984
+  type: 'test'
+  ...
+1..29
+# tests 29
 # suites 0
-# pass 25
+# pass 29
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 770.70791
+# duration_ms 891.502927
