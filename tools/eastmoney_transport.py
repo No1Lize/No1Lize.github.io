@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import re
 import time
-from typing import Callable
+from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import Request, urlopen
@@ -141,8 +141,48 @@ def install_transport() -> None:
     official.fetch_text = fetch_text
 
 
+def install_quality_preservation() -> None:
+    """Keep user-tracking metrics when the official crawl rewrites qualityGate."""
+
+    official = tracking_crawler.official
+    original_evaluate_quality = official.evaluate_quality
+    if getattr(original_evaluate_quality, "_preserves_tracking_quality", False):
+        return
+
+    original_load_payload = official.load_existing_payload
+    tracking_report: dict[str, Any] = {}
+
+    def load_existing_payload(path=official.OUTPUT_PATH) -> dict[str, Any]:
+        payload = original_load_payload(path)
+        tracking_report.clear()
+        quality_gate = payload.get("qualityGate", {})
+        report = (
+            quality_gate.get("trackingQuality")
+            if isinstance(quality_gate, dict)
+            else None
+        )
+        if isinstance(report, dict):
+            tracking_report.update(report)
+        return payload
+
+    def evaluate_quality(
+        articles: list[dict[str, Any]],
+        source_status: list[dict[str, Any]],
+        settings: dict[str, Any],
+    ) -> dict[str, Any]:
+        quality = original_evaluate_quality(articles, source_status, settings)
+        if tracking_report:
+            quality["trackingQuality"] = dict(tracking_report)
+        return quality
+
+    setattr(evaluate_quality, "_preserves_tracking_quality", True)
+    official.load_existing_payload = load_existing_payload
+    official.evaluate_quality = evaluate_quality
+
+
 def main() -> int:
     install_transport()
+    install_quality_preservation()
     return category_crawler.main()
 
 
