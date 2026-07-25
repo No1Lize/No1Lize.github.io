@@ -9,6 +9,12 @@ import {
 import { companies, ipoCompanies } from "@/lib/catalog-data";
 import { sourceBrandKey } from "@/lib/source-brand";
 import {
+  DISMISSAL_EVENT,
+  dismissTrackingRecommendation,
+  hydrateTrackingRecommendationDismissals,
+  isRecommendationDismissed,
+} from "@/lib/tracking-recommendation-dismissal";
+import {
   recommendListedCompanies,
   type ListedCompanyRecommendation,
 } from "@/lib/tracking-listed-recommendations";
@@ -182,6 +188,7 @@ function mergeSources(
 export function TrackingAdminModuleRecommendations() {
   const { articles } = useArticles();
   const [mounted, setMounted] = useState(false);
+  const [dismissalVersion, setDismissalVersion] = useState(0);
   const [snapshot, setSnapshot] = useState<Snapshot>({
     sector: "",
     listedKeys: [],
@@ -214,27 +221,35 @@ export function TrackingAdminModuleRecommendations() {
         }
       });
     };
+    const refreshDismissals = () => setDismissalVersion((value) => value + 1);
     const observer = new MutationObserver(refresh);
     observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    window.addEventListener(DISMISSAL_EVENT, refreshDismissals);
+    void hydrateTrackingRecommendationDismissals();
     refresh();
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      window.removeEventListener(DISMISSAL_EVENT, refreshDismissals);
     };
   }, []);
 
-  const listedRecommendations = useMemo(
-    () =>
-      snapshot.sector
-        ? recommendListedCompanies(
-            articles,
-            snapshot.sector,
-            ipoCompanies,
-            existingListedCompanies(snapshot.listedKeys),
-          )
-        : [],
-    [articles, snapshot.listedKeys, snapshot.sector],
-  );
+  const listedRecommendations = useMemo(() => {
+    if (!snapshot.sector) return [];
+    return recommendListedCompanies(
+      articles,
+      snapshot.sector,
+      ipoCompanies,
+      existingListedCompanies(snapshot.listedKeys),
+    ).filter(
+      (item) =>
+        !isRecommendationDismissed(
+          snapshot.sector,
+          "listedCompanies",
+          item.value,
+        ),
+    );
+  }, [articles, dismissalVersion, snapshot.listedKeys, snapshot.sector]);
 
   const sourceRecommendations = useMemo(() => {
     if (!snapshot.sector) return [];
@@ -245,8 +260,11 @@ export function TrackingAdminModuleRecommendations() {
       discovered,
       fallbackSourceRecommendations(snapshot.sector, snapshot.sourceUrls),
       snapshot.sourceUrls,
+    ).filter(
+      (item) =>
+        !isRecommendationDismissed(snapshot.sector, "sources", item.value),
     );
-  }, [articles, snapshot.sector, snapshot.sourceUrls]);
+  }, [articles, dismissalVersion, snapshot.sector, snapshot.sourceUrls]);
 
   async function addListed(item: ListedCompanyRecommendation) {
     const section = sectionByTitle(LISTED_TITLE);
@@ -315,6 +333,13 @@ export function TrackingAdminModuleRecommendations() {
           title="推荐上市公司"
           items={listedRecommendations}
           onAdd={addListed}
+          onDismiss={(item) =>
+            dismissTrackingRecommendation(
+              snapshot.sector,
+              "listedCompanies",
+              item.value,
+            )
+          }
         />,
         listedHost,
       )}
@@ -323,6 +348,9 @@ export function TrackingAdminModuleRecommendations() {
           title="推荐信息源"
           items={sourceRecommendations as (TrackingSourceRecommendation & AdminRecommendationItem)[]}
           onAdd={addSource}
+          onDismiss={(item) =>
+            dismissTrackingRecommendation(snapshot.sector, "sources", item.value)
+          }
         />,
         sourceHostElement,
       )}
