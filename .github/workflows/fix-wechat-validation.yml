@@ -1,0 +1,68 @@
+name: One-time fix WeChat intelligence validation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-wechat-validation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply exact fixes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          module = Path('tools/wechat_public_sources.py')
+          text = module.read_text(encoding='utf-8')
+          old = '    return _unique(value for value in values if _contains_phrase(text, value, crawler), 40)'
+          new = '''    return _unique(\n        (value for value in values if _contains_phrase(text, value, crawler)),\n        40,\n    )'''
+          if old not in text:
+              raise SystemExit('WeChat generator anchor not found')
+          module.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          venture = Path('lib/venture-profile-data.ts')
+          text = venture.read_text(encoding='utf-8')
+          old = '  level: "官方披露" | "监管文件" | "媒体报道" | "数据库记录" | "待交叉验证";'
+          new = '  level: "官方披露" | "原始材料" | "监管文件" | "媒体报道" | "数据库记录" | "待交叉验证";'
+          if old not in text:
+              raise SystemExit('VentureSource level anchor not found')
+          text = text.replace(old, new, 1)
+          old = '''const VALID_SOURCE_LEVELS = new Set([\n  "官方披露",\n  "监管文件",'''
+          new = '''const VALID_SOURCE_LEVELS = new Set([\n  "官方披露",\n  "原始材料",\n  "监管文件",'''
+          if old not in text:
+              raise SystemExit('Venture source whitelist anchor not found')
+          venture.write_text(text.replace(old, new, 1), encoding='utf-8')
+          PY
+      - name: Verify all crawler and frontend checks
+        run: |
+          python -m py_compile tools/wechat_public_sources.py tools/crawl_with_source_categories.py
+          python -m unittest tests.test_wechat_public_sources
+          python -m unittest discover -s tests -p "test_*.py"
+          npm install
+          npx tsc --noEmit
+      - name: Commit verified fixes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/wechat_public_sources.py lib/venture-profile-data.ts
+          git commit -m "fix: validate WeChat entity crawler and original sources"
+          git pull --rebase origin main
+          git push origin HEAD:main
