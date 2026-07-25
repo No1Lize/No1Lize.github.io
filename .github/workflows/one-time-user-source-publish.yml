@@ -17,7 +17,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,41 +32,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          git pull --ff-only origin main
           REPORT="diagnostics/one-time-user-source-publish.txt"
-          mkdir -p diagnostics
-
-          {
-            echo "commit=$(git rev-parse HEAD)"
-            echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            echo
-            echo "===== crawl_user_sources ====="
-            python tools/crawl_with_source_categories.py --source feeds
-            echo
-            echo "===== migrate ====="
-            python tools/migrate_article_entities.py
-            echo
-            echo "===== refine_eastmoney ====="
-            python tools/refine_eastmoney_snapshot.py
-            echo
-            echo "===== enrich_tracking ====="
-            python tools/enrich_tracking_snapshot.py
-            echo
-            echo "===== validate_quality ====="
-            python tools/crawl_articles.py --validate-only
-            echo
-            echo "===== validate_eastmoney ====="
-            python tools/validate_eastmoney_snapshot.py
-            echo
-            echo "===== validate_user_source_coverage ====="
-            python tools/validate_user_source_coverage.py
-            echo
-            echo "===== full_unittest ====="
-            python -m unittest discover -s tests -p "test_*.py"
-            echo
-            echo "===== snapshot ====="
-            python -c 'import json; from pathlib import Path; p=json.loads(Path("public/data/articles.json").read_text(encoding="utf-8")); q=p.get("qualityGate",{}).get("checks",{}); s=[x for x in p.get("sourceStatus",[]) if str(x.get("id","")).startswith("user-source-")]; print(json.dumps({"generatedAt":p.get("generatedAt"),"articleCount":p.get("articleCount"),"minimumArticlesActual":q.get("minimumArticles",{}).get("actual"),"uniqueUrlsActual":q.get("uniqueUrls",{}).get("actual"),"uniqueUrlsRequired":q.get("uniqueUrls",{}).get("required"),"userSourceStatuses":len(s),"productiveUserSources":sum(int(x.get("accepted",0) or 0)>0 or int(x.get("discoveredAccepted",0) or 0)>0 for x in s)},ensure_ascii=False,indent=2))'
-          } 2>&1 | tee "$REPORT"
 
           publish_file() {
             local repo_path="$1"
@@ -91,10 +57,76 @@ jobs:
             return 1
           }
 
-          publish_file \
-            "public/data/articles.json" \
-            "public/data/articles.json" \
-            "data: publish current user source snapshot"
+          run_pipeline() {
+            mkdir -p diagnostics
+            rm -f "$REPORT"
+            {
+              echo "commit=$(git rev-parse HEAD)"
+              echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              echo "tracking_blob=$(git hash-object config/user_tracking.json)"
+              echo
+              echo "===== crawl_user_sources ====="
+              python tools/crawl_with_source_categories.py --source feeds
+              echo
+              echo "===== migrate ====="
+              python tools/migrate_article_entities.py
+              echo
+              echo "===== refine_eastmoney ====="
+              python tools/refine_eastmoney_snapshot.py
+              echo
+              echo "===== enrich_tracking ====="
+              python tools/enrich_tracking_snapshot.py
+              echo
+              echo "===== validate_quality ====="
+              python tools/crawl_articles.py --validate-only
+              echo
+              echo "===== validate_eastmoney ====="
+              python tools/validate_eastmoney_snapshot.py
+              echo
+              echo "===== validate_user_source_coverage ====="
+              python tools/validate_user_source_coverage.py
+              echo
+              echo "===== full_unittest ====="
+              python -m unittest discover -s tests -p "test_*.py"
+              echo
+              echo "===== snapshot ====="
+              python -c 'import json; from pathlib import Path; p=json.loads(Path("public/data/articles.json").read_text(encoding="utf-8")); q=p.get("qualityGate",{}).get("checks",{}); s=[x for x in p.get("sourceStatus",[]) if str(x.get("id","")).startswith("user-source-")]; print(json.dumps({"generatedAt":p.get("generatedAt"),"articleCount":p.get("articleCount"),"minimumArticlesActual":q.get("minimumArticles",{}).get("actual"),"uniqueUrlsActual":q.get("uniqueUrls",{}).get("actual"),"uniqueUrlsRequired":q.get("uniqueUrls",{}).get("required"),"userSourceStatuses":len(s),"productiveUserSources":sum(int(x.get("accepted",0) or 0)>0 or int(x.get("discoveredAccepted",0) or 0)>0 for x in s),"trackingConfigHash":p.get("trackingConfigHash")},ensure_ascii=False,indent=2))'
+            } 2>&1 | tee "$REPORT"
+          }
+
+          published=0
+          for config_attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            local_config_sha="$(git hash-object config/user_tracking.json)"
+            run_pipeline
+            remote_config_sha="$(gh api "repos/${GITHUB_REPOSITORY}/contents/config/user_tracking.json" --jq .sha)"
+
+            if [ "$local_config_sha" != "$remote_config_sha" ]; then
+              echo "Tracking config changed during crawl; retrying with latest main." | tee -a "$REPORT"
+              continue
+            fi
+
+            publish_file \
+              "public/data/articles.json" \
+              "public/data/articles.json" \
+              "data: publish current user source snapshot"
+
+            post_publish_config_sha="$(gh api "repos/${GITHUB_REPOSITORY}/contents/config/user_tracking.json" --jq .sha)"
+            if [ "$local_config_sha" != "$post_publish_config_sha" ]; then
+              echo "Tracking config changed during data commit; regenerating before Pages deployment." | tee -a "$REPORT"
+              continue
+            fi
+
+            published=1
+            break
+          done
+
+          if [ "$published" -ne 1 ]; then
+            echo "Tracking config did not remain stable long enough to publish." >&2
+            exit 1
+          fi
+
           publish_file \
             "diagnostics/one-time-user-source-publish.txt" \
             "$REPORT" \
