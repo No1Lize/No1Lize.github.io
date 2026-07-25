@@ -33,22 +33,26 @@ jobs:
         shell: bash
         run: |
           set +e
-          python -m unittest tests.test_market_profiles
+          mkdir -p .github/diagnostics
+          python -m unittest tests.test_market_profiles > .github/diagnostics/market-tests.log 2>&1
           MARKET_TESTS=$?
-          python -m unittest discover -s tests -p "test_*.py"
+          python -m unittest discover -s tests -p "test_*.py" > .github/diagnostics/python-tests.log 2>&1
           PYTHON_TESTS=$?
-          npm install
+          npm install > .github/diagnostics/npm-install.log 2>&1
           NPM_INSTALL=$?
           if [ "$NPM_INSTALL" -eq 0 ]; then
-            npm run test:unit
+            npm run test:unit > .github/diagnostics/unit-tests.log 2>&1
             UNIT_TESTS=$?
-            npm run build:pages
+            npm run build:pages > .github/diagnostics/pages-build-full.log 2>&1
             PAGES_BUILD=$?
+            tail -n 180 .github/diagnostics/pages-build-full.log > .github/diagnostics/pages-build.log
+            rm .github/diagnostics/pages-build-full.log
           else
             UNIT_TESTS=125
             PAGES_BUILD=125
+            printf 'npm install failed\n' > .github/diagnostics/unit-tests.log
+            printf 'npm install failed\n' > .github/diagnostics/pages-build.log
           fi
-          mkdir -p .github/diagnostics
           cat > .github/diagnostics/market-profile-validation.json <<EOF
           {
             "marketProfileTests": $MARKET_TESTS,
@@ -70,7 +74,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .github/diagnostics/market-profile-validation.json
+          git add .github/diagnostics
           if git diff --cached --quiet; then
             exit 0
           fi
