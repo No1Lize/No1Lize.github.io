@@ -10,6 +10,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_public_sources
     from . import wechat_registry_bridge
     from . import wechat_sogou_bridge
+    from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_with_source_categories as base
     import wechat_index_context_guard
@@ -17,6 +18,33 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_public_sources
     import wechat_registry_bridge
     import wechat_sogou_bridge
+    import wechat_snapshot_quality
+
+
+def _install_snapshot_quality() -> None:
+    original = base.tracking.crawler.replace_source_batches
+    if getattr(original, "_wechat_snapshot_quality", False):
+        return
+
+    def replace_source_batches(existing, incoming, statuses):
+        wechat_rows = [
+            article
+            for article in incoming
+            if article.get("source", {}).get("platform") == "微信"
+        ]
+        other_rows = [
+            article
+            for article in incoming
+            if article.get("source", {}).get("platform") != "微信"
+        ]
+        resolved = wechat_snapshot_quality.resolve_cross_sector_articles(
+            wechat_rows,
+            base.tracking.load_tracking(),
+        )
+        return original(existing, [*other_rows, *resolved], statuses)
+
+    setattr(replace_source_batches, "_wechat_snapshot_quality", True)
+    base.tracking.crawler.replace_source_batches = replace_source_batches
 
 
 def main() -> int:
@@ -27,6 +55,7 @@ def main() -> int:
         wechat_registry_bridge,
     )
     wechat_sogou_bridge.install(wechat_public_sources)
+    _install_snapshot_quality()
     return base.main()
 
 
