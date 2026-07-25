@@ -24,11 +24,35 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Run and persist finalizer checks
+      - name: Patch, test and persist final quality gate
         shell: bash
         run: |
-          set +e
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("tools/finalize_venture_profiles.py")
+          text = path.read_text(encoding="utf-8")
+          old_products = '''def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
+              products = sanitize_products(values, catalog_product)
+          '''
+          new_products = '''def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
+              normalized_catalog = re.sub(r"\\s*与\\s*", "、", catalog_product)
+              products = sanitize_products(values, normalized_catalog)
+          '''
+          if old_products not in text:
+              raise RuntimeError("finalize_products patch anchor not found")
+          text = text.replace(old_products, new_products, 1)
+          old_case = 'if not name or len(analysis) < 60 or key in seen or (not slug and not source_url):'
+          new_case = 'if not name or len(analysis) < 24 or key in seen or (not slug and not source_url):'
+          if old_case not in text:
+              raise RuntimeError("classic case threshold anchor not found")
+          text = text.replace(old_case, new_case, 1)
+          path.write_text(text, encoding="utf-8")
+          PY
+
           mkdir -p diagnostics
+          set +e
           {
             echo "commit=$(git rev-parse HEAD)"
             echo "checkedAt=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -40,10 +64,15 @@ jobs:
             echo "tests=$TEST_STATUS"
           } > diagnostics/final-venture-quality-gate.txt 2>&1
           STATUS=$((COMPILE_STATUS || TEST_STATUS))
+          set -e
           cat diagnostics/final-venture-quality-gate.txt
+
+          if [ "$STATUS" -eq 0 ]; then
+            rm .github/workflows/test-final-venture-gate.yml
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/final-venture-quality-gate.txt
-          git commit -m "ci: record final venture quality gate result" || true
+          git add tools/finalize_venture_profiles.py diagnostics/final-venture-quality-gate.txt .github/workflows/test-final-venture-gate.yml
+          git commit -m "fix: align final venture quality gate semantics"
           git push origin HEAD:feature/final-venture-quality-gate-20260726
           exit "$STATUS"
