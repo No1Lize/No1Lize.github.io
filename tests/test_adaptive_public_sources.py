@@ -52,6 +52,8 @@ class FakeRobust:
                 "id": "yahoo-article",
                 "sourceId": spec["id"],
                 "title": "人工智慧新創完成融資",
+                "publishedAt": "2026-07-25",
+                "importance": 80,
                 "source": {
                     "url": "https://tw.news.yahoo.com/ai-funding-20260725.html",
                     "name": "Yahoo奇摩",
@@ -73,6 +75,17 @@ class FakeRobust:
         }
 
 
+def article(article_id: str, url: str, day: str) -> dict:
+    return {
+        "id": article_id,
+        "sourceId": "user-source-example",
+        "title": article_id,
+        "publishedAt": day,
+        "importance": 70,
+        "source": {"url": url, "name": "Example"},
+    }
+
+
 class AdaptivePublicSourceTests(unittest.TestCase):
     def test_yahoo_consent_parameters_are_removed(self) -> None:
         self.assertEqual(
@@ -88,6 +101,15 @@ class AdaptivePublicSourceTests(unittest.TestCase):
                 "https://example.com/list?p=2&from=archive&utm_source=test"
             ),
             "https://example.com/list?from=archive&p=2",
+        )
+
+    def test_unknown_deep_url_adds_root_entry(self) -> None:
+        self.assertEqual(
+            adaptive.source_seed_urls("https://example.com/research/archive?p=2"),
+            [
+                "https://example.com/research/archive?p=2",
+                "https://example.com/",
+            ],
         )
 
     def test_yahoo_profile_adds_regional_public_entries(self) -> None:
@@ -142,6 +164,53 @@ class AdaptivePublicSourceTests(unittest.TestCase):
         self.assertEqual(status["accepted"], 1)
         self.assertIn("structured-data", status["strategies"])
         self.assertEqual(status["canonicalSourceUrl"], "https://tw.yahoo.com/")
+        self.assertEqual(status["historyLimit"], adaptive.DEFAULT_HISTORY_LIMIT)
+
+    def test_successful_adaptive_batch_keeps_bounded_history(self) -> None:
+        existing = [
+            article("old-1", "https://example.com/news/old-1", "2026-07-23"),
+            article("old-2", "https://example.com/news/old-2", "2026-07-24"),
+        ]
+        incoming = [
+            article("new-1", "https://example.com/news/new-1", "2026-07-25"),
+            article("new-2", "https://example.com/news/old-2", "2026-07-25"),
+        ]
+        status = {
+            "id": "user-source-example",
+            "status": "ok",
+            "accepted": 2,
+            "adapter": "adaptive-public-v1",
+            "historyLimit": 3,
+        }
+
+        merged = adaptive.merge_adaptive_history(
+            existing,
+            incoming,
+            [status],
+            FakeCrawler(),
+        )
+
+        self.assertEqual(
+            [item["id"] for item in merged],
+            ["new-2", "new-1", "old-1"],
+        )
+        self.assertEqual(status["newAccepted"], 2)
+        self.assertEqual(status["accepted"], 3)
+        self.assertEqual(status["retainedPreviousCount"], 1)
+        self.assertTrue(status["retainedPrevious"])
+
+    def test_failed_adaptive_batch_does_not_replace_history(self) -> None:
+        incoming = [article("other", "https://other.example/news/1", "2026-07-25")]
+        status = {
+            "id": "user-source-example",
+            "status": "error",
+            "accepted": 0,
+            "adapter": "adaptive-public-v1",
+        }
+        self.assertEqual(
+            adaptive.merge_adaptive_history([], incoming, [status], FakeCrawler()),
+            incoming,
+        )
 
 
 if __name__ == "__main__":
