@@ -62,12 +62,34 @@ jobs:
           fi
           exit "$status"
       - name: Regenerate terminal venture snapshot
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
         run: |
-          python tools/stabilize_venture_profiles.py
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
-          git diff --check
+          set +e
+          mkdir -p diagnostics
+          {
+            echo '=== stabilize ==='
+            python tools/stabilize_venture_profiles.py
+            echo '=== stabilize check ==='
+            python tools/stabilize_venture_profiles.py --check
+            echo '=== finalizer check ==='
+            python tools/finalize_venture_profiles.py --check
+            echo '=== semantics check ==='
+            python tools/enforce_venture_entity_semantics.py --check
+            echo '=== diff check ==='
+            git diff --check
+          } > diagnostics/venture-entity-label-regeneration.txt 2>&1
+          status=$?
+          cat diagnostics/venture-entity-label-regeneration.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-entity-label-regeneration.txt
+            git commit -m "ci: record venture snapshot regeneration failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
       - name: Commit validated fix to PR branch
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
