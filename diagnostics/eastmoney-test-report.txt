@@ -1,9 +1,95 @@
-commit=379faf37f5ac813f4f72e682d3394f41af089b00
-generated_at=2026-07-25T05:36:44Z
+commit=78ee1d5cec88f16ef0f706e6bf6fd89bf3f1e00f
+generated_at=2026-07-25T05:39:34Z
+exit_code=1
+
+===== migrate =====
+{"clearedFakeCompanies": 0, "recoveredSpecializedStatuses": 1, "relabelledSources": 7, "removedFakeCompanySlugs": 0, "removedLegacyStatuses": 0, "removedNonArticles": 0}
 exit_code=0
 
-.......................................................
-----------------------------------------------------------------------
-Ran 55 tests in 0.019s
+===== refine =====
+{"eastmoneySeen": 7, "eastmoneyKept": 7, "eastmoneyNewKept": 0, "eastmoneyRetainedKept": 0, "removedRoundups": [], "removedUnrelated": []}
+exit_code=0
 
-OK
+===== quality_validate =====
+{"passed": true, "checks": {"minimumArticles": {"actual": 432, "required": 50, "passed": true}, "minimumHealthySources": {"actual": 71, "required": 6, "passed": true}, "minimumRegions": {"actual": 3, "required": 2, "passed": true}, "minimumSourceLevels": {"actual": 5, "required": 3, "passed": true}, "minimumPlatforms": {"actual": 13, "required": 4, "passed": true}, "minimumEventTypes": {"actual": 11, "required": 6, "passed": true}, "minimumChinaArticles": {"actual": 117, "required": 8, "passed": true}, "minimumUsArticles": {"actual": 270, "required": 20, "passed": true}, "maximumSingleSourceShare": {"actual": 0.1343, "required": 0.45, "passed": true}, "invalidArticles": {"actual": 0, "required": 0, "passed": true}, "uniqueUrls": {"actual": 432, "required": 432, "passed": true}}, "invalidArticles": []}
+exit_code=0
+
+===== eastmoney_validate =====
+{
+  "enabled": true,
+  "attempted": true,
+  "attemptStatusCount": 1,
+  "detailStatusCount": 1,
+  "acceptedByCrawler": 7,
+  "eastmoneyRecords": 7,
+  "detailArticles": 7,
+  "detailSourceIds": [
+    "official-user-东方财富"
+  ],
+  "missingDetailStatusIds": [],
+  "attributedArticles": 1,
+  "companies": [
+    "月之暗面"
+  ],
+  "badUrls": [],
+  "genericDuplicates": [],
+  "mediaAsCompany": [],
+  "leakedInternalFields": [],
+  "accountingErrors": [],
+  "errors": []
+}
+exit_code=0
+
+===== full_unittest =====
+...........official=two fatal=RuntimeError: blocked
+...........................................................................F................
+======================================================================
+FAIL: test_migration_removes_profile_pages_and_fake_company_links (test_source_categories.LegacyEntityMigrationTests.test_migration_removes_profile_pages_and_fake_company_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_source_categories.py", line 209, in test_migration_removes_profile_pages_and_fake_company_links
+    self.assertEqual(migrated["sourceStatus"], [])
+AssertionError: Lists differ: [{'id': 'official-user-投资界', 'status': 'ok'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'id': 'official-user-投资界', 'status': 'ok'}
+
+- [{'id': 'official-user-投资界', 'status': 'ok'}]
++ []
+
+----------------------------------------------------------------------
+Ran 103 tests in 0.042s
+
+FAILED (failures=1)
+No snapshot changes (1 articles).
+exit_code=1
+
+===== final_snapshot_summary =====
+{
+  "generatedAt": "2026-07-25T05:39:31+00:00",
+  "articleCount": 432,
+  "eastmoneyDetailCount": 7,
+  "internalMarkerCount": 0,
+  "eastmoneyStatuses": [
+    {
+      "id": "official-user-东方财富",
+      "name": "东方财富 专用详情",
+      "company": "东方财富",
+      "coverage": "retained",
+      "status": "partial",
+      "accepted": 7,
+      "scanned": 7,
+      "failed": 0,
+      "platform": "东方财富",
+      "sourceCategory": "media",
+      "newAccepted": 0,
+      "retainedPrevious": true,
+      "retainedPreviousCount": 7,
+      "recoveredStatus": true,
+      "error": "Recovered from surviving detail articles after a legacy status migration"
+    }
+  ],
+  "qualityPassed": true
+}
+exit_code=0
