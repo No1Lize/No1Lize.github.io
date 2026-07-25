@@ -24,6 +24,15 @@ const eventTypeSchema = z.enum([
   "人物观点",
 ]);
 
+const relatedSourceSchema = z.object({
+  name: z.string(),
+  url: z.url(),
+  level: z.string(),
+  platform: z.string(),
+  title: z.string(),
+  publishedAt: z.string(),
+});
+
 const articleSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -53,6 +62,12 @@ const articleSchema = z.object({
     platform: z.string().optional(),
   }),
   curated: z.boolean().optional(),
+  qualityScore: z.number().min(0).max(100).optional(),
+  qualityStatus: z.enum(["高可信", "可用", "低可信"]).optional(),
+  qualitySignals: z.array(z.string()).optional(),
+  relatedSources: z.array(relatedSourceSchema).optional(),
+  duplicateCount: z.number().int().nonnegative().optional(),
+  eventClusterId: z.string().optional(),
 });
 
 const payloadSchema = z.object({
@@ -82,6 +97,13 @@ const payloadSchema = z.object({
       id: z.string(),
       errors: z.array(z.string()),
     })).optional(),
+    trackingQuality: z.object({
+      scoredUserArticles: z.number().int().nonnegative(),
+      acceptedUserArticles: z.number().int().nonnegative(),
+      rejectedUserArticles: z.number().int().nonnegative(),
+      clusteredDuplicates: z.number().int().nonnegative(),
+      minimumScore: z.number().min(0).max(100),
+    }).optional(),
   }).optional(),
 });
 
