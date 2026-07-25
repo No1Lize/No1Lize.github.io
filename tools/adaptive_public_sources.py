@@ -3,12 +3,12 @@
 
 Every public website enters the same pipeline. Site differences are represented
 as small profiles that provide canonical URLs, additional public entry points,
-request headers and decoding candidates. Profiles do not own separate crawler
-implementations; candidate discovery, article parsing, filtering and quality
-control remain in the shared generic/robust stages.
+request headers, decoding candidates and optional public search templates.
+Profiles do not own separate crawler implementations; candidate discovery,
+article parsing, filtering and quality control remain in the shared stages.
 
 Some sites need a stricter publisher after common discovery. Those profiles use
-an explicit handoff: the adaptive pipeline still probes every public surface and
+an explicit handoff: the adaptive pipeline still probes public surfaces and
 records diagnostics, while one downstream plugin owns the published article
 batch. This prevents duplicate source identities without bypassing the shared
 adapter.
@@ -24,9 +24,9 @@ import html
 import re
 import time
 from dataclasses import dataclass
-from typing import Any, Iterable
+from typing import Any, Iterable, Sequence
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+from urllib.parse import parse_qsl, quote_plus, urlencode, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
 
 
@@ -48,7 +48,6 @@ YAHOO_VOLATILE_QUERY_KEYS = {
     "ncid",
     "fr",
     "from",
-    "p",
 }
 CHARSET_PATTERN = re.compile(
     br"charset\s*=\s*[\"']?\s*([a-zA-Z0-9._-]+)",
@@ -63,6 +62,7 @@ class SourceProfile:
     default_language: str = ""
     encodings: tuple[str, ...] = ("utf-8",)
     accept_language: str = "zh-CN,zh;q=0.9,en;q=0.6"
+    native_search_templates: tuple[str, ...] = ()
     publisher_handoff: str = ""
     handoff_status_id: str = ""
 
@@ -83,6 +83,7 @@ PROFILES = (
         default_language="zh-Hant",
         encodings=("utf-8", "big5", "cp950"),
         accept_language="zh-TW,zh-Hant;q=0.9,en-US;q=0.7,en;q=0.5",
+        native_search_templates=("https://tw.news.yahoo.com/search?p={query}",),
     ),
     SourceProfile(
         id="yahoo-sg",
@@ -90,6 +91,7 @@ PROFILES = (
         default_language="en",
         encodings=("utf-8",),
         accept_language="en-SG,en;q=0.9,zh-TW;q=0.5",
+        native_search_templates=("https://sg.news.yahoo.com/search?p={query}",),
     ),
 )
 DEFAULT_PROFILE = SourceProfile(id="default", host_suffixes=())
@@ -113,23 +115,43 @@ def profile_for(url: str) -> SourceProfile:
     return DEFAULT_PROFILE
 
 
+def _drop_query_parameter(
+    profile: SourceProfile,
+    path: str,
+    key: str,
+    value: str,
+) -> bool:
+    folded_key = key.casefold()
+    if folded_key.startswith("utm_"):
+        return True
+    if not profile.id.startswith("yahoo-"):
+        return False
+    if folded_key in YAHOO_VOLATILE_QUERY_KEYS:
+        return True
+    if (
+        folded_key == "p"
+        and path in {"", "/"}
+        and value.casefold() in {"", "us", "tw", "home"}
+    ):
+        return True
+    return False
+
+
 def canonical_source_url(url: str) -> str:
-    """Remove tracking noise without breaking unknown-site route parameters."""
+    """Remove tracking noise without breaking meaningful route/search parameters."""
 
     parts = urlsplit(html.unescape(str(url or "")).strip())
     if parts.scheme.casefold() not in {"http", "https"} or not parts.netloc:
         return str(url or "").strip()
     profile = profile_for(url)
-    removable = YAHOO_VOLATILE_QUERY_KEYS if profile.id.startswith("yahoo-") else set()
+    path = parts.path or "/"
     query = urlencode(
         sorted(
             (key, value)
             for key, value in parse_qsl(parts.query, keep_blank_values=True)
-            if key.casefold() not in removable
-            and not key.casefold().startswith("utm_")
+            if not _drop_query_parameter(profile, path, key, value)
         )
     )
-    path = parts.path or "/"
     if path in {"/default.html", "/index.html", "/index.htm"}:
         path = "/"
     return urlunsplit(
@@ -148,6 +170,20 @@ def _origin_url(url: str) -> str:
     if parts.scheme not in {"http", "https"} or not parts.netloc:
         return ""
     return urlunsplit((parts.scheme, parts.netloc, "/", "", ""))
+
+
+def _unique_urls(values: Iterable[str], limit: int = 12) -> list[str]:
+    result: list[str] = []
+    seen: set[str] = set()
+    for raw in values:
+        normalized = canonical_source_url(raw)
+        if not normalized or normalized in seen:
+            continue
+        result.append(normalized)
+        seen.add(normalized)
+        if len(result) >= limit:
+            break
+    return result
 
 
 def source_seed_urls(url: str) -> list[str]:
@@ -184,15 +220,37 @@ def source_seed_urls(url: str) -> list[str]:
                 "https://fund.eastmoney.com/",
             )
         )
+    return _unique_urls(seeds, 6)
 
-    result: list[str] = []
-    seen: set[str] = set()
-    for seed in seeds:
-        normalized = canonical_source_url(seed)
-        if normalized and normalized not in seen:
-            result.append(normalized)
-            seen.add(normalized)
-    return result[:6]
+
+def _preferred_search_term(keywords: Sequence[str]) -> str:
+    values = [re.sub(r"\s+", " ", str(term or "")).strip() for term in keywords]
+    values = [value for value in values if value]
+    for value in values:
+        folded = value.casefold()
+        if folded in {"ai", "ai / agi", "artificial intelligence", "人工智能", "人工智慧"}:
+            return "AI"
+    for value in values:
+        if (
+            2 <= len(value) <= 40
+            and not value.startswith(("http://", "https://"))
+            and not re.search(r"\b(?:AND|OR|NOT)\b|site:", value, flags=re.IGNORECASE)
+        ):
+            return value
+    return "technology"
+
+
+def native_search_seed_urls(url: str, keywords: Sequence[str]) -> list[str]:
+    """Build profile-defined public search pages without site-specific crawlers."""
+
+    profile = profile_for(url)
+    if not profile.native_search_templates:
+        return []
+    query = quote_plus(_preferred_search_term(keywords))
+    return _unique_urls(
+        (template.format(query=query) for template in profile.native_search_templates),
+        4,
+    )
 
 
 def _normalize_charset(value: str | None) -> str:
@@ -421,16 +479,24 @@ def crawl_adaptive_source(
     all_items: list[dict[str, Any]] = []
     statuses: list[dict[str, Any]] = []
     strategies: list[str] = []
-    seeds = source_seed_urls(canonical)[:seed_limit]
+    language = str(spec.get("sourceLanguage") or profile.default_language)
+    localized_keywords = generic.localize_keywords(spec.get("keywords", []), language)
+    profile_search_seeds = native_search_seed_urls(canonical, localized_keywords)
+    configured_seeds = _unique_urls(
+        [*profile_search_seeds, *source_seed_urls(canonical)],
+        seed_limit,
+    )
+    attempted_seeds: list[str] = []
 
-    for seed in seeds:
+    for seed in configured_seeds:
         if len(_dedupe_articles(all_items, crawler)) >= useful_yield:
             break
+        attempted_seeds.append(seed)
         seed_spec = {
             **spec,
             "url": seed,
             "sourceUrl": seed,
-            "sourceLanguage": spec.get("sourceLanguage") or profile.default_language,
+            "sourceLanguage": language,
             "maxItems": seed_max_items,
         }
         items, status = robust.crawl_with_second_stage(
@@ -480,7 +546,9 @@ def crawl_adaptive_source(
             "adapter": "adaptive-public-v1",
             "profile": profile.id,
             "canonicalSourceUrl": canonical,
-            "attemptedSeeds": seeds,
+            "configuredSeeds": configured_seeds,
+            "attemptedSeeds": attempted_seeds,
+            "nativeSearchSeeds": profile_search_seeds,
             "strategies": strategies,
             "historyLimit": max(DEFAULT_HISTORY_LIMIT, max_items),
             "requestBudget": {
