@@ -1,0 +1,50 @@
+name: One-time verify persistent recommendation dismissals
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-persistent-recommendation-dismissals.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Verify
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          npm install > /tmp/dismissal-verify.log 2>&1
+          INSTALL_STATUS=$?
+          if [ "$INSTALL_STATUS" -eq 0 ]; then
+            npm run test:unit >> /tmp/dismissal-verify.log 2>&1
+            TEST_STATUS=$?
+            npx tsc --noEmit >> /tmp/dismissal-verify.log 2>&1
+            TYPE_STATUS=$?
+          else
+            TEST_STATUS=99
+            TYPE_STATUS=99
+          fi
+          printf '{\n  "installStatus": %s,\n  "testStatus": %s,\n  "typeStatus": %s,\n  "passed": %s,\n  "logTail": %s\n}\n' \
+            "$INSTALL_STATUS" "$TEST_STATUS" "$TYPE_STATUS" \
+            "$([ "$INSTALL_STATUS" -eq 0 ] && [ "$TEST_STATUS" -eq 0 ] && [ "$TYPE_STATUS" -eq 0 ] && echo true || echo false)" \
+            "$(tail -n 200 /tmp/dismissal-verify.log | python -c 'import json,sys; print(json.dumps(sys.stdin.read().splitlines(), ensure_ascii=False))')" \
+            > diagnostics/persistent-recommendation-dismissals.json
+      - name: Commit diagnostic
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/persistent-recommendation-dismissals.json
+          git commit -m "ci: record persistent dismissal verification"
+          git pull --rebase origin main
+          git push origin HEAD:main
