@@ -27,10 +27,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Run full venture validation and record report
+      - name: Run production venture pipeline and record report
         shell: bash
         run: |
-          # stability-validation-v3
+          # production-quality-gate-v1
           set +e
           mkdir -p diagnostics
           REPORT=diagnostics/venture-research-validation.txt
@@ -49,9 +49,14 @@ jobs:
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py \
-            tools/normalize_venture_profiles.py
+            tools/normalize_venture_profiles.py \
+            tools/sanitize_venture_profiles.py \
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py
           run_check enrich python tools/enrich_venture_profiles.py
           run_check normalize python tools/normalize_venture_profiles.py
+          run_check finalize python tools/finalize_venture_profiles.py
+          run_check finalizer_check python tools/finalize_venture_profiles.py --check
           run_check crawler_validate python tools/crawl_venture_profiles.py --validate-only
           run_check enrich_validate python tools/enrich_venture_profiles.py --validate-only
           run_check normalize_check python tools/normalize_venture_profiles.py --check
@@ -59,7 +64,10 @@ jobs:
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
-            tests.test_normalize_venture_profiles
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
           run_check npm_install npm install
           run_check node_tests node --import tsx --test \
             tests/venture-profile-data.test.ts \
@@ -69,6 +77,8 @@ jobs:
           import json
           from pathlib import Path
           payload = json.loads(Path("public/data/venture_profiles.json").read_text(encoding="utf-8"))
+          agibot = payload.get("companies", {}).get("agibot", {})
+          sequoia = payload.get("institutions", {}).get("sequoia-capital", {})
           print("===== final_snapshot =====")
           print(json.dumps({
               "schemaVersion": payload.get("schemaVersion"),
@@ -77,6 +87,10 @@ jobs:
               "institutions": len(payload.get("institutions", {})),
               "qualityPassed": payload.get("qualityGate", {}).get("passed"),
               "qualityChecks": payload.get("qualityGate", {}).get("checks", {}),
+              "agibotProducts": agibot.get("products", []),
+              "agibotHasProjectBackground": isinstance(agibot.get("projectBackground"), dict),
+              "sequoiaRecentYearSummary": sequoia.get("recentYearSummary", {}),
+              "sequoiaClassicCases": len(sequoia.get("classicCases", [])),
           }, ensure_ascii=False, indent=2))
           PY
           cp "$REPORT" /tmp/venture-research-validation.txt
@@ -86,6 +100,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$REPORT"
-          git commit -m "ci: record structured venture research validation"
+          git commit -m "ci: record final venture quality gate validation"
           git pull --rebase origin main
           git push origin HEAD:main
