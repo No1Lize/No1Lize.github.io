@@ -160,8 +160,120 @@ const VALID_SOURCE_LEVELS = new Set([
   "待交叉验证",
 ]);
 
+const NAVIGATION_TERMS = [
+  "products",
+  "solutions",
+  "research",
+  "policy",
+  "commitments",
+  "learn",
+  "news",
+  "insights",
+  "investments",
+  "projects",
+  "careers",
+  "contact",
+  "portfolio",
+  "companies",
+  "产品资料与下载",
+  "产品资料",
+  "数据服务",
+  "解决方案",
+  "新闻资讯",
+  "加入我们",
+  "联系我们",
+  "投资组合",
+  "被投企业",
+  "投资项目",
+] as const;
+
+const PRODUCT_NOISE_TERMS = [
+  "terms of service",
+  "data processing agreement",
+  "privacy policy",
+  "cookie policy",
+  "responsible scaling policy",
+  "press release",
+  "white paper",
+  "case study",
+  "introducing ",
+  "announcing ",
+  "k-12",
+  "careers",
+  "jobs",
+  "manual",
+  "documentation",
+  "download",
+  "support",
+  "产品手册",
+  "产品资料",
+  "资料下载",
+  "售后",
+  "用户协议",
+  "服务条款",
+  "隐私政策",
+  "数据处理协议",
+  "白皮书",
+  "大赛",
+  "赛事",
+  "峰会",
+  "论坛",
+  "发布会",
+  "展会",
+  "新闻",
+  "资讯",
+  "招聘",
+] as const;
+
+const PERSON_NAME_NOISE = [
+  "关于",
+  "新闻",
+  "资讯",
+  "生产力",
+  "营销",
+  "联席",
+  "产品",
+  "技术",
+  "公司",
+  "集团",
+  "智能",
+  "解决方案",
+  "业务",
+  "研发",
+  "服务",
+  "平台",
+  "团队",
+  "联系",
+  "加入",
+  "招聘",
+  "官网",
+  "中心",
+  "部门",
+  "事业部",
+  "办公室",
+  "委员会",
+  "研究院",
+  "高级",
+  "副总",
+  "总裁",
+  "经理",
+  "总监",
+  "主管",
+  "首席",
+  "负责人",
+  "董事会",
+] as const;
+
+const FINANCING_ACTION_RE = /\b(?:rais(?:e|ed|es|ing)|funding round|financing round|series\s+[a-z0-9]+|seed round|pre-seed|backed by|led by|investment from|invested in|secured)\b|(?:完成|获得|宣布|获).{0,28}(?:融资|投资)|(?:融资|募资|领投|跟投|战略投资|估值)/iu;
+const CAPITAL_ACTION_RE = /\b(?:ipo|listed|listing|went public|acquired|acquisition|merger|nasdaq|nyse|hkex|stock exchange)\b|(?:上市|挂牌|并购|收购|退出|退市|交易所|公开市场)/iu;
+const DATE_LIKE_RE = /\b20\d{2}[-/.]\d{1,2}(?:[-/.]\d{1,2})?\b|\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2},?\s+20\d{2}\b/iu;
+
 function clean(value: unknown, limit = 600) {
   return String(value ?? "").replace(/\s+/gu, " ").trim().slice(0, limit);
+}
+
+function compact(value: unknown) {
+  return clean(value, 1000).toLocaleLowerCase("zh-CN").replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
 }
 
 function cleanList(values: unknown, limit = 20, itemLimit = 220) {
@@ -182,6 +294,83 @@ function cleanList(values: unknown, limit = 20, itemLimit = 220) {
 function validUrl(value: unknown) {
   const text = clean(value, 1000);
   return /^https?:\/\//iu.test(text) ? text : "";
+}
+
+function looksLikeNavigation(text: string) {
+  const lowered = text.toLocaleLowerCase("zh-CN");
+  const hits = NAVIGATION_TERMS.filter((term) => lowered.includes(term.toLocaleLowerCase("zh-CN")));
+  if (/all rights reserved|cookie settings|版权所有|备案号/iu.test(text)) return true;
+  if (hits.length >= 4) return true;
+  if ((text.includes("\\") || text.includes("|") || text.includes("｜")) && hits.length >= 2) {
+    return true;
+  }
+  return text.length >= 220 && hits.length >= 3;
+}
+
+export function sanitizeVentureNarrative(value: unknown, limit = 900) {
+  const text = clean(value, 5000);
+  if (!text) return "";
+  const clauses = text
+    .split(/[。！？!?；;\n]+|(?<=\.)\s+(?=[A-Z\u3400-\u9fff])/u)
+    .map((item) => clean(item, 700).replace(/^[ .。|｜\\-]+|[ .。|｜\\-]+$/gu, ""))
+    .filter((item) => item.length >= 18 && !looksLikeNavigation(item));
+  const selected: string[] = [];
+  const seen: string[] = [];
+  let total = 0;
+  for (const clause of clauses) {
+    const key = compact(clause);
+    if (!key) continue;
+    if (
+      seen.some(
+        (previous) =>
+          previous === key ||
+          (previous.length >= 40 && key.length >= 40 && (previous.includes(key) || key.includes(previous))),
+      )
+    ) {
+      continue;
+    }
+    if (total + clause.length > limit && selected.length) continue;
+    selected.push(clause);
+    seen.push(key);
+    total += clause.length;
+    if (selected.length >= 4 || total >= limit) break;
+  }
+  if (!selected.length) return "";
+  const cjkCount = selected.join("").match(/[\u3400-\u9fff]/gu)?.length ?? 0;
+  const joined = cjkCount / Math.max(1, selected.join("").length) >= 0.18
+    ? `${selected.map((item) => item.replace(/。$/u, "")).join("。")}。`
+    : `${selected.map((item) => item.replace(/\.$/u, "")).join(". ")}.`;
+  return clean(joined, limit);
+}
+
+export function sanitizeVentureProducts(values: unknown) {
+  return cleanList(values, 30, 240).filter((item) => {
+    const lowered = item.toLocaleLowerCase("zh-CN");
+    if (item.includes("|") || item.includes("｜")) return false;
+    if (PRODUCT_NOISE_TERMS.some((term) => lowered.includes(term.toLocaleLowerCase("zh-CN")))) {
+      return false;
+    }
+    if (DATE_LIKE_RE.test(item) && /introducing|announcing|新闻|资讯|发布/iu.test(item)) {
+      return false;
+    }
+    return true;
+  }).slice(0, 16);
+}
+
+function matchesEntityAlias(name: string, aliases: string[]) {
+  const nameKey = compact(name);
+  if (nameKey.length < 2) return false;
+  return aliases.some((alias) => {
+    const aliasKey = compact(alias);
+    return aliasKey.length >= 2 && (aliasKey.includes(nameKey) || nameKey.includes(aliasKey));
+  });
+}
+
+function validPersonName(name: string) {
+  if (!name || name.length < 2 || name.length > 80 || /\d|https?:\/\/|@/u.test(name)) return false;
+  if (PERSON_NAME_NOISE.some((term) => name.includes(term))) return false;
+  if (/^[\u3400-\u9fff·]{2,6}$/u.test(name)) return true;
+  return /^[A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+){1,3}$/u.test(name);
 }
 
 function normalizeSources(values: unknown): VentureSource[] {
@@ -210,15 +399,16 @@ function normalizeSources(values: unknown): VentureSource[] {
   return result;
 }
 
-function normalizeTeam(values: unknown): VentureTeamMember[] {
+function normalizeTeam(values: unknown, aliases: string[] = []): VentureTeamMember[] {
   if (!Array.isArray(values)) return [];
   const result: VentureTeamMember[] = [];
   const seen = new Set<string>();
   for (const raw of values) {
     if (!raw || typeof raw !== "object") continue;
     const row = raw as Record<string, unknown>;
-    const name = clean(row.name, 100);
-    if (!name || seen.has(name.toLocaleLowerCase("zh-CN"))) continue;
+    const name = clean(row.name, 100).replace(/^[ ,，:：;；|｜-]+|[ ,，:：;；|｜-]+$/gu, "");
+    const key = name.toLocaleLowerCase("zh-CN");
+    if (!validPersonName(name) || matchesEntityAlias(name, aliases) || seen.has(key)) continue;
     result.push({
       name,
       role: clean(row.role, 120) || undefined,
@@ -227,13 +417,13 @@ function normalizeTeam(values: unknown): VentureTeamMember[] {
       previousExperience: clean(row.previousExperience, 360) || undefined,
       sourceUrl: validUrl(row.sourceUrl) || undefined,
     });
-    seen.add(name.toLocaleLowerCase("zh-CN"));
+    seen.add(key);
     if (result.length >= 20) break;
   }
   return result;
 }
 
-function normalizeCapitalEvents(values: unknown): VentureCapitalEvent[] {
+function normalizeCapitalEvents(values: unknown, capitalMarket = false): VentureCapitalEvent[] {
   if (!Array.isArray(values)) return [];
   const result: VentureCapitalEvent[] = [];
   const seen = new Set<string>();
@@ -242,18 +432,26 @@ function normalizeCapitalEvents(values: unknown): VentureCapitalEvent[] {
     const row = raw as Record<string, unknown>;
     const title = clean(row.title, 220);
     const summary = clean(row.summary, 520);
+    const amount = clean(row.amount, 80);
+    const round = clean(row.round, 80);
+    const sourceUrl = validUrl(row.sourceUrl);
+    const evidence = `${title} ${summary}`;
     if (!title && !summary) continue;
+    if (!sourceUrl) continue;
+    if (capitalMarket ? !CAPITAL_ACTION_RE.test(evidence) : !(amount || round || FINANCING_ACTION_RE.test(evidence))) {
+      continue;
+    }
     const key = `${clean(row.date, 20)}|${title}|${summary}`.toLocaleLowerCase("zh-CN");
     if (seen.has(key)) continue;
     result.push({
       date: clean(row.date, 20) || undefined,
-      type: clean(row.type, 60) || "资本事件",
+      type: clean(row.type, 60) || (capitalMarket ? "资本市场" : "融资"),
       title: title || summary.slice(0, 80),
       summary: summary || title,
-      amount: clean(row.amount, 80) || undefined,
-      round: clean(row.round, 80) || undefined,
+      amount: amount || undefined,
+      round: round || undefined,
       investors: cleanList(row.investors, 12, 100),
-      sourceUrl: validUrl(row.sourceUrl) || undefined,
+      sourceUrl,
     });
     seen.add(key);
     if (result.length >= 20) break;
@@ -400,15 +598,15 @@ function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProf
     name: clean(raw.name, 120),
     updatedAt: clean(raw.updatedAt, 40),
     status: raw.status || "fallback",
-    background: projectBackground?.summary || clean(raw.background, 900),
+    background: projectBackground?.summary || sanitizeVentureNarrative(raw.background, 900),
     projectBackground,
-    technology: clean(raw.technology, 900),
-    products: cleanList(raw.products, 16, 240),
+    technology: sanitizeVentureNarrative(raw.technology, 900),
+    products: sanitizeVentureProducts(raw.products),
     technologyProducts: normalizeTechnologyProducts(raw.technologyProducts),
-    team: normalizeTeam(raw.team),
+    team: normalizeTeam(raw.team, [raw.name, raw.slug]),
     financing: normalizeCapitalEvents(raw.financing),
     capitalSummary: normalizeCapitalSummary(raw.capitalSummary),
-    capitalMarkets: normalizeCapitalEvents(raw.capitalMarkets),
+    capitalMarkets: normalizeCapitalEvents(raw.capitalMarkets, true),
     exitPerformance: normalizeExitPerformance(raw.exitPerformance),
     researchModelVersion: Number(raw.researchModelVersion) || undefined,
     sources: normalizeSources(raw.sources),
@@ -425,9 +623,9 @@ function normalizeInstitutionProfile(raw: InstitutionVentureProfile): Institutio
     name: clean(raw.name, 120),
     updatedAt: clean(raw.updatedAt, 40),
     status: raw.status || "fallback",
-    overview: clean(raw.overview, 900),
-    strategy: clean(raw.strategy, 900),
-    team: normalizeTeam(raw.team),
+    overview: sanitizeVentureNarrative(raw.overview, 900),
+    strategy: sanitizeVentureNarrative(raw.strategy, 900),
+    team: normalizeTeam(raw.team, [raw.name, raw.slug]),
     recentInvestments: normalizePortfolio(raw.recentInvestments),
     recentYearSummary: normalizeRecentYearSummary(raw.recentYearSummary),
     portfolio: normalizePortfolio(raw.portfolio),
