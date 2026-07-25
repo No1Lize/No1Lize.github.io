@@ -1,4 +1,4 @@
-name: Enriched three-market profile refresh v5
+name: Enriched three-market profile refresh v6
 
 on:
   push:
@@ -89,10 +89,6 @@ jobs:
             .github/diagnostics/market-refresh-npm.log \
             .github/diagnostics/market-refresh-unit.log \
             .github/diagnostics/market-refresh-build.log
-          # Market data publication is gated by the market crawler, its dedicated
-          # regression tests, snapshot validation and the actual Next static build.
-          # The repository-wide unit suite is recorded but does not block this
-          # isolated data product when unrelated feature branches are in flight.
           if [ "${{ steps.refresh.outputs.crawl }}" = "0" ] && \
              [ "${{ steps.refresh.outputs.tests }}" = "0" ] && \
              [ "${{ steps.refresh.outputs.validator }}" = "0" ] && \
