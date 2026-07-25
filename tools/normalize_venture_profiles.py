@@ -208,21 +208,44 @@ def normalize_payload(payload: dict[str, Any], catalog_text: str) -> tuple[dict[
         stats["institutionTeams"] += max(0, len(old_team) - len(profile["team"]))
         profile["evidenceScore"] = evidence_score(profile, "institution")
 
-    quality = evaluate_quality(
+    core_quality = evaluate_quality(
         payload.get("companies", {}),
         payload.get("institutions", {}),
         len(companies),
         len(institutions),
         payload.get("sourceStatus", []),
     )
+    existing_quality = (
+        dict(payload.get("qualityGate", {}))
+        if isinstance(payload.get("qualityGate"), dict)
+        else {}
+    )
+    quality = dict(existing_quality)
+    for key, value in core_quality.items():
+        if key not in {"checks", "passed"}:
+            quality[key] = value
+
+    checks = (
+        dict(existing_quality.get("checks", {}))
+        if isinstance(existing_quality.get("checks"), dict)
+        else {}
+    )
+    if isinstance(core_quality.get("checks"), dict):
+        checks.update(core_quality["checks"])
+
     errors = consistency_errors(payload, company_aliases, institution_aliases)
-    quality.setdefault("checks", {})["profileConsistency"] = {
+    checks["profileConsistency"] = {
         "actual": len(errors),
         "required": 0,
         "passed": not errors,
     }
+    quality["checks"] = checks
     quality["consistencyErrors"] = errors[:50]
-    quality["passed"] = all(check.get("passed", False) for check in quality["checks"].values())
+    quality["passed"] = all(
+        bool(check.get("passed"))
+        for check in checks.values()
+        if isinstance(check, dict)
+    )
     payload["qualityGate"] = quality
     return payload, stats
 
@@ -235,19 +258,42 @@ def main() -> int:
     args = parser.parse_args()
 
     payload = json.loads(args.input.read_text(encoding="utf-8"))
+    original = json.dumps(payload, ensure_ascii=False, sort_keys=True)
     catalog_text = args.catalog.read_text(encoding="utf-8")
     normalized, stats = normalize_payload(payload, catalog_text)
+    normalized_text = json.dumps(normalized, ensure_ascii=False, sort_keys=True)
+    already_normalized = original == normalized_text
     quality = normalized.get("qualityGate", {})
 
     if args.check:
-        print(json.dumps({"passed": quality.get("passed", False), "stats": stats, "qualityGate": quality}, ensure_ascii=False))
-        return 0 if quality.get("passed", False) else 1
+        passed = bool(quality.get("passed", False)) and already_normalized
+        print(
+            json.dumps(
+                {
+                    "passed": passed,
+                    "alreadyNormalized": already_normalized,
+                    "stats": stats,
+                    "qualityGate": quality,
+                },
+                ensure_ascii=False,
+            )
+        )
+        return 0 if passed else 1
 
     args.input.write_text(
         json.dumps(normalized, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(json.dumps({"stats": stats, "passed": quality.get("passed", False)}, ensure_ascii=False))
+    print(
+        json.dumps(
+            {
+                "stats": stats,
+                "passed": quality.get("passed", False),
+                "changed": not already_normalized,
+            },
+            ensure_ascii=False,
+        )
+    )
     return 0 if quality.get("passed", False) else 1
 
 
