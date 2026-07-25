@@ -16,11 +16,19 @@ class WeChatSnapshotQualityTest(unittest.TestCase):
             "EPIC Lab",
             "Mission Alignment",
             "Anthropic CEO",
+            "Digital Psychiatry",
+            "AI-Associated Mental Health",
+            "工程师",
+            "深度学习",
             "论文链接",
             "OpenAI",
+            "CEO Lior Div",
         ]
         cleaned = quality.clean_people(values, ["OpenAI", "Anthropic"])
-        self.assertEqual(cleaned, ["Joshua Achiam", "Noam Brown", "黄佳诺"])
+        self.assertEqual(
+            cleaned,
+            ["Joshua Achiam", "Noam Brown", "黄佳诺", "Lior Div"],
+        )
 
     def test_known_company_ownership_resolves_duplicate_article_to_ai(self) -> None:
         tracking = {
@@ -56,6 +64,42 @@ class WeChatSnapshotQualityTest(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["sector"], "AI / AGI")
         self.assertEqual(result[0]["mentionedPeople"], ["Jianuo Huang"])
+
+    def test_single_misclassified_anthropic_article_is_reassigned_to_ai(self) -> None:
+        tracking = {
+            "tracks": [
+                {
+                    "name": "AI / AGI",
+                    "enabled": True,
+                    "keywords": ["Claude", "大模型", "智能体"],
+                    "sampleCompanies": ["Anthropic"],
+                },
+                {
+                    "name": "机器人",
+                    "enabled": True,
+                    "keywords": ["VLA", "具身智能", "机器人"],
+                    # Historical polluted samples must not override the official catalog.
+                    "sampleCompanies": ["Anthropic", "Figure AI"],
+                },
+            ]
+        }
+        article = {
+            "id": "wrong-sector",
+            "sourceId": "user-track-wechat-qbitai-robotics",
+            "title": "Anthropic发布Claude Code新能力",
+            "summary": "Anthropic为Claude智能体增加长期任务能力。",
+            "sector": "机器人",
+            "company": "Anthropic",
+            "mentionedCompanies": ["Anthropic"],
+            "mentionedPeople": ["Claude Code"],
+            "matchedTrackingTerms": [],
+            "source": {"url": "https://mp.weixin.qq.com/s?mid=3&idx=1"},
+        }
+        result = quality.resolve_cross_sector_articles([article], tracking)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["sector"], "AI / AGI")
+        self.assertEqual(result[0]["wechatSectorReassignedFrom"], "机器人")
+        self.assertEqual(result[0]["mentionedPeople"], [])
 
     def test_title_terms_resolve_generic_company_article_to_robotics(self) -> None:
         tracking = {
