@@ -64,7 +64,29 @@ const articles: LiveIntelligenceEvent[] = [
       platform: "X",
     },
   },
+  {
+    id: "noise-1",
+    sourceId: "noise-media",
+    title: "US CEO discusses UK STEM AI AGI LLM RT K3 outlook",
+    summary: "A generic roundup with country codes, job titles and isolated abbreviations.",
+    type: "媒体报道",
+    region: "全球",
+    sector: "AI / AGI",
+    company: "科技产业",
+    publishedAt: "2099-01-04",
+    importance: 40,
+    qualityScore: 45,
+    authors: ["CEO", "US", "AI"],
+    source: {
+      name: "Noise Media",
+      url: "https://noise.example.com/roundup",
+      level: "媒体报道",
+      platform: "网站",
+    },
+  },
 ];
+
+const forbiddenNoise = ["US", "UK", "AI", "AGI", "LLM", "STEM", "RT", "K3", "CEO"];
 
 test("tracking recommendations derive useful additions from sector intelligence", () => {
   const result = recommendTrackingAdditions(articles, "AI / AGI", {
@@ -79,10 +101,21 @@ test("tracking recommendations derive useful additions from sector intelligence"
   assert.ok(!result.sources.some((item) => new URL(item.source.url).hostname === "x.com"));
 });
 
+test("country codes, roles and isolated acronyms are never recommended as entities", () => {
+  const result = recommendTrackingAdditions(articles, "AI / AGI");
+  const keywordValues = new Set(result.keywords.map((item) => item.value));
+  const peopleValues = new Set(result.people.map((item) => item.value));
+
+  for (const noise of forbiddenNoise) {
+    assert.ok(!keywordValues.has(noise), `${noise} should not be a keyword recommendation`);
+    assert.ok(!peopleValues.has(noise), `${noise} should not be a person recommendation`);
+  }
+});
+
 test("existing source hosts are removed from recommendations", () => {
   const result = recommendTrackingAdditions(articles, "AI / AGI", {
     sources: ["https://openai.com/news/"],
   });
 
-  assert.equal(result.sources.length, 0);
+  assert.ok(!result.sources.some((item) => new URL(item.source.url).hostname === "openai.com"));
 });
