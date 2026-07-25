@@ -10,12 +10,14 @@ field extraction so the adapter is not tied to one market's page layout.
 
 from __future__ import annotations
 
+import csv
 import json
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
+from io import StringIO
 from typing import Any, Iterable
-from urllib.parse import urlsplit
+from urllib.parse import quote_plus, urlsplit
 
 try:
     from . import crawl_market_profiles as market
@@ -23,6 +25,7 @@ except ImportError:
     import crawl_market_profiles as market
 
 MAX_WORKERS = 5
+MIN_TREND_POINTS = 20
 TONGHUASHUN_SECTIONS = ("company", "finance", "operate")
 _BASE_LABELED_VALUE = market.labeled_value
 
@@ -81,6 +84,81 @@ def multi_page_fetch(url: str) -> str:
     return "\n<!-- merged public company section -->\n".join(bodies)
 
 
+def stooq_url(identity: market.CompanyIdentity) -> str:
+    symbol = quote_plus(f"{identity.ticker.lower()}.us")
+    return f"https://stooq.com/q/d/l/?s={symbol}&i=d"
+
+
+def parse_stooq_csv(body: str) -> list[dict[str, Any]]:
+    points: list[dict[str, Any]] = []
+    reader = csv.DictReader(StringIO(body.strip()))
+    for row in reader:
+        try:
+            point = {
+                "date": str(row.get("Date") or ""),
+                "open": float(row["Open"]),
+                "close": float(row["Close"]),
+                "high": float(row["High"]),
+                "low": float(row["Low"]),
+            }
+            volume = row.get("Volume")
+            if volume not in {None, "", "No data"}:
+                point["volume"] = float(volume)
+            points.append(point)
+        except (KeyError, TypeError, ValueError):
+            continue
+    return market.dedupe_price_points(points)
+
+
+def clean_profile(profile: dict[str, Any]) -> dict[str, Any]:
+    metrics = profile.get("metrics")
+    if isinstance(metrics, list):
+        for metric in metrics:
+            if isinstance(metric, dict) and isinstance(metric.get("value"), str):
+                metric["value"] = re.sub(r"%{2,}", "%", metric["value"])
+
+    company = profile.get("company") if isinstance(profile.get("company"), dict) else {}
+    listed_at = str(company.get("listedAt") or "")
+    lower_bound = listed_at if re.fullmatch(r"\d{4}-\d{2}-\d{2}", listed_at) else "1900-01-01"
+    upper_bound = date.today().isoformat()
+    cleaned_points: list[dict[str, Any]] = []
+    for point in profile.get("priceHistory", []):
+        if not isinstance(point, dict):
+            continue
+        point_date = str(point.get("date") or "")
+        if not re.fullmatch(r"20\d{2}-\d{2}-\d{2}", point_date):
+            continue
+        if lower_bound <= point_date <= upper_bound:
+            cleaned_points.append(point)
+    profile["priceHistory"] = market.dedupe_price_points(cleaned_points)
+    return profile
+
+
+def crawl_item(
+    item: dict[str, Any],
+    previous: dict[str, Any] | None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    profile, status = market.crawl_company(item, previous, multi_page_fetch)
+    profile = clean_profile(profile)
+    identity: market.CompanyIdentity = item["identity"]
+
+    if identity.market == "美股" and len(profile.get("priceHistory", [])) < MIN_TREND_POINTS:
+        fallback_url = stooq_url(identity)
+        try:
+            points = parse_stooq_csv(market.fetch_text(fallback_url, attempts=1))
+            if len(points) > len(profile.get("priceHistory", [])):
+                profile["priceHistory"] = points
+                profile.setdefault("sources", {})["price"] = fallback_url
+        except Exception as exc:  # noqa: BLE001 - the primary snapshot remains valid.
+            warnings = profile.setdefault("warnings", [])
+            warnings.append(f"美股历史行情回退失败：{type(exc).__name__}: {exc}")
+            profile["warnings"] = warnings[-8:]
+
+    status["status"] = profile.get("status", status.get("status", "partial"))
+    status["pricePoints"] = len(profile.get("priceHistory", []))
+    return profile, status
+
+
 def build_snapshot_concurrent(
     config: dict[str, Any],
     previous_snapshot: dict[str, Any],
@@ -94,10 +172,9 @@ def build_snapshot_concurrent(
     with ThreadPoolExecutor(max_workers=min(MAX_WORKERS, max(1, len(items)))) as pool:
         futures = {
             pool.submit(
-                market.crawl_company,
+                crawl_item,
                 item,
                 previous_profiles.get(item["identity"].slug),
-                multi_page_fetch,
             ): index
             for index, item in enumerate(items)
         }
