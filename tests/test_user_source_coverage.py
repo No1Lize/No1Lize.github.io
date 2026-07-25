@@ -11,10 +11,11 @@ def source(
     *,
     source_type: str = "listing-search",
     category: str = "media",
+    name: str | None = None,
 ) -> dict:
     return {
         "id": source_id,
-        "name": source_id,
+        "name": name or source_id,
         "url": url,
         "sourceType": source_type,
         "sourceCategory": category,
@@ -52,6 +53,7 @@ class UserSourceCoverageTests(unittest.TestCase):
         self.assertEqual(report["productiveRuntimeStatuses"], 1)
         self.assertEqual(report["missingStatuses"], [])
         self.assertEqual(report["adapterMismatches"], [])
+        self.assertEqual(report["missingHandoffs"], [])
 
     def test_missing_status_fails(self) -> None:
         config = {
@@ -86,6 +88,75 @@ class UserSourceCoverageTests(unittest.TestCase):
 
         self.assertFalse(report["passed"])
         self.assertEqual(report["adapterMismatches"][0]["actual"], "generic-web-v2")
+
+    def test_handoff_without_strict_publisher_status_fails(self) -> None:
+        config = {
+            "schemaVersion": 1,
+            "tracks": [],
+            "sources": [
+                source(
+                    "eastmoney",
+                    "https://www.eastmoney.com/default.html",
+                    name="东方财富",
+                )
+            ],
+        }
+        snapshot = {
+            "sourceStatus": [
+                {
+                    "id": "user-source-eastmoney",
+                    "status": "partial",
+                    "accepted": 0,
+                    "adapter": "adaptive-public-v1",
+                    "publisherHandoff": "eastmoney-strict-detail",
+                    "handoffStatusId": "official-user-东方财富",
+                }
+            ]
+        }
+
+        report = evaluate_coverage(config, snapshot)
+
+        self.assertFalse(report["passed"])
+        self.assertEqual(
+            report["missingHandoffs"][0]["expectedStatusId"],
+            "official-user-东方财富",
+        )
+
+    def test_handoff_counts_strict_publisher_as_source_output(self) -> None:
+        config = {
+            "schemaVersion": 1,
+            "tracks": [],
+            "sources": [
+                source(
+                    "eastmoney",
+                    "https://www.eastmoney.com/default.html",
+                    name="东方财富",
+                )
+            ],
+        }
+        snapshot = {
+            "sourceStatus": [
+                {
+                    "id": "user-source-eastmoney",
+                    "status": "partial",
+                    "accepted": 0,
+                    "adapter": "adaptive-public-v1",
+                    "publisherHandoff": "eastmoney-strict-detail",
+                    "handoffStatusId": "official-user-东方财富",
+                },
+                {
+                    "id": "official-user-东方财富",
+                    "status": "ok",
+                    "accepted": 7,
+                },
+            ]
+        }
+
+        report = evaluate_coverage(config, snapshot)
+
+        self.assertTrue(report["passed"])
+        self.assertEqual(report["productiveRuntimeStatuses"], 1)
+        self.assertEqual(report["missingHandoffs"], [])
 
     def test_x_direct_source_only_requires_diagnostic_status(self) -> None:
         config = {
