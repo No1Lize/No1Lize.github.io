@@ -34,6 +34,7 @@ export type MarketCompanyProfile = {
   employees?: string;
   chairman?: string;
   address?: string;
+  region?: string;
   description?: string;
   mainBusiness?: string;
 };
@@ -52,6 +53,7 @@ export type MarketProfile = {
   sources: {
     tonghuashun: string;
     price?: string;
+    quote?: string;
   };
   warnings?: string[];
 };
@@ -65,6 +67,7 @@ type MarketProfileSnapshot = {
     status: string;
     profileAccepted: boolean;
     pricePoints: number;
+    marketCapAccepted?: boolean;
     error?: string;
   }[];
 };
