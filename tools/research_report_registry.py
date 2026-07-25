@@ -22,6 +22,28 @@ RESEARCH_SOURCE_OVERRIDES = {
     "joby": "https://investors.jobyaviation.com/financials/sec-filings/default.aspx",
 }
 
+# Verified direct URLs from the corresponding HKEX listed-company title pages.
+# These are used only when the dynamic title-search page cannot expose its links
+# to the crawler. The original HKEX page remains the sourcePageUrl.
+CURATED_PDF_CANDIDATES: dict[str, list[dict[str, str]]] = {
+    "horizon-robotics": [
+        {
+            "title": "Horizon Robotics Annual Report 2025",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0430/2026043001830.pdf",
+            "publishedAt": "2026-04-30",
+            "description": "HKEX Annual Report 2025 · Horizon Robotics",
+        }
+    ],
+    "xtalpi": [
+        {
+            "title": "XtalPi Annual Report 2025",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0417/2026041701551.pdf",
+            "publishedAt": "2026-04-17",
+            "description": "HKEX Annual Report 2025 · XtalPi Holdings",
+        }
+    ],
+}
+
 STABLE_CIK_FALLBACKS = {
     "PONY": "0001969302",
     "WRD": "0001867729",
@@ -69,6 +91,15 @@ def load_official_websites(root: Path) -> dict[str, str]:
             result[slug] = url
     result.update(RESEARCH_SOURCE_OVERRIDES)
     return result
+
+
+def load_curated_pdf_candidates() -> dict[str, list[dict[str, str]]]:
+    """Return verified public PDF candidates keyed by listed-company slug."""
+
+    return {
+        slug: [dict(candidate) for candidate in candidates]
+        for slug, candidates in CURATED_PDF_CANDIDATES.items()
+    }
 
 
 def load_local_cik_map(root: Path) -> dict[str, str]:
