@@ -47,8 +47,13 @@ jobs:
             tools/finalize_venture_profiles.py \
             tools/enforce_venture_entity_semantics.py
       - name: Run complete venture regressions
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
         run: |
-          python -m unittest \
+          set +e
+          mkdir -p diagnostics
+          python -m unittest -v \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
@@ -57,7 +62,18 @@ jobs:
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
             tests.test_finalize_venture_profiles \
-            tests.test_venture_entity_semantics
+            tests.test_venture_entity_semantics \
+            > diagnostics/venture-entity-regressions.txt 2>&1
+          status=$?
+          cat diagnostics/venture-entity-regressions.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-entity-regressions.txt
+            git commit -m "ci: record venture entity regression failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
       - name: Enrich current production snapshot
         run: python tools/enrich_venture_profiles.py
       - name: Align research fields to entity evidence
