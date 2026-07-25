@@ -30,7 +30,7 @@ jobs:
       - name: Run production venture pipeline and record report
         shell: bash
         run: |
-          # production-quality-gate-v1
+          # production-quality-gate-v2
           set +e
           mkdir -p diagnostics
           REPORT=diagnostics/venture-research-validation.txt
@@ -100,6 +100,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$REPORT"
-          git commit -m "ci: record final venture quality gate validation"
+          git commit -m "ci: record aligned venture production validation"
           git pull --rebase origin main
           git push origin HEAD:main
