@@ -95,15 +95,6 @@ def _display_name(raw_name: str, url: str, index: int) -> str:
     return host or f"用户来源 {index + 1}"
 
 
-def _is_eastmoney_media(category: str, url: str, name: str) -> bool:
-    host = (urlsplit(url).hostname or "").casefold().removeprefix("www.")
-    return category == "media" and (
-        host == "eastmoney.com"
-        or host.endswith(".eastmoney.com")
-        or "东方财富" in name
-    )
-
-
 def _custom_sources(
     tracking_config: dict[str, Any], tracks: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], dict[str, tuple[str, str, str, str]]]:
@@ -240,6 +231,7 @@ def _install_generic_adapter() -> None:
     ) -> None:
         original_install(merged, sec_specs, active_ids)
         original_crawl_source = tracking.crawler._crawl_config_source
+        original_replace_batches = tracking.crawler.replace_source_batches
 
         def crawl_source(
             spec: dict[str, Any], user_agent: str
@@ -268,7 +260,22 @@ def _install_generic_adapter() -> None:
                 status["retainedPrevious"] = True
             return articles, status
 
+        def replace_source_batches(
+            existing: list[dict[str, Any]],
+            incoming: list[dict[str, Any]],
+            statuses: list[dict[str, Any]],
+        ) -> list[dict[str, Any]]:
+            history_aware = adaptive_public_sources.merge_adaptive_history(
+                existing,
+                incoming,
+                statuses,
+                tracking.crawler,
+            )
+            return original_replace_batches(existing, history_aware, statuses)
+
+        setattr(replace_source_batches, "_adaptive_history", True)
         tracking.crawler._crawl_config_source = crawl_source
+        tracking.crawler.replace_source_batches = replace_source_batches
 
     setattr(install, "_generic_web_adapter", True)
     tracking._install_runtime_overrides = install
