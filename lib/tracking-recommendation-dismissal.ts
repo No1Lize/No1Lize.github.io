@@ -117,7 +117,9 @@ export async function hydrateTrackingRecommendationDismissals(): Promise<void> {
     const config = JSON.parse(decodeBase64(file.content)) as { tracks?: unknown[] };
     const store = readStore();
     for (const track of config.tracks ?? []) {
-      if (track && typeof track === "object") mergeTrackIntoStore(store, track as Record<string, unknown>);
+      if (track && typeof track === "object") {
+        mergeTrackIntoStore(store, track as Record<string, unknown>);
+      }
     }
     writeStore(store);
   } catch {
@@ -134,15 +136,14 @@ export async function dismissTrackingRecommendation(
   const cleanValue = value.normalize("NFKC").replace(/\s+/g, " ").trim();
   if (!cleanValue) return;
 
-  const key = trackKey(sector);
-  const store = readStore();
-  const current = store[key] ?? {};
-  current[kind] = mergeUnique(current[kind], [cleanValue]);
-  store[key] = current;
-  writeStore(store);
-
   const token = window.sessionStorage.getItem(TOKEN_SESSION_KEY)?.trim() ?? "";
-  if (!token) throw new Error("管理员 Token 不可用，忽略状态仅保存在当前标签页。");
+  if (!token) throw new Error("管理员 Token 不可用，忽略状态尚未保存。");
+
+  const key = trackKey(sector);
+  const nextStore = readStore();
+  const nextCurrent = nextStore[key] ?? {};
+  nextCurrent[kind] = mergeUnique(nextCurrent[kind], [cleanValue]);
+  nextStore[key] = nextCurrent;
 
   const fileUrl = `https://api.github.com/repos/${TRACKING_REPOSITORY}/contents/${TRACKING_CONFIG_PATH}`;
   const headers = {
@@ -195,7 +196,7 @@ export async function dismissTrackingRecommendation(
       }),
     });
     if (response.ok) {
-      window.dispatchEvent(new CustomEvent(DISMISSAL_EVENT));
+      writeStore(nextStore);
       return;
     }
     if (response.status !== 409 || attempt === 2) {
