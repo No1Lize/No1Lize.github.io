@@ -1,5 +1,7 @@
 import rawTrackingConfig from "@/config/user_tracking.json";
 import { ipoCompanies } from "@/lib/catalog-data";
+import { normalizeMarketTicker } from "@/lib/listed-company-identity";
+import { normalizeMarketTicker } from "@/lib/listed-company-identity";
 
 export const TRACKING_REPOSITORY = "No1Lize/No1Lize.github.io";
 export const TRACKING_BRANCH = "main";
@@ -369,11 +371,12 @@ function normalizeListedCompany(
   if (!value || typeof value !== "object") return null;
   const raw = value as Record<string, unknown>;
   const name = cleanText(raw.name, 80);
-  const ticker = cleanText(raw.ticker, 30).toUpperCase().replace(/\s+/g, "");
   const market = MARKETS.includes(raw.market as TrackingMarket)
     ? (raw.market as TrackingMarket)
     : null;
-  if (!name || !ticker || !market) return null;
+  if (!name || !market) return null;
+  const ticker = normalizeMarketTicker(market, cleanText(raw.ticker, 30));
+  if (!ticker) return null;
   const catalogSlug = cleanText(raw.catalogSlug, 80);
   return {
     id:
@@ -452,7 +455,8 @@ function defaultListedCompanies(): TrackingListedCompany[] {
   return ipoCompanies.map((company) => ({
     id: `catalog-${company.slug}`,
     name: company.name,
-    ticker: company.ticker,
+    ticker:
+      normalizeMarketTicker(company.market, company.ticker) || company.ticker,
     market: company.market,
     sector: company.sector,
     enabled: true,

@@ -3,6 +3,7 @@
 import type { FormEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ipoCompanies } from "@/lib/catalog-data";
+import { normalizeMarketTicker } from "@/lib/listed-company-identity";
 import {
   TRACKING_BRANCH,
   TRACKING_CONFIG_PATH,
@@ -511,7 +512,8 @@ export function UserTrackingPanel({
     const existing = config.listedCompanies.find(
       (item) =>
         item.id === company.id ||
-        (item.market === company.market && item.ticker === company.ticker),
+        (item.market === company.market &&
+          normalizeMarketTicker(item.market, item.ticker) === company.ticker),
     );
     const listedCompanies = existing
       ? config.listedCompanies.map((item) =>
@@ -541,7 +543,9 @@ export function UserTrackingPanel({
     const company: TrackingListedCompany = {
       id: `catalog-${catalog.slug}`,
       name: catalog.name,
-      ticker: catalog.ticker.toUpperCase(),
+      ticker:
+        normalizeMarketTicker(catalog.market, catalog.ticker) ||
+        catalog.ticker.toUpperCase(),
       market: catalog.market,
       sector: catalog.sector,
       enabled: true,
@@ -561,19 +565,30 @@ export function UserTrackingPanel({
   function addListedCompany(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
     const name = listedDraft.name.trim();
-    const ticker = listedDraft.ticker
-      .trim()
-      .toUpperCase()
-      .replace(/\s+/g, "");
-    if (!name || !ticker) {
-      setMessage("请填写上市公司名称和股票代码。", "error");
+    const ticker = normalizeMarketTicker(
+      listedDraft.market,
+      listedDraft.ticker,
+    );
+    if (!name) {
+      setMessage("请填写上市公司名称。", "error");
+      return;
+    }
+    if (!ticker) {
+      setMessage(
+        listedDraft.market === "A股"
+          ? "A股代码应为 6 位数字，可输入 600519、600519.SH 或 SH600519。"
+          : listedDraft.market === "港股"
+            ? "港股代码可输入 700、0700、00700、0700.HK 或 HK0700。"
+            : "美股代码格式无效，例如 AAPL、BRK.B。",
+        "error",
+      );
       return;
     }
 
     const catalog = ipoCompanies.find(
       (company) =>
         company.market === listedDraft.market &&
-        company.ticker.toUpperCase() === ticker,
+        normalizeMarketTicker(company.market, company.ticker) === ticker,
     );
     const company: TrackingListedCompany = {
       id: catalog
