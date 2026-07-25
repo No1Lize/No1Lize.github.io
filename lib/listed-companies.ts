@@ -1,4 +1,6 @@
 import { ipoCompanies, type IpoCompany } from "@/lib/catalog-data";
+import { listedCompanySlug, normalizeMarketTicker } from "@/lib/listed-company-identity";
+import { marketProfiles } from "@/lib/market-profile-data";
 import {
   userTrackingConfig,
   type TrackingListedCompany,
@@ -6,6 +8,7 @@ import {
 
 export type ListedCompanyView = {
   id: string;
+  slug: string;
   name: string;
   ticker: string;
   market: "A股" | "港股" | "美股";
@@ -50,7 +53,7 @@ const catalogBySlug = new Map(
 );
 const catalogByMarketTicker = new Map(
   ipoCompanies.map((company) => [
-    `${company.market}:${company.ticker.toUpperCase()}`,
+    `${company.market}:${normalizeMarketTicker(company.market, company.ticker)}`,
     company,
   ]),
 );
@@ -58,26 +61,51 @@ const catalogByMarketTicker = new Map(
 export function resolveListedCompany(
   item: TrackingListedCompany,
 ): ListedCompanyView {
+  const ticker = normalizeMarketTicker(item.market, item.ticker) || item.ticker;
   const catalog = item.catalogSlug
     ? catalogBySlug.get(item.catalogSlug)
-    : catalogByMarketTicker.get(`${item.market}:${item.ticker.toUpperCase()}`);
+    : catalogByMarketTicker.get(`${item.market}:${ticker}`);
+  const slug = listedCompanySlug(item.market, ticker, catalog?.slug ?? item.catalogSlug);
+  const marketProfile = marketProfiles[slug];
+  const source = catalog?.source ??
+    (marketProfile
+      ? {
+          name: "同花顺公开公司页",
+          url: marketProfile.sources.tonghuashun,
+          level: "数据库记录" as const,
+        }
+      : undefined);
 
   return {
     id: item.id,
-    name: item.name || catalog?.name || item.ticker,
-    ticker: item.ticker,
+    slug,
+    name: marketProfile?.company.name || item.name || catalog?.name || ticker,
+    ticker,
     market: item.market,
     sector: item.sector || catalog?.sector || "未分类",
     enabled: item.enabled,
     custom: item.custom,
     ...(catalog ? { catalogSlug: catalog.slug } : {}),
-    status: catalog?.status ?? "待接入数据",
-    latest: catalog?.latest ?? "等待接入公告与财务数据源",
-    ...(catalog ? { source: catalog.source } : {}),
+    status:
+      marketProfile?.status === "ok"
+        ? "数据已同步"
+        : marketProfile?.status === "partial"
+          ? "部分数据已同步"
+          : catalog?.status ?? "等待首次市场数据同步",
+    latest:
+      marketProfile?.updatedAt?.slice(0, 10) ??
+      catalog?.latest ??
+      "已创建详情页，等待定时任务抓取",
+    ...(source ? { source } : {}),
   };
 }
 
 export const listedCompaniesForDisplay: ListedCompanyView[] =
   configuredListedCompanies
     .filter((company) => company.enabled)
-    .map(resolveListedCompany);
+    .map(resolveListedCompany)
+    .filter((company) => Boolean(company.slug));
+
+export const listedCompanyBySlug = new Map(
+  listedCompaniesForDisplay.map((company) => [company.slug, company]),
+);
