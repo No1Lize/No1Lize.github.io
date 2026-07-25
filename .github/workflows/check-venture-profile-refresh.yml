@@ -23,10 +23,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
+          # status revision: post-wechat-fix-v2
           mkdir -p diagnostics
           gh run list \
             --workflow refresh-venture-profiles.yml \
-            --limit 5 \
+            --limit 10 \
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
             > diagnostics/venture-profile-refresh-status.json
           git config user.name 'github-actions[bot]'
