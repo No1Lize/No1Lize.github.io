@@ -12,7 +12,7 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
         body = '''
         <html><head><title>领导团队</title></head><body>
           <p>关于智元 合伙人 新闻资讯 合伙人 无限生产力 合伙人</p>
-          <p>联席 总裁 营销服 总裁</p>
+          <p>智元 合伙人 联席 总裁 营销服 总裁 高级副 总裁</p>
           <p>邓泰华 创始人 彭志辉 联合创始人 姜青松 合伙人</p>
         </body></html>
         '''
@@ -27,8 +27,10 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
         self.assertNotIn("关于智元", names)
         self.assertNotIn("新闻资讯", names)
         self.assertNotIn("无限生产力", names)
+        self.assertNotIn("智元", names)
         self.assertNotIn("联席", names)
         self.assertNotIn("营销服", names)
+        self.assertNotIn("高级副", names)
 
     def test_products_prioritize_catalog_and_reject_document_navigation(self) -> None:
         body = '''
@@ -38,6 +40,8 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
           <h2>产品手册</h2>
           <h2>产品资料与下载</h2>
           <h2>售后服务政策</h2>
+          <h2>具身智能服务机器人大赛</h2>
+          <h2>Transforming Defense Capabilities with Advanced Technology</h2>
           <h2>远征A3人形机器人</h2>
           <a href="/products/a3">远征A3人形机器人</a>
         </body></html>
@@ -62,6 +66,8 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
         self.assertNotIn("产品手册", products)
         self.assertNotIn("产品资料与下载", products)
         self.assertNotIn("售后服务政策", products)
+        self.assertNotIn("具身智能服务机器人大赛", products)
+        self.assertNotIn("Transforming Defense Capabilities with Advanced Technology", products)
 
     def test_retained_history_is_resanitized_after_homepage_timeout(self) -> None:
         company = extraction.CatalogCompany(
@@ -84,9 +90,11 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
             "status": "ok",
             "background": "完整背景。",
             "technology": "完整技术资料。",
-            "products": ["产品手册", "远征A2"],
+            "products": ["产品手册", "具身智能服务机器人大赛", "远征A2"],
             "team": [
                 {"name": "关于智元", "role": "合伙人", "summary": "", "sourceUrl": company.source_url},
+                {"name": "智元", "role": "合伙人", "summary": "", "sourceUrl": company.source_url},
+                {"name": "高级副", "role": "总裁", "summary": "", "sourceUrl": company.source_url},
                 {"name": "邓泰华", "role": "创始人", "summary": "", "sourceUrl": company.source_url},
                 {"name": "具身业务部", "role": "总裁", "summary": "", "sourceUrl": company.source_url},
             ],
@@ -106,6 +114,7 @@ class VentureProfileNoiseFilterTests(unittest.TestCase):
         self.assertEqual(status["status"], "retained")
         self.assertEqual([item["name"] for item in profile["team"]], ["邓泰华"])
         self.assertNotIn("产品手册", profile["products"])
+        self.assertNotIn("具身智能服务机器人大赛", profile["products"])
         self.assertIn("远征A2", profile["products"])
 
 
