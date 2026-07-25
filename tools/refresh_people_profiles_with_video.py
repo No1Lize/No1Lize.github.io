@@ -13,6 +13,7 @@ if str(ROOT) not in sys.path:
 
 from tools import refresh_people_profiles as core
 from tools.person_video_discovery import discover_person_video_materials
+from tools.person_wechat_video_discovery import discover_person_wechat_video_materials
 
 _BASE_ENRICH_CANDIDATE = core.enrich_candidate
 
@@ -42,6 +43,17 @@ def merge_video_materials(profile: dict[str, Any], video_materials: list[dict[st
     }
 
 
+def discover_all_video_materials(candidate: dict[str, Any]) -> list[dict[str, str]]:
+    result: list[dict[str, str]] = []
+    for discover in (discover_person_video_materials, discover_person_wechat_video_materials):
+        try:
+            result.extend(discover(candidate))
+        except Exception:
+            # One public platform or article parser must never erase the last good profile.
+            continue
+    return result
+
+
 def enrich_candidate(
     candidate: dict[str, Any],
     previous: dict[str, Any] | None,
@@ -51,7 +63,7 @@ def enrich_candidate(
     profile = _BASE_ENRICH_CANDIDATE(candidate, previous, articles, offline)
     if offline:
         return profile
-    return merge_video_materials(profile, discover_person_video_materials(candidate))
+    return merge_video_materials(profile, discover_all_video_materials(candidate))
 
 
 # The core builder resolves this global from its own module, so replace it once before
