@@ -23,7 +23,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          # status revision: semantic-filter-v5
+          # status revision: filtered-data-v6
           mkdir -p diagnostics
           gh run list \
             --workflow refresh-venture-profiles.yml \
