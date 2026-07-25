@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Run the public crawler with category-aware user source routing.
+"""Run the public crawler with category-aware, language-aware source routing.
 
-This module deliberately wraps ``crawl_with_tracking`` rather than duplicating
-its crawler, quality-gate and person-label logic. It replaces only the custom
-source conversion step so media and person sources never inherit a fabricated
-company entity.
+This module wraps ``crawl_with_tracking`` and replaces only the browser-managed
+source conversion and runtime adapter dispatch. RSS and SEC retain their native
+adapters; arbitrary public websites use a generic multi-strategy crawler.
 """
 
 from __future__ import annotations
@@ -16,22 +15,19 @@ from urllib.parse import urlsplit
 
 try:  # Imported by tests as tools.crawl_with_source_categories.
     from . import crawl_with_tracking as tracking
+    from . import generic_web_sources
     from . import strict_tracking_config
     from . import x_rate_limit
+    from .crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_with_tracking as tracking
+    import generic_web_sources
     import strict_tracking_config
     import x_rate_limit
+    from crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 
 
 VALID_SOURCE_CATEGORIES = {"company", "media", "person"}
-EVENT_TERMS = (
-    "融资 OR 投资 OR IPO OR 上市 OR 公告 OR 财报 OR 发布 OR 突破 "
-    "OR funding OR investment OR filing OR earnings OR launch OR research"
-)
-PERSON_EVENT_TERMS = (
-    "访谈 OR 观点 OR 演讲 OR 研究 OR 发布 OR interview OR opinion OR talk OR research OR post"
-)
 
 
 def source_category(raw: dict[str, Any], source_type: str | None = None) -> str:
@@ -50,7 +46,9 @@ def source_category(raw: dict[str, Any], source_type: str | None = None) -> str:
     return "media"
 
 
-def _listed_company_index(tracking_config: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def _listed_company_index(
+    tracking_config: dict[str, Any],
+) -> dict[str, dict[str, Any]]:
     result: dict[str, dict[str, Any]] = {}
     for raw in tracking_config.get("listedCompanies", []):
         if not isinstance(raw, dict):
@@ -73,10 +71,38 @@ def _category_keywords(
     return tracking._source_keywords(sanitized, track_by_name)
 
 
+def _source_level(category: str, source_type: str) -> str:
+    if source_type == "rss" and category == "person":
+        return "原始材料"
+    return {
+        "company": "官方披露",
+        "media": "媒体报道",
+        "person": "原始材料",
+    }.get(category, "待交叉验证")
+
+
+def _display_name(raw_name: str, url: str, index: int) -> str:
+    if raw_name and not re.match(r"^https?://", raw_name, flags=re.IGNORECASE):
+        return raw_name
+    host = (urlsplit(url).hostname or "").casefold().removeprefix("www.")
+    return host or f"用户来源 {index + 1}"
+
+
+def _is_eastmoney_media(category: str, url: str, name: str) -> bool:
+    host = (urlsplit(url).hostname or "").casefold().removeprefix("www.")
+    return category == "media" and (
+        host == "eastmoney.com"
+        or host.endswith(".eastmoney.com")
+        or "东方财富" in name
+    )
+
+
 def _custom_sources(
     tracking_config: dict[str, Any], tracks: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], dict[str, tuple[str, str, str, str]]]:
-    feed_specs: list[dict[str, Any]] = []
+    """Route every enabled user source to RSS, SEC, or generic website crawling."""
+
+    runtime_specs: list[dict[str, Any]] = []
     sec_specs: dict[str, tuple[str, str, str, str]] = {}
     track_by_name = {track["name"].casefold(): track for track in tracks}
     listed_by_id = _listed_company_index(tracking_config)
@@ -85,8 +111,10 @@ def _custom_sources(
         if not isinstance(raw, dict) or raw.get("enabled", True) is False:
             continue
 
-        name = tracking._clean(raw.get("name"), 80)
-        source_type = tracking._clean(raw.get("sourceType"), 30) or "listing-search"
+        raw_name = tracking._clean(raw.get("name"), 80)
+        source_type = (
+            tracking._clean(raw.get("sourceType"), 30) or "listing-search"
+        )
         category = source_category(raw, source_type)
         company = tracking._clean(raw.get("company"), 80)
         ticker = tracking._clean(raw.get("ticker"), 30).upper()
@@ -95,16 +123,22 @@ def _custom_sources(
             region = "全球"
         sector = tracking._clean(raw.get("sector"), 60) or "AI / AGI"
         url = tracking._clean(raw.get("url"), 500)
+        name = _display_name(raw_name, url, index)
         source_id = f"user-source-{tracking._slug(raw.get('id') or name or index)}"
-        if not name:
-            continue
 
         linked_company = listed_by_id.get(
             tracking._clean(raw.get("listedCompanyId"), 100), {}
         )
         if category == "company":
-            company = company or tracking._clean(linked_company.get("name"), 80) or name
-            ticker = ticker or tracking._clean(linked_company.get("ticker"), 30).upper()
+            company = (
+                company
+                or tracking._clean(linked_company.get("name"), 80)
+                or name
+            )
+            ticker = (
+                ticker
+                or tracking._clean(linked_company.get("ticker"), 30).upper()
+            )
 
         if source_type == "sec":
             if category == "company" and ticker:
@@ -118,45 +152,29 @@ def _custom_sources(
         if not re.match(r"^https?://", url, flags=re.IGNORECASE):
             continue
 
-        keywords = _category_keywords(raw, category, track_by_name)
-        allowed_hosts: list[str] = []
-        if source_type == "rss":
-            feed_url = url
-            platform = {
-                "company": "用户公司 RSS",
-                "media": "用户媒体 RSS",
-                "person": "用户人物 RSS",
-            }[category]
-        else:
-            host = (urlsplit(url).hostname or "").lower().removeprefix("www.")
-            if not host:
-                continue
-            allowed_hosts = [host]
-            if category == "company":
-                identity_terms = tracking._unique([company, ticker, *keywords], 16)
-                query = f"site:{host} ({tracking._quoted_or_query(identity_terms)}) ({EVENT_TERMS})"
-                platform = "用户公司来源"
-            elif category == "person":
-                identity_terms = tracking._unique([name, *keywords], 16)
-                query = (
-                    f"site:{host} ({tracking._quoted_or_query(identity_terms)}) "
-                    f"({PERSON_EVENT_TERMS})"
-                )
-                platform = "用户人物来源"
-            else:
-                topic_terms = tracking._unique(keywords, 16)
-                query = f"site:{host} ({tracking._quoted_or_query(topic_terms)}) ({EVENT_TERMS})"
-                platform = "用户媒体来源"
-            feed_url = tracking._bing_rss(query)
+        # Eastmoney is intentionally delegated to its stricter direct parser.
+        if _is_eastmoney_media(category, url, name):
+            continue
 
+        keywords = _category_keywords(raw, category, track_by_name)
+        adapter = "rss" if source_type == "rss" else "generic_web"
         spec: dict[str, Any] = {
             "id": source_id,
             "name": name,
-            "url": feed_url,
-            "adapter": "rss",
-            "platform": platform,
+            "url": url,
+            "sourceUrl": url,
+            "adapter": adapter,
+            "platform": (
+                {
+                    "company": "用户公司 RSS",
+                    "media": "用户媒体 RSS",
+                    "person": "用户人物 RSS",
+                }[category]
+                if source_type == "rss"
+                else name
+            ),
             "sourceCategory": category,
-            "sourceLevel": "待交叉验证",
+            "sourceLevel": _source_level(category, source_type),
             "region": region,
             "sector": sector,
             "maxItems": 10,
@@ -164,6 +182,9 @@ def _custom_sources(
             "strictTitleKeywords": False,
             "enabled": True,
         }
+        source_language = tracking._clean(raw.get("sourceLanguage"), 20)
+        if source_language:
+            spec["sourceLanguage"] = source_language
         if category == "company":
             company_slug = (
                 tracking._clean(linked_company.get("catalogSlug"), 80)
@@ -171,11 +192,11 @@ def _custom_sources(
             )
             spec["company"] = company
             spec["companySlug"] = company_slug
-        if allowed_hosts:
-            spec["allowedHosts"] = allowed_hosts
-        feed_specs.append(spec)
+            if ticker:
+                spec["ticker"] = ticker
+        runtime_specs.append(spec)
 
-    return feed_specs[:60], sec_specs
+    return runtime_specs[:80], sec_specs
 
 
 def _install_strict_tracking_validation() -> None:
@@ -192,10 +213,41 @@ def _install_strict_tracking_validation() -> None:
     tracking._parse_person_label = strict_tracking_config.parse_person_label
 
 
+def _install_generic_adapter() -> None:
+    original_install = tracking._install_runtime_overrides
+    if getattr(original_install, "_generic_web_adapter", False):
+        return
+
+    def install(
+        merged: dict[str, Any],
+        sec_specs: dict[str, tuple[str, str, str, str]],
+        active_ids: set[str],
+    ) -> None:
+        original_install(merged, sec_specs, active_ids)
+        original_crawl_source = tracking.crawler._crawl_config_source
+
+        def crawl_source(
+            spec: dict[str, Any], user_agent: str
+        ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+            if spec.get("adapter") == "generic_web":
+                return generic_web_sources.crawl_generic_source(
+                    spec, user_agent, tracking.crawler
+                )
+            return original_crawl_source(spec, user_agent)
+
+        tracking.crawler._crawl_config_source = crawl_source
+
+    setattr(install, "_generic_web_adapter", True)
+    tracking._install_runtime_overrides = install
+
+
 def main() -> int:
     _install_strict_tracking_validation()
     x_rate_limit.install(tracking.crawler)
     tracking._custom_sources = _custom_sources
+    _install_generic_adapter()
+    configure_crawler()
+    _install_empty_sec_guard()
     return tracking.main()
 
 
