@@ -1,4 +1,5 @@
 import rawTrackingConfig from "@/config/user_tracking.json";
+import { ipoCompanies } from "@/lib/catalog-data";
 
 export const TRACKING_REPOSITORY = "No1Lize/No1Lize.github.io";
 export const TRACKING_BRANCH = "main";
@@ -177,6 +178,19 @@ function normalizeSource(value: unknown, index: number): TrackingSource | null {
   };
 }
 
+function defaultListedCompanies(): TrackingListedCompany[] {
+  return ipoCompanies.map((company) => ({
+    id: `catalog-${company.slug}`,
+    name: company.name,
+    ticker: company.ticker,
+    market: company.market,
+    sector: company.sector,
+    enabled: true,
+    custom: false,
+    catalogSlug: company.slug,
+  }));
+}
+
 export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
   const raw =
     value && typeof value === "object"
@@ -191,7 +205,7 @@ export function normalizeTrackingConfig(value: unknown): UserTrackingConfig {
     ? raw.listedCompanies
         .map(normalizeListedCompany)
         .filter((item): item is TrackingListedCompany => Boolean(item))
-    : [];
+    : defaultListedCompanies();
   const sources = Array.isArray(raw.sources)
     ? raw.sources
         .map(normalizeSource)
