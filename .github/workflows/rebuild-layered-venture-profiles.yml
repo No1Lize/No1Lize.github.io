@@ -1,0 +1,109 @@
+name: Rebuild layered venture profiles
+
+on:
+  push:
+    branches:
+      - feature/venture-narrative-page-chrome-v3
+    paths:
+      - .github/workflows/rebuild-layered-venture-profiles.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rebuild-layered-venture-profiles
+  cancel-in-progress: false
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/venture-narrative-page-chrome-v3
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch layered model and run focused tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("tools/enrich_venture_profiles.py")
+          text = path.read_text(encoding="utf-8")
+          try_old = '''try:
+              from .venture_profile_extraction import (
+          '''
+          try_new = '''try:
+              from .sanitize_venture_narratives import sanitize_narrative
+              from .venture_profile_extraction import (
+          '''
+          except_old = '''except ImportError:
+              from venture_profile_extraction import (
+          '''
+          except_new = '''except ImportError:
+              from sanitize_venture_narratives import sanitize_narrative
+              from venture_profile_extraction import (
+          '''
+          if "from .sanitize_venture_narratives import sanitize_narrative" not in text:
+              if try_old not in text or except_old not in text:
+                  raise RuntimeError("enricher import anchors not found")
+              text = text.replace(try_old, try_new, 1)
+              text = text.replace(except_old, except_new, 1)
+              path.write_text(text, encoding="utf-8")
+          PY
+          python tools/patch_venture_enrichment_idempotence.py
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py \
+            tools/sanitize_venture_profiles.py \
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
+      - name: Rebuild from official sources
+        env:
+          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
+        run: python tools/crawl_venture_profiles.py --workers 8 --max-pages 6
+      - name: Rebuild research layer and validate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/enrich_venture_profiles.py
+          python tools/normalize_venture_profiles.py
+          python tools/finalize_venture_profiles.py
+          python tools/finalize_venture_profiles.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles
+          git diff --check
+      - name: Commit rebuilt layered snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f tools/patch_venture_enrichment_idempotence.py
+          rm -f .github/workflows/rebuild-layered-venture-profiles.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "data: rebuild layered venture research profiles"
+          git push origin HEAD:feature/venture-narrative-page-chrome-v3
