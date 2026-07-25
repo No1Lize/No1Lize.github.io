@@ -40,6 +40,19 @@ from tools.research_report_adapters import (
     load_sec_ticker_map,
 )
 
+try:
+    from tools.research_report_adapters import (
+        discover_sec_candidates,
+        discover_web_candidates,
+        load_sec_ticker_map,
+    )
+except ModuleNotFoundError:  # direct execution: python tools/crawl_research_reports.py
+    from research_report_adapters import (
+        discover_sec_candidates,
+        discover_web_candidates,
+        load_sec_ticker_map,
+    )
+
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 MARKET_PROFILE_PATH = ROOT / "public" / "data" / "market_profiles.json"
