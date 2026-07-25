@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Record status
+      - name: Record status and failure tails
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -33,9 +33,16 @@ jobs:
             --limit 5 \
             --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
             > diagnostics/venture-team-shape-status.json
+          gh run view 30166647447 --log-failed 2>&1 | tail -n 180 \
+            > diagnostics/venture-research-validation-failure.txt || true
+          gh run view 30166552886 --log-failed 2>&1 | tail -n 140 \
+            > diagnostics/venture-team-shape-failure.txt || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add diagnostics/venture-research-validation-status.json diagnostics/venture-team-shape-status.json
-          git commit -m "ci: record venture research workflow status"
+          git add diagnostics/venture-research-validation-status.json \
+            diagnostics/venture-team-shape-status.json \
+            diagnostics/venture-research-validation-failure.txt \
+            diagnostics/venture-team-shape-failure.txt
+          git commit -m "ci: record venture research failure details"
           git pull --rebase origin main
           git push origin HEAD:main
