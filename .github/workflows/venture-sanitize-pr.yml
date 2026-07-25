@@ -20,7 +20,7 @@ jobs:
       github.event.pull_request.user.login == github.repository_owner &&
       github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,91 +29,54 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Apply pending venture source patches
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
-        run: |
-          set +e
-          mkdir -p diagnostics
-          {
-            if [ -f tools/patch_venture_quality_compat.py ]; then
-              python tools/patch_venture_quality_compat.py
-            fi
-            if [ -f tools/patch_venture_enrichment_idempotence.py ]; then
-              python tools/patch_venture_enrichment_idempotence.py
-            fi
-            if [ -f tools/patch_venture_structured_products.py ]; then
-              python tools/patch_venture_structured_products.py
-            fi
-            if [ -f tools/patch_venture_finalizer_products.py ]; then
-              python tools/patch_venture_finalizer_products.py
-            fi
-            if [ -f tools/migrate_venture_entity_attribution_v1.py ]; then
-              python tools/migrate_venture_entity_attribution_v1.py
-            fi
-          } > diagnostics/venture-pr-patch.txt 2>&1
-          status=$?
-          cat diagnostics/venture-pr-patch.txt
-          if [ "$status" -ne 0 ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add diagnostics/venture-pr-patch.txt
-            git commit -m "ci: record venture migration failure"
-            git push origin "HEAD:${HEAD_REF}"
-          fi
-          exit "$status"
-      - name: Compile venture pipeline
+      - name: Compile production venture pipeline
         run: |
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py \
+            tools/refine_venture_research_evidence.py \
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py \
-            tools/finalize_venture_profiles.py
-      - name: Run venture unit tests
-        env:
-          HEAD_REF: ${{ github.event.pull_request.head.ref }}
-        shell: bash
+            tools/finalize_venture_profiles.py \
+            tools/enforce_venture_entity_semantics.py
+      - name: Run complete venture regressions
         run: |
-          set +e
-          mkdir -p diagnostics
-          python -m unittest -v \
+          python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
             tests.test_finalize_venture_profiles \
-            > diagnostics/venture-pr-regressions.txt 2>&1
-          status=$?
-          cat diagnostics/venture-pr-regressions.txt
-          if [ "$status" -ne 0 ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add diagnostics/venture-pr-regressions.txt
-            git commit -m "ci: record venture regression failure"
-            git push origin "HEAD:${HEAD_REF}"
-          fi
-          exit "$status"
-      - name: Enrich current snapshot
+            tests.test_venture_entity_semantics
+      - name: Enrich current production snapshot
         run: python tools/enrich_venture_profiles.py
+      - name: Align research fields to entity evidence
+        run: |
+          python tools/refine_venture_research_evidence.py
+          python tools/refine_venture_research_evidence.py --check
       - name: Normalize cross-entity consistency
         run: python tools/normalize_venture_profiles.py
-      - name: Apply final venture quality gate
-        run: python tools/finalize_venture_profiles.py
-      - name: Check finalizer idempotence
-        run: python tools/finalize_venture_profiles.py --check
-      - name: Validate crawler quality gate
-        run: python tools/crawl_venture_profiles.py --validate-only
-      - name: Validate enrichment quality gate
-        run: python tools/enrich_venture_profiles.py --validate-only
-      - name: Check generated diff
-        run: git diff --check
-      - name: Commit validated data to PR branch
+      - name: Apply structural quality gate
+        run: |
+          python tools/finalize_venture_profiles.py
+          python tools/finalize_venture_profiles.py --check
+      - name: Apply entity-semantic quality gate
+        run: |
+          python tools/enforce_venture_entity_semantics.py
+          python tools/enforce_venture_entity_semantics.py --check
+      - name: Validate all publication gates
+        run: |
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          git diff --check
+      - name: Commit validated production snapshot
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
         shell: bash
@@ -122,20 +85,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           rm -f .venture-sanitize-trigger
-          rm -f diagnostics/venture-pr-patch.txt
-          rm -f diagnostics/venture-pr-regressions.txt
-          rm -f diagnostics/venture-pr-compile.txt
-          rm -f diagnostics/venture-pr-enrichment-test.txt
-          rm -f diagnostics/venture-pr-normalizer-test.txt
-          rm -f diagnostics/venture-pr-structured-test.txt
-          rm -f diagnostics/venture-pr-narrative-test.txt
-          rm -f diagnostics/venture-pr-normalizer-check.txt
+          rm -rf diagnostics
           rm -f tools/patch_venture_quality_compat.py
           rm -f tools/patch_venture_enrichment_idempotence.py
           rm -f tools/patch_venture_structured_products.py
           rm -f tools/patch_venture_finalizer_products.py
           rm -f tools/patch_venture_narrative_prose.py
           rm -f tools/migrate_venture_entity_attribution_v1.py
+          rm -f tools/patch_refine_venture_evidence_regressions.py
+          rm -f .github/workflows/venture-sanitize-pr.yml
           git add -A
-          git commit -m "data: normalize startup and institution profiles"
+          if git diff --cached --quiet; then
+            echo "No venture snapshot changes were required."
+            exit 0
+          fi
+          git commit -m "data: enforce entity-semantic venture profiles"
           git push origin "HEAD:${HEAD_REF}"
