@@ -1,0 +1,62 @@
+{
+  "spec": {
+    "id": "user-source-source-yahoo-tw",
+    "name": "Yahoo奇摩",
+    "sourceUrl": "https://tw.yahoo.com/",
+    "sourceLanguage": null
+  },
+  "status": {
+    "id": "user-source-source-yahoo-tw",
+    "name": "Yahoo奇摩",
+    "status": "ok",
+    "scanned": 30,
+    "accepted": 5,
+    "failed": 0,
+    "platform": "Yahoo奇摩",
+    "adapter": "adaptive-public-v1",
+    "profile": "yahoo-tw",
+    "canonicalSourceUrl": "https://tw.yahoo.com/",
+    "attemptedSeeds": [
+      "https://tw.yahoo.com/",
+      "https://tw.news.yahoo.com/",
+      "https://tw.stock.yahoo.com/"
+    ],
+    "strategies": [
+      "primary"
+    ],
+    "historyLimit": 20,
+    "requestBudget": {
+      "timeoutSeconds": 12,
+      "attempts": 2,
+      "seedLimit": 6,
+      "stopAfterAccepted": 3
+    }
+  },
+  "articles": [
+    {
+      "title": "AI代理失控發動網攻 路透：OpenAI逾一週後才察覺",
+      "publishedAt": "2026-07-25",
+      "url": "https://tw.news.yahoo.com/ai%E4%BB%A3%E7%90%86%E5%A4%B1%E6%8E%A7%E7%99%BC%E5%8B%95%E7%B6%B2%E6%94%BB-%E8%B7%AF%E9%80%8F%EF%BC%9Aopenai%E9%80%BE%E4%B8%80%E9%80%B1%E5%BE%8C%E6%89%8D%E5%AF%9F%E8%A6%BA-043841408.html"
+    },
+    {
+      "title": "越來越多「以AI為由而裁員」的公司都後悔了，原因曝光",
+      "publishedAt": "2026-07-02",
+      "url": "https://tw.news.yahoo.com/%E8%B6%8A%E4%BE%86%E8%B6%8A%E5%A4%9A%E3%80%8C%E4%BB%A5ai%E7%82%BA%E7%94%B1%E8%80%8C%E8%A3%81%E5%93%A1%E3%80%8D%E7%9A%84%E5%85%AC%E5%8F%B8%E9%83%BD%E5%BE%8C%E6%82%94%E4%BA%86%EF%BC%8C%E5%8E%9F%E5%9B%A0%E6%9B%9D%E5%85%89-110700217.html"
+    },
+    {
+      "title": "黃仁勳AI PC開紅盤？RTX Spark筆電初步需求超預期 微星賣到要追單",
+      "publishedAt": "2026-07-16",
+      "url": "https://tw.news.yahoo.com/%E9%BB%83%E4%BB%81%E5%8B%B3ai-pc%E9%96%8B%E7%B4%85%E7%9B%A4-rtx-spark%E7%AD%86%E9%9B%BB%E5%88%9D%E6%AD%A5%E9%9C%80%E6%B1%82%E8%B6%85%E9%A0%90%E6%9C%9F-%E5%BE%AE%E6%98%9F%E8%B3%A3%E5%88%B0%E8%A6%81%E8%BF%BD%E5%96%AE-122000301.html"
+    },
+    {
+      "title": "家長曬兒超強手繪《灌籃高手》吸3000萬觀看 卻引質疑是AI生成",
+      "publishedAt": "2026-07-24",
+      "url": "https://tw.news.yahoo.com/%E5%AE%B6%E9%95%B7%E6%9B%AC%E5%85%92%E8%B6%85%E5%BC%B7%E6%89%8B%E7%B9%AA%E3%80%8A%E7%81%8C%E7%B1%83%E9%AB%98%E6%89%8B%E3%80%8B%E5%90%B83000%E8%90%AC%E8%A7%80%E7%9C%8B-%E5%8D%BB%E5%BC%95%E8%B3%AA%E7%96%91%E6%98%AFai%E7%94%9F%E6%88%90-084601603.html"
+    },
+    {
+      "title": "測試耗材迎漲價潮！大摩喊買「2台廠」：已掌握定價權",
+      "publishedAt": "2026-07-01",
+      "url": "https://tw.stock.yahoo.com/news/%E6%B8%AC%E8%A9%A6%E8%80%97%E6%9D%90%E8%BF%8E%E6%BC%B2%E5%83%B9%E6%BD%AE%EF%BC%81%E5%A4%A7%E6%91%A9%E5%96%8A%E8%B2%B7%E3%80%8C2%E5%8F%B0%E5%BB%A0%E3%80%8D%EF%BC%9A%E5%B7%B2%E6%8E%8C%E6%8F%A1%E5%AE%9A%E5%83%B9%E6%AC%8A-094400801.html"
+    }
+  ]
+}
