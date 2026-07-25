@@ -4,6 +4,7 @@ import unittest
 
 from tools import crawl_articles
 from tools import crawl_with_tracking
+from tools import wechat_index_context_guard as context_guard
 from tools import wechat_public_sources as wechat
 from tools import wechat_registry_bridge as bridge
 
@@ -12,6 +13,7 @@ class WeChatPublicIndexFallbackTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         bridge.install(wechat)
+        context_guard.install(bridge)
 
     def _qbit_spec(self) -> dict:
         tracking = crawl_with_tracking.load_tracking()
