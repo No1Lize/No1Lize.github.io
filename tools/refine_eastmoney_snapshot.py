@@ -234,11 +234,20 @@ def refine_snapshot(
     result["articleCount"] = len(kept)
     result["sourceStatus"] = source_status
     if quality_settings is not None:
-        result["qualityGate"] = evaluate_quality(
+        quality = evaluate_quality(
             kept,
             source_status,
             quality_settings,
         )
+        previous_quality = snapshot.get("qualityGate", {})
+        tracking_quality = (
+            previous_quality.get("trackingQuality")
+            if isinstance(previous_quality, dict)
+            else None
+        )
+        if isinstance(tracking_quality, dict):
+            quality["trackingQuality"] = dict(tracking_quality)
+        result["qualityGate"] = quality
 
     report = {
         "eastmoneySeen": eastmoney_seen,
