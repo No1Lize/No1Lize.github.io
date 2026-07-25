@@ -1,0 +1,84 @@
+name: Finalize clean all-company research PDF archive
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/finalize-research-report-archive.yml
+      - tools/finalize_research_report_archive.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: finalize-research-report-archive
+  cancel-in-progress: true
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RESEARCH_REPORTS_PER_COMPANY: "3"
+      RESEARCH_REPORTS_MAX_TOTAL: "48"
+      RESEARCH_REPORT_MAX_BYTES: "16777216"
+      RESEARCH_REPORT_MAX_ARCHIVE_BYTES: "125829120"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Finalize and validate clean archive
+        run: |
+          mkdir -p .github/diagnostics
+          python tools/finalize_research_report_archive.py | tee .github/diagnostics/research-report-finalize.log
+          python -m unittest tests.test_research_reports
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path('public/data/research_reports.json').read_text(encoding='utf-8'))
+          reports = payload['reports']
+          counts = {market: sum(1 for item in reports if item.get('market') == market) for market in ('A股', '港股', '美股')}
+          assert payload['trackedCompanies'] == 15
+          assert all(counts.values()), counts
+          reject = ('certificate', 'iso 9001', 'form of proxy', 'annual general meeting', 'poll results', 'monthly return', 'next day disclosure', '委任表格', '股东大会通知', '月报表')
+          for report in reports:
+              combined = f"{report.get('title', '')} {report.get('sourcePageUrl', '')}".casefold()
+              assert not any(term.casefold() in combined for term in reject), report.get('title')
+              path = Path('public') / report['localPdfUrl'].lstrip('/')
+              data = path.read_bytes()
+              assert data.lstrip().startswith(b'%PDF-')
+              assert b'%%EOF' in data[-8192:]
+          Path('.github/diagnostics/research-report-finalize.json').write_text(json.dumps({
+              'trackedCompanies': payload['trackedCompanies'],
+              'marketCounts': payload['marketCounts'],
+              'reportMarketCounts': counts,
+              'reports': len(reports),
+              'archiveBytes': payload['archiveBytes'],
+              'status': 'success',
+          }, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+      - name: Commit clean archive
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/research_reports.json public/research-reports \
+            .github/diagnostics/research-report-finalize.log \
+            .github/diagnostics/research-report-finalize.json
+          git commit -m "data: finalize clean all-company research PDF archive" || true
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep 5
+          done
+          exit 1
+      - name: Trigger Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
