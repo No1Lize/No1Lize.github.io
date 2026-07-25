@@ -32,6 +32,28 @@ PDF_TERMS = (
     "业绩",
     "演示",
 )
+REJECT_TERMS = (
+    "certificate",
+    "certification",
+    "privacy policy",
+    "terms of use",
+    "code of conduct",
+    "supplier policy",
+    "iso 9001",
+    "press release pdf",
+    "news release pdf",
+    "proxy card",
+    "form of proxy",
+    "monthly return",
+    "notice of meeting",
+    "证书",
+    "认证证书",
+    "隐私政策",
+    "使用条款",
+    "月报表",
+    "代表委任表格",
+    "会议通知",
+)
 LANDING_TERMS = (
     "investor",
     "financial",
@@ -174,8 +196,15 @@ def is_direct_pdf(url: str) -> bool:
     return ".pdf" in combined
 
 
+def is_rejected_text(text: str) -> bool:
+    lowered = text.casefold()
+    return any(term.casefold() in lowered for term in REJECT_TERMS)
+
+
 def is_relevant_text(text: str, company: dict[str, str]) -> bool:
     lowered = text.casefold()
+    if is_rejected_text(lowered):
+        return False
     term_hit = any(term.casefold() in lowered for term in PDF_TERMS)
     alias_hit = any(alias.casefold() in lowered for alias in aliases(company))
     return term_hit and alias_hit
@@ -220,7 +249,7 @@ def extract_pdf_links(
         context_end = min(len(text), match.end() + 240)
         context = strip_tags(text[context_start:context_end])
         combined = f"{anchor} {context} {url}"
-        if not (
+        if is_rejected_text(combined) or not (
             is_relevant_text(combined, company)
             or (is_company_domain(url, website) and any(term in combined.casefold() for term in PDF_TERMS))
             or ("hkexnews.hk" in host_name(url) and any(term in combined.casefold() for term in PDF_TERMS))
@@ -244,11 +273,13 @@ def extract_pdf_links(
             continue
         window_at = escaped.find(url)
         context = strip_tags(escaped[max(0, window_at - 300): window_at + len(url) + 300])
-        if not (
-            is_relevant_text(context + " " + url, company)
-            or is_company_domain(url, website)
-            or "hkexnews.hk" in host_name(url)
-            or "sec.gov" in host_name(url)
+        combined = context + " " + url
+        if is_rejected_text(combined) or not (
+            is_relevant_text(combined, company)
+            or (
+                (is_company_domain(url, website) or "hkexnews.hk" in host_name(url) or "sec.gov" in host_name(url))
+                and any(term in combined.casefold() for term in PDF_TERMS)
+            )
         ):
             continue
         seen.add(url)
