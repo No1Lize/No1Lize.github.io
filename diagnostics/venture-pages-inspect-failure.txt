@@ -1,0 +1,18 @@
+inspect	Record relevant files and references	﻿2026-07-25T15:01:24.1495875Z ##[group]Run mkdir -p diagnostics
+inspect	Record relevant files and references	2026-07-25T15:01:24.1496929Z ^[[36;1mmkdir -p diagnostics^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1497976Z ^[[36;1m{^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1498728Z ^[[36;1m  echo '===== FILES ====='^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1500304Z ^[[36;1m  find app components lib data public tools tests config -maxdepth 5 -type f 2>/dev/null | sort^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1501878Z ^[[36;1m  echo^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1502638Z ^[[36;1m  echo '===== MATCHES ====='^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1504902Z ^[[36;1m  grep -RInE '创业案例|投资机构|Sequoia Capital|OpenAI|startup|venture|investment institution' app components lib data public tools tests config 2>/dev/null | head -1200 || true^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1507338Z ^[[36;1m} > diagnostics/venture-pages-structure.txt^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1508669Z ^[[36;1mgit config user.name 'github-actions[bot]'^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1510173Z ^[[36;1mgit config user.email '41898282+github-actions[bot]@users.noreply.github.com'^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1511799Z ^[[36;1mgit add diagnostics/venture-pages-structure.txt^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1513252Z ^[[36;1mgit commit -m 'ci: record startup and investment page structure'^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1514525Z ^[[36;1mgit pull --rebase origin main^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1515487Z ^[[36;1mgit push origin HEAD:main^[[0m
+inspect	Record relevant files and references	2026-07-25T15:01:24.1560811Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+inspect	Record relevant files and references	2026-07-25T15:01:24.1561926Z ##[endgroup]
+inspect	Record relevant files and references	2026-07-25T15:01:24.1722329Z ##[error]Process completed with exit code 1.

@@ -112,7 +112,7 @@ export function Dashboard() {
       <section className="dashboard-intro">
         <div>
           <p className="eyebrow">DAILY INTELLIGENCE DESK · 中美双轨</p>
-          <h1>把公开信息，变成可追溯的判断依据。</h1>
+          <h1>科技投资，每一天进步一点点！</h1>
           <p className="intro-copy">
             持续读取公司与监管披露、金融创投媒体、新浪、X、微信公开索引及开放论文数据库，连接中美科技公司的产品、融资、经营、研究与资本市场进展。
           </p>
