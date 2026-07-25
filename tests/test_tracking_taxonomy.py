@@ -17,12 +17,12 @@ class TrackingTaxonomyTests(unittest.TestCase):
             ["脑机接口(BCI)", "脑机接口", "BCI"],
         )
 
-    def test_shared_actors_are_not_unscoped_discovery_terms(self) -> None:
+    def test_shared_terms_are_not_unscoped_discovery_terms(self) -> None:
         tracks = [
             {
                 "slug": "energy",
                 "name": "新能源",
-                "keywords": ["长时储能"],
+                "keywords": ["聚变能源", "长时储能"],
                 "people": [],
                 "sampleCompanies": ["Helion Energy", "宁德时代"],
             },
@@ -43,8 +43,12 @@ class TrackingTaxonomyTests(unittest.TestCase):
 
         energy_terms = by_id["user-track-energy"]["keywords"]
         fusion_terms = by_id["user-track-fusion"]["keywords"]
+        self.assertIn("长时储能", energy_terms)
+        self.assertIn("托卡马克", fusion_terms)
         self.assertIn("宁德时代", energy_terms)
         self.assertIn("Commonwealth Fusion Systems", fusion_terms)
+        self.assertNotIn("聚变能源", energy_terms)
+        self.assertNotIn("聚变能源", fusion_terms)
         self.assertNotIn("Helion Energy", energy_terms)
         self.assertNotIn("Helion Energy", fusion_terms)
         self.assertIn("新能源", energy_terms)
