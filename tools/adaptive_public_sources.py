@@ -7,6 +7,12 @@ request headers and decoding candidates. Profiles do not own separate crawler
 implementations; candidate discovery, article parsing, filtering and quality
 control remain in the shared generic/robust stages.
 
+Some sites need a stricter publisher after common discovery. Those profiles use
+an explicit handoff: the adaptive pipeline still probes every public surface and
+records diagnostics, while one downstream plugin owns the published article
+batch. This prevents duplicate source identities without bypassing the shared
+adapter.
+
 The adapter is intentionally best-effort for public pages. Login-only content,
 CAPTCHAs, paywalls and sites that expose no public HTML/feed/search surface are
 reported as unavailable rather than fabricated as successful crawls.
@@ -54,6 +60,8 @@ class SourceProfile:
     default_language: str = ""
     encodings: tuple[str, ...] = ("utf-8",)
     accept_language: str = "zh-CN,zh;q=0.9,en;q=0.6"
+    publisher_handoff: str = ""
+    handoff_status_id: str = ""
 
 
 PROFILES = (
@@ -63,6 +71,8 @@ PROFILES = (
         default_language="zh-Hans",
         encodings=("utf-8", "gb18030"),
         accept_language="zh-CN,zh;q=0.9,en;q=0.5",
+        publisher_handoff="eastmoney-strict-detail",
+        handoff_status_id="official-user-东方财富",
     ),
     SourceProfile(
         id="yahoo-tw",
@@ -323,12 +333,13 @@ def merge_adaptive_history(
     crawler: Any,
     default_limit: int = DEFAULT_HISTORY_LIMIT,
 ) -> list[dict[str, Any]]:
-    """Keep a bounded history for successful adaptive website batches."""
+    """Keep a bounded history for successful directly published website batches."""
 
     adaptive_statuses = {
         str(status.get("id") or ""): status
         for status in statuses
         if status.get("adapter") == "adaptive-public-v1"
+        and not status.get("publisherHandoff")
         and status.get("status") in {"ok", "partial"}
         and int(status.get("accepted", 0) or 0) > 0
     }
@@ -466,4 +477,15 @@ def crawl_adaptive_source(
             "historyLimit": max(DEFAULT_HISTORY_LIMIT, max_items),
         }
     )
+
+    if profile.publisher_handoff:
+        discovered_count = len(items)
+        result["discoveredAccepted"] = discovered_count
+        result["accepted"] = 0
+        result["publisherHandoff"] = profile.publisher_handoff
+        result["handoffStatusId"] = profile.handoff_status_id
+        if discovered_count and result.get("status") == "ok":
+            result["status"] = "partial"
+        return [], result
+
     return items, result
