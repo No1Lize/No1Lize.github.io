@@ -1,0 +1,57 @@
+name: Diagnose homepage source-link deployment
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/diagnose-home-source-links.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        id: install
+        continue-on-error: true
+        run: npm install > /tmp/install.log 2>&1
+      - name: Unit tests
+        id: tests
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: npm run test:unit > /tmp/tests.log 2>&1
+      - name: Pages build
+        id: build
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: npm run build:pages > /tmp/build.log 2>&1
+      - name: Record result
+        run: |
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json, pathlib
+          def tail(path):
+              p=pathlib.Path(path)
+              return p.read_text(errors='replace')[-12000:] if p.exists() else ''
+          data={
+            'install':'${{ steps.install.outcome }}',
+            'tests':'${{ steps.tests.outcome }}',
+            'build':'${{ steps.build.outcome }}',
+            'installLog':tail('/tmp/install.log'),
+            'testLog':tail('/tmp/tests.log'),
+            'buildLog':tail('/tmp/build.log'),
+          }
+          pathlib.Path('diagnostics/home-source-link-build.json').write_text(json.dumps(data,ensure_ascii=False,indent=2))
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add diagnostics/home-source-link-build.json
+          git commit -m 'ci: record homepage source-link build result' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
