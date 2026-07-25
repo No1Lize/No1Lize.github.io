@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
+import "./ipo/[slug]/market-detail.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://no1lize.github.io"),
