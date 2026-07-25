@@ -129,8 +129,6 @@ def normalize_team_members(
             "name": name,
             "role": clean_text(member.get("role"), 160),
             "summary": clean_text(member.get("summary"), 360),
-            "background": clean_text(member.get("background"), 360),
-            "previousExperience": clean_text(member.get("previousExperience"), 360),
             "sourceUrl": clean_text(member.get("sourceUrl"), 2000),
         })
         seen.add(compact)
@@ -141,7 +139,7 @@ def normalize_team_members(
 
 def _event_has_evidence(event: dict[str, Any], capital_market: bool) -> bool:
     text = clean_text(
-        f"{event.get('type', '')} {event.get('title', '')} {event.get('summary', '')}", 1200
+        f"{event.get('title', '')} {event.get('summary', '')}", 1200
     )
     if capital_market:
         return bool(CAPITAL_MARKET_ACTION_PATTERN.search(text))
