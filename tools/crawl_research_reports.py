@@ -34,12 +34,6 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, quote_plus, urlencode, urljoin, urlparse
 from urllib.request import Request, urlopen
 
-from tools.research_report_adapters import (
-    discover_sec_candidates,
-    discover_web_candidates,
-    load_sec_ticker_map,
-)
-
 try:
     from tools.research_report_adapters import (
         discover_sec_candidates,
