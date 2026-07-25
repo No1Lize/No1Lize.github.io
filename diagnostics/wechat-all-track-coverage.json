@@ -1,0 +1,625 @@
+{
+  "snapshotGeneratedAt": "2026-07-25T23:46:54+00:00",
+  "enabledTrackCount": 12,
+  "generatedSourceCount": 30,
+  "executedSourceCount": 30,
+  "tracksWithoutExecutedSource": [],
+  "wechatIngestion": {
+    "generatedAt": "2026-07-25T23:46:54+00:00",
+    "configuredSources": 30,
+    "successfulSources": 13,
+    "acceptedArticles": 46,
+    "fullTextArticles": 40,
+    "indexOnlyArticles": 6,
+    "retainedSources": 17,
+    "mentionedCompanyLinks": 45,
+    "mentionedPeopleLinks": 99
+  },
+  "tracks": [
+    {
+      "sector": "AI / AGI",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 6,
+      "statusCount": 6,
+      "acceptedThisRun": 30,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 27,
+      "fullTextArticles": 27,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1,
+        "bing-or-public-index": 5
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-ai",
+          "name": "微信公众号 · AI / AGI",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-qbitai-ai",
+          "name": "量子位",
+          "status": "partial",
+          "scanned": 18,
+          "accepted": 6,
+          "failed": 8,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-jiqizhixin-ai",
+          "name": "机器之心",
+          "status": "partial",
+          "scanned": 25,
+          "accepted": 6,
+          "failed": 6,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-aitopics-ai",
+          "name": "新智元",
+          "status": "partial",
+          "scanned": 37,
+          "accepted": 6,
+          "failed": 7,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-aitechuang-ai",
+          "name": "AI科技评论",
+          "status": "ok",
+          "scanned": 17,
+          "accepted": 6,
+          "failed": 0,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-deeptechchina-ai",
+          "name": "DeepTech深科技",
+          "status": "ok",
+          "scanned": 16,
+          "accepted": 6,
+          "failed": 0,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "机器人",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 7,
+      "statusCount": 7,
+      "acceptedThisRun": 24,
+      "retainedSourceCount": 3,
+      "snapshotArticleCount": 11,
+      "fullTextArticles": 11,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 3,
+        "bing-or-public-index": 4
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-robotics",
+          "name": "微信公众号 · 机器人",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-qbitai-robotics",
+          "name": "量子位",
+          "status": "partial",
+          "scanned": 19,
+          "accepted": 6,
+          "failed": 8,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-jiqizhixin-robotics",
+          "name": "机器之心",
+          "status": "partial",
+          "scanned": 25,
+          "accepted": 6,
+          "failed": 5,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-aitopics-robotics",
+          "name": "新智元",
+          "status": "partial",
+          "scanned": 38,
+          "accepted": 6,
+          "failed": 7,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-aitechuang-robotics",
+          "name": "AI科技评论",
+          "status": "ok",
+          "scanned": 18,
+          "accepted": 6,
+          "failed": 0,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-robospeak-robotics",
+          "name": "机器人大讲堂",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-gg-robot-robotics",
+          "name": "高工机器人",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "半导体",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 3,
+      "statusCount": 3,
+      "acceptedThisRun": 6,
+      "retainedSourceCount": 2,
+      "snapshotArticleCount": 6,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 6,
+      "providers": {
+        "sogou-weixin+fallback": 2,
+        "public-index-metadata": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-semiconductor",
+          "name": "微信公众号 · 半导体",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-icbank-semiconductor",
+          "name": "半导体行业观察",
+          "status": "partial",
+          "scanned": 14,
+          "accepted": 6,
+          "failed": 14,
+          "platform": "微信",
+          "discoveryProvider": "public-index-metadata",
+          "indexOnly": true,
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-ijiwei-semiconductor",
+          "name": "集微网",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "新能源",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 3,
+      "statusCount": 3,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 3,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 3
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-energy",
+          "name": "微信公众号 · 新能源",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-gg-lithium-energy",
+          "name": "高工锂电",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-cbea-battery-energy",
+          "name": "电池中国",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "生物科技",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 2,
+      "statusCount": 2,
+      "acceptedThisRun": 6,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 1,
+      "fullTextArticles": 1,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1,
+        "bing-or-public-index": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-biotech",
+          "name": "微信公众号 · 生物科技",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-deeptechchina-biotech",
+          "name": "DeepTech深科技",
+          "status": "ok",
+          "scanned": 15,
+          "accepted": 6,
+          "failed": 0,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "量子计算",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 2,
+      "statusCount": 2,
+      "acceptedThisRun": 6,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1,
+        "bing-or-public-index": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-quantum",
+          "name": "微信公众号 · 量子计算",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-deeptechchina-quantum",
+          "name": "DeepTech深科技",
+          "status": "ok",
+          "scanned": 15,
+          "accepted": 6,
+          "failed": 0,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "商业航天",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 1,
+      "statusCount": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-space",
+          "name": "微信公众号 · 商业航天",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "Web3",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 1,
+      "statusCount": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-web3",
+          "name": "微信公众号 · Web3",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "新材料",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 2,
+      "statusCount": 2,
+      "acceptedThisRun": 6,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 1,
+      "fullTextArticles": 1,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1,
+        "bing-or-public-index": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-materials",
+          "name": "微信公众号 · 新材料",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-deeptechchina-materials",
+          "name": "DeepTech深科技",
+          "status": "ok",
+          "scanned": 15,
+          "accepted": 6,
+          "failed": 0,
+          "platform": "微信",
+          "discoveryProvider": "bing-or-public-index",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "智能制造",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 1,
+      "statusCount": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-manufacturing",
+          "name": "微信公众号 · 智能制造",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "可控核聚变",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 1,
+      "statusCount": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-fusion",
+          "name": "微信公众号 · 可控核聚变",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "风险投资",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 1,
+      "statusCount": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-track-1ccjq49",
+          "name": "微信公众号 · 风险投资",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    }
+  ]
+}
