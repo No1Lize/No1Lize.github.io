@@ -1,7 +1,6 @@
 import rawTrackingConfig from "@/config/user_tracking.json";
 import { ipoCompanies } from "@/lib/catalog-data";
 import { normalizeMarketTicker } from "@/lib/listed-company-identity";
-import { normalizeMarketTicker } from "@/lib/listed-company-identity";
 
 export const TRACKING_REPOSITORY = "No1Lize/No1Lize.github.io";
 export const TRACKING_BRANCH = "main";
