@@ -23,6 +23,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_INDEX_PATH = ROOT / "config" / "wechat_public_indexes.json"
 _INDEX_CACHE: dict[str, str] = {}
+_WECHAT: Any | None = None
 _GENERIC_ANCHOR_TEXT = {
     "",
     "打开原文",
@@ -183,9 +184,9 @@ def _extract_index_rows(
         title = _fallback_title(
             parser, int(link.get("position", 0)), str(link.get("title", ""))
         )
-        if not title or url in seen:
+        if not title or url in seen or _WECHAT is None:
             continue
-        companies, people, keywords = spec["_wechat"]._relevance_entities(
+        companies, people, keywords = _WECHAT._relevance_entities(
             title,
             context,
             "",
@@ -278,6 +279,8 @@ def _fallback_index_rows(
 def install(wechat: Any) -> None:
     """Apply whitelist-first discovery, account verification, and fallbacks."""
 
+    global _WECHAT
+    _WECHAT = wechat
     index_map = _load_public_indexes()
     original_generate = wechat_source_registry.generated_wechat_sources
 
@@ -286,7 +289,6 @@ def install(wechat: Any) -> None:
         for spec in specs:
             account_id = str(spec.get("accountConfigId") or "")
             spec["publicIndexUrls"] = list(index_map.get(account_id, []))
-            spec["_wechat"] = wechat
         return specs
 
     setattr(generated_wechat_sources, "_wechat_registry_indexed", True)
