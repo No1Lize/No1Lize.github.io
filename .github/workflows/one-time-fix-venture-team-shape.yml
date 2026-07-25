@@ -1,4 +1,4 @@
-name: One-time venture project background sanitation
+name: One-time venture project background fallback
 
 on:
   push:
@@ -35,30 +35,35 @@ jobs:
           from pathlib import Path
           path = Path("lib/venture-profile-data.ts")
           text = path.read_text(encoding="utf-8")
-          old = '''function normalizeProjectBackground(value: unknown): VentureProjectBackground | undefined {
-            if (!value || typeof value !== "object") return undefined;
-            const row = value as Record<string, unknown>;
-            const summary = clean(row.summary, 900);
-            if (!summary) return undefined;
+          old = '''function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
+            const projectBackground = normalizeProjectBackground(raw.projectBackground);
             return {
-              summary,
-              problemSolved: clean(row.problemSolved, 520) || undefined,
-              marketOpportunity: clean(row.marketOpportunity, 520) || undefined,
-            };
-          }'''
-          new = '''function normalizeProjectBackground(value: unknown): VentureProjectBackground | undefined {
-            if (!value || typeof value !== "object") return undefined;
-            const row = value as Record<string, unknown>;
-            const summary = sanitizeVentureNarrative(row.summary, 900);
-            if (!summary) return undefined;
+              slug: clean(raw.slug, 100),
+              name: clean(raw.name, 120),
+              updatedAt: clean(raw.updatedAt, 40),
+              status: raw.status || "fallback",
+              background: projectBackground?.summary || sanitizeVentureNarrative(raw.background, 900),
+              projectBackground,'''
+          new = '''function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
+            const fallbackBackground = sanitizeVentureNarrative(raw.background, 900);
+            const projectBackground =
+              normalizeProjectBackground(raw.projectBackground) ??
+              (Number(raw.researchModelVersion) >= 2
+                ? {
+                    summary:
+                      fallbackBackground ||
+                      "当前公开来源未提供可核对的项目背景说明。",
+                  }
+                : undefined);
             return {
-              summary,
-              problemSolved: sanitizeVentureNarrative(row.problemSolved, 520) || undefined,
-              marketOpportunity: sanitizeVentureNarrative(row.marketOpportunity, 520) || undefined,
-            };
-          }'''
+              slug: clean(raw.slug, 100),
+              name: clean(raw.name, 120),
+              updatedAt: clean(raw.updatedAt, 40),
+              status: raw.status || "fallback",
+              background: projectBackground?.summary || fallbackBackground,
+              projectBackground,'''
           if old not in text:
-              raise SystemExit("normalizeProjectBackground block not found")
+              raise SystemExit("normalizeCompanyProfile project background block not found")
           path.write_text(text.replace(old, new, 1), encoding="utf-8")
           PY
           npm install
@@ -69,6 +74,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add lib/venture-profile-data.ts
-          git commit -m "fix: sanitize structured project background narratives"
+          git commit -m "fix: preserve structured project background fallback"
           git pull --rebase origin main
           git push origin HEAD:main
