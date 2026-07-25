@@ -83,7 +83,7 @@ function hasNamedEntityShape(value: string): boolean {
   const term = normalize(value);
   if (!term || GENERIC_CONCEPTS.has(key(term))) return false;
 
-  // Acronym/project code: GRPO, MCP, VLA, HBM, Qwen3.
+  // Acronym/project code: GRPO, MCP, VLA, HBM.
   if (/^[A-Z][A-Z0-9]{2,11}(?:-[A-Z0-9]{1,10})*$/.test(term)) return true;
 
   // Versioned/model identifiers: GPT-5, Gemini 2.5, Qwen3-32B.
@@ -116,6 +116,19 @@ function hasNamedEntityShape(value: string): boolean {
   return false;
 }
 
+export function isAllowedDisplayedKeywordRecommendation(
+  item: TrackingRecommendation,
+): boolean {
+  const term = normalize(item.value);
+  if (!term || GENERIC_CONCEPTS.has(key(term))) return false;
+
+  // Seeded recommendations have already passed the configured vocabulary gate.
+  if (!item.reason.startsWith("动态发现：")) return true;
+
+  // Dynamic recommendations must be named entities, never isolated common nouns.
+  return hasNamedEntityShape(term);
+}
+
 export function isAllowedKeywordRecommendation(
   item: TrackingRecommendation,
   selectedSector: string,
@@ -123,11 +136,8 @@ export function isAllowedKeywordRecommendation(
   const term = normalize(item.value);
   if (!term || GENERIC_CONCEPTS.has(key(term))) return false;
 
-  // Curated seed terms remain available as prior knowledge.
   if (seedTermsForSector(selectedSector).has(key(term))) return true;
-
-  // Newly discovered candidates must look like a named entity, not a common noun.
-  return item.reason.startsWith("动态发现：") && hasNamedEntityShape(term);
+  return isAllowedDisplayedKeywordRecommendation(item);
 }
 
 export function recommendPolicyCheckedTrackingAdditions(
