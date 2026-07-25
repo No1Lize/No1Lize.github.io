@@ -10,7 +10,7 @@ import {
   resolveSectorDefinition,
   sectorCompleteness,
 } from "@/lib/sector-profile-generator";
-import { trackIdentityTerms } from "@/lib/tracking-taxonomy";
+import { uniqueIdentityTermsByTrack } from "@/lib/tracking-taxonomy";
 import {
   userTrackingConfig,
   type TrackingTrack,
@@ -83,59 +83,59 @@ function buildRaw(): SectorRaw[] {
   const yearAgo = asOf - 365 * 24 * 60 * 60 * 1000;
   const ninetyDaysAgo = asOf - 90 * 24 * 60 * 60 * 1000;
   const previousNinetyDays = asOf - 180 * 24 * 60 * 60 * 1000;
+  const activeTracks = userTrackingConfig.tracks.filter((track) => track.enabled);
+  const ownedIdentityTerms = uniqueIdentityTermsByTrack(activeTracks);
 
-  return userTrackingConfig.tracks
-    .filter((track) => track.enabled)
-    .map((tracking) => {
-      const base =
-        baseBySlug.get(tracking.slug) ?? baseByName.get(tracking.name);
-      const aliases = unique(
-        [...trackIdentityTerms(tracking), base?.name ?? ""],
-        24,
-      );
-      const aliasKeys = new Set(
-        aliases.map((alias) => alias.toLocaleLowerCase("zh-CN")),
-      );
-      const events = intelligenceEvents.filter(
-        (event) =>
-          aliasKeys.has(event.sector.toLocaleLowerCase("zh-CN")) &&
-          dateValue(event.publishedAt) >= yearAgo,
-      );
-      const financing = events.filter((event) => event.type === "融资").length;
-      const institutions = new Set(
-        events.flatMap((event) => event.institutions ?? []),
-      ).size;
-      const weightedEvents = Math.round(
-        events.reduce((sum, event) => sum + event.importance, 0) / 100,
-      );
-      const ipo = events.filter((event) =>
-        ["IPO", "监管文件", "财报"].includes(event.type),
-      ).length;
-      const research = events.filter((event) =>
-        ["技术突破", "政策", "产品发布", "论文"].includes(event.type),
-      ).length;
-      const current = events.filter(
-        (event) => dateValue(event.publishedAt) >= ninetyDaysAgo,
-      ).length;
-      const previous = events.filter((event) => {
-        const timestamp = dateValue(event.publishedAt);
-        return timestamp >= previousNinetyDays && timestamp < ninetyDaysAgo;
-      }).length;
+  return activeTracks.map((tracking) => {
+    const base =
+      baseBySlug.get(tracking.slug) ?? baseByName.get(tracking.name);
+    const aliases = unique(
+      [...(ownedIdentityTerms.get(tracking.slug) ?? [tracking.name]), base?.name ?? ""],
+      24,
+    );
+    const aliasKeys = new Set(
+      aliases.map((alias) => alias.toLocaleLowerCase("zh-CN")),
+    );
+    const events = intelligenceEvents.filter(
+      (event) =>
+        aliasKeys.has(event.sector.toLocaleLowerCase("zh-CN")) &&
+        dateValue(event.publishedAt) >= yearAgo,
+    );
+    const financing = events.filter((event) => event.type === "融资").length;
+    const institutions = new Set(
+      events.flatMap((event) => event.institutions ?? []),
+    ).size;
+    const weightedEvents = Math.round(
+      events.reduce((sum, event) => sum + event.importance, 0) / 100,
+    );
+    const ipo = events.filter((event) =>
+      ["IPO", "监管文件", "财报"].includes(event.type),
+    ).length;
+    const research = events.filter((event) =>
+      ["技术突破", "政策", "产品发布", "论文"].includes(event.type),
+    ).length;
+    const current = events.filter(
+      (event) => dateValue(event.publishedAt) >= ninetyDaysAgo,
+    ).length;
+    const previous = events.filter((event) => {
+      const timestamp = dateValue(event.publishedAt);
+      return timestamp >= previousNinetyDays && timestamp < ninetyDaysAgo;
+    }).length;
 
-      return {
-        tracking,
-        base,
-        aliases,
-        events,
-        financing,
-        institutions,
-        weightedEvents,
-        ipo,
-        research,
-        current,
-        previous,
-      };
-    });
+    return {
+      tracking,
+      base,
+      aliases,
+      events,
+      financing,
+      institutions,
+      weightedEvents,
+      ipo,
+      research,
+      current,
+      previous,
+    };
+  });
 }
 
 function buildTrackedSectors(): TrackedSector[] {
