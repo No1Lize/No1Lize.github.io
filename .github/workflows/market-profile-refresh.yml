@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Crawl listed market profiles
-        run: python tools/crawl_market_profiles.py
+        run: python tools/refresh_market_profiles.py
       - name: Verify three-market parser and fallback behavior
         run: python -m unittest tests.test_market_profiles
       - name: Commit market snapshot
@@ -42,7 +42,7 @@ jobs:
           git add public/data/market_profiles.json
           git commit -m "data: initialize three-market company profiles"
           git pull --rebase origin main
-          python tools/crawl_market_profiles.py
+          python tools/refresh_market_profiles.py
           python -m unittest tests.test_market_profiles
           git add public/data/market_profiles.json
           if ! git diff --cached --quiet; then
