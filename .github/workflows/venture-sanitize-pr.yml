@@ -1,0 +1,70 @@
+name: Venture sanitation PR runner
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - .venture-sanitize-trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: venture-sanitize-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  sanitize:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == github.repository_owner &&
+      github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Normalize and validate venture snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py \
+            tools/sanitize_venture_profiles.py \
+            tools/sanitize_venture_narratives.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer
+          python tools/normalize_venture_profiles.py
+          python tools/sanitize_venture_profiles.py
+          python tools/sanitize_venture_narratives.py
+          python tools/normalize_venture_profiles.py --check
+          python tools/sanitize_venture_profiles.py --check
+          python tools/sanitize_venture_narratives.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+          git diff --check
+      - name: Commit sanitized data to PR branch
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .venture-sanitize-trigger
+          git add public/data/venture_profiles.json
+          git commit -m "data: normalize startup and institution profiles"
+          git push origin "HEAD:${HEAD_REF}"
