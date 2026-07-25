@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-25T13:05:19+00:00",
+  "generatedAt": "2026-07-25T13:38:49+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-07-25T13:04:59+00:00",
+      "updatedAt": "2026-07-25T13:38:01+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -1064,7 +1064,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-07-25T13:04:58+00:00",
+      "updatedAt": "2026-07-25T13:38:01+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2117,7 +2117,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-07-25T13:04:57+00:00",
+      "updatedAt": "2026-07-25T13:38:01+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3165,7 +3165,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-07-25T13:04:55+00:00",
+      "updatedAt": "2026-07-25T13:38:00+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4217,7 +4217,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-07-25T13:04:56+00:00",
+      "updatedAt": "2026-07-25T13:38:00+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5269,7 +5269,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-07-25T13:05:05+00:00",
+      "updatedAt": "2026-07-25T13:38:08+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6250,37 +6250,12 @@
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "US$30.97亿"
-        },
-        {
-          "id": "floatMarketCap",
-          "label": "流通市值",
-          "value": "US$25.19亿"
-        },
-        {
-          "id": "pb",
-          "label": "市净率",
-          "value": "1.92"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "1.35%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "US$3440.18万"
+          "value": "US$30.94亿"
         },
         {
           "id": "totalShares",
           "label": "总股本",
           "value": "4.34亿股"
-        },
-        {
-          "id": "floatShares",
-          "label": "流通股",
-          "value": "3.53亿股"
         },
         {
           "id": "eps",
@@ -6316,8 +6291,7 @@
       "financialSeries": [],
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/PONY/",
-        "price": "https://query1.finance.yahoo.com/v8/finance/chart/PONY?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-        "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.PONY&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170"
+        "price": "https://query1.finance.yahoo.com/v8/finance/chart/PONY?range=6mo&interval=1d&events=history&includeAdjustedClose=true"
       }
     },
     "weride": {
@@ -6325,7 +6299,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-07-25T13:05:05+00:00",
+      "updatedAt": "2026-07-25T13:38:09+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7376,7 +7350,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-07-25T13:05:05+00:00",
+      "updatedAt": "2026-07-25T13:38:10+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8437,7 +8411,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-07-25T13:05:07+00:00",
+      "updatedAt": "2026-07-25T13:38:17+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -9498,7 +9472,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-07-25T13:05:08+00:00",
+      "updatedAt": "2026-07-25T13:38:19+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -10559,7 +10533,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-07-25T13:05:14+00:00",
+      "updatedAt": "2026-07-25T13:38:28+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -11620,7 +11594,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-07-25T13:05:15+00:00",
+      "updatedAt": "2026-07-25T13:38:29+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -12681,7 +12655,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-07-25T13:05:15+00:00",
+      "updatedAt": "2026-07-25T13:38:41+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -13742,7 +13716,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-07-25T13:05:16+00:00",
+      "updatedAt": "2026-07-25T13:38:41+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -14802,7 +14776,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-07-25T13:05:17+00:00",
+      "updatedAt": "2026-07-25T13:38:45+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
