@@ -22,6 +22,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # status check revision: fixed-publisher-v2
           mkdir -p diagnostics
           gh run list \
             --workflow one-time-user-source-publish.yml \
