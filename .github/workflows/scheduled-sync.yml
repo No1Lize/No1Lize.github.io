@@ -28,7 +28,6 @@ on:
       - config/intelligence_sources.json
       - config/official_company_sources.json
       - config/user_tracking.json
-      - public/data/market_profiles.json
       - .github/workflows/scheduled-sync.yml
   schedule:
     - cron: "17 */2 * * *"
