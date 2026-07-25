@@ -1,0 +1,73 @@
+name: Adaptive source pipeline diagnostics
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/adaptive-source-pipeline-diagnostics.yml
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run adaptive pipeline diagnostics
+        shell: bash
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: |
+          set +e
+          REPORT="diagnostics/adaptive-source-pipeline-report.txt"
+          mkdir -p diagnostics
+          run_step() {
+            local name="$1"
+            shift
+            echo >>"$REPORT"
+            echo "===== $name =====" >>"$REPORT"
+            "$@" >>"$REPORT" 2>&1
+            echo "exit_code=$?" >>"$REPORT"
+          }
+          {
+            echo "commit=$(git rev-parse HEAD)"
+            echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          } >"$REPORT"
+          run_step "crawl_user_sources" python tools/crawl_with_source_categories.py --source feeds
+          run_step "crawl_eastmoney_official" python tools/eastmoney_transport.py
+          run_step "migrate" python tools/migrate_article_entities.py
+          run_step "refine_eastmoney" python tools/refine_eastmoney_snapshot.py
+          run_step "enrich_tracking" python tools/enrich_tracking_snapshot.py
+          run_step "quality_validate" python tools/crawl_articles.py --validate-only
+          run_step "eastmoney_validate" python tools/validate_eastmoney_snapshot.py
+          run_step "user_source_coverage" python tools/validate_user_source_coverage.py
+          run_step "full_unittest" python -m unittest discover -s tests -p "test_*.py"
+          echo >>"$REPORT"
+          echo "===== selected_statuses =====" >>"$REPORT"
+          python - <<'PY' >>"$REPORT" 2>&1
+          import json
+          from pathlib import Path
+          payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
+          selected = [
+              status for status in payload.get('sourceStatus', [])
+              if any(token in str(status.get('id', '')).casefold() for token in ('yahoo', '东方财富', 'youtube', 'source-b', 'jycfcg', 'washington-post'))
+          ]
+          print(json.dumps({
+              'generatedAt': payload.get('generatedAt'),
+              'articleCount': payload.get('articleCount'),
+              'statuses': selected,
+          }, ensure_ascii=False, indent=2))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$REPORT"
+          git commit -m "ci: record adaptive source pipeline diagnostics"
+          git pull --rebase origin main
+          git push origin HEAD:main
