@@ -1,4 +1,4 @@
-name: One-time venture team shape compatibility fix
+name: One-time venture project background fallback
 
 on:
   push:
@@ -10,13 +10,13 @@ permissions:
   contents: write
 
 concurrency:
-  group: one-time-venture-team-shape
+  group: one-time-venture-project-background
   cancel-in-progress: false
 
 jobs:
   patch:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,36 +24,56 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Patch, test and commit
         run: |
           set -euo pipefail
           git pull --rebase origin main
           python - <<'PY'
           from pathlib import Path
-          path = Path("tools/normalize_venture_profiles.py")
-          lines = path.read_text(encoding="utf-8").splitlines()
-          remove_terms = (
-              '"background": clean_text(member.get("background")',
-              '"previousExperience": clean_text(member.get("previousExperience")',
-          )
-          filtered = [line for line in lines if not any(term in line for term in remove_terms)]
-          if len(filtered) != len(lines) - 2:
-              raise SystemExit(f"expected to remove 2 team-shape lines, removed {len(lines) - len(filtered)}")
-          path.write_text("\n".join(filtered) + "\n", encoding="utf-8")
+          path = Path("lib/venture-profile-data.ts")
+          text = path.read_text(encoding="utf-8")
+          old = '''function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
+            const projectBackground = normalizeProjectBackground(raw.projectBackground);
+            return {
+              slug: clean(raw.slug, 100),
+              name: clean(raw.name, 120),
+              updatedAt: clean(raw.updatedAt, 40),
+              status: raw.status || "fallback",
+              background: projectBackground?.summary || sanitizeVentureNarrative(raw.background, 900),
+              projectBackground,'''
+          new = '''function normalizeCompanyProfile(raw: CompanyVentureProfile): CompanyVentureProfile {
+            const fallbackBackground = sanitizeVentureNarrative(raw.background, 900);
+            const projectBackground =
+              normalizeProjectBackground(raw.projectBackground) ??
+              (Number(raw.researchModelVersion) >= 2
+                ? {
+                    summary:
+                      fallbackBackground ||
+                      "当前公开来源未提供可核对的项目背景说明。",
+                  }
+                : undefined);
+            return {
+              slug: clean(raw.slug, 100),
+              name: clean(raw.name, 120),
+              updatedAt: clean(raw.updatedAt, 40),
+              status: raw.status || "fallback",
+              background: projectBackground?.summary || fallbackBackground,
+              projectBackground,'''
+          if old not in text:
+              raise SystemExit("normalizeCompanyProfile project background block not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
           PY
-          python -m py_compile \
-            tools/venture_profile_extraction.py \
-            tools/crawl_venture_profiles.py \
-            tools/enrich_venture_profiles.py \
-            tools/normalize_venture_profiles.py
-          python -m unittest \
-            tests.test_venture_profile_extraction \
-            tests.test_venture_profile_noise_filters \
-            tests.test_venture_profile_enrichment \
-            tests.test_normalize_venture_profiles
+          npm install
+          node --import tsx --test \
+            tests/venture-profile-data.test.ts \
+            tests/catalog.test.ts
+          GITHUB_PAGES=true npx next build
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+users.noreply.github.com"
-          git add tools/normalize_venture_profiles.py
-          git commit -m "fix: keep venture team records compatible with quality validation"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/venture-profile-data.ts
+          git commit -m "fix: preserve structured project background fallback"
           git pull --rebase origin main
           git push origin HEAD:main

@@ -30,6 +30,7 @@ jobs:
       - name: Run full venture validation and record report
         shell: bash
         run: |
+          # stability-validation-v3
           set +e
           mkdir -p diagnostics
           REPORT=diagnostics/venture-research-validation.txt

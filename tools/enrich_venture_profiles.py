@@ -433,6 +433,13 @@ def _company_project_background(
     profile: dict[str, Any],
     articles: Sequence[dict[str, Any]],
 ) -> dict[str, str]:
+    existing = profile.get("projectBackground")
+    if isinstance(existing, dict) and clean_text(existing.get("summary"), 760):
+        return {
+            "summary": clean_text(existing.get("summary"), 760),
+            "problemSolved": clean_text(existing.get("problemSolved"), 460),
+            "marketOpportunity": clean_text(existing.get("marketOpportunity"), 460),
+        }
     aliases = company.aliases
     article_values = [
         f"{article.get('title', '')}。{article.get('summary', '')}"

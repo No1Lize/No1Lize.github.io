@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-25T16:54:14+00:00",
+  "generatedAt": "2026-07-25T17:07:50+00:00",
   "articleCount": 473,
   "articles": [
     {
@@ -7678,9 +7678,7 @@
       "mentionedCompanies": [
         "Anthropic"
       ],
-      "mentionedPeople": [
-        "Claude Code"
-      ],
+      "mentionedPeople": [],
       "matchedTrackingTerms": [],
       "wechatAccountConfigId": "qbitai",
       "trackSlugs": [
@@ -7715,8 +7713,7 @@
       ],
       "mentionedPeople": [
         "Ethan Knight",
-        "Noam Brown",
-        "Sol Ultra"
+        "Noam Brown"
       ],
       "matchedTrackingTerms": [
         "智能体",
@@ -7895,15 +7892,10 @@
         "DeepSeek"
       ],
       "mentionedPeople": [
-        "QbitAI DeepSeek",
-        "Autoregressive Drafting",
-        "Speculative Decoding",
-        "EPIC Lab",
         "Jianuo Huang",
         "Yaojie Zhang",
         "Linfeng Zhang",
-        "黄佳诺",
-        "论文链接"
+        "黄佳诺"
       ],
       "matchedTrackingTerms": [],
       "wechatAccountConfigId": "qbitai",
@@ -8131,10 +8123,8 @@
       ],
       "mentionedPeople": [
         "Joshua Achiam",
-        "Mission Alignment",
         "Chris Lehane",
         "Dario Amodei",
-        "Anthropic CEO",
         "David Luan",
         "Jan Leike",
         "Miles Brundage",
@@ -8428,9 +8418,7 @@
       ],
       "mentionedPeople": [
         "李飞飞",
-        "Google Chrome",
         "Addy Osmani",
-        "FaceMind Research Asia",
         "陆弘远"
       ],
       "matchedTrackingTerms": [
@@ -8769,9 +8757,7 @@
         "唐杰",
         "Yuchen Jin",
         "CEO Lior Div",
-        "Mythos Preview",
         "Nicholas Carlini",
-        "Carlini Loop",
         "Niels Provos"
       ],
       "matchedTrackingTerms": [
@@ -8901,7 +8887,6 @@
         "阿里云 / Qwen"
       ],
       "mentionedPeople": [
-        "Agent Harness",
         "工程师",
         "工程师和用",
         "深度学习",
@@ -9042,7 +9027,6 @@
         "Digital Psychiatry",
         "Hamilton Morrin",
         "AI-Associated Mental Health",
-        "Claude Code",
         "Fiona Fung"
       ],
       "matchedTrackingTerms": [
@@ -15164,12 +15148,18 @@
     }
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-25T16:54:14+00:00",
+    "generatedAt": "2026-07-25T17:07:50+00:00",
     "configuredSources": 2,
     "successfulSources": 2,
-    "acceptedArticles": 12,
+    "acceptedArticles": 10,
     "retainedSources": 0,
-    "mentionedCompanyLinks": 17,
-    "mentionedPeopleLinks": 69
+    "mentionedCompanyLinks": 14,
+    "mentionedPeopleLinks": 33,
+    "fullTextArticles": 10,
+    "indexOnlyArticles": 0,
+    "qualityCleanedAt": "2026-07-25T17:07:50+00:00",
+    "qualityRemovedCrossSectorDuplicates": 0,
+    "qualityRemovedNonPeople": 0,
+    "nonWechatArticlesPreserved": 463
   }
 }
