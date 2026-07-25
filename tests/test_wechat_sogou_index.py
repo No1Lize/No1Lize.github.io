@@ -20,6 +20,19 @@ class WeChatSogouIndexTest(unittest.TestCase):
         self.assertIn("%E9%87%8F%E5%AD%90%E4%BD%8D", url)
         self.assertIn("%E6%8E%A8%E7%90%86%E6%A8%A1%E5%9E%8B", url)
 
+    def test_generic_track_query_uses_sector_not_display_prefix(self) -> None:
+        spec = {
+            "name": "微信公众号 · 商业航天",
+            "sector": "商业航天",
+            "queryIdentity": "商业航天",
+            "genericDiscovery": True,
+            "keywords": ["商业航天", "可复用火箭"],
+        }
+        query = sogou._query_term(spec)
+        self.assertTrue(query.startswith("商业航天"))
+        self.assertIn("可复用火箭", query)
+        self.assertNotIn("微信公众号", query)
+
     def test_parses_server_rendered_article_result(self) -> None:
         body = """
         <ul class="news-list">
