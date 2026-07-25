@@ -65,6 +65,39 @@ PURE_RESEARCH_LABELS = {
     "ai安全研究",
 }
 
+PRODUCT_NOISE_TERMS = (
+    "terms of service",
+    "data processing agreement",
+    "privacy policy",
+    "investor relations",
+    "transfer agent",
+    "annual report",
+    "earnings",
+    "contact",
+    "careers",
+    "招聘",
+    "投资者关系",
+    "联系方式",
+)
+PRODUCT_PERIOD_RE = re.compile(
+    r"^(?:q[1-4]|fy)\s*20\d{2}$|^20\d{2}\s*(?:q[1-4]|年度|年报)$",
+    re.IGNORECASE,
+)
+TEAM_NAME_NOISE_TERMS = (
+    "investor relations",
+    "transfer agent",
+    "email",
+    "contact",
+    "careers",
+    "privacy",
+    "management team",
+    "board of directors",
+    "投资者关系",
+    "联系方式",
+    "管理团队",
+    "董事会",
+)
+
 STRONG_FINANCING_RE = re.compile(
     r"\b(?:rais(?:e|ed|es|ing)|funding round|financing round|"
     r"seed round|pre-seed funding|secured .{0,40} funding|"
@@ -75,9 +108,9 @@ STRONG_FINANCING_RE = re.compile(
 )
 INVESTED_IN_RE = re.compile(r"\b(?:invested|invests|investing)\s+(?:in|into)\b", re.IGNORECASE)
 CAPITAL_EVIDENCE_RE = re.compile(
-    r"\b(?:ipo|listed|listing|went public|acquired|acquisition|merger|"
-    r"nasdaq|nyse|hkex|stock exchange)\b|"
-    r"(?:上市|挂牌|并购|收购|退出|退市|交易所|公开市场)",
+    r"\b(?:ipo|initial public offering|went public|listed on|listing on|"
+    r"acquired by|acquisition|merger|delisted)\b|"
+    r"(?:完成上市|正式上市|申请上市|挂牌|并购|收购|完成退出|退市|公开市场)",
     re.IGNORECASE,
 )
 CASE_EVIDENCE_RE = re.compile(
@@ -121,14 +154,38 @@ def _unique_strings(values: Iterable[Any], limit: int, item_limit: int) -> list[
     return result
 
 
+def _split_product_values(values: Sequence[Any]) -> list[str]:
+    result: list[str] = []
+    for raw in values:
+        value = clean_text(raw, 800)
+        result.extend(
+            clean_text(part, 180).strip(" >›→-|｜。.!！")
+            for part in re.split(
+                r"[、，,;/]|\s*与\s*|\s+and\s+",
+                value,
+                flags=re.IGNORECASE,
+            )
+            if clean_text(part, 180).strip(" >›→-|｜。.!！")
+        )
+    return result
+
+
+def _product_noise(value: Any) -> bool:
+    item = clean_text(value, 240).strip()
+    lowered = item.casefold()
+    compact = _compact(item)
+    if compact in {_compact(label) for label in PURE_RESEARCH_LABELS}:
+        return True
+    if any(term in lowered for term in PRODUCT_NOISE_TERMS):
+        return True
+    return bool(PRODUCT_PERIOD_RE.fullmatch(item))
+
+
 def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
-    normalized_catalog = re.sub(r"\s*与\s*", "、", catalog_product)
-    products = sanitize_products(values, normalized_catalog)
-    return [
-        item
-        for item in products
-        if _compact(item) not in {_compact(label) for label in PURE_RESEARCH_LABELS}
-    ][:10]
+    normalized_values = _split_product_values(values)
+    normalized_catalog = "、".join(_split_product_values([catalog_product]))
+    products = sanitize_products(normalized_values, normalized_catalog)
+    return [item for item in products if not _product_noise(item)][:10]
 
 
 def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[str, str]]:
@@ -138,10 +195,13 @@ def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[st
     }
     result: list[dict[str, str]] = []
     for row in sanitize_team_members(values, aliases):
-        original = originals.get(clean_text(row.get("name"), 120).casefold(), {})
+        name = clean_text(row.get("name"), 120)
+        if any(term in name.casefold() for term in TEAM_NAME_NOISE_TERMS):
+            continue
+        original = originals.get(name.casefold(), {})
         result.append(
             {
-                "name": clean_text(row.get("name"), 120),
+                "name": name,
                 "role": clean_text(row.get("role"), 160),
                 "summary": clean_text(row.get("summary"), 360),
                 "background": clean_text(original.get("background"), 420),
