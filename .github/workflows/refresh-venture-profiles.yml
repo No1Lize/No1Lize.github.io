@@ -13,6 +13,7 @@ on:
       - tools/sanitize_venture_narratives.py
       - tools/finalize_venture_profiles.py
       - tools/enforce_venture_entity_semantics.py
+      - tools/stabilize_venture_profiles.py
       - lib/catalog-data.ts
       - lib/venture-profile-data.ts
       - public/data/articles.json
@@ -27,6 +28,7 @@ on:
       - tests/test_venture_narrative_sanitizer.py
       - tests/test_finalize_venture_profiles.py
       - tests/test_venture_entity_semantics.py
+      - tests/test_stabilize_venture_profiles.py
       - tests/venture-profile-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
   schedule:
@@ -52,9 +54,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Verify crawler syntax and focused tests
+      - name: Verify venture pipeline and regressions
         run: |
-          # semantic-profile-refresh-v17
           python -m py_compile \
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
@@ -64,7 +65,8 @@ jobs:
             tools/sanitize_venture_profiles.py \
             tools/sanitize_venture_narratives.py \
             tools/finalize_venture_profiles.py \
-            tools/enforce_venture_entity_semantics.py
+            tools/enforce_venture_entity_semantics.py \
+            tools/stabilize_venture_profiles.py
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
@@ -74,7 +76,8 @@ jobs:
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
             tests.test_finalize_venture_profiles \
-            tests.test_venture_entity_semantics
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
       - name: Record catalog revision
         id: catalog-before
         env:
@@ -93,18 +96,18 @@ jobs:
           python tools/refine_venture_research_evidence.py --check
       - name: Normalize cross-entity profile consistency
         run: python tools/normalize_venture_profiles.py
-      - name: Apply structural venture quality gate
+      - name: Reach the shared terminal quality fixed point
         run: |
-          python tools/finalize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
-      - name: Apply entity-semantic quality gate
-        run: |
-          python tools/enforce_venture_entity_semantics.py
           python tools/enforce_venture_entity_semantics.py --check
       - name: Validate generated venture snapshot
         run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
+          python tools/refine_venture_research_evidence.py --check
+          python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
           python -m unittest \
@@ -116,7 +119,8 @@ jobs:
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
             tests.test_finalize_venture_profiles \
-            tests.test_venture_entity_semantics
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
       - uses: actions/setup-node@v4
         with:
           node-version: 22

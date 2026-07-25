@@ -131,6 +131,16 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
                     "source": {"url": "https://example.com/funding"},
                 },
                 {
+                    "company": "Infinity",
+                    "companySlug": "infinity",
+                    "title": "Infinity完成融资",
+                    "summary": "Infinity完成融资，研究人员曾来自智元机器人，Sequoia Capital未参与本轮。",
+                    "type": "融资",
+                    "publishedAt": "2026-07-20",
+                    "institutions": ["Touring Capital"],
+                    "source": {"url": "https://example.com/infinity"},
+                },
+                {
                     "company": "智元机器人",
                     "companySlug": "agibot",
                     "title": "远征A3技术说明",
@@ -174,6 +184,8 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
         self.assertIn("彭志辉", team["彭志辉"]["summary"])
 
         self.assertEqual(len(company["financing"]), 1)
+        self.assertNotIn("Infinity", company["financing"][0]["title"])
+        self.assertNotIn("Infinity", company["projectBackground"]["summary"])
         self.assertIn("B轮融资", company["financing"][0]["title"])
         self.assertEqual(len(company["capitalMarkets"]), 1)
         self.assertEqual(company["capitalMarkets"][0]["type"], "上市")
