@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 from collections import defaultdict
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit, urlunsplit
@@ -29,6 +30,86 @@ EASTMONEY_INDEX_PATTERN = re.compile(
     r"/(?:a|news)/(?:cjjyw|cjjgd|cjjyj)(?:_\d+)?\.html$",
     flags=re.IGNORECASE,
 )
+EASTMONEY_BODY_IDS = {
+    "contentbody",
+    "articlebody",
+    "articlecontent",
+    "newscontent",
+}
+EASTMONEY_BODY_CLASSES = {
+    "newscontent",
+    "articlecontent",
+    "article-body",
+    "contentbody",
+}
+EASTMONEY_BOILERPLATE_MARKERS = (
+    "东方财富app",
+    "手机查看",
+    "微信扫一扫",
+    "分享到您的朋友圈",
+    "文章来源",
+    "责任编辑",
+    "免责声明",
+    "风险提示",
+    "郑重声明",
+)
+
+
+class EastmoneyBodyParser(HTMLParser):
+    """Extract paragraphs from Eastmoney's article-body containers."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.paragraphs: list[str] = []
+        self._capture_depth = 0
+        self._paragraph_depth = 0
+        self._paragraph_parts: list[str] = []
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        lowered = tag.casefold()
+        values = {key.casefold(): value or "" for key, value in attrs}
+        element_id = values.get("id", "").casefold()
+        class_tokens = {
+            token.casefold() for token in values.get("class", "").split() if token
+        }
+        is_container = (
+            element_id in EASTMONEY_BODY_IDS
+            or bool(class_tokens & EASTMONEY_BODY_CLASSES)
+        )
+
+        if self._capture_depth:
+            self._capture_depth += 1
+        elif is_container:
+            self._capture_depth = 1
+
+        if self._capture_depth and lowered in {"p", "h2", "h3"}:
+            if not self._paragraph_depth:
+                self._paragraph_parts = []
+            self._paragraph_depth += 1
+        elif self._capture_depth and lowered == "br" and self._paragraph_depth:
+            self._paragraph_parts.append(" ")
+
+    def handle_data(self, data: str) -> None:
+        if self._capture_depth and self._paragraph_depth:
+            self._paragraph_parts.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        lowered = tag.casefold()
+        if (
+            self._capture_depth
+            and self._paragraph_depth
+            and lowered in {"p", "h2", "h3"}
+        ):
+            self._paragraph_depth -= 1
+            if not self._paragraph_depth:
+                text = official.clean_text(" ".join(self._paragraph_parts))
+                if text:
+                    self.paragraphs.append(text)
+                self._paragraph_parts = []
+        if self._capture_depth:
+            self._capture_depth -= 1
 
 
 def _clean(value: Any, limit: int = 160) -> str:
@@ -55,6 +136,55 @@ def _is_eastmoney_source(company: str, urls: list[str]) -> bool:
     return "东方财富" in company or any(
         _normalized_host(url).endswith("eastmoney.com") for url in urls
     )
+
+
+def _is_eastmoney_article_url(url: str) -> bool:
+    return _normalized_host(url).endswith("eastmoney.com") and bool(
+        re.search(EASTMONEY_ARTICLE_PATTERN, urlsplit(url).path, flags=re.IGNORECASE)
+    )
+
+
+def _useful_eastmoney_paragraph(text: str) -> bool:
+    folded = official.clean_text(text).casefold()
+    return (
+        len(folded) >= 18
+        and not any(marker in folded for marker in EASTMONEY_BOILERPLATE_MARKERS)
+    )
+
+
+def _eastmoney_summary(body: str, limit: int = 500) -> str:
+    parser = EastmoneyBodyParser()
+    parser.feed(body)
+    paragraphs = parser.paragraphs
+
+    # Older Eastmoney templates occasionally omit the usual container id. In
+    # that case, inspect paragraph tags but keep the same boilerplate filter.
+    if not paragraphs:
+        paragraphs = [
+            official.strip_html(fragment)
+            for fragment in re.findall(
+                r"<p\b[^>]*>(.*?)</p>", body, flags=re.IGNORECASE | re.DOTALL
+            )
+        ]
+
+    selected: list[str] = []
+    seen: set[str] = set()
+    for raw in paragraphs:
+        text = official.clean_text(raw)
+        key = text.casefold()
+        if not _useful_eastmoney_paragraph(text) or key in seen:
+            continue
+        candidate = " ".join([*selected, text])
+        if len(candidate) > limit:
+            remaining = limit - len(" ".join(selected)) - (1 if selected else 0)
+            if remaining >= 60:
+                selected.append(text[:remaining].rstrip("，。；; ") + "…")
+            break
+        selected.append(text)
+        seen.add(key)
+        if len(" ".join(selected)) >= 320 or len(selected) >= 3:
+            break
+    return " ".join(selected)[:limit].rstrip()
 
 
 def _is_probable_non_article(article: dict[str, Any]) -> bool:
@@ -227,6 +357,12 @@ def install_overrides(
             return article
         if _is_probable_non_article(article):
             return None
+        source = article.get("source") if isinstance(article.get("source"), dict) else {}
+        article_url = _clean(source.get("url"), 500) or candidate_url
+        if _is_eastmoney_article_url(article_url):
+            summary = _eastmoney_summary(body)
+            if summary:
+                article["summary"] = summary
         return _sanitize_user_article(article)
 
     def load_payload(path: Path = official.OUTPUT_PATH) -> dict[str, Any]:
@@ -235,6 +371,18 @@ def install_overrides(
         for raw in payload.get("articles", []):
             article = dict(raw)
             source_id = str(article.get("sourceId", ""))
+            source = article.get("source") if isinstance(article.get("source"), dict) else {}
+            source_url = _clean(source.get("url"), 500)
+
+            # Eastmoney listing-search used to run through both the generic Bing
+            # adapter and this direct crawler. Keep the direct article crawl and
+            # remove the generic portal/index duplicate batch from the snapshot.
+            if (
+                source_id.startswith("user-source-")
+                and _normalized_host(source_url).endswith("eastmoney.com")
+            ):
+                continue
+
             if source_id.startswith(USER_OFFICIAL_PREFIX):
                 if source_id not in active_ids or _is_probable_non_article(article):
                     continue
