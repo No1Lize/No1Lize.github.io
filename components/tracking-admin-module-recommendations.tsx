@@ -71,7 +71,13 @@ function ensureHost(section: HTMLElement, name: string): HTMLElement {
 
 function listedKeys(section: HTMLElement | null): string[] {
   if (!section) return [];
-  const text = normalize(section.textContent ?? "");
+  const followedButtons = Array.from(section.querySelectorAll<HTMLButtonElement>("button"))
+    .filter((button) => /·\s*(已关注|重新启用)/.test(button.textContent ?? ""))
+    .map((button) => button.textContent ?? "");
+  const followedCards = Array.from(section.querySelectorAll<HTMLElement>("article"))
+    .filter((card) => /已有档案\s*\/\s*官方源|自定义/.test(card.textContent ?? ""))
+    .map((card) => card.textContent ?? "");
+  const text = normalize([...followedButtons, ...followedCards].join(" "));
   return ipoCompanies
     .filter(
       (company) =>
