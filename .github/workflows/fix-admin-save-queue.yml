@@ -1,0 +1,195 @@
+name: One-time resilient admin save queue fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-admin-save-queue.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Patch save queue and recommendation waits
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str) -> None:
+              file = Path(path)
+              text = file.read_text(encoding="utf-8")
+              if old not in text:
+                  raise SystemExit(f"missing marker in {path}: {old[:160]!r}")
+              file.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          panel = "components/user-tracking-panel.tsx"
+          old = '''      const latest = await githubJson<{ sha: string }>(
+        `${fileUrl}?ref=${TRACKING_BRANCH}`,
+        cleanToken,
+      );
+      if (latest.sha !== currentSha) {
+        throw new Error("远端配置已变化，请重新载入后再操作。");
+      }
+
+      const result = await githubJson<{
+        content?: { sha?: string };
+        commit?: { sha?: string };
+      }>(fileUrl, cleanToken, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: "config: update tracking from website admin",
+          content: encodeBase64(`${JSON.stringify(next, null, 2)}\\n`),
+          sha: currentSha,
+          branch: TRACKING_BRANCH,
+        }),
+      });'''
+          new = '''      let result: {
+        content?: { sha?: string };
+        commit?: { sha?: string };
+      } | null = null;
+      let lastError: unknown = null;
+
+      for (let attempt = 0; attempt < 3; attempt += 1) {
+        const latest = await githubJson<{ sha: string }>(
+          `${fileUrl}?ref=${TRACKING_BRANCH}&ts=${Date.now()}`,
+          cleanToken,
+        );
+        if (latest.sha !== remoteShaRef.current) {
+          remoteShaRef.current = latest.sha;
+          setRemoteSha(latest.sha);
+        }
+
+        try {
+          result = await githubJson<{
+            content?: { sha?: string };
+            commit?: { sha?: string };
+          }>(fileUrl, cleanToken, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              message: "config: update tracking from website admin",
+              content: encodeBase64(`${JSON.stringify(next, null, 2)}\\n`),
+              sha: latest.sha,
+              branch: TRACKING_BRANCH,
+            }),
+          });
+          break;
+        } catch (error) {
+          lastError = error;
+          const message = error instanceof Error ? error.message : String(error);
+          if (attempt >= 2 || !/(409|sha|conflict)/i.test(message)) throw error;
+          await new Promise((resolve) => window.setTimeout(resolve, 180 * (attempt + 1)));
+        }
+      }
+
+      if (!result) throw lastError ?? new Error("GitHub 同步失败。");'''
+          replace_once(panel, old, new)
+
+          replace_once(
+              panel,
+              '''    saveQueueRef.current = saveQueueRef.current.then(() =>
+      persistConfig(normalized, mode),
+    );''',
+              '''    saveQueueRef.current = saveQueueRef.current
+      .catch(() => undefined)
+      .then(() => persistConfig(normalized, mode));''',
+          )
+
+          module = "components/tracking-admin-module-recommendations.tsx"
+          replace_once(
+              module,
+              '''import { useArticles } from "@/lib/use-articles";
+import type { TrackingListedCompany } from "@/lib/user-tracking";''',
+              '''import { useArticles } from "@/lib/use-articles";
+import { currentAdminStatus, waitForAdminSave } from "@/lib/tracking-admin-sync";
+import type { TrackingListedCompany } from "@/lib/user-tracking";''',
+          )
+          replace_once(
+              module,
+              '''    if (!button) throw new Error("推荐公司未出现在现有档案搜索结果中。");
+    button.click();
+  }''',
+              '''    if (!button) throw new Error("推荐公司未出现在现有档案搜索结果中。");
+    const previousStatus = currentAdminStatus();
+    button.click();
+    await waitForAdminSave(previousStatus);
+  }''',
+          )
+          replace_once(
+              module,
+              '''    if (!button) throw new Error("未找到信息源添加按钮。");
+    button.click();
+  }''',
+              '''    if (!button) throw new Error("未找到信息源添加按钮。");
+    const previousStatus = currentAdminStatus();
+    button.click();
+    await waitForAdminSave(previousStatus);
+  }''',
+          )
+
+          bridge = "components/tracking-recommendations-bridge.tsx"
+          replace_once(
+              bridge,
+              '''import { useArticles } from "@/lib/use-articles";''',
+              '''import { useArticles } from "@/lib/use-articles";
+import { currentAdminStatus, waitForAdminSave } from "@/lib/tracking-admin-sync";''',
+          )
+          replace_once(
+              bridge,
+              '''  button.click();
+
+  const expected = normalizedKey(value);
+  await waitForCondition(
+    () => existingValues(type).some((entry) => normalizedKey(entry) === expected),
+    "原管理面板未确认新增条目，请手动重试。",
+  );''',
+              '''  const previousStatus = currentAdminStatus();
+  button.click();
+
+  const expected = normalizedKey(value);
+  await waitForCondition(
+    () => existingValues(type).some((entry) => normalizedKey(entry) === expected),
+    "原管理面板未确认新增条目，请手动重试。",
+  );
+  await waitForAdminSave(previousStatus);''',
+          )
+          replace_once(
+              bridge,
+              '''  button.click();
+
+  const expectedHost = sourceHost(item.source.url);
+  await waitForCondition(
+    () => existingSourceUrls().some((value) => sourceHost(value) === expectedHost),
+    "原管理面板未确认新增信息源，请手动重试。",
+  );''',
+              '''  const previousStatus = currentAdminStatus();
+  button.click();
+
+  const expectedHost = sourceHost(item.source.url);
+  await waitForCondition(
+    () => existingSourceUrls().some((value) => sourceHost(value) === expectedHost),
+    "原管理面板未确认新增信息源，请手动重试。",
+  );
+  await waitForAdminSave(previousStatus);''',
+          )
+          PY
+      - name: Install and verify
+        run: npm install && npm run test:unit && npx tsc --noEmit
+      - name: Commit verified fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add components/user-tracking-panel.tsx components/tracking-admin-module-recommendations.tsx components/tracking-recommendations-bridge.tsx
+          git commit -m "fix: serialize repeated admin recommendation saves"
+          git pull --rebase origin main
+          git push origin HEAD:main
