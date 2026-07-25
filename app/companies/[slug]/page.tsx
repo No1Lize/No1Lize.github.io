@@ -48,14 +48,18 @@ export default async function CompanyDetail({
     venture?.updatedAt?.slice(0, 10) ||
     ventureProfileGeneratedAt?.slice(0, 10) ||
     snapshotDate;
-  const background = venture?.background || company.summary;
+  const background = venture?.projectBackground?.summary || venture?.background || company.summary;
+  const projectBackground = venture?.projectBackground;
   const technology = venture?.technology || research.technology;
   const products = venture?.products?.length
     ? venture.products
     : [company.product];
+  const technologyProducts = venture?.technologyProducts ?? [];
   const team = venture?.team ?? [];
   const financing = venture?.financing ?? [];
+  const capitalSummary = venture?.capitalSummary;
   const capitalMarkets = venture?.capitalMarkets ?? [];
+  const exitPerformance = venture?.exitPerformance;
   const events = intelligenceEvents
     .filter((item) => item.companySlug === slug)
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
@@ -153,17 +157,56 @@ export default async function CompanyDetail({
               </div>
             </dl>
             <p>{background}</p>
+            {(projectBackground?.problemSolved || projectBackground?.marketOpportunity) && (
+              <div className="insight-grid">
+                {projectBackground.problemSolved && (
+                  <Insight label="解决的问题" text={projectBackground.problemSolved} />
+                )}
+                {projectBackground.marketOpportunity && (
+                  <Insight label="市场与应用机会" text={projectBackground.marketOpportunity} />
+                )}
+              </div>
+            )}
           </Section>
 
           <Section id="核心技术与产品" title="核心技术与技术产品">
             <p>{technology}</p>
-            <div className="insight-grid">
-              {products.map((product) => (
-                <Insight label="产品 / 平台" text={product} key={product} />
-              ))}
-              <Insight label="产业位置" text={research.industryPosition} />
-              <Insight label="商业化观察" text={research.commercialization} />
-            </div>
+            {technologyProducts.length ? (
+              <div className="analysis-grid">
+                {technologyProducts.map((product) => {
+                  const content = (
+                    <>
+                      <span>{product.category || "技术产品"}</span>
+                      <strong>{product.name}</strong>
+                      <p>{product.description}</p>
+                      {product.technicalHighlights?.length ? (
+                        <small>技术要点：{product.technicalHighlights.join("；")}</small>
+                      ) : null}
+                    </>
+                  );
+                  return product.sourceUrl ? (
+                    <a
+                      href={product.sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      key={product.name}
+                    >
+                      {content}
+                    </a>
+                  ) : (
+                    <div key={product.name}>{content}</div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="insight-grid">
+                {products.map((product) => (
+                  <Insight label="产品 / 平台" text={product} key={product} />
+                ))}
+                <Insight label="产业位置" text={research.industryPosition} />
+                <Insight label="商业化观察" text={research.commercialization} />
+              </div>
+            )}
           </Section>
 
           <Section id="核心团队" title="核心团队背景">
@@ -174,8 +217,14 @@ export default async function CompanyDetail({
                     <>
                       <strong>{member.name}</strong>
                       <span>
-                        {[member.role, member.summary].filter(Boolean).join(" · ") ||
-                          "公开团队成员"}
+                        {[
+                          member.role,
+                          member.summary,
+                          member.background,
+                          member.previousExperience,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ") || "公开团队成员"}
                       </span>
                     </>
                   );
@@ -201,6 +250,29 @@ export default async function CompanyDetail({
           </Section>
 
           <Section id="投融资与资本运作" title="投融资与资本运营过程">
+            {capitalSummary && (
+              <div className="insight-grid">
+                <Insight label="融资证据汇总" text={capitalSummary.summary} />
+                <Insight
+                  label="已披露金额"
+                  text={capitalSummary.disclosedAmounts.length
+                    ? capitalSummary.disclosedAmounts.join("、")
+                    : "未披露或尚未识别"}
+                />
+                <Insight
+                  label="主要投资方"
+                  text={capitalSummary.majorInvestors.length
+                    ? capitalSummary.majorInvestors.join("、")
+                    : "未披露或尚未识别"}
+                />
+                <Insight
+                  label="融资阶段"
+                  text={capitalSummary.rounds.length
+                    ? capitalSummary.rounds.join("、")
+                    : "未披露或尚未识别"}
+                />
+              </div>
+            )}
             <CapitalTimeline
               items={financing}
               emptyText="当前公开页面未识别到可核对的融资轮次、金额或投资方。页面不会用推测数据填充，后续通过公司公告、投资机构披露与监管材料继续补充。"
@@ -208,6 +280,18 @@ export default async function CompanyDetail({
           </Section>
 
           <Section id="上市与退出表现" title="上市、并购与退出表现">
+            {exitPerformance && (
+              <div className="source-card">
+                <span>{exitPerformance.status}</span>
+                <strong>{exitPerformance.latestEvent || "资本市场结论"}</strong>
+                <small>{exitPerformance.summary}</small>
+                {exitPerformance.sourceUrl && (
+                  <a href={exitPerformance.sourceUrl} target="_blank" rel="noreferrer">
+                    查看原始披露
+                  </a>
+                )}
+              </div>
+            )}
             <CapitalTimeline
               items={capitalMarkets}
               emptyText={
