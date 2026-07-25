@@ -35,23 +35,19 @@ ROOT = Path(__file__).resolve().parents[1]
 '''
 
 PRODUCT_ANCHOR = '''def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
-    normalized_catalog = re.sub(r"\s*与\s*", "、", catalog_product)
-    products = sanitize_products(values, normalized_catalog)
-    return [
-        item
-        for item in products
-        if _compact(item) not in {_compact(label) for label in PURE_RESEARCH_LABELS}
-    ][:10]
+    normalized_values = _split_product_values(values)
+    normalized_catalog = "、".join(_split_product_values([catalog_product]))
+    products = sanitize_products(normalized_values, normalized_catalog)
+    return [item for item in products if not _product_noise(item)][:10]
 '''
 
 PRODUCT_REPLACEMENT = '''def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
-    normalized_catalog = re.sub(r"\s*与\s*", "、", catalog_product)
-    products = normalize_product_items(sanitize_products(values, normalized_catalog))
-    return [
-        item
-        for item in products
-        if _compact(item) not in {_compact(label) for label in PURE_RESEARCH_LABELS}
-    ][:10]
+    normalized_values = _split_product_values(values)
+    normalized_catalog = "、".join(_split_product_values([catalog_product]))
+    products = normalize_product_items(
+        sanitize_products(normalized_values, normalized_catalog)
+    )
+    return [item for item in products if not _product_noise(item)][:10]
 '''
 
 
@@ -64,8 +60,10 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
 
 def main() -> None:
     text = PATH.read_text(encoding="utf-8")
-    text = replace_once(text, IMPORT_ANCHOR, IMPORT_REPLACEMENT, "normalizer import")
-    text = replace_once(text, PRODUCT_ANCHOR, PRODUCT_REPLACEMENT, "finalizer products")
+    if "from .normalize_venture_profiles import normalize_product_items" not in text:
+        text = replace_once(text, IMPORT_ANCHOR, IMPORT_REPLACEMENT, "normalizer import")
+    if PRODUCT_REPLACEMENT not in text:
+        text = replace_once(text, PRODUCT_ANCHOR, PRODUCT_REPLACEMENT, "finalizer products")
     PATH.write_text(text, encoding="utf-8")
     print("Aligned finalizer products with canonical normalization.")
 
