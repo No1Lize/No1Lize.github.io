@@ -3,6 +3,10 @@
 import { useMemo, useState } from "react";
 import { currentAdminStatus, waitForAdminSave } from "@/lib/tracking-admin-sync";
 import { isAllowedDisplayedKeywordRecommendation } from "@/lib/tracking-recommendation-policy";
+import {
+  isKnownTrackingSeedTerm,
+  isTrackingTermAllowedForSector,
+} from "@/lib/tracking-sector-policy";
 import type {
   TrackingRecommendation,
   TrackingRecommendationSet,
@@ -22,6 +26,27 @@ export type AnyTrackingRecommendation =
   | TrackingRecommendation
   | TrackingSourceRecommendation;
 
+function currentDisplayedSector(): string {
+  if (typeof document === "undefined") return "";
+  const detailLabel = Array.from(document.querySelectorAll<HTMLElement>("p")).find(
+    (node) => node.textContent?.trim() === "TRACK DETAIL",
+  );
+  const section = detailLabel?.closest<HTMLElement>("section");
+  return section?.querySelector("h2")?.textContent?.trim() ?? "";
+}
+
+function keywordBelongsToDisplayedSector(
+  item: TrackingRecommendation,
+  selectedSector: string,
+): boolean {
+  if (!isAllowedDisplayedKeywordRecommendation(item)) return false;
+  if (!isKnownTrackingSeedTerm(item.value)) return true;
+  return Boolean(
+    selectedSector &&
+      isTrackingTermAllowedForSector(item.value, selectedSector),
+  );
+}
+
 export function TrackingRecommendations({
   recommendations,
   onlyType,
@@ -37,6 +62,7 @@ export function TrackingRecommendations({
   const [pending, setPending] = useState<string>("");
   const [hidden, setHidden] = useState<Record<string, boolean>>({});
   const [error, setError] = useState("");
+  const selectedSector = currentDisplayedSector();
 
   const sections = useMemo(
     () =>
@@ -50,14 +76,15 @@ export function TrackingRecommendations({
             items:
               type === "keywords"
                 ? items.filter((item) =>
-                    isAllowedDisplayedKeywordRecommendation(
+                    keywordBelongsToDisplayedSector(
                       item as TrackingRecommendation,
+                      selectedSector,
                     ),
                   )
                 : items,
           };
         }),
-    [onlyType, recommendations],
+    [onlyType, recommendations, selectedSector],
   );
 
   const activeSections = sections
