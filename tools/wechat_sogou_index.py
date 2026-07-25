@@ -46,8 +46,18 @@ def _strip_markup(value: str, limit: int = 500) -> str:
     return _clean(re.sub(r"(?s)<[^>]+>", " ", value), limit)
 
 
+def _url_entity_unescape(value: str) -> str:
+    return (
+        str(value or "")
+        .replace("&amp;", "&")
+        .replace("&#38;", "&")
+        .replace("&#x26;", "&")
+        .replace("&#X26;", "&")
+    )
+
+
 def _normalized_url(value: str) -> str:
-    parts = urlsplit(html.unescape(value or ""))
+    parts = urlsplit(_url_entity_unescape(value))
     query = urlencode(parse_qsl(parts.query, keep_blank_values=True))
     return urlunsplit((parts.scheme, parts.netloc, parts.path, query, ""))
 
@@ -139,7 +149,7 @@ def parse_search_results(body: str, search_url: str) -> list[dict[str, Any]]:
         )
         if not href:
             continue
-        result_url = _normalized_url(urljoin(search_url, html.unescape(href)))
+        result_url = _normalized_url(urljoin(search_url, _url_entity_unescape(href)))
         if not result_url or result_url in seen:
             continue
         title_html = _first_match(
@@ -185,7 +195,7 @@ def resolve_script_url(body: str) -> str:
             html.unescape(body or ""), flags=re.IGNORECASE,
         )
         value = direct.group(0) if direct else ""
-    value = html.unescape(value).replace("\\/", "/").replace("\\x26", "&").replace("@", "")
+    value = _url_entity_unescape(value).replace("\\/", "/").replace("\\x26", "&").replace("@", "")
     parts = urlsplit(value)
     if parts.scheme not in {"http", "https"} or parts.hostname != "mp.weixin.qq.com":
         return ""
