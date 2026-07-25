@@ -11,6 +11,7 @@ import {
   cloneTrackingConfig,
   normalizeTrackingConfig,
   slugifyTrack,
+  validatePersonLabel,
   type TrackingListedCompany,
   type TrackingMarket,
   type TrackingRegion,
@@ -69,9 +70,9 @@ const LABELS: Record<ListField, { title: string; placeholder: string; help: stri
     help: "会加入新闻、公开搜索和论文来源的筛选词。",
   },
   people: {
-    title: "关键人物",
-    placeholder: "例如：姚顺雨 @ShunyuYao12",
-    help: "写入 @handle 时会额外生成 X 公开时间线来源。",
+    title: "关键人物 / 关键账号",
+    placeholder: "例如：SpaceX @SpaceX、埃隆·马斯克 @elonmusk",
+    help: "推荐填写“显示名 @handle”。个人、组织或项目账号均可；有 handle 时会抓取 X 公开时间线。",
   },
   sampleCompanies: {
     title: "样本公司",
@@ -162,6 +163,10 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
     () => config.tracks.filter((item) => item.enabled),
     [config.tracks],
   );
+  const personPreview = useMemo(() => {
+    const value = listInputs.people.trim();
+    return value ? validatePersonLabel(value) : null;
+  }, [listInputs.people]);
 
   useEffect(() => {
     if (active >= config.tracks.length) {
@@ -190,7 +195,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
         cleanToken,
       );
       if (latest.sha !== currentSha) {
-        throw new Error("远端配置已变化，请重新载入后再操作。 ");
+        throw new Error("远端配置已变化，请重新载入后再操作。");
       }
 
       const result = await githubJson<{
@@ -208,7 +213,7 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
       });
 
       const nextSha = result.content?.sha;
-      if (!nextSha) throw new Error("GitHub 未返回新的配置文件 SHA。 ");
+      if (!nextSha) throw new Error("GitHub 未返回新的配置文件 SHA。");
       remoteShaRef.current = nextSha;
       setRemoteSha(nextSha);
       setConfig(next);
@@ -329,8 +334,28 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
   }
 
   function addListItem(field: ListField) {
-    const value = listInputs[field].trim();
-    if (!track || !value || track[field].includes(value)) return;
+    if (!track) return;
+    const rawValue = listInputs[field].trim();
+    if (!rawValue) return;
+
+    let value = rawValue;
+    if (field === "people") {
+      const parsed = validatePersonLabel(rawValue);
+      if (!parsed.valid) {
+        setMessage(`人物标签无效：${parsed.message}`, "error");
+        return;
+      }
+      value = parsed.normalized;
+    }
+
+    const duplicate = track[field].some(
+      (entry) => entry.toLocaleLowerCase("zh-CN") === value.toLocaleLowerCase("zh-CN"),
+    );
+    if (duplicate) {
+      setMessage(`“${value}”已经存在，无需重复添加。`, "error");
+      return;
+    }
+
     update({
       ...config,
       tracks: config.tracks.map((item, index) =>
@@ -544,15 +569,39 @@ export function UserTrackingPanel({ initial }: { initial: UserTrackingConfig }) 
                   <div className={styles.trackSections}>
                     {LIST_FIELDS.map((field) => (
                       <div className={styles.listEditor} key={field}>
-                        <h3>{LABELS[field].title}</h3><p className={styles.help}>{LABELS[field].help}</p>
+                        <h3>{LABELS[field].title}</h3>
+                        <p className={styles.help}>{LABELS[field].help}</p>
                         <div className={styles.tags}>
                           {track[field].map((value) => <button className={styles.tag} key={value} onClick={() => removeListItem(field, value)}>{value} ×</button>)}
                           {!track[field].length && <span className={styles.empty}>暂无条目</span>}
                         </div>
                         <div className={styles.inlineForm}>
-                          <input value={listInputs[field]} onChange={(event) => setListInputs((current) => ({ ...current, [field]: event.target.value }))} onKeyDown={(event) => { if (event.key === "Enter") addListItem(field); }} placeholder={LABELS[field].placeholder} />
-                          <button className={styles.secondary} onClick={() => addListItem(field)}>添加并同步</button>
+                          <input
+                            value={listInputs[field]}
+                            onChange={(event) => setListInputs((current) => ({ ...current, [field]: event.target.value }))}
+                            onKeyDown={(event) => { if (event.key === "Enter") addListItem(field); }}
+                            placeholder={LABELS[field].placeholder}
+                            aria-invalid={field === "people" && Boolean(personPreview && !personPreview.valid)}
+                          />
+                          <button
+                            className={styles.secondary}
+                            disabled={field === "people" && Boolean(personPreview && !personPreview.valid)}
+                            onClick={() => addListItem(field)}
+                          >
+                            添加并同步
+                          </button>
                         </div>
+                        {field === "people" && personPreview && (
+                          <p
+                            className={styles.status}
+                            data-kind={personPreview.valid ? (personPreview.xEnabled ? "success" : "neutral") : "error"}
+                            aria-live="polite"
+                          >
+                            {personPreview.valid && personPreview.normalized !== listInputs.people.trim()
+                              ? `将规范化为“${personPreview.normalized}”。${personPreview.message}`
+                              : personPreview.message}
+                          </p>
+                        )}
                       </div>
                     ))}
                   </div>
