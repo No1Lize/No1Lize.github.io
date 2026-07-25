@@ -3,8 +3,8 @@
 
 This module wraps ``crawl_with_tracking`` and replaces only the browser-managed
 source conversion and runtime adapter dispatch. RSS and SEC retain their native
-adapters; arbitrary public websites use a generic multi-strategy crawler with a
-bounded second-stage fallback for JS-heavy pages.
+adapters; arbitrary public websites use one adaptive multi-stage crawler with
+bounded fallbacks and small domain profiles.
 """
 
 from __future__ import annotations
@@ -15,6 +15,7 @@ from typing import Any
 from urllib.parse import urlsplit
 
 try:  # Imported by tests as tools.crawl_with_source_categories.
+    from . import adaptive_public_sources
     from . import crawl_with_tracking as tracking
     from . import generic_web_sources
     from . import robust_web_fallback
@@ -23,6 +24,7 @@ try:  # Imported by tests as tools.crawl_with_source_categories.
     from . import x_rate_limit
     from .crawl_tracked_articles import configure_crawler, _install_empty_sec_guard
 except ImportError:  # Executed directly with ``python tools/...``.
+    import adaptive_public_sources
     import crawl_with_tracking as tracking
     import generic_web_sources
     import robust_web_fallback
@@ -105,7 +107,7 @@ def _is_eastmoney_media(category: str, url: str, name: str) -> bool:
 def _custom_sources(
     tracking_config: dict[str, Any], tracks: list[dict[str, Any]]
 ) -> tuple[list[dict[str, Any]], dict[str, tuple[str, str, str, str]]]:
-    """Route every enabled user source to RSS, SEC, or generic website crawling."""
+    """Route every enabled user source to RSS, SEC, or adaptive website crawling."""
 
     runtime_specs: list[dict[str, Any]] = []
     sec_specs: dict[str, tuple[str, str, str, str]] = {}
@@ -127,7 +129,9 @@ def _custom_sources(
         if region not in {"中国", "美国", "全球"}:
             region = "全球"
         sector = tracking._clean(raw.get("sector"), 60) or "AI / AGI"
-        url = tracking._clean(raw.get("url"), 500)
+        url = adaptive_public_sources.canonical_source_url(
+            tracking._clean(raw.get("url"), 500)
+        )
         name = _display_name(raw_name, url, index)
         source_id = f"user-source-{tracking._slug(raw.get('id') or name or index)}"
 
@@ -155,10 +159,6 @@ def _custom_sources(
             continue
 
         if not re.match(r"^https?://", url, flags=re.IGNORECASE):
-            continue
-
-        # Eastmoney is intentionally delegated to its stricter direct parser.
-        if _is_eastmoney_media(category, url, name):
             continue
 
         keywords = _category_keywords(raw, category, track_by_name)
@@ -251,16 +251,14 @@ def _install_generic_adapter() -> None:
                     spec, user_agent, tracking.crawler
                 )
 
-            articles, status = robust_web_fallback.crawl_with_second_stage(
+            articles, status = adaptive_public_sources.crawl_adaptive_source(
                 spec,
                 user_agent,
                 tracking.crawler,
                 generic_web_sources,
+                robust_web_fallback,
             )
             if not articles and status.get("status") == "empty":
-                # An arbitrary portal returning no static candidates is not a
-                # verified empty dataset. Mark it as a transient failure so the
-                # shared batch replacement logic retains the previous snapshot.
                 status = dict(status)
                 status["status"] = "error"
                 status["failed"] = max(1, int(status.get("failed", 0) or 0))
