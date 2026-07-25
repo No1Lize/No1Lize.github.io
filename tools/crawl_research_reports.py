@@ -34,6 +34,12 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qs, quote_plus, urlencode, urljoin, urlparse
 from urllib.request import Request, urlopen
 
+from tools.research_report_adapters import (
+    discover_sec_candidates,
+    discover_web_candidates,
+    load_sec_ticker_map,
+)
+
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 MARKET_PROFILE_PATH = ROOT / "public" / "data" / "market_profiles.json"
@@ -48,7 +54,8 @@ USER_AGENT = (
 )
 MAX_REPORTS_PER_COMPANY = int(os.getenv("RESEARCH_REPORTS_PER_COMPANY", "3"))
 MAX_TOTAL_REPORTS = int(os.getenv("RESEARCH_REPORTS_MAX_TOTAL", "48"))
-MAX_PDF_BYTES = int(os.getenv("RESEARCH_REPORT_MAX_BYTES", str(10 * 1024 * 1024)))
+MAX_PDF_BYTES = int(os.getenv("RESEARCH_REPORT_MAX_BYTES", str(16 * 1024 * 1024)))
+MAX_ARCHIVE_BYTES = int(os.getenv("RESEARCH_REPORT_MAX_ARCHIVE_BYTES", str(120 * 1024 * 1024)))
 MAX_SEARCH_RESULTS = int(os.getenv("RESEARCH_REPORT_SEARCH_RESULTS", "10"))
 LOOKBACK_DAYS = int(os.getenv("RESEARCH_REPORT_LOOKBACK_DAYS", "1095"))
 WORKERS = max(1, min(6, int(os.getenv("RESEARCH_REPORT_WORKERS", "4"))))
@@ -501,24 +508,12 @@ def parse_bing_rss(raw: bytes) -> list[dict[str, str]]:
 def discover_public_pdf_candidates(
     company: dict[str, str], website: str
 ) -> list[dict[str, str]]:
-    candidates: list[dict[str, str]] = []
-    seen: set[str] = set()
-    for query in bing_queries(company, website):
-        try:
-            raw = request_bytes(BING_RSS.format(query=quote_plus(query)), timeout=25)
-            items = parse_bing_rss(raw)
-        except Exception as error:
-            log(f"{company['ticker']} search failed: {error}")
-            continue
-        for item in items:
-            url = item["url"]
-            if url in seen or not is_research_candidate(item, company, website):
-                continue
-            seen.add(url)
-            candidates.append(item)
-            if len(candidates) >= MAX_SEARCH_RESULTS:
-                return candidates
-    return candidates
+    return discover_web_candidates(
+        company,
+        website,
+        request_bytes,
+        max_results=MAX_SEARCH_RESULTS,
+    )
 
 
 def is_research_candidate(
@@ -591,6 +586,7 @@ def archive_public_report(
 def crawl_company(
     company: dict[str, str],
     website: str,
+    cik: str,
     previous_reports: list[dict[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     new_reports: list[dict[str, Any]] = []
@@ -612,6 +608,19 @@ def crawl_company(
                 break
     except Exception as error:
         errors.append(f"Eastmoney: {error}")
+
+    if len(new_reports) < MAX_REPORTS_PER_COMPANY and cik:
+        sec_candidates = discover_sec_candidates(company, cik, request_bytes)
+        fetched += len(sec_candidates)
+        for candidate in sec_candidates:
+            try:
+                report = archive_public_report(candidate, company)
+            except Exception as error:
+                errors.append(f"SEC PDF {candidate.get('url', '')}: {error}")
+                continue
+            new_reports.append(report)
+            if len(new_reports) >= MAX_REPORTS_PER_COMPANY:
+                break
 
     if len(new_reports) < MAX_REPORTS_PER_COMPANY:
         candidates = discover_public_pdf_candidates(company, website)
@@ -643,7 +652,12 @@ def crawl_company(
         "fetched": fetched,
         "archived": len(new_reports),
         "retained": max(0, len(reports) - len(new_reports)),
-        "adapters": ["Eastmoney", "public-web", *( ["company-domain"] if website else [] )],
+        "adapters": [
+            "Eastmoney",
+            *( ["SEC"] if cik else [] ),
+            "public-web",
+            *( ["company-domain"] if website else [] ),
+        ],
         **({"errors": errors[:5]} if errors else {}),
     }
 
@@ -652,6 +666,7 @@ def main() -> int:
     config = read_json(CONFIG_PATH, {})
     previous = read_json(INDEX_PATH, {"reports": []})
     websites = load_company_websites()
+    sec_tickers = load_sec_ticker_map(request_bytes)
     companies = [
         company
         for raw in config.get("listedCompanies", [])
@@ -670,6 +685,7 @@ def main() -> int:
                 crawl_company,
                 company,
                 websites.get(company["slug"], ""),
+                sec_tickers.get(company["ticker"], ""),
                 previous_by_company.get(company["slug"], []),
             ): company
             for company in companies
@@ -695,9 +711,17 @@ def main() -> int:
             statuses.append(status)
 
     unique = {report["id"]: report for report in collected if report.get("id")}
-    reports = sorted(
+    ordered_reports = sorted(
         unique.values(), key=lambda report: report.get("publishedAt", ""), reverse=True
     )[:MAX_TOTAL_REPORTS]
+    reports: list[dict[str, Any]] = []
+    archive_bytes = 0
+    for report in ordered_reports:
+        file_size = int(report.get("fileSizeBytes") or 0)
+        if reports and file_size > 0 and archive_bytes + file_size > MAX_ARCHIVE_BYTES:
+            continue
+        reports.append(report)
+        archive_bytes += max(0, file_size)
     referenced = {
         Path(report["localPdfUrl"]).name
         for report in reports
@@ -713,10 +737,11 @@ def main() -> int:
         for market in sorted(SUPPORTED_MARKETS)
     }
     payload = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "trackedCompanies": len(companies),
         "marketCounts": market_counts,
+        "archiveBytes": archive_bytes,
         "reports": reports,
         "sourceStatus": sorted(statuses, key=lambda item: (item.get("market", ""), item.get("source", ""))),
     }
