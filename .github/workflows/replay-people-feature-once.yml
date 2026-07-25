@@ -1,0 +1,146 @@
+name: Replay people feature once
+
+on:
+  push:
+    branches: [feature/tracked-people-research-clean-20260725]
+    paths:
+      - '.github/workflows/replay-people-feature-once.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  replay-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/tracked-people-research-clean-20260725
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore verified people files only
+        run: |
+          git fetch origin 102e8fe1d0284db85bbc803d2945de5cb423016e
+          git checkout 102e8fe1d0284db85bbc803d2945de5cb423016e -- \
+            app/people/page.tsx \
+            'app/people/[slug]/page.tsx' \
+            config/person_profile_overrides.json \
+            lib/people-data.ts \
+            public/data/people.json \
+            tests/people-data.test.ts \
+            tests/test_refresh_people_profiles.py \
+            tools/refresh_people_profiles.py
+      - name: Patch latest scheduled sync and React lifecycle lint
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          workflow_path = Path('.github/workflows/scheduled-sync.yml')
+          workflow = workflow_path.read_text()
+          replacements = [
+              (
+                  '      - tools/tracking_quality.py\n',
+                  '      - tools/tracking_quality.py\n      - tools/refresh_people_profiles.py\n',
+              ),
+              (
+                  '      - config/official_company_sources.json\n',
+                  '      - config/official_company_sources.json\n      - config/person_profile_overrides.json\n',
+              ),
+              (
+                  '      - name: Validate data quality\n',
+                  '      - name: Refresh tracked people profiles\n        run: python tools/refresh_people_profiles.py\n      - name: Validate data quality\n',
+              ),
+              (
+                  '      - name: Test crawler\n',
+                  '      - name: Validate tracked people profiles\n        run: python tools/refresh_people_profiles.py --offline --validate-only\n      - name: Test crawler\n',
+              ),
+              (
+                  'if git diff --quiet -- public/data/articles.json public/data/market_profiles.json; then',
+                  'if git diff --quiet -- public/data/articles.json public/data/market_profiles.json public/data/people.json; then',
+              ),
+              (
+                  'git add public/data/articles.json public/data/market_profiles.json\n',
+                  'git add public/data/articles.json public/data/market_profiles.json public/data/people.json\n',
+              ),
+              (
+                  'git commit -m "data: refresh public articles and market profiles"',
+                  'git commit -m "data: refresh public articles, market and people profiles"',
+              ),
+              (
+                  '            python tools/enrich_tracking_snapshot.py\n            python tools/crawl_articles.py --validate-only\n',
+                  '            python tools/enrich_tracking_snapshot.py\n            python tools/refresh_people_profiles.py\n            python tools/crawl_articles.py --validate-only\n',
+              ),
+              (
+                  '            python tools/validate_market_profiles.py\n            python -m unittest discover -s tests -p "test_*.py"\n',
+                  '            python tools/validate_market_profiles.py\n            python tools/refresh_people_profiles.py --offline --validate-only\n            python -m unittest discover -s tests -p "test_*.py"\n',
+              ),
+          ]
+          for old, new in replacements:
+              if new in workflow:
+                  continue
+              if old not in workflow:
+                  raise SystemExit(f'scheduled sync marker not found: {old!r}')
+              workflow = workflow.replace(old, new, 1)
+          workflow_path.write_text(workflow)
+
+          admin_path = Path('components/tracking-admin-module-recommendations.tsx')
+          admin = admin_path.read_text()
+          admin = admin.replace('  const [mounted, setMounted] = useState(false);\n', '')
+          admin = admin.replace('    setMounted(true);\n', '')
+          admin = admin.replace('    if (!snapshot.sector) return [];\n    return recommendListedCompanies(', '    void dismissalVersion;\n    if (!snapshot.sector) return [];\n    return recommendListedCompanies(', 1)
+          admin = admin.replace('    if (!snapshot.sector) return [];\n    const discovered = recommendTrackingAdditions(', '    void dismissalVersion;\n    if (!snapshot.sector) return [];\n    const discovered = recommendTrackingAdditions(', 1)
+          admin = admin.replace('  if (!mounted || !snapshot.sector) return null;\n', '  if (!snapshot.sector) return null;\n')
+          admin_path.write_text(admin)
+
+          bridge_path = Path('components/tracking-recommendations-bridge.tsx')
+          bridge = bridge_path.read_text()
+          bridge = bridge.replace('  const [mounted, setMounted] = useState(false);\n', '')
+          bridge = bridge.replace('    setMounted(true);\n', '')
+          bridge = bridge.replace('    if (!snapshot.sector) return EMPTY_RECOMMENDATIONS;\n', '    void dismissalVersion;\n    if (!snapshot.sector) return EMPTY_RECOMMENDATIONS;\n', 1)
+          bridge = bridge.replace('  if (!mounted || !snapshot.sector) return null;\n', '  if (!snapshot.sector) return null;\n')
+          bridge_path.write_text(bridge)
+
+          panel_path = Path('components/user-tracking-panel.tsx')
+          panel = panel_path.read_text()
+          old_effect = '''  useEffect(() => {\n    if (active >= config.tracks.length) {\n      setActive(Math.max(0, config.tracks.length - 1));\n    }\n  }, [active, config.tracks.length]);\n'''
+          new_effect = '''  useEffect(() => {\n    if (active < config.tracks.length) return;\n    const frame = requestAnimationFrame(() => {\n      setActive(Math.max(0, config.tracks.length - 1));\n    });\n    return () => cancelAnimationFrame(frame);\n  }, [active, config.tracks.length]);\n'''
+          if old_effect not in panel:
+              raise SystemExit('active-index effect not found')
+          panel_path.write_text(panel.replace(old_effect, new_effect))
+          PY
+      - name: Verify clean combined feature
+        run: |
+          npm install --no-audit --no-fund
+          npm run lint
+          npm run test:unit
+          python -m unittest discover -s tests -p 'test_*.py'
+          python tools/refresh_people_profiles.py --offline --validate-only
+          npx tsc --noEmit
+          GITHUB_PAGES=true npx next build
+      - name: Commit verified feature and self-clean
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git rm .github/workflows/replay-people-feature-once.yml
+          git add \
+            .github/workflows/scheduled-sync.yml \
+            app/people/page.tsx \
+            'app/people/[slug]/page.tsx' \
+            components/tracking-admin-module-recommendations.tsx \
+            components/tracking-recommendations-bridge.tsx \
+            components/user-tracking-panel.tsx \
+            config/person_profile_overrides.json \
+            lib/people-data.ts \
+            public/data/people.json \
+            tests/people-data.test.ts \
+            tests/test_refresh_people_profiles.py \
+            tools/refresh_people_profiles.py
+          git commit -m 'feat: generate research pages for all tracked people'
+          git pull --rebase origin feature/tracked-people-research-clean-20260725
+          git push origin HEAD:feature/tracked-people-research-clean-20260725
