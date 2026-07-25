@@ -2,138 +2,113 @@ from __future__ import annotations
 
 import unittest
 
-from tools import crawl_with_source_categories as categories
+from tools import crawl_official_with_source_categories as official_categories
+from tools import crawl_with_source_categories as generic_categories
 from tools import migrate_article_entities as migration
 
 
-class SourceCategoryRoutingTests(unittest.TestCase):
-    def setUp(self) -> None:
-        self.tracks = [
-            {
-                "slug": "ai",
-                "name": "AI / AGI",
-                "keywords": ["推理模型"],
-                "people": [],
-                "sampleCompanies": ["OpenAI"],
-            }
-        ]
-
-    def test_legacy_sources_default_to_media_without_company_signals(self) -> None:
+class SourceCategoryTests(unittest.TestCase):
+    def test_explicit_category_wins(self) -> None:
         self.assertEqual(
-            categories.source_category(
+            generic_categories.source_category(
                 {
-                    "name": "投资界",
+                    "sourceCategory": "person",
                     "sourceType": "listing-search",
-                    "company": "投资界",
+                    "company": "Some Company",
                 }
+            ),
+            "person",
+        )
+
+    def test_sec_source_defaults_to_company(self) -> None:
+        self.assertEqual(
+            generic_categories.source_category(
+                {"sourceType": "sec", "company": "Example"}
+            ),
+            "company",
+        )
+
+    def test_listing_search_defaults_to_media(self) -> None:
+        self.assertEqual(
+            generic_categories.source_category(
+                {"sourceType": "listing-search", "company": "投资界"}
             ),
             "media",
         )
 
-    def test_legacy_sec_and_ticker_sources_default_to_company(self) -> None:
+    def test_generic_crawler_excludes_company_sources(self) -> None:
+        sources = [
+            {
+                "id": "company",
+                "sourceCategory": "company",
+                "sourceType": "listing-search",
+            },
+            {
+                "id": "media",
+                "sourceCategory": "media",
+                "sourceType": "listing-search",
+            },
+            {
+                "id": "person",
+                "sourceCategory": "person",
+                "sourceType": "listing-search",
+            },
+        ]
+        filtered = generic_categories.filter_sources(sources)
         self.assertEqual(
-            categories.source_category(
-                {"name": "NVIDIA SEC", "sourceType": "sec", "ticker": "NVDA"}
-            ),
-            "company",
-        )
-        self.assertEqual(
-            categories.source_category(
-                {"name": "NVIDIA IR", "sourceType": "listing-search", "ticker": "NVDA"}
-            ),
-            "company",
+            {source["id"] for source in filtered},
+            {"media", "person"},
         )
 
-    def test_media_source_never_emits_company_entity(self) -> None:
+    def test_official_crawler_keeps_company_sources(self) -> None:
         tracking = {
             "sources": [
                 {
-                    "id": "source-investment-news",
-                    "name": "投资界",
-                    "url": "https://www.pedaily.cn/",
-                    "sourceType": "listing-search",
-                    "sourceCategory": "media",
-                    "region": "中国",
-                    "sector": "AI / AGI",
-                    "company": "投资界",
-                    "ticker": "",
-                    "keywords": ["AI 创业"],
-                    "enabled": True,
-                }
-            ]
-        }
-
-        feeds, sec = categories._custom_sources(tracking, self.tracks)
-
-        self.assertEqual(sec, {})
-        self.assertEqual(len(feeds), 1)
-        self.assertEqual(feeds[0]["sourceCategory"], "media")
-        self.assertEqual(feeds[0]["adapter"], "generic_web")
-        self.assertEqual(feeds[0]["platform"], "投资界")
-        self.assertEqual(feeds[0]["sourceUrl"], "https://www.pedaily.cn/")
-        self.assertNotIn("company", feeds[0])
-        self.assertNotIn("companySlug", feeds[0])
-
-    def test_person_source_never_emits_company_entity(self) -> None:
-        tracking = {
-            "sources": [
-                {
-                    "id": "source-person-blog",
-                    "name": "Andrej Karpathy Blog",
-                    "url": "https://karpathy.ai/",
-                    "sourceType": "listing-search",
-                    "sourceCategory": "person",
-                    "region": "美国",
-                    "sector": "AI / AGI",
-                    "company": "",
-                    "ticker": "",
-                    "keywords": ["neural networks"],
-                    "enabled": True,
-                }
-            ]
-        }
-
-        feeds, sec = categories._custom_sources(tracking, self.tracks)
-
-        self.assertEqual(sec, {})
-        self.assertEqual(feeds[0]["sourceCategory"], "person")
-        self.assertEqual(feeds[0]["adapter"], "generic_web")
-        self.assertEqual(feeds[0]["platform"], "Andrej Karpathy Blog")
-        self.assertNotIn("company", feeds[0])
-        self.assertNotIn("companySlug", feeds[0])
-
-    def test_company_source_keeps_catalog_slug(self) -> None:
-        tracking = {
-            "listedCompanies": [
-                {
-                    "id": "catalog-nvidia",
-                    "name": "英伟达",
-                    "ticker": "NVDA",
-                    "catalogSlug": "nvidia",
-                }
-            ],
-            "sources": [
-                {
-                    "id": "listed-source-catalog-nvidia",
-                    "name": "英伟达公告披露",
-                    "url": "https://www.sec.gov/edgar/search/",
-                    "sourceType": "sec",
+                    "id": "company",
+                    "name": "公司官网",
                     "sourceCategory": "company",
-                    "region": "美国",
-                    "sector": "AI / AGI",
-                    "company": "英伟达",
-                    "ticker": "NVDA",
-                    "keywords": ["英伟达", "NVDA"],
-                    "enabled": True,
-                    "listedCompanyId": "catalog-nvidia",
-                }
-            ],
+                    "sourceType": "listing-search",
+                    "url": "https://company.example/news",
+                },
+                {
+                    "id": "media",
+                    "name": "媒体",
+                    "sourceCategory": "media",
+                    "sourceType": "listing-search",
+                    "url": "https://media.example/news",
+                },
+            ]
         }
+        filtered = official_categories._filtered_tracking_payload(tracking)
+        self.assertEqual(
+            [source["id"] for source in filtered["sources"]],
+            ["company"],
+        )
 
-        feeds, sec = categories._custom_sources(tracking, self.tracks)
-
-        self.assertEqual(feeds, [])
-        self.assertEqual(sec["NVDA"], ("英伟达", "nvidia", "AI / AGI", "美国"))
+    def test_official_crawler_keeps_eastmoney_media_exception(self) -> None:
+        tracking = {
+            "sources": [
+                {
+                    "id": "eastmoney",
+                    "name": "东方财富",
+                    "sourceCategory": "media",
+                    "sourceType": "listing-search",
+                    "url": "https://www.eastmoney.com/default.html",
+                },
+                {
+                    "id": "other-media",
+                    "name": "投资界",
+                    "sourceCategory": "media",
+                    "sourceType": "listing-search",
+                    "url": "https://www.pedaily.cn/",
+                },
+            ]
+        }
+        filtered = official_categories._filtered_tracking_payload(tracking)
+        self.assertEqual(
+            [source["id"] for source in filtered["sources"]],
+            ["eastmoney"],
+        )
 
 
 class LegacyEntityMigrationTests(unittest.TestCase):
@@ -141,7 +116,7 @@ class LegacyEntityMigrationTests(unittest.TestCase):
         self.tracking = {
             "sources": [
                 {
-                    "id": "source-track-rcvvao",
+                    "id": "source-track-investment",
                     "name": "投资界",
                     "url": "https://www.pedaily.cn/",
                     "sourceType": "listing-search",
@@ -199,6 +174,7 @@ class LegacyEntityMigrationTests(unittest.TestCase):
 
         self.assertEqual(migrated["articleCount"], 2)
         self.assertEqual(report["removedNonArticles"], 1)
+        self.assertEqual(report["removedLegacyStatuses"], 0)
         cleaned = next(item for item in migrated["articles"] if item["id"] == "fake-company")
         preserved = next(item for item in migrated["articles"] if item["id"] == "real-company")
         self.assertEqual(cleaned["company"], migration.GENERIC_COMPANY)
@@ -206,7 +182,10 @@ class LegacyEntityMigrationTests(unittest.TestCase):
         self.assertEqual(cleaned["source"]["level"], "媒体报道")
         self.assertEqual(preserved["company"], "Anthropic")
         self.assertEqual(preserved["companySlug"], "anthropic")
-        self.assertEqual(migrated["sourceStatus"], [])
+        self.assertEqual(
+            migrated["sourceStatus"],
+            [{"id": "official-user-投资界", "status": "ok"}],
+        )
 
 
 if __name__ == "__main__":
