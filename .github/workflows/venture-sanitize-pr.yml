@@ -29,10 +29,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Apply pending venture source patch
+      - name: Apply pending venture source patches
         run: |
           if [ -f tools/patch_venture_enrichment_idempotence.py ]; then
             python tools/patch_venture_enrichment_idempotence.py
+          fi
+          if [ -f tools/patch_venture_structured_products.py ]; then
+            python tools/patch_venture_structured_products.py
           fi
       - name: Compile venture pipeline
         run: |
@@ -128,13 +131,12 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm .venture-sanitize-trigger
-          git rm -f diagnostics/venture-pr-enrichment-test.txt
-          git rm -f diagnostics/venture-pr-normalizer-test.txt
-          git rm -f diagnostics/venture-pr-structured-test.txt
-          if [ -f tools/patch_venture_enrichment_idempotence.py ]; then
-            rm tools/patch_venture_enrichment_idempotence.py
-          fi
-          git add tools/enrich_venture_profiles.py public/data/venture_profiles.json
+          rm -f .venture-sanitize-trigger
+          rm -f diagnostics/venture-pr-enrichment-test.txt
+          rm -f diagnostics/venture-pr-normalizer-test.txt
+          rm -f diagnostics/venture-pr-structured-test.txt
+          rm -f tools/patch_venture_enrichment_idempotence.py
+          rm -f tools/patch_venture_structured_products.py
+          git add -A
           git commit -m "data: normalize startup and institution profiles"
           git push origin "HEAD:${HEAD_REF}"
