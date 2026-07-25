@@ -56,7 +56,7 @@ export function trackNameAliases(name: string): string[] {
   return unique([normalized, compact, ...split], 12);
 }
 
-/** Terms that identify a sector itself and are safe for event-to-sector matching. */
+/** Terms configured for one track before cross-track ownership is resolved. */
 export function trackIdentityTerms(track: TrackingTrack): string[] {
   return unique([...trackNameAliases(track.name), ...track.keywords], 24);
 }
@@ -147,20 +147,51 @@ export function detectTrackOverlaps(tracks: TrackingTrack[]): TrackOverlap[] {
   );
 }
 
-export function uniqueActorTermsByTrack(
+function termCounts(
   tracks: TrackingTrack[],
-): Map<string, string[]> {
+  termsForTrack: (track: TrackingTrack) => string[],
+): Map<string, number> {
   const counts = new Map<string, number>();
   for (const track of tracks.filter((item) => item.enabled)) {
     const seen = new Set<string>();
-    for (const value of trackActorTerms(track)) {
+    for (const value of termsForTrack(track)) {
       const normalized = normalizeTaxonomyTerm(value);
       if (!normalized || seen.has(normalized)) continue;
       counts.set(normalized, (counts.get(normalized) ?? 0) + 1);
       seen.add(normalized);
     }
   }
+  return counts;
+}
 
+/**
+ * Track names always own their derived aliases. A keyword only owns event
+ * matching when it is unique across enabled tracks.
+ */
+export function uniqueIdentityTermsByTrack(
+  tracks: TrackingTrack[],
+): Map<string, string[]> {
+  const keywordCounts = termCounts(tracks, (track) => track.keywords);
+  return new Map(
+    tracks.map((track) => [
+      track.slug,
+      unique(
+        [
+          ...trackNameAliases(track.name),
+          ...track.keywords.filter(
+            (value) => keywordCounts.get(normalizeTaxonomyTerm(value)) === 1,
+          ),
+        ],
+        24,
+      ),
+    ]),
+  );
+}
+
+export function uniqueActorTermsByTrack(
+  tracks: TrackingTrack[],
+): Map<string, string[]> {
+  const counts = termCounts(tracks, trackActorTerms);
   return new Map(
     tracks.map((track) => [
       track.slug,
