@@ -1,0 +1,75 @@
+name: Diagnose Eastmoney pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/eastmoney-diagnostics.yml
+      - tools/eastmoney_*.py
+      - tools/refine_eastmoney_snapshot.py
+      - tools/validate_eastmoney_snapshot.py
+      - tools/migrate_article_entities.py
+      - tools/crawl_official_with_tracking.py
+      - tests/test_eastmoney*.py
+      - tests/test_refine_eastmoney_snapshot.py
+      - tests/test_migrate_specialized_media_statuses.py
+      - tests/test_validate_eastmoney_pipeline_metadata.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: eastmoney-pipeline-diagnostics
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run Eastmoney regression suite
+        id: tests
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -p "test_*eastmoney*.py" 2>&1 | tee /tmp/eastmoney-tests.log
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+      - name: Record diagnostic report
+        env:
+          TEST_EXIT_CODE: ${{ steps.tests.outputs.exit_code }}
+        shell: bash
+        run: |
+          mkdir -p diagnostics
+          {
+            echo "commit=${GITHUB_SHA}"
+            echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "exit_code=${TEST_EXIT_CODE:-unknown}"
+            echo
+            cat /tmp/eastmoney-tests.log
+          } > diagnostics/eastmoney-test-report.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/eastmoney-test-report.txt
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "ci: record Eastmoney test diagnostics"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+      - name: Fail when tests failed
+        if: steps.tests.outputs.exit_code != '0'
+        run: exit 1
