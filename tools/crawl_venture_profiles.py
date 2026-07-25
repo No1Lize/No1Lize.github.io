@@ -497,6 +497,22 @@ def _invalid_source_urls(profiles: dict[str, dict[str, Any]]) -> list[str]:
     return invalid
 
 
+def _team_core_rows(values: Sequence[Any]) -> list[dict[str, str]]:
+    result: list[dict[str, str]] = []
+    for raw in values if isinstance(values, list) else []:
+        if not isinstance(raw, dict):
+            continue
+        result.append(
+            {
+                "name": clean_text(raw.get("name"), 120),
+                "role": clean_text(raw.get("role"), 160),
+                "summary": clean_text(raw.get("summary"), 320),
+                "sourceUrl": normalize_url(raw.get("sourceUrl", "")),
+            }
+        )
+    return result
+
+
 def evaluate_quality(
     companies: dict[str, dict[str, Any]],
     institutions: dict[str, dict[str, Any]],
@@ -511,11 +527,15 @@ def evaluate_quality(
         if products != sanitize_product_items(products):
             semantic_errors.append(f"company:{slug}:product-noise")
         team = profile.get("team", [])
-        if team != sanitize_team_members(team, (profile.get("name", ""),)):
+        if _team_core_rows(team) != sanitize_team_members(
+            team, (profile.get("name", ""),)
+        ):
             semantic_errors.append(f"company:{slug}:team-noise")
     for slug, profile in institutions.items():
         team = profile.get("team", [])
-        if team != sanitize_team_members(team, (profile.get("name", ""),)):
+        if _team_core_rows(team) != sanitize_team_members(
+            team, (profile.get("name", ""),)
+        ):
             semantic_errors.append(f"institution:{slug}:team-noise")
     checks = {
         "companyCoverage": {

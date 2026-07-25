@@ -136,8 +136,27 @@ def _unique_strings(values: Iterable[Any], *, limit: int, item_limit: int) -> li
 
 
 def _catalog_products(value: str) -> list[str]:
-    parts = re.split(r"[、，,;/]|\s+与\s+|\s+and\s+", clean_text(value, 800), flags=re.IGNORECASE)
-    return sanitize_product_items([part.strip() for part in parts if part.strip()])
+    parts = re.split(
+        r"[、，,;/]|\s*与\s*|\s+and\s+",
+        clean_text(value, 800),
+        flags=re.IGNORECASE,
+    )
+    cleaned: list[str] = []
+    pure_research = {
+        "research", "ai research", "ai safety research", "safety research",
+        "研究", "安全研究", "人工智能研究", "ai安全研究",
+    }
+    for raw in parts:
+        item = clean_text(raw, 180).strip(" >›→-|｜。.!！")
+        item = re.sub(
+            r"(?:等)?(?:机器人|产品|解决方案)?系列$|(?:等产品|等解决方案)$",
+            "",
+            item,
+            flags=re.IGNORECASE,
+        ).strip(" >›→-|｜。.!！")
+        if item and item.casefold() not in {value.casefold() for value in pure_research}:
+            cleaned.append(item)
+    return sanitize_product_items(cleaned)
 
 
 def _editorial_product(value: str) -> bool:
