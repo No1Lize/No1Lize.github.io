@@ -20,18 +20,27 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Probe browser-managed user sources
+      - name: Verify adaptive user-source pipeline
         shell: bash
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: |
-          # diagnostic revision: isolated-user-probe-v5
+          # diagnostic revision: final-social-native-search-v6
           set +e
           REPORT="diagnostics/adaptive-source-pipeline-report.txt"
           mkdir -p diagnostics
           {
             echo "commit=$(git rev-parse HEAD)"
             echo "generated_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            echo "===== py_compile ====="
+            python -m py_compile \
+              tools/adaptive_public_sources.py \
+              tools/robust_web_fallback.py \
+              tools/probe_user_sources.py \
+              tools/validate_user_source_coverage.py \
+              tools/eastmoney_transport.py
+            echo "exit_code=$?"
             echo
             echo "===== user_source_probe ====="
             python tools/probe_user_sources.py --workers 4
