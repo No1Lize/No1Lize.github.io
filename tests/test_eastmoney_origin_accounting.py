@@ -154,6 +154,50 @@ class EastmoneyOriginAccountingTests(unittest.TestCase):
             )
         )
 
+    def test_repeated_refinement_preserves_closed_accounting(self) -> None:
+        snapshot = {
+            "articleCount": 2,
+            "articles": [
+                article(
+                    "new-valid",
+                    "SK海力士推进新一代AI芯片合作",
+                    sequence=8,
+                    origin=EASTMONEY_ORIGIN_NEW,
+                ),
+                article(
+                    "retained-valid",
+                    "三星电子与博通合作开发先进内存芯片",
+                    sequence=9,
+                    origin=EASTMONEY_ORIGIN_RETAINED,
+                ),
+            ],
+            "sourceStatus": [
+                source_status(
+                    accepted=2,
+                    newAccepted=1,
+                    retainedPrevious=True,
+                    retainedPreviousCount=1,
+                )
+            ],
+        }
+
+        first, _ = refine_snapshot(snapshot, self.tracking)
+        second, _ = refine_snapshot(first, self.tracking)
+
+        self.assertEqual(first["articles"], second["articles"])
+        self.assertEqual(first["sourceStatus"], second["sourceStatus"])
+        status = second["sourceStatus"][0]
+        self.assertEqual(status["accepted"], 2)
+        self.assertEqual(status["newAccepted"], 1)
+        self.assertEqual(status["retainedPreviousCount"], 1)
+        self.assertTrue(status["retainedPrevious"])
+        self.assertTrue(
+            all(
+                EASTMONEY_ORIGIN_FIELD not in item
+                for item in second["articles"]
+            )
+        )
+
     def test_clean_empty_discovery_counts_all_survivors_as_retained(self) -> None:
         snapshot = {
             "articleCount": 1,
