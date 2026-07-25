@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Run the intelligence crawler with repository-backed listed-company tracking.
+"""Run the tracking-aware crawler with repository-backed SEC coverage.
 
-The existing crawler remains the source-specific implementation. This wrapper
-loads ``config/user_tracking.json`` before execution and replaces its static SEC
-watchlist with the enabled US-listed companies managed from the website's gear
-admin. If the tracking configuration is absent or invalid, the crawler keeps its
-built-in defaults instead of dropping all SEC coverage.
+``crawl_with_tracking.py`` already merges technology tracks, people, RSS feeds,
+company sources and manually configured SEC sources. This wrapper adds the one
+missing policy boundary: the enabled US-listed companies in
+``config/user_tracking.json`` replace the main crawler's static SEC watchlist.
+Consequently, adding, disabling or deleting a listed company in the gear admin
+also changes the next EDGAR crawl.
 """
 
 from __future__ import annotations
@@ -14,14 +15,14 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tools import crawl_articles as crawler  # noqa: E402
+from tools import crawl_with_tracking as tracking_crawler  # noqa: E402
 
+crawler = tracking_crawler.crawler
 TRACKING_CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 _TICKER_PATTERN = re.compile(r"^[A-Z][A-Z0-9.-]{0,14}$")
 
@@ -38,7 +39,13 @@ def _infer_region(name: str) -> str:
 def load_sec_tracking(
     path: Path = TRACKING_CONFIG_PATH,
 ) -> dict[str, tuple[str, str, str, str]]:
-    """Return enabled US-listed companies in the crawler's SEC tuple format."""
+    """Return enabled US-listed companies in the crawler's SEC tuple format.
+
+    A missing or malformed configuration keeps the crawler's built-in defaults.
+    A valid empty ``listedCompanies`` array is intentional and disables the base
+    SEC watchlist; manually configured SEC sources can still be merged later by
+    ``crawl_with_tracking.py``.
+    """
 
     fallback = dict(crawler.SEC_TRACKED)
     try:
@@ -91,9 +98,32 @@ def configure_crawler(path: Path = TRACKING_CONFIG_PATH) -> int:
     return len(tracked)
 
 
+def _install_empty_sec_guard() -> None:
+    original_crawl_sec = crawler.crawl_sec
+
+    def crawl_sec(user_agent: str):
+        if crawler.SEC_TRACKED:
+            return original_crawl_sec(user_agent)
+        return (
+            [],
+            {},
+            crawler._status(
+                "sec",
+                "SEC EDGAR",
+                "disabled",
+                0,
+                0,
+                platform="SEC",
+            ),
+        )
+
+    crawler.crawl_sec = crawl_sec
+
+
 def main() -> int:
     configure_crawler()
-    return crawler.main()
+    _install_empty_sec_guard()
+    return tracking_crawler.main()
 
 
 if __name__ == "__main__":
