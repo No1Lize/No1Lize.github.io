@@ -23,10 +23,22 @@ from typing import Any, Iterable
 from urllib.parse import urlsplit
 
 try:
-    from .crawl_articles import OUTPUT_PATH, ROOT, clean_text
+    from .crawl_articles import (
+        OUTPUT_PATH,
+        ROOT,
+        clean_text,
+        evaluate_quality,
+        load_config,
+    )
     from .eastmoney_entities import build_listed_entity_index
 except ImportError:
-    from crawl_articles import OUTPUT_PATH, ROOT, clean_text
+    from crawl_articles import (
+        OUTPUT_PATH,
+        ROOT,
+        clean_text,
+        evaluate_quality,
+        load_config,
+    )
     from eastmoney_entities import build_listed_entity_index
 
 
@@ -121,7 +133,10 @@ def is_eastmoney_article(article: dict[str, Any]) -> bool:
 
 def is_roundup_title(title: str) -> bool:
     normalized = _clean(title, 300)
-    return any(re.search(pattern, normalized, flags=re.IGNORECASE) for pattern in ROUNDUP_PATTERNS)
+    return any(
+        re.search(pattern, normalized, flags=re.IGNORECASE)
+        for pattern in ROUNDUP_PATTERNS
+    )
 
 
 def _technology_hits(text: str) -> set[str]:
@@ -173,7 +188,9 @@ def is_relevant_eastmoney_article(
 
 
 def refine_snapshot(
-    snapshot: dict[str, Any], tracking: dict[str, Any]
+    snapshot: dict[str, Any],
+    tracking: dict[str, Any],
+    quality_settings: dict[str, Any] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     entities = build_listed_entity_index(tracking)
     aliases = _company_aliases(entities)
@@ -200,18 +217,28 @@ def refine_snapshot(
         else:
             removed_unrelated.append(_clean(article.get("title"), 300))
 
-    result = dict(snapshot)
-    result["articles"] = kept
-    result["articleCount"] = len(kept)
-
-    for status in result.get("sourceStatus", []):
-        if not isinstance(status, dict):
-            continue
+    source_status = [
+        dict(raw)
+        for raw in snapshot.get("sourceStatus", [])
+        if isinstance(raw, dict)
+    ]
+    for status in source_status:
         status_id = _clean(status.get("id"), 120)
         if status_id.startswith("official-user-东方财富"):
             status["accepted"] = eastmoney_kept
             if eastmoney_kept == 0 and status.get("status") in {"ok", "partial"}:
                 status["status"] = "empty"
+
+    result = dict(snapshot)
+    result["articles"] = kept
+    result["articleCount"] = len(kept)
+    result["sourceStatus"] = source_status
+    if quality_settings is not None:
+        result["qualityGate"] = evaluate_quality(
+            kept,
+            source_status,
+            quality_settings,
+        )
 
     report = {
         "eastmoneySeen": eastmoney_seen,
@@ -237,7 +264,12 @@ def main() -> int:
 
     snapshot = json.loads(args.snapshot.read_text(encoding="utf-8"))
     tracking = json.loads(args.tracking.read_text(encoding="utf-8"))
-    refined, report = refine_snapshot(snapshot, tracking)
+    quality_settings = load_config().get("qualityGate", {})
+    refined, report = refine_snapshot(
+        snapshot,
+        tracking,
+        quality_settings,
+    )
     write_snapshot(args.snapshot, refined)
     print(json.dumps(report, ensure_ascii=False))
     return 0
