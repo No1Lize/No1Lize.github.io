@@ -31,6 +31,9 @@ jobs:
           python-version: "3.12"
       - name: Apply pending venture source patches
         run: |
+          if [ -f tools/patch_venture_quality_compat.py ]; then
+            python tools/patch_venture_quality_compat.py
+          fi
           if [ -f tools/patch_venture_enrichment_idempotence.py ]; then
             python tools/patch_venture_enrichment_idempotence.py
           fi
@@ -111,6 +114,7 @@ jobs:
           rm -f diagnostics/venture-pr-structured-test.txt
           rm -f diagnostics/venture-pr-narrative-test.txt
           rm -f diagnostics/venture-pr-normalizer-check.txt
+          rm -f tools/patch_venture_quality_compat.py
           rm -f tools/patch_venture_enrichment_idempotence.py
           rm -f tools/patch_venture_structured_products.py
           rm -f tools/patch_venture_finalizer_products.py
