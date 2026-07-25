@@ -23,6 +23,21 @@ except ImportError:  # Executed directly with ``python tools/...``.
 
 TRACKING_PATH = crawler.ROOT / "config" / "user_tracking.json"
 USER_SOURCE_PREFIXES = ("user-source-", "user-track-", "user-x-")
+GENERIC_PERSON_LABELS = {
+    "人物",
+    "专家",
+    "研究员",
+    "科学家",
+    "创始人",
+    "创业者",
+    "投资人",
+    "ceo",
+    "cto",
+    "founder",
+    "researcher",
+    "scientist",
+}
+PERSON_SEPARATOR_PATTERN = r"[\s|｜·•:：,，;；/\\\-—–()（）\[\]【】]+"
 
 
 def _clean(value: Any, limit: int = 160) -> str:
@@ -44,6 +59,85 @@ def _unique(values: Iterable[Any], limit: int = 120) -> list[str]:
         if not item or key in seen:
             continue
         result.append(item)
+        seen.add(key)
+        if len(result) >= limit:
+            break
+    return result
+
+
+def _trim_person_separators(value: str) -> str:
+    value = re.sub(rf"^{PERSON_SEPARATOR_PATTERN}", "", value)
+    value = re.sub(rf"{PERSON_SEPARATOR_PATTERN}$", "", value)
+    return _clean(value, 80)
+
+
+def _parse_person_label(raw: Any) -> dict[str, Any] | None:
+    """Validate and split a browser-managed person/account label.
+
+    Organization and project accounts are intentionally accepted. A label with
+    a valid X handle produces three independent search terms: display name,
+    bare handle, and @handle. A concrete name without a handle remains useful
+    for public search but does not generate an X timeline source.
+    """
+
+    value = _clean(raw, 100).replace("＠", "@")
+    if not value:
+        return None
+    if re.match(r"^https?://", value, flags=re.IGNORECASE):
+        return None
+    if re.search(r"(?:x|twitter)\.com/", value, flags=re.IGNORECASE):
+        return None
+    if value.count("@") > 1:
+        return None
+
+    match = re.search(r"@([A-Za-z0-9_]{1,15})(?![A-Za-z0-9_])", value)
+    if "@" in value and not match:
+        return None
+
+    if match:
+        handle = match.group(1)
+        display_name = _trim_person_separators(
+            f"{value[:match.start()]} {value[match.end():]}"
+        )
+        if display_name and not re.search(r"[A-Za-z0-9\u3400-\u9fff]", display_name):
+            return None
+        normalized = f"{display_name} @{handle}" if display_name else f"@{handle}"
+        return {
+            "normalized": normalized,
+            "displayName": display_name,
+            "handle": handle,
+            "searchTerms": _unique([display_name, handle, f"@{handle}"], 3),
+        }
+
+    display_name = _trim_person_separators(value)
+    if (
+        len(display_name) < 2
+        or not re.search(r"[A-Za-z0-9\u3400-\u9fff]", display_name)
+        or display_name.casefold() in GENERIC_PERSON_LABELS
+    ):
+        return None
+    return {
+        "normalized": display_name,
+        "displayName": display_name,
+        "handle": "",
+        "searchTerms": [display_name],
+    }
+
+
+def _normalize_people(values: Any, limit: int = 40) -> list[str]:
+    if not isinstance(values, list):
+        return []
+    result: list[str] = []
+    seen: set[str] = set()
+    for raw in values:
+        parsed = _parse_person_label(raw)
+        if not parsed:
+            continue
+        normalized = str(parsed["normalized"])
+        key = normalized.casefold()
+        if key in seen:
+            continue
+        result.append(normalized)
         seen.add(key)
         if len(result) >= limit:
             break
@@ -78,11 +172,20 @@ def _enabled_tracks(tracking: dict[str, Any]) -> list[dict[str, Any]]:
                 "slug": _slug(raw.get("slug") or name),
                 "name": name,
                 "keywords": _unique(raw.get("keywords", []), 60),
-                "people": _unique(raw.get("people", []), 40),
+                "people": _normalize_people(raw.get("people", []), 40),
                 "sampleCompanies": _unique(raw.get("sampleCompanies", []), 40),
             }
         )
     return result[:30]
+
+
+def _person_search_terms(values: Iterable[Any]) -> list[str]:
+    terms: list[str] = []
+    for raw in values:
+        parsed = _parse_person_label(raw)
+        if parsed:
+            terms.extend(parsed.get("searchTerms", []))
+    return _unique(terms, 80)
 
 
 def _track_terms(track: dict[str, Any]) -> list[str]:
@@ -90,7 +193,7 @@ def _track_terms(track: dict[str, Any]) -> list[str]:
         [
             track["name"],
             *track.get("keywords", []),
-            *track.get("people", []),
+            *_person_search_terms(track.get("people", [])),
             *track.get("sampleCompanies", []),
         ],
         80,
@@ -134,13 +237,11 @@ def _generated_track_sources(tracks: list[dict[str, Any]]) -> list[dict[str, Any
 
 
 def _person_profile(raw: str, track: dict[str, Any]) -> dict[str, Any] | None:
-    value = _clean(raw, 100)
-    match = re.search(r"@([A-Za-z0-9_]{1,15})", value)
-    if not match:
+    parsed = _parse_person_label(raw)
+    if not parsed or not parsed.get("handle"):
         return None
-    handle = match.group(1)
-    name = re.sub(r"\s*[|(/-]*\s*@?[A-Za-z0-9_]{1,15}\)?\s*$", "", value).strip()
-    name = name or handle
+    handle = str(parsed["handle"])
+    name = str(parsed.get("displayName") or handle)
     return {
         "id": f"user-x-{_slug(handle)}",
         "name": name,
