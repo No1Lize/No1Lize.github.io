@@ -1,9 +1,9 @@
 {
   "compileStatus": 0,
   "targetedTestStatus": 0,
-  "allPythonTestStatus": 0,
+  "allPythonTestStatus": 1,
   "liveProbeStatus": 0,
-  "passed": true,
+  "passed": false,
   "liveProbe": {
     "configuredSources": 23,
     "whitelistedSources": 18,
@@ -19,31 +19,89 @@
     "status": {
       "id": "user-track-wechat-qbitai-ai",
       "name": "量子位",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
+      "status": "partial",
+      "scanned": 15,
+      "accepted": 6,
+      "failed": 5,
       "platform": "微信",
-      "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
-      "retainedPrevious": true,
-      "discoveryProvider": "sogou-weixin+fallback",
-      "sogouScanned": 9,
-      "sogouResolved": 9
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
-    "samples": []
+    "samples": [
+      {
+        "title": "GPT-5.6一小时解开50年数学猜想，700词Prompt驾驭64个子Agent",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da11dddfad98cb798410ee855583c0ee19fd4be0cddfd2fdedf2295e14e941ca238f6ceeec&idx=1&mid=2247902895&sn=e1b447a17522c5595d3096ff0ec17a64",
+        "wechatAccount": "量子位",
+        "discoveryProvider": null,
+        "companies": [
+          "OpenAI"
+        ],
+        "people": [],
+        "sector": "AI / AGI",
+        "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 我看呐，只要以后笔记本半开着，就没有人的事儿了。 刚刚，OpenAI研究院 Ethan Knight 宣布： 昨儿刚出的GPT-5.6，用不到一小时，就完成了一道存在了半个世纪的图论猜想证明。 而这道题呢，来头也还真不小，就是大名鼎鼎的 循环双覆盖猜想（Cycle Double Cover Conjecture） 。 为解决这道题，研究员把现在最顶的GPT-5.6 Sol蹬到Ultra；GPT呢，又自己蹬了64个子agent。 最后，硬是写出了一份三页的pdf，证明完毕，Over。 发布后，还在韩国开ICML的Noam Brown（o1核心贡献者）也隔着太平洋第一时间赶来捧场。 他表示，这次和此前的Erdős单位距离问题不同，不靠什么内部特供模型，靠公开能用的GPT-5.6 Sol Ultra就把活儿干了。 而且，GPT-5.6 Sol Ultra把测试时计算并行大幅铺开，原本可能要磨上一整天的证明，如今被64个子agent压进了一个小时。 可以说，在数学这块，前沿模型的天花板还在拉高。而多agent，也能极快地加速任务的处理"
+      },
+      {
+        "title": "大三本科生一作，交出7.92倍加速的投机解码新答卷！DeepSeek和阶跃星辰双双引用",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1209dfad9b1fe560d54a8062973ca62dc5648c3cffbfd33b523067447b9e4d3cbf0e8889&idx=3&mid=2247902587&sn=879066ecce663ab9daba5d73fe2dc27b",
+        "wechatAccount": "量子位",
+        "discoveryProvider": null,
+        "companies": [
+          "DeepSeek"
+        ],
+        "people": [],
+        "sector": "AI / AGI",
+        "summary": "Domino团队 投稿 量子位 | 公众号 QbitAI DeepSeek的投机解码框架DSpark，让“如何把大模型推理做得更快”再次成为热点。 论文中仍有不少细节可挖。比如，作者提到了约一个月前来自上海交通大学等机构的工作 Domino ，并指出其CausalEncoder的设计与DSpark的理念相似。此外，Domino算法也在阶跃星辰发布的JetSpec中被提及。 而这篇论文的第一作者 黄佳诺 ，目前还是一名 大三的本科生 。 如果想理解DSpark中draft-model侧的关键设计，不妨先读Domino。Domino更像一个干净的研究原型，用更简单、更集中的结构讲清楚一个核心问题：如何在parallel backbone的低开销基础上，轻量地补回draft block内部的串行依赖，兼顾扩散与自回归的双重优势。 △ Domino方法总览。 核心问题：并行很快，但缺少因果依赖 投机解码的基本思路是：先让轻量draft model一次猜出多个未来token，再交给target model批量验证。它的速度取决于两个因素： draft要足够快，也要足够准。 这就带来一个trade"
+      },
+      {
+        "title": "刚刚，OpenAI首席未来学家离职！曾被马斯克骂蠢驴",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5697869e8644d4e3dd0563bf622cb244d475413509993f2678272aca03f685&idx=2&mid=2247902258&sn=9255dfa6c73c1433b887448e2fb783bb",
+        "wechatAccount": "量子位",
+        "discoveryProvider": null,
+        "companies": [
+          "OpenAI",
+          "Anthropic"
+        ],
+        "people": [],
+        "sector": "AI / AGI",
+        "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 刚刚，OpenAI首席未来学家 Joshua Achiam 在X上宣布离职。 这并不是一个普通员工变动。 在OpenAI内部， 首席未来学家 这个职位夹在AI安全、政策和公司使命之间，负责研究AI继续变强之后，可能给世界带来的风险和机会。 而Joshua Achiam，正是OpenAI这条安全与使命线上的核心人物之一。 9年前的2017，他以实习生身份加入OpenAI。早期，他是一名专注于AI安全的研究科学家，做过深度强化学习里的安全约束研究。 后来，他领导过OpenAI的 Mission Alignment （使命对齐）团队，负责维护这家公司最初那句使命： 确保AGI造福全人类。 今年2月，OpenAI解散Mission Alignment团队，Joshua转任公司首席未来学家。 只不过，短短5个月后，Joshua就宣布自己将在7月24日正式离开这家待了9年的公司。 至于离职原因，Joshua并没有透露太多。 他只是表示，自己离开并不是因为某个具体事件，也不是一时兴起，而是已经思考了很长一段时间。 为了安全的AGI 在X长文"
+      },
+      {
+        "title": "DeepSeek你怎么连HR都缺啊？！",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6dabdfade4bd1d8de3d4da2ded03214705837d50fec3c8bc97968c2e937286852f3bb19a&idx=2&mid=2247899865&sn=2b0d2607ead8596c6276d6d76007a995",
+        "wechatAccount": "量子位",
+        "discoveryProvider": null,
+        "companies": [
+          "DeepSeek",
+          "阿里云"
+        ],
+        "people": [],
+        "sector": "AI / AGI",
+        "summary": "克雷西 发自 凹非寺 量子位 | 公众号 QbitAI 不是，DeepSeek，我知道你缺人，但没想到你怎么连HR都缺啊？ 这不刚好是毕业季嘛，DeepSeek官方放出了全新一轮的招聘公告。 其中除了算法数据运维这些技术型岗位， 像HR法务行政等职能部门也都在招人 。 其中HR团队还特别加了一条横线，“地位”和AGI核心业务管培生一样，你品，你细品。 那么，这次DeepSeek具体都要招聘什么样的人才呢？ 技术&职能，30+岗位同时招人 DeepSeek官方的招聘页面，一共挂出了30+岗位，覆盖7个职能方向，横跨杭州、北京和内蒙古乌兰察布三地。 大概是这么个格局，全栈开发和算法方向10个、AI核心系统研发6个、模型数据策略5个、深度学习研究员4个，再加上产品、职能、管培各若干。 技术线这块招的最多，这点也符合人们对DeepSeek的一贯印象。 特别是最新押注的Agent Harness方向，正在在疯狂加人，研究员、工程师、产品经理三个方向全部开放，实习全职都收。 搜索方向则是在招算法和架构两个子方向，DeepSeek给搜索写的团队使命是「AGI感知世界的原生感官」，要做的「让每次提问都"
+      }
+    ]
   },
   "logTail": [
     ".................",
     "----------------------------------------------------------------------",
-    "Ran 17 tests in 0.029s",
+    "Ran 17 tests in 0.035s",
     "",
     "OK",
     "......................official=two fatal=RuntimeError: blocked",
-    "...............................................................................................................................................................................",
+    "........................................................................................................................................................F............................",
+    "======================================================================",
+    "FAIL: test_enrichment_is_idempotent (test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enrichment_is_idempotent)",
     "----------------------------------------------------------------------",
-    "Ran 197 tests in 0.301s",
+    "Traceback (most recent call last):",
+    "  File \"/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_enrichment.py\", line 148, in test_enrichment_is_idempotent",
+    "    self.assertEqual(first, second)",
+    "AssertionError: {'sch[194 chars]d': '研发并商业化通用人工智能模型与开发者平台。', 'technology': 'GP[3945 chars]': 2} != {'sch[194 chars]d': 'OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型[4001 chars]': 2}",
+    "Diff is 11015 characters long. Set self.maxDiff to None to see it.",
     "",
-    "OK",
+    "----------------------------------------------------------------------",
+    "Ran 203 tests in 0.395s",
+    "",
+    "FAILED (failures=1)",
     "No snapshot changes (1 articles)."
   ]
 }
