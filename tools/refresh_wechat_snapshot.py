@@ -18,6 +18,7 @@ try:  # Imported by tests as tools.refresh_wechat_snapshot.
     from . import wechat_public_sources
     from . import wechat_registry_bridge
     from . import wechat_sogou_bridge
+    from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_articles as crawler
     import crawl_with_tracking as tracking
@@ -26,6 +27,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_public_sources
     import wechat_registry_bridge
     import wechat_sogou_bridge
+    import wechat_snapshot_quality
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = ROOT / "public" / "data" / "articles.json"
@@ -93,6 +95,10 @@ def crawl_sources(
                 accepted=status.get("accepted", 0),
             )
         )
+    incoming = wechat_snapshot_quality.resolve_cross_sector_articles(
+        incoming,
+        tracking.load_tracking(),
+    )
     return incoming, statuses
 
 
