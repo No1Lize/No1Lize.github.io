@@ -1,0 +1,173 @@
+name: Refresh verified people identities once
+
+on:
+  push:
+    branches: [feature/tracked-people-research-20260725]
+    paths:
+      - '.github/workflows/refresh-people-identity-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-people-identity-once
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/tracked-people-research-20260725
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply Wikipedia identity-context guard
+        id: patch
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tools/refresh_people_profiles.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''def fetch_wikipedia(aliases: list[str], queries: list[str] | None = None) -> dict[str, str] | None:\n    queries = unique(queries or aliases)\n'''
+          new = '''def fetch_wikipedia(\n    aliases: list[str],\n    queries: list[str] | None = None,\n    identity_terms: list[str] | None = None,\n) -> dict[str, str] | None:\n    queries = unique(queries or aliases)\n    expected = [normalize(value) for value in unique(identity_terms or []) if len(normalize(value)) >= 3]\n'''
+          if old in text:
+              text = text.replace(old, new, 1)
+          elif 'identity_terms: list[str] | None = None' not in text:
+              raise SystemExit('fetch_wikipedia signature patch target not found')
+
+          old_rank = '''                score = candidate_score(str(page.get("title") or ""), aliases)\n                if score >= 55:\n                    ranked.append((score, page))\n'''
+          new_rank = '''                score = candidate_score(str(page.get("title") or ""), aliases)\n                context = normalize(f"{page.get('title') or ''} {extract}")\n                identity_hits = sum(1 for term in expected if term and term in context)\n                if score >= 55 and (not expected or identity_hits > 0):\n                    ranked.append((score + min(identity_hits, 3) * 8, page))\n'''
+          if old_rank in text:
+              text = text.replace(old_rank, new_rank, 1)
+          elif 'identity_hits = sum(1 for term in expected' not in text:
+              raise SystemExit('Wikipedia ranking patch target not found')
+
+          old_call = 'wikipedia = None if offline else fetch_wikipedia(aliases, identity_queries)'
+          new_call = 'wikipedia = None if offline else fetch_wikipedia(aliases, identity_queries, identity_terms)'
+          if old_call in text:
+              text = text.replace(old_call, new_call, 1)
+          elif new_call not in text:
+              raise SystemExit('Wikipedia call patch target not found')
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Refresh people profiles
+        id: refresh
+        continue-on-error: true
+        run: python tools/refresh_people_profiles.py --workers 4 > /tmp/refresh.log 2>&1
+
+      - name: Verify Wikipedia and Wikidata identity chain
+        id: identity
+        continue-on-error: true
+        run: |
+          python - <<'PY' > /tmp/identity.log 2>&1
+          import json, urllib.parse, urllib.request
+          from pathlib import Path
+
+          payload = json.loads(Path('public/data/people.json').read_text(encoding='utf-8'))
+          failures = []
+          checked = 0
+          for person in payload.get('people', []):
+              wiki = next((m['url'] for m in person.get('materials', []) if 'wikipedia.org/wiki/' in m.get('url','')), '')
+              wd = next((m['url'] for m in person.get('materials', []) if 'wikidata.org/wiki/' in m.get('url','')), '')
+              if not wiki or not wd:
+                  continue
+              host = urllib.parse.urlparse(wiki).hostname or ''
+              lang = host.split('.')[0]
+              title = urllib.parse.unquote(urllib.parse.urlparse(wiki).path.split('/wiki/',1)[-1]).replace('_',' ')
+              params = urllib.parse.urlencode({'action':'query','titles':title,'prop':'pageprops','format':'json','origin':'*'})
+              req = urllib.request.Request(f'https://{lang}.wikipedia.org/w/api.php?{params}', headers={'User-Agent':'No1Lize-PeopleResearch/1.0'})
+              with urllib.request.urlopen(req, timeout=15) as response:
+                  data = json.loads(response.read().decode('utf-8'))
+              pages = ((data.get('query') or {}).get('pages') or {}).values()
+              qid = next((str((p.get('pageprops') or {}).get('wikibase_item') or '') for p in pages), '')
+              actual = wd.rstrip('/').split('/')[-1]
+              checked += 1
+              if not qid or qid != actual:
+                  failures.append(f"{person.get('slug')}: Wikipedia={qid or 'none'} Wikidata={actual}")
+          print(f'checked={checked}')
+          if failures:
+              print('\n'.join(failures))
+              raise SystemExit(1)
+          PY
+
+      - name: Validate generated profiles
+        id: validate
+        continue-on-error: true
+        run: |
+          python tools/refresh_people_profiles.py --offline --validate-only > /tmp/validate.log 2>&1
+          python -m unittest discover -s tests -p 'test_*.py' >> /tmp/validate.log 2>&1
+
+      - name: Install dependencies
+        id: install
+        continue-on-error: true
+        run: npm install --no-audit --no-fund > /tmp/install.log 2>&1
+
+      - name: Run frontend tests and build
+        id: frontend
+        continue-on-error: true
+        if: steps.install.outcome == 'success'
+        run: |
+          npm run test:unit > /tmp/frontend.log 2>&1
+          npx tsc --noEmit >> /tmp/frontend.log 2>&1
+          GITHUB_PAGES=true npx next build >> /tmp/frontend.log 2>&1
+
+      - name: Record and commit result
+        if: always()
+        run: |
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json, pathlib
+          def tail(path):
+              p=pathlib.Path(path)
+              return p.read_text(errors='replace')[-12000:] if p.exists() else ''
+          outcomes = {
+              'patch': '${{ steps.patch.outcome }}',
+              'refresh': '${{ steps.refresh.outcome }}',
+              'identity': '${{ steps.identity.outcome }}',
+              'validate': '${{ steps.validate.outcome }}',
+              'install': '${{ steps.install.outcome }}',
+              'frontend': '${{ steps.frontend.outcome }}',
+          }
+          payload = json.loads(pathlib.Path('public/data/people.json').read_text(encoding='utf-8'))
+          data = {
+              'sourceCommit':'${{ github.sha }}',
+              'passed': all(value == 'success' for value in outcomes.values()),
+              **outcomes,
+              'personCount': payload.get('personCount',0),
+              'complete': sum(p.get('status') == 'complete' for p in payload.get('people',[])),
+              'partial': sum(p.get('status') == 'partial' for p in payload.get('people',[])),
+              'pending': sum(p.get('status') == 'pending' for p in payload.get('people',[])),
+              'refreshLog': tail('/tmp/refresh.log'),
+              'identityLog': tail('/tmp/identity.log'),
+              'validateLog': tail('/tmp/validate.log'),
+              'frontendLog': tail('/tmp/frontend.log'),
+          }
+          pathlib.Path('diagnostics/people-identity-refresh.json').write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add tools/refresh_people_profiles.py public/data/people.json diagnostics/people-identity-refresh.json
+          git commit -m 'data: refresh verified people identities' || true
+          git pull --rebase origin feature/tracked-people-research-20260725
+          git push origin HEAD:feature/tracked-people-research-20260725
+
+      - name: Fail when verification failed
+        if: always()
+        run: |
+          test '${{ steps.patch.outcome }}' = success
+          test '${{ steps.refresh.outcome }}' = success
+          test '${{ steps.identity.outcome }}' = success
+          test '${{ steps.validate.outcome }}' = success
+          test '${{ steps.install.outcome }}' = success
+          test '${{ steps.frontend.outcome }}' = success
