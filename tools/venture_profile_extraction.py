@@ -793,6 +793,32 @@ def _specific_product_label(value: str) -> bool:
     )
 
 
+def sanitize_product_items(values: Sequence[Any]) -> list[str]:
+    """Remove generic navigation/document labels from current or retained data."""
+    result: list[str] = []
+    seen: set[str] = set()
+    for raw in values:
+        item = clean_text(raw, 180).strip(" >›→-|｜")
+        lowered = item.casefold()
+        compact = re.sub(r"[^a-z0-9\u3400-\u9fff]+", "", lowered)
+        if not item or lowered in NAVIGATION_NOISE or lowered in GENERIC_PRODUCT_LABELS:
+            continue
+        if any(term in lowered for term in PRODUCT_DOCUMENT_TERMS):
+            continue
+        if compact in {
+            re.sub(r"\W+", "", label).casefold()
+            for label in GENERIC_PRODUCT_LABELS
+        }:
+            continue
+        if compact in seen:
+            continue
+        result.append(item)
+        seen.add(compact)
+        if len(result) >= 10:
+            break
+    return result
+
+
 def extract_products(pages: Sequence[ParsedPage], fallback: str) -> list[str]:
     candidates: list[tuple[int, str]] = []
     # The catalog product description is manually curated and therefore outranks
@@ -842,6 +868,42 @@ def _valid_person_name(name: str) -> bool:
             compact,
         )
     )
+
+
+def sanitize_team_members(
+    members: Sequence[dict[str, Any]], aliases: Sequence[str]
+) -> list[dict[str, str]]:
+    """Apply current person-name rules to newly crawled and retained history."""
+    result: list[dict[str, str]] = []
+    seen: set[str] = set()
+    alias_keys = {clean_text(alias, 120).casefold() for alias in aliases if alias}
+    for member in members:
+        if not isinstance(member, dict):
+            continue
+        name = clean_text(member.get("name"), 120).strip(" ,，:：;；-|｜")
+        role = clean_text(member.get("role"), 160)
+        if not _valid_person_name(name):
+            continue
+        if any(alias in name.casefold() for alias in alias_keys if len(alias) >= 2):
+            continue
+        key = name.casefold()
+        if key in seen:
+            existing = next(item for item in result if item["name"].casefold() == key)
+            if not existing.get("role") and role:
+                existing["role"] = role
+            continue
+        result.append(
+            {
+                "name": name,
+                "role": role,
+                "summary": clean_text(member.get("summary"), 320),
+                "sourceUrl": normalize_url(member.get("sourceUrl", "")),
+            }
+        )
+        seen.add(key)
+        if len(result) >= 16:
+            break
+    return result
 
 
 def extract_team(pages: Sequence[ParsedPage], aliases: Sequence[str]) -> list[dict[str, str]]:

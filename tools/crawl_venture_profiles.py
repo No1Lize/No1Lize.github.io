@@ -44,6 +44,8 @@ try:
         extract_institution_portfolio,
         extract_products,
         extract_team,
+        sanitize_product_items,
+        sanitize_team_members,
         normalize_url,
         parse_catalog,
         parse_public_page,
@@ -72,6 +74,8 @@ except ImportError:
         extract_institution_portfolio,
         extract_products,
         extract_team,
+        sanitize_product_items,
+        sanitize_team_members,
         normalize_url,
         parse_catalog,
         parse_public_page,
@@ -431,6 +435,12 @@ def crawl_company(
     updated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
     profile = build_company_profile(company, pages, warnings, updated_at)
     profile, retained = retain_richer_profile(profile, previous, "company")
+    # Retained history must pass the latest semantic rules too. Otherwise a
+    # temporary homepage outage could resurrect navigation labels from an old
+    # snapshot even though new extraction is already stricter.
+    profile["team"] = sanitize_team_members(profile.get("team", []), company.aliases)
+    profile["products"] = sanitize_product_items(profile.get("products", []))
+    profile["evidenceScore"] = evidence_score(profile, "company")
     status = {
         "kind": "company",
         "slug": company.slug,
@@ -458,6 +468,10 @@ def crawl_institution(
     updated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
     profile = build_institution_profile(institution, pages, companies, warnings, updated_at)
     profile, retained = retain_richer_profile(profile, previous, "institution")
+    profile["team"] = sanitize_team_members(
+        profile.get("team", []), institution.aliases
+    )
+    profile["evidenceScore"] = evidence_score(profile, "institution")
     status = {
         "kind": "institution",
         "slug": institution.slug,
@@ -491,6 +505,18 @@ def evaluate_quality(
     statuses: Sequence[dict[str, Any]],
 ) -> dict[str, Any]:
     invalid = _invalid_source_urls(companies) + _invalid_source_urls(institutions)
+    semantic_errors: list[str] = []
+    for slug, profile in companies.items():
+        products = profile.get("products", [])
+        if products != sanitize_product_items(products):
+            semantic_errors.append(f"company:{slug}:product-noise")
+        team = profile.get("team", [])
+        if team != sanitize_team_members(team, (profile.get("name", ""),)):
+            semantic_errors.append(f"company:{slug}:team-noise")
+    for slug, profile in institutions.items():
+        team = profile.get("team", [])
+        if team != sanitize_team_members(team, (profile.get("name", ""),)):
+            semantic_errors.append(f"institution:{slug}:team-noise")
     checks = {
         "companyCoverage": {
             "actual": len(companies),
@@ -512,11 +538,17 @@ def evaluate_quality(
             "required": 0,
             "passed": not invalid,
         },
+        "semanticNoise": {
+            "actual": len(semantic_errors),
+            "required": 0,
+            "passed": not semantic_errors,
+        },
     }
     return {
         "passed": all(check["passed"] for check in checks.values()),
         "checks": checks,
         "invalidSourceUrls": invalid[:30],
+        "semanticErrors": semantic_errors[:30],
         "productiveCompanies": sum(profile.get("status") in {"ok", "partial", "retained"} for profile in companies.values()),
         "productiveInstitutions": sum(profile.get("status") in {"ok", "partial", "retained"} for profile in institutions.values()),
     }
