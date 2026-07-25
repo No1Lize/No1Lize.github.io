@@ -1,5 +1,6 @@
 name: One-time Pages build diagnostic
 
+# Diagnostic run 2: verify the published React DOM type dependency.
 on:
   push:
     branches: [main]
