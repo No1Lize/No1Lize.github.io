@@ -1,0 +1,86 @@
+name: One-time validate structured venture research
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/one-time-validate-venture-research.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-time-validate-venture-research
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run full venture validation and record report
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          REPORT=diagnostics/venture-research-validation.txt
+          : > "$REPORT"
+          run_check() {
+            local name="$1"
+            shift
+            echo "===== $name =====" | tee -a "$REPORT"
+            "$@" >> "$REPORT" 2>&1
+            local code=$?
+            echo "exit=$code" | tee -a "$REPORT"
+            echo >> "$REPORT"
+            return 0
+          }
+          run_check py_compile python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/normalize_venture_profiles.py
+          run_check enrich python tools/enrich_venture_profiles.py
+          run_check normalize python tools/normalize_venture_profiles.py
+          run_check crawler_validate python tools/crawl_venture_profiles.py --validate-only
+          run_check enrich_validate python tools/enrich_venture_profiles.py --validate-only
+          run_check normalize_check python tools/normalize_venture_profiles.py --check
+          run_check python_tests python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_normalize_venture_profiles
+          run_check npm_install npm install
+          run_check node_tests node --import tsx --test \
+            tests/venture-profile-data.test.ts \
+            tests/catalog.test.ts
+          run_check next_build env GITHUB_PAGES=true npx next build
+          python - <<'PY' >> "$REPORT"
+          import json
+          from pathlib import Path
+          payload = json.loads(Path("public/data/venture_profiles.json").read_text(encoding="utf-8"))
+          print("===== final_snapshot =====")
+          print(json.dumps({
+              "schemaVersion": payload.get("schemaVersion"),
+              "researchModelVersion": payload.get("researchModelVersion"),
+              "companies": len(payload.get("companies", {})),
+              "institutions": len(payload.get("institutions", {})),
+              "qualityPassed": payload.get("qualityGate", {}).get("passed"),
+              "qualityChecks": payload.get("qualityGate", {}).get("checks", {}),
+          }, ensure_ascii=False, indent=2))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$REPORT"
+          git commit -m "ci: record structured venture research validation"
+          git pull --rebase origin main
+          git push origin HEAD:main
