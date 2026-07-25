@@ -1,7 +1,7 @@
 .panel {
   margin-top: 12px;
   padding: 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: 8px;
   background: color-mix(in srgb, var(--surface) 86%, var(--bg));
 }
@@ -36,18 +36,25 @@
   gap: 6px;
   max-width: 100%;
   padding: 7px 9px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
   font: inherit;
   text-align: left;
+  transition: border-color 140ms ease, transform 140ms ease, background 140ms ease;
 }
 
 .item:hover {
-  border-color: var(--accent);
+  border-color: var(--green-bright);
+  background: var(--surface-2);
   transform: translateY(-1px);
+}
+
+.item:disabled {
+  cursor: wait;
+  opacity: 0.68;
 }
 
 .item strong {
@@ -65,32 +72,24 @@
 }
 
 .item b {
-  color: var(--accent);
+  color: var(--green-bright);
   font-size: 11px;
   white-space: nowrap;
 }
 
 .empty {
   margin: 0;
-  color: var(--muted);
+  color: var(--faint);
   font-size: 12px;
-}
-
-.refresh {
-  border: 0;
-  background: transparent;
-  color: var(--accent);
-  cursor: pointer;
-  font: inherit;
-  font-size: 12px;
-}
-
-.refresh:disabled {
-  color: var(--muted);
-  cursor: default;
 }
 
 @media (max-width: 720px) {
+  .header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
   .item {
     width: 100%;
     border-radius: 7px;
