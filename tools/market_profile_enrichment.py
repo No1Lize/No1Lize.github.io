@@ -154,6 +154,11 @@ def metric_has_number(value: Any) -> bool:
 def merge_metrics(current: list[dict[str, Any]], incoming: list[dict[str, Any]]) -> list[dict[str, Any]]:
     merged: dict[str, dict[str, Any]] = {}
     order: list[str] = []
+    incoming_ids = {
+        str(metric.get("id") or "")
+        for metric in incoming
+        if isinstance(metric, dict)
+    }
     for metric in [*current, *incoming]:
         if not isinstance(metric, dict):
             continue
@@ -166,7 +171,7 @@ def merge_metrics(current: list[dict[str, Any]], incoming: list[dict[str, Any]])
         if previous is None or (
             metric_has_number(metric.get("value"))
             and not metric_has_number(previous.get("value"))
-        ) or metric in incoming:
+        ) or metric_id in incoming_ids:
             merged[metric_id] = metric
     preferred = [
         "marketCap", "floatMarketCap", "pe", "pb", "turnover", "amount",
@@ -208,7 +213,7 @@ def normalize_company_text(value: Any, max_chars: int = 360) -> str:
         return ""
     for marker in NOISY_DESCRIPTION_MARKERS:
         index = text.find(marker)
-        if index >= 70:
+        if index >= 20:
             text = text[:index].rstrip(" ，。；;")
             break
     text = re.sub(r"(?:201\d|202\d)年\d{1,2}月[^。；]{20,}", "", text)
