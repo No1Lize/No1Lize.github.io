@@ -1,16 +1,24 @@
-import type { IntelligenceEvent } from "@/lib/intelligence-data";
+import type { EventType, IntelligenceEvent } from "@/lib/intelligence-data";
 import type { SectorDefinition } from "@/lib/sector-definitions";
 import type { TrackingTrack } from "@/lib/user-tracking";
 
 const GENERIC_COMPANY_NAMES = new Set(["", "科技产业", "未分类"]);
 
-const EVENT_GROUPS: Array<{ name: string; types: string[] }> = [
+const EVENT_GROUPS: Array<{ name: string; types: EventType[] }> = [
   { name: "科研与技术验证", types: ["技术突破", "论文"] },
   { name: "产品与系统工程", types: ["产品发布", "商业进展", "公司动态"] },
   { name: "融资与产业化", types: ["融资", "产业投资", "并购"] },
   { name: "政策与监管", types: ["政策", "监管文件"] },
   { name: "资本市场", types: ["IPO", "财报"] },
 ];
+
+const CAPITAL_EVENT_TYPES: readonly EventType[] = [
+  "融资",
+  "产业投资",
+  "并购",
+  "IPO",
+];
+const POLICY_EVENT_TYPES: readonly EventType[] = ["政策", "监管文件"];
 
 const FALLBACK_SUBSECTORS = [
   "基础研究",
@@ -132,7 +140,7 @@ function buildResearchFocus(
   track: TrackingTrack,
   events: IntelligenceEvent[],
 ): string[] {
-  const types = new Set(events.map((event) => event.type));
+  const types = new Set<EventType>(events.map((event) => event.type));
   const result: string[] = [];
 
   for (const keyword of unique(track.keywords, 1)) {
@@ -146,10 +154,10 @@ function buildResearchFocus(
   if (track.people.length) {
     result.push("关键人物观点与研究路线变化");
   }
-  if (["融资", "产业投资", "并购", "IPO"].some((type) => types.has(type))) {
+  if (CAPITAL_EVENT_TYPES.some((type) => types.has(type))) {
     result.push("融资节奏、资本开支与项目兑现");
   }
-  if (["政策", "监管文件"].some((type) => types.has(type))) {
+  if (POLICY_EVENT_TYPES.some((type) => types.has(type))) {
     result.push("政策、监管、安全边界与许可进度");
   }
   return unique(result, 7);
