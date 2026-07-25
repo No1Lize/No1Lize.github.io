@@ -1,0 +1,259 @@
+name: Apply universal WeChat track coverage
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-universal-wechat-coverage.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Complete universal discovery adapters
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          sogou = Path("tools/wechat_sogou_index.py")
+          text = sogou.read_text(encoding="utf-8")
+          old = '''def _query_term(spec: dict[str, Any]) -> str:
+              expected = spec.get("expectedAccounts") or [spec.get("name", "")]
+              name = _clean(expected[0] if expected else spec.get("name", ""), 40)
+              keywords = [
+                  _clean(value, 30)
+                  for value in spec.get("keywords", [])
+                  if _clean(value, 30).casefold() not in GENERIC_QUERY_TERMS and len(_clean(value, 30)) >= 2
+              ]
+              topic = keywords[0] if keywords else _clean(spec.get("sector"), 20)
+              return _clean(f"{name} {topic}", 38) or _clean(spec.get("sector"), 38)
+          '''.replace("          ", "")
+          new = '''def _query_term(spec: dict[str, Any]) -> str:
+              expected = spec.get("expectedAccounts") or []
+              sector = _clean(spec.get("sector"), 30)
+              if spec.get("genericDiscovery"):
+                  identity = _clean(spec.get("queryIdentity") or sector, 30)
+              else:
+                  identity = _clean(
+                      spec.get("queryIdentity")
+                      or (expected[0] if expected else spec.get("name", "")),
+                      30,
+                  )
+              keywords = [
+                  _clean(value, 30)
+                  for value in spec.get("keywords", [])
+                  if _clean(value, 30).casefold() not in GENERIC_QUERY_TERMS
+                  and len(_clean(value, 30)) >= 2
+                  and _clean(value, 30).casefold() != identity.casefold()
+              ]
+              topic = keywords[0] if keywords else sector
+              return _clean(f"{identity} {topic}", 38) or sector
+          '''.replace("          ", "")
+          if old not in text:
+              raise SystemExit("Sogou query function anchor not found")
+          sogou.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          bridge = Path("tools/wechat_registry_bridge.py")
+          text = bridge.read_text(encoding="utf-8")
+          old = '''def _load_public_indexes(path: Path = PUBLIC_INDEX_PATH) -> dict[str, list[str]]:
+              try:
+                  payload = json.loads(path.read_text(encoding="utf-8"))
+              except (OSError, json.JSONDecodeError):
+                  return {}
+              if not isinstance(payload, dict) or int(payload.get("schemaVersion", 0)) != 1:
+                  return {}
+              accounts = payload.get("accounts", {})
+              if not isinstance(accounts, dict):
+                  return {}
+              return {
+                  str(account_id): _unique(
+                      str(url)
+                      for url in urls
+                      if isinstance(urls, list)
+                      and str(url).startswith(("https://", "http://"))
+                  )
+                  for account_id, urls in accounts.items()
+                  if isinstance(urls, list)
+              }
+          '''.replace("          ", "")
+          new = '''def _load_public_indexes(path: Path = PUBLIC_INDEX_PATH) -> dict[str, list[str]]:
+              try:
+                  payload = json.loads(path.read_text(encoding="utf-8"))
+              except (OSError, json.JSONDecodeError):
+                  return {}
+              if not isinstance(payload, dict) or int(payload.get("schemaVersion", 0)) != 1:
+                  return {}
+              accounts = payload.get("accounts", {})
+              if not isinstance(accounts, dict):
+                  return {}
+              result = {
+                  str(account_id): _unique(
+                      str(url)
+                      for url in urls
+                      if isinstance(urls, list)
+                      and str(url).startswith(("https://", "http://"))
+                  )
+                  for account_id, urls in accounts.items()
+                  if isinstance(urls, list)
+              }
+              global_indexes = payload.get("globalIndexes", [])
+              if isinstance(global_indexes, list):
+                  result["*"] = _unique(
+                      str(url)
+                      for url in global_indexes
+                      if str(url).startswith(("https://", "http://"))
+                  )
+              return result
+          '''.replace("          ", "")
+          if old not in text:
+              raise SystemExit("public index loader anchor not found")
+          text = text.replace(old, new, 1)
+          old = '''    def generated_wechat_sources(tracks: Any, tracking: Any) -> list[dict[str, Any]]:
+              specs = original_generate(tracks, tracking)
+              for spec in specs:
+                  account_id = str(spec.get("accountConfigId") or "")
+                  spec["publicIndexUrls"] = list(index_map.get(account_id, []))
+              return specs
+          '''.replace("          ", "")
+          new = '''    def generated_wechat_sources(tracks: Any, tracking: Any) -> list[dict[str, Any]]:
+              specs = original_generate(tracks, tracking)
+              for spec in specs:
+                  account_id = str(spec.get("accountConfigId") or "")
+                  shared = index_map.get("*", []) if spec.get("genericDiscovery") else []
+                  spec["publicIndexUrls"] = _unique(
+                      [*index_map.get(account_id, []), *shared]
+                  )
+              return specs
+          '''.replace("          ", "")
+          if old not in text:
+              raise SystemExit("registry wrapper anchor not found")
+          bridge.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          index_path = Path("config/wechat_public_indexes.json")
+          payload = json.loads(index_path.read_text(encoding="utf-8"))
+          payload["globalIndexes"] = ["https://weixin.imaseo.com/"]
+          index_path.write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          test_registry = Path("tests/test_wechat_source_registry.py")
+          text = test_registry.read_text(encoding="utf-8")
+          if "from urllib.parse import unquote_plus" not in text:
+              text = text.replace(
+                  "import unittest\n",
+                  "import unittest\nfrom urllib.parse import unquote_plus\n",
+                  1,
+              )
+          text = text.replace(
+              '        self.assertIn("脑机接口", source["url"])',
+              '        self.assertIn("脑机接口", unquote_plus(source["url"]))',
+          )
+          test_registry.write_text(text, encoding="utf-8")
+
+          test_sogou = Path("tests/test_wechat_sogou_index.py")
+          text = test_sogou.read_text(encoding="utf-8")
+          anchor = "    def test_parses_server_rendered_article_result(self) -> None:\n"
+          addition = '''    def test_generic_track_query_uses_sector_not_display_prefix(self) -> None:
+              spec = {
+                  "name": "微信公众号 · 商业航天",
+                  "sector": "商业航天",
+                  "queryIdentity": "商业航天",
+                  "genericDiscovery": True,
+                  "keywords": ["商业航天", "可复用火箭"],
+              }
+              query = sogou._query_term(spec)
+              self.assertTrue(query.startswith("商业航天"))
+              self.assertIn("可复用火箭", query)
+              self.assertNotIn("微信公众号", query)
+
+          '''.replace("          ", "")
+          if "test_generic_track_query_uses_sector_not_display_prefix" not in text:
+              if anchor not in text:
+                  raise SystemExit("Sogou test anchor not found")
+              text = text.replace(anchor, addition + anchor, 1)
+          test_sogou.write_text(text, encoding="utf-8")
+
+          test_index = Path("tests/test_wechat_public_index_fallback.py")
+          text = test_index.read_text(encoding="utf-8")
+          anchor = "    def test_index_parser_keeps_only_matching_account_and_relevant_titles(self) -> None:\n"
+          addition = '''    def test_generic_track_receives_shared_public_index(self) -> None:
+              tracking = crawl_with_tracking.load_tracking()
+              tracks = crawl_with_tracking._enabled_tracks(tracking)
+              specs = wechat.generated_wechat_sources(tracks, crawl_with_tracking)
+              spec = next(
+                  item
+                  for item in specs
+                  if item.get("genericDiscovery")
+                  and item.get("sector") == "商业航天"
+              )
+              self.assertIn("https://weixin.imaseo.com/", spec["publicIndexUrls"])
+              self.assertNotIn("expectedAccounts", spec)
+
+          '''.replace("          ", "")
+          if "test_generic_track_receives_shared_public_index" not in text:
+              if anchor not in text:
+                  raise SystemExit("public index test anchor not found")
+              text = text.replace(anchor, addition + anchor, 1)
+          test_index.write_text(text, encoding="utf-8")
+
+          Path(".github/workflows/apply-universal-wechat-coverage.yml").unlink()
+          PY
+
+      - name: Validate universal source invariant
+        run: |
+          python -m py_compile \
+            tools/wechat_source_registry.py \
+            tools/wechat_sogou_index.py \
+            tools/wechat_registry_bridge.py \
+            tools/wechat_public_sources.py
+          python -m unittest \
+            tests.test_wechat_source_registry \
+            tests.test_wechat_sogou_index \
+            tests.test_wechat_public_index_fallback \
+            tests.test_wechat_public_sources \
+            tests.test_wechat_snapshot_quality \
+            tests.test_refresh_wechat_snapshot
+          python - <<'PY'
+          from tools import crawl_with_tracking
+          from tools import refresh_wechat_snapshot
+
+          tracking = crawl_with_tracking.load_tracking()
+          tracks = crawl_with_tracking._enabled_tracks(tracking)
+          specs = refresh_wechat_snapshot.configured_sources()
+          expected = {track["name"] for track in tracks}
+          generic = {
+              spec["sector"]
+              for spec in specs
+              if spec.get("genericDiscovery")
+          }
+          missing = sorted(expected - generic)
+          if missing:
+              raise SystemExit(f"tracks missing generic WeChat source: {missing}")
+          print(f"validated {len(expected)} enabled tracks and {len(specs)} WeChat sources")
+          PY
+
+      - name: Commit completed universal adapter
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: complete universal WeChat discovery adapters"
+          git pull --rebase origin main
+          python -m unittest \
+            tests.test_wechat_source_registry \
+            tests.test_wechat_sogou_index \
+            tests.test_wechat_public_index_fallback
+          git push origin HEAD:main
