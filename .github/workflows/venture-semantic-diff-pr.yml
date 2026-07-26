@@ -1,0 +1,73 @@
+name: Diagnose latest-main venture evidence drift
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/venture-semantic-diff-pr.yml
+      - tools/apply_venture_semantic_rebase.py
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply semantic rebase
+        run: python tools/apply_venture_semantic_rebase.py
+      - name: Reprocess snapshot
+        run: |
+          for pass in $(seq 1 8); do
+            cp public/data/venture_profiles.json /tmp/before-cycle.json
+            python tools/refine_venture_research_evidence.py
+            python tools/normalize_venture_profiles.py
+            python tools/stabilize_venture_profiles.py
+            cmp -s /tmp/before-cycle.json public/data/venture_profiles.json && break
+          done
+      - name: Capture evidence drift
+        run: |
+          cp public/data/venture_profiles.json /tmp/before-evidence.json
+          python tools/refine_venture_research_evidence.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          before = json.loads(Path('/tmp/before-evidence.json').read_text(encoding='utf-8'))
+          after = json.loads(Path('public/data/venture_profiles.json').read_text(encoding='utf-8'))
+          changes = []
+          def walk(a, b, path=''):
+              if type(a) is not type(b):
+                  changes.append({'path': path, 'before': a, 'after': b}); return
+              if isinstance(a, dict):
+                  for key in sorted(set(a) | set(b)):
+                      child = f'{path}.{key}' if path else key
+                      if key not in a:
+                          changes.append({'path': child, 'before': '<missing>', 'after': b[key]})
+                      elif key not in b:
+                          changes.append({'path': child, 'before': a[key], 'after': '<missing>'})
+                      else:
+                          walk(a[key], b[key], child)
+              elif isinstance(a, list):
+                  if a != b:
+                      changes.append({'path': path, 'before': a, 'after': b})
+              elif a != b:
+                  changes.append({'path': path, 'before': a, 'after': b})
+          walk(before, after)
+          Path('/tmp/venture-semantic-drift.json').write_text(
+              json.dumps({'count': len(changes), 'changes': changes}, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(f'Captured {len(changes)} fields.')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: venture-semantic-drift
+          path: /tmp/venture-semantic-drift.json
