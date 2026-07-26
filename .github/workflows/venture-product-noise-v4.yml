@@ -1,0 +1,128 @@
+name: Venture product noise v4
+
+on:
+  push:
+    branches: [feature/venture-product-noise-v4]
+    paths:
+      - .venture-product-noise-v4
+
+permissions:
+  contents: write
+
+concurrency:
+  group: venture-product-noise-v4
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply permanent semantic patch
+        run: python tools/patch_venture_product_noise_v4.py
+      - name: Run venture regressions
+        run: |
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/refine_venture_research_evidence.py \
+            tools/normalize_venture_profiles.py \
+            tools/finalize_venture_profiles.py \
+            tools/enforce_venture_entity_semantics.py \
+            tools/stabilize_venture_profiles.py
+          python -m unittest -v \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
+      - name: Reprocess production venture snapshot
+        run: |
+          python tools/refine_venture_research_evidence.py
+          python tools/refine_venture_research_evidence.py --check
+          python tools/normalize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+      - name: Verify cleaned formal data
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('public/data/venture_profiles.json').read_text(encoding='utf-8'))
+          companies = payload.get('companies', {})
+          product_names = {
+              item
+              for profile in companies.values()
+              for item in profile.get('products', [])
+          }
+          technology_product_names = {
+              row.get('name', '')
+              for profile in companies.values()
+              for row in profile.get('technologyProducts', [])
+              if isinstance(row, dict)
+          }
+          forbidden = {
+              'November 19', 'June 30', 'F.02 Contributed to the Production of 30',
+              '000 Cars at BMW', 'F.03 Arrives at BMW', 'Helix-02 Bedroom Tidy',
+              'F.03 Battery Development', 'View C360 Reference Architecture for Insurance',
+              'Commonwealth Fusion Systems Raises $863 Million Series B2 Round',
+              '星河动力 CQ-50 发动机交付速度再提升', '工艺革新',
+              'B2B Marketing', 'B2C Marketing',
+          }
+          assert forbidden.isdisjoint(product_names), forbidden & product_names
+          assert forbidden.isdisjoint(technology_product_names), forbidden & technology_product_names
+          assert '网友直呼疯狂' not in companies['anthropic'].get('researchTechnology', '')
+          assert companies['form-energy'].get('financing', []) == []
+          assert companies['anduril'].get('background') == '开发自主系统、传感器和国防软件平台。'
+          checks = payload.get('qualityGate', {}).get('checks', {})
+          assert checks.get('entitySemanticConsistency', {}).get('passed') is True
+          print(json.dumps({
+              'companies': len(companies),
+              'institutions': len(payload.get('institutions', {})),
+              'anthropicResearchTechnology': companies['anthropic'].get('researchTechnology', ''),
+              'figureProducts': companies['figure-ai'].get('products', []),
+              'formEnergyFinancing': companies['form-energy'].get('financing', []),
+          }, ensure_ascii=False))
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate frontend consumption
+        run: |
+          npm install
+          node --import tsx --test tests/venture-profile-data.test.ts tests/catalog.test.ts
+      - name: Commit validated permanent result
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm -f .venture-product-noise-v4
+          rm -f tools/patch_venture_product_noise_v4.py
+          rm -f .github/workflows/venture-product-noise-v4.yml
+          git add \
+            tools/enforce_venture_entity_semantics.py \
+            tests/test_venture_entity_semantics.py \
+            public/data/venture_profiles.json
+          git add -u \
+            .venture-product-noise-v4 \
+            tools/patch_venture_product_noise_v4.py \
+            .github/workflows/venture-product-noise-v4.yml
+          git commit -m 'fix: reject residual venture product and prose noise'
+          git push origin HEAD:feature/venture-product-noise-v4
