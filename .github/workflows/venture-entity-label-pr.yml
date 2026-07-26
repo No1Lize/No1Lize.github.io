@@ -125,8 +125,63 @@ jobs:
           fi
           exit "$status"
       - name: Reach shared terminal fixed point
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
         run: |
-          python tools/stabilize_venture_profiles.py
+          set +e
+          mkdir -p diagnostics
+          python tools/stabilize_venture_profiles.py \
+            > diagnostics/venture-cross-gate-diff.txt 2>&1
+          status=$?
+          if [ "$status" -ne 0 ]; then
+            python - <<'PY' >> diagnostics/venture-cross-gate-diff.txt 2>&1
+          import json
+          from tools.enforce_venture_entity_semantics import enforce_snapshot
+          from tools.finalize_venture_profiles import finalize_snapshot
+          from tools.stabilize_venture_profiles import CATALOG_PATH, SNAPSHOT_PATH
+
+          def differences(left, right, path="$"):
+              rows = []
+              if type(left) is not type(right):
+                  return [(path, left, right)]
+              if isinstance(left, dict):
+                  for key in sorted(set(left) | set(right)):
+                      if key not in left or key not in right:
+                          rows.append((f"{path}.{key}", left.get(key), right.get(key)))
+                      else:
+                          rows.extend(differences(left[key], right[key], f"{path}.{key}"))
+              elif isinstance(left, list):
+                  if left != right:
+                      rows.append((path, left, right))
+              elif left != right:
+                  rows.append((path, left, right))
+              return rows
+
+          payload = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+          catalog = CATALOG_PATH.read_text(encoding="utf-8")
+          structural, _ = finalize_snapshot(payload, catalog)
+          semantic, _ = enforce_snapshot(structural, catalog)
+          structural_again, _ = finalize_snapshot(semantic, catalog)
+          semantic_again, _ = enforce_snapshot(semantic, catalog)
+          for label, left, right in (
+              ("input_to_structural", payload, structural),
+              ("structural_to_semantic", structural, semantic),
+              ("semantic_to_structural_check", semantic, structural_again),
+              ("semantic_to_semantic_check", semantic, semantic_again),
+          ):
+              print(f"=== {label} ===")
+              for row in differences(left, right)[:120]:
+                  print(json.dumps(row, ensure_ascii=False, default=str))
+          PY
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-cross-gate-diff.txt
+            git commit -m "ci: record venture cross-gate differences"
+            git push origin "HEAD:${HEAD_REF}"
+            cat diagnostics/venture-cross-gate-diff.txt
+            exit "$status"
+          fi
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
