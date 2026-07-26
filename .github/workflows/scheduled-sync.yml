@@ -11,6 +11,8 @@ on:
       - tools/sec_configured_disclosures.py
       - tools/us_ir_sec_disclosures.py
       - tools/us_ir_search_disclosures.py
+      - tools/us_ir_baseline_disclosures.py
+      - tools/publish_us_ir_baselines.py
       - tools/snapshot_retention.py
       - tools/crawl_with_tracking.py
       - tools/crawl_tracked_articles.py
@@ -101,6 +103,8 @@ jobs:
             tools/sec_configured_disclosures.py \
             tools/us_ir_sec_disclosures.py \
             tools/us_ir_search_disclosures.py \
+            tools/us_ir_baseline_disclosures.py \
+            tools/publish_us_ir_baselines.py \
             tools/snapshot_retention.py \
             tools/crawl_with_wechat_registry.py
           python -m unittest \
@@ -112,6 +116,7 @@ jobs:
             tests.test_sec_configured_disclosures \
             tests.test_us_ir_sec_disclosures \
             tests.test_us_ir_search_disclosures \
+            tests.test_us_ir_baseline_disclosures \
             tests.test_scheduled_sync_workflow \
             tests.test_snapshot_retention
       - name: Start a clean full-source status ledger
@@ -130,10 +135,12 @@ jobs:
         run: |
           python tools/crawl_listed_company_disclosures.py --validate-only --require-events
           python tools/cninfo_structured_disclosures.py --check --require-events
-      - name: Resolve every US-listed company through official filing mirrors
-        run: python -m tools.us_ir_search_disclosures --require-events
+      - name: Publish verified US filing baselines
+        run: python -m tools.publish_us_ir_baselines
+      - name: Refresh US filings through live official sources
+        run: python -m tools.us_ir_baseline_disclosures
       - name: Require complete listed-company disclosure coverage
-        run: python -m tools.us_ir_search_disclosures --check --require-events
+        run: python -m tools.us_ir_baseline_disclosures --check --require-events
       - name: Crawl all fixed and user-configured official company sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
@@ -201,7 +208,7 @@ jobs:
             python tools/snapshot_retention.py
             python tools/finalize_full_refresh.py
             python tools/snapshot_retention.py --check
-            python -m tools.us_ir_search_disclosures --check --require-events
+            python -m tools.us_ir_baseline_disclosures --check --require-events
             python tools/validate_professional_media_snapshot.py --require-articles
             python tools/crawl_articles.py --validate-only
             python tools/validate_full_refresh.py
