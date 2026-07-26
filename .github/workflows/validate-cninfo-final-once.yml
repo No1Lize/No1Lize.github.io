@@ -1,0 +1,120 @@
+name: Validate final CNINFO disclosure integration once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/validate-cninfo-final-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: validate-cninfo-final-once
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run final offline validation
+        shell: bash
+        run: |
+          set +e
+          : > /tmp/cninfo-final.log
+          python -m py_compile \
+            tools/crawl_listed_company_disclosures.py \
+            tools/cninfo_structured_disclosures.py \
+            >> /tmp/cninfo-final.log 2>&1
+          compile_exit=$?
+          python -m unittest \
+            tests.test_listed_company_disclosures \
+            tests.test_cninfo_structured_disclosures \
+            tests.test_scheduled_sync_workflow \
+            >> /tmp/cninfo-final.log 2>&1
+          test_exit=$?
+          python tools/crawl_listed_company_disclosures.py --validate-only --require-events \
+            >> /tmp/cninfo-final.log 2>&1
+          base_check_exit=$?
+          python tools/cninfo_structured_disclosures.py --check --require-events \
+            >> /tmp/cninfo-final.log 2>&1
+          structured_check_exit=$?
+          export compile_exit test_exit base_check_exit structured_check_exit
+          python - <<'PY'
+          import json
+          import os
+          from datetime import UTC, datetime
+          from pathlib import Path
+
+          snapshot = json.loads(
+              Path("public/data/listed_company_disclosures.json").read_text(encoding="utf-8")
+          )
+          exit_codes = {
+              key: int(os.environ[key])
+              for key in (
+                  "compile_exit",
+                  "test_exit",
+                  "base_check_exit",
+                  "structured_check_exit",
+              )
+          }
+          a_share = [
+              {
+                  key: status.get(key)
+                  for key in (
+                      "id",
+                      "companySlug",
+                      "ticker",
+                      "status",
+                      "structuredScanned",
+                      "structuredAccepted",
+                      "structuredErrors",
+                  )
+              }
+              for status in snapshot.get("sourceStatus", [])
+              if isinstance(status, dict) and status.get("market") == "A股"
+          ]
+          report = {
+              "generatedAt": datetime.now(UTC).replace(microsecond=0).isoformat(),
+              "passed": all(value == 0 for value in exit_codes.values()),
+              "exitCodes": exit_codes,
+              "snapshot": {
+                  "companyCount": snapshot.get("companyCount"),
+                  "eventCount": snapshot.get("eventCount"),
+                  "cninfoStructured": snapshot.get("cninfoStructured"),
+                  "aShareStatuses": a_share,
+              },
+              "log": Path("/tmp/cninfo-final.log").read_text(
+                  encoding="utf-8", errors="replace"
+              ).splitlines()[-80:],
+          }
+          Path("diagnostics/cninfo-structured-validation.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
+      - name: Commit final validation and remove workflow
+        run: |
+          rm -f .github/workflows/validate-cninfo-final-once.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            diagnostics/cninfo-structured-validation.json \
+            .github/workflows/validate-cninfo-final-once.yml
+          git commit -m "ci: confirm CNINFO structured disclosure integration"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
