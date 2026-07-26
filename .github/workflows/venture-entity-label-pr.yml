@@ -32,6 +32,7 @@ jobs:
       - name: Apply venture semantic patches
         run: |
           python tools/patch_venture_entity_labels_v1.py
+          python tools/patch_venture_person_sentence_names.py
           python tools/patch_venture_short_summary_fallback.py
       - name: Run semantic and terminal regressions
         env:
