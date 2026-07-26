@@ -172,7 +172,7 @@ class ProfessionalVentureSourceTests(unittest.TestCase):
         )
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["round"], "A轮")
-        self.assertEqual(rows[0]["amount"], "10亿元人民币")
+        self.assertEqual(rows[0]["amount"], "10亿元")
         self.assertEqual(rows[0]["verification"], "待交叉验证")
         self.assertEqual(status["status"], "success")
 
