@@ -7,6 +7,7 @@ on:
     paths:
       - config/professional_technology_media_sources.json
       - tools/professional_media_sources.py
+      - tools/validate_professional_media_snapshot.py
       - tools/crawl_with_wechat_registry.py
       - tests/test_professional_media_sources.py
       - .github/workflows/refresh-professional-media.yml
@@ -32,6 +33,7 @@ jobs:
         run: |
           python -m py_compile \
             tools/professional_media_sources.py \
+            tools/validate_professional_media_snapshot.py \
             tools/crawl_with_wechat_registry.py
           python -m unittest tests.test_professional_media_sources
           python - <<'PY'
@@ -51,6 +53,8 @@ jobs:
               raise SystemExit(f"expected 100 enabled media sources, got {len(sources)}")
           if len(covered) != 100 or set(covered) != {row["id"] for row in sources}:
               raise SystemExit("professional media grouping does not cover the complete catalog")
+          if not specs:
+              raise SystemExit("professional media catalog generated no executable source groups")
           print(
               {
                   "enabledSources": len(sources),
@@ -59,7 +63,7 @@ jobs:
               }
           )
           PY
-      - name: Start professional media data refresh
+      - name: Start full public-data refresh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run scheduled-sync.yml --ref main -f source=feeds
+        run: gh workflow run scheduled-sync.yml --ref main
