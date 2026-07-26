@@ -30,12 +30,29 @@ jobs:
         with:
           python-version: "3.12"
       - name: Apply venture semantic patches
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
         run: |
-          python tools/patch_venture_entity_labels_v1.py
-          python tools/patch_venture_person_sentence_names.py
-          python tools/patch_venture_short_summary_fallback.py
-          python tools/patch_venture_terminal_entity_contract.py
-          python tools/patch_venture_short_technology_fallback.py
+          set +e
+          mkdir -p diagnostics
+          {
+            python tools/patch_venture_entity_labels_v1.py
+            python tools/patch_venture_person_sentence_names.py
+            python tools/patch_venture_short_summary_fallback.py
+            python tools/patch_venture_terminal_entity_contract.py
+            python tools/patch_venture_short_technology_fallback.py
+          } > diagnostics/venture-patch-application.txt 2>&1
+          status=$?
+          cat diagnostics/venture-patch-application.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-patch-application.txt
+            git commit -m "ci: record venture patch application failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
       - name: Run semantic and terminal regressions
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
