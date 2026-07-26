@@ -13,6 +13,7 @@ on:
       - tools/wechat_*.py
       - tools/refresh_wechat_snapshot.py
       - tests/test_wechat_*.py
+      - tests/test_refresh_wechat_snapshot.py
       - .github/workflows/refresh-all-track-wechat.yml
 
 permissions:
@@ -99,16 +100,23 @@ jobs:
           python -m py_compile \
             tools/wechat_source_registry.py \
             tools/wechat_public_sources.py \
+            tools/wechat_fetch_compat.py \
             tools/wechat_sogou_index.py \
+            tools/wechat_sogou_link_compat.py \
             tools/wechat_registry_bridge.py \
+            tools/wechat_original_redirect_bridge.py \
             tools/wechat_index_record_fallback.py \
             tools/wechat_snapshot_quality.py \
             tools/refresh_wechat_snapshot.py
           python -m unittest \
             tests.test_wechat_source_registry \
             tests.test_wechat_sogou_index \
+            tests.test_wechat_sogou_link_compat \
             tests.test_wechat_public_sources \
+            tests.test_wechat_fetch_compat \
             tests.test_wechat_public_index_fallback \
+            tests.test_wechat_original_redirect_bridge \
+            tests.test_wechat_index_record_fallback \
             tests.test_wechat_snapshot_quality \
             tests.test_refresh_wechat_snapshot
           python tools/crawl_articles.py --validate-only
@@ -120,6 +128,17 @@ jobs:
           from tools import refresh_wechat_snapshot
 
           payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
+          non_original = [
+              article.get("id", "unknown")
+              for article in payload.get("articles", [])
+              if refresh_wechat_snapshot._is_wechat_record(article)
+              and not refresh_wechat_snapshot._publishable_article(article)
+          ]
+          if non_original:
+              raise SystemExit(
+                  f"non-original WeChat records entered the snapshot: {non_original[:10]}"
+              )
+
           tracking = crawl_with_tracking.load_tracking()
           tracks = crawl_with_tracking._enabled_tracks(tracking)
           specs = refresh_wechat_snapshot.configured_sources()
@@ -163,16 +182,8 @@ jobs:
                           1 for item in sector_statuses if item.get("retainedPrevious")
                       ),
                       "snapshotArticleCount": len(articles),
-                      "fullTextArticles": sum(
-                          1
-                          for article in articles
-                          if article.get("wechatContentMode") != "index-only"
-                      ),
-                      "indexOnlyArticles": sum(
-                          1
-                          for article in articles
-                          if article.get("wechatContentMode") == "index-only"
-                      ),
+                      "fullTextArticles": len(articles),
+                      "indexOnlyArticles": 0,
                       "providers": dict(
                           Counter(
                               str(item.get("discoveryProvider", "unknown"))
@@ -199,6 +210,7 @@ jobs:
               "generatedSourceCount": len(specs),
               "executedSourceCount": len(statuses),
               "tracksWithoutExecutedSource": missing_status,
+              "originalUrlContractPassed": not non_original,
               "wechatIngestion": payload.get("wechatIngestion", {}),
               "tracks": rows,
           }
