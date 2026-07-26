@@ -11,6 +11,8 @@ on:
     branches: [main]
     paths:
       - config/user_tracking.json
+      - tools/expand_tracking_entities.py
+      - .github/workflows/tracking-discovery.yml
   schedule:
     - cron: "30 13 * * *"
       timezone: "Asia/Taipei"
@@ -48,7 +50,19 @@ jobs:
           set -euo pipefail
           MODE="full"
           if [ "${{ github.event_name }}" = "push" ]; then
-            MODE="seed-only"
+            # Config pushes (admin edits) only seed brand-new tracks so every
+            # panel edit stays cheap; tool/workflow pushes run a full pass.
+            if python - <<'PYEOF'
+          import json, os, sys
+          event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
+          files = []
+          for commit in event.get("commits", []):
+              files += commit.get("modified", []) + commit.get("added", [])
+          sys.exit(0 if "config/user_tracking.json" in files else 1)
+          PYEOF
+            then
+              MODE="seed-only"
+            fi
           elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             MODE="${{ inputs.mode }}"
           fi
@@ -56,7 +70,7 @@ jobs:
           if [ "$MODE" = "seed-only" ]; then
             python tools/expand_tracking_entities.py --seed-new-only | tee /tmp/discovery.json
           else
-            python tools/expand_tracking_entities.py --max-tracks 4 | tee /tmp/discovery.json
+            python tools/expand_tracking_entities.py --max-tracks 12 --max-requests 420 | tee /tmp/discovery.json
           fi
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
