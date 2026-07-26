@@ -28,6 +28,11 @@
       "homepage": "https://www.hkexnews.hk/index_c.htm",
       "hosts": ["hkexnews.hk"]
     },
+    "sec": {
+      "name": "美国证券交易委员会 SEC",
+      "homepage": "https://www.sec.gov/edgar/search/",
+      "hosts": ["sec.gov", "data.sec.gov"]
+    },
     "eastmoney": {
       "name": "东方财富公告",
       "homepage": "https://data.eastmoney.com/notices/",
@@ -38,6 +43,18 @@
     "horizon-robotics": "1000238030",
     "xtalpi": "1000225298",
     "catl": "1000259940"
+  },
+  "secCiks": {
+    "pony-ai": "0001969302",
+    "weride": "0001867729",
+    "rigetti": "0001838359",
+    "ionq": "0001824920",
+    "rocket-lab": "0001819994",
+    "tempus-ai": "0001717115",
+    "recursion": "0001601830",
+    "mobileye": "0001910139",
+    "aurora": "0001828108",
+    "joby": "0001819848"
   },
   "extraListings": [
     {
