@@ -73,9 +73,12 @@ PRODUCT_EDITORIAL_RE = re.compile(
     r"journey home|announces?|launches?|introduces?|partnership|collaboration|"
     r"read more|learn more|start chat|free chat|try now|new paper|explores?|"
     r"nominates?|applauded|positive topline|developed using|for the treatment|"
-    r"enabling rapid|development with)\b|"
+    r"enabling rapid|development with|raises?|raised|funding round|"
+    r"financing round|contributed|arrives?|signs?|named|publishes?|delivers?|"
+    r"updates?|development|virtual tour|bedroom tidy|demo(?:nstration)?)\b|"
     r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|"
-    r"访谈|观点|生态合作|开始对话|免费对话|立即体验|体验全新|交付速度|再提升)",
+    r"访谈|观点|生态合作|开始对话|免费对话|立即体验|体验全新|融资|募资|领投|跟投|"
+    r"交付速度|再提升)",
     re.IGNORECASE,
 )
 PRODUCT_URL_RE = re.compile(
@@ -97,6 +100,28 @@ PRODUCT_EXACT_NOISE = {
     "drug discovery",
     "nach01",
 }
+PRODUCT_DATE_LABEL_RE = re.compile(
+    r"^(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|"
+    r"jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|"
+    r"dec(?:ember)?)\s+\d{1,2}(?:,?\s+20\d{2})?$",
+    re.IGNORECASE,
+)
+PRODUCT_NAV_PREFIX_RE = re.compile(
+    r"^(?:view|explore|discover|read|learn|watch|see|find|download|get started)\b",
+    re.IGNORECASE,
+)
+PRODUCT_FRAGMENT_RE = re.compile(r"^\d{2,}\s+[A-Za-z]", re.IGNORECASE)
+PRODUCT_GENERIC_RE = re.compile(
+    r"^(?:b2b marketing|b2c marketing|marketing|工艺革新|技术创新|"
+    r"产品|平台|服务|业务|更多|qnimgs|images?|assets?|static|uploads?)$",
+    re.IGNORECASE,
+)
+NARRATIVE_EDITORIAL_RE = re.compile(
+    r"(?:网友|直呼|狂塞|昨日|过去\d+天|一口气|热议|小编|据悉|报道称|"
+    r"本文|作者|赌.{0,8}级|别再|它讲的是)|"
+    r"\b(?:click here|we asked|viral|what you need to know)\b",
+    re.IGNORECASE,
+)
 PERSON_CJK_RE = re.compile(r"^[\u3400-\u9fff·]{2,8}$")
 PERSON_LATIN_TOKEN_RE = re.compile(r"^[A-Z][A-Za-z'’.-]*$")
 PERSON_PARTICLES = {"de", "del", "da", "di", "van", "von", "la", "le"}
@@ -182,7 +207,11 @@ def _relevant_clauses(
     clauses: list[str] = []
     for raw in CLAUSE_SPLIT_RE.split(text):
         clause = clean_text(raw, 900).strip(" .。|｜\\-")
-        if len(clause) < 18 or PAGE_CHROME_RE.search(clause):
+        if (
+            len(clause) < 18
+            or PAGE_CHROME_RE.search(clause)
+            or NARRATIVE_EDITORIAL_RE.search(clause)
+        ):
             continue
         if terms and not _contains_any(clause, terms):
             continue
@@ -211,19 +240,23 @@ def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
     compact = _compact(item)
     if (
         not item
+        or len(item) > 100
         or YEAR_ONLY_RE.fullmatch(item)
         or NUMERIC_ONLY_RE.fullmatch(item)
         or PRODUCT_EDITORIAL_RE.search(item)
         or PRODUCT_URL_RE.search(item)
         or PRODUCT_FILE_RE.search(item)
         or PRODUCT_SENTENCE_RE.search(item)
+        or PRODUCT_DATE_LABEL_RE.fullmatch(item)
+        or PRODUCT_NAV_PREFIX_RE.search(item)
+        or PRODUCT_FRAGMENT_RE.search(item)
+        or PRODUCT_GENERIC_RE.fullmatch(item)
         or item.casefold().strip(" .") in PRODUCT_EXACT_NOISE
         or len(compact) < 2
     ):
         return False
     alias_compacts = {_compact(alias) for alias in aliases if _compact(alias)}
     return compact not in alias_compacts
-
 
 def _valid_person_name(value: Any) -> bool:
     name = clean_text(value, 120).strip(" ,，:：;；-|｜")
