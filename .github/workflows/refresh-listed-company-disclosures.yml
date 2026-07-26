@@ -11,7 +11,9 @@ on:
       - config/user_tracking.json
       - tools/bootstrap_listed_company_disclosures.py
       - tools/crawl_listed_company_disclosures.py
+      - tools/cninfo_structured_disclosures.py
       - tests/test_listed_company_disclosures.py
+      - tests/test_cninfo_structured_disclosures.py
       - lib/listed-company-disclosure-data.ts
       - lib/venture-profile-data-with-disclosures.ts
       - tsconfig.json
@@ -36,18 +38,25 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate disclosure crawler
+      - name: Validate disclosure crawlers
         run: |
           python -m py_compile \
             tools/bootstrap_listed_company_disclosures.py \
-            tools/crawl_listed_company_disclosures.py
-          python -m unittest tests.test_listed_company_disclosures
+            tools/crawl_listed_company_disclosures.py \
+            tools/cninfo_structured_disclosures.py
+          python -m unittest \
+            tests.test_listed_company_disclosures \
+            tests.test_cninfo_structured_disclosures
       - name: Bootstrap verified official documents
         run: python tools/bootstrap_listed_company_disclosures.py
       - name: Refresh official exchange disclosures
         run: python tools/crawl_listed_company_disclosures.py
+      - name: Resolve A-share documents through CNINFO structured data
+        run: python tools/cninfo_structured_disclosures.py --require-events
       - name: Require verified disclosure events
-        run: python tools/crawl_listed_company_disclosures.py --validate-only --require-events
+        run: |
+          python tools/crawl_listed_company_disclosures.py --validate-only --require-events
+          python tools/cninfo_structured_disclosures.py --check --require-events
       - name: Commit disclosure snapshot
         id: update
         run: |
