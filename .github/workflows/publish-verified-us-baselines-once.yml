@@ -1,0 +1,142 @@
+name: Publish verified US filing baselines once
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-verified-us-baselines-once.yml
+      - config/listed_company_disclosure_sources.json
+      - tools/us_ir_baseline_disclosures.py
+      - tools/publish_us_ir_baselines.py
+      - tests/test_us_ir_baseline_disclosures.py
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: publish-verified-us-baselines-once
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate deterministic US filing baselines
+        run: |
+          python -m py_compile \
+            tools/us_ir_sec_disclosures.py \
+            tools/us_ir_search_disclosures.py \
+            tools/us_ir_baseline_disclosures.py \
+            tools/publish_us_ir_baselines.py
+          python -m unittest \
+            tests.test_us_ir_sec_disclosures \
+            tests.test_us_ir_search_disclosures \
+            tests.test_us_ir_baseline_disclosures \
+            tests.test_scheduled_sync_workflow
+      - name: Publish all verified US filing baselines
+        run: python -m tools.publish_us_ir_baselines
+      - name: Require all 15 listed-company profiles
+        run: python -m tools.us_ir_baseline_disclosures --check --require-events
+      - name: Write migration diagnostics
+        run: |
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json
+          from datetime import UTC, datetime
+          from pathlib import Path
+
+          path = Path("public/data/listed_company_disclosures.json")
+          snapshot = json.loads(path.read_text(encoding="utf-8"))
+          companies = snapshot.get("companies", {})
+          statuses = [
+              status
+              for status in snapshot.get("sourceStatus", [])
+              if isinstance(status, dict)
+              and str(status.get("id", "")).startswith("us-ir-disclosure-")
+          ]
+          baseline_events = [
+              event
+              for company in companies.values()
+              if isinstance(company, dict)
+              for event in company.get("events", [])
+              if isinstance(event, dict) and event.get("verifiedBaseline") is True
+          ]
+          market_counts = {}
+          for company in companies.values():
+              if not isinstance(company, dict):
+                  continue
+              for listing in company.get("listings", []):
+                  if not isinstance(listing, dict):
+                      continue
+                  market = str(listing.get("market", "unknown"))
+                  market_counts[market] = market_counts.get(market, 0) + 1
+          report = {
+              "generatedAt": datetime.now(UTC).replace(microsecond=0).isoformat(),
+              "passed": (
+                  int(snapshot.get("companyCount", 0)) == 15
+                  and len(companies) == 15
+                  and len(statuses) == 10
+                  and len(baseline_events) == 10
+                  and all(int(status.get("baselineAccepted", 0) or 0) == 1 for status in statuses)
+              ),
+              "snapshotGeneratedAt": snapshot.get("generatedAt"),
+              "companyCount": snapshot.get("companyCount", 0),
+              "eventCount": snapshot.get("eventCount", 0),
+              "marketListingCounts": market_counts,
+              "verifiedBaselineCount": len(baseline_events),
+              "usIrStructured": snapshot.get("usIrStructured", {}),
+              "companies": [
+                  {
+                      "slug": slug,
+                      "name": company.get("name"),
+                      "eventCount": len(company.get("events", [])),
+                      "baselineCount": sum(
+                          1
+                          for event in company.get("events", [])
+                          if isinstance(event, dict) and event.get("verifiedBaseline") is True
+                      ),
+                  }
+                  for slug, company in sorted(companies.items())
+                  if isinstance(company, dict)
+              ],
+          }
+          if not report["passed"]:
+              raise SystemExit(json.dumps(report, ensure_ascii=False))
+          Path("diagnostics/verified-us-filing-baselines.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(report, ensure_ascii=False))
+          PY
+      - name: Commit formal snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/publish-verified-us-baselines-once.yml
+          git add \
+            public/data/listed_company_disclosures.json \
+            diagnostics/verified-us-filing-baselines.json
+          git commit -m "data: publish disclosures for all 15 listed companies"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && \
+              python -m tools.us_ir_baseline_disclosures --check --require-events && \
+              git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+      - name: Publish company pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
