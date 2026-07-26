@@ -2,7 +2,7 @@ TAP version 13
 # Subtest: professional institution directory keeps complete Qingke main lists
 not ok 1 - professional institution directory keeps complete Qingke main lists
   ---
-  duration_ms: 3.913766
+  duration_ms: 3.519696
   type: 'test'
   location: '/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/institution-ranking-data.test.ts:1:213'
   failureType: 'testCodeFailure'
@@ -26,19 +26,19 @@ not ok 1 - professional institution directory keeps complete Qingke main lists
 # Subtest: ordered rankings retain exact published positions
 ok 2 - ordered rankings retain exact published positions
   ---
-  duration_ms: 0.395702
+  duration_ms: 0.376076
   type: 'test'
   ...
 # Subtest: cross-list institutions are merged and linked to detailed profiles
 ok 3 - cross-list institutions are merged and linked to detailed profiles
   ---
-  duration_ms: 1.094
+  duration_ms: 0.981361
   type: 'test'
   ...
 # Subtest: source metadata distinguishes names from category-only cross checks
 ok 4 - source metadata distinguishes names from category-only cross checks
   ---
-  duration_ms: 0.282821
+  duration_ms: 0.255958
   type: 'test'
   ...
 1..4
@@ -49,4 +49,4 @@ ok 4 - source metadata distinguishes names from category-only cross checks
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 246.269538
+# duration_ms 230.236198
