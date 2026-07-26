@@ -127,7 +127,7 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .market-divider { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--faint); font-size: 9px; }
 .market-divider i { height: 48px; width: 1px; background: var(--border); transform: rotate(18deg); }
 
-.content-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(290px, .72fr) minmax(320px, .78fr); gap: 30px; padding-top: 34px; }
+.content-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; padding-top: 34px; }
 .headlines-column { min-width: 0; border-left: 1px solid var(--border); padding-left: 26px; }
 .headline-list { border-top: 1px solid var(--border); max-height: 1080px; overflow: auto; scrollbar-color: var(--border) transparent; }
 .headline-item { display: flex; gap: 10px; align-items: flex-start; padding: 11px 4px; border-bottom: 1px solid var(--border-soft); transition: background .18s ease; }
@@ -181,7 +181,7 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .empty-state strong { color: var(--text); margin-top: 8px; }
 .empty-state p { max-width: 380px; font-size: 12px; }
 
-.heat-list { border-top: 1px solid var(--border); }
+.heat-list { border-top: 1px solid var(--border); max-height: 1080px; overflow: auto; scrollbar-color: var(--border) transparent; }
 .heat-row { display: grid; grid-template-columns: 26px minmax(118px, 1fr) 80px 28px; gap: 10px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border-soft); }
 .heat-row:hover strong { color: var(--green-bright); }
 .heat-rank { color: var(--faint); font-size: 10px; }
@@ -391,6 +391,6 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .document-preview-text { max-height: 72vh; overflow: auto; white-space: pre-wrap; word-break: break-word; border: 1px solid var(--border); background: var(--surface); padding: 20px 22px; color: var(--text); font-size: 14px; line-height: 1.9; font-family: inherit; }
 
 @media (max-width: 1250px) and (min-width: 901px) {
-  .content-grid { grid-template-columns: minmax(0, 1.35fr) minmax(300px, .8fr); }
+  .content-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .side-column-stack { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--border); padding: 26px 0 0; }
 }

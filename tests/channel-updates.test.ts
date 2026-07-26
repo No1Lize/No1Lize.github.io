@@ -26,8 +26,8 @@ const channels: ChannelUpdateKey[] = [
 
 const snapshotTime = "2026-07-26T02:10:42.000Z";
 
-test("homepage channel update directory displays the latest 50 items", () => {
-  assert.equal(HOMEPAGE_CHANNEL_UPDATE_LIMIT, 50);
+test("homepage channel update directory matches the 80-item column layout", () => {
+  assert.equal(HOMEPAGE_CHANNEL_UPDATE_LIMIT, 80);
 });
 
 test("normalizes exact, relative and undated source labels", () => {
