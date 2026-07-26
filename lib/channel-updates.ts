@@ -21,6 +21,7 @@ export type ChannelUpdateItem = {
   context: string;
   date: string;
   sortAt: string;
+  keywords: string[];
 };
 
 export type ChannelUpdateDirectory = {
@@ -132,6 +133,17 @@ function normalize(value: string) {
   return value.toLocaleLowerCase("zh-CN").replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
 }
 
+function uniqueKeywords(values: string[]) {
+  const seen = new Set<string>();
+  return values.filter((value) => {
+    const keyword = value.trim();
+    const normalized = normalize(keyword);
+    if (!normalized || seen.has(normalized)) return false;
+    seen.add(normalized);
+    return true;
+  });
+}
+
 function searchableArticleText(article: ArticleRecord) {
   return normalize(
     [
@@ -180,6 +192,7 @@ function dedupeAndSort(items: ChannelUpdateItem[]) {
 function articleToUpdate(
   article: ArticleRecord,
   context: string,
+  keywords: string[],
 ): ChannelUpdateItem {
   return {
     id: article.id,
@@ -191,16 +204,24 @@ function articleToUpdate(
     context,
     date: article.publishedAt,
     sortAt: article.publishedAt,
+    keywords: uniqueKeywords([
+      article.type,
+      article.sector,
+      article.region,
+      ...keywords,
+    ]),
   };
 }
 
 function technologyDirectory(): ChannelUpdateDirectory {
   const items = articlesPayload.articles
     .filter((article) => enabledSectorNames.has(article.sector))
-    .map((article) => articleToUpdate(article, `${article.sector} · ${article.region}`));
+    .map((article) =>
+      articleToUpdate(article, `${article.sector} · ${article.region}`, [article.sector]),
+    );
   return {
     title: "赛道更新目录",
-    description: "当前启用赛道的最新公开事件，按披露日期倒序排列。点击条目直接打开原始来源。",
+    description: "当前启用赛道的最新公开事件，可按赛道、事件类型和地区关键词筛选，并按时间排序。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -214,11 +235,16 @@ function companiesDirectory(): ChannelUpdateDirectory {
     const mentionedCompany = article.mentionedCompanies?.[0] ?? "";
     if (!article.companySlug && !matchedCompany && !explicitCompany && !mentionedCompany) return [];
     const companyName = explicitCompany || mentionedCompany || matchedCompany || "公司动态";
-    return [articleToUpdate(article, `${companyName} · ${article.sector}`)];
+    return [
+      articleToUpdate(article, `${companyName} · ${article.sector}`, [
+        companyName,
+        article.sector,
+      ]),
+    ];
   });
   return {
     title: "公司更新目录",
-    description: "与已收录公司直接相关的融资、产品、经营和资本市场更新，最新披露置顶。",
+    description: "与已收录公司直接相关的融资、产品、经营和资本市场更新，可按公司、赛道和事件关键词筛选。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -230,11 +256,16 @@ function institutionsDirectory(): ChannelUpdateDirectory {
     const explicitInstitution = article.institutions?.[0] ?? "";
     if (!matchedInstitution && !explicitInstitution && !capitalEventTypes.has(article.type)) return [];
     const institution = explicitInstitution || matchedInstitution || "资本动态";
-    return [articleToUpdate(article, `${institution} · ${article.sector}`)];
+    return [
+      articleToUpdate(article, `${institution} · ${article.sector}`, [
+        institution,
+        article.sector,
+      ]),
+    ];
   });
   return {
     title: "资本与机构更新目录",
-    description: "投资机构、融资、并购与 IPO 相关公开进展，按最新披露顺序集中呈现。",
+    description: "投资机构、融资、并购与 IPO 相关公开进展，可按机构、赛道和事件关键词筛选。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -254,11 +285,12 @@ function reportsDirectory(): ChannelUpdateDirectory {
       context: `${report.institution} · ${report.sector}`,
       date: report.publishedAt,
       sortAt,
+      keywords: uniqueKeywords([report.reportType, report.sector, report.institution]),
     } satisfies ChannelUpdateItem;
   });
   return {
     title: "研报更新目录",
-    description: "新归档的公开研报与 PDF 原文，按系统归档时间置顶，点击直接打开原始文件。",
+    description: "新归档的公开研报与 PDF 原文，可按报告类型、赛道和研究机构关键词筛选。",
     generatedAt: researchReportsPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -269,22 +301,24 @@ function peopleDirectory(): ChannelUpdateDirectory {
     (person.materials ?? []).map((material, index) => {
       const fallback = person.updatedAt || peoplePayload.generatedAt;
       const sortAt = safeDate(material.date, fallback);
+      const materialLabel = materialTypeLabels[material.type] || "人物材料";
       return {
         id: `${person.slug}-${index}-${normalize(material.title)}`,
         title: material.title,
         summary: `${person.name} · ${person.role}`,
         href: material.url,
         source: material.source,
-        label: materialTypeLabels[material.type] || "人物材料",
+        label: materialLabel,
         context: person.name,
         date: material.date || fallback.slice(0, 10),
         sortAt,
+        keywords: uniqueKeywords([person.name, materialLabel]),
       } satisfies ChannelUpdateItem;
     }),
   );
   return {
     title: "人物材料更新目录",
-    description: "人物演讲、采访、公开对话、论文与著作等新抓取材料，最新发现置顶。",
+    description: "人物演讲、采访、公开对话、论文与著作等材料，可按人物和材料类型关键词筛选。",
     generatedAt: peoplePayload.generatedAt,
     items: dedupeAndSort(items),
   };

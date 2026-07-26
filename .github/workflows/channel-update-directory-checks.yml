@@ -9,8 +9,10 @@ on:
       - "app/reports/page.tsx"
       - "app/people/page.tsx"
       - "components/channel-update-directory.tsx"
+      - "components/channel-update-directory-client.tsx"
       - "components/channel-update-directory.module.css"
       - "lib/channel-updates.ts"
+      - "lib/channel-update-filter.ts"
       - "tests/channel-updates.test.ts"
       - ".github/workflows/channel-update-directory-checks.yml"
   push:
@@ -22,8 +24,10 @@ on:
       - "app/reports/page.tsx"
       - "app/people/page.tsx"
       - "components/channel-update-directory.tsx"
+      - "components/channel-update-directory-client.tsx"
       - "components/channel-update-directory.module.css"
       - "lib/channel-updates.ts"
+      - "lib/channel-update-filter.ts"
       - "tests/channel-updates.test.ts"
       - ".github/workflows/channel-update-directory-checks.yml"
 
