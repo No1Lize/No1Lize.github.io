@@ -6,7 +6,7 @@ on:
       - ".github/workflows/professional-venture-refresh-artifact.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   refresh:
@@ -91,3 +91,45 @@ jobs:
             diagnostics/professional-venture-source-refresh.json
           if-no-files-found: error
           retention-days: 2
+      - name: Publish generated files to the data branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_BRANCH: ${{ github.head_ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          publish_file() {
+            local path="$1"
+            local message="$2"
+            local endpoint="repos/${GITHUB_REPOSITORY}/contents/${path}"
+            local sha
+            sha="$(gh api "${endpoint}?ref=${TARGET_BRANCH}" --jq '.sha' 2>/dev/null || true)"
+            local request
+            request="$(mktemp)"
+            python - "$path" "$message" "$sha" "$TARGET_BRANCH" "$request" <<'PY'
+          import base64
+          import json
+          import sys
+
+          path, message, sha, branch, request_path = sys.argv[1:]
+          payload = {
+              'message': message,
+              'content': base64.b64encode(open(path, 'rb').read()).decode(),
+              'branch': branch,
+          }
+          if sha:
+              payload['sha'] = sha
+          with open(request_path, 'w', encoding='utf-8') as handle:
+              json.dump(payload, handle)
+          PY
+            gh api --method PUT "$endpoint" --input "$request" >/dev/null
+            rm -f "$request"
+          }
+
+          publish_file \
+            public/data/venture_profiles.json \
+            'data: add professional financing and equity source status'
+          publish_file \
+            diagnostics/professional-venture-source-refresh.json \
+            'diagnostics: record public professional venture discovery'
