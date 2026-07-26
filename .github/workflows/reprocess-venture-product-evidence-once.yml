@@ -1,0 +1,73 @@
+name: Reprocess traceable venture product evidence once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/reprocess-venture-product-evidence-once.yml
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  reprocess:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record snapshot revision
+        id: before
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo "sha=$(gh api "repos/${GITHUB_REPOSITORY}/contents/public/data/venture_profiles.json?ref=main" --jq .sha)" >> "$GITHUB_OUTPUT"
+      - name: Reprocess and validate
+        run: |
+          python -m unittest \
+            tests.test_refine_venture_research_evidence \
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles \
+            tests.test_venture_semantic_rebase
+          for pass in $(seq 1 8); do
+            cp public/data/venture_profiles.json /tmp/before.json
+            python tools/refine_venture_research_evidence.py
+            python tools/normalize_venture_profiles.py
+            python tools/stabilize_venture_profiles.py
+            cmp -s /tmp/before.json public/data/venture_profiles.json && break
+          done
+          python tools/refine_venture_research_evidence.py --check
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate frontend
+        run: |
+          npm install
+          node --import tsx --test tests/venture-profile-data.test.ts tests/catalog.test.ts
+      - name: Publish unless a newer snapshot landed
+        id: publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE_SHA: ${{ steps.before.outputs.sha }}
+        run: |
+          ENDPOINT="repos/${GITHUB_REPOSITORY}/contents/public/data/venture_profiles.json"
+          CURRENT_SHA="$(gh api "$ENDPOINT?ref=main" --jq .sha)"
+          if [ "$CURRENT_SHA" != "$BEFORE_SHA" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          REQUEST="$(mktemp)"
+          python -c 'import base64,json,sys; p,s,o=sys.argv[1:]; json.dump({"message":"data: require traceable venture product evidence","content":base64.b64encode(open(p,"rb").read()).decode(),"sha":s,"branch":"main"},open(o,"w"))' public/data/venture_profiles.json "$CURRENT_SHA" "$REQUEST"
+          gh api --method PUT "$ENDPOINT" --input "$REQUEST" >/dev/null
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Publish site
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
