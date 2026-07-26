@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - tools/crawl_articles.py
+      - tools/crawl_listed_company_disclosures.py
       - tools/snapshot_retention.py
       - tools/crawl_with_tracking.py
       - tools/crawl_tracked_articles.py
@@ -45,8 +46,12 @@ on:
       - tools/refine_eastmoney_snapshot.py
       - tools/validate_eastmoney_snapshot.py
       - tools/migrate_article_entities.py
+      - lib/listed-company-disclosure-data.ts
+      - lib/venture-profile-data-with-disclosures.ts
+      - tsconfig.json
       - tests/**/*.py
       - config/intelligence_sources.json
+      - config/listed_company_disclosure_sources.json
       - config/professional_technology_media_sources.json
       - config/wechat_sources.json
       - config/wechat_public_indexes.json
@@ -65,7 +70,7 @@ permissions:
 
 concurrency:
   group: public-article-refresh
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   crawl:
@@ -78,15 +83,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate source and retention plans
+      - name: Validate source, disclosure and retention plans
         run: |
           python -m py_compile \
             tools/professional_media_sources.py \
             tools/validate_professional_media_snapshot.py \
+            tools/crawl_listed_company_disclosures.py \
             tools/snapshot_retention.py \
             tools/crawl_with_wechat_registry.py
           python -m unittest \
             tests.test_professional_media_sources \
+            tests.test_listed_company_disclosures \
             tests.test_snapshot_retention
       - name: Start a clean full-source status ledger
         run: python tools/prepare_full_refresh.py
@@ -96,6 +103,10 @@ jobs:
         run: python tools/crawl_with_wechat_registry.py --source all
       - name: Require executed professional media groups and original-domain articles
         run: python tools/validate_professional_media_snapshot.py --require-articles
+      - name: Crawl official exchange and designated disclosure sources
+        run: python tools/crawl_listed_company_disclosures.py
+      - name: Require verified listed-company disclosure events
+        run: python tools/crawl_listed_company_disclosures.py --validate-only --require-events
       - name: Crawl all fixed and user-configured official company sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
@@ -133,14 +144,22 @@ jobs:
       - name: Commit changed public data
         id: data-update
         run: |
-          if git diff --quiet -- public/data/articles.json public/data/market_profiles.json public/data/people.json; then
+          if git diff --quiet -- \
+            public/data/articles.json \
+            public/data/listed_company_disclosures.json \
+            public/data/market_profiles.json \
+            public/data/people.json; then
             echo "No public data changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/articles.json public/data/market_profiles.json public/data/people.json
+          git add \
+            public/data/articles.json \
+            public/data/listed_company_disclosures.json \
+            public/data/market_profiles.json \
+            public/data/people.json
           git commit -m "data: refresh all public intelligence sources"
           for attempt in 1 2 3; do
             git pull --rebase origin main
@@ -155,6 +174,7 @@ jobs:
             python tools/snapshot_retention.py
             python tools/finalize_full_refresh.py
             python tools/snapshot_retention.py --check
+            python tools/crawl_listed_company_disclosures.py --validate-only --require-events
             python tools/validate_professional_media_snapshot.py --require-articles
             python tools/crawl_articles.py --validate-only
             python tools/validate_full_refresh.py
@@ -163,7 +183,11 @@ jobs:
             python tools/validate_market_profiles.py
             python tools/refresh_people_profiles_with_video.py --offline --validate-only
             python -m unittest discover -s tests -p "test_*.py"
-            git add public/data/articles.json public/data/market_profiles.json public/data/people.json
+            git add \
+              public/data/articles.json \
+              public/data/listed_company_disclosures.json \
+              public/data/market_profiles.json \
+              public/data/people.json
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
