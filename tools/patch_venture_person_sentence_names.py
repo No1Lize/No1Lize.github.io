@@ -61,6 +61,7 @@ PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
 }
 PERSON_ORGANIZATION_NAMES = {
     "moses singer",
+    "sun microsystems",
 ''',
         "person navigation and organization tokens",
     )
@@ -132,6 +133,7 @@ PERSON_ORGANIZATION_NAMES = {
                         {"name": "Chris Lyons. Black History", "role": "Partner"},
                         {"name": "ML Angela Yeung Awards", "role": "CTO"},
                         {"name": "Solutions Platform Overview AI", "role": "Partner"},
+                        {"name": "Sun Microsystems", "role": "Founder"},
                         {"name": "Megan Holston-Alexander", "role": "Partner"},
 ''',
         "sentence-like person regression fixtures",
@@ -153,7 +155,7 @@ PERSON_ORGANIZATION_NAMES = {
         self.assertEqual(diagnostics["removedTeamMembers"], 2)
 ''',
         '''        self.assertEqual(diagnostics["removedProducts"], 5)
-        self.assertEqual(diagnostics["removedTeamMembers"], 7)
+        self.assertEqual(diagnostics["removedTeamMembers"], 8)
 ''',
         "entity removal regression counts",
     )
