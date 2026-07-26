@@ -1,17 +1,13 @@
 {
-  "generatedAt": "2026-07-26T05:27:26+00:00",
-  "passed": false,
+  "generatedAt": "2026-07-26T05:33:06+00:00",
+  "passed": true,
   "exitCodes": {
     "compile_exit": 0,
-    "test_exit": 1,
-    "bootstrap_exit": 0,
-    "base_exit": 0,
-    "structured_exit": 0,
+    "test_exit": 0,
     "base_check_exit": 0,
     "structured_check_exit": 0
   },
   "snapshot": {
-    "generatedAt": "2026-07-26T05:27:10+00:00",
     "companyCount": 5,
     "eventCount": 110,
     "cninfoStructured": {
@@ -24,12 +20,8 @@
       {
         "id": "exchange-disclosure-cambricon-a-688256",
         "companySlug": "cambricon",
-        "market": "A股",
         "ticker": "688256",
         "status": "ok",
-        "accepted": 18,
-        "structuredAttempted": true,
-        "structuredOrgIdResolved": true,
         "structuredScanned": 120,
         "structuredAccepted": 18,
         "structuredErrors": []
@@ -37,12 +29,8 @@
       {
         "id": "exchange-disclosure-catl-a-300750",
         "companySlug": "catl",
-        "market": "A股",
         "ticker": "300750",
         "status": "ok",
-        "accepted": 18,
-        "structuredAttempted": true,
-        "structuredOrgIdResolved": true,
         "structuredScanned": 120,
         "structuredAccepted": 18,
         "structuredErrors": []
@@ -50,43 +38,20 @@
       {
         "id": "exchange-disclosure-bgi-genomics-a-300676",
         "companySlug": "bgi-genomics",
-        "market": "A股",
         "ticker": "300676",
         "status": "ok",
-        "accepted": 18,
-        "structuredAttempted": true,
-        "structuredOrgIdResolved": true,
         "structuredScanned": 120,
         "structuredAccepted": 18,
         "structuredErrors": []
       }
     ]
   },
-  "logTail": [
-    "....F...",
-    "======================================================================",
-    "FAIL: test_enrichment_merges_a_share_events_without_removing_hk_events (tests.test_cninfo_structured_disclosures.CninfoStructuredDisclosuresTest.test_enrichment_merges_a_share_events_without_removing_hk_events)",
+  "log": [
+    "..........",
     "----------------------------------------------------------------------",
-    "Traceback (most recent call last):",
-    "  File \"/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_cninfo_structured_disclosures.py\", line 178, in test_enrichment_merges_a_share_events_without_removing_hk_events",
-    "    self.assertEqual(",
-    "AssertionError: Lists differ: ['disclosure URL outside allowlist: https:[62 chars]pdf'] != []",
+    "Ran 10 tests in 0.003s",
     "",
-    "First list contains 1 additional elements.",
-    "First extra element 0:",
-    "'disclosure URL outside allowlist: https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/example.pdf'",
-    "",
-    "+ []",
-    "- ['disclosure URL outside allowlist: '",
-    "-  'https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/example.pdf']",
-    "",
-    "----------------------------------------------------------------------",
-    "Ran 8 tests in 0.003s",
-    "",
-    "FAILED (failures=1)",
-    "Verified exchange bootstrap already present.",
-    "{\"companies\": 5, \"events\": 56, \"officialEvents\": 56, \"fallbackEvents\": 0}",
-    "{\"companyCount\": 5, \"eventCount\": 110, \"cninfoAccepted\": 54}",
+    "OK",
     "{\"passed\": true, \"eventCount\": 110}",
     "{\"passed\": true, \"acceptedEventCount\": 54}"
   ]
