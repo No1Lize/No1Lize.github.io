@@ -19,11 +19,11 @@ Traceback (most recent call last):
   File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_stabilize_venture_profiles.py", line 37, in test_current_snapshot_and_catalog_share_fixed_point
     stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, catalog_text)
                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/stabilize_venture_profiles.py", line 83, in stabilize_snapshot
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/stabilize_venture_profiles.py", line 129, in stabilize_snapshot
     raise RuntimeError(
-RuntimeError: venture terminal gates entered a cycle before reaching a shared fixed point
+RuntimeError: venture terminal gates entered a cycle before reaching a shared fixed point: {"lastPass": {"pass": 2, "semantic": {"changedCompanies": 1, "changedInstitutions": 0, "clearedTeamSummaries": 0, "internalPasses": 2, "removedCapitalMarkets": 0, "removedFinancing": 0, "removedProducts": 0, "removedTeamMembers": 0, "replacedTechnologyDescriptions": 0}, "semanticCheck": {"changedCompanies": 0, "changedInstitutions": 0, "clearedTeamSummaries": 0, "internalPasses": 1, "removedCapitalMarkets": 0, "removedFinancing": 0, "removedProducts": 0, "removedTeamMembers": 0, "replacedTechnologyDescriptions": 0}, "semanticStable": true, "structural": {"changedCompanies": 1, "changedInstitutions": 0, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}, "structuralCheck": {"changedCompanies": 1, "changedInstitutions": 0, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}, "structuralStable": false}, "semanticCheckVsSemantic": [], "structuralVsSemantic": ["$.companies.form-energy.evidenceScore", "$.companies.form-energy.researchTechnology", "$.companies.form-energy.technology"]}
 
 ----------------------------------------------------------------------
-Ran 13 tests in 1.000s
+Ran 13 tests in 0.983s
 
 FAILED (errors=1)
