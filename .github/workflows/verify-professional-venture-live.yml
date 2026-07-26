@@ -26,9 +26,9 @@ jobs:
           npx tsc --noEmit
           node --import tsx --test tests/professional-venture-data.test.ts
           npm run build:pages
-          page="$(find out -type f -name '*.html' -path '*companies*deepseek*' | head -n 1)"
+          page="$(find out -type f -name '*.html' -path '*companies*agibot*' | head -n 1)"
           if [ -z "$page" ]; then
-            echo 'DeepSeek static page was not exported.'
+            echo 'AgiBot static page was not exported.'
             find out -maxdepth 4 -type f | sort | sed -n '1,200p'
             exit 1
           fi
@@ -42,7 +42,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          url='https://no1lize.github.io/companies/deepseek/'
+          url='https://no1lize.github.io/companies/agibot/'
           for attempt in $(seq 1 24); do
             curl -fsSL --retry 2 --retry-delay 2 "${url}?verify=${GITHUB_SHA}-${attempt}" -o live-company.html || true
             if grep -Fq '股权、股东与工商变更核验' live-company.html 2>/dev/null \
