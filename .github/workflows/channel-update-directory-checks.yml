@@ -1,0 +1,46 @@
+name: Channel update directory checks
+
+on:
+  pull_request:
+    paths:
+      - "app/technology/page.tsx"
+      - "app/companies/page.tsx"
+      - "app/institutions/page.tsx"
+      - "app/reports/page.tsx"
+      - "app/people/page.tsx"
+      - "components/channel-update-directory.tsx"
+      - "components/channel-update-directory.module.css"
+      - "lib/channel-updates.ts"
+      - "tests/channel-updates.test.ts"
+      - ".github/workflows/channel-update-directory-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "app/technology/page.tsx"
+      - "app/companies/page.tsx"
+      - "app/institutions/page.tsx"
+      - "app/reports/page.tsx"
+      - "app/people/page.tsx"
+      - "components/channel-update-directory.tsx"
+      - "components/channel-update-directory.module.css"
+      - "lib/channel-updates.ts"
+      - "tests/channel-updates.test.ts"
+      - ".github/workflows/channel-update-directory-checks.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install
+      - name: Type-check update directory
+        run: npx tsc --noEmit
+      - name: Run focused update-directory tests
+        run: node --import tsx --test tests/channel-updates.test.ts

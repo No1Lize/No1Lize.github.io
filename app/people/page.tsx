@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
 
 export const metadata: Metadata = {
@@ -29,6 +30,9 @@ export default function PeoplePage() {
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
       </header>
+
+      <ChannelUpdateDirectory channel="people" />
+
       <div className="people-grid">
         {researchPeople.map((person) => (
           <Link href={`/people/${person.slug}`} key={person.slug}>
