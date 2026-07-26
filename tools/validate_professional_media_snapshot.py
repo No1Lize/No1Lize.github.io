@@ -48,6 +48,17 @@ def validate_payload(
             + ", ".join(missing_statuses[:12])
         )
 
+    unattempted_statuses = sorted(
+        source_id
+        for source_id, row in statuses.items()
+        if row.get("attempted") is not True
+    )
+    if unattempted_statuses:
+        raise ValueError(
+            "professional media statuses are placeholders rather than current attempts: "
+            + ", ".join(unattempted_statuses[:12])
+        )
+
     articles = [
         row
         for row in payload.get("articles", [])
@@ -87,9 +98,10 @@ def validate_payload(
         if row.get("status") in {"ok", "partial"}
         and int(row.get("accepted", 0) or 0) > 0
     )
+    attempted_groups = sum(row.get("attempted") is True for row in statuses.values())
     if require_articles and (accepted_by_status <= 0 or not articles):
         raise ValueError(
-            "all 100 professional media sources executed without publishing any "
+            "all 100 professional media sources were attempted without publishing any "
             "verifiable original-domain article"
         )
 
@@ -97,7 +109,9 @@ def validate_payload(
         "enabledMediaSources": len(enabled),
         "expectedExecutionGroups": len(expected_ids),
         "executedGroups": len(statuses),
+        "attemptedGroups": attempted_groups,
         "missingExecutionGroups": missing_statuses,
+        "unattemptedGroups": unattempted_statuses,
         "successfulGroups": successful_groups,
         "acceptedByStatuses": accepted_by_status,
         "snapshotArticles": len(articles),
