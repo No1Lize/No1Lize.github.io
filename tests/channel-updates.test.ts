@@ -10,6 +10,7 @@ import {
   collectChannelUpdateKeywords,
   filterAndSortChannelUpdates,
 } from "../lib/channel-update-filter";
+import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "../lib/homepage-channel-update-config";
 import {
   getChannelUpdateDirectory,
   type ChannelUpdateKey,
@@ -24,6 +25,10 @@ const channels: ChannelUpdateKey[] = [
 ];
 
 const snapshotTime = "2026-07-26T02:10:42.000Z";
+
+test("homepage channel update directory displays the latest 50 items", () => {
+  assert.equal(HOMEPAGE_CHANNEL_UPDATE_LIMIT, 50);
+});
 
 test("normalizes exact, relative and undated source labels", () => {
   const exact = normalizeChannelUpdateDate("2020-05-29", snapshotTime);
