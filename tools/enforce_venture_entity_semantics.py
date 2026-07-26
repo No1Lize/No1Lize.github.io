@@ -484,6 +484,72 @@ def _capital_summary(events: Sequence[dict[str, Any]]) -> dict[str, Any]:
         "summary": summary,
     }
 
+def _contains_product_noise(value: Any) -> bool:
+    text = clean_text(value, 1600)
+    if not text:
+        return False
+    for raw in re.split(r"[、，,;/。]", text):
+        item = clean_text(raw, 300).strip(" .。:：")
+        if not item:
+            continue
+        if (
+            PRODUCT_EDITORIAL_RE.search(item)
+            or PRODUCT_URL_RE.search(item)
+            or PRODUCT_FILE_RE.search(item)
+            or PRODUCT_SENTENCE_RE.search(item)
+            or PRODUCT_DATE_LABEL_RE.fullmatch(item)
+            or PRODUCT_NAV_PREFIX_RE.search(item)
+            or PRODUCT_FRAGMENT_RE.search(item)
+            or PRODUCT_GENERIC_RE.fullmatch(item)
+            or item.casefold().strip(" .") in PRODUCT_EXACT_NOISE
+        ):
+            return True
+    return False
+
+
+def _exit_performance(
+    events: Sequence[dict[str, Any]], *, listed: bool = False
+) -> dict[str, str]:
+    latest = sorted(
+        events,
+        key=lambda row: clean_text(row.get("date"), 20),
+        reverse=True,
+    )[0] if events else {}
+    if latest:
+        title = clean_text(latest.get("title"), 180)
+        date = clean_text(latest.get("date"), 20)
+        event_type = clean_text(latest.get("type"), 80)
+        is_listing = listed or any(
+            term in f"{event_type} {title}".casefold()
+            for term in ("ipo", "listed", "listing", "上市", "挂牌")
+        )
+        return {
+            "status": "已上市" if is_listing else "已发生并购或退出事件",
+            "latestDate": date,
+            "latestEvent": title,
+            "summary": (
+                f"最新可核对资本市场记录为{date or '日期未披露'}的"
+                f"{title or '资本市场事件'}。"
+            ),
+            "sourceUrl": clean_text(latest.get("sourceUrl"), 1000),
+        }
+    if listed:
+        return {
+            "status": "已上市",
+            "latestDate": "",
+            "latestEvent": "",
+            "summary": "目录状态显示该公司已上市；当前快照未保留可核对的上市事件明细。",
+            "sourceUrl": "",
+        }
+    return {
+        "status": "暂无公开退出信息",
+        "latestDate": "",
+        "latestEvent": "",
+        "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
+        "sourceUrl": "",
+    }
+
+
 def _enforce_snapshot_once(
     payload: dict[str, Any], catalog_text: str
 ) -> tuple[dict[str, Any], dict[str, int]]:
@@ -520,16 +586,23 @@ def _enforce_snapshot_once(
         )
         official_domain = _domain(spec.source_url) if spec else ""
         original_products = profile.get("products", [])
-        products = [
+        original_product_items = [
             clean_text(item, 180)
             for item in original_products
-            if _valid_product(item, aliases)
+            if clean_text(item, 180)
         ] if isinstance(original_products, list) else []
+        products = [
+            item
+            for item in original_product_items
+            if _valid_product(item, aliases)
+        ]
         products = list(dict.fromkeys(products))[:16]
+        removed_products = [
+            item for item in original_product_items if item not in products
+        ]
         diagnostics["removedProducts"] += max(
             0,
-            (len(original_products) if isinstance(original_products, list) else 0)
-            - len(products),
+            len(original_product_items) - len(products),
         )
         profile["products"] = products
 
@@ -544,19 +617,36 @@ def _enforce_snapshot_once(
         technology = _relevant_clauses(
             raw_technology, aliases, products, limit=900
         )
-        if products and (
-            not technology
-            or PRODUCT_EDITORIAL_RE.search(raw_technology)
-            or PRODUCT_URL_RE.search(raw_technology)
-            or PRODUCT_FILE_RE.search(raw_technology)
-            or PRODUCT_SENTENCE_RE.search(raw_technology)
-        ):
+        removed_in_technology = any(
+            _contains_any(raw_technology, (item,))
+            for item in removed_products
+        )
+        rebuild_technology = bool(
+            products
+            and (
+                removed_in_technology
+                or _contains_product_noise(raw_technology)
+                or not technology
+            )
+        )
+        if rebuild_technology:
             technology = f"核心技术与产品包括{'、'.join(products[:8])}。"
         profile["technology"] = technology
-        research_technology = _relevant_clauses(
-            profile.get("researchTechnology", ""), aliases, products, limit=900
+        raw_research_technology = clean_text(
+            profile.get("researchTechnology", ""), 1400
         )
-        profile["researchTechnology"] = research_technology or technology
+        research_technology = _relevant_clauses(
+            raw_research_technology, aliases, products, limit=900
+        )
+        removed_in_research = any(
+            _contains_any(raw_research_technology, (item,))
+            for item in removed_products
+        )
+        profile["researchTechnology"] = (
+            technology
+            if removed_in_research or _contains_product_noise(raw_research_technology)
+            else (research_technology or technology)
+        )
 
         project = profile.get("projectBackground")
         if isinstance(project, dict):
@@ -610,6 +700,10 @@ def _enforce_snapshot_once(
             - len(profile["capitalMarkets"]),
         )
         profile["capitalSummary"] = _capital_summary(profile["financing"])
+        profile["exitPerformance"] = _exit_performance(
+            profile["capitalMarkets"],
+            listed=bool(spec and spec.status == "已上市"),
+        )
         profile["evidenceScore"] = evidence_score(profile, "company")
         if profile != before:
             diagnostics["changedCompanies"] += 1

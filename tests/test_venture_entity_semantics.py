@@ -233,6 +233,14 @@ class VentureEntitySemanticTests(unittest.TestCase):
         )
         self.assertEqual(cleaned["companies"]["form-energy"]["financing"], [])
         self.assertEqual(cleaned["companies"]["anthropic"]["capitalMarkets"], [])
+        self.assertEqual(
+            cleaned["companies"]["anthropic"]["exitPerformance"]["status"],
+            "暂无公开退出信息",
+        )
+        self.assertNotIn(
+            "工艺革新",
+            cleaned["companies"]["galactic-energy"].get("technology", ""),
+        )
 
     def test_rejects_official_aggregation_and_clickbait_capital_events(self) -> None:
         payload = {
@@ -271,6 +279,53 @@ class VentureEntitySemanticTests(unittest.TestCase):
         self.assertEqual(company["capitalMarkets"], [])
         self.assertEqual(diagnostics["removedFinancing"], 1)
         self.assertEqual(diagnostics["removedCapitalMarkets"], 1)
+
+    def test_recomputes_derived_fields_after_semantic_removal(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "核心技术与产品包括Claude Platform、工艺革新。",
+                    "researchTechnology": "核心技术与产品包括Claude Platform、工艺革新。",
+                    "products": ["Claude Platform", "工艺革新"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "technologyProducts": [],
+                    "capitalSummary": {"eventCount": 0},
+                    "exitPerformance": {
+                        "status": "已发生并购或退出事件",
+                        "latestDate": "2026-07-11",
+                        "latestEvent": "旧媒体标题",
+                        "summary": "旧媒体标题。",
+                        "sourceUrl": "https://example.com/stale",
+                    },
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, _ = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(company["products"], ["Claude Platform"])
+        self.assertEqual(
+            company["technology"],
+            "核心技术与产品包括Claude Platform。",
+        )
+        self.assertEqual(company["researchTechnology"], company["technology"])
+        self.assertEqual(
+            company["exitPerformance"],
+            {
+                "status": "暂无公开退出信息",
+                "latestDate": "",
+                "latestEvent": "",
+                "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
+                "sourceUrl": "",
+            },
+        )
 
     def test_trims_investor_relations_page_chrome(self) -> None:
         payload = {
