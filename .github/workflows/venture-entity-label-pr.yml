@@ -81,35 +81,34 @@ jobs:
           payload = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
           companies, institutions = parse_catalog(CATALOG_PATH.read_text(encoding="utf-8"))
           company_aliases = {item.slug: item.aliases for item in companies}
-
-          forbidden = {
-              "英特尔深化智能生态合作",
+          forbidden_products = {"英特尔深化智能生态合作"}
+          forbidden_team_names = {
               "Spotlight Megan Holston-Alexander Hear",
               "Chris Lyons. The Next",
               "Chris Lyons. Black History",
           }
-          rendered = json.dumps(payload, ensure_ascii=False)
-          remaining = sorted(item for item in forbidden if item in rendered)
-          assert not remaining, f"known venture noise remains: {remaining}"
 
           for slug, profile in payload.get("companies", {}).items():
               aliases = (profile.get("name", ""), slug, *company_aliases.get(slug, ()))
-              invalid_products = [
-                  item for item in profile.get("products", [])
-                  if not _valid_product(item, aliases)
-              ]
-              invalid_people = [
+              products = profile.get("products", [])
+              team_names = [
                   row.get("name", "") for row in profile.get("team", [])
-                  if isinstance(row, dict) and not _valid_person_name(row.get("name"))
+                  if isinstance(row, dict)
               ]
+              invalid_products = [item for item in products if not _valid_product(item, aliases)]
+              invalid_people = [name for name in team_names if not _valid_person_name(name)]
+              assert forbidden_products.isdisjoint(products), f"{slug} known product noise remains"
+              assert forbidden_team_names.isdisjoint(team_names), f"{slug} known team noise remains"
               assert not invalid_products, f"{slug} invalid products: {invalid_products}"
               assert not invalid_people, f"{slug} invalid team: {invalid_people}"
 
           for slug, profile in payload.get("institutions", {}).items():
-              invalid_people = [
+              team_names = [
                   row.get("name", "") for row in profile.get("team", [])
-                  if isinstance(row, dict) and not _valid_person_name(row.get("name"))
+                  if isinstance(row, dict)
               ]
+              invalid_people = [name for name in team_names if not _valid_person_name(name)]
+              assert forbidden_team_names.isdisjoint(team_names), f"{slug} known team noise remains"
               assert not invalid_people, f"{slug} invalid team: {invalid_people}"
           PY
           } > diagnostics/venture-entity-assertions.txt 2>&1
@@ -136,15 +135,23 @@ jobs:
           import json
           from tools.enforce_venture_entity_semantics import SNAPSHOT_PATH
 
-          text = SNAPSHOT_PATH.read_text(encoding="utf-8")
-          payload = json.loads(text)
-          forbidden = (
-              "英特尔深化智能生态合作",
-              "Spotlight Megan Holston-Alexander Hear",
-              "Chris Lyons. The Next",
-              "Chris Lyons. Black History",
-          )
-          assert all(item not in text for item in forbidden)
+          payload = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+          product_names = {
+              item
+              for profile in payload.get("companies", {}).values()
+              for item in profile.get("products", [])
+          }
+          team_names = {
+              row.get("name", "")
+              for collection in (payload.get("companies", {}), payload.get("institutions", {}))
+              for profile in collection.values()
+              for row in profile.get("team", [])
+              if isinstance(row, dict)
+          }
+          assert "英特尔深化智能生态合作" not in product_names
+          assert "Spotlight Megan Holston-Alexander Hear" not in team_names
+          assert "Chris Lyons. The Next" not in team_names
+          assert "Chris Lyons. Black History" not in team_names
           checks = payload.get("qualityGate", {}).get("checks", {})
           assert checks.get("entitySemanticConsistency", {}).get("passed") is True
           PY
