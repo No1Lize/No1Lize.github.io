@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
 from unittest.mock import patch
 
@@ -21,6 +22,34 @@ export type IpoCompany = {};
 
 
 class VentureProfileStabilizerTests(unittest.TestCase):
+    def test_current_snapshot_and_catalog_share_fixed_point(self) -> None:
+        catalog_text = stabilizer.CATALOG_PATH.read_text(encoding="utf-8")
+        payload = json.loads(stabilizer.SNAPSHOT_PATH.read_text(encoding="utf-8"))
+        companies, _ = semantics.parse_catalog(catalog_text)
+        specs = {company.slug: company for company in companies}
+
+        self.assertIn("anduril", specs)
+        self.assertEqual(
+            specs["anduril"].summary,
+            "开发自主系统、传感器和国防软件平台。",
+        )
+
+        stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, catalog_text)
+        structural_check, _ = finalizer.finalize_snapshot(stabilized, catalog_text)
+        semantic_check, _ = semantics.enforce_snapshot(stabilized, catalog_text)
+
+        self.assertTrue(diagnostics["converged"])
+        self.assertEqual(
+            stabilized["companies"]["anduril"]["background"],
+            "开发自主系统、传感器和国防软件平台。",
+        )
+        self.assertEqual(
+            stabilized["companies"]["anduril"]["projectBackground"]["summary"],
+            "开发自主系统、传感器和国防软件平台。",
+        )
+        self.assertEqual(structural_check, stabilized)
+        self.assertEqual(semantic_check, stabilized)
+
     def test_real_gates_share_one_terminal_fixed_point(self) -> None:
         payload = {
             "schemaVersion": 2,
