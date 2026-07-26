@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-26T16:00:16+00:00",
+  "updatedAt": "2026-07-26T16:12:04+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-26T15:57:19+00:00"
+      "lastExpandedAt": "2026-07-26T16:09:34+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-26T15:57:35+00:00"
+      "lastExpandedAt": "2026-07-26T16:09:47+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-26T15:57:51+00:00"
+      "lastExpandedAt": "2026-07-26T16:10:01+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-26T15:58:07+00:00"
+      "lastExpandedAt": "2026-07-26T16:10:16+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-26T15:58:23+00:00"
+      "lastExpandedAt": "2026-07-26T16:10:29+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-26T15:58:38+00:00"
+      "lastExpandedAt": "2026-07-26T16:10:43+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-26T15:58:52+00:00"
+      "lastExpandedAt": "2026-07-26T16:10:55+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-26T15:59:07+00:00"
+      "lastExpandedAt": "2026-07-26T16:11:08+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-26T15:59:21+00:00"
+      "lastExpandedAt": "2026-07-26T16:11:20+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-26T15:59:36+00:00"
+      "lastExpandedAt": "2026-07-26T16:11:33+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-26T15:59:54+00:00"
+      "lastExpandedAt": "2026-07-26T16:11:47+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-26T16:00:16+00:00"
+      "lastExpandedAt": "2026-07-26T16:12:04+00:00"
     }
   },
   "added": [
@@ -923,24 +923,6 @@
     },
     {
       "track": "semiconductor",
-      "kind": "keywords",
-      "value": "新浪财经",
-      "addedAt": "2026-07-26T15:45:17+00:00",
-      "evidence": [
-        "news-term"
-      ]
-    },
-    {
-      "track": "semiconductor",
-      "kind": "keywords",
-      "value": "财联社",
-      "addedAt": "2026-07-26T15:45:17+00:00",
-      "evidence": [
-        "news-term"
-      ]
-    },
-    {
-      "track": "semiconductor",
       "kind": "sources",
       "value": "https://finance.eastmoney.com/",
       "addedAt": "2026-07-26T15:45:17+00:00",
@@ -1016,15 +998,6 @@
       "track": "space",
       "kind": "keywords",
       "value": "海南商业航天发射",
-      "addedAt": "2026-07-26T15:46:23+00:00",
-      "evidence": [
-        "news-term"
-      ]
-    },
-    {
-      "track": "space",
-      "kind": "sampleCompanies",
-      "value": "搜狐网",
       "addedAt": "2026-07-26T15:46:23+00:00",
       "evidence": [
         "news-term"
@@ -1299,15 +1272,6 @@
       ]
     },
     {
-      "track": "quantum",
-      "kind": "keywords",
-      "value": "新华网",
-      "addedAt": "2026-07-26T15:58:38+00:00",
-      "evidence": [
-        "news-term"
-      ]
-    },
-    {
       "track": "space",
       "kind": "keywords",
       "value": "场二期发射区土建",
@@ -1469,7 +1433,311 @@
       "evidence": [
         "news-term"
       ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "新浪财经",
+      "addedAt": "2026-07-26T16:09:47+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "聊天機器人",
+      "addedAt": "2026-07-26T16:09:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "技术奇点",
+      "addedAt": "2026-07-26T16:09:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "RDNA (microarchitecture)",
+      "addedAt": "2026-07-26T16:10:01+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "Radeon RX 7000 series",
+      "addedAt": "2026-07-26T16:10:01+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "Radeon",
+      "addedAt": "2026-07-26T16:10:01+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "太陽能發電",
+      "addedAt": "2026-07-26T16:10:16+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "人类基因组计划",
+      "addedAt": "2026-07-26T16:10:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "基因組",
+      "addedAt": "2026-07-26T16:10:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "遗传学",
+      "addedAt": "2026-07-26T16:10:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "九章四号",
+      "addedAt": "2026-07-26T16:10:43+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "CSS纠错码",
+      "addedAt": "2026-07-26T16:10:43+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "表面码",
+      "addedAt": "2026-07-26T16:10:43+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "星链",
+      "addedAt": "2026-07-26T16:10:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "國際海事衛星組織",
+      "addedAt": "2026-07-26T16:10:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "人造衛星",
+      "addedAt": "2026-07-26T16:10:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "欧易",
+      "addedAt": "2026-07-26T16:11:08+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "香港穩定幣",
+      "addedAt": "2026-07-26T16:11:08+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "法定貨幣",
+      "addedAt": "2026-07-26T16:11:08+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "氧化鋅",
+      "addedAt": "2026-07-26T16:11:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "自旋電子學",
+      "addedAt": "2026-07-26T16:11:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "奥尔特温·赫斯",
+      "addedAt": "2026-07-26T16:11:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "过程控制",
+      "addedAt": "2026-07-26T16:11:33+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "工業控制系統",
+      "addedAt": "2026-07-26T16:11:33+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "電機工程學",
+      "addedAt": "2026-07-26T16:11:33+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "超导现象",
+      "addedAt": "2026-07-26T16:11:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "钇钡铜氧",
+      "addedAt": "2026-07-26T16:11:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "铋锶钙铜氧",
+      "addedAt": "2026-07-26T16:11:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "China",
+      "addedAt": "2026-07-26T16:12:04+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Crunchbase",
+      "addedAt": "2026-07-26T16:12:04+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Army Police (Brazil)",
+      "addedAt": "2026-07-26T16:12:04+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
     }
   ],
-  "removed": []
+  "removed": [
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "新浪财经",
+      "removedAt": "2026-07-26T16:09:12+00:00"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "财联社",
+      "removedAt": "2026-07-26T16:09:12+00:00"
+    },
+    {
+      "track": "space",
+      "kind": "sampleCompanies",
+      "value": "搜狐网",
+      "removedAt": "2026-07-26T16:09:12+00:00"
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "新华网",
+      "removedAt": "2026-07-26T16:09:12+00:00"
+    }
+  ]
 }
