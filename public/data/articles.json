@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T00:45:43+00:00",
+  "generatedAt": "2026-07-26T01:20:03+00:00",
   "articleCount": 504,
   "articles": [
     {
@@ -15883,16 +15883,14 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "error",
+      "status": "partial",
       "scanned": 15,
-      "accepted": 0,
+      "accepted": 1,
       "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "retainedPrevious": true,
-      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-energy",
@@ -16626,15 +16624,15 @@
     }
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T00:45:43+00:00",
+    "generatedAt": "2026-07-26T01:20:03+00:00",
     "configuredSources": 30,
-    "successfulSources": 11,
-    "acceptedArticles": 40,
-    "fullTextArticles": 40,
+    "successfulSources": 12,
+    "acceptedArticles": 41,
+    "fullTextArticles": 41,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 19,
-    "mentionedCompanyLinks": 44,
-    "mentionedPeopleLinks": 100
+    "retainedSources": 18,
+    "mentionedCompanyLinks": 46,
+    "mentionedPeopleLinks": 104
   }
 }

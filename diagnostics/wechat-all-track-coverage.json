@@ -1,21 +1,21 @@
 {
-  "snapshotGeneratedAt": "2026-07-26T00:45:43+00:00",
+  "snapshotGeneratedAt": "2026-07-26T01:20:03+00:00",
   "enabledTrackCount": 12,
   "generatedSourceCount": 30,
   "executedSourceCount": 30,
   "tracksWithoutExecutedSource": [],
   "originalUrlContractPassed": true,
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T00:45:43+00:00",
+    "generatedAt": "2026-07-26T01:20:03+00:00",
     "configuredSources": 30,
-    "successfulSources": 11,
-    "acceptedArticles": 40,
-    "fullTextArticles": 40,
+    "successfulSources": 12,
+    "acceptedArticles": 41,
+    "fullTextArticles": 41,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 19,
-    "mentionedCompanyLinks": 44,
-    "mentionedPeopleLinks": 100
+    "retainedSources": 18,
+    "mentionedCompanyLinks": 46,
+    "mentionedPeopleLinks": 104
   },
   "tracks": [
     {
@@ -386,8 +386,8 @@
       "genericSourcePresent": true,
       "sourceCount": 2,
       "statusCount": 2,
-      "acceptedThisRun": 0,
-      "retainedSourceCount": 2,
+      "acceptedThisRun": 1,
+      "retainedSourceCount": 1,
       "snapshotArticleCount": 1,
       "fullTextArticles": 1,
       "indexOnlyArticles": 0,
@@ -413,16 +413,14 @@
         {
           "id": "user-track-wechat-deeptechchina-quantum",
           "name": "DeepTech深科技",
-          "status": "error",
+          "status": "partial",
           "scanned": 15,
-          "accepted": 0,
+          "accepted": 1,
           "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
-          "sogouResolved": 0,
-          "retainedPrevious": true,
-          "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
+          "sogouResolved": 0
         }
       ]
     },
