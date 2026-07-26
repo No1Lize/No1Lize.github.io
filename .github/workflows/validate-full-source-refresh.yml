@@ -7,6 +7,11 @@ on:
       - tools/prepare_full_refresh.py
       - tools/finalize_full_refresh.py
       - tools/validate_full_refresh.py
+      - tools/professional_media_sources.py
+      - tools/validate_professional_media_snapshot.py
+      - tools/crawl_with_wechat_registry.py
+      - tools/snapshot_retention.py
+      - tests/test_professional_media_sources.py
       - .github/workflows/validate-full-source-refresh.yml
   workflow_dispatch:
 
@@ -22,12 +27,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Validate source adapters
+        run: |
+          python -m py_compile \
+            tools/professional_media_sources.py \
+            tools/validate_professional_media_snapshot.py \
+            tools/crawl_with_wechat_registry.py \
+            tools/validate_full_refresh.py
+          python -m unittest tests.test_professional_media_sources
       - name: Start clean source ledger
         run: python tools/prepare_full_refresh.py
       - name: Crawl every configured public source family
         env:
           SEC_USER_AGENT: "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com (+https://github.com/No1Lize/No1Lize.github.io)"
         run: python tools/crawl_with_wechat_registry.py --source all
+      - name: Require attempted professional media and original-domain articles
+        run: python tools/validate_professional_media_snapshot.py --require-articles
       - name: Crawl all official company sources
         env:
           SEC_USER_AGENT: "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com (+https://github.com/No1Lize/No1Lize.github.io)"
@@ -39,9 +54,12 @@ jobs:
           python tools/refine_eastmoney_snapshot.py
           python tools/enrich_tracking_snapshot.py
           python tools/refresh_people_profiles_with_video.py
+          python tools/snapshot_retention.py
           python tools/finalize_full_refresh.py
       - name: Validate the complete refresh
         run: |
+          python tools/snapshot_retention.py --check
+          python tools/validate_professional_media_snapshot.py --require-articles
           python tools/crawl_articles.py --validate-only
           python tools/validate_full_refresh.py
           python tools/validate_eastmoney_snapshot.py
