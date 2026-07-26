@@ -1,0 +1,111 @@
+name: Validate navigation-safe venture team names
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .venture-team-navigation-trigger
+      - .github/workflows/venture-team-navigation-pr.yml
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reject navigation phrases as person names
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          source_path = Path('tools/enforce_venture_entity_semantics.py')
+          source = source_path.read_text(encoding='utf-8')
+          old = '''PERSON_NOISE_TOKENS = {
+              "spotlight", "hear", "read", "view", "more", "team", "leadership",
+              "newsroom", "profile", "people", "about", "featured", "general",
+              "partner", "managing", "principal", "director", "founder", "cofounder",
+              "chief", "officer", "president", "executive",
+              "the", "next", "black", "history", "awards", "solutions", "platform",
+              "overview", "providers", "program", "programs", "events", "resources",
+          }
+          '''
+          new = '''PERSON_NOISE_TOKENS = {
+              "spotlight", "hear", "read", "view", "more", "team", "leadership",
+              "newsroom", "profile", "people", "about", "featured", "general",
+              "partner", "managing", "principal", "director", "founder", "cofounder",
+              "chief", "officer", "president", "executive",
+              "the", "next", "black", "history", "awards", "solutions", "platform",
+              "overview", "providers", "program", "programs", "events", "resources",
+              "discover", "explore", "learn", "browse", "build", "create", "support",
+              "developer", "developers", "app", "apps", "application", "applications",
+              "documentation", "docs", "community", "customers", "services", "technology",
+              "for", "with", "and", "our", "your", "all", "using", "how", "why", "what",
+          }
+          '''
+          if new not in source:
+              if old not in source:
+                  raise SystemExit('person noise token block not found')
+              source_path.write_text(source.replace(old, new, 1), encoding='utf-8')
+
+          test_path = Path('tests/test_venture_semantic_rebase.py')
+          test = test_path.read_text(encoding='utf-8')
+          if 'test_rejects_navigation_phrases_as_team_names' not in test:
+              marker = '\n\nif __name__ == "__main__":\n'
+              method = '''
+              def test_rejects_navigation_phrases_as_team_names(self) -> None:
+                  self.assertFalse(semantics._valid_person_name("Discover For App Developers"))
+                  self.assertFalse(semantics._valid_person_name("Explore Our Technology"))
+                  self.assertFalse(semantics._valid_person_name("Learn With Developers"))
+                  self.assertTrue(semantics._valid_person_name("Megan Holston-Alexander"))
+          '''
+              if marker not in test:
+                  raise SystemExit('test marker not found')
+              test_path.write_text(test.replace(marker, method + marker, 1), encoding='utf-8')
+          PY
+      - name: Run venture regressions and fixed points
+        run: |
+          python -m py_compile tools/enforce_venture_entity_semantics.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_refine_venture_research_evidence \
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles \
+            tests.test_venture_semantic_rebase
+          for pass in $(seq 1 8); do
+            cp public/data/venture_profiles.json /tmp/before.json
+            python tools/refine_venture_research_evidence.py
+            python tools/normalize_venture_profiles.py
+            python tools/stabilize_venture_profiles.py
+            cmp -s /tmp/before.json public/data/venture_profiles.json && break
+          done
+          python tools/refine_venture_research_evidence.py --check
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate frontend
+        run: |
+          npm install
+          node --import tsx --test tests/venture-profile-data.test.ts tests/catalog.test.ts
+      - name: Commit source only
+        run: |
+          rm -f .github/workflows/venture-team-navigation-pr.yml .venture-team-navigation-trigger
+          git restore public/data/venture_profiles.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tools/enforce_venture_entity_semantics.py tests/test_venture_semantic_rebase.py
+          git add -u .github/workflows/venture-team-navigation-pr.yml .venture-team-navigation-trigger
+          git commit -m 'fix: reject navigation phrases as venture team names'
+          git push origin HEAD:${{ github.head_ref }}
