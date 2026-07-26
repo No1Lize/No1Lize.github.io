@@ -1,18 +1,10 @@
 #!/usr/bin/env python3
-"""Build a structured listed-company disclosure snapshot.
+"""Refresh verified A-share and Hong Kong listed-company disclosures.
 
-The crawler covers enabled A-share and Hong Kong listings from
-``config/user_tracking.json``. It prioritizes official disclosure hosts:
-
-* Shanghai Stock Exchange and CNINFO for Shanghai listings;
-* Shenzhen Stock Exchange and CNINFO for Shenzhen listings;
-* HKEXnews for Hong Kong listings.
-
-Domain-restricted public search is used only for URL discovery. Every published
-record must resolve to an allowlisted original disclosure host. Eastmoney's
-announcement database is used only when a listing yields no official result.
-The crawler stores document metadata and short factual snippets, never full PDF
-or announcement text.
+Official exchange or designated disclosure pages are queried first. Every
+published event must point to SSE, SZSE, CNINFO or HKEXnews. Eastmoney's public
+announcement database is a fallback only when no official document is found.
+The snapshot stores metadata and short snippets, not full announcement text.
 """
 
 from __future__ import annotations
@@ -26,10 +18,11 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from datetime import UTC, date, datetime, timedelta
 from email.utils import parsedate_to_datetime
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote_plus, urlsplit
+from urllib.parse import parse_qs, quote_plus, urljoin, urlsplit
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,7 +92,9 @@ ROUTINE_NOISE = (
     "list of directors",
     "terms of reference",
     "月报表",
+    "翌日披露报表",
     "董事名单",
+    "董事会会议日期",
     "股东大会通知",
     "股东大会决议",
 )
@@ -120,9 +115,9 @@ class Listing:
 
     @property
     def source_id(self) -> str:
-        digest = re.sub(r"[^a-z0-9]+", "-", self.catalog_slug.casefold()).strip("-")
+        slug = re.sub(r"[^a-z0-9]+", "-", self.catalog_slug.casefold()).strip("-")
         market = "a" if self.market == "A股" else "hk"
-        return f"exchange-disclosure-{digest}-{market}-{self.ticker.casefold()}"
+        return f"exchange-disclosure-{slug}-{market}-{self.ticker.casefold()}"
 
     @property
     def exchange(self) -> str:
@@ -138,6 +133,58 @@ class Candidate:
     summary: str
     published_at: str
     provider: str
+
+
+class TableRowParser(HTMLParser):
+    """Capture links and visible text grouped by table rows or list blocks."""
+
+    def __init__(self, base_url: str):
+        super().__init__(convert_charrefs=True)
+        self.base_url = base_url
+        self.rows: list[tuple[str, list[tuple[str, str]]]] = []
+        self._depth = 0
+        self._text: list[str] = []
+        self._links: list[tuple[str, str]] = []
+        self._href = ""
+        self._anchor: list[str] = []
+        self.all_links: list[tuple[str, str]] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = {key.casefold(): value or "" for key, value in attrs}
+        lowered = tag.casefold()
+        if lowered in {"tr", "li", "article"}:
+            if self._depth == 0:
+                self._text = []
+                self._links = []
+            self._depth += 1
+        if lowered == "a" and values.get("href"):
+            self._href = urljoin(self.base_url, values["href"])
+            self._anchor = []
+
+    def handle_data(self, data: str) -> None:
+        value = clean_text(data, 1000)
+        if value:
+            if self._depth:
+                self._text.append(value)
+            if self._href:
+                self._anchor.append(value)
+
+    def handle_endtag(self, tag: str) -> None:
+        lowered = tag.casefold()
+        if lowered == "a" and self._href:
+            title = clean_text(" ".join(self._anchor), 600)
+            pair = (self._href, title)
+            self.all_links.append(pair)
+            if self._depth:
+                self._links.append(pair)
+            self._href = ""
+            self._anchor = []
+        if lowered in {"tr", "li", "article"} and self._depth:
+            self._depth -= 1
+            if self._depth == 0 and (self._text or self._links):
+                self.rows.append((clean_text(" ".join(self._text), 4000), list(self._links)))
+                self._text = []
+                self._links = []
 
 
 def clean_text(value: Any, limit: int = 1000) -> str:
@@ -235,10 +282,19 @@ def official_query(listing: Listing) -> str:
 
 def fallback_query(listing: Listing) -> str:
     terms = " OR ".join(f'"{term}"' for term in CAPITAL_TERMS_ZH[:18])
-    return (
-        "site:data.eastmoney.com/notices "
-        f'("{listing.ticker}" OR "{listing.name}") ({terms})'
-    )
+    return f'site:data.eastmoney.com/notices ("{listing.ticker}" OR "{listing.name}") ({terms})'
+
+
+def direct_index_url(listing: Listing, config: dict[str, Any]) -> str:
+    if listing.market == "港股":
+        stock_id = str(config.get("hkexStockIds", {}).get(listing.catalog_slug, ""))
+        if not stock_id:
+            return ""
+        return (
+            "https://www1.hkexnews.hk/search/titlesearch.xhtml?lang=EN&market=SEHK"
+            f"&stockId={stock_id}&category=0"
+        )
+    return "https://www.cninfo.com.cn/new/fulltextSearch?keyWord=" + quote_plus(listing.ticker)
 
 
 def fetch_text(url: str, timeout: int, attempts: int) -> str:
@@ -248,7 +304,7 @@ def fetch_text(url: str, timeout: int, attempts: int) -> str:
             url,
             headers={
                 "User-Agent": USER_AGENT,
-                "Accept": "application/rss+xml,application/xml,text/xml,text/html;q=0.9,*/*;q=0.8",
+                "Accept": "text/html,application/xhtml+xml,application/rss+xml,application/xml;q=0.9,*/*;q=0.8",
                 "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
                 "Accept-Encoding": "identity",
             },
@@ -256,7 +312,7 @@ def fetch_text(url: str, timeout: int, attempts: int) -> str:
         try:
             with urlopen(request, timeout=timeout) as response:
                 charset = response.headers.get_content_charset() or "utf-8"
-                return response.read(3_000_000).decode(charset, errors="replace")
+                return response.read(4_000_000).decode(charset, errors="replace")
         except (HTTPError, URLError, TimeoutError, OSError) as exc:
             last_error = exc
             if attempt + 1 < attempts:
@@ -265,7 +321,7 @@ def fetch_text(url: str, timeout: int, attempts: int) -> str:
 
 
 def normalize_date(value: str) -> str:
-    raw = clean_text(value, 100)
+    raw = clean_text(value, 160)
     if not raw:
         return ""
     try:
@@ -281,6 +337,12 @@ def normalize_date(value: str) -> str:
             return date(int(match.group(1)), int(match.group(2)), int(match.group(3))).isoformat()
         except ValueError:
             return ""
+    compact = re.search(r"/(20\d{2})/(\d{2})(\d{2})/", raw)
+    if compact:
+        try:
+            return date(int(compact.group(1)), int(compact.group(2)), int(compact.group(3))).isoformat()
+        except ValueError:
+            return ""
     return ""
 
 
@@ -293,24 +355,49 @@ def parse_rss(body: str, provider: str) -> list[Candidate]:
         values: dict[str, str] = {}
         for child in node.iter():
             key = child.tag.rsplit("}", 1)[-1].casefold()
-            if key == "link":
-                value = clean_text(child.attrib.get("href", ""), 1000) or clean_text(child.text, 1000)
-            else:
-                value = clean_text(child.text, 2000)
+            value = (
+                clean_text(child.attrib.get("href", ""), 1200)
+                if key == "link"
+                else clean_text(child.text, 2000)
+            )
+            if not value and key == "link":
+                value = clean_text(child.text, 1200)
             if value and key not in values:
                 values[key] = value
-        title = clean_text(values.get("title"), 500)
+        title = clean_text(values.get("title"), 600)
         url = clean_text(values.get("link"), 1200)
-        summary = clean_text(values.get("description") or values.get("summary"), 1000)
+        summary = clean_text(values.get("description") or values.get("summary"), 1200)
         published = normalize_date(
-            values.get("pubdate")
-            or values.get("published")
-            or values.get("updated")
-            or summary
+            values.get("pubdate") or values.get("published") or values.get("updated") or summary
         )
         if title and url:
             rows.append(Candidate(title, url, summary, published, provider))
     return rows
+
+
+def parse_direct_page(body: str, base_url: str, provider: str) -> list[Candidate]:
+    parser = TableRowParser(base_url)
+    parser.feed(body)
+    candidates: list[Candidate] = []
+    seen: set[str] = set()
+    for row_text, links in parser.rows:
+        published = normalize_date(row_text)
+        for url, anchor_text in links:
+            if url in seen:
+                continue
+            title = clean_text(anchor_text or row_text, 600)
+            if not title:
+                continue
+            candidates.append(Candidate(title, url, row_text, published or normalize_date(url), provider))
+            seen.add(url)
+    for url, anchor_text in parser.all_links:
+        if url in seen or not anchor_text:
+            continue
+        candidates.append(
+            Candidate(anchor_text, url, anchor_text, normalize_date(url), provider)
+        )
+        seen.add(url)
+    return candidates
 
 
 def source_name(url: str) -> tuple[str, str]:
@@ -332,49 +419,40 @@ def allowed_url(listing: Listing, url: str, *, fallback: bool = False) -> bool:
     host = normalized_host(url)
     path = urlsplit(url).path.casefold()
     if fallback:
-        return (
-            (host == "eastmoney.com" or host.endswith(".eastmoney.com"))
-            and "/notices" in path
-        )
+        return (host == "eastmoney.com" or host.endswith(".eastmoney.com")) and "/notices" in path
     if listing.market == "港股":
-        return (
-            (host == "hkexnews.hk" or host.endswith(".hkexnews.hk"))
-            and ("/listedco/" in path or "/search/" in path)
-        )
+        return (host == "hkexnews.hk" or host.endswith(".hkexnews.hk")) and "/listedco/" in path
     if host == "cninfo.com.cn" or host.endswith(".cninfo.com.cn"):
-        return "/disclosure/" in path or "/finalpage/" in path or "/fulltextsearch" in path
-    exchange = a_share_exchange(listing.ticker)
-    if exchange == "sse":
+        return "/disclosure/" in path or "/finalpage/" in path or "/new/disclosure/" in path
+    if a_share_exchange(listing.ticker) == "sse":
         return (host == "sse.com.cn" or host.endswith(".sse.com.cn")) and "/disclosure" in path
     return (host == "szse.cn" or host.endswith(".szse.cn")) and "/disclosure" in path
 
 
 def relevant_candidate(listing: Listing, candidate: Candidate) -> bool:
-    text = clean_text(
-        f"{candidate.title} {candidate.summary} {candidate.url}",
-        5000,
-    ).casefold()
-    ticker_variants = {listing.ticker.casefold(), listing.ticker.lstrip("0").casefold()}
-    name_variants = {
+    text = clean_text(f"{candidate.title} {candidate.summary} {candidate.url}", 6000).casefold()
+    variants = {
+        listing.ticker.casefold(),
+        listing.ticker.lstrip("0").casefold(),
         listing.name.casefold(),
         listing.name.replace("机器人", "").casefold(),
         listing.name.replace("科技", "").casefold(),
     }
-    return any(term and term in text for term in (*ticker_variants, *name_variants))
+    return any(term and term in text for term in variants)
 
 
 def classify_document(title: str, summary: str = "") -> str:
-    text = clean_text(f"{title} {summary}", 3000).casefold()
+    text = clean_text(f"{title} {summary}", 4000).casefold()
     if any(term in text for term in ROUTINE_NOISE):
         return ""
     groups = (
         ("招股与上市", ("招股说明书", "招股章程", "上市公告", "prospectus", "listing document", "global offering")),
-        ("定期报告与业绩", ("年度报告", "半年度报告", "季度报告", "业绩预告", "业绩快报", "annual report", "interim report", "quarterly results", "profit warning")),
+        ("定期报告与业绩", ("年度报告", "半年度报告", "季度报告", "业绩预告", "业绩快报", "annual report", "annual results", "interim report", "quarterly results", "profit warning")),
         ("证券发行与融资", ("配售", "定向增发", "非公开发行", "发行股份", "可转换债券", "公司债券", "募集资金", "placing", "issue of shares", "issue of securities", "convertible bond", "notes issue")),
         ("并购与资产交易", ("重大资产重组", "收购", "并购", "出售资产", "acquisition", "disposal", "major transaction")),
-        ("股权激励", ("股权激励", "share scheme", "share option", "restricted share units")),
-        ("股份回购", ("股份回购", "回购股份", "repurchase")),
-        ("重大经营与风险", ("重大合同", "重大事项", "关联交易", "business update", "inside information")),
+        ("股权激励", ("股权激励", "员工持股", "share scheme", "share option", "restricted share units")),
+        ("股份回购", ("股份回购", "回购股份", "share buyback", "repurchase")),
+        ("重大经营与风险", ("重大合同", "重大事项", "关联交易", "交易进展", "business update", "trading update", "inside information")),
     )
     for label, terms in groups:
         if any(term in text for term in terms):
@@ -396,8 +474,6 @@ def to_event(listing: Listing, candidate: Candidate, *, fallback: bool) -> dict[
     source, level = source_name(candidate.url)
     if not source:
         return None
-    summary = candidate.summary or f"{source}公开披露：{candidate.title}"
-    summary = clean_text(summary, 360)
     return {
         "id": event_id(listing, candidate.url),
         "companySlug": listing.catalog_slug,
@@ -408,13 +484,9 @@ def to_event(listing: Listing, candidate: Candidate, *, fallback: bool) -> dict[
         "listingRole": listing.listing_role,
         "publishedAt": candidate.published_at,
         "documentType": document_type,
-        "title": candidate.title,
-        "summary": summary,
-        "source": {
-            "name": source,
-            "url": candidate.url,
-            "level": level,
-        },
+        "title": clean_text(candidate.title, 600),
+        "summary": clean_text(candidate.summary or f"{source}公开披露：{candidate.title}", 420),
+        "source": {"name": source, "url": candidate.url, "level": level},
         "discoveredVia": candidate.provider,
         "fallback": fallback,
     }
@@ -423,19 +495,31 @@ def to_event(listing: Listing, candidate: Candidate, *, fallback: bool) -> dict[
 def discover(
     listing: Listing,
     settings: dict[str, Any],
+    config: dict[str, Any],
     *,
     fallback: bool = False,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    timeout = int(settings.get("requestTimeout", 18))
+    attempts = int(settings.get("requestAttempts", 2))
+    candidates: list[Candidate] = []
+    errors: list[str] = []
+    if not fallback:
+        direct_url = direct_index_url(listing, config)
+        if direct_url:
+            try:
+                body = fetch_text(direct_url, timeout, attempts)
+                candidates.extend(parse_direct_page(body, direct_url, "official-direct-index"))
+            except Exception as exc:  # noqa: BLE001 - continue with official domain search.
+                errors.append(f"direct:{type(exc).__name__}:{exc}")
     query = fallback_query(listing) if fallback else official_query(listing)
     provider = "eastmoney-domain-search" if fallback else "official-domain-search"
-    body = fetch_text(
-        bing_rss(query),
-        int(settings.get("requestTimeout", 18)),
-        int(settings.get("requestAttempts", 2)),
-    )
-    candidates = parse_rss(body, provider)
+    try:
+        candidates.extend(parse_rss(fetch_text(bing_rss(query), timeout, attempts), provider))
+    except Exception as exc:  # noqa: BLE001 - direct results may still be usable.
+        errors.append(f"search:{type(exc).__name__}:{exc}")
+
     cutoff = date.today() - timedelta(days=int(settings.get("maxAgeDays", 1095)))
-    accepted: list[dict[str, Any]] = []
+    accepted: dict[str, dict[str, Any]] = {}
     for candidate in candidates:
         if not allowed_url(listing, candidate.url, fallback=fallback):
             continue
@@ -449,11 +533,10 @@ def discover(
                 continue
         except ValueError:
             continue
-        accepted.append(event)
+        accepted[event["source"]["url"]] = event
     limit = max(1, min(int(settings.get("maxItemsPerListing", 18)), 30))
-    deduplicated = {event["source"]["url"]: event for event in accepted}
     rows = sorted(
-        deduplicated.values(),
+        accepted.values(),
         key=lambda event: (event["publishedAt"], event["id"]),
         reverse=True,
     )[:limit]
@@ -464,11 +547,12 @@ def discover(
         "market": listing.market,
         "ticker": listing.ticker,
         "exchange": listing.exchange,
-        "provider": provider,
+        "provider": "eastmoney" if fallback else "official",
         "status": "ok" if rows else "error",
         "scanned": len(candidates),
         "accepted": len(rows),
         "fallback": fallback,
+        "errors": errors,
     }
 
 
@@ -496,10 +580,10 @@ def build_snapshot(
     statuses: list[dict[str, Any]] = []
 
     for listing in rows:
-        events: list[dict[str, Any]] = []
         try:
-            events, status = discover(listing, settings, fallback=False)
-        except Exception as exc:  # noqa: BLE001 - retain prior verified disclosure data.
+            events, status = discover(listing, settings, config, fallback=False)
+        except Exception as exc:  # noqa: BLE001
+            events = []
             status = {
                 "id": listing.source_id,
                 "companySlug": listing.catalog_slug,
@@ -507,16 +591,18 @@ def build_snapshot(
                 "market": listing.market,
                 "ticker": listing.ticker,
                 "exchange": listing.exchange,
-                "provider": "official-domain-search",
+                "provider": "official",
                 "status": "error",
                 "scanned": 0,
                 "accepted": 0,
                 "fallback": False,
-                "error": f"{type(exc).__name__}: {exc}",
+                "errors": [f"{type(exc).__name__}:{exc}"],
             }
         if not events and bool(settings.get("fallbackEnabled", True)):
             try:
-                fallback_events, fallback_status = discover(listing, settings, fallback=True)
+                fallback_events, fallback_status = discover(
+                    listing, settings, config, fallback=True
+                )
                 if fallback_events:
                     events = fallback_events
                     status["status"] = "partial"
@@ -524,8 +610,9 @@ def build_snapshot(
                     status["accepted"] = len(events)
                 status["fallbackScanned"] = fallback_status.get("scanned", 0)
                 status["fallbackAccepted"] = fallback_status.get("accepted", 0)
-            except Exception as exc:  # noqa: BLE001 - official error remains diagnostic.
-                status["fallbackError"] = f"{type(exc).__name__}: {exc}"
+                status["fallbackErrors"] = fallback_status.get("errors", [])
+            except Exception as exc:  # noqa: BLE001
+                status["fallbackErrors"] = [f"{type(exc).__name__}:{exc}"]
 
         company_events = events_by_company.setdefault(listing.catalog_slug, {})
         for event in events:
@@ -542,13 +629,10 @@ def build_snapshot(
 
     generated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
     companies: dict[str, Any] = {}
-    slugs = sorted({listing.catalog_slug for listing in rows})
-    for slug in slugs:
+    for slug in sorted({listing.catalog_slug for listing in rows}):
         current = list(events_by_company.get(slug, {}).values())
         previous_company = previous_companies.get(slug, {}) if isinstance(previous_companies.get(slug), dict) else {}
-        previous_events = [
-            event for event in previous_company.get("events", []) if isinstance(event, dict)
-        ]
+        previous_events = [event for event in previous_company.get("events", []) if isinstance(event, dict)]
         by_url = {
             str(event.get("source", {}).get("url", "")): event
             for event in previous_events
@@ -556,26 +640,23 @@ def build_snapshot(
         }
         for event in current:
             by_url[event["source"]["url"]] = event
-        max_company_items = max(1, min(int(settings.get("maxItemsPerListing", 18)) * 2, 48))
+        max_items = max(1, min(int(settings.get("maxItemsPerListing", 18)) * 2, 48))
         merged = sorted(
             by_url.values(),
             key=lambda event: (str(event.get("publishedAt", "")), str(event.get("id", ""))),
             reverse=True,
-        )[:max_company_items]
-        listing_info = listing_rows_by_company.get(slug, [])
+        )[:max_items]
         name = next((listing.name for listing in rows if listing.catalog_slug == slug), slug)
-        new_count = sum(1 for event in current)
         companies[slug] = {
             "slug": slug,
             "name": name,
             "updatedAt": generated_at,
-            "status": "ok" if new_count else ("retained" if merged else "partial"),
-            "listings": listing_info,
+            "status": "ok" if current else ("retained" if merged else "partial"),
+            "listings": listing_rows_by_company.get(slug, []),
             "events": merged,
             "officialEventCount": sum(not bool(event.get("fallback")) for event in merged),
             "fallbackEventCount": sum(bool(event.get("fallback")) for event in merged),
         }
-
     return {
         "schemaVersion": 1,
         "generatedAt": generated_at,
@@ -586,7 +667,10 @@ def build_snapshot(
     }
 
 
-def validate_snapshot(payload: dict[str, Any], listings: Iterable[Listing] | None = None) -> list[str]:
+def validate_snapshot(
+    payload: dict[str, Any],
+    listings: Iterable[Listing] | None = None,
+) -> list[str]:
     errors: list[str] = []
     rows = list(listings or load_listings())
     expected_status = {listing.source_id for listing in rows}
@@ -600,47 +684,50 @@ def validate_snapshot(payload: dict[str, Any], listings: Iterable[Listing] | Non
         errors.append("missing disclosure source statuses: " + ", ".join(missing[:10]))
     companies = payload.get("companies")
     if not isinstance(companies, dict):
-        errors.append("companies must be an object")
-        return errors
+        return [*errors, "companies must be an object"]
+    listings_by_slug: dict[str, list[Listing]] = {}
     for listing in rows:
-        company = companies.get(listing.catalog_slug)
+        listings_by_slug.setdefault(listing.catalog_slug, []).append(listing)
+    for slug, company in companies.items():
         if not isinstance(company, dict):
-            errors.append(f"missing disclosure company: {listing.catalog_slug}")
+            errors.append(f"invalid disclosure company: {slug}")
             continue
+        valid_listings = listings_by_slug.get(slug, [])
         for event in company.get("events", []):
             if not isinstance(event, dict):
-                errors.append(f"invalid event row: {listing.catalog_slug}")
+                errors.append(f"invalid event row: {slug}")
                 continue
             source = event.get("source") if isinstance(event.get("source"), dict) else {}
             url = str(source.get("url", ""))
             fallback = bool(event.get("fallback"))
-            if not allowed_url(listing, url, fallback=fallback):
+            if not any(allowed_url(listing, url, fallback=fallback) for listing in valid_listings):
                 errors.append(f"disclosure URL outside allowlist: {url}")
             if not classify_document(str(event.get("title", "")), str(event.get("summary", ""))):
                 errors.append(f"unclassified disclosure event: {event.get('id', 'unknown')}")
             if not normalize_date(str(event.get("publishedAt", ""))):
                 errors.append(f"invalid disclosure date: {event.get('id', 'unknown')}")
-    if int(payload.get("eventCount", -1)) != sum(
+    expected_count = sum(
         len(company.get("events", []))
         for company in companies.values()
         if isinstance(company, dict)
-    ):
+    )
+    if int(payload.get("eventCount", -1)) != expected_count:
         errors.append("eventCount does not match disclosure events")
     return errors
 
 
 def write_snapshot(payload: dict[str, Any], path: Path = OUTPUT_PATH) -> bool:
     previous = load_previous(path)
-    comparable_previous = dict(previous)
-    comparable_next = dict(payload)
+    comparable_previous = json.loads(json.dumps(previous, ensure_ascii=False))
+    comparable_next = json.loads(json.dumps(payload, ensure_ascii=False))
     comparable_previous.pop("generatedAt", None)
     comparable_next.pop("generatedAt", None)
-    for company in comparable_previous.get("companies", {}).values() if isinstance(comparable_previous.get("companies"), dict) else []:
-        if isinstance(company, dict):
-            company.pop("updatedAt", None)
-    for company in comparable_next.get("companies", {}).values() if isinstance(comparable_next.get("companies"), dict) else []:
-        if isinstance(company, dict):
-            company.pop("updatedAt", None)
+    for comparable in (comparable_previous, comparable_next):
+        companies = comparable.get("companies", {})
+        if isinstance(companies, dict):
+            for company in companies.values():
+                if isinstance(company, dict):
+                    company.pop("updatedAt", None)
     if comparable_previous == comparable_next and path.exists():
         print("No listed-company disclosure changes.")
         return False
@@ -673,10 +760,13 @@ def main() -> int:
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--validate-only", action="store_true")
+    parser.add_argument("--require-events", action="store_true")
     args = parser.parse_args()
     if args.validate_only:
         payload = load_previous()
         errors = validate_snapshot(payload)
+        if args.require_events and int(payload.get("eventCount", 0) or 0) <= 0:
+            errors.append("no listed-company disclosure events were published")
         if errors:
             raise SystemExit("; ".join(errors))
         print(json.dumps({"passed": True, "eventCount": payload.get("eventCount", 0)}, ensure_ascii=False))
