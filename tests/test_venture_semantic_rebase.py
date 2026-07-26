@@ -140,6 +140,11 @@ class VentureSemanticRebaseTests(unittest.TestCase):
         self.assertFalse(semantics._valid_person_name("Learn With Developers"))
         self.assertTrue(semantics._valid_person_name("Megan Holston-Alexander"))
 
+    def test_rejects_portfolio_navigation_phrases_as_team_names(self) -> None:
+        self.assertFalse(semantics._valid_person_name("Experience Stories Launch Research"))
+        self.assertFalse(semantics._valid_person_name("Portfolio Insights Research Hub"))
+        self.assertTrue(semantics._valid_person_name("Sarah Guo"))
+
 
 if __name__ == "__main__":
     unittest.main()
