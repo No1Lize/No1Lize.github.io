@@ -4,7 +4,9 @@ import { HomepageChannelUpdates } from "@/components/homepage-channel-updates";
 export default function Home() {
   return (
     <main className="page-shell">
-      <Dashboard sidebar={<HomepageChannelUpdates />} />
+      <Dashboard>
+        <HomepageChannelUpdates />
+      </Dashboard>
     </main>
   );
 }
