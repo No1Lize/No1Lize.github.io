@@ -1,0 +1,44 @@
+name: Refresh institution rankings
+
+on:
+  pull_request:
+    paths:
+      - "app/institutions/**"
+      - "components/institution-directory*"
+      - "lib/institution-ranking-data.ts"
+      - "tools/crawl_institution_rankings.py"
+      - "tests/institution-ranking-data.test.ts"
+      - "tests/test_institution_ranking_crawler.py"
+      - ".github/workflows/refresh-institution-rankings.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "23 3 * * 1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: institution-rankings-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test ranking parser
+        run: python -m unittest tests.test_institution_ranking_crawler
+      - name: Validate Qingke and CVSource pages
+        run: python tools/crawl_institution_rankings.py --report public/data/institution_ranking_status.json
+      - name: Commit source health report
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/institution_ranking_status.json
+          git diff --cached --quiet || git commit -m "data: refresh institution ranking source status"
+          git push
