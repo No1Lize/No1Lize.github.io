@@ -89,6 +89,33 @@ def _fake_fetch(url: str) -> str:
     return ""
 
 
+def _diverse_fetch(url: str) -> str:
+    """Every seed resolves to its own unrelated morelike titles, so no
+    candidate is ever confirmed by a second seed (score stays at 2.0)."""
+
+    parsed = urlparse(url)
+    query = parse_qs(parsed.query)
+    host = parsed.netloc
+    if host.endswith("wikipedia.org") and query.get("action") == ["opensearch"]:
+        term = query["search"][0]
+        return json.dumps([term, [f"{term}主题"], [""], [""]])
+    if host.endswith("wikipedia.org") and query.get("list") == ["search"]:
+        base = query["srsearch"][0].replace("morelike:", "")
+        return json.dumps(
+            {
+                "query": {
+                    "search": [
+                        {"title": f"{base}关联技术甲"},
+                        {"title": f"{base}关联技术乙"},
+                    ]
+                }
+            }
+        )
+    if host == "www.wikidata.org" and query.get("action") == ["wbsearchentities"]:
+        return json.dumps({"search": []})
+    return ""
+
+
 class ExpandTrackingEntitiesTests(unittest.TestCase):
     def setUp(self) -> None:
         self.tmp = tempfile.TemporaryDirectory()
@@ -214,6 +241,30 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         self.assertIn(("keywords", "灵巧手"), removed)
         track = self._read_config()["tracks"][0]
         self.assertNotIn("灵巧手", track["keywords"])
+
+    def test_diverse_seed_tracks_fall_back_to_relaxed_keywords(self) -> None:
+        """Regression: tracks whose seeds share no related pages (GPU vs 先进
+        封装 vs LPU) produced zero additions because no candidate was
+        confirmed by two seeds; the relaxed pass must still surface a few
+        keyword candidates instead of freezing the track."""
+
+        self._write_config(
+            self._base_config(
+                slug="semiconductor",
+                name="半导体",
+                keywords=["GPU", "先进封装"],
+            )
+        )
+        rc = expander.run(
+            ["--only-track", "semiconductor"], fetch_text=_diverse_fetch
+        )
+        self.assertEqual(rc, 0)
+        track = self._read_config()["tracks"][0]
+        added = [
+            keyword for keyword in track["keywords"] if "关联技术" in keyword
+        ]
+        self.assertTrue(added, "relaxed pass must add single-source keywords")
+        self.assertLessEqual(len(added), 3)
 
     def test_ignored_recommendations_block_candidates(self) -> None:
         self._write_config(

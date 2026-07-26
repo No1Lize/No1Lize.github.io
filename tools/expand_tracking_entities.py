@@ -693,6 +693,44 @@ def expand_track(
             existing["keywords"].add(normalize_term(keyword))
             existing_all.add(value_key)
 
+    # Tracks with diverse seeds (e.g. GPU / 先进封装 / LPU) rarely produce
+    # cross-seed candidates, so nothing clears the strict threshold. Relax to
+    # the seeding threshold for keywords only, capped small, so every track
+    # with usable web results moves forward instead of staying frozen.
+    if (
+        not seeding
+        and not any(added[kind] for kind in added)
+        and caps["keywords"] > 0
+    ):
+        relaxed = sorted(
+            (
+                candidate
+                for candidate in pool.values()
+                if SEED_ACCEPT_THRESHOLD <= candidate.score < threshold
+            ),
+            key=lambda candidate: candidate.score,
+            reverse=True,
+        )
+        for candidate in relaxed:
+            if len(added["keywords"]) >= 3:
+                break
+            value_key = normalize_term(candidate.value)
+            if value_key in existing_all or value_key in existing["sources"]:
+                continue
+            if value_key in {normalize_term(name) for name in all_track_names}:
+                continue
+            keyword = validate_keyword(candidate.value)
+            if not keyword or normalize_term(keyword) in blocked["keywords"]:
+                continue
+            if normalize_term(keyword) in existing["keywords"]:
+                continue
+            added["keywords"].append(keyword)
+            existing["keywords"].add(normalize_term(keyword))
+            existing_all.add(value_key)
+        if added["keywords"]:
+            summary["relaxed"] = True
+
+    summary["poolSize"] = len(pool)
     if dry_run:
         return summary
 
