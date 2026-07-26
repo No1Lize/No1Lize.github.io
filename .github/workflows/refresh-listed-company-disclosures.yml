@@ -9,15 +9,18 @@ on:
     paths:
       - config/listed_company_disclosure_sources.json
       - config/user_tracking.json
+      - tools/__init__.py
       - tools/bootstrap_listed_company_disclosures.py
       - tools/crawl_listed_company_disclosures.py
       - tools/cninfo_structured_disclosures.py
       - tools/sec_structured_disclosures.py
       - tools/sec_configured_disclosures.py
+      - tools/us_ir_sec_disclosures.py
       - tests/test_listed_company_disclosures.py
       - tests/test_cninfo_structured_disclosures.py
       - tests/test_sec_structured_disclosures.py
       - tests/test_sec_configured_disclosures.py
+      - tests/test_us_ir_sec_disclosures.py
       - lib/listed-company-disclosure-data.ts
       - lib/venture-profile-data-with-disclosures.ts
       - tsconfig.json
@@ -34,7 +37,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,12 +52,14 @@ jobs:
             tools/crawl_listed_company_disclosures.py \
             tools/cninfo_structured_disclosures.py \
             tools/sec_structured_disclosures.py \
-            tools/sec_configured_disclosures.py
+            tools/sec_configured_disclosures.py \
+            tools/us_ir_sec_disclosures.py
           python -m unittest \
             tests.test_listed_company_disclosures \
             tests.test_cninfo_structured_disclosures \
             tests.test_sec_structured_disclosures \
-            tests.test_sec_configured_disclosures
+            tests.test_sec_configured_disclosures \
+            tests.test_us_ir_sec_disclosures
       - name: Bootstrap verified official documents
         run: python tools/bootstrap_listed_company_disclosures.py
       - name: Refresh A-share and Hong Kong exchange disclosures
@@ -65,12 +70,10 @@ jobs:
         run: |
           python tools/crawl_listed_company_disclosures.py --validate-only --require-events
           python tools/cninfo_structured_disclosures.py --check --require-events
-      - name: Resolve every US-listed company through SEC EDGAR
-        env:
-          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/sec_configured_disclosures.py --require-events
+      - name: Resolve every US-listed company through official IR filing mirrors
+        run: python -m tools.us_ir_sec_disclosures --require-events
       - name: Require complete listed-company coverage
-        run: python tools/sec_configured_disclosures.py --check --require-events
+        run: python -m tools.us_ir_sec_disclosures --check --require-events
       - name: Commit disclosure snapshot
         id: update
         run: |
@@ -84,7 +87,7 @@ jobs:
           git commit -m "data: refresh disclosures for all listed companies"
           for attempt in 1 2 3; do
             if git pull --rebase origin main && \
-              python tools/sec_configured_disclosures.py --check --require-events && \
+              python -m tools.us_ir_sec_disclosures --check --require-events && \
               git push origin HEAD:main; then
               break
             fi
