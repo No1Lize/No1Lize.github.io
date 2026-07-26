@@ -1,0 +1,62 @@
+name: Refresh homepage intelligence
+
+on:
+  schedule:
+    - cron: "17 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-homepage-intelligence
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh against the latest main revision
+        id: refresh
+        shell: bash
+        env:
+          SEC_USER_AGENT: "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com (+https://github.com/No1Lize/No1Lize.github.io)"
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          changed=false
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            python3 tools/crawl_articles.py --source all
+            python3 tools/crawl_articles.py --validate-only
+            if git diff --quiet -- public/data/articles.json; then
+              echo "No homepage intelligence changes."
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git add public/data/articles.json
+            git commit -m 'data: refresh homepage intelligence'
+            if git push origin HEAD:main; then
+              changed=true
+              break
+            fi
+            sleep 5
+          done
+          if [ "$changed" != true ]; then
+            exit 1
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Trigger Pages deployment for refreshed data
+        if: steps.refresh.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${{ github.repository }}/dispatches" -f event_type=data-updated
