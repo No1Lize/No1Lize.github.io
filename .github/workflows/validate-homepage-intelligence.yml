@@ -1,0 +1,30 @@
+name: Validate homepage intelligence
+
+on:
+  pull_request:
+    paths:
+      - components/dashboard.tsx
+      - .github/workflows/refresh-homepage-intelligence.yml
+      - .maintenance/homepage-freshness-validation.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.13.0"
+          cache: npm
+      - run: npm run install:ci
+      - name: Lint homepage implementation
+        run: npx eslint components/dashboard.tsx
+      - name: Type-check application
+        run: npx tsc --noEmit
+      - name: Build GitHub Pages output
+        run: npm run build:pages
