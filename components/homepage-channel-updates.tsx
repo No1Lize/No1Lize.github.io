@@ -1,5 +1,6 @@
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "@/lib/homepage-channel-update-config";
 import {
   getChannelUpdateDirectory,
   type ChannelUpdateItem,
@@ -55,7 +56,7 @@ function getLatestChannelUpdates() {
         right.date.localeCompare(left.date) ||
         left.title.localeCompare(right.title, "zh-CN"),
     )
-    .slice(0, 15);
+    .slice(0, HOMEPAGE_CHANNEL_UPDATE_LIMIT);
 }
 
 export function HomepageChannelUpdates() {
@@ -72,7 +73,8 @@ export function HomepageChannelUpdates() {
       </div>
 
       <p className="method-note">
-        聚合频道 02、03、04、06、07，按更新时间倒序排列，并合并跨频道重复条目。
+        聚合频道 02、03、04、06、07，按更新时间倒序排列，合并跨频道重复条目，并展示最新
+        {HOMEPAGE_CHANNEL_UPDATE_LIMIT} 条。
       </p>
 
       <div className="heat-list" aria-label="频道最新更新目录">
@@ -106,7 +108,9 @@ export function HomepageChannelUpdates() {
               <span>{item.date}</span>
               <span>{item.label}</span>
             </div>
-            <b aria-hidden="true"><ArrowUpRight size={14} /></b>
+            <b aria-hidden="true">
+              <ArrowUpRight size={14} />
+            </b>
           </a>
         ))}
       </div>
