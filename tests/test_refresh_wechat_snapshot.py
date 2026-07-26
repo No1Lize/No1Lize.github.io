@@ -73,8 +73,9 @@ class RefreshWeChatSnapshotTest(unittest.TestCase):
         self.assertEqual(next_payload["wechatIngestion"]["acceptedArticles"], 1)
         self.assertEqual(next_payload["wechatIngestion"]["mentionedCompanyLinks"], 1)
         self.assertEqual(next_payload["wechatIngestion"]["mentionedPeopleLinks"], 1)
+        self.assertEqual(next_payload["wechatIngestion"]["indexOnlyArticles"], 0)
 
-    def test_failed_source_retains_previous_batch(self) -> None:
+    def test_failed_source_retains_previous_original_batch(self) -> None:
         old_wechat = self._article(
             "old-wechat",
             "user-track-wechat-qbitai-ai",
@@ -104,6 +105,47 @@ class RefreshWeChatSnapshotTest(unittest.TestCase):
         self.assertEqual(next_payload["articleCount"], 1)
         self.assertEqual(next_payload["articles"][0]["id"], "old-wechat")
         self.assertEqual(next_payload["wechatIngestion"]["retainedSources"], 1)
+
+    def test_failed_source_removes_legacy_index_proxy_record(self) -> None:
+        original = self._article(
+            "original",
+            "user-track-wechat-icbank-semiconductor",
+            "https://mp.weixin.qq.com/s/original",
+        )
+        proxy = self._article(
+            "proxy",
+            "user-track-wechat-icbank-semiconductor",
+            "https://www.jintiankansha.com/t/proxy-id",
+        )
+        proxy["source"]["platform"] = "微信公开索引"
+        proxy["source"]["level"] = "数据库记录"
+        proxy["wechatContentMode"] = "index-only"
+        payload = {
+            "schemaVersion": 3,
+            "articles": [original, proxy],
+            "sourceStatus": [],
+        }
+        next_payload = refresh.merge_wechat_snapshot(
+            payload,
+            [],
+            [
+                {
+                    "id": "user-track-wechat-icbank-semiconductor",
+                    "name": "半导体行业观察",
+                    "status": "error",
+                    "scanned": 0,
+                    "accepted": 0,
+                    "failed": 1,
+                    "retainedPrevious": True,
+                    "platform": "微信",
+                }
+            ],
+        )
+        self.assertEqual(
+            [article["id"] for article in next_payload["articles"]],
+            ["original"],
+        )
+        self.assertEqual(next_payload["wechatIngestion"]["removedProxyRecords"], 1)
 
 
 if __name__ == "__main__":
