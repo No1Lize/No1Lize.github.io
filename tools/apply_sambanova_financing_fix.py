@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Retain explicit first-close financing evidence in the final publication gate."""
+"""Retain first-close financing and make evidence checks semantic."""
 
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "tools" / "finalize_venture_profiles.py"
-TEST = ROOT / "tests" / "test_finalize_venture_profiles.py"
+FINALIZER = ROOT / "tools" / "finalize_venture_profiles.py"
+FINALIZER_TEST = ROOT / "tests" / "test_finalize_venture_profiles.py"
+REFINER = ROOT / "tools" / "refine_venture_research_evidence.py"
 
 
 def main() -> None:
-    source = SOURCE.read_text(encoding="utf-8")
+    source = FINALIZER.read_text(encoding="utf-8")
     old = '''STRONG_FINANCING_RE = re.compile(
     r"\\b(?:rais(?:e|ed|es|ing)|funding round|financing round|"
     r"seed round|pre-seed funding|secured .{0,40} funding|"
@@ -33,9 +34,9 @@ def main() -> None:
     if new not in source:
         if old not in source:
             raise SystemExit("finalizer financing regex block not found")
-        SOURCE.write_text(source.replace(old, new, 1), encoding="utf-8")
+        FINALIZER.write_text(source.replace(old, new, 1), encoding="utf-8")
 
-    test = TEST.read_text(encoding="utf-8")
+    test = FINALIZER_TEST.read_text(encoding="utf-8")
     if "test_financing_keeps_explicit_first_close" not in test:
         marker = "    def test_recent_investments_use_actual_one_year_window(self) -> None:\n"
         method = '''    def test_financing_keeps_explicit_first_close(self) -> None:
@@ -57,7 +58,39 @@ def main() -> None:
 '''
         if marker not in test:
             raise SystemExit("finalizer test insertion marker not found")
-        TEST.write_text(test.replace(marker, method + marker, 1), encoding="utf-8")
+        FINALIZER_TEST.write_text(test.replace(marker, method + marker, 1), encoding="utf-8")
+
+    refiner = REFINER.read_text(encoding="utf-8")
+    old_check = '''    rendered = json.dumps(refined, ensure_ascii=False, indent=2) + "\\n"
+    current = args.snapshot.read_text(encoding="utf-8")
+    print(json.dumps(diagnostics, ensure_ascii=False, sort_keys=True))
+    if args.check:
+        if rendered != current:
+            print("Venture profile snapshot requires evidence alignment.")
+            return 1
+        print("Venture profile snapshot passed evidence alignment checks.")
+        return 0
+    if rendered == current:
+        print("No venture evidence alignment changes.")
+        return 0
+'''
+    new_check = '''    rendered = json.dumps(refined, ensure_ascii=False, indent=2) + "\\n"
+    current = args.snapshot.read_text(encoding="utf-8")
+    print(json.dumps(diagnostics, ensure_ascii=False, sort_keys=True))
+    if args.check:
+        if refined != snapshot:
+            print("Venture profile snapshot requires evidence alignment.")
+            return 1
+        print("Venture profile snapshot passed evidence alignment checks.")
+        return 0
+    if refined == snapshot:
+        print("No venture evidence alignment changes.")
+        return 0
+'''
+    if new_check not in refiner:
+        if old_check not in refiner:
+            raise SystemExit("refiner textual check block not found")
+        REFINER.write_text(refiner.replace(old_check, new_check, 1), encoding="utf-8")
 
 
 if __name__ == "__main__":
