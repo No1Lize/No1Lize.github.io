@@ -21,9 +21,9 @@ def ranking_table(title: str, spec: dict[str, object], count: int | None = None)
             else f"机构{index}"
         )
         if ordered:
-            rows.append(f"<tr><td>{index}</td><td>机构全称{index}</td><td>{name}</td></tr>")
+            rows.append(f"<tr><td>{index}</td><td>公司全称{index}</td><td>{name}</td></tr>")
         else:
-            rows.append(f"<tr><td>机构全称{index}</td><td>{name}</td></tr>")
+            rows.append(f"<tr><td>公司全称{index}</td><td>{name}</td></tr>")
     return f"<h2>{title}</h2><table>{''.join(rows)}</table>"
 
 
