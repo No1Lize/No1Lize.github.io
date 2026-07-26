@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Run the standard crawler with verified WeChat account routing enabled."""
+"""Run the standard crawler with verified WeChat and professional media routing."""
 
 from __future__ import annotations
 
 try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import crawl_with_source_categories as base
+    from . import professional_media_sources
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
@@ -17,6 +18,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_with_source_categories as base
+    import professional_media_sources
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
@@ -78,6 +80,27 @@ def _install_snapshot_quality() -> None:
     base.tracking.crawler.replace_source_batches = replace_source_batches
 
 
+def _install_professional_media() -> None:
+    original = base._custom_sources
+    if getattr(original, "_professional_media_catalog", False):
+        return
+
+    def custom_sources(tracking_config, tracks):
+        runtime_specs, sec_specs = original(tracking_config, tracks)
+        professional_specs = professional_media_sources.grouped_specs(
+            tracks,
+            base.tracking,
+        )
+        return [*runtime_specs, *professional_specs], sec_specs
+
+    setattr(custom_sources, "_professional_media_catalog", True)
+    base._custom_sources = custom_sources
+    professional_media_sources.install(base.tracking.crawler)
+    prefixes = tuple(base.tracking.USER_SOURCE_PREFIXES)
+    if "professional-media-" not in prefixes:
+        base.tracking.USER_SOURCE_PREFIXES = (*prefixes, "professional-media-")
+
+
 def main() -> int:
     wechat_fetch_compat.install(wechat_public_sources)
     wechat_registry_bridge.install(wechat_public_sources)
@@ -88,6 +111,7 @@ def main() -> int:
     )
     wechat_sogou_link_compat.install(wechat_sogou_index)
     wechat_sogou_bridge.install(wechat_public_sources)
+    _install_professional_media()
     _install_snapshot_quality()
     return base.main()
 
