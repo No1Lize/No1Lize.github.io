@@ -1,0 +1,50 @@
+name: Professional venture source checks
+
+on:
+  pull_request:
+    paths:
+      - "tools/enrich_professional_venture_sources.py"
+      - "tests/test_professional_venture_sources.py"
+      - "lib/professional-venture-data.ts"
+      - "components/company-equity-evidence.tsx"
+      - "app/companies/**"
+      - "tests/professional-venture-data.test.ts"
+      - ".github/workflows/professional-venture-source-checks.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/enrich_professional_venture_sources.py"
+      - "tests/test_professional_venture_sources.py"
+      - "lib/professional-venture-data.ts"
+      - "components/company-equity-evidence.tsx"
+      - "app/companies/**"
+      - "tests/professional-venture-data.test.ts"
+      - ".github/workflows/professional-venture-source-checks.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify Python adapters without external calls
+        run: |
+          python -m py_compile tools/enrich_professional_venture_sources.py
+          python -m unittest -v tests.test_professional_venture_sources
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Type-check professional venture UI
+        run: npx tsc --noEmit
+      - name: Verify professional venture frontend boundary
+        run: node --import tsx --test tests/professional-venture-data.test.ts
+      - name: Build static site
+        run: npm run build
