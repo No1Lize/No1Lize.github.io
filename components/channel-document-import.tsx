@@ -22,7 +22,10 @@ import {
   extractPptxDocument,
 } from "@/lib/document-extract";
 import { extractPdfDocument } from "@/lib/document-extract-pdf";
-import { generateDocumentSummary } from "@/lib/document-summary";
+import {
+  generateDocumentSummary,
+  isMostlyLegibleText,
+} from "@/lib/document-summary";
 import {
   GITHUB_API_ROOT,
   bytesToBase64,
@@ -205,18 +208,24 @@ export function ChannelDocumentImport({
             } 仍可归档原文件。`;
           }
           const trimmed = text.trim();
-          const summary = trimmed
+          const legible = Boolean(trimmed) && isMostlyLegibleText(trimmed);
+          if (trimmed && !legible) {
+            parseNote =
+              parseNote ||
+              "文本层缺少可靠的 Unicode 映射（常见于 macOS 打印导出的 PDF），自动摘要不可用，请手动补写。";
+          }
+          const summary = legible
             ? generateDocumentSummary(text)
             : fallbackSummary(fileType);
           updateEntry(docId, {
             bytes,
             summary,
-            textChars: trimmed.length,
+            textChars: legible ? trimmed.length : 0,
             ...(pageCount ? { pageCount } : {}),
             status: "ready",
             detail:
               parseNote ||
-              (trimmed
+              (legible
                 ? "已生成摘要，可在提交前修改标题与摘要。"
                 : "未提取到正文，可手动补写摘要后提交。"),
           });
@@ -352,7 +361,7 @@ export function ChannelDocumentImport({
 
         updateEntry(key, { detail: "正在更新文档索引……" });
         let commitSha = "";
-        for (let attempt = 1; attempt <= 2; attempt += 1) {
+        for (let attempt = 1; attempt <= 4; attempt += 1) {
           const manifest = await fetchRepoTextFile(
             cleanToken,
             CHANNEL_DOCUMENTS_PATH,
@@ -379,7 +388,10 @@ export function ChannelDocumentImport({
             break;
           } catch (error) {
             const status = (error as Error & { status?: number }).status;
-            if (attempt === 1 && (status === 409 || status === 422)) continue;
+            // Data workflows commit frequently; retry sha races a few times
+            // before surfacing the error (a lost index leaves the uploaded
+            // file orphaned in the repo).
+            if (attempt < 4 && (status === 409 || status === 422)) continue;
             throw error;
           }
         }

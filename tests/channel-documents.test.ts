@@ -22,6 +22,7 @@ import {
 import {
   cleanExtractedText,
   generateDocumentSummary,
+  isMostlyLegibleText,
 } from "../lib/document-summary";
 
 const validRecord: ChannelDocumentRecord = {
@@ -229,6 +230,18 @@ test("generateDocumentSummary caps length and handles empty input", () => {
   const summary = generateDocumentSummary(long, 120);
   assert.ok(summary.length <= 120);
   assert.ok(summary.endsWith("…") || summary.endsWith("。"));
+});
+
+test("isMostlyLegibleText rejects mojibake from unmapped CJK fonts", () => {
+  const legible =
+    "本报告覆盖长江存储的产能爬坡、战略配售结构与 NAND 价格周期，" +
+    "并对 2026 年资本开支给出敏感性分析。Revenue grows 18% YoY.";
+  assert.equal(isMostlyLegibleText(legible), true);
+  const mojibake =
+    "Â UV ÆâÇπ ˜›ÖˆË ∂∑Ù ¡ß∏ƒ ÈÌ˚ Ø˝Δ ¬Ω„ ÛÚ ÒÏÎ ˆ¯˜ Â∏Ö ıÓÙ ¥µ∂ ]«» ˜Ë ÍÎÏ ÌÛÙ ¯˘˙ Ø∆ ¬√ƒ";
+  assert.equal(isMostlyLegibleText(mojibake), false);
+  assert.equal(isMostlyLegibleText("   "), false);
+  assert.equal(isMostlyLegibleText("短文本"), false);
 });
 
 test("cleanExtractedText collapses layout whitespace", () => {

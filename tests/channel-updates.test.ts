@@ -72,7 +72,13 @@ test("all requested channels expose a non-empty update directory", () => {
 test("channel updates are newest-first and link to original public sources", () => {
   for (const channel of channels) {
     const items = getChannelUpdateDirectory(channel).items;
-    assert.ok(items.every((item) => /^https?:\/\//u.test(item.href)));
+    // Crawled records link to their original public source; manually imported
+    // documents link to the archived copy under /data/uploads/.
+    assert.ok(
+      items.every((item) =>
+        /^https?:\/\//u.test(item.href) || item.href.startsWith("/data/uploads/"),
+      ),
+    );
     assert.ok(items.every((item) => item.title && item.source && item.date));
     assert.ok(
       items.every((item) =>

@@ -4,6 +4,11 @@
 // the same version as the pdfjs-dist dependency in package.json.
 
 export const PDF_WORKER_PATH = "/vendor/pdf.worker.min.mjs";
+// CJK PDFs use CID-keyed fonts; without these packed CMaps getTextContent
+// returns mojibake. Both directories are vendored from the same pdfjs-dist
+// version as the worker.
+export const PDF_CMAP_PATH = "/vendor/cmaps/";
+export const PDF_STANDARD_FONT_PATH = "/vendor/standard_fonts/";
 
 // Reading every page of a large PDF is wasteful for a short summary; the
 // opening pages carry the abstract and key findings.
@@ -17,7 +22,12 @@ export async function extractPdfDocument(
     pdfjs.GlobalWorkerOptions.workerSrc = PDF_WORKER_PATH;
   }
   // getDocument may transfer the buffer to the worker; keep the caller's copy.
-  const task = pdfjs.getDocument({ data: data.slice() });
+  const task = pdfjs.getDocument({
+    data: data.slice(),
+    cMapUrl: PDF_CMAP_PATH,
+    cMapPacked: true,
+    standardFontDataUrl: PDF_STANDARD_FONT_PATH,
+  });
   const document = await task.promise;
   try {
     const pageCount = document.numPages;

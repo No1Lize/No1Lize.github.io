@@ -5,6 +5,20 @@ const CONTROL_CHARS =
   /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F\uFEFF]/g;
 const SPACE_RUNS = /[	   -​　]+/g;
 
+/**
+ * Whether extracted text is trustworthy enough to summarize. PDFs exported by
+ * macOS Quartz (and some scanners) embed subset CJK fonts without ToUnicode
+ * maps, so extraction yields symbol soup no summarizer should ever see.
+ */
+export function isMostlyLegibleText(rawText: string): boolean {
+  const text = rawText.replace(/\s+/g, "");
+  if (text.length < 40) return false;
+  const sample = text.slice(0, 4000);
+  const legible = (sample.match(/[A-Za-z0-9㐀-鿿，。、；：？！""''（）%¥$€.\-,:;()/]/gu) ?? [])
+    .length;
+  return legible / sample.length >= 0.6;
+}
+
 export function cleanExtractedText(raw: string): string {
   return raw
     .replace(/\r\n?/g, "\n")
