@@ -1,0 +1,41 @@
+name: Institution lint diagnostic
+
+on:
+  pull_request:
+    paths:
+      - .institution-lint-trigger
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - name: Record lint output
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set +e
+          mkdir -p diagnostics
+          npm run lint > diagnostics/institution-directory-lint.txt 2>&1
+          status=$?
+          cat diagnostics/institution-directory-lint.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/institution-directory-lint.txt
+            git commit -m "ci: record institution directory lint failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
