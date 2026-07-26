@@ -34,14 +34,31 @@ jobs:
           python tools/patch_venture_entity_labels_v1.py
           python tools/patch_venture_short_summary_fallback.py
       - name: Run semantic and terminal regressions
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
         run: |
-          python -m py_compile \
-            tools/enforce_venture_entity_semantics.py \
-            tools/finalize_venture_profiles.py \
-            tools/stabilize_venture_profiles.py
-          python -m unittest \
-            tests.test_venture_entity_semantics \
-            tests.test_stabilize_venture_profiles
+          set +e
+          mkdir -p diagnostics
+          {
+            python -m py_compile \
+              tools/enforce_venture_entity_semantics.py \
+              tools/finalize_venture_profiles.py \
+              tools/stabilize_venture_profiles.py
+            python -m unittest -v \
+              tests.test_venture_entity_semantics \
+              tests.test_stabilize_venture_profiles
+          } > diagnostics/venture-terminal-regressions.txt 2>&1
+          status=$?
+          cat diagnostics/venture-terminal-regressions.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-terminal-regressions.txt
+            git commit -m "ci: record terminal venture regression failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
       - name: Apply semantic cleanup directly
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
@@ -140,6 +157,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           rm -f .venture-entity-label-trigger
+          rm -rf diagnostics
           git add \
             tools/enforce_venture_entity_semantics.py \
             tools/finalize_venture_profiles.py \
