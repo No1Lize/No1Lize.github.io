@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { marketProfiles } from "../lib/market-profile-data";
+import { latestQuoteView, marketProfiles } from "../lib/market-profile-data";
 
 function metricValue(slug: string, id: string) {
   return marketProfiles[slug]?.metrics.find((metric) => metric.id === id)?.value ?? "";
@@ -28,5 +28,27 @@ test("all enabled snapshot profiles have a display region and readable market ca
     assert.ok(profile.company.region, `${profile.slug}: missing region`);
     const marketCap = profile.metrics.find((metric) => metric.id === "marketCap")?.value;
     if (marketCap) assert.match(marketCap, /\d/u, `${profile.slug}: non-numeric market cap`);
+  }
+});
+
+test("quote and news normalization keeps optional double-source fields safe", () => {
+  for (const profile of Object.values(marketProfiles)) {
+    assert.ok(Array.isArray(profile.news), `${profile.slug}: news must normalize to an array`);
+    for (const item of profile.news ?? []) {
+      assert.ok(item.title.trim(), `${profile.slug}: empty news title`);
+      assert.match(item.url, /^https?:\/\//u, `${profile.slug}: invalid news link`);
+      assert.ok(item.publishedAt.trim(), `${profile.slug}: missing news time`);
+    }
+    if (profile.quote) {
+      assert.ok(
+        Number.isFinite(profile.quote.price) && profile.quote.price > 0,
+        `${profile.slug}: quote price must be positive`,
+      );
+    }
+    const view = latestQuoteView(profile);
+    if (view) {
+      assert.match(view.price, /\d/u, `${profile.slug}: quote view lacks numeric price`);
+      assert.ok(Number.isFinite(view.changePercent), `${profile.slug}: invalid change percent`);
+    }
   }
 });

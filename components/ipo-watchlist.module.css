@@ -189,6 +189,30 @@
   color: #d6a45c;
 }
 
+.quoteCell {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.quoteCell small {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.quoteCell[data-direction="up"],
+.quoteCell[data-direction="up"] small {
+  color: var(--red);
+}
+
+.quoteCell[data-direction="down"],
+.quoteCell[data-direction="down"] small {
+  color: var(--green-bright);
+}
+
 .empty {
   display: grid;
   min-height: 230px;

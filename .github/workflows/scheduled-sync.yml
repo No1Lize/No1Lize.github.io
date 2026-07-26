@@ -42,6 +42,7 @@ on:
       - tools/refresh_market_profiles.py
       - tools/refresh_market_profiles_enriched.py
       - tools/market_profile_enrichment.py
+      - tools/market_quote_news_sources.py
       - tools/validate_market_profiles.py
       - tools/refresh_people_profiles.py
       - tools/refresh_people_profiles_with_video.py

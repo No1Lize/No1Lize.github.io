@@ -7,9 +7,11 @@ import re
 
 try:
     from . import market_profile_enrichment as enrichment
+    from . import market_quote_news_sources as quote_news
     from . import refresh_market_profiles as runner
 except ImportError:
     import market_profile_enrichment as enrichment
+    import market_quote_news_sources as quote_news
     import refresh_market_profiles as runner
 
 _original_crawl_item = runner.crawl_item
@@ -81,6 +83,7 @@ def crawl_item(item, previous):
         runner.neutral_fetch_text,
     )
     profile = preserve_company_copy(profile, previous)
+    profile = quote_news.enrich_quote_and_news(item["identity"], profile, previous)
     status["status"] = profile.get("status", status.get("status", "partial"))
     status["pricePoints"] = len(profile.get("priceHistory", []))
     status["marketCapAccepted"] = any(
@@ -88,6 +91,10 @@ def crawl_item(item, previous):
         for metric in profile.get("metrics", [])
         if isinstance(metric, dict)
     )
+    status["quoteAccepted"] = isinstance(profile.get("quote"), dict) and bool(
+        profile.get("quote", {}).get("price")
+    )
+    status["newsCount"] = len(profile.get("news") or [])
     return profile, status
 
 

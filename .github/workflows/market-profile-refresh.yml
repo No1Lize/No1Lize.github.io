@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - .github/workflows/market-profile-refresh.yml
+  schedule:
+    # 上市跟踪频道每天早上 7 点（Asia/Taipei，与北京时间一致）刷新一次。
+    - cron: "0 7 * * *"
+      timezone: "Asia/Taipei"
   workflow_dispatch:
 
 permissions:
@@ -39,7 +43,7 @@ jobs:
           CRAWL=$?
           tail -n 220 .github/diagnostics/market-refresh-full.log > .github/diagnostics/market-refresh.log
           rm .github/diagnostics/market-refresh-full.log
-          python -m unittest tests.test_market_profiles tests.test_market_profile_transport tests.test_market_profile_enrichment > .github/diagnostics/market-refresh-tests.log 2>&1
+          python -m unittest tests.test_market_profiles tests.test_market_profile_transport tests.test_market_profile_enrichment tests.test_market_quote_news > .github/diagnostics/market-refresh-tests.log 2>&1
           TESTS=$?
           python tools/validate_market_profiles.py > .github/diagnostics/market-refresh-validator.log 2>&1
           VALIDATOR=$?

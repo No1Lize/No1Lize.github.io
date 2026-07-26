@@ -62,6 +62,7 @@ export function IpoWatchlist({ companies }: IpoWatchlistProps) {
               <tr>
                 <th>企业</th>
                 <th>市场 / 代码</th>
+                <th>最新价 / 涨跌幅</th>
                 <th>赛道</th>
                 <th>当前状态</th>
                 <th>最近跟踪</th>
@@ -79,6 +80,27 @@ export function IpoWatchlist({ companies }: IpoWatchlistProps) {
                   </td>
                   <td>
                     {company.market} · {company.ticker}
+                  </td>
+                  <td>
+                    {company.quote ? (
+                      <span
+                        className={styles.quoteCell}
+                        data-direction={company.quote.direction}
+                        title={
+                          company.quote.delayed
+                            ? `延迟行情 · ${company.quote.asOf ?? ""}`
+                            : `${company.quote.sourceName ?? "公开报价"} · ${company.quote.asOf ?? ""}`
+                        }
+                      >
+                        {company.quote.price}
+                        <small>
+                          {company.quote.changePercent >= 0 ? "+" : ""}
+                          {company.quote.changePercent.toFixed(2)}%
+                        </small>
+                      </span>
+                    ) : (
+                      <span className={styles.pendingLabel}>待同步</span>
+                    )}
                   </td>
                   <td>{company.sector}</td>
                   <td>

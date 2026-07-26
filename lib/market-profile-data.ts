@@ -25,6 +25,23 @@ export type MarketFinancialSeries = {
   points: { period: string; value: number }[];
 };
 
+export type MarketQuote = {
+  price: number;
+  change?: number;
+  changePercent?: number;
+  previousClose?: number;
+  currency?: string;
+  asOf?: string;
+  source?: { name: string; url: string };
+};
+
+export type MarketNewsItem = {
+  title: string;
+  url: string;
+  publishedAt: string;
+  source: string;
+};
+
 export type MarketCompanyProfile = {
   name: string;
   englishName?: string;
@@ -51,10 +68,14 @@ export type MarketProfile = {
   priceHistory: MarketPricePoint[];
   metrics: MarketMetric[];
   financialSeries: MarketFinancialSeries[];
+  quote?: MarketQuote;
+  news?: MarketNewsItem[];
   sources: {
     tonghuashun: string;
     price?: string;
     quote?: string;
+    yahooFinance?: string;
+    sinaFinance?: string;
   };
   warnings?: string[];
 };
@@ -69,6 +90,8 @@ type MarketProfileSnapshot = {
     profileAccepted: boolean;
     pricePoints: number;
     marketCapAccepted?: boolean;
+    quoteAccepted?: boolean;
+    newsCount?: number;
     error?: string;
   }[];
 };
@@ -182,6 +205,78 @@ function fallbackDescription(profile: MarketProfile) {
   return `${profile.company.name}的公开市场资料页，持续跟踪历史行情、财务指标、公司公告与经营进展。`;
 }
 
+function normalizeQuote(quote: MarketQuote | undefined): MarketQuote | undefined {
+  if (!quote || typeof quote !== "object") return undefined;
+  const price = Number(quote.price);
+  if (!Number.isFinite(price) || price <= 0) return undefined;
+  return { ...quote, price };
+}
+
+function normalizeNews(news: MarketNewsItem[] | undefined): MarketNewsItem[] {
+  if (!Array.isArray(news)) return [];
+  return news
+    .filter(
+      (item) =>
+        item &&
+        typeof item.title === "string" &&
+        item.title.trim() &&
+        typeof item.url === "string" &&
+        /^https?:\/\//u.test(item.url) &&
+        typeof item.publishedAt === "string" &&
+        item.publishedAt.trim(),
+    )
+    .slice(0, 10);
+}
+
+export function quoteCurrencyPrefix(quote: MarketQuote | undefined, market: TrackingMarket) {
+  const currency = quote?.currency?.toUpperCase();
+  if (currency === "CNY" || currency === "RMB") return "¥";
+  if (currency === "HKD") return "HK$";
+  if (currency === "USD") return "US$";
+  return market === "A股" ? "¥" : market === "港股" ? "HK$" : "US$";
+}
+
+export type MarketQuoteView = {
+  price: string;
+  changePercent: number;
+  direction: "up" | "down" | "flat";
+  asOf?: string;
+  sourceName?: string;
+  delayed: boolean;
+};
+
+/** 列表页/详情页共用的最新价视图：优先公开报价快照，退化为最近收盘。 */
+export function latestQuoteView(profile: MarketProfile | undefined): MarketQuoteView | null {
+  if (!profile) return null;
+  const prefix = quoteCurrencyPrefix(profile.quote, profile.market);
+  const quote = profile.quote;
+  if (quote) {
+    const pct = Number.isFinite(quote.changePercent) ? Number(quote.changePercent) : 0;
+    return {
+      price: `${prefix}${quote.price.toFixed(2)}`,
+      changePercent: pct,
+      direction: pct > 0 ? "up" : pct < 0 ? "down" : "flat",
+      ...(quote.asOf ? { asOf: quote.asOf } : {}),
+      ...(quote.source?.name ? { sourceName: quote.source.name } : {}),
+      delayed: false,
+    };
+  }
+  const points = profile.priceHistory;
+  if (points.length >= 2) {
+    const latest = points.at(-1)!;
+    const previous = points.at(-2)!;
+    const pct = previous.close ? ((latest.close - previous.close) / previous.close) * 100 : 0;
+    return {
+      price: `${prefix}${latest.close.toFixed(2)}`,
+      changePercent: pct,
+      direction: pct > 0 ? "up" : pct < 0 ? "down" : "flat",
+      asOf: latest.date,
+      delayed: true,
+    };
+  }
+  return null;
+}
+
 function normalizeProfile(profile: MarketProfile): MarketProfile {
   // The snapshot is crawler-generated; a partial profile must degrade to
   // empty sections instead of crashing the whole static build.
@@ -217,13 +312,18 @@ function normalizeProfile(profile: MarketProfile): MarketProfile {
     }
   }
 
-  return {
+  const quote = normalizeQuote(profile.quote);
+  const normalized: MarketProfile = {
     ...profile,
     company,
     priceHistory,
     metrics,
     financialSeries,
+    news: normalizeNews(profile.news),
   };
+  if (quote) normalized.quote = quote;
+  else delete normalized.quote;
+  return normalized;
 }
 
 const snapshot = rawMarketProfiles as MarketProfileSnapshot;

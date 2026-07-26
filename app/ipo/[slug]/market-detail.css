@@ -31,6 +31,20 @@
   white-space: nowrap;
 }
 
+.market-hero-stats[data-cols="3"] {
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+}
+
+.market-hero-stats .hero-stat[data-direction="up"] strong,
+.market-hero-stats .hero-stat[data-direction="up"] small {
+  color: var(--red);
+}
+
+.market-hero-stats .hero-stat[data-direction="down"] strong,
+.market-hero-stats .hero-stat[data-direction="down"] small {
+  color: var(--green-bright);
+}
+
 .market-detail-layout {
   grid-template-columns: 165px minmax(0, 1fr) 250px;
 }
@@ -291,6 +305,142 @@
 .market-chart-empty strong { color: var(--text); }
 .market-chart-empty p { max-width: 420px; font-size: 11px; }
 
+.market-live-quote {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 1px;
+  margin-bottom: 10px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.market-live-price {
+  padding: 16px 20px;
+  background: var(--surface);
+}
+
+.market-live-price span,
+.market-live-price small {
+  display: block;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.market-live-price strong {
+  display: block;
+  margin: 5px 0 3px;
+  font-size: 28px;
+  font-weight: 520;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.market-live-quote[data-direction="up"] .market-live-price strong,
+.market-live-quote[data-direction="up"] .market-live-price small {
+  color: var(--red);
+}
+
+.market-live-quote[data-direction="down"] .market-live-price strong,
+.market-live-quote[data-direction="down"] .market-live-price small {
+  color: var(--green-bright);
+}
+
+.market-live-facts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0;
+  background: var(--surface);
+}
+
+.market-live-facts div {
+  padding: 13px 16px;
+  border-left: 1px solid var(--border-soft);
+}
+
+.market-live-facts div:first-child {
+  border-left: 0;
+}
+
+.market-live-facts dt {
+  color: var(--faint);
+  font-size: 9px;
+}
+
+.market-live-facts dd {
+  margin: 5px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.market-live-facts a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.market-live-facts a:hover {
+  color: var(--green-bright);
+}
+
+.market-news-list {
+  display: grid;
+  gap: 1px;
+  margin-bottom: 14px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.market-news-item {
+  display: grid;
+  grid-template-columns: 122px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: baseline;
+  padding: 12px 16px;
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+
+.market-news-item:hover {
+  background: var(--surface-2);
+}
+
+.market-news-item time {
+  color: var(--faint);
+  font-size: 10px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.market-news-item strong {
+  font-size: 13px;
+  font-weight: 520;
+  line-height: 1.65;
+}
+
+.market-news-item:hover strong {
+  color: var(--green-bright);
+}
+
+.market-news-source {
+  justify-self: end;
+  padding: 2px 7px;
+  border: 1px solid var(--border-soft);
+  color: var(--faint);
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.market-news-source[data-source="yahoo"] {
+  color: var(--blue);
+  border-color: color-mix(in srgb, var(--blue) 45%, transparent);
+}
+
+.market-news-source[data-source="sina"] {
+  color: var(--orange);
+  border-color: color-mix(in srgb, var(--orange) 45%, transparent);
+}
+
 .market-facts-grid {
   grid-template-columns: repeat(5, 1fr);
 }
@@ -446,10 +596,16 @@
   .market-ohlc-grid div { border-left: 0; }
   .market-facts-grid,
   .market-metric-grid { grid-template-columns: repeat(2, 1fr); }
+  .market-live-quote { grid-template-columns: 1fr; }
+  .market-live-facts { grid-template-columns: repeat(2, 1fr); }
+  .market-live-facts div { border-left: 0; border-top: 1px solid var(--border-soft); }
+  .market-news-item { grid-template-columns: 1fr; gap: 4px; }
+  .market-news-source { justify-self: start; }
 }
 
 @media (max-width: 600px) {
   .market-hero-stats,
+  .market-hero-stats[data-cols="3"],
   .research-directory-grid,
   .financial-series-grid { grid-template-columns: 1fr; }
   .market-terminal-toolbar { align-items: flex-start; }

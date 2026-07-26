@@ -1,6 +1,10 @@
 import { ipoCompanies, type IpoCompany } from "@/lib/catalog-data";
 import { listedCompanySlug, normalizeMarketTicker } from "@/lib/listed-company-identity";
-import { marketProfiles } from "@/lib/market-profile-data";
+import {
+  latestQuoteView,
+  marketProfiles,
+  type MarketQuoteView,
+} from "@/lib/market-profile-data";
 import {
   userTrackingConfig,
   type TrackingListedCompany,
@@ -18,6 +22,7 @@ export type ListedCompanyView = {
   catalogSlug?: string;
   status: string;
   latest: string;
+  quote?: MarketQuoteView;
   source?: IpoCompany["source"];
 };
 
@@ -75,6 +80,7 @@ export function resolveListedCompany(
           level: "数据库记录" as const,
         }
       : undefined);
+  const quote = latestQuoteView(marketProfile);
 
   return {
     id: item.id,
@@ -96,6 +102,7 @@ export function resolveListedCompany(
       marketProfile?.updatedAt?.slice(0, 10) ??
       catalog?.latest ??
       "已创建详情页，等待定时任务抓取",
+    ...(quote ? { quote } : {}),
     ...(source ? { source } : {}),
   };
 }

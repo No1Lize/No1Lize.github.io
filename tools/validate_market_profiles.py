@@ -105,6 +105,45 @@ def validate() -> tuple[list[str], list[str]]:
         if not market_cap_value:
             warnings.append(f"{slug}: total market cap is unavailable")
 
+        quote = profile.get("quote")
+        if quote is not None:
+            if not isinstance(quote, dict):
+                errors.append(f"{slug}: quote must be an object")
+            else:
+                try:
+                    price = float(quote.get("price"))
+                except (TypeError, ValueError):
+                    price = float("nan")
+                if not math.isfinite(price) or price <= 0:
+                    errors.append(f"{slug}: quote price must be a positive number")
+                source = quote.get("source")
+                if (
+                    not isinstance(source, dict)
+                    or not str(source.get("name") or "").strip()
+                    or not str(source.get("url") or "").startswith("http")
+                ):
+                    errors.append(f"{slug}: quote source must include name and URL")
+
+        news = profile.get("news")
+        if news is not None:
+            if not isinstance(news, list):
+                errors.append(f"{slug}: news must be an array")
+            else:
+                if len(news) > 20:
+                    warnings.append(f"{slug}: news list is unusually long ({len(news)})")
+                for index, item in enumerate(news[:20]):
+                    if (
+                        not isinstance(item, dict)
+                        or not str(item.get("title") or "").strip()
+                        or not str(item.get("url") or "").startswith("http")
+                    ):
+                        errors.append(f"{slug}: news item {index} missing title or link")
+                        continue
+                    if not str(item.get("publishedAt") or "").strip():
+                        errors.append(f"{slug}: news item {index} missing publishedAt")
+                    if not str(item.get("source") or "").strip():
+                        errors.append(f"{slug}: news item {index} missing source name")
+
         listed_at = str(company.get("listedAt") or "")
         dates: list[str] = []
         seen: set[str] = set()

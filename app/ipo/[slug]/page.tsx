@@ -19,8 +19,11 @@ import {
   listedCompanyBySlug,
 } from "@/lib/listed-companies";
 import {
+  latestQuoteView,
   marketProfiles,
+  quoteCurrencyPrefix,
   type MarketMetric,
+  type MarketNewsItem,
 } from "@/lib/market-profile-data";
 import {
   companyDatabaseLinks,
@@ -91,6 +94,8 @@ export default async function IpoDetail({
   const heroDescription = clipAtSentence(detailDescription, 140);
   const region = marketData?.company.region || inferDisplayRegion(company.market);
   const marketCap = metricValue(marketData?.metrics, "marketCap");
+  const quoteView = latestQuoteView(marketData);
+  const marketNews: MarketNewsItem[] = marketData?.news ?? [];
   const relatedReports = relatedResearchReports({
     companySlug: slug,
     ticker: company.ticker,
@@ -124,12 +129,23 @@ export default async function IpoDetail({
             </span>
           </div>
         </div>
-        <div className="market-hero-stats">
+        <div className="market-hero-stats" data-cols={quoteView ? "3" : "2"}>
           <div className="hero-stat">
             <span>上市代码</span>
             <strong>{company.ticker}</strong>
             <small>{listedAt}</small>
           </div>
+          {quoteView && (
+            <div className="hero-stat" data-direction={quoteView.direction}>
+              <span>{quoteView.delayed ? "最近收盘" : "最新价"}</span>
+              <strong className="market-cap-value">{quoteView.price}</strong>
+              <small>
+                {quoteView.changePercent >= 0 ? "+" : ""}
+                {quoteView.changePercent.toFixed(2)}% ·{" "}
+                {quoteView.delayed ? "延迟行情" : quoteView.sourceName ?? "公开报价"}
+              </small>
+            </div>
+          )}
           <div className="hero-stat">
             <span>总市值</span>
             <strong className="market-cap-value">{marketCap || "待同步"}</strong>
@@ -152,6 +168,64 @@ export default async function IpoDetail({
 
         <article className="detail-article">
           <Section id="行情走势" title="行情走势">
+            {marketData?.quote && (
+              <div
+                className="market-live-quote"
+                data-direction={
+                  (marketData.quote.changePercent ?? 0) > 0
+                    ? "up"
+                    : (marketData.quote.changePercent ?? 0) < 0
+                      ? "down"
+                      : "flat"
+                }
+              >
+                <div className="market-live-price">
+                  <span>最新价 · {marketData.quote.source?.name ?? "公开报价"}</span>
+                  <strong>
+                    {quoteCurrencyPrefix(marketData.quote, company.market)}
+                    {marketData.quote.price.toFixed(2)}
+                  </strong>
+                  <small>
+                    {signedFixed(marketData.quote.change)} ·{" "}
+                    {signedFixed(marketData.quote.changePercent)}%
+                  </small>
+                </div>
+                <dl className="market-live-facts">
+                  <div>
+                    <dt>昨收</dt>
+                    <dd>
+                      {marketData.quote.previousClose !== undefined
+                        ? marketData.quote.previousClose.toFixed(2)
+                        : "—"}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>币种</dt>
+                    <dd>{marketData.quote.currency ?? "—"}</dd>
+                  </div>
+                  <div>
+                    <dt>更新时间</dt>
+                    <dd>{formatQuoteTime(marketData.quote.asOf)}</dd>
+                  </div>
+                  <div>
+                    <dt>来源</dt>
+                    <dd>
+                      {marketData.quote.source ? (
+                        <a
+                          href={marketData.quote.source.url}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {marketData.quote.source.name} →
+                        </a>
+                      ) : (
+                        "公开延迟报价"
+                      )}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            )}
             <MarketLineChart
               points={marketData?.priceHistory ?? []}
               market={company.market}
@@ -186,15 +260,50 @@ export default async function IpoDetail({
           </Section>
 
           <Section id="新闻公告" title="新闻公告">
+            {marketNews.length ? (
+              <>
+                <h3 className="subsection-title">
+                  市场新闻速览 · Yahoo财经 / 新浪财经
+                </h3>
+                <div className="market-news-list">
+                  {marketNews.map((item) => (
+                    <a
+                      key={item.url}
+                      className="market-news-item"
+                      href={item.url}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <time>{formatQuoteTime(item.publishedAt)}</time>
+                      <strong>{item.title}</strong>
+                      <span
+                        className="market-news-source"
+                        data-source={item.source === "Yahoo财经" ? "yahoo" : "sina"}
+                      >
+                        {item.source}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+                <p className="data-note">
+                  以上条目仅保存公开标题、时间与原文链接，点击跳转到 Yahoo财经或新浪财经原文。
+                </p>
+              </>
+            ) : null}
             {news.length || filings.length ? (
-              <div className="timeline">
-                {[...news.slice(0, 6), ...filings.slice(0, 4)]
-                  .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-                  .map((event) => <EventRow event={event} key={event.id} />)}
-              </div>
-            ) : (
+              <>
+                {marketNews.length ? (
+                  <h3 className="subsection-title">公司事件与披露归属</h3>
+                ) : null}
+                <div className="timeline">
+                  {[...news.slice(0, 6), ...filings.slice(0, 4)]
+                    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+                    .map((event) => <EventRow event={event} key={event.id} />)}
+                </div>
+              </>
+            ) : !marketNews.length ? (
               <DataPending text="已建立公司页，等待新闻与公告抓取器完成首次归属。" />
-            )}
+            ) : null}
           </Section>
 
           <Section id="财务分析" title="财务分析">
@@ -330,6 +439,20 @@ export default async function IpoDetail({
                 <small>{marketData.sources.price}</small>
               </a>
             )}
+            {marketData?.sources.yahooFinance && (
+              <a className="source-card" href={marketData.sources.yahooFinance} target="_blank" rel="noreferrer">
+                <span>行情快照与新闻</span>
+                <strong>Yahoo财经（新加坡站）公司页</strong>
+                <small>{marketData.sources.yahooFinance}</small>
+              </a>
+            )}
+            {marketData?.sources.sinaFinance && (
+              <a className="source-card" href={marketData.sources.sinaFinance} target="_blank" rel="noreferrer">
+                <span>行情快照与新闻</span>
+                <strong>新浪财经公司页</strong>
+                <small>{marketData.sources.sinaFinance}</small>
+              </a>
+            )}
             {company.source && (
               <a className="source-card" href={company.source.url} target="_blank" rel="noreferrer">
                 <span>{company.source.level}</span>
@@ -394,6 +517,11 @@ export default async function IpoDetail({
             <p>公司资料与报价快照合并</p>
           </div>
           <div className="confidence-box">
+            <span>市场新闻速览</span>
+            <strong>{marketNews.length}</strong>
+            <p>Yahoo财经 / 新浪财经标题条目</p>
+          </div>
+          <div className="confidence-box">
             <span>新闻与监管文件</span>
             <strong>{companyEvents.length}</strong>
             <p>按公司实体自动归属</p>
@@ -414,6 +542,16 @@ export default async function IpoDetail({
 
 function metricValue(metrics: MarketMetric[] | undefined, id: string) {
   return metrics?.find((metric) => metric.id === id)?.value || "";
+}
+
+function signedFixed(value: number | undefined, digits = 2) {
+  if (value === undefined || !Number.isFinite(value)) return "—";
+  return `${value >= 0 ? "+" : ""}${value.toFixed(digits)}`;
+}
+
+function formatQuoteTime(value: string | undefined) {
+  if (!value) return "—";
+  return value.slice(0, 16).replace("T", " ");
 }
 
 function inferDisplayRegion(market: "A股" | "港股" | "美股") {
