@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-26T14:57:16+00:00",
+  "updatedAt": "2026-07-26T15:10:35+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-26T14:53:05+00:00"
+      "lastExpandedAt": "2026-07-26T15:07:10+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-26T14:53:28+00:00"
+      "lastExpandedAt": "2026-07-26T15:07:27+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-26T14:53:46+00:00"
+      "lastExpandedAt": "2026-07-26T15:07:43+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-26T14:54:23+00:00"
+      "lastExpandedAt": "2026-07-26T15:08:17+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-26T14:54:47+00:00"
+      "lastExpandedAt": "2026-07-26T15:08:34+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-26T14:55:08+00:00"
+      "lastExpandedAt": "2026-07-26T15:08:52+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-26T14:55:27+00:00"
+      "lastExpandedAt": "2026-07-26T15:09:08+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-26T14:55:43+00:00"
+      "lastExpandedAt": "2026-07-26T15:09:22+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-26T14:56:03+00:00"
+      "lastExpandedAt": "2026-07-26T15:09:39+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-26T14:56:22+00:00"
+      "lastExpandedAt": "2026-07-26T15:09:55+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-26T14:56:55+00:00"
+      "lastExpandedAt": "2026-07-26T15:10:20+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-26T14:57:16+00:00"
+      "lastExpandedAt": "2026-07-26T15:10:35+00:00"
     }
   },
   "added": [
@@ -337,6 +337,124 @@
       "kind": "sampleCompanies",
       "value": "CMC资本",
       "addedAt": "2026-07-26T14:57:16+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Mamba (深度学习架构)",
+      "addedAt": "2026-07-26T15:07:10+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "路徑語言模型",
+      "addedAt": "2026-07-26T15:07:10+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "OpenAI Codex",
+      "addedAt": "2026-07-26T15:07:10+00:00",
+      "evidence": [
+        "google-suggest",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "钾离子电池",
+      "addedAt": "2026-07-26T15:08:17+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "鋰離子聚合物電池",
+      "addedAt": "2026-07-26T15:08:17+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "電網儲能",
+      "addedAt": "2026-07-26T15:08:17+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "卡諾電池",
+      "addedAt": "2026-07-26T15:08:17+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "液流電池",
+      "addedAt": "2026-07-26T15:08:17+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "歐洲聯合環狀反應爐",
+      "addedAt": "2026-07-26T15:10:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "可控核聚變",
+      "addedAt": "2026-07-26T15:10:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "KSTAR",
+      "addedAt": "2026-07-26T15:10:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "全超导托卡马克核聚变实验装置",
+      "addedAt": "2026-07-26T15:10:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "磁局限融合",
+      "addedAt": "2026-07-26T15:10:20+00:00",
       "evidence": [
         "wikipedia-morelike"
       ]
