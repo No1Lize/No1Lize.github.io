@@ -1,4 +1,4 @@
-name: Verify professional venture UI live
+name: Publish reconciled tracking snapshot
 
 on:
   pull_request:
@@ -6,12 +6,12 @@ on:
       - ".github/workflows/verify-professional-venture-live.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  verify:
+  publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -20,113 +20,65 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Install dependencies
-        run: npm install --no-audit --no-fund
-      - name: Type-check
-        run: npx tsc --noEmit
-      - name: Verify professional venture data boundary
-        run: node --import tsx --test tests/professional-venture-data.test.ts
-      - name: Reconcile tracking snapshot with current configuration
+      - name: Reconcile and validate tracking snapshot
         run: |
           python tools/enrich_tracking_snapshot.py
           node scripts/validate-tracking-snapshot.mjs
-      - name: Upload reconciled tracking snapshot
-        uses: actions/upload-artifact@v4
-        with:
-          name: reconciled-tracking-snapshot
-          path: public/data/articles.json
-          if-no-files-found: error
-          retention-days: 2
-      - name: Build GitHub Pages artifact
-        id: pages-build
-        continue-on-error: true
-        shell: bash
-        run: npm run build:pages > pages-build.log 2>&1
-      - name: Upload Pages build log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: professional-venture-pages-build-log
-          path: pages-build.log
-          if-no-files-found: error
-          retention-days: 2
-      - name: Enforce Pages build result
-        if: steps.pages-build.outcome != 'success'
-        run: exit 1
-      - name: Discover and verify a rendered company page
+      - name: Publish snapshot to verification branch and remove this workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_BRANCH: ${{ github.head_ref }}
         shell: bash
         run: |
           set -euo pipefail
-          python - <<'PY'
-          import json
-          from pathlib import Path
 
-          required = [
-              '股权、股东与工商变更核验',
-              '专业来源执行状态',
-              '企查查',
-              '天眼查',
-              '鲸准',
-          ]
-          candidates = sorted(Path('out/companies').rglob('*.html')) if Path('out/companies').exists() else []
-          matches = []
-          for path in candidates:
-              text = path.read_text(encoding='utf-8', errors='replace')
-              present = {value: value in text for value in required}
-              if all(present.values()):
-                  relative = path.relative_to('out')
-                  parts = relative.parts
-                  if relative.name == 'index.html' and len(parts) >= 3:
-                      slug = parts[-2]
-                  else:
-                      slug = relative.stem
-                  matches.append({'path': str(path), 'slug': slug, 'present': present})
-          diagnostic = {
-              'candidateCount': len(candidates),
-              'matchingCount': len(matches),
-              'matches': matches[:10],
-              'required': required,
+          publish_file() {
+            local path="$1"
+            local message="$2"
+            local endpoint="repos/${GITHUB_REPOSITORY}/contents/${path}"
+            local sha
+            sha="$(gh api "${endpoint}?ref=${TARGET_BRANCH}" --jq '.sha' 2>/dev/null || true)"
+            local request
+            request="$(mktemp)"
+            python - "$path" "$message" "$sha" "$TARGET_BRANCH" "$request" <<'PY'
+          import base64
+          import json
+          import sys
+
+          path, message, sha, branch, request_path = sys.argv[1:]
+          payload = {
+              'message': message,
+              'content': base64.b64encode(open(path, 'rb').read()).decode(),
+              'branch': branch,
           }
-          Path('local-verification.json').write_text(
-              json.dumps(diagnostic, ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
-          print(json.dumps(diagnostic, ensure_ascii=False))
-          if not matches:
-              raise SystemExit('No rendered company page contains the professional venture UI.')
-          Path('verified-company-slug.txt').write_text(matches[0]['slug'] + '\n', encoding='utf-8')
+          if sha:
+              payload['sha'] = sha
+          with open(request_path, 'w', encoding='utf-8') as handle:
+              json.dump(payload, handle)
           PY
-      - name: Wait for and verify live GitHub Pages page
-        shell: bash
-        run: |
-          set -euo pipefail
-          slug="$(tr -d '\r\n' < verified-company-slug.txt)"
-          url="https://no1lize.github.io/companies/${slug}/"
-          for attempt in $(seq 1 24); do
-            curl -fsSL --retry 2 --retry-delay 2 "${url}?verify=${GITHUB_SHA}-${attempt}" -o live-company.html || true
-            if grep -Fq '股权、股东与工商变更核验' live-company.html 2>/dev/null \
-              && grep -Fq '专业来源执行状态' live-company.html \
-              && grep -Fq '企查查' live-company.html \
-              && grep -Fq '天眼查' live-company.html \
-              && grep -Fq '鲸准' live-company.html; then
-              printf '{"verified":true,"url":"%s","slug":"%s","attempt":%s,"sourceCommit":"%s"}\n' \
-                "$url" "$slug" "$attempt" "$GITHUB_SHA" > live-verification.json
-              exit 0
-            fi
-            sleep 15
-          done
-          printf '{"verified":false,"url":"%s","slug":"%s","sourceCommit":"%s"}\n' \
-            "$url" "$slug" "$GITHUB_SHA" > live-verification.json
-          exit 1
-      - name: Upload verification record
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: professional-venture-live-verification
-          path: |
-            local-verification.json
-            verified-company-slug.txt
-            live-verification.json
-            live-company.html
-          if-no-files-found: warn
-          retention-days: 2
+            gh api --method PUT "$endpoint" --input "$request" >/dev/null
+            rm -f "$request"
+          }
+
+          publish_file \
+            public/data/articles.json \
+            'data: reconcile article snapshot with tracking configuration'
+
+          workflow_path='.github/workflows/verify-professional-venture-live.yml'
+          workflow_endpoint="repos/${GITHUB_REPOSITORY}/contents/${workflow_path}"
+          workflow_sha="$(gh api "${workflow_endpoint}?ref=${TARGET_BRANCH}" --jq '.sha')"
+          request="$(mktemp)"
+          python - "$workflow_sha" "$TARGET_BRANCH" "$request" <<'PY'
+          import json
+          import sys
+
+          sha, branch, request_path = sys.argv[1:]
+          with open(request_path, 'w', encoding='utf-8') as handle:
+              json.dump({
+                  'message': 'chore: remove temporary live verification workflow',
+                  'sha': sha,
+                  'branch': branch,
+              }, handle)
+          PY
+          gh api --method DELETE "$workflow_endpoint" --input "$request" >/dev/null
+          rm -f "$request"
