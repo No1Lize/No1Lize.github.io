@@ -1,0 +1,220 @@
+name: Apply homepage freshness repair
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+env:
+  TARGET_ISSUE_TITLE: "[maintenance] Apply homepage freshness fix"
+
+concurrency:
+  group: apply-homepage-freshness-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    if: github.event.issue.title == '[maintenance] Apply homepage freshness fix'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Synchronize latest main
+        run: git pull --rebase origin main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Repair homepage freshness semantics and sorting
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("components/dashboard.tsx")
+          text = path.read_text(encoding="utf-8")
+
+          replacements = [
+              (
+                  '  const [query, setQuery] = useState("");\n  const [showMethod, setShowMethod] = useState(false);',
+                  '  const [query, setQuery] = useState("");\n  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");\n  const [showMethod, setShowMethod] = useState(false);',
+              ),
+              (
+                  '''  const normalizedQuery = query.trim().toLowerCase();\n  const visibleEvents = useMemo(''',
+                  '''  const latestPublishedAt = useMemo(\n    () =>\n      activeArticles.reduce(\n        (latest, item) => (item.publishedAt > latest ? item.publishedAt : latest),\n        "",\n      ),\n    [activeArticles],\n  );\n  const processedAt = formatTaipeiDate(generatedAt);\n  const freshnessLabel = !isLive\n    ? "内置快照"\n    : latestPublishedAt === processedAt\n      ? "当日情报已更新"\n      : "内容待刷新";\n  const normalizedQuery = query.trim().toLowerCase();\n  const visibleEvents = useMemo(''',
+              ),
+              (
+                  '''        .sort(\n          (a, b) =>\n            b.publishedAt.localeCompare(a.publishedAt) ||\n            b.importance - a.importance,\n        ),\n    [activeArticles, eventType, normalizedQuery, region],''',
+                  '''        .sort((a, b) => {\n          const timeComparison =\n            sortOrder === "newest"\n              ? b.publishedAt.localeCompare(a.publishedAt)\n              : a.publishedAt.localeCompare(b.publishedAt);\n          return timeComparison || b.importance - a.importance;\n        }),\n    [activeArticles, eventType, normalizedQuery, region, sortOrder],''',
+              ),
+              (
+                  '''            <span>公开资料快照 · {generatedAt.slice(0, 10)}</span>\n            <span className="status-pill"><i /> {isLive ? "已同步" : "内置快照"}</span>''',
+                  '''            <span>最新情报 · {latestPublishedAt || "暂无"}</span>\n            <span className="status-pill"><i /> {freshnessLabel}</span>''',
+              ),
+              (
+                  '''          <p>{qualityGate?.passed === false ? "数据质量门未通过" : "当前启用赛道的可追溯公开情报"}</p>''',
+                  '''          <p>\n            {qualityGate?.passed === false\n              ? "数据质量门未通过"\n              : isLive && latestPublishedAt !== processedAt\n                ? "数据已处理，但最新情报仍待刷新"\n                : "当前启用赛道的可追溯公开情报"}\n          </p>''',
+              ),
+              (
+                  '''            <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>''',
+                  '''            <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>\n            <span>数据处理 · {processedAt}</span>''',
+              ),
+              (
+                  '''            <select value={eventType} onChange={(event) => setEventType(event.target.value as (typeof eventTypes)[number])} aria-label="事件类型">\n              {eventTypes.map((item) => <option key={item}>{item}</option>)}\n            </select>\n            <label className="inline-search">''',
+                  '''            <select value={eventType} onChange={(event) => setEventType(event.target.value as (typeof eventTypes)[number])} aria-label="事件类型">\n              {eventTypes.map((item) => <option key={item}>{item}</option>)}\n            </select>\n            <select\n              value={sortOrder}\n              onChange={(event) => setSortOrder(event.target.value as "newest" | "oldest")}\n              aria-label="时间排序"\n            >\n              <option value="newest">时间：最新优先</option>\n              <option value="oldest">时间：最早优先</option>\n            </select>\n            <label className="inline-search">''',
+              ),
+              (
+                  '''function EventTitle({ item }: { item: IntelligenceEvent }) {''',
+                  '''function formatTaipeiDate(value: string) {\n  const timestamp = new Date(value);\n  if (Number.isNaN(timestamp.getTime())) return value.slice(0, 10);\n  const parts = new Intl.DateTimeFormat("en-CA", {\n    timeZone: "Asia/Taipei",\n    year: "numeric",\n    month: "2-digit",\n    day: "2-digit",\n  }).formatToParts(timestamp);\n  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));\n  return `${values.year}-${values.month}-${values.day}`;\n}\n\nfunction EventTitle({ item }: { item: IntelligenceEvent }) {''',
+              ),
+          ]
+
+          for old, new in replacements:
+              if new in text:
+                  continue
+              if old not in text:
+                  raise SystemExit(f"Expected dashboard block not found:\n{old}")
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding="utf-8")
+          PY
+
+      - name: Install permanent homepage refresh workflow
+        shell: bash
+        run: |
+          cat > .github/workflows/refresh-homepage-intelligence.yml <<'YAML'
+          name: Refresh homepage intelligence
+
+          on:
+            schedule:
+              - cron: "17 */3 * * *"
+            workflow_dispatch:
+
+          permissions:
+            contents: write
+
+          concurrency:
+            group: refresh-homepage-intelligence
+            cancel-in-progress: false
+
+          jobs:
+            refresh:
+              runs-on: ubuntu-latest
+              timeout-minutes: 60
+              steps:
+                - uses: actions/checkout@v4
+                  with:
+                    fetch-depth: 0
+                - uses: actions/setup-python@v5
+                  with:
+                    python-version: "3.12"
+                - name: Refresh against the latest main revision
+                  id: refresh
+                  shell: bash
+                  env:
+                    SEC_USER_AGENT: "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com (+https://github.com/No1Lize/No1Lize.github.io)"
+                  run: |
+                    set -euo pipefail
+                    git config user.name 'github-actions[bot]'
+                    git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+                    changed=false
+                    for attempt in 1 2 3; do
+                      git fetch origin main
+                      git reset --hard origin/main
+                      python3 tools/crawl_articles.py --source all
+                      python3 tools/crawl_articles.py --validate-only
+                      if git diff --quiet -- public/data/articles.json; then
+                        echo "No homepage intelligence changes."
+                        echo "changed=false" >> "$GITHUB_OUTPUT"
+                        exit 0
+                      fi
+                      git add public/data/articles.json
+                      git commit -m 'data: refresh homepage intelligence'
+                      if git push origin HEAD:main; then
+                        changed=true
+                        break
+                      fi
+                      sleep 5
+                    done
+                    if [ "$changed" != true ]; then
+                      exit 1
+                    fi
+                    echo "changed=true" >> "$GITHUB_OUTPUT"
+                - name: Trigger Pages deployment for refreshed data
+                  if: steps.refresh.outputs.changed == 'true'
+                  env:
+                    GH_TOKEN: ${{ github.token }}
+                  run: gh api --method POST "repos/${{ github.repository }}/dispatches" -f event_type=data-updated
+          YAML
+
+      - name: Remove obsolete migration workflows
+        run: |
+          rm -f .github/workflows/add-homepage-time-sort.yml
+          rm -f .github/workflows/apply-homepage-freshness-fix.yml
+
+      - name: Attempt immediate full intelligence refresh
+        id: crawl
+        continue-on-error: true
+        env:
+          SEC_USER_AGENT: "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com (+https://github.com/No1Lize/No1Lize.github.io)"
+        run: python3 tools/crawl_articles.py --source all
+
+      - name: Validate resulting snapshot
+        run: python3 tools/crawl_articles.py --validate-only
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.13.0"
+          cache: npm
+
+      - name: Verify frontend changes
+        run: |
+          npm run install:ci
+          npx tsc --noEmit
+          npm run lint
+
+      - name: Commit and publish repair
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add components/dashboard.tsx .github/workflows/refresh-homepage-intelligence.yml
+          if [ -f public/data/articles.json ]; then
+            git add public/data/articles.json
+          fi
+          git add -u .github/workflows/add-homepage-time-sort.yml .github/workflows/apply-homepage-freshness-fix.yml
+          if git diff --cached --quiet; then
+            echo "No repair changes to commit."
+          else
+            git commit -m 'fix: refresh homepage intelligence and expose freshness'
+            for attempt in 1 2 3; do
+              if git pull --rebase origin main && git push origin HEAD:main; then
+                break
+              fi
+              if [ "$attempt" = 3 ]; then
+                exit 1
+              fi
+              sleep 5
+            done
+          fi
+
+      - name: Trigger Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${{ github.repository }}/dispatches" -f event_type=data-updated
+
+      - name: Close maintenance issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          CRAWL_OUTCOME: ${{ steps.crawl.outcome }}
+        run: |
+          gh issue close "$ISSUE_NUMBER" --comment "Homepage freshness repair was committed. Immediate full-crawl outcome: $CRAWL_OUTCOME. The permanent all-source refresh now runs every three hours and dispatches Pages deployment when data changes."
