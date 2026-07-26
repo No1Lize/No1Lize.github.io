@@ -32,7 +32,7 @@ jobs:
           python-version: '3.12'
       - name: Apply permanent semantic fixes
         run: python tools/apply_venture_team_product_semantics_fix.py
-      - name: Verify Python regressions
+      - name: Compile venture pipeline
         run: |
           python -m py_compile \
             tools/venture_profile_extraction.py \
@@ -45,108 +45,55 @@ jobs:
             tools/finalize_venture_profiles.py \
             tools/enforce_venture_entity_semantics.py \
             tools/stabilize_venture_profiles.py
+      - name: Test evidence refinement semantics
+        run: python -m unittest -v tests.test_refine_venture_research_evidence
+      - name: Test terminal entity semantics
+        run: python -m unittest -v tests.test_venture_entity_semantics
+      - name: Test remaining Python regressions
+        run: |
           python -m unittest \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
-            tests.test_refine_venture_research_evidence \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
             tests.test_venture_narrative_sanitizer \
             tests.test_finalize_venture_profiles \
-            tests.test_venture_entity_semantics \
             tests.test_stabilize_venture_profiles
-      - name: Reach the complete venture pipeline cycle
+      - name: Reprocess complete formal snapshot
         shell: bash
         run: |
           set -euo pipefail
-          converged=false
           for pass in $(seq 1 8); do
             cp public/data/venture_profiles.json /tmp/venture-before.json
             python tools/refine_venture_research_evidence.py
             python tools/normalize_venture_profiles.py
             python tools/stabilize_venture_profiles.py
             if cmp -s /tmp/venture-before.json public/data/venture_profiles.json; then
-              echo "Complete venture pipeline returned to the same snapshot on pass ${pass}."
-              converged=true
+              echo "Complete venture pipeline converged on pass ${pass}."
               break
             fi
+            if [ "$pass" = 8 ]; then
+              echo "Complete venture pipeline did not converge."
+              exit 1
+            fi
           done
-          if [ "$converged" != true ]; then
-            echo "Complete venture pipeline did not return to a repeated state within 8 passes."
-            exit 1
-          fi
-      - name: Capture evidence-versus-terminal oscillation
-        shell: bash
+      - name: Check all publication fixed points
         run: |
-          set -euo pipefail
-          cp public/data/venture_profiles.json /tmp/venture-terminal.json
-          python tools/refine_venture_research_evidence.py
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          before = json.loads(Path('/tmp/venture-terminal.json').read_text(encoding='utf-8'))
-          after = json.loads(Path('public/data/venture_profiles.json').read_text(encoding='utf-8'))
-          changes = []
-
-          def walk(a, b, path=''):
-              if type(a) is not type(b):
-                  changes.append({'path': path, 'before': a, 'after': b})
-                  return
-              if isinstance(a, dict):
-                  for key in sorted(set(a) | set(b)):
-                      child = f'{path}.{key}' if path else key
-                      if key not in a:
-                          changes.append({'path': child, 'before': '<missing>', 'after': b[key]})
-                      elif key not in b:
-                          changes.append({'path': child, 'before': a[key], 'after': '<missing>'})
-                      else:
-                          walk(a[key], b[key], child)
-                  return
-              if isinstance(a, list):
-                  if a != b:
-                      changes.append({'path': path, 'before': a, 'after': b})
-                  return
-              if a != b:
-                  changes.append({'path': path, 'before': a, 'after': b})
-
-          walk(before, after)
-          Path('/tmp/venture-gate-oscillation.json').write_text(
-              json.dumps({'count': len(changes), 'changes': changes}, ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
-          print(f'Captured {len(changes)} oscillating fields.')
-          PY
-          cp /tmp/venture-terminal.json public/data/venture_profiles.json
-      - uses: actions/upload-artifact@v4
-        with:
-          name: venture-gate-oscillation
-          path: /tmp/venture-gate-oscillation.json
-      - name: Check entity evidence fixed point
-        run: python tools/refine_venture_research_evidence.py --check
-      - name: Check terminal quality fixed points
-        if: success()
-        run: |
+          python tools/refine_venture_research_evidence.py --check
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
-      - name: Validate crawler and enrichment contracts
-        if: success()
-        run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
       - uses: actions/setup-node@v4
-        if: success()
         with:
           node-version: 22
       - name: Verify frontend data consumption
-        if: success()
         run: |
           npm install
           node --import tsx --test tests/venture-profile-data.test.ts tests/catalog.test.ts
       - name: Commit validated source, tests and formal data
-        if: success()
         shell: bash
         run: |
           set -euo pipefail
@@ -168,5 +115,5 @@ jobs:
             .github/workflows/reprocess-venture-snapshot-once.yml \
             .github/workflows/venture-team-product-pr.yml \
             .venture-team-product-trigger
-          git commit -m 'fix: require biographical team evidence and real product highlights'
+          git commit -m 'fix: unify venture evidence and entity semantics'
           git push origin HEAD:${{ github.head_ref }}
