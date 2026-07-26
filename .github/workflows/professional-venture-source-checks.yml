@@ -66,4 +66,11 @@ jobs:
       - name: Verify professional venture frontend boundary
         run: node --import tsx --test tests/professional-venture-data.test.ts
       - name: Build static site
-        run: npm run build
+        shell: bash
+        run: |
+          set -o pipefail
+          if ! npm run build > /tmp/professional-build.log 2>&1; then
+            tail -n 100 /tmp/professional-build.log
+            exit 1
+          fi
+          tail -n 40 /tmp/professional-build.log
