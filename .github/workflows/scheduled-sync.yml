@@ -65,7 +65,7 @@ permissions:
 
 concurrency:
   group: public-article-refresh
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   crawl:
