@@ -1,0 +1,106 @@
+name: Apply homepage freshness repair from maintenance PR
+
+on:
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: apply-homepage-freshness-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    if: >-
+      github.event.pull_request.title == '[maintenance] Run homepage freshness repair' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Synchronize latest main
+        run: git pull --rebase origin main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Apply homepage code repair
+        run: python3 tools/apply_homepage_freshness_fix.py
+
+      - name: Attempt immediate full intelligence refresh
+        id: crawl
+        continue-on-error: true
+        env:
+          SEC_USER_AGENT: "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com (+https://github.com/No1Lize/No1Lize.github.io)"
+        run: python3 tools/crawl_articles.py --source all
+
+      - name: Validate resulting snapshot
+        run: python3 tools/crawl_articles.py --validate-only
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.13.0"
+          cache: npm
+
+      - name: Verify frontend changes
+        run: |
+          npm run install:ci
+          npx tsc --noEmit
+          npm run lint
+
+      - name: Remove temporary repair scaffolding
+        run: |
+          rm -f .github/workflows/add-homepage-time-sort.yml
+          rm -f .github/workflows/apply-homepage-freshness-fix.yml
+          rm -f .github/workflows/apply-homepage-freshness-pr.yml
+          rm -f tools/apply_homepage_freshness_fix.py
+
+      - name: Commit repair to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add components/dashboard.tsx .github/workflows/refresh-homepage-intelligence.yml
+          if [ -f public/data/articles.json ]; then
+            git add public/data/articles.json
+          fi
+          git add -u .github/workflows/add-homepage-time-sort.yml
+          git add -u .github/workflows/apply-homepage-freshness-fix.yml
+          git add -u .github/workflows/apply-homepage-freshness-pr.yml
+          git add -u tools/apply_homepage_freshness_fix.py
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: refresh homepage intelligence and expose freshness'
+            for attempt in 1 2 3; do
+              if git pull --rebase origin main && git push origin HEAD:main; then
+                break
+              fi
+              if [ "$attempt" = 3 ]; then
+                exit 1
+              fi
+              sleep 5
+            done
+          fi
+
+      - name: Trigger Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${{ github.repository }}/dispatches" -f event_type=data-updated
+
+      - name: Close maintenance records
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CRAWL_OUTCOME: ${{ steps.crawl.outcome }}
+        run: |
+          gh issue close 41 --comment "Homepage freshness repair was committed through the maintenance PR. Immediate full-crawl outcome: $CRAWL_OUTCOME." || true
+          gh pr close "$PR_NUMBER" --delete-branch --comment "Homepage freshness repair was applied to main. Immediate full-crawl outcome: $CRAWL_OUTCOME."
