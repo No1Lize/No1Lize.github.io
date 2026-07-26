@@ -3,14 +3,17 @@ name: Channel update directory checks
 on:
   pull_request:
     paths:
+      - "app/page.tsx"
       - "app/technology/page.tsx"
       - "app/companies/page.tsx"
       - "app/institutions/page.tsx"
       - "app/reports/page.tsx"
       - "app/people/page.tsx"
+      - "components/homepage-channel-updates.tsx"
       - "components/channel-update-directory.tsx"
       - "components/channel-update-directory-client.tsx"
       - "components/channel-update-directory.module.css"
+      - "lib/homepage-channel-update-config.ts"
       - "lib/channel-updates.ts"
       - "lib/channel-update-filter.ts"
       - "lib/channel-update-date.ts"
@@ -19,14 +22,17 @@ on:
   push:
     branches: [main]
     paths:
+      - "app/page.tsx"
       - "app/technology/page.tsx"
       - "app/companies/page.tsx"
       - "app/institutions/page.tsx"
       - "app/reports/page.tsx"
       - "app/people/page.tsx"
+      - "components/homepage-channel-updates.tsx"
       - "components/channel-update-directory.tsx"
       - "components/channel-update-directory-client.tsx"
       - "components/channel-update-directory.module.css"
+      - "lib/homepage-channel-update-config.ts"
       - "lib/channel-updates.ts"
       - "lib/channel-update-filter.ts"
       - "lib/channel-update-date.ts"
