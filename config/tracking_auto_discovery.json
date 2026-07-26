@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-26T15:47:49+00:00",
+  "updatedAt": "2026-07-26T16:00:16+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-26T15:44:42+00:00"
+      "lastExpandedAt": "2026-07-26T15:57:19+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-26T15:45:02+00:00"
+      "lastExpandedAt": "2026-07-26T15:57:35+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-26T15:45:17+00:00"
+      "lastExpandedAt": "2026-07-26T15:57:51+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-26T15:45:35+00:00"
+      "lastExpandedAt": "2026-07-26T15:58:07+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-26T15:45:51+00:00"
+      "lastExpandedAt": "2026-07-26T15:58:23+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-26T15:46:08+00:00"
+      "lastExpandedAt": "2026-07-26T15:58:38+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-26T15:46:23+00:00"
+      "lastExpandedAt": "2026-07-26T15:58:52+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-26T15:46:38+00:00"
+      "lastExpandedAt": "2026-07-26T15:59:07+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-26T15:46:54+00:00"
+      "lastExpandedAt": "2026-07-26T15:59:21+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-26T15:47:11+00:00"
+      "lastExpandedAt": "2026-07-26T15:59:36+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-26T15:47:28+00:00"
+      "lastExpandedAt": "2026-07-26T15:59:54+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-26T15:47:49+00:00"
+      "lastExpandedAt": "2026-07-26T16:00:16+00:00"
     }
   },
   "added": [
@@ -1131,6 +1131,343 @@
       "addedAt": "2026-07-26T15:47:49+00:00",
       "evidence": [
         "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Here",
+      "addedAt": "2026-07-26T15:57:19+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "DeepSeek API Docs",
+      "addedAt": "2026-07-26T15:57:19+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "agentic ai",
+      "addedAt": "2026-07-26T15:57:19+00:00",
+      "evidence": [
+        "google-suggest",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "sources",
+      "value": "https://portal.gigaom.com/",
+      "addedAt": "2026-07-26T15:57:19+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "WeRide",
+      "addedAt": "2026-07-26T15:57:35+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "Aurora",
+      "addedAt": "2026-07-26T15:57:35+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "人工智能哲學",
+      "addedAt": "2026-07-26T15:57:35+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "ATI Technologies",
+      "addedAt": "2026-07-26T15:57:51+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "Graphics card",
+      "addedAt": "2026-07-26T15:57:51+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "RDNA 3",
+      "addedAt": "2026-07-26T15:57:51+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "蜂巢能源全球合作",
+      "addedAt": "2026-07-26T15:58:07+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "半固態電池",
+      "addedAt": "2026-07-26T15:58:07+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "固态离子学",
+      "addedAt": "2026-07-26T15:58:07+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "DNA測序",
+      "addedAt": "2026-07-26T15:58:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "组学",
+      "addedAt": "2026-07-26T15:58:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "宏基因组学",
+      "addedAt": "2026-07-26T15:58:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "超导量子计算",
+      "addedAt": "2026-07-26T15:58:38+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "超导量子计算机",
+      "addedAt": "2026-07-26T15:58:38+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "新华网",
+      "addedAt": "2026-07-26T15:58:38+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "场二期发射区土建",
+      "addedAt": "2026-07-26T15:58:52+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "Mission Success",
+      "addedAt": "2026-07-26T15:58:52+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "墓地轨道",
+      "addedAt": "2026-07-26T15:58:52+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "资产类别",
+      "addedAt": "2026-07-26T15:59:07+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "金融市场",
+      "addedAt": "2026-07-26T15:59:07+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "加密貨幣",
+      "addedAt": "2026-07-26T15:59:07+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "固态电池材料",
+      "addedAt": "2026-07-26T15:59:21+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "量子点",
+      "addedAt": "2026-07-26T15:59:21+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "碲化鋅鎘",
+      "addedAt": "2026-07-26T15:59:21+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "控制工程",
+      "addedAt": "2026-07-26T15:59:36+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "机械电子学",
+      "addedAt": "2026-07-26T15:59:36+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "分散式控制系統",
+      "addedAt": "2026-07-26T15:59:36+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "等离子体形状控制",
+      "addedAt": "2026-07-26T15:59:54+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "JT-60",
+      "addedAt": "2026-07-26T15:59:54+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "中国环流器二号",
+      "addedAt": "2026-07-26T15:59:54+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Z.ai",
+      "addedAt": "2026-07-26T16:00:16+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Comment",
+      "addedAt": "2026-07-26T16:00:16+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "亚洲日报",
+      "addedAt": "2026-07-26T16:00:16+00:00",
+      "evidence": [
+        "news-term"
       ]
     }
   ],
