@@ -11,9 +11,12 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -23,6 +26,17 @@ jobs:
         run: npx tsc --noEmit
       - name: Verify professional venture data boundary
         run: node --import tsx --test tests/professional-venture-data.test.ts
+      - name: Reconcile tracking snapshot with current configuration
+        run: |
+          python tools/enrich_tracking_snapshot.py
+          node scripts/validate-tracking-snapshot.mjs
+      - name: Upload reconciled tracking snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: reconciled-tracking-snapshot
+          path: public/data/articles.json
+          if-no-files-found: error
+          retention-days: 2
       - name: Build GitHub Pages artifact
         id: pages-build
         continue-on-error: true
