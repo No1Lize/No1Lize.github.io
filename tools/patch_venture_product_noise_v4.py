@@ -1,0 +1,265 @@
+#!/usr/bin/env python3
+"""Patch permanent venture semantics for residual product, prose and event noise."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+TARGET = ROOT / "tools" / "enforce_venture_entity_semantics.py"
+TESTS = ROOT / "tests" / "test_venture_entity_semantics.py"
+
+
+def replace_section(text: str, start_marker: str, end_marker: str, block: str, label: str) -> str:
+    if block.rstrip() in text:
+        print(f"{label}: already applied")
+        return text
+    start = text.find(start_marker)
+    end = text.find(end_marker, start)
+    if start < 0 or end < 0:
+        raise SystemExit(f"{label}: section boundary not found")
+    print(f"{label}: applied")
+    return text[:start] + block.rstrip() + "\n" + text[end:]
+
+
+def replace_function(text: str, name: str, next_name: str, block: str) -> str:
+    if block.rstrip() in text:
+        print(f"{name}: already applied")
+        return text
+    start = text.find(f"def {name}(")
+    end = text.find(f"\n\ndef {next_name}(", start)
+    if start < 0 or end < 0:
+        raise SystemExit(f"{name}: function boundary not found")
+    print(f"{name}: replaced")
+    return text[:start] + block.rstrip() + text[end:]
+
+
+def patch_semantics() -> None:
+    text = TARGET.read_text(encoding="utf-8")
+
+    editorial = '''PRODUCT_EDITORIAL_RE = re.compile(
+    r"\\b(?:press release|latest news|newsroom|things to know|crew undocks|"
+    r"journey home|announces?|launches?|introduces?|partnership|collaboration|"
+    r"read more|learn more|start chat|free chat|try now|new paper|explores?|"
+    r"nominates?|applauded|positive topline|developed using|for the treatment|"
+    r"enabling rapid|development with|raises?|raised|funding round|"
+    r"financing round|contributed|arrives?|signs?|named|publishes?|delivers?|"
+    r"updates?|development|virtual tour|bedroom tidy|demo(?:nstration)?)\\b|"
+    r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|"
+    r"访谈|观点|生态合作|开始对话|免费对话|立即体验|体验全新|融资|募资|领投|跟投|"
+    r"交付速度|再提升)",
+    re.IGNORECASE,
+)
+'''
+    text = replace_section(
+        text,
+        "PRODUCT_EDITORIAL_RE = re.compile(",
+        "PRODUCT_URL_RE = re.compile(",
+        editorial,
+        "expanded editorial product filter",
+    )
+
+    extras = '''PRODUCT_EXACT_NOISE = {
+    "cost-effective drug discovery",
+    "drug discovery",
+    "nach01",
+}
+PRODUCT_DATE_LABEL_RE = re.compile(
+    r"^(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|"
+    r"jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|"
+    r"dec(?:ember)?)\\s+\\d{1,2}(?:,?\\s+20\\d{2})?$",
+    re.IGNORECASE,
+)
+PRODUCT_NAV_PREFIX_RE = re.compile(
+    r"^(?:view|explore|discover|read|learn|watch|see|find|download|get started)\\b",
+    re.IGNORECASE,
+)
+PRODUCT_FRAGMENT_RE = re.compile(r"^\\d{2,}\\s+[A-Za-z]", re.IGNORECASE)
+PRODUCT_GENERIC_RE = re.compile(
+    r"^(?:b2b marketing|b2c marketing|marketing|工艺革新|技术创新|"
+    r"产品|平台|服务|业务|更多|qnimgs|images?|assets?|static|uploads?)$",
+    re.IGNORECASE,
+)
+NARRATIVE_EDITORIAL_RE = re.compile(
+    r"(?:网友|直呼|狂塞|昨日|过去\\d+天|一口气|热议|小编|据悉|报道称|"
+    r"本文|作者|赌.{0,8}级|别再|它讲的是)|"
+    r"\\b(?:click here|we asked|viral|what you need to know)\\b",
+    re.IGNORECASE,
+)
+'''
+    text = replace_section(
+        text,
+        "PRODUCT_EXACT_NOISE = {",
+        "PERSON_CJK_RE = re.compile(",
+        extras,
+        "product date navigation and prose filters",
+    )
+
+    old_clause = """        if len(clause) < 18 or PAGE_CHROME_RE.search(clause):
+            continue
+"""
+    new_clause = """        if (
+            len(clause) < 18
+            or PAGE_CHROME_RE.search(clause)
+            or NARRATIVE_EDITORIAL_RE.search(clause)
+        ):
+            continue
+"""
+    if "NARRATIVE_EDITORIAL_RE.search(clause)" not in text:
+        if old_clause not in text:
+            raise SystemExit("editorial narrative filter: source block not found")
+        text = text.replace(old_clause, new_clause, 1)
+        print("editorial narrative filter: applied")
+    else:
+        print("editorial narrative filter: already applied")
+
+    product_function = '''def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
+    item = clean_text(value, 200).strip()
+    compact = _compact(item)
+    if (
+        not item
+        or len(item) > 100
+        or YEAR_ONLY_RE.fullmatch(item)
+        or NUMERIC_ONLY_RE.fullmatch(item)
+        or PRODUCT_EDITORIAL_RE.search(item)
+        or PRODUCT_URL_RE.search(item)
+        or PRODUCT_FILE_RE.search(item)
+        or PRODUCT_SENTENCE_RE.search(item)
+        or PRODUCT_DATE_LABEL_RE.fullmatch(item)
+        or PRODUCT_NAV_PREFIX_RE.search(item)
+        or PRODUCT_FRAGMENT_RE.search(item)
+        or PRODUCT_GENERIC_RE.fullmatch(item)
+        or item.casefold().strip(" .") in PRODUCT_EXACT_NOISE
+        or len(compact) < 2
+    ):
+        return False
+    alias_compacts = {_compact(alias) for alias in aliases if _compact(alias)}
+    return compact not in alias_compacts
+'''
+    text = replace_function(text, "_valid_product", "_valid_person_name", product_function)
+
+    strict_return = "return bool(source_is_official and FIRST_PERSON_FINANCING_RE.search(evidence))"
+    if strict_return not in text:
+        marker = "    return source_is_official\n\n\ndef _sanitize_events("
+        if marker not in text:
+            raise SystemExit("strict event attribution: source return not found")
+        text = text.replace(
+            marker,
+            f"    {strict_return}\n\n\ndef _sanitize_events(",
+            1,
+        )
+        print("strict event attribution: applied")
+    else:
+        print("strict event attribution: already applied")
+
+    TARGET.write_text(text, encoding="utf-8")
+
+
+def patch_tests() -> None:
+    text = TESTS.read_text(encoding="utf-8")
+    if "import json\n" not in text:
+        if "import copy\n" not in text:
+            raise SystemExit("json import marker not found")
+        text = text.replace("import copy\n", "import copy\nimport json\n", 1)
+
+    marker = '''    def test_trims_investor_relations_page_chrome(self) -> None:
+'''
+    addition = '''    def test_rejects_web_dates_files_events_and_clickbait_prose(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "Anthropic develops Claude Platform for enterprise AI.",
+                    "researchTechnology": (
+                        "过去45天Anthropic狂塞500个技能，网友直呼疯狂，一口气赌OS级深度。 "
+                        "Anthropic develops Claude Platform for enterprise AI."
+                    ),
+                    "products": [
+                        "Claude Platform", "November 19", "June 30", "https:",
+                        "www.example.com", "A15D1080-6F8C-4C6A-833F-73803D8B7.png",
+                        "View C360 Reference Architecture for Insurance",
+                        "Explore Agent Library", "F.02 Contributed to the Production of 30",
+                        "000 Cars at BMW", "F.03 Arrives at BMW", "Helix-02 Bedroom Tidy",
+                        "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
+                        "F.03 Battery Development", "B2B Marketing", "工艺革新",
+                        "星河动力 CQ-50 发动机交付速度再提升",
+                    ],
+                    "team": [],
+                    "financing": [{
+                        "date": "2021-03-19",
+                        "title": "Newsroom",
+                        "summary": "A founder raised $900M. Anthropic researchers later commented.",
+                        "sourceUrl": "https://www.anthropic.com/newsroom",
+                    }],
+                    "capitalMarkets": [],
+                    "technologyProducts": [],
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(company["products"], ["Claude Platform"])
+        self.assertEqual(
+            company["researchTechnology"],
+            "Anthropic develops Claude Platform for enterprise AI.",
+        )
+        self.assertEqual(company["financing"], [])
+        self.assertEqual(diagnostics["removedProducts"], 16)
+        self.assertEqual(diagnostics["removedFinancing"], 1)
+
+    def test_current_snapshot_removes_known_product_and_prose_noise(self) -> None:
+        payload = json.loads(semantics.SNAPSHOT_PATH.read_text(encoding="utf-8"))
+        catalog_text = semantics.CATALOG_PATH.read_text(encoding="utf-8")
+        cleaned, _ = semantics.enforce_snapshot(payload, catalog_text)
+        product_names = {
+            item
+            for profile in cleaned.get("companies", {}).values()
+            for item in profile.get("products", [])
+        }
+        technology_product_names = {
+            row.get("name", "")
+            for profile in cleaned.get("companies", {}).values()
+            for row in profile.get("technologyProducts", [])
+            if isinstance(row, dict)
+        }
+        forbidden_products = {
+            "November 19", "June 30", "F.02 Contributed to the Production of 30",
+            "000 Cars at BMW", "F.03 Arrives at BMW", "Helix-02 Bedroom Tidy",
+            "F.03 Battery Development", "View C360 Reference Architecture for Insurance",
+            "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
+            "星河动力 CQ-50 发动机交付速度再提升", "工艺革新",
+            "B2B Marketing", "B2C Marketing",
+        }
+        self.assertTrue(forbidden_products.isdisjoint(product_names))
+        self.assertTrue(forbidden_products.isdisjoint(technology_product_names))
+        self.assertNotIn(
+            "网友直呼疯狂",
+            cleaned["companies"]["anthropic"].get("researchTechnology", ""),
+        )
+        self.assertEqual(cleaned["companies"]["form-energy"]["financing"], [])
+
+'''
+    if "def test_rejects_web_dates_files_events_and_clickbait_prose" not in text:
+        if marker not in text:
+            raise SystemExit("product noise test insertion marker not found")
+        text = text.replace(marker, addition + marker, 1)
+        print("product noise regressions: applied")
+    else:
+        print("product noise regressions: already applied")
+
+    TESTS.write_text(text, encoding="utf-8")
+
+
+def main() -> None:
+    patch_semantics()
+    patch_tests()
+
+
+if __name__ == "__main__":
+    main()
