@@ -7,6 +7,7 @@ on:
       - tools/crawl_venture_profiles.py
       - tools/venture_profile_extraction.py
       - tools/enrich_venture_profiles.py
+      - tools/enrich_professional_venture_sources.py
       - tools/refine_venture_research_evidence.py
       - tools/normalize_venture_profiles.py
       - tools/sanitize_venture_profiles.py
@@ -16,12 +17,15 @@ on:
       - tools/stabilize_venture_profiles.py
       - lib/catalog-data.ts
       - lib/venture-profile-data.ts
+      - lib/professional-venture-data.ts
+      - components/company-equity-evidence.tsx
       - public/data/articles.json
       - app/companies/**
       - app/institutions/**
       - tests/test_venture_profile_extraction.py
       - tests/test_venture_profile_noise_filters.py
       - tests/test_venture_profile_enrichment.py
+      - tests/test_professional_venture_sources.py
       - tests/test_refine_venture_research_evidence.py
       - tests/test_normalize_venture_profiles.py
       - tests/test_venture_profile_postprocess.py
@@ -30,6 +34,7 @@ on:
       - tests/test_venture_entity_semantics.py
       - tests/test_stabilize_venture_profiles.py
       - tests/venture-profile-data.test.ts
+      - tests/professional-venture-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
   schedule:
     - cron: "41 3 * * *"
@@ -60,6 +65,7 @@ jobs:
             tools/venture_profile_extraction.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py \
+            tools/enrich_professional_venture_sources.py \
             tools/refine_venture_research_evidence.py \
             tools/normalize_venture_profiles.py \
             tools/sanitize_venture_profiles.py \
@@ -71,6 +77,7 @@ jobs:
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
+            tests.test_professional_venture_sources \
             tests.test_refine_venture_research_evidence \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
@@ -90,6 +97,19 @@ jobs:
         run: python tools/crawl_venture_profiles.py --workers 8 --max-pages 6
       - name: Enrich profiles with intelligence and capital evidence
         run: python tools/enrich_venture_profiles.py
+      - name: Enrich Chinese startups from professional venture databases
+        env:
+          PROFESSIONAL_SOURCE_ENABLE_PAID: ${{ vars.PROFESSIONAL_SOURCE_ENABLE_PAID || 'false' }}
+          PROFESSIONAL_SOURCE_PUBLIC_DISCOVERY: ${{ vars.PROFESSIONAL_SOURCE_PUBLIC_DISCOVERY || 'true' }}
+          PROFESSIONAL_SOURCE_MAX_COMPANIES: ${{ vars.PROFESSIONAL_SOURCE_MAX_COMPANIES || '20' }}
+          PROFESSIONAL_SOURCE_COMPANY_SLUGS: ${{ vars.PROFESSIONAL_SOURCE_COMPANY_SLUGS }}
+          PROFESSIONAL_SOURCE_INCLUDE_EXTERNAL_INVESTMENTS: ${{ vars.PROFESSIONAL_SOURCE_INCLUDE_EXTERNAL_INVESTMENTS || 'false' }}
+          PROFESSIONAL_SOURCE_INCLUDE_BENEFICIARIES: ${{ vars.PROFESSIONAL_SOURCE_INCLUDE_BENEFICIARIES || 'false' }}
+          QCC_APP_KEY: ${{ secrets.QCC_APP_KEY }}
+          QCC_SECRET_KEY: ${{ secrets.QCC_SECRET_KEY }}
+          TIANYANCHA_TOKEN: ${{ secrets.TIANYANCHA_TOKEN }}
+          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
+        run: python tools/enrich_professional_venture_sources.py
       - name: Align research fields to entity-specific evidence
         run: |
           python tools/refine_venture_research_evidence.py
@@ -106,6 +126,7 @@ jobs:
         run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
+          python tools/enrich_professional_venture_sources.py --validate-only
           python tools/refine_venture_research_evidence.py --check
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
@@ -114,6 +135,7 @@ jobs:
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_noise_filters \
             tests.test_venture_profile_enrichment \
+            tests.test_professional_venture_sources \
             tests.test_refine_venture_research_evidence \
             tests.test_normalize_venture_profiles \
             tests.test_venture_profile_postprocess \
@@ -129,6 +151,7 @@ jobs:
           npm install
           node --import tsx --test \
             tests/venture-profile-data.test.ts \
+            tests/professional-venture-data.test.ts \
             tests/catalog.test.ts
       - name: Publish only against the same catalog revision
         id: publish
