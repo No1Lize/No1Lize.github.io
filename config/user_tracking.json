@@ -45,7 +45,12 @@
         "OpenAI Codex",
         "Reward hacking",
         "Reinforcement learning",
-        "AI safety"
+        "AI safety",
+        "Amazon",
+        "Meta",
+        "Gemini",
+        "LLaMA",
+        "微调 (深度学习)"
       ],
       "people": [
         "Sam Altman",
@@ -77,7 +82,8 @@
         "智谱AI",
         "月之暗面",
         "腾讯 / 元宝",
-        "阿里云 / Qwen"
+        "阿里云 / Qwen",
+        "Google"
       ],
       "ignoredRecommendations": {
         "companies": [
@@ -109,7 +115,11 @@
         "机器人学术语表",
         "机器人伦理学",
         "人形機器人",
-        "協作式機器人"
+        "協作式機器人",
+        "上海",
+        "PONY AI Inc",
+        "科技股份有限公司",
+        "智元创新"
       ],
       "people": [
         "汪滔",
@@ -153,7 +163,10 @@
         "CPU",
         "杂质半导体",
         "简并半导体",
-        "絕緣體"
+        "絕緣體",
+        "Nvidia",
+        "新浪财经",
+        "财联社"
       ],
       "people": [],
       "sampleCompanies": [
@@ -204,7 +217,9 @@
         "低溫儲能",
         "V2G",
         "氫能載具",
-        "抽水蓄能电站"
+        "抽水蓄能电站",
+        "电池",
+        "太阳能"
       ],
       "people": [
         "Google DeepMind @GoogleDeepMind"
@@ -252,7 +267,8 @@
         "分子之心",
         "Recursion Pharmaceuticals",
         "华大基因",
-        "OpenAI"
+        "OpenAI",
+        "东方财富"
       ]
     },
     {
@@ -273,7 +289,8 @@
         "量子计算机",
         "秀爾演算法",
         "D-Wave 系统公司",
-        "绝热量子计算机"
+        "绝热量子计算机",
+        "LLC"
       ],
       "people": [],
       "sampleCompanies": [
@@ -303,7 +320,8 @@
         "SpaceX Starship",
         "新西兰航天局",
         "火箭派",
-        "阿丽亚娜空间"
+        "阿丽亚娜空间",
+        "海南商业航天发射"
       ],
       "people": [],
       "sampleCompanies": [
@@ -314,7 +332,8 @@
         "Joby Aviation",
         "Axiom Space",
         "Relativity Space",
-        "星河动力"
+        "星河动力",
+        "搜狐网"
       ],
       "ignoredRecommendations": {
         "companies": [
@@ -335,7 +354,10 @@
         "RWA",
         "Polygon (blockchain)",
         "Blockchain game",
-        "Decentralized autonomous organization"
+        "Decentralized autonomous organization",
+        "穩定幣條例",
+        "泰达币",
+        "DAI"
       ],
       "people": [],
       "sampleCompanies": [
@@ -364,7 +386,8 @@
         "散热器",
         "鳳鼻頭",
         "大林蒲",
-        "洲際液化天然氣接收站"
+        "洲際液化天然氣接收站",
+        "材料"
       ],
       "people": [],
       "sampleCompanies": [
@@ -390,7 +413,9 @@
         "可编程逻辑控制器",
         "智慧家庭",
         "智慧電網",
-        "物联网"
+        "物联网",
+        "移动设备",
+        "智能手机"
       ],
       "people": [],
       "sampleCompanies": [
@@ -424,7 +449,8 @@
         "全超导托卡马克核聚变实验装置",
         "磁局限融合",
         "普林斯顿等离子体物理实验室",
-        "偏滤器"
+        "偏滤器",
+        "人造太阳"
       ],
       "people": [
         "杨钊",
@@ -460,7 +486,8 @@
         "私人股权投资",
         "老虎全球管理",
         "博裕资本",
-        "紅杉資本"
+        "紅杉資本",
+        "手机新浪网"
       ],
       "people": [],
       "sampleCompanies": [
@@ -2704,6 +2731,156 @@
       "ticker": "",
       "keywords": [
         "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-google",
+      "name": "Google 官方网站",
+      "url": "https://about.google/",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Google",
+      "ticker": "",
+      "keywords": [
+        "Google"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-investors-cerebras-ai",
+      "name": "Cerebras Systems 官方来源 · AI / AGI信源",
+      "url": "https://investors.cerebras.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-ir-aurora-tech",
+      "name": "Aurora Innovation · 机器人信源",
+      "url": "https://ir.aurora.tech/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-finance-eastmoney-com",
+      "name": "东方财富 · 半导体信源",
+      "url": "https://finance.eastmoney.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-console-groq-com",
+      "name": "Groq 官方来源 · 半导体信源",
+      "url": "https://console.groq.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-item-ddee68df",
+      "name": "东方财富 官方网站",
+      "url": "http://www.eastmoney.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "生物科技",
+      "company": "东方财富",
+      "ticker": "",
+      "keywords": [
+        "东方财富"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-ir-recursion-com",
+      "name": "Recursion Pharmaceuticals 官方来源 · 生物科技信源",
+      "url": "https://ir.recursion.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "生物科技",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "生物科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-item-ca1e1423",
+      "name": "搜狐网 官方网站",
+      "url": "https://www.sohu.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "商业航天",
+      "company": "搜狐网",
+      "ticker": "",
+      "keywords": [
+        "搜狐网"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-news-slashdot-org",
+      "name": "Slashdot · 风险投资信源",
+      "url": "https://news.slashdot.org/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-hardware-slashdot-org",
+      "name": "Slashdot · 风险投资信源",
+      "url": "https://hardware.slashdot.org/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
       ],
       "enabled": true
     }

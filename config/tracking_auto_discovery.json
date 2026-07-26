@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-26T15:15:55+00:00",
+  "updatedAt": "2026-07-26T15:47:49+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-26T15:12:48+00:00"
+      "lastExpandedAt": "2026-07-26T15:44:42+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-26T15:13:05+00:00"
+      "lastExpandedAt": "2026-07-26T15:45:02+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-26T15:13:21+00:00"
+      "lastExpandedAt": "2026-07-26T15:45:17+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-26T15:13:44+00:00"
+      "lastExpandedAt": "2026-07-26T15:45:35+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-26T15:14:01+00:00"
+      "lastExpandedAt": "2026-07-26T15:45:51+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-26T15:14:18+00:00"
+      "lastExpandedAt": "2026-07-26T15:46:08+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-26T15:14:33+00:00"
+      "lastExpandedAt": "2026-07-26T15:46:23+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-26T15:14:47+00:00"
+      "lastExpandedAt": "2026-07-26T15:46:38+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-26T15:15:03+00:00"
+      "lastExpandedAt": "2026-07-26T15:46:54+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-26T15:15:19+00:00"
+      "lastExpandedAt": "2026-07-26T15:47:11+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-26T15:15:38+00:00"
+      "lastExpandedAt": "2026-07-26T15:47:28+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-26T15:15:55+00:00"
+      "lastExpandedAt": "2026-07-26T15:47:49+00:00"
     }
   },
   "added": [
@@ -790,6 +790,347 @@
       "addedAt": "2026-07-26T15:15:55+00:00",
       "evidence": [
         "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Amazon",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Meta",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Gemini",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "LLaMA",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "微调 (深度学习)",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "sampleCompanies",
+      "value": "Google",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "corpus-term",
+        "news-confirmed",
+        "news-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "sources",
+      "value": "https://about.google/",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "sources",
+      "value": "https://investors.cerebras.ai/",
+      "addedAt": "2026-07-26T15:44:42+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "上海",
+      "addedAt": "2026-07-26T15:45:02+00:00",
+      "evidence": [
+        "corpus-term",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "PONY AI Inc",
+      "addedAt": "2026-07-26T15:45:02+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "科技股份有限公司",
+      "addedAt": "2026-07-26T15:45:02+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "智元创新",
+      "addedAt": "2026-07-26T15:45:02+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "sources",
+      "value": "https://ir.aurora.tech/",
+      "addedAt": "2026-07-26T15:45:02+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "Nvidia",
+      "addedAt": "2026-07-26T15:45:17+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "新浪财经",
+      "addedAt": "2026-07-26T15:45:17+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "财联社",
+      "addedAt": "2026-07-26T15:45:17+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "sources",
+      "value": "https://finance.eastmoney.com/",
+      "addedAt": "2026-07-26T15:45:17+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "sources",
+      "value": "https://console.groq.com/",
+      "addedAt": "2026-07-26T15:45:17+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "电池",
+      "addedAt": "2026-07-26T15:45:35+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "太阳能",
+      "addedAt": "2026-07-26T15:45:35+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "sampleCompanies",
+      "value": "东方财富",
+      "addedAt": "2026-07-26T15:45:51+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "sources",
+      "value": "http://www.eastmoney.com",
+      "addedAt": "2026-07-26T15:45:51+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "sources",
+      "value": "https://ir.recursion.com/",
+      "addedAt": "2026-07-26T15:45:51+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "LLC",
+      "addedAt": "2026-07-26T15:46:08+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "海南商业航天发射",
+      "addedAt": "2026-07-26T15:46:23+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "sampleCompanies",
+      "value": "搜狐网",
+      "addedAt": "2026-07-26T15:46:23+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "sources",
+      "value": "https://www.sohu.com",
+      "addedAt": "2026-07-26T15:46:23+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "穩定幣條例",
+      "addedAt": "2026-07-26T15:46:38+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "泰达币",
+      "addedAt": "2026-07-26T15:46:38+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "DAI",
+      "addedAt": "2026-07-26T15:46:38+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "材料",
+      "addedAt": "2026-07-26T15:46:54+00:00",
+      "evidence": [
+        "news-confirmed",
+        "news-term",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "移动设备",
+      "addedAt": "2026-07-26T15:47:11+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "智能手机",
+      "addedAt": "2026-07-26T15:47:11+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "人造太阳",
+      "addedAt": "2026-07-26T15:47:28+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "手机新浪网",
+      "addedAt": "2026-07-26T15:47:49+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://news.slashdot.org/",
+      "addedAt": "2026-07-26T15:47:49+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://hardware.slashdot.org/",
+      "addedAt": "2026-07-26T15:47:49+00:00",
+      "evidence": [
+        "wikidata-official-site"
       ]
     }
   ],
