@@ -21,6 +21,8 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
             "python tools/crawl_with_wechat_registry.py --source all",
             "python tools/validate_professional_media_snapshot.py --require-articles",
             "python tools/crawl_listed_company_disclosures.py",
+            "python tools/cninfo_structured_disclosures.py --require-events",
+            "python tools/cninfo_structured_disclosures.py --check --require-events",
             "python tools/eastmoney_transport.py",
             "python tools/validate_full_refresh.py",
         )
