@@ -19,30 +19,60 @@ jobs:
           node-version: "22"
       - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Build and verify local static page
-        shell: bash
+      - name: Build GitHub Pages artifact
         run: |
-          set -euo pipefail
           npx tsc --noEmit
           node --import tsx --test tests/professional-venture-data.test.ts
           npm run build:pages
-          page="$(find out -type f -name '*.html' -path '*companies*agibot*' | head -n 1)"
-          if [ -z "$page" ]; then
-            echo 'AgiBot static page was not exported.'
-            find out -maxdepth 4 -type f | sort | sed -n '1,200p'
-            exit 1
-          fi
-          echo "Verifying rendered page: $page"
-          grep -Fq '股权、股东与工商变更核验' "$page"
-          grep -Fq '专业来源执行状态' "$page"
-          grep -Fq '企查查' "$page"
-          grep -Fq '天眼查' "$page"
-          grep -Fq '鲸准' "$page"
+      - name: Discover and verify a rendered company page
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          required = [
+              '股权、股东与工商变更核验',
+              '专业来源执行状态',
+              '企查查',
+              '天眼查',
+              '鲸准',
+          ]
+          candidates = sorted(Path('out/companies').rglob('*.html')) if Path('out/companies').exists() else []
+          matches = []
+          for path in candidates:
+              text = path.read_text(encoding='utf-8', errors='replace')
+              present = {value: value in text for value in required}
+              if all(present.values()):
+                  relative = path.relative_to('out')
+                  parts = relative.parts
+                  if relative.name == 'index.html' and len(parts) >= 3:
+                      slug = parts[-2]
+                  else:
+                      slug = relative.stem
+                  matches.append({'path': str(path), 'slug': slug, 'present': present})
+          diagnostic = {
+              'candidateCount': len(candidates),
+              'matchingCount': len(matches),
+              'matches': matches[:10],
+              'required': required,
+          }
+          Path('local-verification.json').write_text(
+              json.dumps(diagnostic, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(diagnostic, ensure_ascii=False))
+          if not matches:
+              raise SystemExit('No rendered company page contains the professional venture UI.')
+          Path('verified-company-slug.txt').write_text(matches[0]['slug'] + '\n', encoding='utf-8')
+          PY
       - name: Wait for and verify live GitHub Pages page
         shell: bash
         run: |
           set -euo pipefail
-          url='https://no1lize.github.io/companies/agibot/'
+          slug="$(tr -d '\r\n' < verified-company-slug.txt)"
+          url="https://no1lize.github.io/companies/${slug}/"
           for attempt in $(seq 1 24); do
             curl -fsSL --retry 2 --retry-delay 2 "${url}?verify=${GITHUB_SHA}-${attempt}" -o live-company.html || true
             if grep -Fq '股权、股东与工商变更核验' live-company.html 2>/dev/null \
@@ -50,14 +80,14 @@ jobs:
               && grep -Fq '企查查' live-company.html \
               && grep -Fq '天眼查' live-company.html \
               && grep -Fq '鲸准' live-company.html; then
-              printf '{"verified":true,"url":"%s","attempt":%s,"sourceCommit":"%s"}\n' \
-                "$url" "$attempt" "$GITHUB_SHA" > live-verification.json
+              printf '{"verified":true,"url":"%s","slug":"%s","attempt":%s,"sourceCommit":"%s"}\n' \
+                "$url" "$slug" "$attempt" "$GITHUB_SHA" > live-verification.json
               exit 0
             fi
             sleep 15
           done
-          printf '{"verified":false,"url":"%s","sourceCommit":"%s"}\n' \
-            "$url" "$GITHUB_SHA" > live-verification.json
+          printf '{"verified":false,"url":"%s","slug":"%s","sourceCommit":"%s"}\n' \
+            "$url" "$slug" "$GITHUB_SHA" > live-verification.json
           exit 1
       - name: Upload verification record
         if: always()
@@ -65,6 +95,8 @@ jobs:
         with:
           name: professional-venture-live-verification
           path: |
+            local-verification.json
+            verified-company-slug.txt
             live-verification.json
             live-company.html
           if-no-files-found: warn
