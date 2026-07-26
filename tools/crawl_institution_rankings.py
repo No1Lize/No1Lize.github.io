@@ -11,16 +11,24 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from html.parser import HTMLParser
 from pathlib import Path
-from typing import Iterable
+from typing import Any
 
 QINGKE_URL = "https://news.pedaily.cn/202512/559270.shtml"
 CHINAVENTURE_URL = "https://www.chinaventure.com.cn/rank/210/list.html"
 
-EXPECTED_TABLES = {
-    "2025年中国早期投资机构30强": 30,
-    "2025年中国创业投资机构50强": 50,
-    "2025年中国私募股权投资机构50强": 50,
-    "2025年中国国资投资机构50强": 50,
+EXPECTED_TABLES: dict[str, dict[str, Any]] = {
+    "2025年中国早期投资机构30强": {
+        "count": 30, "first": "中科创星", "last": "初心资本", "ordered": True,
+    },
+    "2025年中国创业投资机构50强": {
+        "count": 50, "first": "IDG资本", "last": "华睿投资", "ordered": True,
+    },
+    "2025年中国私募股权投资机构50强": {
+        "count": 50, "first": "红杉中国", "last": "联新资本", "ordered": True,
+    },
+    "2025年中国国资投资机构50强": {
+        "count": 50, "first": "北京国管", "last": "南山战新投", "ordered": False,
+    },
 }
 EXPECTED_TEXT_MARKERS = (
     "2025年中国战略投资者/CVC30强",
@@ -45,23 +53,33 @@ class Table:
 
 
 class RankingHTMLParser(HTMLParser):
+    """Collect physical HTML tables without depending on article heading tags."""
+
     def __init__(self) -> None:
         super().__init__()
         self._capture_heading = False
         self._heading_parts: list[str] = []
         self.current_heading = ""
+        self._table_depth = 0
+        self._table_heading = ""
+        self._table_rows: list[tuple[str, ...]] = []
         self._in_row = False
         self._in_cell = False
         self._cell_parts: list[str] = []
         self._row: list[str] = []
-        self._rows_by_heading: dict[str, list[tuple[str, ...]]] = {}
+        self.tables: list[Table] = []
         self.text_parts: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
-        if tag in {"h1", "h2", "h3"}:
+        if tag in {"h1", "h2", "h3", "strong"}:
             self._capture_heading = True
             self._heading_parts = []
-        elif tag == "tr":
+        elif tag == "table":
+            if self._table_depth == 0:
+                self._table_heading = self.current_heading
+                self._table_rows = []
+            self._table_depth += 1
+        elif tag == "tr" and self._table_depth:
             self._in_row = True
             self._row = []
         elif tag in {"td", "th"} and self._in_row:
@@ -69,7 +87,7 @@ class RankingHTMLParser(HTMLParser):
             self._cell_parts = []
 
     def handle_endtag(self, tag: str) -> None:
-        if tag in {"h1", "h2", "h3"} and self._capture_heading:
+        if tag in {"h1", "h2", "h3", "strong"} and self._capture_heading:
             heading = clean("".join(self._heading_parts))
             if heading:
                 self.current_heading = heading
@@ -80,8 +98,13 @@ class RankingHTMLParser(HTMLParser):
         elif tag == "tr" and self._in_row:
             row = tuple(cell for cell in self._row if cell)
             if row:
-                self._rows_by_heading.setdefault(self.current_heading, []).append(row)
+                self._table_rows.append(row)
             self._in_row = False
+        elif tag == "table" and self._table_depth:
+            self._table_depth -= 1
+            if self._table_depth == 0 and self._table_rows:
+                self.tables.append(Table(self._table_heading, tuple(self._table_rows)))
+                self._table_rows = []
 
     def handle_data(self, data: str) -> None:
         value = clean(data)
@@ -94,11 +117,7 @@ class RankingHTMLParser(HTMLParser):
             self._cell_parts.append(value)
 
     def finish(self) -> tuple[list[Table], str]:
-        tables = [
-            Table(heading=heading, rows=tuple(rows))
-            for heading, rows in self._rows_by_heading.items()
-        ]
-        return tables, " ".join(self.text_parts)
+        return self.tables, " ".join(self.text_parts)
 
 
 def clean(value: str) -> str:
@@ -126,15 +145,20 @@ def parse_page(html: str) -> tuple[list[Table], str]:
     return parser.finish()
 
 
-def ranked_rows(tables: Iterable[Table], heading: str) -> list[tuple[str, ...]]:
-    candidates: list[tuple[str, ...]] = []
+def is_header(row: tuple[str, ...]) -> bool:
+    text = " ".join(row)
+    return "机构全称" in text or "机构简称" in text or "名次" in text
+
+
+def table_count(tables: list[Table], spec: dict[str, Any]) -> int:
     for table in tables:
-        if heading not in table.heading:
+        rendered = " ".join(" ".join(row) for row in table.rows)
+        if spec["first"] not in rendered or spec["last"] not in rendered:
             continue
-        for row in table.rows:
-            if row and re.fullmatch(r"\d+", row[0]):
-                candidates.append(row)
-    return candidates
+        if spec["ordered"]:
+            return sum(1 for row in table.rows if row and re.fullmatch(r"\d+", row[0]))
+        return sum(1 for row in table.rows if len(row) >= 2 and not is_header(row))
+    return 0
 
 
 def validate_pages(qingke_html: str, chinaventure_html: str) -> dict[str, object]:
@@ -143,8 +167,9 @@ def validate_pages(qingke_html: str, chinaventure_html: str) -> dict[str, object
     counts: dict[str, int] = {}
     failures: list[str] = []
 
-    for heading, expected in EXPECTED_TABLES.items():
-        actual = len(ranked_rows(qingke_tables, heading))
+    for heading, spec in EXPECTED_TABLES.items():
+        actual = table_count(qingke_tables, spec)
+        expected = int(spec["count"])
         counts[heading] = actual
         if actual != expected:
             failures.append(f"{heading}: expected {expected}, got {actual}")
@@ -160,6 +185,7 @@ def validate_pages(qingke_html: str, chinaventure_html: str) -> dict[str, object
     return {
         "passed": not failures,
         "counts": counts,
+        "tableCount": len(qingke_tables),
         "failures": failures,
         "sources": [
             {"publisher": "清科研究中心 / 投资界", "url": QINGKE_URL},
@@ -175,16 +201,8 @@ def main() -> int:
     parser.add_argument("--report", type=Path)
     args = parser.parse_args()
 
-    qingke_html = (
-        args.qingke_html.read_text(encoding="utf-8")
-        if args.qingke_html
-        else fetch(QINGKE_URL)
-    )
-    chinaventure_html = (
-        args.chinaventure_html.read_text(encoding="utf-8")
-        if args.chinaventure_html
-        else fetch(CHINAVENTURE_URL)
-    )
+    qingke_html = args.qingke_html.read_text(encoding="utf-8") if args.qingke_html else fetch(QINGKE_URL)
+    chinaventure_html = args.chinaventure_html.read_text(encoding="utf-8") if args.chinaventure_html else fetch(CHINAVENTURE_URL)
     result = validate_pages(qingke_html, chinaventure_html)
     result["checkedAt"] = datetime.now(UTC).isoformat()
 
