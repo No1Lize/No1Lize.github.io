@@ -547,7 +547,7 @@ export function ChannelDocumentImport({
                     />
                   </label>
                   <label>
-                    <span>摘要（展示在文件链接上方，可修改）</span>
+                    <span>摘要（本地抽取式、非生成式；展示在文件链接上方，可修改）</span>
                     <textarea
                       value={entry.summary}
                       rows={3}

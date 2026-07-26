@@ -153,10 +153,7 @@ test("channelDocumentToUpdateItem renders the summary above the file link", () =
   const item = channelDocumentToUpdateItem(validRecord, "2026-07-26T12:00:00.000Z");
   assert.equal(item.title, "固态电池产业调研");
   assert.equal(item.summary, "覆盖正极材料与电解质路线的对比分析。");
-  assert.equal(
-    item.href,
-    "/data/uploads/technology/doc-20260726-120000-ab12-固态电池调研.pdf",
-  );
+  assert.equal(item.href, "/documents/doc-20260726-120000-ab12/");
   assert.equal(item.label, "PDF文档");
   assert.equal(item.source, "手动导入");
   assert.equal(item.context, "固态电池调研.pdf · 12 页");
@@ -240,8 +237,29 @@ test("isMostlyLegibleText rejects mojibake from unmapped CJK fonts", () => {
   const mojibake =
     "Â UV ÆâÇπ ˜›ÖˆË ∂∑Ù ¡ß∏ƒ ÈÌ˚ Ø˝Δ ¬Ω„ ÛÚ ÒÏÎ ˆ¯˜ Â∏Ö ıÓÙ ¥µ∂ ]«» ˜Ë ÍÎÏ ÌÛÙ ¯˘˙ Ø∆ ¬√ƒ";
   assert.equal(isMostlyLegibleText(mojibake), false);
+  // Real-world macOS Quartz output keeps ASCII digits and percent signs but
+  // mangles every CJK glyph into extended-Latin/math symbols.
+  const quartz =
+    "Â UV (CXMT) &y CÆ â ( C p / SK ÄÌ r / ∏ Å ) ∂Σ*+ È% ƒ 7% ~ 8% fi 2026 " +
+    "# π% ÷ ~ 13% fl 15 C b n o 90% O ‚fi ú Ï âKLfl 15 I Ì ê ∏k 1a nm ◊ ‹ fi " +
+    "ƒ 15-16nm fl 15 1b nm fi 12-13n";
+  assert.equal(isMostlyLegibleText(quartz.repeat(2)), false);
   assert.equal(isMostlyLegibleText("   "), false);
   assert.equal(isMostlyLegibleText("短文本"), false);
+});
+
+test("generateDocumentSummary prefers conclusion and quantified sentences", () => {
+  const text = [
+    "封面与公司标识页。",
+    "目录……………………………………3",
+    "我们认为存储行业 2026 年景气度显著回升，预计 NAND 合约价同比上涨 13%。",
+    "本页图表来源为公司公告整理。",
+    "长江存储产能爬坡带动国产设备链受益，测算 2026 年资本开支约 500 亿元。",
+  ].join("\n");
+  const summary = generateDocumentSummary(text);
+  assert.ok(summary.includes("景气度"));
+  assert.ok(summary.includes("资本开支"));
+  assert.ok(!summary.includes("目录"));
 });
 
 test("cleanExtractedText collapses layout whitespace", () => {

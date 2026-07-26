@@ -73,10 +73,10 @@ test("channel updates are newest-first and link to original public sources", () 
   for (const channel of channels) {
     const items = getChannelUpdateDirectory(channel).items;
     // Crawled records link to their original public source; manually imported
-    // documents link to the archived copy under /data/uploads/.
+    // documents link to the in-site reader page.
     assert.ok(
       items.every((item) =>
-        /^https?:\/\//u.test(item.href) || item.href.startsWith("/data/uploads/"),
+        /^https?:\/\//u.test(item.href) || item.href.startsWith("/documents/"),
       ),
     );
     assert.ok(items.every((item) => item.title && item.source && item.date));

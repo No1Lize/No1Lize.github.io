@@ -183,7 +183,9 @@ export function channelDocumentToUpdateItem(
     id: record.id,
     title: record.title,
     summary: record.summary || FALLBACK_SUMMARY,
-    href: `/${record.filePath}`,
+    // Land on the in-site reader (summary on top, inline preview, explicit
+    // download button) instead of the raw file, which browsers may download.
+    href: `/documents/${record.id}/`,
     source: CHANNEL_DOCUMENT_SOURCE,
     label,
     context,
@@ -196,6 +198,16 @@ export function channelDocumentToUpdateItem(
 }
 
 const channelDocumentsPayload = normalizeChannelDocuments(rawChannelDocuments);
+
+export function getAllChannelDocuments(): ChannelDocumentRecord[] {
+  return channelDocumentsPayload.documents;
+}
+
+export function getChannelDocumentById(
+  id: string,
+): ChannelDocumentRecord | undefined {
+  return channelDocumentsPayload.documents.find((record) => record.id === id);
+}
 
 export function getChannelDocumentUpdateItems(
   channel: ChannelDocumentChannel,
