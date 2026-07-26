@@ -1,0 +1,51 @@
+name: Apply institution alias fix
+
+on:
+  pull_request:
+    paths:
+      - .institution-alias-trigger
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Normalize institution aliases
+        run: python tools/patch_institution_directory_alias.py
+      - run: npm install
+      - name: Verify institution data tests
+        run: node --import tsx --test tests/institution-ranking-data.test.ts
+      - name: Commit alias fix and remove temporary diagnostics
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f \
+            .institution-alias-trigger \
+            .institution-unit-trigger \
+            diagnostics/institution-ranking-unit.txt \
+            tools/patch_institution_directory_alias.py \
+            .github/workflows/institution-unit-diagnostic.yml \
+            .github/workflows/apply-institution-alias-fix.yml
+          git add -A -- \
+            lib/institution-ranking-data.ts \
+            .institution-alias-trigger \
+            .institution-unit-trigger \
+            diagnostics/institution-ranking-unit.txt \
+            tools/patch_institution_directory_alias.py \
+            .github/workflows/institution-unit-diagnostic.yml \
+            .github/workflows/apply-institution-alias-fix.yml
+          git commit -m "fix: merge IDG institution directory aliases"
+          git push origin "HEAD:${HEAD_REF}"
