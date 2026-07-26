@@ -187,6 +187,7 @@ addQingkeList("并购投资", qingkeMna);
 
 for (const institution of institutionCatalog) {
   const matchedName =
+    institution.name === "IDG 资本" ? "IDG资本" :
     institution.name === "深创投" ? "深创投集团" :
     institution.name === "高瓴" ? "高瓴投资" :
     institution.name;
