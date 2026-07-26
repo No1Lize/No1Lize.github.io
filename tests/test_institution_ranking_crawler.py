@@ -53,7 +53,7 @@ class InstitutionRankingCrawlerTests(unittest.TestCase):
 
         self.assertFalse(result["passed"])
         failures = "\n".join(result["failures"])
-        self.assertIn("expected 30, got 0", failures)
+        self.assertIn("expected 30, got 29", failures)
         self.assertIn("CVSource marker missing", failures)
 
 
