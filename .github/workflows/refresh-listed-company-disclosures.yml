@@ -12,8 +12,10 @@ on:
       - tools/bootstrap_listed_company_disclosures.py
       - tools/crawl_listed_company_disclosures.py
       - tools/cninfo_structured_disclosures.py
+      - tools/sec_structured_disclosures.py
       - tests/test_listed_company_disclosures.py
       - tests/test_cninfo_structured_disclosures.py
+      - tests/test_sec_structured_disclosures.py
       - lib/listed-company-disclosure-data.ts
       - lib/venture-profile-data-with-disclosures.ts
       - tsconfig.json
@@ -30,7 +32,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,20 +45,28 @@ jobs:
           python -m py_compile \
             tools/bootstrap_listed_company_disclosures.py \
             tools/crawl_listed_company_disclosures.py \
-            tools/cninfo_structured_disclosures.py
+            tools/cninfo_structured_disclosures.py \
+            tools/sec_structured_disclosures.py
           python -m unittest \
             tests.test_listed_company_disclosures \
-            tests.test_cninfo_structured_disclosures
+            tests.test_cninfo_structured_disclosures \
+            tests.test_sec_structured_disclosures
       - name: Bootstrap verified official documents
         run: python tools/bootstrap_listed_company_disclosures.py
-      - name: Refresh official exchange disclosures
+      - name: Refresh A-share and Hong Kong exchange disclosures
         run: python tools/crawl_listed_company_disclosures.py
       - name: Resolve A-share documents through CNINFO structured data
         run: python tools/cninfo_structured_disclosures.py --require-events
-      - name: Require verified disclosure events
+      - name: Validate A-share and Hong Kong coverage
         run: |
           python tools/crawl_listed_company_disclosures.py --validate-only --require-events
           python tools/cninfo_structured_disclosures.py --check --require-events
+      - name: Resolve every US-listed company through SEC EDGAR
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: python tools/sec_structured_disclosures.py --require-events
+      - name: Require complete listed-company coverage
+        run: python tools/sec_structured_disclosures.py --check --require-events
       - name: Commit disclosure snapshot
         id: update
         run: |
@@ -67,9 +77,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/listed_company_disclosures.json
-          git commit -m "data: refresh official listed-company disclosures"
+          git commit -m "data: refresh disclosures for all listed companies"
           for attempt in 1 2 3; do
-            if git pull --rebase origin main && git push origin HEAD:main; then
+            if git pull --rebase origin main && \
+              python tools/sec_structured_disclosures.py --check --require-events && \
+              git push origin HEAD:main; then
               break
             fi
             if [ "$attempt" -eq 3 ]; then
