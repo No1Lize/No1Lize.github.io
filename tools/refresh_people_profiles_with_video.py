@@ -13,6 +13,7 @@ if str(ROOT) not in sys.path:
 
 from tools import refresh_people_profiles as core
 from tools.person_video_discovery import discover_person_video_materials
+from tools.wechat_channel_card_discovery import discover_embedded_wechat_video_materials
 
 _BASE_ENRICH_CANDIDATE = core.enrich_candidate
 
@@ -51,7 +52,19 @@ def enrich_candidate(
     profile = _BASE_ENRICH_CANDIDATE(candidate, previous, articles, offline)
     if offline:
         return profile
-    return merge_video_materials(profile, discover_person_video_materials(candidate))
+    video_materials: list[dict[str, str]] = []
+    try:
+        video_materials.extend(discover_person_video_materials(candidate))
+    except Exception:
+        pass
+    if articles:
+        try:
+            video_materials.extend(
+                discover_embedded_wechat_video_materials(candidate, articles)
+            )
+        except Exception:
+            pass
+    return merge_video_materials(profile, video_materials)
 
 
 # The core builder resolves this global from its own module, so replace it once before

@@ -29,38 +29,66 @@ class PeopleVideoEnrichmentTest(unittest.TestCase):
             },
         }
 
-    def test_online_enrichment_adds_video_to_materials_and_speeches(self):
-        video = {
+    def test_online_enrichment_adds_all_video_paths(self):
+        youtube = {
             "title": "Sam Altman interview on AI",
             "date": "2026-07-25",
             "type": "interview",
             "url": "https://www.youtube.com/watch?v=abc1234",
             "source": "YouTube · Example Channel",
         }
+        wechat = {
+            "title": "Sam Altman 微信公开对话",
+            "date": "2026-07-24",
+            "type": "qa",
+            "url": "https://channels.weixin.qq.com/a",
+            "source": "微信视频号 · 测试账号",
+        }
+        articles = [{"title": "Sam Altman 公众号访谈"}]
         with patch.object(MODULE.core, "fetch_wikipedia", return_value=None), patch.object(
             MODULE.core, "fetch_wikidata", return_value=None
-        ), patch.object(MODULE, "discover_person_video_materials", return_value=[video]):
-            profile = MODULE.enrich_candidate(self.candidate, None, [], offline=False)
-        self.assertIn(video["url"], [item["url"] for item in profile["materials"]])
-        self.assertIn(video["url"], [item["url"] for item in profile["speeches"]])
-        self.assertIn(video["url"], profile["sources"])
+        ), patch.object(
+            MODULE, "discover_person_video_materials", return_value=[youtube]
+        ) as direct, patch.object(
+            MODULE, "discover_embedded_wechat_video_materials", return_value=[wechat]
+        ) as embedded:
+            profile = MODULE.enrich_candidate(
+                self.candidate, None, articles, offline=False
+            )
+        direct.assert_called_once_with(self.candidate)
+        embedded.assert_called_once_with(self.candidate, articles)
+        urls = [item["url"] for item in profile["materials"]]
+        self.assertIn(youtube["url"], urls)
+        self.assertIn(wechat["url"], urls)
+        self.assertIn(youtube["url"], profile["sources"])
+        self.assertIn(wechat["url"], profile["sources"])
 
-    def test_offline_validation_never_calls_video_platforms(self):
+    def test_offline_validation_never_calls_video_sources(self):
         with patch.object(
-            MODULE, "discover_person_video_materials", side_effect=AssertionError("network discovery must be skipped")
+            MODULE,
+            "discover_person_video_materials",
+            side_effect=AssertionError("network discovery must be skipped"),
+        ), patch.object(
+            MODULE,
+            "discover_embedded_wechat_video_materials",
+            side_effect=AssertionError("article discovery must be skipped"),
         ):
-            profile = MODULE.enrich_candidate(self.candidate, None, [], offline=True)
+            profile = MODULE.enrich_candidate(
+                self.candidate, None, [], offline=True
+            )
         self.assertEqual(profile["materials"], [])
 
     def test_previous_video_is_retained_when_new_discovery_returns_nothing(self):
         previous = {
-            "materials": [{
-                "title": "Sam Altman 公开对话",
-                "date": "2026-07-20",
-                "type": "qa",
-                "url": "https://www.bilibili.com/video/BV1existing",
-                "source": "Bilibili",
-            }],
+            "materials": [
+                {
+                    "title": "Sam Altman 公开对话",
+                    "date": "2026-07-20",
+                    "type": "qa",
+                    "url": "https://www.bilibili.com/video/BV1existing",
+                    "source": "Bilibili",
+                }
+            ],
             "summary": "",
             "background": "",
             "role": "",
@@ -72,10 +100,20 @@ class PeopleVideoEnrichmentTest(unittest.TestCase):
         }
         with patch.object(MODULE.core, "fetch_wikipedia", return_value=None), patch.object(
             MODULE.core, "fetch_wikidata", return_value=None
-        ), patch.object(MODULE, "discover_person_video_materials", return_value=[]):
-            profile = MODULE.enrich_candidate(self.candidate, previous, [], offline=False)
-        self.assertEqual(profile["materials"][0]["url"], previous["materials"][0]["url"])
-        self.assertEqual(profile["speeches"][0]["url"], previous["materials"][0]["url"])
+        ), patch.object(
+            MODULE, "discover_person_video_materials", return_value=[]
+        ), patch.object(
+            MODULE, "discover_embedded_wechat_video_materials", return_value=[]
+        ):
+            profile = MODULE.enrich_candidate(
+                self.candidate, previous, [], offline=False
+            )
+        self.assertEqual(
+            profile["materials"][0]["url"], previous["materials"][0]["url"]
+        )
+        self.assertEqual(
+            profile["speeches"][0]["url"], previous["materials"][0]["url"]
+        )
 
 
 if __name__ == "__main__":
