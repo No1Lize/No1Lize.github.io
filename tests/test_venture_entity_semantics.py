@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
 
 from tools import enforce_venture_entity_semantics as semantics
@@ -152,6 +153,179 @@ class VentureEntitySemanticTests(unittest.TestCase):
         )
         self.assertEqual(diagnostics["removedProducts"], 9)
         self.assertEqual(diagnostics["removedTeamMembers"], 8)
+
+    def test_rejects_web_dates_files_events_and_clickbait_prose(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "Anthropic develops Claude Platform for enterprise AI.",
+                    "researchTechnology": (
+                        "过去45天Anthropic狂塞500个技能，网友直呼疯狂，一口气赌OS级深度。 "
+                        "Anthropic develops Claude Platform for enterprise AI."
+                    ),
+                    "products": [
+                        "Claude Platform", "November 19", "June 30", "https:",
+                        "www.example.com", "A15D1080-6F8C-4C6A-833F-73803D8B7.png",
+                        "View C360 Reference Architecture for Insurance",
+                        "Explore Agent Library", "F.02 Contributed to the Production of 30",
+                        "000 Cars at BMW", "F.03 Arrives at BMW", "Helix-02 Bedroom Tidy",
+                        "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
+                        "F.03 Battery Development", "B2B Marketing", "工艺革新",
+                        "星河动力 CQ-50 发动机交付速度再提升",
+                    ],
+                    "team": [],
+                    "financing": [{
+                        "date": "2021-03-19",
+                        "title": "Newsroom",
+                        "summary": "A founder raised $900M. Anthropic researchers later commented.",
+                        "sourceUrl": "https://www.anthropic.com/newsroom",
+                    }],
+                    "capitalMarkets": [],
+                    "technologyProducts": [],
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(company["products"], ["Claude Platform"])
+        self.assertEqual(
+            company["researchTechnology"],
+            "Anthropic develops Claude Platform for enterprise AI.",
+        )
+        self.assertEqual(company["financing"], [])
+        self.assertEqual(diagnostics["removedProducts"], 16)
+        self.assertEqual(diagnostics["removedFinancing"], 1)
+
+    def test_current_snapshot_removes_known_product_and_prose_noise(self) -> None:
+        payload = json.loads(semantics.SNAPSHOT_PATH.read_text(encoding="utf-8"))
+        catalog_text = semantics.CATALOG_PATH.read_text(encoding="utf-8")
+        cleaned, _ = semantics.enforce_snapshot(payload, catalog_text)
+        product_names = {
+            item
+            for profile in cleaned.get("companies", {}).values()
+            for item in profile.get("products", [])
+        }
+        technology_product_names = {
+            row.get("name", "")
+            for profile in cleaned.get("companies", {}).values()
+            for row in profile.get("technologyProducts", [])
+            if isinstance(row, dict)
+        }
+        forbidden_products = {
+            "November 19", "June 30", "F.02 Contributed to the Production of 30",
+            "000 Cars at BMW", "F.03 Arrives at BMW", "Helix-02 Bedroom Tidy",
+            "F.03 Battery Development", "View C360 Reference Architecture for Insurance",
+            "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
+            "星河动力 CQ-50 发动机交付速度再提升", "工艺革新",
+            "B2B Marketing", "B2C Marketing",
+        }
+        self.assertTrue(forbidden_products.isdisjoint(product_names))
+        self.assertTrue(forbidden_products.isdisjoint(technology_product_names))
+        self.assertNotIn(
+            "网友直呼疯狂",
+            cleaned["companies"]["anthropic"].get("researchTechnology", ""),
+        )
+        self.assertEqual(cleaned["companies"]["form-energy"]["financing"], [])
+        self.assertEqual(cleaned["companies"]["anthropic"]["capitalMarkets"], [])
+        self.assertEqual(
+            cleaned["companies"]["anthropic"]["exitPerformance"]["status"],
+            "暂无公开退出信息",
+        )
+        self.assertNotIn(
+            "工艺革新",
+            cleaned["companies"]["galactic-energy"].get("technology", ""),
+        )
+
+    def test_rejects_official_aggregation_and_clickbait_capital_events(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "Anthropic develops Claude Platform.",
+                    "products": ["Claude Platform"],
+                    "team": [],
+                    "financing": [{
+                        "date": "2021-03-19",
+                        "title": "Newsroom",
+                        "summary": (
+                            "A founder raised $900M before a later mention of Anthropic."
+                        ),
+                        "sourceUrl": "https://www.anthropic.com/newsroom",
+                    }],
+                    "capitalMarkets": [{
+                        "date": "2026-07-11",
+                        "title": "AI史诗级工程却引来愤怒",
+                        "summary": "Anthropic announced the acquisition of Bun.",
+                        "sourceUrl": "https://news.example.com/clickbait",
+                    }],
+                    "technologyProducts": [],
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(company["financing"], [])
+        self.assertEqual(company["capitalMarkets"], [])
+        self.assertEqual(diagnostics["removedFinancing"], 1)
+        self.assertEqual(diagnostics["removedCapitalMarkets"], 1)
+
+    def test_recomputes_derived_fields_after_semantic_removal(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "核心技术与产品包括Claude Platform、工艺革新。",
+                    "researchTechnology": "核心技术与产品包括Claude Platform、工艺革新。",
+                    "products": ["Claude Platform", "工艺革新"],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "technologyProducts": [],
+                    "capitalSummary": {"eventCount": 0},
+                    "exitPerformance": {
+                        "status": "已发生并购或退出事件",
+                        "latestDate": "2026-07-11",
+                        "latestEvent": "旧媒体标题",
+                        "summary": "旧媒体标题。",
+                        "sourceUrl": "https://example.com/stale",
+                    },
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, _ = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(company["products"], ["Claude Platform"])
+        self.assertEqual(
+            company["technology"],
+            "核心技术与产品包括Claude Platform。",
+        )
+        self.assertEqual(company["researchTechnology"], company["technology"])
+        self.assertEqual(
+            company["exitPerformance"],
+            {
+                "status": "暂无公开退出信息",
+                "latestDate": "",
+                "latestEvent": "",
+                "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
+                "sourceUrl": "",
+            },
+        )
 
     def test_trims_investor_relations_page_chrome(self) -> None:
         payload = {

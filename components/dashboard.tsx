@@ -47,12 +47,27 @@ export function Dashboard() {
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
   const [query, setQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
   const [showMethod, setShowMethod] = useState(false);
 
   const activeArticles = useMemo(
     () => articles.filter((item) => enabledSectorNames.has(item.sector)),
     [articles],
   );
+  const latestPublishedAt = useMemo(
+    () =>
+      activeArticles.reduce(
+        (latest, item) => (item.publishedAt > latest ? item.publishedAt : latest),
+        "",
+      ),
+    [activeArticles],
+  );
+  const processedAt = formatTaipeiDate(generatedAt);
+  const freshnessLabel = !isLive
+    ? "内置快照"
+    : latestPublishedAt === processedAt
+      ? "当日情报已更新"
+      : "内容待刷新";
   const normalizedQuery = query.trim().toLowerCase();
   const visibleEvents = useMemo(
     () =>
@@ -87,12 +102,14 @@ export function Dashboard() {
             .toLowerCase();
           return searchableText.includes(normalizedQuery);
         })
-        .sort(
-          (a, b) =>
-            b.publishedAt.localeCompare(a.publishedAt) ||
-            b.importance - a.importance,
-        ),
-    [activeArticles, eventType, normalizedQuery, region],
+        .sort((a, b) => {
+          const timeComparison =
+            sortOrder === "newest"
+              ? b.publishedAt.localeCompare(a.publishedAt)
+              : a.publishedAt.localeCompare(b.publishedAt);
+          return timeComparison || b.importance - a.importance;
+        }),
+    [activeArticles, eventType, normalizedQuery, region, sortOrder],
   );
   const displayedEvents = visibleEvents.slice(0, normalizedQuery ? 100 : 30);
   const sourceCount = new Set(activeArticles.map((item) => item.source.url)).size;
@@ -144,14 +161,21 @@ export function Dashboard() {
         </div>
         <div className="snapshot-card">
           <div className="snapshot-top">
-            <span>公开资料快照 · {generatedAt.slice(0, 10)}</span>
-            <span className="status-pill"><i /> {isLive ? "已同步" : "内置快照"}</span>
+            <span>最新情报 · {latestPublishedAt || "暂无"}</span>
+            <span className="status-pill"><i /> {freshnessLabel}</span>
           </div>
           <strong>{String(activeArticles.length).padStart(2, "0")}</strong>
-          <p>{qualityGate?.passed === false ? "数据质量门未通过" : "当前启用赛道的可追溯公开情报"}</p>
+          <p>
+            {qualityGate?.passed === false
+              ? "数据质量门未通过"
+              : isLive && latestPublishedAt !== processedAt
+                ? "数据已处理，但最新情报仍待刷新"
+                : "当前启用赛道的可追溯公开情报"}
+          </p>
           <div className="snapshot-meta">
             <span>{healthySourceCount || sourceCount} 个有效来源</span>
             <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>
+            <span>数据处理 · {processedAt}</span>
           </div>
           {trackingQuality && (
             <p className={qualityStyles.trackingSummary}>
@@ -189,6 +213,14 @@ export function Dashboard() {
             </div>
             <select value={eventType} onChange={(event) => setEventType(event.target.value as (typeof eventTypes)[number])} aria-label="事件类型">
               {eventTypes.map((item) => <option key={item}>{item}</option>)}
+            </select>
+            <select
+              value={sortOrder}
+              onChange={(event) => setSortOrder(event.target.value as "newest" | "oldest")}
+              aria-label="时间排序"
+            >
+              <option value="newest">时间：最新优先</option>
+              <option value="oldest">时间：最早优先</option>
             </select>
             <label className="inline-search">
               <Search size={15} />
@@ -292,6 +324,19 @@ export function Dashboard() {
       </section>
     </>
   );
+}
+
+function formatTaipeiDate(value: string) {
+  const timestamp = new Date(value);
+  if (Number.isNaN(timestamp.getTime())) return value.slice(0, 10);
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Taipei",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(timestamp);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
 }
 
 function EventTitle({ item }: { item: IntelligenceEvent }) {
