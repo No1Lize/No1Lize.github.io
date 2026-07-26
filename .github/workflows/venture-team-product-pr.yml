@@ -56,7 +56,7 @@ jobs:
             tests.test_finalize_venture_profiles \
             tests.test_venture_entity_semantics \
             tests.test_stabilize_venture_profiles
-      - name: Reach the complete venture pipeline fixed point
+      - name: Reach the complete venture pipeline cycle
         shell: bash
         run: |
           set -euo pipefail
@@ -67,33 +67,86 @@ jobs:
             python tools/normalize_venture_profiles.py
             python tools/stabilize_venture_profiles.py
             if cmp -s /tmp/venture-before.json public/data/venture_profiles.json; then
-              echo "Complete venture pipeline converged on pass ${pass}."
+              echo "Complete venture pipeline returned to the same snapshot on pass ${pass}."
               converged=true
               break
             fi
           done
           if [ "$converged" != true ]; then
-            echo "Complete venture pipeline did not converge within 8 passes."
+            echo "Complete venture pipeline did not return to a repeated state within 8 passes."
             exit 1
           fi
-      - name: Check all venture quality fixed points
+      - name: Capture evidence-versus-terminal oscillation
+        shell: bash
         run: |
-          python tools/refine_venture_research_evidence.py --check
+          set -euo pipefail
+          cp public/data/venture_profiles.json /tmp/venture-terminal.json
+          python tools/refine_venture_research_evidence.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          before = json.loads(Path('/tmp/venture-terminal.json').read_text(encoding='utf-8'))
+          after = json.loads(Path('public/data/venture_profiles.json').read_text(encoding='utf-8'))
+          changes = []
+
+          def walk(a, b, path=''):
+              if type(a) is not type(b):
+                  changes.append({'path': path, 'before': a, 'after': b})
+                  return
+              if isinstance(a, dict):
+                  for key in sorted(set(a) | set(b)):
+                      child = f'{path}.{key}' if path else key
+                      if key not in a:
+                          changes.append({'path': child, 'before': '<missing>', 'after': b[key]})
+                      elif key not in b:
+                          changes.append({'path': child, 'before': a[key], 'after': '<missing>'})
+                      else:
+                          walk(a[key], b[key], child)
+                  return
+              if isinstance(a, list):
+                  if a != b:
+                      changes.append({'path': path, 'before': a, 'after': b})
+                  return
+              if a != b:
+                  changes.append({'path': path, 'before': a, 'after': b})
+
+          walk(before, after)
+          Path('/tmp/venture-gate-oscillation.json').write_text(
+              json.dumps({'count': len(changes), 'changes': changes}, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(f'Captured {len(changes)} oscillating fields.')
+          PY
+          cp /tmp/venture-terminal.json public/data/venture_profiles.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: venture-gate-oscillation
+          path: /tmp/venture-gate-oscillation.json
+      - name: Check entity evidence fixed point
+        run: python tools/refine_venture_research_evidence.py --check
+      - name: Check terminal quality fixed points
+        if: success()
+        run: |
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
       - name: Validate crawler and enrichment contracts
+        if: success()
         run: |
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
       - uses: actions/setup-node@v4
+        if: success()
         with:
           node-version: 22
       - name: Verify frontend data consumption
+        if: success()
         run: |
           npm install
           node --import tsx --test tests/venture-profile-data.test.ts tests/catalog.test.ts
       - name: Commit validated source, tests and formal data
+        if: success()
         shell: bash
         run: |
           set -euo pipefail
