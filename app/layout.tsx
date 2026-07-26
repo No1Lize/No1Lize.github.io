@@ -17,9 +17,7 @@ export const metadata: Metadata = {
     description: "公开、克制、可追溯的中美科技与创投情报。",
     type: "website",
     locale: "zh_CN",
-    url: "https://no1lize.github.io",
   },
-  other: { "codex-preview": "development" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -2,7 +2,7 @@
 
 import { Menu, Moon, Search, Settings, Sun, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { LiveStatus } from "@/components/live-status";
 
 const navItems = [
@@ -15,8 +15,31 @@ const navItems = [
   ["人物研究", "/people"],
 ];
 
+// The persisted theme lives in localStorage; expose it as an external store
+// so the exported (always dark) HTML hydrates cleanly before the stored
+// preference is applied, and other tabs stay in sync via storage events.
+const THEME_KEY = "lize-theme";
+const themeListeners = new Set<() => void>();
+
+function subscribeTheme(callback: () => void) {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === THEME_KEY) callback();
+  };
+  themeListeners.add(callback);
+  window.addEventListener("storage", onStorage);
+  return () => {
+    themeListeners.delete(callback);
+    window.removeEventListener("storage", onStorage);
+  };
+}
+
+function readTheme() {
+  return window.localStorage.getItem(THEME_KEY) === "light" ? "light" : "dark";
+}
+
 export function SiteHeader() {
-  const [dark, setDark] = useState(true);
+  const theme = useSyncExternalStore(subscribeTheme, readTheme, () => "dark");
+  const dark = theme !== "light";
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -24,9 +47,8 @@ export function SiteHeader() {
   }, [dark]);
 
   function toggleTheme() {
-    const next = !dark;
-    setDark(next);
-    window.localStorage.setItem("lize-theme", next ? "dark" : "light");
+    window.localStorage.setItem(THEME_KEY, dark ? "light" : "dark");
+    for (const listener of themeListeners) listener();
   }
 
   return (

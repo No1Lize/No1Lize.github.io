@@ -286,7 +286,9 @@ export function UserTrackingPanel({
       }
       remoteShaRef.current = nextSha;
       setRemoteSha(nextSha);
-      setConfig(next);
+      // Local state already holds the newest optimistic config from
+      // enqueueSave; re-applying this save's snapshot here would roll back
+      // edits queued while the request was in flight.
       const commit = result.commit?.sha?.slice(0, 8) ?? "已创建";
       setMessage(
         `${mode === "auto" ? "已自动同步" : "已同步"}（${commit}），部署将在仓库工作流中继续。`,
@@ -839,7 +841,9 @@ export function UserTrackingPanel({
                     setNewTrackName(event.target.value)
                   }
                   onKeyDown={(event) => {
-                    if (event.key === "Enter") addTrack();
+                    // Ignore the Enter that commits an IME composition.
+                    if (event.key === "Enter" && !event.nativeEvent.isComposing)
+                      addTrack();
                   }}
                   placeholder="新增赛道名称"
                 />
@@ -915,7 +919,11 @@ export function UserTrackingPanel({
                                 }))
                               }
                               onKeyDown={(event) => {
-                                if (event.key === "Enter") {
+                                // Ignore the Enter that commits an IME composition.
+                                if (
+                                  event.key === "Enter" &&
+                                  !event.nativeEvent.isComposing
+                                ) {
                                   addListItem(field);
                                 }
                               }}

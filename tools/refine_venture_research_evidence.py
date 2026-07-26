@@ -247,11 +247,39 @@ def _select_required_sentence(
     return clean_text(candidates[0][1], limit) if candidates else ""
 
 
+def _stable_existing_sentence(
+    value: Any,
+    company: CatalogCompany,
+    required_terms: Sequence[str],
+    limit: int = 460,
+) -> str:
+    """Keep an already-published sentence while it is still valid evidence.
+
+    A sentence survives only when it stays entity-bound (mentions the company),
+    still matches the required topic terms, and has not drifted into
+    capital-market or financing territory. Anything else is recomputed from
+    stable evidence, which keeps refinement idempotent instead of oscillating
+    between equally plausible sentences on every refresh.
+    """
+    sentence = sanitize_narrative(value, limit=limit)
+    if not sentence:
+        return ""
+    if CAPITAL_MARKET_RE.search(sentence) or FINANCING_RE.search(sentence):
+        return ""
+    if not any(_alias_in_text(alias, sentence) for alias in company.aliases):
+        return ""
+    if not _contains_any(sentence, required_terms):
+        return ""
+    return sentence
+
+
 def _clean_project_background(
     company: CatalogCompany,
     profile: dict[str, Any],
     articles: Sequence[dict[str, Any]],
 ) -> dict[str, str]:
+    current = profile.get("projectBackground")
+    current = current if isinstance(current, dict) else {}
     catalog_summary = (
         sanitize_narrative(company.summary, limit=760)
         or clean_text(company.summary, 760)
@@ -279,14 +307,18 @@ def _clean_project_background(
         profile.get("technology", ""),
         *non_capital_articles,
     ]
-    problem = _select_required_sentence(
+    problem = _stable_existing_sentence(
+        current.get("problemSolved", ""), company, PROBLEM_TERMS
+    ) or _select_required_sentence(
         stable_evidence,
         required_aliases=company.aliases,
         required_terms=PROBLEM_TERMS,
         excluded_pattern=CAPITAL_MARKET_RE,
         limit=460,
     )
-    market = _select_required_sentence(
+    market = _stable_existing_sentence(
+        current.get("marketOpportunity", ""), company, MARKET_TERMS
+    ) or _select_required_sentence(
         stable_evidence,
         required_aliases=company.aliases,
         required_terms=MARKET_TERMS,

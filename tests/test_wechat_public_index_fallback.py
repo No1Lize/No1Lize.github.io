@@ -12,8 +12,26 @@ from tools import wechat_registry_bridge as bridge
 class WeChatPublicIndexFallbackTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        # ``install`` permanently patches the shared modules, so snapshot the
+        # originals and restore them to keep other test files order-independent.
+        cls._original_wechat_attrs = (
+            wechat.generated_wechat_sources,
+            wechat.parse_wechat_article,
+            wechat.crawl_wechat_source,
+        )
+        cls._original_extract_index_rows = bridge._extract_index_rows
         bridge.install(wechat)
         context_guard.install(bridge)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        (
+            wechat.generated_wechat_sources,
+            wechat.parse_wechat_article,
+            wechat.crawl_wechat_source,
+        ) = cls._original_wechat_attrs
+        bridge._extract_index_rows = cls._original_extract_index_rows
+        bridge._INDEX_CACHE.clear()
 
     def _qbit_spec(self) -> dict:
         tracking = crawl_with_tracking.load_tracking()

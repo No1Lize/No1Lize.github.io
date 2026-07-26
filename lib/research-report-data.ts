@@ -51,11 +51,13 @@ export const researchReportBySlug = new Map(
 export function relatedResearchReports({
   companySlug,
   ticker,
+  market,
   sector,
   limit = 8,
 }: {
   companySlug?: string;
   ticker?: string;
+  market?: ResearchReportAsset["market"];
   sector?: string;
   limit?: number;
 }) {
@@ -64,7 +66,12 @@ export function relatedResearchReports({
     .map((report) => {
       const reportTicker = report.ticker?.replace(/\D/gu, "").replace(/^0+/u, "");
       const companyMatch = Boolean(companySlug && report.companySlug === companySlug);
-      const tickerMatch = Boolean(normalizedTicker && reportTicker === normalizedTicker);
+      // Digit-only tickers collide across exchanges (港股 02228 vs A股
+      // 002228), so a known market on both sides must agree.
+      const marketCompatible = !market || !report.market || report.market === market;
+      const tickerMatch = Boolean(
+        normalizedTicker && reportTicker === normalizedTicker && marketCompatible,
+      );
       const sectorMatch = Boolean(sector && report.sector === sector);
       return {
         report,

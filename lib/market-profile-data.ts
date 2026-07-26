@@ -183,6 +183,10 @@ function fallbackDescription(profile: MarketProfile) {
 }
 
 function normalizeProfile(profile: MarketProfile): MarketProfile {
+  // The snapshot is crawler-generated; a partial profile must degrade to
+  // empty sections instead of crashing the whole static build.
+  const priceHistory = profile.priceHistory ?? [];
+  const financialSeries = profile.financialSeries ?? [];
   const company = { ...profile.company };
   company.industry = cleanIndustry(company.industry) || undefined;
   const description = cleanCompanyText(company.description, 360);
@@ -194,13 +198,13 @@ function normalizeProfile(profile: MarketProfile): MarketProfile {
   company.description = combined.length >= 40 ? combined : fallbackDescription(profile);
   company.region = normalizedRegion(company, profile.market);
 
-  const metrics = profile.metrics.filter((metric) => hasNumericValue(metric.value));
+  const metrics = (profile.metrics ?? []).filter((metric) => hasNumericValue(metric.value));
   const marketCapIndex = metrics.findIndex((metric) => metric.id === "marketCap");
   const currentMarketCap = marketCapIndex >= 0 ? metrics[marketCapIndex].value : "";
   if (!hasNumericValue(currentMarketCap)) {
     const totalShares = metrics.find((metric) => metric.id === "totalShares")?.value;
     const shares = parseShares(totalShares);
-    const latestClose = profile.priceHistory.at(-1)?.close || 0;
+    const latestClose = priceHistory.at(-1)?.close || 0;
     if (shares > 0 && latestClose > 0) {
       const derived: MarketMetric = {
         id: "marketCap",
@@ -216,7 +220,9 @@ function normalizeProfile(profile: MarketProfile): MarketProfile {
   return {
     ...profile,
     company,
+    priceHistory,
     metrics,
+    financialSeries,
   };
 }
 

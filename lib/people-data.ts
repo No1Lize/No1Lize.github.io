@@ -44,8 +44,13 @@ function uniqueStrings(values: string[]): string[] {
 function uniqueMaterials(values: PersonMaterial[]): PersonMaterial[] {
   const seen = new Set<string>();
   return values.filter((value) => {
-    const key = value.url.trim().toLocaleLowerCase("en-US") || value.title.trim().toLocaleLowerCase("zh-CN");
-    if (!key || seen.has(key)) return false;
+    // Key on url + title: distinct curated materials may share a landing
+    // page (e.g. a publisher's letters index), and dropping one would also
+    // shift the evidenceIndex references authored against the catalog order.
+    const url = value.url.trim().toLocaleLowerCase("en-US");
+    const title = value.title.trim().toLocaleLowerCase("zh-CN");
+    const key = `${url}|${title}`;
+    if (key === "|" || seen.has(key)) return false;
     seen.add(key);
     return true;
   });

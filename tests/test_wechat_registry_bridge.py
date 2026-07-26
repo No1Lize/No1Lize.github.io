@@ -10,9 +10,25 @@ from tools import wechat_registry_bridge as bridge
 class WeChatRegistryBridgeTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
+        # ``install`` permanently patches the shared module, so snapshot the
+        # originals and restore them to keep other test files order-independent.
+        cls._original_wechat_attrs = (
+            wechat.generated_wechat_sources,
+            wechat.parse_wechat_article,
+            wechat.crawl_wechat_source,
+        )
         bridge.install(wechat)
 
-    def test_bridge_replaces_generic_generation_with_account_registry(self) -> None:
+    @classmethod
+    def tearDownClass(cls) -> None:
+        (
+            wechat.generated_wechat_sources,
+            wechat.parse_wechat_article,
+            wechat.crawl_wechat_source,
+        ) = cls._original_wechat_attrs
+        bridge._INDEX_CACHE.clear()
+
+    def test_bridge_keeps_generic_discovery_and_adds_registry_accounts(self) -> None:
         tracks = [
             {
                 "slug": "ai",
@@ -26,7 +42,16 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         names = {item["name"] for item in sources}
         self.assertIn("量子位", names)
         self.assertIn("机器之心", names)
-        self.assertTrue(all(item.get("expectedAccounts") for item in sources))
+        generic = [item for item in sources if item.get("genericDiscovery")]
+        self.assertEqual(len(generic), 1)
+        self.assertFalse(generic[0].get("expectedAccounts"))
+        account_scoped = [
+            item for item in sources if not item.get("genericDiscovery")
+        ]
+        self.assertTrue(account_scoped)
+        self.assertTrue(
+            all(item.get("expectedAccounts") for item in account_scoped)
+        )
 
     def test_bridge_rejects_wrong_account_before_entity_parsing(self) -> None:
         spec = {

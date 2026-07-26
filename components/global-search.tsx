@@ -3,16 +3,19 @@
 import { Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { companies, institutionCatalog, people, reports } from "@/lib/catalog-data";
-import { sectors } from "@/lib/intelligence-data";
+import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
+import { researchPeople } from "@/lib/people-data";
+import { trackedSectors } from "@/lib/tracked-sectors";
 import { useArticles } from "@/lib/use-articles";
 
+// Sector and people records must come from the same modules that generate
+// the /technology and /people routes, so search never misses a live page.
 const staticRecords = [
   ...companies.map((item) => ({ type:"公司", title:item.name, text:item.summary, href:`/companies/${item.slug}`, region:item.region })),
   ...institutionCatalog.map((item) => ({ type:"机构", title:item.name, text:`${item.stages} · ${item.sectors.join(" / ")}`, href:`/institutions/${item.slug}`, region:item.region })),
-  ...people.map((item) => ({ type:"人物", title:item.name, text:item.summary, href:`/people/${item.slug}`, region:"全球" })),
+  ...researchPeople.map((item) => ({ type:"人物", title:item.name, text:item.summary, href:`/people/${item.slug}`, region:"全球" })),
   ...reports.map((item) => ({ type:"报告", title:item.title, text:item.summary, href:`/reports/${item.slug}`, region:"全球" })),
-  ...sectors.map((item) => ({ type:"赛道", title:item.name, text:`热度 ${item.heat} · 数据完整度 ${item.completeness}%`, href:`/technology/${item.slug}`, region:"全球" })),
+  ...trackedSectors.map((item) => ({ type:"赛道", title:item.name, text:`热度 ${item.heat} · 数据完整度 ${item.completeness}%`, href:`/technology/${item.slug}`, region:"全球" })),
 ];
 
 export function GlobalSearch() {

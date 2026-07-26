@@ -374,6 +374,14 @@ function validPersonName(name: string) {
   return /^[A-Z][A-Za-z'.-]+(?:\s+[A-Z][A-Za-z'.-]+){1,3}$/u.test(name);
 }
 
+function safeHostname(url: string): string {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "";
+  }
+}
+
 function normalizeSources(values: unknown): VentureSource[] {
   if (!Array.isArray(values)) return [];
   const result: VentureSource[] = [];
@@ -385,7 +393,7 @@ function normalizeSources(values: unknown): VentureSource[] {
     if (!url || seen.has(url)) continue;
     const level = clean(row.level, 20);
     result.push({
-      name: clean(row.name, 120) || new URL(url).hostname,
+      name: clean(row.name, 120) || safeHostname(url) || url,
       url,
       level: VALID_SOURCE_LEVELS.has(level)
         ? (level as VentureSource["level"])

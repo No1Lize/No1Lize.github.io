@@ -89,6 +89,7 @@ export default async function IpoDetail({
   const relatedReports = relatedResearchReports({
     companySlug: slug,
     ticker: company.ticker,
+    market: company.market,
     sector: company.sector,
     limit: 8,
   });
