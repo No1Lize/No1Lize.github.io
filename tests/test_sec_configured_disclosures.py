@@ -35,6 +35,7 @@ class SecConfiguredDisclosuresTest(unittest.TestCase):
         )
         self.assertEqual(resolved, {"IONQ": "0001824920"})
         self.assertEqual(metadata["configuredListingCount"], 1)
+        self.assertEqual(metadata["configuredTickers"], ["IONQ"])
         self.assertFalse(metadata["dynamicLookupAttempted"])
         self.assertEqual(metadata["dynamicLookupErrors"], [])
 
@@ -63,6 +64,26 @@ class SecConfiguredDisclosuresTest(unittest.TestCase):
         self.assertEqual(resolved, {"FUTR": "0001234567"})
         self.assertTrue(metadata["dynamicLookupAttempted"])
         self.assertEqual(metadata["dynamicResolvedCount"], 1)
+        self.assertEqual(metadata["dynamicResolvedTickers"], ["FUTR"])
+
+    def test_submission_identity_must_match_cik_and_ticker(self) -> None:
+        configured.verify_submission_identity(
+            {"cik": "1824920", "tickers": ["IONQ"]},
+            expected_ticker="IONQ",
+            expected_cik="0001824920",
+        )
+        with self.assertRaises(RuntimeError):
+            configured.verify_submission_identity(
+                {"cik": "1824920", "tickers": ["OTHER"]},
+                expected_ticker="IONQ",
+                expected_cik="0001824920",
+            )
+        with self.assertRaises(RuntimeError):
+            configured.verify_submission_identity(
+                {"cik": "1234567", "tickers": ["IONQ"]},
+                expected_ticker="IONQ",
+                expected_cik="0001824920",
+            )
 
     def test_registry_metadata_marks_configured_cik_source(self) -> None:
         listing = sec.USListing("ionq", "IonQ", "IONQ", "量子计算")
@@ -84,11 +105,12 @@ class SecConfiguredDisclosuresTest(unittest.TestCase):
         result = configured.apply_registry_metadata(
             snapshot,
             [listing],
-            {"IONQ": "0001824920"},
             {
                 "configuredListingCount": 1,
+                "configuredTickers": ["IONQ"],
                 "dynamicLookupAttempted": False,
                 "dynamicResolvedCount": 0,
+                "dynamicResolvedTickers": [],
                 "dynamicLookupErrors": [],
             },
         )
