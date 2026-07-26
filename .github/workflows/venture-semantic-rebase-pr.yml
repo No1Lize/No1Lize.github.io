@@ -73,14 +73,18 @@ jobs:
             fi
           done
           test "$converged" = true
-      - name: Check publication fixed points
-        run: |
-          python tools/refine_venture_research_evidence.py --check
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
-          python tools/crawl_venture_profiles.py --validate-only
-          python tools/enrich_venture_profiles.py --validate-only
+      - name: Check evidence fixed point
+        run: python tools/refine_venture_research_evidence.py --check
+      - name: Check stabilizer fixed point
+        run: python tools/stabilize_venture_profiles.py --check
+      - name: Check finalizer fixed point
+        run: python tools/finalize_venture_profiles.py --check
+      - name: Check entity semantic fixed point
+        run: python tools/enforce_venture_entity_semantics.py --check
+      - name: Validate crawler snapshot contract
+        run: python tools/crawl_venture_profiles.py --validate-only
+      - name: Validate enrichment snapshot contract
+        run: python tools/enrich_venture_profiles.py --validate-only
       - uses: actions/setup-node@v4
         with:
           node-version: 22
