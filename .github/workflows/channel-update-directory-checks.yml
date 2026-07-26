@@ -13,6 +13,7 @@ on:
       - "components/channel-update-directory.module.css"
       - "lib/channel-updates.ts"
       - "lib/channel-update-filter.ts"
+      - "lib/channel-update-date.ts"
       - "tests/channel-updates.test.ts"
       - ".github/workflows/channel-update-directory-checks.yml"
   push:
@@ -28,6 +29,7 @@ on:
       - "components/channel-update-directory.module.css"
       - "lib/channel-updates.ts"
       - "lib/channel-update-filter.ts"
+      - "lib/channel-update-date.ts"
       - "tests/channel-updates.test.ts"
       - ".github/workflows/channel-update-directory-checks.yml"
 
