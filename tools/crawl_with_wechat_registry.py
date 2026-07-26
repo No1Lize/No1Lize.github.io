@@ -5,6 +5,7 @@ from __future__ import annotations
 
 try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import crawl_with_source_categories as base
+    from . import professional_media_progress
     from . import professional_media_sources
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
@@ -18,6 +19,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_with_source_categories as base
+    import professional_media_progress
     import professional_media_sources
     import wechat_fetch_compat
     import wechat_index_context_guard
@@ -99,6 +101,7 @@ def _install_professional_media() -> None:
         base.tracking.crawler,
         base.generic_web_sources,
     )
+    professional_media_progress.install(base.tracking.crawler)
     prefixes = tuple(base.tracking.USER_SOURCE_PREFIXES)
     if "professional-media-" not in prefixes:
         base.tracking.USER_SOURCE_PREFIXES = (*prefixes, "professional-media-")
