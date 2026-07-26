@@ -298,14 +298,26 @@ def _subject_evidence(
         return False
 
     lowered = evidence.casefold()
+    source_is_official = bool(
+        official_domain and _domain(row.get("sourceUrl")) == official_domain
+    )
+    title_lowered = title.casefold()
+    title_has_alias = any(
+        len(_compact(alias)) >= 2 and alias.casefold() in title_lowered
+        for alias in aliases
+    )
+    title_has_action = action_re.search(title) is not None
+
+    # Third-party media rows must identify both the entity and event in the title.
+    # This rejects clickbait headlines whose body merely mentions an acquisition.
+    if not source_is_official and not (title_has_alias and title_has_action):
+        return False
+
     alias_positions = [
         lowered.find(alias.casefold())
         for alias in aliases
         if len(_compact(alias)) >= 2 and alias.casefold() in lowered
     ]
-    source_is_official = bool(
-        official_domain and _domain(row.get("sourceUrl")) == official_domain
-    )
     if not alias_positions:
         return bool(source_is_official and FIRST_PERSON_FINANCING_RE.search(evidence))
 
@@ -326,8 +338,10 @@ def _subject_evidence(
             return True
         if re.search(rf"(?:对|向){escaped}.{{0,18}}(?:投资|融资)", lowered):
             return True
-    return source_is_official
 
+    # An official news index is not enough by itself. Without direct subject
+    # evidence, only an explicit first-person disclosure is accepted.
+    return bool(source_is_official and FIRST_PERSON_FINANCING_RE.search(evidence))
 
 def _sanitize_events(
     values: Any,

@@ -232,6 +232,45 @@ class VentureEntitySemanticTests(unittest.TestCase):
             cleaned["companies"]["anthropic"].get("researchTechnology", ""),
         )
         self.assertEqual(cleaned["companies"]["form-energy"]["financing"], [])
+        self.assertEqual(cleaned["companies"]["anthropic"]["capitalMarkets"], [])
+
+    def test_rejects_official_aggregation_and_clickbait_capital_events(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "Anthropic develops Claude Platform.",
+                    "products": ["Claude Platform"],
+                    "team": [],
+                    "financing": [{
+                        "date": "2021-03-19",
+                        "title": "Newsroom",
+                        "summary": (
+                            "A founder raised $900M before a later mention of Anthropic."
+                        ),
+                        "sourceUrl": "https://www.anthropic.com/newsroom",
+                    }],
+                    "capitalMarkets": [{
+                        "date": "2026-07-11",
+                        "title": "AI史诗级工程却引来愤怒",
+                        "summary": "Anthropic announced the acquisition of Bun.",
+                        "sourceUrl": "https://news.example.com/clickbait",
+                    }],
+                    "technologyProducts": [],
+                    "sources": [],
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(company["financing"], [])
+        self.assertEqual(company["capitalMarkets"], [])
+        self.assertEqual(diagnostics["removedFinancing"], 1)
+        self.assertEqual(diagnostics["removedCapitalMarkets"], 1)
 
     def test_trims_investor_relations_page_chrome(self) -> None:
         payload = {

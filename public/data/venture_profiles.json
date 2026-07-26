@@ -325,18 +325,7 @@
       ],
       "team": [],
       "financing": [],
-      "capitalMarkets": [
-        {
-          "date": "2026-07-11",
-          "type": "并购/退出",
-          "title": "仅11天，Claude重写百万行代码，AI史诗级工程却引来愤怒",
-          "summary": "机器之心编辑部 这几天，科技圈都在吃瓜：编程语言 Zig 的创始人 Andrew Kelley 怒了。 原因在于原来全面押注 Zig 语言的 Bun，被其创始人 Jarred Sumner 用 Rust 语言重写了。 Andrew Kelley 毫无遮拦地展示了自己的怒火，他没有在这个现象级技术事件中说客套话，直接将矛头对准了 Jarred Sumner 的个人工程习惯、管理能力，以及这起事件背后的商业逻辑。 Bun 是一个高性能 JavaScript/TypeScript 运行时，旨在成为 Node.js 的更快速、现代的直接替代品，近年来已经成为了前端世界挑战 Node.js 霸权的重量级选手。 Bun 的核心卖点是极速：无论是启动速度、依赖安装还是测试运行，都远超竞品，其部分原因在于它是用 Zig 语言编写的。 去年 12 月，Anthropic 宣布收购了 Bun ，将其作为基础设施来驱动其 AI 编程工具 Claude Code 和 Claude Agent SDK。Jarred Sumner 和 Bun 团队的其他成员目前都在 Anthropic 工作。 在大规模应用，尤其",
-          "amount": "",
-          "round": "",
-          "investors": [],
-          "sourceUrl": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67c6ab391f57cd91a351ee3b54b7e6b03b42b7f161674f84358259f5034a9d0ae8963a487&idx=2&mid=2651043860&sn=97c8f838e97a33452ca653c26acb0333"
-        }
-      ],
+      "capitalMarkets": [],
       "sources": [
         {
           "name": "Anthropic",
@@ -388,7 +377,7 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 74,
+      "evidenceScore": 60,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "以可靠性、可解释性与安全研究为重点的前沿 AI 公司。",
@@ -1479,25 +1468,25 @@
       "projectBackground": {
         "summary": "开发高温超导磁体和紧凑型托卡马克聚变装置。",
         "problemSolved": "",
-        "marketOpportunity": "核心技术与产品包括SPARC、ARC 聚变系统、Commonwealth Fusion Systems Raises $863 Million Series B2 Round to Accelerate the Commercialization of Fusion Energy."
+        "marketOpportunity": ""
       },
       "researchTechnology": "Commonwealth Fusion Systems Announces Equity Investment by Abu Dhabi-Based Plynth Energy. Commonwealth Fusion Systems 发布“CFS named first international partner in UKAEA’s LIBRTI program”. A*STAR and Commonwealth Fusion Systems Sign a Collaborative Research Agreement to Advance Fusion Supply Chain Capabilities in Singapore.",
       "technologyProducts": [
         {
           "name": "SPARC",
           "category": "软件 / 系统",
-          "description": "核心技术与产品包括SPARC、ARC 聚变系统、Commonwealth Fusion Systems Raises $863 Million Series B2 Round to Accelerate the Commercialization of Fusion Energy.",
+          "description": "Commonwealth Fusion Systems Builds on Learnings From SPARC to Publish Five Peer-Reviewed Papers Validating the Physics of the ARC Fusion Power Plant.",
           "technicalHighlights": [
-            "核心技术与产品包括SPARC、ARC 聚变系统、Commonwealth Fusion Systems Raises $863 Million Series B2 Round to Accelerate the Commercialization of Fusion Energy."
+            "Commonwealth Fusion Systems Builds on Learnings From SPARC to Publish Five Peer-Reviewed Papers Validating the Physics of the ARC Fusion Power Plant."
           ],
           "sourceUrl": "https://cfs.energy/news-and-media/commonwealth-fusion-systems-builds-on-learnings-from-sparc-to-publish-five-peer-reviewed-papers-validating-the-physics-of-the-arc-fusion-power-plant"
         },
         {
           "name": "ARC 聚变系统",
           "category": "软件 / 系统",
-          "description": "核心技术与产品包括SPARC、ARC 聚变系统、Commonwealth Fusion Systems Raises $863 Million Series B2 Round to Accelerate the Commercialization of Fusion Energy.",
+          "description": "核心技术与产品包括SPARC、ARC 聚变系统。",
           "technicalHighlights": [
-            "核心技术与产品包括SPARC、ARC 聚变系统、Commonwealth Fusion Systems Raises $863 Million Series B2 Round to Accelerate the Commercialization of Fusion Energy."
+            "核心技术与产品包括SPARC、ARC 聚变系统。"
           ],
           "sourceUrl": "https://cfs.energy/news-and-media/commonwealth-fusion-systems-builds-on-learnings-from-sparc-to-publish-five-peer-reviewed-papers-validating-the-physics-of-the-arc-fusion-power-plant"
         }
@@ -1948,18 +1937,7 @@
         "多日储能系统"
       ],
       "team": [],
-      "financing": [
-        {
-          "date": "2021-03-19",
-          "type": "融资",
-          "title": "Newsroom",
-          "summary": "Form Factory 1: Virtual Tour First Time Founders with Ed Elson – This Founder Raised $900M to Power the Grid The Cutting Edge of Energy Storage: Rust Form Energy’s 100-hour battery is almost here A groundbreaking long-duration battery nears industrial scale Form Factory 1 Groundbreaking Form Energy’",
-          "amount": "$900M",
-          "round": "",
-          "investors": [],
-          "sourceUrl": "https://formenergy.com/newsroom/"
-        }
-      ],
+      "financing": [],
       "capitalMarkets": [],
       "sources": [
         {
@@ -1979,7 +1957,7 @@
         "thin page: https://formenergy.com/products",
         "本轮公开页面信息少于上一版，已保留更完整的历史档案。"
       ],
-      "evidenceScore": 54,
+      "evidenceScore": 40,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "开发面向电网长时储能的铁空气电池。",
@@ -1999,15 +1977,13 @@
         }
       ],
       "capitalSummary": {
-        "eventCount": 1,
-        "disclosedAmounts": [
-          "$900M"
-        ],
+        "eventCount": 0,
+        "disclosedAmounts": [],
         "rounds": [],
         "majorInvestors": [],
-        "latestDate": "2021-03-19",
+        "latestDate": "",
         "latestRound": "",
-        "summary": "共识别到1条可追溯融资记录；最新记录为2021-03-19的Newsroom。"
+        "summary": "当前公开来源未提供可核对的融资轮次、金额和投资方记录。"
       },
       "exitPerformance": {
         "status": "暂无公开退出信息",
@@ -5204,18 +5180,7 @@
           "sourceUrl": "https://www.rocketlabusa.com/about/community/"
         }
       ],
-      "capitalMarkets": [
-        {
-          "date": "2026-06-12",
-          "type": "上市",
-          "title": "Rocket Lab To Join The Nasdaq-100 Index",
-          "summary": "LONG BEACH, Calif., June 12, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today announced today its inclusion in the Nasdaq-100 Index. This milestone places Rocket Lab among the 100 largest non-financial companies listed on",
-          "amount": "",
-          "round": "",
-          "investors": [],
-          "sourceUrl": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-join-nasdaq-100-index"
-        }
-      ],
+      "capitalMarkets": [],
       "sources": [
         {
           "name": "Rocket Lab",
@@ -5267,7 +5232,7 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 100,
+      "evidenceScore": 98,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "提供小型运载发射、卫星平台、航天器部件和任务服务。",
