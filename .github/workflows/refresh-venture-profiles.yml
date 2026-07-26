@@ -34,6 +34,7 @@ on:
       - tests/test_venture_entity_semantics.py
       - tests/test_stabilize_venture_profiles.py
       - tests/venture-profile-data.test.ts
+      - tests/professional-venture-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
   schedule:
     - cron: "41 3 * * *"
@@ -98,12 +99,12 @@ jobs:
         run: python tools/enrich_venture_profiles.py
       - name: Enrich Chinese startups from professional venture databases
         env:
-          PROFESSIONAL_SOURCE_ENABLE_PAID: ${{ vars.PROFESSIONAL_SOURCE_ENABLE_PAID }}
-          PROFESSIONAL_SOURCE_PUBLIC_DISCOVERY: ${{ vars.PROFESSIONAL_SOURCE_PUBLIC_DISCOVERY }}
-          PROFESSIONAL_SOURCE_MAX_COMPANIES: ${{ vars.PROFESSIONAL_SOURCE_MAX_COMPANIES }}
+          PROFESSIONAL_SOURCE_ENABLE_PAID: ${{ vars.PROFESSIONAL_SOURCE_ENABLE_PAID || 'false' }}
+          PROFESSIONAL_SOURCE_PUBLIC_DISCOVERY: ${{ vars.PROFESSIONAL_SOURCE_PUBLIC_DISCOVERY || 'true' }}
+          PROFESSIONAL_SOURCE_MAX_COMPANIES: ${{ vars.PROFESSIONAL_SOURCE_MAX_COMPANIES || '20' }}
           PROFESSIONAL_SOURCE_COMPANY_SLUGS: ${{ vars.PROFESSIONAL_SOURCE_COMPANY_SLUGS }}
-          PROFESSIONAL_SOURCE_INCLUDE_EXTERNAL_INVESTMENTS: ${{ vars.PROFESSIONAL_SOURCE_INCLUDE_EXTERNAL_INVESTMENTS }}
-          PROFESSIONAL_SOURCE_INCLUDE_BENEFICIARIES: ${{ vars.PROFESSIONAL_SOURCE_INCLUDE_BENEFICIARIES }}
+          PROFESSIONAL_SOURCE_INCLUDE_EXTERNAL_INVESTMENTS: ${{ vars.PROFESSIONAL_SOURCE_INCLUDE_EXTERNAL_INVESTMENTS || 'false' }}
+          PROFESSIONAL_SOURCE_INCLUDE_BENEFICIARIES: ${{ vars.PROFESSIONAL_SOURCE_INCLUDE_BENEFICIARIES || 'false' }}
           QCC_APP_KEY: ${{ secrets.QCC_APP_KEY }}
           QCC_SECRET_KEY: ${{ secrets.QCC_SECRET_KEY }}
           TIANYANCHA_TOKEN: ${{ secrets.TIANYANCHA_TOKEN }}
@@ -150,6 +151,7 @@ jobs:
           npm install
           node --import tsx --test \
             tests/venture-profile-data.test.ts \
+            tests/professional-venture-data.test.ts \
             tests/catalog.test.ts
       - name: Publish only against the same catalog revision
         id: publish
