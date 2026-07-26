@@ -24,7 +24,7 @@ export function ExternalDatabaseLinks({
           <strong>
             {link.label} <ExternalLink size={12} aria-hidden="true" />
           </strong>
-          <small>{link.platform === "鲸准" ? "经 Bing 公开索引直达 jingdata.com" : "www.qcc.com"}</small>
+          <small>{link.via}</small>
         </a>
       ))}
     </div>

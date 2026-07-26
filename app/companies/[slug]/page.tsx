@@ -4,7 +4,10 @@ import { notFound } from "next/navigation";
 import { CompanyEquityEvidence } from "@/components/company-equity-evidence";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
-import { companyDatabaseLinks } from "@/lib/external-database-links";
+import {
+  companyDatabaseLinks,
+  hanghangchaResearchLink,
+} from "@/lib/external-database-links";
 import { intelligenceEvents, snapshotDate } from "@/lib/intelligence-data";
 import {
   getCompanyResearch,
@@ -398,6 +401,12 @@ export default async function CompanyDetail({
                 <small>{source.url}</small>
               </a>
             ))}
+            <ExternalDatabaseLinks
+              links={[hanghangchaResearchLink(company.name, "公司相关研报与数据图表检索")].filter(
+                (link): link is NonNullable<typeof link> => Boolean(link),
+              )}
+              lead="以下入口跳转到外部研报数据库检索本公司；报告在对方平台查看，本站不抓取、不缓存其内容。"
+            />
           </Section>
         </article>
 

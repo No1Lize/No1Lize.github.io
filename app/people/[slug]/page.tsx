@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
-import { personDatabaseLinks } from "@/lib/external-database-links";
+import {
+  hanghangchaResearchLink,
+  personDatabaseLinks,
+} from "@/lib/external-database-links";
 import { researchPeople, type PersonMaterial } from "@/lib/people-data";
 import { getPersonProfile } from "@/lib/research-content";
 
@@ -39,6 +42,13 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
   const person = researchPeople.find((item) => item.slug === slug);
   if (!person) notFound();
   const profile = getPersonProfile(person);
+  const registryLinks = personDatabaseLinks(person.name);
+  const externalLinks = [
+    ...registryLinks,
+    ...(registryLinks.length
+      ? [hanghangchaResearchLink(person.name, "人物相关研报与公开观点检索")]
+      : []),
+  ].filter((link): link is NonNullable<typeof link> => Boolean(link));
   const sections = [
     "人物背景",
     "公司与机构",
@@ -133,8 +143,8 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
           <Section id="公开材料" title="全部公开材料">
             <MaterialList materials={person.materials} empty="暂无可追溯公开材料。" />
             <ExternalDatabaseLinks
-              links={personDatabaseLinks(person.name)}
-              lead="以下入口跳转到外部商业数据库检索该人物的任职、持股与创投记录；数据在对方平台查看，本站不抓取、不缓存其内容。"
+              links={externalLinks}
+              lead="以下入口跳转到外部商业数据库检索该人物的任职、持股、创投记录与相关研报；数据在对方平台查看，本站不抓取、不缓存其内容。"
             />
           </Section>
         </article>

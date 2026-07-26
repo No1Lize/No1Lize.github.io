@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   companyDatabaseLinks,
+  hanghangchaEntryLink,
+  hanghangchaResearchLink,
   personDatabaseLinks,
 } from "../lib/external-database-links";
 
@@ -40,4 +42,21 @@ test("person links require a chinese name", () => {
   assert.equal(links.length, 2);
   assert.ok(links[0].url.includes(encodeURIComponent("段永平")));
   assert.ok(links.every((link) => link.url.startsWith("https://")));
+});
+
+test("hanghangcha research link is a bing public-index search", () => {
+  const link = hanghangchaResearchLink("可控核聚变");
+  assert.ok(link);
+  assert.equal(link.platform, "行行查");
+  assert.ok(link.url.startsWith("https://www.bing.com/search?q="));
+  assert.ok(
+    decodeURIComponent(link.url).includes('site:hanghangcha.com "可控核聚变"'),
+  );
+  assert.equal(hanghangchaResearchLink("   "), null);
+});
+
+test("hanghangcha entry link points at the platform itself", () => {
+  const entry = hanghangchaEntryLink();
+  assert.equal(entry.url, "https://www.hanghangcha.com/");
+  assert.ok(entry.via.includes("需登录对方平台"));
 });

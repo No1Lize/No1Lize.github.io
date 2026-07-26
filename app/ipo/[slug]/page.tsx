@@ -22,7 +22,10 @@ import {
   marketProfiles,
   type MarketMetric,
 } from "@/lib/market-profile-data";
-import { companyDatabaseLinks } from "@/lib/external-database-links";
+import {
+  companyDatabaseLinks,
+  hanghangchaResearchLink,
+} from "@/lib/external-database-links";
 import { ipoProfiles } from "@/lib/research-content";
 import { relatedResearchReports } from "@/lib/research-report-data";
 
@@ -360,6 +363,12 @@ export default async function IpoDetail({
               <strong>查看全部公开研报 PDF</strong>
               <small>按公司、代码、机构和行业统一检索 →</small>
             </Link>
+            <ExternalDatabaseLinks
+              links={[
+                hanghangchaResearchLink(company.name, "公司与行业研报公开索引检索"),
+              ].filter((link): link is NonNullable<typeof link> => Boolean(link))}
+              lead="以下入口跳转到外部研报数据库检索本公司与所属行业；报告在对方平台查看，本站不抓取、不缓存其内容。"
+            />
           </Section>
         </article>
 

@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ExternalDatabaseLinks } from "@/components/external-database-links";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
+import { hanghangchaResearchLink } from "@/lib/external-database-links";
 import {
   eventsForTrackedSector,
   getTrackedSector,
@@ -362,6 +364,12 @@ export default async function SectorDetail({
             ) : (
               <p className={styles.empty}>暂无与该赛道直接关联的专题研究。</p>
             )}
+            <ExternalDatabaseLinks
+              links={[hanghangchaResearchLink(sector.name, "赛道研报与数据图表公开索引检索")].filter(
+                (link): link is NonNullable<typeof link> => Boolean(link),
+              )}
+              lead="以下入口跳转到外部研报数据库检索本赛道；报告在对方平台查看，本站不抓取、不缓存其内容。"
+            />
           </Section>
 
           <Section id="风险" title="主要风险">

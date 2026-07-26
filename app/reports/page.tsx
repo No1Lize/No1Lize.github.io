@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
+import { ExternalDatabaseLinks } from "@/components/external-database-links";
 import { ResearchReportLibrary } from "@/components/research-report-library";
 import { reports } from "@/lib/catalog-data";
+import { hanghangchaEntryLink } from "@/lib/external-database-links";
 import { researchReportGeneratedAt, researchReports } from "@/lib/research-report-data";
 import styles from "./reports.module.css";
 
@@ -41,6 +43,10 @@ export default function ReportsPage() {
           点击任意研报进入站内 PDF 阅读页。系统仅保存公开可直接下载且通过 PDF 文件校验的原文，不绕过登录、付费或访问权限。
         </p>
         <ResearchReportLibrary reports={researchReports} />
+        <ExternalDatabaseLinks
+          links={[hanghangchaEntryLink()]}
+          lead="行行查是会员制行业研究数据库：各赛道、公司与人物详情页提供按实体的检索直达入口；报告与 PPT 需登录对方平台查看，本站不抓取、不缓存其内容。"
+        />
       </section>
 
       <section className={styles.section}>
