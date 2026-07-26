@@ -1,0 +1,123 @@
+name: Validate source-only venture semantic release
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .venture-semantic-source-trigger
+      - .github/workflows/venture-semantic-source-only-pr.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: venture-semantic-source-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-publish-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reapply all validated semantic patches to latest main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git show 1e444a70f1e8e55cea6adb4b252040933c5f2b9b:tools/apply_venture_semantic_rebase.py > tools/_apply_semantic_base.py
+          git show d095a72fb024b9678efff80a569618e6024e285e:tools/apply_ionq_financing_context_fix.py > tools/_apply_ionq_context.py
+          git show 525dd9090858eacf3264ed8c978e237f5099631e:tools/apply_product_evidence_precision_fix.py > tools/_apply_product_precision.py
+          git show 525dd9090858eacf3264ed8c978e237f5099631e:tools/apply_product_alias_separator_fix.py > tools/_apply_alias_separator.py
+          git show 057ec8f236a44b41af22203f0743488e2c1c217d:tools/apply_final_event_placeholder_fix.py > tools/_apply_final_semantics.py
+          python tools/_apply_semantic_base.py
+          python tools/_apply_ionq_context.py
+          python tools/_apply_product_precision.py
+          python tools/_apply_alias_separator.py
+          python tools/_apply_final_semantics.py
+      - name: Compile and run venture regressions
+        run: |
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/refine_venture_research_evidence.py \
+            tools/normalize_venture_profiles.py \
+            tools/finalize_venture_profiles.py \
+            tools/enforce_venture_entity_semantics.py \
+            tools/stabilize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles \
+            tests.test_venture_semantic_rebase
+      - name: Validate against latest generated snapshot without committing it
+        shell: bash
+        run: |
+          set -euo pipefail
+          converged=false
+          for pass in $(seq 1 8); do
+            cp public/data/venture_profiles.json /tmp/venture-before.json
+            python tools/refine_venture_research_evidence.py
+            python tools/normalize_venture_profiles.py
+            python tools/stabilize_venture_profiles.py
+            if cmp -s /tmp/venture-before.json public/data/venture_profiles.json; then
+              converged=true
+              echo "Complete venture pipeline converged on pass ${pass}."
+              break
+            fi
+          done
+          test "$converged" = true
+          python tools/refine_venture_research_evidence.py --check
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate frontend consumption
+        run: |
+          npm install
+          node --import tsx --test tests/venture-profile-data.test.ts tests/catalog.test.ts
+      - name: Commit source rules only and clean temporary files
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f \
+            tools/_apply_semantic_base.py \
+            tools/_apply_ionq_context.py \
+            tools/_apply_product_precision.py \
+            tools/_apply_alias_separator.py \
+            tools/_apply_final_semantics.py \
+            .github/workflows/venture-semantic-source-only-pr.yml \
+            .venture-semantic-source-trigger
+          git restore public/data/venture_profiles.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/refine_venture_research_evidence.py \
+            tools/finalize_venture_profiles.py \
+            tools/enforce_venture_entity_semantics.py \
+            tests/test_refine_venture_research_evidence.py \
+            tests/test_finalize_venture_profiles.py \
+            tests/test_venture_semantic_rebase.py \
+            lib/catalog-data.ts
+          git add -u \
+            .github/workflows/venture-semantic-source-only-pr.yml \
+            .venture-semantic-source-trigger
+          git commit -m 'fix: publish stable venture semantic source rules'
+          git push origin HEAD:${{ github.head_ref }}
