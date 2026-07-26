@@ -52,6 +52,7 @@ PRODUCT_URL_FILE_RE = re.compile(
     r"(?:[?#].*)?$|^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})",
     re.IGNORECASE,
 )
+PRODUCT_URL_RE = PRODUCT_URL_FILE_RE
 PRODUCT_DATE_LABEL_RE = re.compile(
     r"^(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|"
     r"jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|"
