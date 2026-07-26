@@ -242,20 +242,24 @@ def _clean_project_background(
         and clean_text(article.get("type"), 60)
         not in {"融资", "产业投资", "IPO", "并购", "监管文件"}
     ]
-    evidence = [
-        profile.get("background", ""),
+    # Derived project fields must use stable, entity-bound evidence only.
+    # ``profile.background`` is overwritten below, so feeding it back into this
+    # selection creates a two-pass oscillation in production snapshots.
+    stable_evidence = [
+        company.summary,
         profile.get("technology", ""),
-        profile.get("researchTechnology", ""),
         *non_capital_articles,
     ]
     problem = _select_required_sentence(
-        evidence,
+        stable_evidence,
+        required_aliases=company.aliases,
         required_terms=PROBLEM_TERMS,
         excluded_pattern=CAPITAL_MARKET_RE,
         limit=460,
     )
     market = _select_required_sentence(
-        evidence,
+        stable_evidence,
+        required_aliases=company.aliases,
         required_terms=MARKET_TERMS,
         excluded_pattern=CAPITAL_MARKET_RE,
         limit=460,
