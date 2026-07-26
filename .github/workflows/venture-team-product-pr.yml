@@ -7,11 +7,13 @@ on:
       - .venture-team-product-trigger
       - .github/workflows/venture-team-product-pr.yml
       - tools/apply_venture_team_product_semantics_fix.py
+      - tools/apply_sambanova_financing_fix.py
       - tools/refine_venture_research_evidence.py
       - tools/enforce_venture_entity_semantics.py
       - tools/finalize_venture_profiles.py
       - tests/test_refine_venture_research_evidence.py
       - tests/test_venture_entity_semantics.py
+      - tests/test_finalize_venture_profiles.py
       - lib/catalog-data.ts
       - public/data/venture_profiles.json
 
@@ -35,7 +37,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Apply permanent semantic fixes
-        run: python tools/apply_venture_team_product_semantics_fix.py
+        run: |
+          python tools/apply_venture_team_product_semantics_fix.py
+          python tools/apply_sambanova_financing_fix.py
       - name: Compile venture pipeline
         run: |
           python -m py_compile \
@@ -107,6 +111,7 @@ jobs:
           set -euo pipefail
           rm -f \
             tools/apply_venture_team_product_semantics_fix.py \
+            tools/apply_sambanova_financing_fix.py \
             .github/workflows/apply-venture-team-product-fix.yml \
             .github/workflows/reprocess-venture-snapshot-once.yml \
             .github/workflows/venture-team-product-pr.yml \
@@ -120,10 +125,12 @@ jobs:
             tools/finalize_venture_profiles.py \
             tests/test_refine_venture_research_evidence.py \
             tests/test_venture_entity_semantics.py \
+            tests/test_finalize_venture_profiles.py \
             lib/catalog-data.ts \
             public/data/venture_profiles.json
           git add -u \
             tools/apply_venture_team_product_semantics_fix.py \
+            tools/apply_sambanova_financing_fix.py \
             .github/workflows/apply-venture-team-product-fix.yml \
             .github/workflows/reprocess-venture-snapshot-once.yml \
             .github/workflows/venture-team-product-pr.yml \
