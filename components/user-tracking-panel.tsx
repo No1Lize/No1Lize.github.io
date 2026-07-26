@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ipoCompanies } from "@/lib/catalog-data";
 import { normalizeMarketTicker } from "@/lib/listed-company-identity";
 import {
@@ -199,7 +199,11 @@ export function UserTrackingPanel({
   const remoteShaRef = useRef("");
   const saveQueueRef = useRef<Promise<void>>(Promise.resolve());
 
-  const track = config.tracks[active];
+  const activeIndex = Math.min(
+    active,
+    Math.max(0, config.tracks.length - 1),
+  );
+  const track = config.tracks[activeIndex];
   const connected = Boolean(username && remoteSha);
   const enabledTracks = useMemo(
     () => config.tracks.filter((item) => item.enabled),
@@ -229,12 +233,6 @@ export function UserTrackingPanel({
     });
     return matches.slice(0, 12);
   }, [catalogQuery]);
-
-  useEffect(() => {
-    if (active >= config.tracks.length) {
-      setActive(Math.max(0, config.tracks.length - 1));
-    }
-  }, [active, config.tracks.length]);
 
   function setMessage(
     message: string,
@@ -424,9 +422,12 @@ export function UserTrackingPanel({
 
   function removeTrack(): void {
     if (!track) return;
+    const nextTracks = config.tracks.filter(
+      (_, index) => index !== activeIndex,
+    );
     update({
       ...config,
-      tracks: config.tracks.filter((_, index) => index !== active),
+      tracks: nextTracks,
       listedCompanies: config.listedCompanies.map((company) =>
         company.sector === track.name
           ? { ...company, sector: "未分类" }
@@ -438,6 +439,7 @@ export function UserTrackingPanel({
           : source,
       ),
     });
+    setActive(Math.min(activeIndex, Math.max(0, nextTracks.length - 1)));
   }
 
   function toggleTrack(): void {
@@ -445,7 +447,7 @@ export function UserTrackingPanel({
     update({
       ...config,
       tracks: config.tracks.map((item, index) =>
-        index === active ? { ...item, enabled: !item.enabled } : item,
+        index === activeIndex ? { ...item, enabled: !item.enabled } : item,
       ),
     });
   }
@@ -486,7 +488,7 @@ export function UserTrackingPanel({
     update({
       ...config,
       tracks: config.tracks.map((item, index) =>
-        index === active
+        index === activeIndex
           ? { ...item, [field]: [...item[field], value] }
           : item,
       ),
@@ -823,7 +825,7 @@ export function UserTrackingPanel({
                 {config.tracks.map((item, index) => (
                   <button
                     className={styles.trackTab}
-                    data-active={index === active}
+                    data-active={index === activeIndex}
                     key={item.slug}
                     onClick={() => setActive(index)}
                   >

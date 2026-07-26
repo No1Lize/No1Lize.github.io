@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import {
   TrackingRecommendations,
@@ -20,6 +20,10 @@ import {
   type TrackingSourceRecommendation,
 } from "@/lib/tracking-recommendations";
 import { useArticles } from "@/lib/use-articles";
+
+const subscribeToHydration = () => () => undefined;
+const getClientHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 const LIST_FIELD_META = {
   keywords: { placeholder: "例如：VLA", title: "追踪关键词" },
@@ -296,7 +300,11 @@ function filterDismissed(
 
 export function TrackingRecommendationsBridge() {
   const { articles } = useArticles();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot,
+  );
   const [dismissalVersion, setDismissalVersion] = useState(0);
   const [snapshot, setSnapshot] = useState<PanelSnapshot>({
     sector: "",
@@ -307,7 +315,6 @@ export function TrackingRecommendationsBridge() {
   });
 
   useEffect(() => {
-    setMounted(true);
     let frame = 0;
     let previous = "";
 
@@ -345,6 +352,7 @@ export function TrackingRecommendationsBridge() {
   }, []);
 
   const recommendations = useMemo(() => {
+    void dismissalVersion;
     if (!snapshot.sector) return EMPTY_RECOMMENDATIONS;
     const generated = recommendTrackingAdditions(articles, snapshot.sector, {
       keywords: snapshot.keywords,

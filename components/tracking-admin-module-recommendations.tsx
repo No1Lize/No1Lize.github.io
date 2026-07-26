@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import {
   TrackingAdminRecommendation,
@@ -27,6 +27,9 @@ import type { TrackingListedCompany } from "@/lib/user-tracking";
 
 const LISTED_TITLE = "上市公司关注管理";
 const SOURCE_TITLE = "补充信息源";
+const subscribeToHydration = () => () => undefined;
+const getClientHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 type Snapshot = {
   sector: string;
@@ -187,7 +190,11 @@ function mergeSources(
 
 export function TrackingAdminModuleRecommendations() {
   const { articles } = useArticles();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    subscribeToHydration,
+    getClientHydrationSnapshot,
+    getServerHydrationSnapshot,
+  );
   const [dismissalVersion, setDismissalVersion] = useState(0);
   const [snapshot, setSnapshot] = useState<Snapshot>({
     sector: "",
@@ -196,7 +203,6 @@ export function TrackingAdminModuleRecommendations() {
   });
 
   useEffect(() => {
-    setMounted(true);
     let frame = 0;
     let previous = "";
     const refresh = () => {
@@ -235,6 +241,7 @@ export function TrackingAdminModuleRecommendations() {
   }, []);
 
   const listedRecommendations = useMemo(() => {
+    void dismissalVersion;
     if (!snapshot.sector) return [];
     return recommendListedCompanies(
       articles,
@@ -252,6 +259,7 @@ export function TrackingAdminModuleRecommendations() {
   }, [articles, dismissalVersion, snapshot.listedKeys, snapshot.sector]);
 
   const sourceRecommendations = useMemo(() => {
+    void dismissalVersion;
     if (!snapshot.sector) return [];
     const discovered = recommendTrackingAdditions(articles, snapshot.sector, {
       sources: snapshot.sourceUrls,
