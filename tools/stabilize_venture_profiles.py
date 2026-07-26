@@ -22,6 +22,47 @@ CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
 
 
+def _diff_paths(
+    left: Any,
+    right: Any,
+    *,
+    prefix: str = "$",
+    limit: int = 40,
+) -> list[str]:
+    """Return bounded JSON-style paths whose values differ."""
+    result: list[str] = []
+
+    def visit(a: Any, b: Any, path: str) -> None:
+        if len(result) >= limit:
+            return
+        if type(a) is not type(b):
+            result.append(path)
+            return
+        if isinstance(a, dict):
+            for key in sorted(set(a) | set(b), key=str):
+                child = f"{path}.{key}"
+                if key not in a or key not in b:
+                    result.append(child)
+                else:
+                    visit(a[key], b[key], child)
+                if len(result) >= limit:
+                    return
+            return
+        if isinstance(a, list):
+            if len(a) != len(b):
+                result.append(f"{path}.length")
+            for index, (left_item, right_item) in enumerate(zip(a, b)):
+                visit(left_item, right_item, f"{path}[{index}]")
+                if len(result) >= limit:
+                    return
+            return
+        if a != b:
+            result.append(path)
+
+    visit(left, right, prefix)
+    return result
+
+
 def stabilize_snapshot(
     payload: dict[str, Any],
     catalog_text: str,
@@ -80,14 +121,26 @@ def stabilize_snapshot(
             separators=(",", ":"),
         )
         if state_key in seen:
+            details = {
+                "structuralVsSemantic": _diff_paths(semantic, structural_check),
+                "semanticCheckVsSemantic": _diff_paths(semantic, semantic_check),
+                "lastPass": history[-1],
+            }
             raise RuntimeError(
-                "venture terminal gates entered a cycle before reaching a shared fixed point"
+                "venture terminal gates entered a cycle before reaching a shared "
+                f"fixed point: {json.dumps(details, ensure_ascii=False, sort_keys=True)}"
             )
         seen.add(state_key)
         current = semantic
 
+    details = {
+        "structuralVsSemantic": _diff_paths(semantic, structural_check),
+        "semanticCheckVsSemantic": _diff_paths(semantic, semantic_check),
+        "lastPass": history[-1] if history else {},
+    }
     raise RuntimeError(
-        f"venture terminal gates did not converge within {max_passes} passes"
+        f"venture terminal gates did not converge within {max_passes} passes: "
+        f"{json.dumps(details, ensure_ascii=False, sort_keys=True)}"
     )
 
 
