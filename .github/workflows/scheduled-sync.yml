@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - tools/crawl_articles.py
+      - tools/snapshot_retention.py
       - tools/crawl_with_tracking.py
       - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
@@ -77,13 +78,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate professional media source plan
+      - name: Validate source and retention plans
         run: |
           python -m py_compile \
             tools/professional_media_sources.py \
             tools/validate_professional_media_snapshot.py \
+            tools/snapshot_retention.py \
             tools/crawl_with_wechat_registry.py
-          python -m unittest tests.test_professional_media_sources
+          python -m unittest \
+            tests.test_professional_media_sources \
+            tests.test_snapshot_retention
       - name: Start a clean full-source status ledger
         run: python tools/prepare_full_refresh.py
       - name: Crawl core, tracking, professional media, X and WeChat sources
@@ -106,8 +110,12 @@ jobs:
         run: python tools/enrich_tracking_snapshot.py
       - name: Refresh tracked people profiles and public videos
         run: python tools/refresh_people_profiles_with_video.py
+      - name: Apply rolling newest-first article retention
+        run: python tools/snapshot_retention.py
       - name: Finalize full refresh audit
         run: python tools/finalize_full_refresh.py
+      - name: Validate rolling article retention
+        run: python tools/snapshot_retention.py --check
       - name: Validate data quality
         run: python tools/crawl_articles.py --validate-only
       - name: Validate complete source coverage
@@ -144,7 +152,9 @@ jobs:
             python tools/refine_eastmoney_snapshot.py
             python tools/enrich_tracking_snapshot.py
             python tools/refresh_people_profiles_with_video.py
+            python tools/snapshot_retention.py
             python tools/finalize_full_refresh.py
+            python tools/snapshot_retention.py --check
             python tools/validate_professional_media_snapshot.py --require-articles
             python tools/crawl_articles.py --validate-only
             python tools/validate_full_refresh.py
