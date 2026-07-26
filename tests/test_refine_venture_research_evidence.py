@@ -209,6 +209,26 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
         second, _ = refine_snapshot(copy.deepcopy(first), self.articles, CATALOG)
         self.assertEqual(first, second)
 
+    def test_project_background_does_not_feed_mutable_background_back(self) -> None:
+        snapshot = copy.deepcopy(self.snapshot)
+        snapshot["companies"]["agibot"]["background"] = (
+            "智元机器人是一家具身智能机器人公司。"
+            "智元机器人面向制造业客户提供具身智能机器人解决方案并推动规模化部署。"
+        )
+
+        first, _ = refine_snapshot(snapshot, self.articles, CATALOG)
+        second, _ = refine_snapshot(copy.deepcopy(first), self.articles, CATALOG)
+
+        self.assertEqual(first, second)
+        self.assertEqual(
+            first["companies"]["agibot"]["projectBackground"]["problemSolved"],
+            "",
+        )
+        self.assertEqual(
+            first["companies"]["agibot"]["projectBackground"]["marketOpportunity"],
+            "",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
