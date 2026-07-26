@@ -41,7 +41,11 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             python3 tools/crawl_articles.py --source all
+            python3 tools/migrate_article_entities.py
+            python3 tools/refine_eastmoney_snapshot.py
+            python3 tools/enrich_tracking_snapshot.py
             python3 tools/crawl_articles.py --validate-only
+            python3 tools/validate_eastmoney_snapshot.py
             if git diff --quiet -- public/data/articles.json; then
               echo "No homepage intelligence changes."
               echo "changed=false" >> "$GITHUB_OUTPUT"
