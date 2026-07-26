@@ -11,30 +11,33 @@ TARGET = ROOT / "tools" / "enforce_venture_entity_semantics.py"
 TESTS = ROOT / "tests" / "test_venture_entity_semantics.py"
 
 
-def replace_once(text: str, old: str, new: str, label: str) -> str:
-    if new in text:
+def replace_section(text: str, start_marker: str, end_marker: str, block: str, label: str) -> str:
+    if block.rstrip() in text:
         print(f"{label}: already applied")
         return text
-    count = text.count(old)
-    if count != 1:
-        raise SystemExit(f"{label}: expected one source block, found {count}")
+    start = text.find(start_marker)
+    end = text.find(end_marker, start)
+    if start < 0 or end < 0:
+        raise SystemExit(f"{label}: section boundary not found")
     print(f"{label}: applied")
-    return text.replace(old, new, 1)
+    return text[:start] + block.rstrip() + "\n" + text[end:]
+
+
+def replace_function(text: str, name: str, next_name: str, block: str) -> str:
+    if block.rstrip() in text:
+        print(f"{name}: already applied")
+        return text
+    start = text.find(f"def {name}(")
+    end = text.find(f"\n\ndef {next_name}(", start)
+    if start < 0 or end < 0:
+        raise SystemExit(f"{name}: function boundary not found")
+    print(f"{name}: replaced")
+    return text[:start] + block.rstrip() + text[end:]
 
 
 def patch_semantics() -> None:
     text = TARGET.read_text(encoding="utf-8")
-    text = replace_once(
-        text,
-        '''PRODUCT_EDITORIAL_RE = re.compile(
-    r"\\b(?:press release|latest news|newsroom|things to know|crew undocks|"
-    r"journey home|announces?|launches?|introduces?|partnership|collaboration)\\b|"
-    r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|访谈|观点|生态合作)",
-    re.IGNORECASE,
-)
-PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
-''',
-        '''PRODUCT_EDITORIAL_RE = re.compile(
+    constants = '''PRODUCT_EDITORIAL_RE = re.compile(
     r"\\b(?:press release|latest news|newsroom|things to know|crew undocks|"
     r"journey home|announces?|launches?|introduces?|partnership|collaboration|"
     r"raises?|raised|funding round|financing round|contributed|arrives?|signs?|"
@@ -71,41 +74,34 @@ NARRATIVE_EDITORIAL_RE = re.compile(
     r"\\b(?:click here|we asked|viral|what you need to know)\\b",
     re.IGNORECASE,
 )
-PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
-''',
-        "expanded product and prose noise constants",
-    )
-    text = replace_once(
+'''
+    text = replace_section(
         text,
-        '''        if len(clause) < 18 or PAGE_CHROME_RE.search(clause):
+        "PRODUCT_EDITORIAL_RE = re.compile(",
+        "PERSON_CJK_RE = re.compile(",
+        constants,
+        "expanded product and prose constants",
+    )
+
+    old_clause = """        if len(clause) < 18 or PAGE_CHROME_RE.search(clause):
             continue
-''',
-        '''        if (
+"""
+    new_clause = """        if (
             len(clause) < 18
             or PAGE_CHROME_RE.search(clause)
             or NARRATIVE_EDITORIAL_RE.search(clause)
         ):
             continue
-''',
-        "editorial narrative clause filter",
-    )
-    text = replace_once(
-        text,
-        '''def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
-    item = clean_text(value, 200).strip()
-    compact = _compact(item)
-    if (
-        not item
-        or YEAR_ONLY_RE.fullmatch(item)
-        or NUMERIC_ONLY_RE.fullmatch(item)
-        or PRODUCT_EDITORIAL_RE.search(item)
-        or len(compact) < 2
-    ):
-        return False
-    alias_compacts = {_compact(alias) for alias in aliases if _compact(alias)}
-    return compact not in alias_compacts
-''',
-        '''def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
+"""
+    if "NARRATIVE_EDITORIAL_RE.search(clause)" not in text:
+        if old_clause not in text:
+            raise SystemExit("editorial clause filter: source block not found")
+        text = text.replace(old_clause, new_clause, 1)
+        print("editorial clause filter: applied")
+    else:
+        print("editorial clause filter: already applied")
+
+    product_function = '''def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
     item = clean_text(value, 200).strip()
     compact = _compact(item)
     if (
@@ -124,39 +120,34 @@ PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
         return False
     alias_compacts = {_compact(alias) for alias in aliases if _compact(alias)}
     return compact not in alias_compacts
-''',
-        "strict product label validator",
-    )
-    text = replace_once(
-        text,
-        '''    return source_is_official
+'''
+    text = replace_function(text, "_valid_product", "_valid_person_name", product_function)
 
+    strict_return = "return bool(source_is_official and FIRST_PERSON_FINANCING_RE.search(evidence))"
+    if strict_return not in text:
+        marker = "    return source_is_official\n\n\ndef _sanitize_events("
+        if marker not in text:
+            raise SystemExit("strict event attribution: return marker not found")
+        text = text.replace(
+            marker,
+            f"    {strict_return}\n\n\ndef _sanitize_events(",
+            1,
+        )
+        print("strict event attribution: applied")
+    else:
+        print("strict event attribution: already applied")
 
-def _sanitize_events(
-''',
-        '''    return bool(source_is_official and FIRST_PERSON_FINANCING_RE.search(evidence))
-
-
-def _sanitize_events(
-''',
-        "strict official event subject attribution",
-    )
     TARGET.write_text(text, encoding="utf-8")
 
 
 def patch_tests() -> None:
     text = TESTS.read_text(encoding="utf-8")
-    text = replace_once(
-        text,
-        '''import copy
-import unittest
-''',
-        '''import copy
-import json
-import unittest
-''',
-        "json test import",
-    )
+    if "import json\n" not in text:
+        if "import copy\n" not in text:
+            raise SystemExit("json test import: import marker not found")
+        text = text.replace("import copy\n", "import copy\nimport json\n", 1)
+        print("json test import: applied")
+
     marker = '''    def test_trims_investor_relations_page_chrome(self) -> None:
 '''
     addition = '''    def test_rejects_web_dates_files_events_and_clickbait_prose(self) -> None:
@@ -172,33 +163,22 @@ import unittest
                         "Anthropic develops Claude Platform for enterprise AI."
                     ),
                     "products": [
-                        "Claude Platform",
-                        "November 19",
-                        "June 30",
-                        "https:",
-                        "www.example.com",
-                        "A15D1080-6F8C-4C6A-833F-73803D8B7.png",
+                        "Claude Platform", "November 19", "June 30", "https:",
+                        "www.example.com", "A15D1080-6F8C-4C6A-833F-73803D8B7.png",
                         "View C360 Reference Architecture for Insurance",
-                        "Explore Agent Library",
-                        "F.02 Contributed to the Production of 30",
+                        "Explore Agent Library", "F.02 Contributed to the Production of 30",
                         "000 Cars at BMW",
                         "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
-                        "F.03 Battery Development",
-                        "B2B Marketing",
-                        "工艺革新",
+                        "F.03 Battery Development", "B2B Marketing", "工艺革新",
                         "星河动力 CQ-50 发动机交付速度再提升",
                     ],
                     "team": [],
-                    "financing": [
-                        {
-                            "date": "2021-03-19",
-                            "title": "Newsroom",
-                            "summary": (
-                                "A founder raised $900M. Anthropic researchers later commented."
-                            ),
-                            "sourceUrl": "https://www.anthropic.com/newsroom",
-                        }
-                    ],
+                    "financing": [{
+                        "date": "2021-03-19",
+                        "title": "Newsroom",
+                        "summary": "A founder raised $900M. Anthropic researchers later commented.",
+                        "sourceUrl": "https://www.anthropic.com/newsroom",
+                    }],
                     "capitalMarkets": [],
                     "technologyProducts": [],
                     "sources": [],
@@ -224,8 +204,7 @@ import unittest
         cleaned, _ = semantics.enforce_snapshot(payload, catalog_text)
         rendered = json.dumps(cleaned, ensure_ascii=False)
         forbidden = (
-            "November 19",
-            "June 30",
+            "November 19", "June 30",
             "View C360 Reference Architecture for Insurance",
             "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
             "A15D1080-6F8C-4C6A-833F-73803D8B7",
@@ -240,6 +219,9 @@ import unittest
         if marker not in text:
             raise SystemExit("product noise test insertion marker not found")
         text = text.replace(marker, addition + marker, 1)
+        print("product and prose regressions: applied")
+    else:
+        print("product and prose regressions: already applied")
     TESTS.write_text(text, encoding="utf-8")
 
 
