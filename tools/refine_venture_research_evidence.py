@@ -27,6 +27,7 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 try:
+    from .enforce_venture_entity_semantics import enforce_snapshot
     from .sanitize_venture_narratives import sanitize_narrative
     from .venture_profile_extraction import (
         CatalogCompany,
@@ -37,6 +38,7 @@ try:
         sanitize_team_members,
     )
 except ImportError:
+    from enforce_venture_entity_semantics import enforce_snapshot
     from sanitize_venture_narratives import sanitize_narrative
     from venture_profile_extraction import (
         CatalogCompany,
@@ -288,10 +290,10 @@ def _refine_products(
         for row in profile.get("technologyProducts", [])
         if isinstance(row, dict) and _compact(row.get("name"))
     }
+    # Product descriptions must use immutable source evidence. Reading
+    # normalized profile narratives here creates a two-state oscillation because
+    # the terminal semantic gate may replace those narratives after this pass.
     evidence_values = [
-        profile.get("researchTechnology", ""),
-        profile.get("technology", ""),
-        profile.get("background", ""),
         *(_article_text(article) for article in articles[:40]),
     ]
     result: list[dict[str, Any]] = []
@@ -323,6 +325,7 @@ def _refine_products(
             for sentence in _sentences(description, 6)
             if _contains_any(sentence, TECH_TERMS)
             and any(alias.casefold() in sentence.casefold() for alias in aliases)
+            and "尚未识别到可独立核对的技术说明" not in sentence
         ][:3]
         source_url = ""
         for article in articles:
@@ -360,7 +363,10 @@ def _refine_team(
         name = clean_text(row.get("name"), 120)
         original = originals.get(name.casefold(), {})
         candidate = sanitize_narrative(original.get("summary", ""), limit=360)
-        if candidate and name.casefold() not in candidate.casefold() and not BIOGRAPHY_RE.search(candidate):
+        if candidate and (
+            name.casefold() not in candidate.casefold()
+            or not BIOGRAPHY_RE.search(candidate)
+        ):
             candidate = ""
         if not candidate:
             candidate = _select_required_sentence(
@@ -375,7 +381,10 @@ def _refine_team(
         row["summary"] = candidate
         for field in ("background", "previousExperience"):
             value = sanitize_narrative(original.get(field, ""), limit=420)
-            if value and name.casefold() not in value.casefold() and not BIOGRAPHY_RE.search(value):
+            if value and (
+                name.casefold() not in value.casefold()
+                or not BIOGRAPHY_RE.search(value)
+            ):
                 value = ""
             row[field] = value
         result.append(row)
@@ -610,6 +619,10 @@ def refine_snapshot(
         for check in checks.values()
         if isinstance(check, dict) and "passed" in check
     )
+    # Evidence refinement must not reintroduce facts rejected by the terminal
+    # entity-semantic gate. Reusing the canonical gate keeps product, team and
+    # capital-event semantics identical across every publication stage.
+    cleaned, _ = enforce_snapshot(cleaned, catalog_text)
     return cleaned, diagnostics
 
 
@@ -630,12 +643,12 @@ def main() -> int:
     current = args.snapshot.read_text(encoding="utf-8")
     print(json.dumps(diagnostics, ensure_ascii=False, sort_keys=True))
     if args.check:
-        if rendered != current:
+        if refined != snapshot:
             print("Venture profile snapshot requires evidence alignment.")
             return 1
         print("Venture profile snapshot passed evidence alignment checks.")
         return 0
-    if rendered == current:
+    if refined == snapshot:
         print("No venture evidence alignment changes.")
         return 0
     args.snapshot.write_text(rendered, encoding="utf-8")

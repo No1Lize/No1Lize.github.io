@@ -93,6 +93,24 @@ PRODUCT_SENTENCE_RE = re.compile(
     re.IGNORECASE,
 )
 PRODUCT_EXACT_NOISE = {
+    "api",
+    "apis",
+    "model",
+    "models",
+    "platform",
+    "platforms",
+    "service",
+    "services",
+    "software",
+    "hardware",
+    "system",
+    "systems",
+    "模型",
+    "平台",
+    "服务",
+    "软件",
+    "硬件",
+    "系统",
     "cost-effective drug discovery",
     "drug discovery",
     "nach01",
@@ -375,9 +393,9 @@ def _sanitize_technology_products(
         row["description"] = description
         highlights = row.get("technicalHighlights", [])
         row["technicalHighlights"] = [
-            clean_text(item, 260)
+            clean_text(item, 220)
             for item in highlights
-            if clean_text(item, 260)
+            if clean_text(item, 220)
             and _contains_any(item, direct_terms)
         ][:6] if isinstance(highlights, list) else []
         result.append(row)

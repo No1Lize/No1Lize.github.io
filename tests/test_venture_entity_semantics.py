@@ -153,6 +153,27 @@ class VentureEntitySemanticTests(unittest.TestCase):
         self.assertEqual(diagnostics["removedProducts"], 9)
         self.assertEqual(diagnostics["removedTeamMembers"], 8)
 
+    def test_rejects_bare_generic_product_names(self) -> None:
+        self.assertFalse(semantics._valid_product("API"))
+        self.assertFalse(semantics._valid_product("Platform"))
+        self.assertTrue(semantics._valid_product("企业 API"))
+        self.assertTrue(semantics._valid_product("Claude Platform"))
+
+    def test_accepts_official_short_brand_financing_subject(self) -> None:
+        row = {
+            "title": "SambaNova Completes First Close of $1B Financing",
+            "summary": "SambaNova completed the financing at an $11B valuation.",
+            "sourceUrl": "https://sambanova.ai/news/financing",
+        }
+        self.assertTrue(
+            semantics._subject_evidence(
+                row,
+                ("SambaNova Systems", "SambaNova"),
+                "sambanova.ai",
+                semantics.FINANCING_ACTION_RE,
+            )
+        )
+
     def test_trims_investor_relations_page_chrome(self) -> None:
         payload = {
             "companies": {
