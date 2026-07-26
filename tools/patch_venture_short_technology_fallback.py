@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Preserve semantic-gate short technology summaries in the structural gate."""
+"""Preserve short technology summaries and rebuild noisy technology prose."""
 
 from __future__ import annotations
 
@@ -8,7 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FINALIZER = ROOT / "tools" / "finalize_venture_profiles.py"
+SEMANTICS = ROOT / "tools" / "enforce_venture_entity_semantics.py"
 TESTS = ROOT / "tests" / "test_stabilize_venture_profiles.py"
+ENTITY_TESTS = ROOT / "tests" / "test_venture_entity_semantics.py"
 
 
 def replace_once(path: Path, old: str, new: str, label: str) -> None:
@@ -39,6 +41,27 @@ def main() -> None:
         profile["researchTechnology"] = sanitize_narrative(
 ''',
         "structural short technology fallback",
+    )
+    replace_once(
+        SEMANTICS,
+        '''        technology = _relevant_clauses(
+            profile.get("technology", ""), aliases, products, limit=900
+        )
+        if not technology and products:
+            technology = f"核心技术与产品包括{'、'.join(products[:8])}。"
+''',
+        '''        raw_technology = clean_text(profile.get("technology", ""), 1400)
+        technology = _relevant_clauses(
+            raw_technology, aliases, products, limit=900
+        )
+        if products and (
+            not technology
+            or PRODUCT_EDITORIAL_RE.search(raw_technology)
+            or PRODUCT_URL_RE.search(raw_technology)
+        ):
+            technology = f"核心技术与产品包括{'、'.join(products[:8])}。"
+''',
+        "noisy technology reconstruction",
     )
 
     marker = '''    def test_converges_when_gates_need_multiple_passes(self) -> None:
@@ -98,6 +121,33 @@ def main() -> None:
         print("short technology regression: applied")
     else:
         print("short technology regression: already applied")
+
+    replace_once(
+        ENTITY_TESTS,
+        '''                    "technology": "Anthropic develops Claude Platform.",
+''',
+        '''                    "technology": "核心技术与产品包括Claude Platform、https:、www.example.com、英特尔深化智能生态合作。",
+''',
+        "noisy technology regression fixture",
+    )
+    replace_once(
+        ENTITY_TESTS,
+        '''        self.assertEqual(
+            cleaned["companies"]["anthropic"]["products"],
+            ["Claude Platform"],
+        )
+''',
+        '''        self.assertEqual(
+            cleaned["companies"]["anthropic"]["products"],
+            ["Claude Platform"],
+        )
+        self.assertEqual(
+            cleaned["companies"]["anthropic"]["technology"],
+            "核心技术与产品包括Claude Platform。",
+        )
+''',
+        "clean technology regression assertion",
+    )
 
 
 if __name__ == "__main__":
