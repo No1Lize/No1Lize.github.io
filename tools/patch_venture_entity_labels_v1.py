@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Patch terminal venture semantics for editorial products and false team names."""
+"""Patch terminal venture semantics for product, prose and event attribution noise."""
 
 from __future__ import annotations
 
@@ -26,39 +26,71 @@ def patch_semantics() -> None:
     text = TARGET.read_text(encoding="utf-8")
     text = replace_once(
         text,
-        'CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\\n]+|(?<=\\.)\\s+(?=[A-Z\\u3400-\\u9fff])")\n',
-        '''CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\\n]+|(?<=\\.)\\s+(?=[A-Z\\u3400-\\u9fff])")
-PRODUCT_EDITORIAL_RE = re.compile(
+        '''PRODUCT_EDITORIAL_RE = re.compile(
     r"\\b(?:press release|latest news|newsroom|things to know|crew undocks|"
     r"journey home|announces?|launches?|introduces?|partnership|collaboration)\\b|"
     r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|访谈|观点|生态合作)",
     re.IGNORECASE,
 )
 PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
-PERSON_LATIN_TOKEN_RE = re.compile(r"^[A-Z][A-Za-z'’.-]*$")
-PERSON_PARTICLES = {"de", "del", "da", "di", "van", "von", "la", "le"}
-PERSON_NOISE_TOKENS = {
-    "spotlight", "hear", "read", "view", "more", "team", "leadership",
-    "newsroom", "profile", "people", "about", "featured", "general",
-    "partner", "managing", "principal", "director", "founder", "cofounder",
-    "chief", "officer", "president", "executive",
-}
-PERSON_ORG_SUFFIXES = (
-    "团队", "部门", "研究院", "实验室", "资本", "基金", "公司", "集团",
-    "委员会", "中心", "办公室", "业务部", "事业部",
-)
 ''',
-        "semantic label constants",
+        '''PRODUCT_EDITORIAL_RE = re.compile(
+    r"\\b(?:press release|latest news|newsroom|things to know|crew undocks|"
+    r"journey home|announces?|launches?|introduces?|partnership|collaboration|"
+    r"raises?|raised|funding round|financing round|contributed|arrives?|signs?|"
+    r"named|publishes?|delivers?|updates?|development|virtual tour|"
+    r"demo(?:nstration)?)\\b|"
+    r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|"
+    r"大会|峰会|访谈|观点|生态合作|融资|募资|领投|跟投|交付速度|再提升)",
+    re.IGNORECASE,
+)
+PRODUCT_URL_FILE_RE = re.compile(
+    r"(?:^https?:$|https?://|www\\.|\\.(?:png|jpe?g|gif|webp|svg|pdf|html?)"
+    r"(?:[?#].*)?$|^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12})",
+    re.IGNORECASE,
+)
+PRODUCT_DATE_LABEL_RE = re.compile(
+    r"^(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|"
+    r"jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|"
+    r"dec(?:ember)?)\\s+\\d{1,2}(?:,?\\s+20\\d{2})?$",
+    re.IGNORECASE,
+)
+PRODUCT_NAV_PREFIX_RE = re.compile(
+    r"^(?:view|explore|discover|read|learn|watch|see|find|download|get started)\\b",
+    re.IGNORECASE,
+)
+PRODUCT_FRAGMENT_RE = re.compile(r"^\\d{2,}\\s+[A-Za-z]", re.IGNORECASE)
+PRODUCT_GENERIC_RE = re.compile(
+    r"^(?:b2b marketing|b2c marketing|marketing|工艺革新|技术创新|"
+    r"产品|平台|服务|业务|更多|qnimgs|images?|assets?|static|uploads?)$",
+    re.IGNORECASE,
+)
+NARRATIVE_EDITORIAL_RE = re.compile(
+    r"(?:网友|直呼|狂塞|昨日|过去\\d+天|一口气|热议|小编|据悉|报道称|"
+    r"本文|作者|赌.{0,8}级|别再|它讲的是)|"
+    r"\\b(?:click here|we asked|viral|what you need to know)\\b",
+    re.IGNORECASE,
+)
+PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
+''',
+        "expanded product and prose noise constants",
     )
-
     text = replace_once(
         text,
-        '''def _valid_product(value: Any) -> bool:
-    item = clean_text(value, 200).strip()
-    if not item or YEAR_ONLY_RE.fullmatch(item) or NUMERIC_ONLY_RE.fullmatch(item):
-        return False
-    return len(_compact(item)) >= 2
+        '''        if len(clause) < 18 or PAGE_CHROME_RE.search(clause):
+            continue
 ''',
+        '''        if (
+            len(clause) < 18
+            or PAGE_CHROME_RE.search(clause)
+            or NARRATIVE_EDITORIAL_RE.search(clause)
+        ):
+            continue
+''',
+        "editorial narrative clause filter",
+    )
+    text = replace_once(
+        text,
         '''def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
     item = clean_text(value, 200).strip()
     compact = _compact(item)
@@ -72,163 +104,141 @@ PERSON_ORG_SUFFIXES = (
         return False
     alias_compacts = {_compact(alias) for alias in aliases if _compact(alias)}
     return compact not in alias_compacts
-
-
-def _valid_person_name(value: Any) -> bool:
-    name = clean_text(value, 120).strip(" ,，:：;；-|｜")
-    if not name or any(name.endswith(suffix) for suffix in PERSON_ORG_SUFFIXES):
+''',
+        '''def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
+    item = clean_text(value, 200).strip()
+    compact = _compact(item)
+    if (
+        not item
+        or len(item) > 100
+        or YEAR_ONLY_RE.fullmatch(item)
+        or NUMERIC_ONLY_RE.fullmatch(item)
+        or PRODUCT_EDITORIAL_RE.search(item)
+        or PRODUCT_URL_FILE_RE.search(item)
+        or PRODUCT_DATE_LABEL_RE.fullmatch(item)
+        or PRODUCT_NAV_PREFIX_RE.search(item)
+        or PRODUCT_FRAGMENT_RE.search(item)
+        or PRODUCT_GENERIC_RE.fullmatch(item)
+        or len(compact) < 2
+    ):
         return False
-    if PERSON_CJK_RE.fullmatch(name):
-        return True
-    tokens = [token for token in name.split() if token]
-    if not 2 <= len(tokens) <= 6:
-        return False
-    lowered = {token.casefold().strip(".,") for token in tokens}
-    if lowered & PERSON_NOISE_TOKENS:
-        return False
-    if not PERSON_LATIN_TOKEN_RE.fullmatch(tokens[0]) or not PERSON_LATIN_TOKEN_RE.fullmatch(tokens[-1]):
-        return False
-    return all(
-        PERSON_LATIN_TOKEN_RE.fullmatch(token) or token.casefold() in PERSON_PARTICLES
-        for token in tokens[1:-1]
-    )
+    alias_compacts = {_compact(alias) for alias in aliases if _compact(alias)}
+    return compact not in alias_compacts
 ''',
-        "product and person validators",
+        "strict product label validator",
     )
-
     text = replace_once(
         text,
-        '''        name = clean_text(row.get("name"), 120)
-        summary = clean_text(row.get("summary"), 420)
-''',
-        '''        name = clean_text(row.get("name"), 120)
-        if not _valid_person_name(name):
-            continue
-        summary = clean_text(row.get("summary"), 420)
-''',
-        "team member validation",
-    )
+        '''    return source_is_official
 
-    text = replace_once(
-        text,
-        '''        "removedCapitalMarkets": 0,
-        "clearedTeamSummaries": 0,
-''',
-        '''        "removedCapitalMarkets": 0,
-        "removedTeamMembers": 0,
-        "clearedTeamSummaries": 0,
-''',
-        "team removal diagnostics",
-    )
 
-    text = replace_once(
-        text,
-        '''            for item in original_products
-            if _valid_product(item)
+def _sanitize_events(
 ''',
-        '''            for item in original_products
-            if _valid_product(item, aliases)
-''',
-        "entity-aware product validation",
-    )
+        '''    return bool(source_is_official and FIRST_PERSON_FINANCING_RE.search(evidence))
 
-    text = replace_once(
-        text,
-        '''        profile["team"] = _sanitize_team(profile.get("team", []))
-        for old, new in zip(team_before, profile["team"]):
-''',
-        '''        profile["team"] = _sanitize_team(profile.get("team", []))
-        diagnostics["removedTeamMembers"] += max(
-            0,
-            (len(team_before) if isinstance(team_before, list) else 0)
-            - len(profile["team"]),
-        )
-        for old, new in zip(team_before, profile["team"]):
-''',
-        "company team removal count",
-    )
 
-    text = replace_once(
-        text,
-        '''        profile["team"] = _sanitize_team(profile.get("team", []))
-        profile["evidenceScore"] = evidence_score(profile, "institution")
+def _sanitize_events(
 ''',
-        '''        institution_team = profile.get("team", [])
-        profile["team"] = _sanitize_team(institution_team)
-        diagnostics["removedTeamMembers"] += max(
-            0,
-            (len(institution_team) if isinstance(institution_team, list) else 0)
-            - len(profile["team"]),
-        )
-        profile["evidenceScore"] = evidence_score(profile, "institution")
-''',
-        "institution team removal count",
+        "strict official event subject attribution",
     )
     TARGET.write_text(text, encoding="utf-8")
 
 
 def patch_tests() -> None:
     text = TESTS.read_text(encoding="utf-8")
+    text = replace_once(
+        text,
+        '''import copy
+import unittest
+''',
+        '''import copy
+import json
+import unittest
+''',
+        "json test import",
+    )
     marker = '''    def test_trims_investor_relations_page_chrome(self) -> None:
 '''
-    addition = '''    def test_rejects_editorial_products_and_navigation_team_names(self) -> None:
+    addition = '''    def test_rejects_web_dates_files_events_and_clickbait_prose(self) -> None:
         payload = {
             "companies": {
                 "anthropic": {
                     "slug": "anthropic",
                     "name": "Anthropic",
                     "background": "Anthropic builds reliable AI systems.",
-                    "technology": "Anthropic develops Claude Platform.",
+                    "technology": "Anthropic develops Claude Platform for enterprise AI.",
+                    "researchTechnology": (
+                        "过去45天Anthropic狂塞500个技能，网友直呼疯狂，一口气赌OS级深度。 "
+                        "Anthropic develops Claude Platform for enterprise AI."
+                    ),
                     "products": [
-                        "Anthropic",
-                        "英特尔深化智能生态合作",
                         "Claude Platform",
+                        "November 19",
+                        "June 30",
+                        "https:",
+                        "www.example.com",
+                        "A15D1080-6F8C-4C6A-833F-73803D8B7.png",
+                        "View C360 Reference Architecture for Insurance",
+                        "Explore Agent Library",
+                        "F.02 Contributed to the Production of 30",
+                        "000 Cars at BMW",
+                        "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
+                        "F.03 Battery Development",
+                        "B2B Marketing",
+                        "工艺革新",
+                        "星河动力 CQ-50 发动机交付速度再提升",
                     ],
-                    "team": [
-                        {"name": "Spotlight Megan Holston-Alexander Hear", "role": "Partner"},
-                        {"name": "Megan Holston-Alexander", "role": "Partner"},
+                    "team": [],
+                    "financing": [
+                        {
+                            "date": "2021-03-19",
+                            "title": "Newsroom",
+                            "summary": (
+                                "A founder raised $900M. Anthropic researchers later commented."
+                            ),
+                            "sourceUrl": "https://www.anthropic.com/newsroom",
+                        }
                     ],
-                    "financing": [],
                     "capitalMarkets": [],
                     "technologyProducts": [],
                     "sources": [],
                 }
             },
-            "institutions": {
-                "fund": {
-                    "slug": "fund",
-                    "name": "Example Capital",
-                    "overview": "Example Capital is a venture firm.",
-                    "strategy": "Example Capital invests in AI.",
-                    "team": [
-                        {"name": "General Partner", "role": "Partner"},
-                        {"name": "Jane Doe", "role": "Partner"},
-                    ],
-                    "sources": [],
-                }
-            },
+            "institutions": {},
             "qualityGate": {"passed": True, "checks": {}},
         }
         cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        company = cleaned["companies"]["anthropic"]
+        self.assertEqual(company["products"], ["Claude Platform"])
         self.assertEqual(
-            cleaned["companies"]["anthropic"]["products"],
-            ["Claude Platform"],
+            company["researchTechnology"],
+            "Anthropic develops Claude Platform for enterprise AI.",
         )
-        self.assertEqual(
-            [row["name"] for row in cleaned["companies"]["anthropic"]["team"]],
-            ["Megan Holston-Alexander"],
+        self.assertEqual(company["financing"], [])
+        self.assertEqual(diagnostics["removedProducts"], 14)
+        self.assertEqual(diagnostics["removedFinancing"], 1)
+
+    def test_current_snapshot_removes_known_product_and_prose_noise(self) -> None:
+        payload = json.loads(semantics.SNAPSHOT_PATH.read_text(encoding="utf-8"))
+        catalog_text = semantics.CATALOG_PATH.read_text(encoding="utf-8")
+        cleaned, _ = semantics.enforce_snapshot(payload, catalog_text)
+        rendered = json.dumps(cleaned, ensure_ascii=False)
+        forbidden = (
+            "November 19",
+            "June 30",
+            "View C360 Reference Architecture for Insurance",
+            "Commonwealth Fusion Systems Raises $863 Million Series B2 Round",
+            "A15D1080-6F8C-4C6A-833F-73803D8B7",
+            "星河动力 CQ-50 发动机交付速度再提升",
+            "网友直呼疯狂",
         )
-        self.assertEqual(
-            [row["name"] for row in cleaned["institutions"]["fund"]["team"]],
-            ["Jane Doe"],
-        )
-        self.assertEqual(diagnostics["removedProducts"], 2)
-        self.assertEqual(diagnostics["removedTeamMembers"], 2)
+        self.assertTrue(all(item not in rendered for item in forbidden))
+        self.assertEqual(cleaned["companies"]["form-energy"]["financing"], [])
 
 '''
-    if "def test_rejects_editorial_products_and_navigation_team_names" not in text:
+    if "def test_rejects_web_dates_files_events_and_clickbait_prose" not in text:
         if marker not in text:
-            raise SystemExit("entity semantic test insertion marker not found")
+            raise SystemExit("product noise test insertion marker not found")
         text = text.replace(marker, addition + marker, 1)
     TESTS.write_text(text, encoding="utf-8")
 
