@@ -1,0 +1,58 @@
+name: Apply venture evidence source fix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-venture-evidence-source-fix.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: apply-venture-evidence-source-fix
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply permanent source and regression fix
+        run: python tools/apply_venture_evidence_source_fix.py
+      - name: Verify focused regression suite
+        run: |
+          python -m py_compile tools/refine_venture_research_evidence.py
+          python -m unittest tests.test_refine_venture_research_evidence
+      - name: Commit permanent fix and remove migration files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f tools/apply_venture_evidence_source_fix.py
+          rm -f .github/workflows/apply-venture-evidence-source-fix.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add tools/refine_venture_research_evidence.py tests/test_refine_venture_research_evidence.py
+          git add -u tools/apply_venture_evidence_source_fix.py .github/workflows/apply-venture-evidence-source-fix.yml
+          git commit -m 'fix: stabilize entity-bound venture project evidence'
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" = 3 ]; then
+              exit 1
+            fi
+            sleep 5
+          done
+          gh workflow run refresh-venture-profiles.yml --ref main
