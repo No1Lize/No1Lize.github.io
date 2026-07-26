@@ -2,6 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  normalizeChannelUpdateDate,
+  UNDATED_CHANNEL_UPDATE_SORT_AT,
+} from "../lib/channel-update-date";
+import {
   ALL_CHANNEL_UPDATE_KEYWORDS,
   collectChannelUpdateKeywords,
   filterAndSortChannelUpdates,
@@ -19,6 +23,38 @@ const channels: ChannelUpdateKey[] = [
   "people",
 ];
 
+const snapshotTime = "2026-07-26T02:10:42.000Z";
+
+test("normalizes exact, relative and undated source labels", () => {
+  const exact = normalizeChannelUpdateDate("2020-05-29", snapshotTime);
+  assert.equal(exact.displayDate, "2020-05-29");
+  assert.equal(exact.precision, "exact");
+
+  const years = normalizeChannelUpdateDate("4年前", snapshotTime);
+  assert.equal(years.displayDate, "约 2022-07-26");
+  assert.equal(years.precision, "approximate");
+
+  const months = normalizeChannelUpdateDate("8个月前", snapshotTime);
+  assert.equal(months.displayDate, "约 2025-11-26");
+  assert.ok(months.sortAt > years.sortAt);
+
+  const ongoing = normalizeChannelUpdateDate("持续更新", snapshotTime);
+  assert.equal(ongoing.displayDate, "持续更新");
+  assert.equal(ongoing.precision, "undated");
+  assert.equal(ongoing.sortAt, UNDATED_CHANNEL_UPDATE_SORT_AT);
+});
+
+test("mixed person time labels sort by their normalized calendar dates", () => {
+  const rows = ["4年前", "8个月前", "7年前", "6年前", "2020-05-29"].map(
+    (label) => ({ label, ...normalizeChannelUpdateDate(label, snapshotTime) }),
+  );
+  rows.sort((left, right) => right.sortAt.localeCompare(left.sortAt));
+  assert.deepEqual(
+    rows.map((row) => row.label),
+    ["8个月前", "4年前", "6年前", "2020-05-29", "7年前"],
+  );
+});
+
 test("all requested channels expose a non-empty update directory", () => {
   for (const channel of channels) {
     const directory = getChannelUpdateDirectory(channel);
@@ -34,12 +70,43 @@ test("channel updates are newest-first and link to original public sources", () 
     assert.ok(items.every((item) => /^https?:\/\//u.test(item.href)));
     assert.ok(items.every((item) => item.title && item.source && item.date));
     assert.ok(items.every((item) => item.keywords.length > 0));
+    assert.ok(
+      items.every((item) =>
+        item.datePrecision === "undated"
+          ? item.sortAt === UNDATED_CHANNEL_UPDATE_SORT_AT
+          : /^\d{4}-\d{2}-\d{2}T/u.test(item.sortAt),
+      ),
+    );
     for (let index = 1; index < items.length; index += 1) {
       assert.ok(
         items[index - 1].sortAt.localeCompare(items[index].sortAt) >= 0,
         `${channel} is not sorted newest-first at index ${index}`,
       );
     }
+  }
+});
+
+test("person dates use one visible calendar format without treating ongoing pages as new", () => {
+  const items = getChannelUpdateDirectory("people").items;
+  for (const item of items) {
+    if (item.datePrecision === "exact") {
+      assert.match(item.date, /^\d{4}-\d{2}-\d{2}$/u);
+    } else if (item.datePrecision === "approximate") {
+      assert.match(item.date, /^约 \d{4}-\d{2}-\d{2}$/u);
+      assert.notEqual(item.date, item.dateOriginal);
+    } else {
+      assert.ok(item.date === "持续更新" || item.date === "日期未标明");
+      assert.equal(item.sortAt, UNDATED_CHANNEL_UPDATE_SORT_AT);
+    }
+  }
+
+  const relativeSortDates = new Map(
+    items
+      .filter((item) => item.datePrecision === "approximate")
+      .map((item) => [item.dateOriginal, item.sortAt]),
+  );
+  if (relativeSortDates.has("8个月前") && relativeSortDates.has("4年前")) {
+    assert.ok(relativeSortDates.get("8个月前")! > relativeSortDates.get("4年前")!);
   }
 });
 
