@@ -19,6 +19,9 @@ on:
       - tools/wechat_sogou_index.py
       - tools/wechat_sogou_bridge.py
       - tools/robust_web_fallback.py
+      - tools/prepare_full_refresh.py
+      - tools/finalize_full_refresh.py
+      - tools/validate_full_refresh.py
       - tools/validate_user_source_coverage.py
       - tools/tracking_taxonomy.py
       - tools/enrich_tracking_snapshot.py
@@ -51,13 +54,6 @@ on:
     - cron: "0 7-23/2 * * *"
       timezone: "Asia/Taipei"
   workflow_dispatch:
-    inputs:
-      source:
-        description: Source to refresh
-        required: false
-        type: choice
-        default: all
-        options: [all, news, company, feeds, x, papers, discovery, sec]
 
 permissions:
   contents: write
@@ -70,7 +66,7 @@ concurrency:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -78,12 +74,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Crawl public sources
+      - name: Start a clean full-source status ledger
+        run: python tools/prepare_full_refresh.py
+      - name: Crawl core, tracking, professional media, X and WeChat sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/crawl_with_wechat_registry.py --source "${{ inputs.source || 'all' }}"
-      - name: Crawl official company sources with category filter
-        if: ${{ inputs.source == '' || inputs.source == 'all' || inputs.source == 'news' || inputs.source == 'company' }}
+        run: python tools/crawl_with_wechat_registry.py --source all
+      - name: Crawl all fixed and user-configured official company sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/eastmoney_transport.py
@@ -97,8 +94,12 @@ jobs:
         run: python tools/enrich_tracking_snapshot.py
       - name: Refresh tracked people profiles and public videos
         run: python tools/refresh_people_profiles_with_video.py
+      - name: Finalize full refresh audit
+        run: python tools/finalize_full_refresh.py
       - name: Validate data quality
         run: python tools/crawl_articles.py --validate-only
+      - name: Validate complete source coverage
+        run: python tools/validate_full_refresh.py
       - name: Validate Eastmoney snapshot
         run: python tools/validate_eastmoney_snapshot.py
       - name: Validate user source coverage
@@ -120,18 +121,20 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add public/data/articles.json public/data/market_profiles.json public/data/people.json
-          git commit -m "data: refresh public articles, market and people profiles"
+          git commit -m "data: refresh all public intelligence sources"
           for attempt in 1 2 3; do
             git pull --rebase origin main
 
-            # Re-run enrichment at the rebased HEAD so stale jobs cannot publish
-            # obsolete market-cap, region, description or person identity semantics.
+            # Re-run deterministic enrichment at the rebased HEAD. Network source
+            # statuses remain the fresh ledger produced by this workflow run.
             python tools/refresh_market_profiles_enriched.py
             python tools/migrate_article_entities.py
             python tools/refine_eastmoney_snapshot.py
             python tools/enrich_tracking_snapshot.py
             python tools/refresh_people_profiles_with_video.py
+            python tools/finalize_full_refresh.py
             python tools/crawl_articles.py --validate-only
+            python tools/validate_full_refresh.py
             python tools/validate_eastmoney_snapshot.py
             python tools/validate_user_source_coverage.py
             python tools/validate_market_profiles.py
