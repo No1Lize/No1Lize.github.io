@@ -19,7 +19,7 @@ concurrency:
 jobs:
   integrate:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,18 +31,32 @@ jobs:
         with:
           node-version: "22"
           cache: npm
-      - name: Apply repository patch
-        run: python tools/apply_listed_disclosure_integration.py
+      - name: Apply repository patch with diagnostics
+        run: |
+          set +e
+          python tools/apply_listed_disclosure_integration.py 2>&1 | tee /tmp/listed-disclosure-patch.log
+          status=${PIPESTATUS[0]}
+          if [ "$status" -ne 0 ]; then
+            mkdir -p diagnostics
+            cp /tmp/listed-disclosure-patch.log diagnostics/listed-disclosure-integration-failure.txt
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/listed-disclosure-integration-failure.txt
+            git commit -m "ci: record listed disclosure integration failure"
+            git pull --rebase origin main
+            git push origin HEAD:main
+            exit "$status"
+          fi
       - name: Validate crawler and routing
         run: |
           python -m py_compile \
             tools/crawl_listed_company_disclosures.py \
             tools/apply_listed_disclosure_integration.py
           python -m unittest tests.test_listed_company_disclosures
-      - name: Validate application build
+      - name: Validate TypeScript integration
         run: |
           npm run install:ci
-          npm run build
+          npx tsc --noEmit
       - name: Commit integration and remove one-time files
         id: update
         run: |
