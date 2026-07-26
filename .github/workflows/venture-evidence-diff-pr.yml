@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/venture-evidence-diff-pr.yml
       - tools/apply_venture_team_product_semantics_fix.py
+      - tools/apply_sambanova_financing_fix.py
 
 permissions:
   contents: read
@@ -22,7 +23,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Apply candidate source fixes
-        run: python tools/apply_venture_team_product_semantics_fix.py
+        run: |
+          python tools/apply_venture_team_product_semantics_fix.py
+          python tools/apply_sambanova_financing_fix.py
       - name: Reprocess full snapshot
         run: |
           for pass in $(seq 1 8); do
