@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T04:52:13+00:00",
-  "articleCount": 881,
+  "generatedAt": "2026-07-26T05:21:28+00:00",
+  "articleCount": 878,
   "articles": [
     {
       "id": "user-source-source-track-rcvvao-2-b552a4acea704321",
@@ -384,46 +384,6 @@
       ]
     },
     {
-      "id": "user-source-source-minimax-e7f5e0aceabc91fc",
-      "sourceId": "user-source-source-minimax",
-      "title": "MiniMax Speech 2.8：赋予 AI 语音“人的温度”",
-      "summary": "这次升级不仅仅是参数的提升，更是一次关于\"真实感\"的突破：我们首次实现了 原生语气词支持 ，并带来了极高精度的 音色还原 、 录音棚级音质 以及地道的 跨语言表现 。 过去，AI语音让人感到冰冷，往往是因为它\"太完美了\"。真正的真人说话，其实充满了不完美的呼吸、停顿和犹豫，这些细节才是传递情绪、强调重点的关键信号。 Speech 2.8 模型首次引入了 自然语气标签 ，通过对口语填充词进行原生建模，让每一个\"嗯\"、\"呃\"或者\"哎\"都保留了应有的停顿和节奏。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-26",
-      "importance": 76,
-      "source": {
-        "name": "MiniMax 官方来源",
-        "url": "https://minimaxi.com/news/minimax-speech-28",
-        "level": "媒体报道",
-        "platform": "MiniMax 官方来源"
-      },
-      "qualityScore": 40,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "relatedSources": [
-        {
-          "name": "MiniMax",
-          "url": "https://www.minimaxi.com/news/minimax-speech-28",
-          "level": "媒体报道",
-          "platform": "官方网站",
-          "title": "MiniMax Speech 2.8：赋予 AI 语音“人的温度”",
-          "publishedAt": "2026-07-25"
-        }
-      ],
-      "duplicateCount": 1,
-      "eventClusterId": "5ece1243ea955ee0",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "user-source-source-minimax-9bbfb9b466e9e218",
       "sourceId": "user-source-source-minimax",
       "title": "MiniMax M2.5 - 编程与 Agent SOTA，专为 Agent Universe 而生",
@@ -448,72 +408,6 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-minimax-9191a1ac44ee5b48",
-      "sourceId": "user-source-source-minimax",
-      "title": "MiniMax Agent，最大的智慧是“靠谱”",
-      "summary": "https://r01udyvbjw.space.minimax.io/（credit to 赛博禅心）",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "publishedAt": "2026-07-26",
-      "importance": 76,
-      "source": {
-        "name": "MiniMax 官方来源",
-        "url": "https://minimaxi.com/news/minimax-agent",
-        "level": "媒体报道",
-        "platform": "MiniMax 官方来源"
-      },
-      "qualityScore": 49,
-      "qualitySignals": [
-        "标题命中 2 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "space"
-      ]
-    },
-    {
-      "id": "user-source-source-minimax-3604bb5e187ba506",
-      "sourceId": "user-source-source-minimax",
-      "title": "MiniMax Hailuo 2.3 视频复杂表现新高度 & Media Agent",
-      "summary": "MiniMax 官方来源 发布相关公开信息，完整内容见原文。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-26",
-      "importance": 76,
-      "source": {
-        "name": "MiniMax 官方来源",
-        "url": "https://minimaxi.com/news/minimax-hailuo-23",
-        "level": "媒体报道",
-        "platform": "MiniMax 官方来源"
-      },
-      "qualityScore": 51,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "relatedSources": [
-        {
-          "name": "MiniMax",
-          "url": "https://www.minimaxi.com/news/minimax-hailuo-23",
-          "level": "媒体报道",
-          "platform": "官方网站",
-          "title": "MiniMax Hailuo 2.3 视频复杂表现新高度 & Media Agent",
-          "publishedAt": "2026-07-25"
-        }
-      ],
-      "duplicateCount": 1,
-      "eventClusterId": "33fb44a35290d75b",
-      "trackSlugs": [
-        "ai"
       ]
     },
     {
@@ -7195,29 +7089,7 @@
         "Claude Agent"
       ],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "qualityScore": 75,
-      "qualitySignals": [
-        "标题命中 3 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "高可信",
-      "relatedSources": [
-        {
-          "name": "投资界",
-          "url": "https://news.pedaily.cn/202607/566804.shtml",
-          "level": "媒体报道",
-          "platform": "投资界",
-          "title": "Claude Agent突然大更新！狂塞500个技能，网友直呼疯狂",
-          "publishedAt": "2026-07-24"
-        }
-      ],
-      "duplicateCount": 1,
-      "eventClusterId": "0bcafe153fd97e95",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-youtube-e002c5682ba8f9b7",
@@ -8946,15 +8818,7 @@
         "WAIC"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 34,
-      "qualitySignals": [
-        "标题命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitechuang-ai-6741096badf52a95",
@@ -8964,7 +8828,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "OpenAI",
       "publishedAt": "2026-07-22",
       "importance": 76,
       "source": {
@@ -8993,17 +8857,7 @@
         "强化学习"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "qualityScore": 29,
-      "qualitySignals": [
-        "摘要命中 3 个追踪词",
-        "营销措辞惩罚 1 项"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-track-1ccjq49-google-us-ffa88a51f47c5abd",
@@ -10231,16 +10085,7 @@
         "强化学习"
       ],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "qualityScore": 46,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-anthropic-34f8ef8be3ccfee9",
@@ -10545,17 +10390,7 @@
         "多模态"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 71,
-      "qualitySignals": [
-        "标题命中 3 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "高可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-deeptechchina-materials-c36ff5dda6fa17f4",
@@ -10586,17 +10421,7 @@
         "散热"
       ],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "qualityScore": 40,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "semiconductor",
-        "materials"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitechuang-robotics-666b55df22840843",
@@ -10633,18 +10458,7 @@
         "RSS"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "qualityScore": 61,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitechuang-ai-16c4c6514e4f05e1",
@@ -10682,16 +10496,7 @@
         "MCP"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "qualityScore": 25,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-track-1ccjq49-google-us-50bb592a60d7cd9c",
@@ -11454,17 +11259,7 @@
         "WAIC"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 52,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-deeptechchina-ai-7d361b7c7fc6edd4",
@@ -11503,18 +11298,7 @@
         "强化学习"
       ],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "qualityScore": 55,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 1 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitechuang-robotics-c07012b46b90e158",
@@ -11524,7 +11308,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "机器人",
-      "company": "科技产业",
+      "company": "阿里云 / Qwen",
       "publishedAt": "2026-07-20",
       "importance": 76,
       "source": {
@@ -11551,16 +11335,7 @@
         "RSS"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "qualityScore": 55,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 1 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-quantum-google-us-dcd21c6a54addd9f",
@@ -12043,17 +11818,7 @@
         "gpt-5"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 69,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "高可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-agibot-efc0a60a38596fb6",
@@ -12107,7 +11872,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "阿里云 / Qwen",
       "publishedAt": "2026-07-19",
       "importance": 76,
       "source": {
@@ -12136,17 +11901,7 @@
         "多模态"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 65,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "高可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitopics-ai-5ec382030539814e",
@@ -12190,18 +11945,7 @@
         "SOTA"
       ],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "qualityScore": 52,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-c6s6ma-d63d5e3cc453f29a",
@@ -12289,17 +12033,7 @@
         "WAIC"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 46,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-deeptechchina-ai-b0c6106bda145f8a",
@@ -12332,16 +12066,7 @@
       ],
       "matchedTrackingTerms": [],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "qualityScore": 27,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitopics-ai-ebee7c609ed7028c",
@@ -12379,18 +12104,7 @@
         "gpt-5"
       ],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "qualityScore": 54,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-fosl0s-f08840ac26ae11f4",
@@ -12709,17 +12423,7 @@
         "API"
       ],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "qualityScore": 58,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 3 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-openai-548e40a2b24ea354",
@@ -13055,17 +12759,7 @@
         "gpt-5"
       ],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "qualityScore": 56,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-sierra-07d3560239dec6d1",
@@ -14296,18 +13990,7 @@
         "SOTA"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 60,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 5 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-jiqizhixin-ai-41e8b498e2c57b8e",
@@ -14343,18 +14026,7 @@
         "推理"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 48,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitopics-ai-46b964a6ef3866c4",
@@ -14390,20 +14062,11 @@
         "Claude",
         "Agents",
         "Multi-Agent",
-        "API"
+        "API",
+        "AMD"
       ],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "qualityScore": 62,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitechuang-robotics-48c88454c14b17b8",
@@ -14444,16 +14107,7 @@
         "灵巧手"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "qualityScore": 45,
-      "qualitySignals": [
-        "摘要命中 3 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-qbitai-ai-ade93c5ff355edb9",
@@ -14463,7 +14117,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "OpenAI",
       "publishedAt": "2026-07-11",
       "importance": 76,
       "source": {
@@ -14489,18 +14143,7 @@
         "gpt-5"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 63,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-jiqizhixin-ai-8dfb9465308a5eae",
@@ -14541,17 +14184,7 @@
         "Claude Agent"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 58,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 4 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-deeptechchina-ai-4d9a7cda269bc7c5",
@@ -14587,17 +14220,7 @@
       ],
       "matchedTrackingTerms": [],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "qualityScore": 19,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "营销措辞惩罚 1 项",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-108mw2h-d07abdff517e59c7",
@@ -14663,17 +14286,7 @@
       ],
       "matchedTrackingTerms": [],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "qualityScore": 47,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-qbitai-robotics-2dd1b00738795f03",
@@ -14705,16 +14318,7 @@
         "世界模型"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 37,
-      "qualitySignals": [
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitechuang-ai-dd7d7d9f16e8e452",
@@ -14755,17 +14359,7 @@
         "强化学习"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "qualityScore": 60,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 3 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-aitechuang-ai-a485d2118b592c50",
@@ -14805,17 +14399,7 @@
         "API"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "qualityScore": 54,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-108mw2h-e8d45b9b3f17a844",
@@ -15099,18 +14683,7 @@
         "大模型"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 63,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "标题命中公司/账号",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-108mw2h-9ef077e89ba8dadc",
@@ -15279,18 +14852,7 @@
         "多模态"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 50,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-eefocus-semiconductor-0f881e5fdeda2f3f",
@@ -15423,17 +14985,7 @@
         "灵巧手"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 54,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-qbitai-ai-ba425ecd1c304768",
@@ -15478,19 +15030,7 @@
         "强化学习"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 59,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "标题命中公司/账号",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-jiqizhixin-robotics-2f49b75d484d8b38",
@@ -15523,17 +15063,49 @@
         "灵巧手"
       ],
       "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page",
-      "qualityScore": 54,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "包含明确事件动作"
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-robotics-6bc398cf6e91c0c1",
+      "sourceId": "user-track-wechat-aitechuang-robotics",
+      "title": "独家｜姚顺雨前同事田永龙加盟腾讯",
+      "summary": "鹅厂AI版图再添一员猛将 作者丨 成妍菁 编辑丨 董子博 AI科技评论独家获悉， OpenAI 前研究员 Yonglong Tian（田永龙）已于近期加入腾讯， 知情人士透露，其后续或将参与参与 VLM（视觉语言模型）相关研发。 一位与其相熟的人士向雷峰网表示， 田永龙在圈内口碑不错，“人挺好，与姚顺雨关系也不错”。 田永龙此前在 OpenAI 担任 Member of Technical Staff，主要研究方向包括计算机视觉、视觉表征学习（Representation Learning）以及生成式模型。在 OpenAI 之前，他曾在“谷歌系”深耕多年。2022年底，他加入位于剑桥的Google Research担任高级研究科学家，随后于2024年5月转入Google DeepMind。 据了解，田永龙与腾讯混元核心成员姚顺雨有过 OpenAI 阶段的共事经历。从履历路径来看，田永龙属于典型的“视觉系”研究员。 其本科毕业于清华大学，随后在香港中文大学获得研究硕士学位，之后赴 MIT 攻读博士，博士期间，其研究重点集中在对比学习、视觉表征学习等方向，并参与过 SupContrast",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-08",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2a22a7eca33408dee051c91e112ee3bc6a301072295eed91dded6e59fe349904d06228cb&idx=3&mid=2247738289&sn=0aa5a1e1cf7ccbc7d5360a826640b714",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "成妍菁"
       ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "robotics"
-      ]
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Google DeepMind",
+        "百度",
+        "腾讯 / 元宝"
+      ],
+      "mentionedPeople": [
+        "姚顺雨",
+        "Yonglong Tian",
+        "Technical Staff",
+        "Representation Learning",
+        "随后于",
+        "期间",
+        "任高级研究",
+        "攻读"
+      ],
+      "matchedTrackingTerms": [],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-source-source-openai-1c93d6c1c7251e5f",
@@ -15647,16 +15219,7 @@
         "Claude"
       ],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "qualityScore": 44,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-anduril-8d72dce938f5c050",
@@ -15886,18 +15449,7 @@
       "matchedTrackingTerms": [],
       "wechatAccountConfigId": "deeptechchina",
       "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "生物科技",
-      "qualityScore": 19,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "营销措辞惩罚 1 项",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      "wechatSectorReassignedFrom": "生物科技"
     },
     {
       "id": "user-source-source-track-fosl0s-c4936c6564289934",
@@ -16161,7 +15713,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
       "publishedAt": "2026-07-01",
       "importance": 76,
       "source": {
@@ -16189,19 +15741,7 @@
       ],
       "wechatAccountConfigId": "qbitai",
       "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人",
-      "qualityScore": 48,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
+      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-source-source-track-12jn6rw-a1117174515f81bf",
@@ -16620,17 +16160,7 @@
         "gpt-5"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 48,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-1izlsao-7badcec8fd6f6306",
@@ -16817,18 +16347,7 @@
         "Multi-Agent"
       ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "qualityScore": 59,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词",
-        "标题命中公司/账号",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-zlbbw1-e23136e06af8ed93",
@@ -18329,27 +17848,6 @@
         "包含明确事件动作"
       ],
       "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "official-minimax-79aec87b9abf8b5d",
-      "sourceId": "official-minimax",
-      "title": "MaxProof: 生成式验证强化学习驱动的数学证明进化系统 - MiniMax Research",
-      "summary": "在 M3 发布推文中，我们汇报了 M3 模型在 IMO 2025 与 USAMO 2026 两组国际数学竞赛真题上的表现：在搭配 MaxProof 框架后，M3 均超过了人类金牌线。本文将进一步展开我们在推进数学证明能力过程中的技术路径，包括基座模型能力增强、verifier 对齐、refinement 能力构建，以及测试时增强框架 MaxProof 的设计。",
-      "type": "技术突破",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-06-09",
-      "importance": 85,
-      "source": {
-        "name": "MiniMax",
-        "url": "https://www.minimaxi.com/blog/minimax-maxproof-math-proof-evolution",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
       "trackSlugs": [
         "ai"
       ]
@@ -30969,34 +30467,31 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitechuang-ai",
       "name": "AI科技评论",
       "status": "ok",
       "scanned": 17,
-      "accepted": 6,
+      "accepted": 4,
       "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitechuang-robotics",
       "name": "AI科技评论",
-      "status": "ok",
+      "status": "partial",
       "scanned": 18,
-      "accepted": 6,
-      "failed": 0,
+      "accepted": 4,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitopics-ai",
@@ -31008,21 +30503,19 @@
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitopics-robotics",
       "name": "新智元",
       "status": "partial",
       "scanned": 38,
-      "accepted": 6,
+      "accepted": 1,
       "failed": 5,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-biotech",
@@ -31036,8 +30529,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-cbea-battery-energy",
@@ -31051,8 +30543,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-chiptrend-ic-semiconductor",
@@ -31066,60 +30557,57 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-ai",
       "name": "DeepTech深科技",
       "status": "ok",
       "scanned": 16,
-      "accepted": 6,
+      "accepted": 5,
       "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-biotech",
       "name": "DeepTech深科技",
       "status": "ok",
       "scanned": 15,
-      "accepted": 6,
+      "accepted": 1,
       "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-materials",
       "name": "DeepTech深科技",
       "status": "ok",
       "scanned": 15,
-      "accepted": 6,
+      "accepted": 1,
       "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "error",
       "scanned": 15,
-      "accepted": 6,
-      "failed": 0,
+      "accepted": 0,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
       "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-eefocus-semiconductor",
@@ -31133,8 +30621,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-energy",
@@ -31148,8 +30635,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-fusion",
@@ -31163,8 +30649,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-gg-lithium-energy",
@@ -31178,8 +30663,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-gg-robot-robotics",
@@ -31193,8 +30677,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-icbank-semiconductor",
@@ -31202,14 +30685,13 @@
       "status": "error",
       "scanned": 0,
       "accepted": 0,
-      "failed": 8,
+      "failed": 16,
       "platform": "微信",
       "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-ijiwei-semiconductor",
@@ -31223,8 +30705,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-jiqizhixin-ai",
@@ -31236,21 +30717,19 @@
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-jiqizhixin-robotics",
       "name": "机器之心",
       "status": "partial",
       "scanned": 26,
-      "accepted": 6,
+      "accepted": 4,
       "failed": 4,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-manufacturing",
@@ -31264,8 +30743,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-materials",
@@ -31279,8 +30757,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-qbitai-ai",
@@ -31292,21 +30769,19 @@
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-qbitai-robotics",
       "name": "量子位",
       "status": "partial",
       "scanned": 19,
-      "accepted": 6,
-      "failed": 7,
+      "accepted": 3,
+      "failed": 6,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-quantum",
@@ -31320,8 +30795,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-robospeak-robotics",
@@ -31335,8 +30809,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-robotics",
@@ -31350,8 +30823,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-semiconductor",
@@ -31365,8 +30837,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-semiconductor-technology-semiconductor",
@@ -31380,8 +30851,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-space",
@@ -31395,8 +30865,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-track-1ccjq49",
@@ -31410,8 +30879,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-web3",
@@ -31425,8 +30893,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-26T04:53:27+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-x-anthropicai",
@@ -31966,5 +31433,17 @@
     "healthySourceCount": 196,
     "failedSourceCount": 80,
     "retainedPreviousSourceCount": 31
+  },
+  "wechatIngestion": {
+    "generatedAt": "2026-07-26T05:21:28+00:00",
+    "configuredSources": 33,
+    "successfulSources": 11,
+    "acceptedArticles": 41,
+    "fullTextArticles": 41,
+    "indexOnlyArticles": 0,
+    "removedProxyRecords": 0,
+    "retainedSources": 22,
+    "mentionedCompanyLinks": 48,
+    "mentionedPeopleLinks": 108
   }
 }
