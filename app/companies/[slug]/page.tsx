@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CompanyEquityEvidence } from "@/components/company-equity-evidence";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
 import { intelligenceEvents, snapshotDate } from "@/lib/intelligence-data";
 import {
@@ -51,9 +52,7 @@ export default async function CompanyDetail({
   const background = venture?.projectBackground?.summary || venture?.background || company.summary;
   const projectBackground = venture?.projectBackground;
   const technology = venture?.researchTechnology || venture?.technology || research.technology;
-  const products = venture?.products?.length
-    ? venture.products
-    : [company.product];
+  const products = venture?.products?.length ? venture.products : [company.product];
   const technologyProducts = venture?.technologyProducts ?? [];
   const team = venture?.team ?? [];
   const financing = venture?.financing ?? [];
@@ -97,6 +96,7 @@ export default async function CompanyDetail({
     "核心技术与产品",
     "核心团队",
     "投融资与资本运作",
+    "股权与工商核验",
     "上市与退出表现",
     "公开动态",
     "关键研究问题",
@@ -121,9 +121,7 @@ export default async function CompanyDetail({
             {venture && <span>证据完整度 {venture.evidenceScore ?? 0}%</span>}
           </div>
         </div>
-        <div className="entity-monogram">
-          {company.name.slice(0, 2).toUpperCase()}
-        </div>
+        <div className="entity-monogram">{company.name.slice(0, 2).toUpperCase()}</div>
       </header>
 
       <div className="detail-layout">
@@ -255,28 +253,38 @@ export default async function CompanyDetail({
                 <Insight label="融资证据汇总" text={capitalSummary.summary} />
                 <Insight
                   label="已披露金额"
-                  text={capitalSummary.disclosedAmounts.length
-                    ? capitalSummary.disclosedAmounts.join("、")
-                    : "未披露或尚未识别"}
+                  text={
+                    capitalSummary.disclosedAmounts.length
+                      ? capitalSummary.disclosedAmounts.join("、")
+                      : "未披露或尚未识别"
+                  }
                 />
                 <Insight
                   label="主要投资方"
-                  text={capitalSummary.majorInvestors.length
-                    ? capitalSummary.majorInvestors.join("、")
-                    : "未披露或尚未识别"}
+                  text={
+                    capitalSummary.majorInvestors.length
+                      ? capitalSummary.majorInvestors.join("、")
+                      : "未披露或尚未识别"
+                  }
                 />
                 <Insight
                   label="融资阶段"
-                  text={capitalSummary.rounds.length
-                    ? capitalSummary.rounds.join("、")
-                    : "未披露或尚未识别"}
+                  text={
+                    capitalSummary.rounds.length
+                      ? capitalSummary.rounds.join("、")
+                      : "未披露或尚未识别"
+                  }
                 />
               </div>
             )}
             <CapitalTimeline
               items={financing}
-              emptyText="当前公开页面未识别到可核对的融资轮次、金额或投资方。页面不会用推测数据填充，后续通过公司公告、投资机构披露与监管材料继续补充。"
+              emptyText="当前公开页面未识别到可核对的融资轮次、金额或投资方。页面不会用推测数据填充，后续通过公司公告、投资机构披露、专业数据库与监管材料继续补充。"
             />
+          </Section>
+
+          <Section id="股权与工商核验" title="股权、股东与工商变更核验">
+            <CompanyEquityEvidence slug={slug} />
           </Section>
 
           <Section id="上市与退出表现" title="上市、并购与退出表现">
@@ -310,17 +318,11 @@ export default async function CompanyDetail({
                     <time>{event.publishedAt}</time>
                     <div>
                       <div className="event-tags">
-                        <span className={`tag tag-${event.type}`}>
-                          {event.type}
-                        </span>
+                        <span className={`tag tag-${event.type}`}>{event.type}</span>
                       </div>
                       <strong>{event.title}</strong>
                       <p>{event.summary}</p>
-                      <a
-                        href={event.source.url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                      <a href={event.source.url} target="_blank" rel="noreferrer">
                         {event.source.level} · {event.source.name}
                       </a>
                     </div>
@@ -386,9 +388,7 @@ export default async function CompanyDetail({
                 rel="noreferrer"
                 key={source.url}
               >
-                <span>
-                  {source.publishedAt || source.section || source.level}
-                </span>
+                <span>{source.publishedAt || source.section || source.level}</span>
                 <strong>{source.title || source.name}</strong>
                 <small>{source.url}</small>
               </a>
@@ -401,10 +401,7 @@ export default async function CompanyDetail({
             <>
               <strong>公开投资机构</strong>
               {relatedInstitutions.map((institution) => (
-                <Link
-                  href={`/institutions/${institution.slug}`}
-                  key={institution.slug}
-                >
+                <Link href={`/institutions/${institution.slug}`} key={institution.slug}>
                   {institution.name}
                   <span>{institution.stages}</span>
                 </Link>
