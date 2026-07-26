@@ -1,0 +1,1 @@
+Validate the direct professional-media adapter, 100/100 current-attempt markers, original-domain attribution, complete source coverage, same-day freshness, and rolling newest-first retention. This branch is validation-only and must not be merged.
