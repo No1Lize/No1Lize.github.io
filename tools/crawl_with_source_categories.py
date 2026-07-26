@@ -194,7 +194,10 @@ def _custom_sources(
                 spec["ticker"] = ticker
         runtime_specs.append(spec)
 
-    return runtime_specs[:80], sec_specs
+    # Route every enabled source. Truncating here would silently ignore
+    # configured sources, which validate_user_source_coverage treats as a
+    # hard failure; per-source maxItems already bounds crawl volume.
+    return runtime_specs, sec_specs
 
 
 def _install_strict_tracking_validation() -> None:

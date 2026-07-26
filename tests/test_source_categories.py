@@ -251,5 +251,36 @@ class LegacyEntityMigrationTests(unittest.TestCase):
         )
 
 
+class SourceRoutingCapacityTests(unittest.TestCase):
+    def test_every_enabled_source_produces_a_runtime_spec(self) -> None:
+        """Regression: routing must not silently truncate configured sources.
+
+        A batch of media sources once pushed the enabled count past a hard
+        [:80] slice; the dropped sources had no runtime spec, so
+        validate_user_source_coverage failed every refresh and the public
+        snapshot froze."""
+
+        tracking = {
+            "sources": [
+                {
+                    "id": f"media-{index}",
+                    "name": f"媒体 {index}",
+                    "sourceCategory": "media",
+                    "sourceType": "listing-search",
+                    "url": f"https://media-{index}.example/news",
+                }
+                for index in range(127)
+            ]
+        }
+        specs, sec_specs = generic_categories._custom_sources(tracking, [])
+        self.assertEqual(len(specs), 127)
+        self.assertEqual(sec_specs, {})
+        self.assertEqual(
+            len({spec["id"] for spec in specs}),
+            127,
+            "runtime ids must stay unique for coverage accounting",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
