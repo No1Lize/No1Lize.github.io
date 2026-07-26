@@ -102,12 +102,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .mobile-menu { display: none; }
 
 .page-shell { width: min(1560px, calc(100% - 40px)); margin: auto; padding: 40px 0 72px; }
-.dashboard-intro { display: grid; grid-template-columns: 1fr 300px; gap: 42px; align-items: end; padding: 36px 0 34px; border-bottom: 1px solid var(--border); }
+.dashboard-intro { display: grid; grid-template-columns: 1fr; gap: 28px; padding: 0 0 34px; border-bottom: 1px solid var(--border); }
 .eyebrow, .section-index { color: var(--green); font-size: 11px; font-weight: 700; letter-spacing: .17em; margin: 0 0 10px; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif; letter-spacing: -.025em; max-width: 850px; margin-bottom: 18px; }
 .intro-copy { max-width: 790px; color: var(--muted); font-size: 16px; margin-bottom: 0; }
-.snapshot-card { border: 1px solid var(--border); background: linear-gradient(135deg, var(--surface-2), var(--surface)); padding: 22px; box-shadow: var(--shadow); }
+.snapshot-card { max-width: 360px; border: 1px solid var(--border); background: linear-gradient(135deg, var(--surface-2), var(--surface)); padding: 22px; box-shadow: var(--shadow); }
 .snapshot-top, .snapshot-meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; }
 .status-pill { display: inline-flex; align-items: center; color: var(--green-bright); }
 .snapshot-card > strong { display: block; font-size: 52px; line-height: 1; margin-top: 23px; font-weight: 500; letter-spacing: -.06em; }
@@ -310,8 +310,6 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
   .main-nav { display: none; position: absolute; top: 72px; left: 14px; right: 14px; margin: 0; background: var(--surface-2); border: 1px solid var(--border); padding: 10px; box-shadow: var(--shadow); }
   .main-nav.is-open { display: grid; grid-template-columns: repeat(2, 1fr); }
   .main-nav a { padding: 10px; min-height: 48px; }
-  .dashboard-intro { grid-template-columns: 1fr; padding-top: 16px; }
-  .snapshot-card { max-width: 360px; }
   .market-strip { grid-template-columns: 1fr; padding: 14px 0; }
   .market-divider { display: none; }
   .market-summary, .market-summary:last-child { justify-content: space-between; border-bottom: 1px solid var(--border-soft); }
