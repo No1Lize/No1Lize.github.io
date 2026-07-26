@@ -1,0 +1,90 @@
+name: Register semiconductor media sources
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - tools/add_semiconductor_media_sources.py
+      - .github/workflows/register-semiconductor-media-sources.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: register-semiconductor-media-sources
+  cancel-in-progress: true
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Upsert media sources
+        run: python tools/add_semiconductor_media_sources.py
+      - name: Validate source configuration
+        run: |
+          python -m py_compile tools/add_semiconductor_media_sources.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from tools.add_semiconductor_media_sources import SEMICONDUCTOR_MEDIA_SOURCES
+          from tools import strict_tracking_config
+
+          path = Path("config/user_tracking.json")
+          payload = json.loads(path.read_text(encoding="utf-8"))
+          sanitized = strict_tracking_config.sanitize_tracking_config(payload)
+          by_id = {
+              str(source.get("id")): source
+              for source in sanitized.get("sources", [])
+              if isinstance(source, dict)
+          }
+          missing = [
+              source["id"]
+              for source in SEMICONDUCTOR_MEDIA_SOURCES
+              if source["id"] not in by_id
+          ]
+          if missing:
+              raise SystemExit(f"registered sources missing after validation: {missing}")
+          for expected in SEMICONDUCTOR_MEDIA_SOURCES:
+              actual = by_id[expected["id"]]
+              if actual.get("sourceCategory") != "media":
+                  raise SystemExit(f"wrong source category: {expected['id']}")
+              if actual.get("sector") != "半导体":
+                  raise SystemExit(f"wrong sector: {expected['id']}")
+              if actual.get("sourceType") != "listing-search":
+                  raise SystemExit(f"wrong source type: {expected['id']}")
+          print(f"validated {len(SEMICONDUCTOR_MEDIA_SOURCES)} semiconductor media sources")
+          PY
+      - name: Commit registered sources
+        id: update
+        run: |
+          if git diff --quiet -- config/user_tracking.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add config/user_tracking.json
+          git commit -m "config: add semiconductor professional media sources"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Start public source refresh
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run scheduled-sync.yml --ref main -f source=discovery
