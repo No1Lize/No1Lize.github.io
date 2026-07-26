@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "generatedAt": "2026-07-25T17:44:03+00:00",
   "companies": {
     "agibot": {
@@ -712,7 +712,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "bgi-genomics": {
       "slug": "bgi-genomics",
@@ -932,7 +962,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "cambricon": {
       "slug": "cambricon",
@@ -1133,7 +1193,37 @@
         "latestEvent": "寒武纪已进入公开市场",
         "summary": "最新可核对资本市场记录为日期未披露的寒武纪已进入公开市场。",
         "sourceUrl": "https://www.cambricon.com/"
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "catl": {
       "slug": "catl",
@@ -1275,7 +1365,37 @@
         "latestEvent": "",
         "summary": "目录状态显示该公司已上市；当前快照未保留可核对的上市事件明细。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "cerebras": {
       "slug": "cerebras",
@@ -1748,7 +1868,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:51+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        }
+      ]
     },
     "envision-energy": {
       "slug": "envision-energy",
@@ -1834,7 +1984,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "figure-ai": {
       "slug": "figure-ai",
@@ -2192,7 +2372,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "galbot": {
       "slug": "galbot",
@@ -2979,7 +3189,37 @@
         "latestEvent": "",
         "summary": "目录状态显示该公司已上市；当前快照未保留可核对的上市事件明细。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "insilico-medicine": {
       "slug": "insilico-medicine",
@@ -3500,7 +3740,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "minimax": {
       "slug": "minimax",
@@ -3674,7 +3944,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "mobileye": {
       "slug": "mobileye",
@@ -3960,7 +4260,37 @@
         "latestEvent": "China's Moonshot AI is seeking a $50 billion valuation in pre-IPO funding talks - qz.com",
         "summary": "最新可核对资本市场记录为2026-07-21的China's Moonshot AI is seeking a $50 billion valuation in pre-IPO funding talks - qz.com。",
         "sourceUrl": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5ScEY1eG5BS2tja281dzA4al9aRHZOaGdORURDZlZoYmJuTkZ5aF9GLVNGM0k4WUlEeGtRM3NXX2lBcENxTkw0Q2VpakJqYTQ4a0FKTlVhRHJvSFJHTkhLUzFKS3prYXgzM1FZbmtMRkxSRVZyWThwTGp3?oc=5"
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "moore-threads": {
       "slug": "moore-threads",
@@ -4163,7 +4493,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "openai": {
       "slug": "openai",
@@ -4296,7 +4656,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "perplexity": {
       "slug": "perplexity",
@@ -4493,7 +4883,37 @@
         "latestEvent": "",
         "summary": "目录状态显示该公司已上市；当前快照未保留可核对的上市事件明细。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "psiquantum": {
       "slug": "psiquantum",
@@ -6210,7 +6630,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:52+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        }
+      ]
     },
     "svlot": {
       "slug": "svlot",
@@ -6349,7 +6799,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "tempus-ai": {
       "slug": "tempus-ai",
@@ -6619,7 +7099,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:51+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        }
+      ]
     },
     "varda": {
       "slug": "varda",
@@ -6927,7 +7437,37 @@
         "latestEvent": "",
         "summary": "目录状态显示该公司已上市；当前快照未保留可核对的上市事件明细。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:52+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "xai": {
       "slug": "xai",
@@ -7211,7 +7751,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:53+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:53+00:00"
+        }
+      ]
     },
     "xtalpi": {
       "slug": "xtalpi",
@@ -7560,7 +8130,37 @@
         "latestEvent": "",
         "summary": "当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
         "sourceUrl": ""
-      }
+      },
+      "equityProfile": {
+        "evidenceStatus": "pending",
+        "verifiedAt": "2026-07-26T05:26:51+00:00"
+      },
+      "professionalSources": [
+        {
+          "name": "企查查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.qcc.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "天眼查",
+          "status": "disabled",
+          "detail": "付费接口调用未启用；未抓取登录后网页。",
+          "url": "https://www.tianyancha.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        },
+        {
+          "name": "鲸准",
+          "status": "no_data",
+          "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+          "url": "https://www.jingdata.com/",
+          "records": 0,
+          "updatedAt": "2026-07-26T05:26:51+00:00"
+        }
+      ]
     }
   },
   "institutions": {
@@ -10806,5 +11406,608 @@
     "productiveInstitutions": 20,
     "consistencyErrors": []
   },
-  "researchModelVersion": 3
+  "researchModelVersion": 3,
+  "professionalSourceStatus": [
+    {
+      "kind": "company",
+      "slug": "deepseek",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "deepseek",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "deepseek",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "unitree",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "unitree",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "unitree",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "zhipu-ai",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "zhipu-ai",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "zhipu-ai",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "moonshot-ai",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "moonshot-ai",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:51+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "moonshot-ai",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "minimax",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "minimax",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "minimax",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "baichuan-ai",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "baichuan-ai",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "baichuan-ai",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "stepfun",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "stepfun",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "stepfun",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "biren",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "biren",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "biren",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "moore-threads",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "moore-threads",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "moore-threads",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "cambricon",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "cambricon",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "cambricon",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "horizon-robotics",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "horizon-robotics",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "horizon-robotics",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "pony-ai",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "pony-ai",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "pony-ai",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "weride",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "weride",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:52+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "weride",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "xpeng-aeroht",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "xpeng-aeroht",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "xpeng-aeroht",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "landspace",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "landspace",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "landspace",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "galactic-energy",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "galactic-energy",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "galactic-energy",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "origin-space",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "origin-space",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "origin-space",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "catl",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "catl",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "catl",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "envision-energy",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "envision-energy",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "envision-energy",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "svlot",
+      "name": "企查查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.qcc.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "svlot",
+      "name": "天眼查",
+      "status": "disabled",
+      "detail": "付费接口调用未启用；未抓取登录后网页。",
+      "url": "https://www.tianyancha.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    },
+    {
+      "kind": "company",
+      "slug": "svlot",
+      "name": "鲸准",
+      "status": "no_data",
+      "detail": "从公开索引发现 0 条可直接打开的鲸准投融资页面；未登录、未绕过验证码，数据库记录需与原始披露交叉验证。",
+      "url": "https://www.jingdata.com/",
+      "records": 0,
+      "updatedAt": "2026-07-26T05:26:53+00:00"
+    }
+  ],
+  "professionalSourceGeneratedAt": "2026-07-26T05:26:53+00:00"
 }
