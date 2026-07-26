@@ -22,8 +22,9 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
             "python tools/validate_professional_media_snapshot.py --require-articles",
             "python tools/crawl_listed_company_disclosures.py",
             "python tools/cninfo_structured_disclosures.py --require-events",
-            "python -m tools.us_ir_search_disclosures --require-events",
-            "python -m tools.us_ir_search_disclosures --check --require-events",
+            "python -m tools.publish_us_ir_baselines",
+            "python -m tools.us_ir_baseline_disclosures",
+            "python -m tools.us_ir_baseline_disclosures --check --require-events",
             "python tools/eastmoney_transport.py",
             "python tools/validate_full_refresh.py",
         )
