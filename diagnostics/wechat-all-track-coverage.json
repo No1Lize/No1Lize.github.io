@@ -1,21 +1,21 @@
 {
-  "snapshotGeneratedAt": "2026-07-26T01:20:03+00:00",
+  "snapshotGeneratedAt": "2026-07-26T01:43:42+00:00",
   "enabledTrackCount": 12,
-  "generatedSourceCount": 30,
-  "executedSourceCount": 30,
+  "generatedSourceCount": 33,
+  "executedSourceCount": 33,
   "tracksWithoutExecutedSource": [],
   "originalUrlContractPassed": true,
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T01:20:03+00:00",
-    "configuredSources": 30,
-    "successfulSources": 12,
+    "generatedAt": "2026-07-26T01:43:42+00:00",
+    "configuredSources": 33,
+    "successfulSources": 11,
     "acceptedArticles": 41,
     "fullTextArticles": 41,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 18,
-    "mentionedCompanyLinks": 46,
-    "mentionedPeopleLinks": 104
+    "retainedSources": 22,
+    "mentionedCompanyLinks": 45,
+    "mentionedPeopleLinks": 101
   },
   "tracks": [
     {
@@ -54,7 +54,7 @@
           "status": "partial",
           "scanned": 18,
           "accepted": 6,
-          "failed": 8,
+          "failed": 9,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -222,15 +222,15 @@
       "sector": "半导体",
       "custom": false,
       "genericSourcePresent": true,
-      "sourceCount": 3,
-      "statusCount": 3,
+      "sourceCount": 6,
+      "statusCount": 6,
       "acceptedThisRun": 0,
-      "retainedSourceCount": 3,
+      "retainedSourceCount": 6,
       "snapshotArticleCount": 0,
       "fullTextArticles": 0,
       "indexOnlyArticles": 0,
       "providers": {
-        "sogou-weixin+fallback": 3
+        "sogou-weixin+fallback": 6
       },
       "sources": [
         {
@@ -264,6 +264,48 @@
         {
           "id": "user-track-wechat-ijiwei-semiconductor",
           "name": "集微网",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-semiconductor-technology-semiconductor",
+          "name": "半导体技术",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-chiptrend-ic-semiconductor",
+          "name": "芯潮IC",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        },
+        {
+          "id": "user-track-wechat-eefocus-semiconductor",
+          "name": "与非网",
           "status": "error",
           "scanned": 0,
           "accepted": 0,
@@ -342,10 +384,10 @@
       "genericSourcePresent": true,
       "sourceCount": 2,
       "statusCount": 2,
-      "acceptedThisRun": 1,
+      "acceptedThisRun": 2,
       "retainedSourceCount": 1,
-      "snapshotArticleCount": 1,
-      "fullTextArticles": 1,
+      "snapshotArticleCount": 2,
+      "fullTextArticles": 2,
       "indexOnlyArticles": 0,
       "providers": {
         "sogou-weixin+fallback": 1,
@@ -369,10 +411,10 @@
         {
           "id": "user-track-wechat-deeptechchina-biotech",
           "name": "DeepTech深科技",
-          "status": "ok",
+          "status": "partial",
           "scanned": 15,
-          "accepted": 1,
-          "failed": 0,
+          "accepted": 2,
+          "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -386,10 +428,10 @@
       "genericSourcePresent": true,
       "sourceCount": 2,
       "statusCount": 2,
-      "acceptedThisRun": 1,
-      "retainedSourceCount": 1,
-      "snapshotArticleCount": 1,
-      "fullTextArticles": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 2,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
       "indexOnlyArticles": 0,
       "providers": {
         "sogou-weixin+fallback": 1,
@@ -413,14 +455,16 @@
         {
           "id": "user-track-wechat-deeptechchina-quantum",
           "name": "DeepTech深科技",
-          "status": "partial",
+          "status": "error",
           "scanned": 15,
-          "accepted": 1,
+          "accepted": 0,
           "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
-          "sogouResolved": 0
+          "sogouResolved": 0,
+          "retainedPrevious": true,
+          "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
         }
       ]
     },

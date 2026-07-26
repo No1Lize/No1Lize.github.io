@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T01:20:03+00:00",
+  "generatedAt": "2026-07-26T01:43:42+00:00",
   "articleCount": 504,
   "articles": [
     {
@@ -9426,7 +9426,7 @@
     },
     {
       "id": "user-track-wechat-deeptechchina-quantum-b2185c32a1575652",
-      "sourceId": "user-track-wechat-deeptechchina-quantum",
+      "sourceId": "user-track-wechat-deeptechchina-biotech",
       "title": "Anthropic也要造芯片了，还挖了OpenAI的芯片工程师",
       "summary": "继 OpenAI 发布首款自研 AI 芯片之后 ，Anthropic 也在加快向芯片领域延伸。 据 The Information 报道， Anthropic 正在与三星接洽，讨论由后者参与制造一款定制 AI 芯片。 双方目前仍处于探索阶段，Anthropic 尚未确定芯片的具体用途、性能指标，也没有明确它将如何集成到服务器和数据中心。 部分媒体称，双方的讨论涉及三星的 2 纳米制程和先进封装能力。不过，Anthropic 和三星均未确认这些细节。面对媒体询问，Anthropic 也没有进一步表态， 只强调包含谷歌、亚马逊和英伟达芯片在内的多元化硬件架构仍将是其算力战略的重要组成部分。 Anthropic一直在扩大芯片供应链 Anthropic 过去给外界的印象，主要是一家专注于模型研究和 AI 安全的公司。但实际上，它与芯片底层的联系早已不止于采购算力。 2024 年，Anthropic 宣布深化与亚马逊的合作。亚马逊云科技（AWS）成为其主要云服务和训练合作伙伴，亚马逊对 Anthropic 的总投资则增加至 80 亿美元。 双方的合作并不是简单地把 Claude 部署到 AWS",
       "type": "公司动态",
@@ -9458,7 +9458,7 @@
       "matchedTrackingTerms": [],
       "wechatAccountConfigId": "deeptechchina",
       "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "量子计算"
+      "wechatSectorReassignedFrom": "生物科技"
     },
     {
       "id": "deepmind-blog-4e2b1466249cf48f",
@@ -9881,46 +9881,6 @@
       ]
     },
     {
-      "id": "user-track-wechat-qbitai-ai-7cebb8e161b3b62e",
-      "sourceId": "user-track-wechat-qbitai-ai",
-      "title": "「开源Claude时刻」，智谱GLM5.2与Mythos被放在一起了",
-      "summary": "克雷西 发自 凹非寺 量子位 | 公众号 QbitAI 这个周末，智谱没闲着。 多家外媒接连跟进报道，华尔街时报更是直言 「中国重置了AI竞赛」 。 因为，智谱的GLM-5.2，让Claude Mythos在找安全漏洞这件事上，不再是独一无二的神话了！ 代码安全公司Semgrep写了篇测评，标题直接叫「We have Mythos at Home」。 热议的核心只有一件事， GLM-5.2在找安全漏洞这件事上追平了Mythos 。 X上的讨论也跟着炸了。 Databricks研究员Yuchen Jin说，这是 「开源领域的Claude时刻」 ，他们看到的需求增长让人震惊。 GLM找漏洞追平Mythos Semgrep做这个测试，最初其实不是为了找最强的开源模型。 他们想弄清的是另一件事，AI找漏洞的成绩，到底有多少是模型本身的能力，又有多少是外面那层脚手架的功劳。 结果把他们自己吓到了。 GLM-5.2在这次测试里没有任何加持和引导， 只有一个prompt和一堆代码裸跑，结果最终在IDOR漏洞检测上拿到39%的F1分 。 这个成绩不仅超过了同样裸跑的其他开源模型，连带着完整SDK加持、",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-06-29",
-      "importance": 76,
-      "source": {
-        "name": "量子位",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6beadfade2fc068f50e81030952ce4708792b1e9abe0461959c42b137b89e7747a5bdf2f&idx=2&mid=2247900312&sn=b5ec17232d8089ec9bb546aec201c145",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "关注前沿科技"
-      ],
-      "wechatAccount": "量子位",
-      "mentionedCompanies": [
-        "Anthropic",
-        "Databricks",
-        "智谱AI"
-      ],
-      "mentionedPeople": [
-        "唐杰",
-        "Yuchen Jin",
-        "Lior Div",
-        "Nicholas Carlini",
-        "Niels Provos"
-      ],
-      "matchedTrackingTerms": [
-        "Claude",
-        "gpt-5"
-      ],
-      "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "google-ai-blog-e0616775a3b94cd0",
       "sourceId": "google-ai-blog",
       "title": "Ask an AI expert: What exactly is the full stack?",
@@ -10142,6 +10102,44 @@
       "trackSlugs": [
         "semiconductor"
       ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-24fc3720e59e81a1",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "跟Claude谈个恋爱怎么了？Nature最新研究：真能给人聊傻了",
+      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 停停停！再这么跟AI聊下去，真要出事了。 最近，一刷小红书、抖音，总能刷到各种调教Claude的帖子。搜索“Claude人设”、“人机恋”，也是满屏教程。 这些教程教你怎么给Claude一个傲娇男友人设，怎么用system prompt让“他”吃醋、撒娇、发小脾气。 毫不夸张的说，Claude已经，俨然成为了新一代电子老公。 乍一看，这可能只是年轻人向AI讨要点情绪价值。 你甚至可能还会说：Claude又不像GPT那么舔，它是出了名的犟种，有时候还跟你对着干呢。但精神科医生们担心的恰恰不只是谄媚—— 当AI越来越像一个”真人”，不管它是顺着你还是偶尔跟你拌嘴，它带来的或许都不只是陪伴。 最近，发表于Nature旗下《Digital Psychiatry and Neuroscience》的一项研究指出—— 聊天机器人并不需要故意诱导什么，它只要持续顺着你、理解你、陪着你，就都有可能把一个正常人聊到开始怀疑现实。 而在部分真实临床案例中，后果甚至发展到了丢掉工作、住进精神病院，以及多次试图自杀的程度。 这是怎么一回事？ Clau",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-06-25",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6d5edfade44801e52119a3747f9b284195c8b45fe435ca14227aa97f99fef63a33e15f1a&idx=2&mid=2247899692&sn=0a7f73e1559acc292a3cdd7fc172b133",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Hamilton Morrin",
+        "Fiona Fung"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Claude",
+        "ChatGPT"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-semiconductor-google-us-04c021e25843ec64",
@@ -15845,6 +15843,20 @@
       "sogouResolved": 0
     },
     {
+      "id": "user-track-wechat-chiptrend-ic-semiconductor",
+      "name": "芯潮IC",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "微信",
+      "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+      "retainedPrevious": true,
+      "discoveryProvider": "sogou-weixin+fallback",
+      "sogouScanned": 0,
+      "sogouResolved": 0
+    },
+    {
       "id": "user-track-wechat-deeptechchina-ai",
       "name": "DeepTech深科技",
       "status": "ok",
@@ -15859,10 +15871,10 @@
     {
       "id": "user-track-wechat-deeptechchina-biotech",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "partial",
       "scanned": 15,
-      "accepted": 1,
-      "failed": 0,
+      "accepted": 2,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -15883,12 +15895,28 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "error",
       "scanned": 15,
-      "accepted": 1,
+      "accepted": 0,
       "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
+    },
+    {
+      "id": "user-track-wechat-eefocus-semiconductor",
+      "name": "与非网",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "微信",
+      "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+      "retainedPrevious": true,
+      "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
       "sogouResolved": 0
     },
@@ -16034,7 +16062,7 @@
       "status": "partial",
       "scanned": 18,
       "accepted": 6,
-      "failed": 8,
+      "failed": 9,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -16097,6 +16125,20 @@
     {
       "id": "user-track-wechat-semiconductor",
       "name": "微信公众号 · 半导体",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "微信",
+      "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+      "retainedPrevious": true,
+      "discoveryProvider": "sogou-weixin+fallback",
+      "sogouScanned": 0,
+      "sogouResolved": 0
+    },
+    {
+      "id": "user-track-wechat-semiconductor-technology-semiconductor",
+      "name": "半导体技术",
       "status": "error",
       "scanned": 0,
       "accepted": 0,
@@ -16624,15 +16666,15 @@
     }
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T01:20:03+00:00",
-    "configuredSources": 30,
-    "successfulSources": 12,
+    "generatedAt": "2026-07-26T01:43:42+00:00",
+    "configuredSources": 33,
+    "successfulSources": 11,
     "acceptedArticles": 41,
     "fullTextArticles": 41,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 18,
-    "mentionedCompanyLinks": 46,
-    "mentionedPeopleLinks": 104
+    "retainedSources": 22,
+    "mentionedCompanyLinks": 45,
+    "mentionedPeopleLinks": 101
   }
 }
