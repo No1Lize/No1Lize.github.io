@@ -82,6 +82,14 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
         self.assertEqual(event["source"]["level"], "监管文件")
 
     def test_enrichment_merges_a_share_events_without_removing_hk_events(self) -> None:
+        hk_listing = base.Listing(
+            "catl",
+            "宁德时代",
+            "港股",
+            "03750",
+            "新能源",
+            "secondary",
+        )
         existing_hk = {
             "id": "hk-event",
             "companySlug": "catl",
@@ -146,7 +154,21 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
                     "accepted": 0,
                     "fallback": False,
                     "errors": [],
-                }
+                },
+                {
+                    "id": hk_listing.source_id,
+                    "companySlug": "catl",
+                    "name": "宁德时代",
+                    "market": "港股",
+                    "ticker": "03750",
+                    "exchange": "香港交易所",
+                    "provider": "official",
+                    "status": "ok",
+                    "scanned": 10,
+                    "accepted": 1,
+                    "fallback": False,
+                    "errors": [],
+                },
             ],
         }
 
@@ -164,19 +186,25 @@ class CninfoStructuredDisclosuresTest(unittest.TestCase):
 
         enriched = cninfo.enrich_snapshot(
             snapshot,
-            [self.listing],
+            [self.listing, hk_listing],
             {"300750": "9900023766"},
             {"maxItemsPerListing": 18},
             query_fn=query_fn,
         )
         events = enriched["companies"]["catl"]["events"]
         self.assertEqual({_event["id"] for _event in events}, {"hk-event", "a-event"})
-        status = enriched["sourceStatus"][0]
+        status = next(
+            row for row in enriched["sourceStatus"] if row["id"] == self.listing.source_id
+        )
         self.assertEqual(status["status"], "ok")
         self.assertEqual(status["structuredAccepted"], 1)
         self.assertEqual(enriched["cninfoStructured"]["acceptedEventCount"], 1)
         self.assertEqual(
-            cninfo.validate_enrichment(enriched, [self.listing], require_events=True),
+            cninfo.validate_enrichment(
+                enriched,
+                [self.listing, hk_listing],
+                require_events=True,
+            ),
             [],
         )
 
