@@ -1,7 +1,346 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "",
-  "tracks": {},
-  "added": [],
+  "updatedAt": "2026-07-26T14:57:16+00:00",
+  "tracks": {
+    "ai": {
+      "lastExpandedAt": "2026-07-26T14:53:05+00:00"
+    },
+    "robotics": {
+      "lastExpandedAt": "2026-07-26T14:53:28+00:00"
+    },
+    "semiconductor": {
+      "lastExpandedAt": "2026-07-26T14:53:46+00:00"
+    },
+    "energy": {
+      "lastExpandedAt": "2026-07-26T14:54:23+00:00"
+    },
+    "biotech": {
+      "lastExpandedAt": "2026-07-26T14:54:47+00:00"
+    },
+    "quantum": {
+      "lastExpandedAt": "2026-07-26T14:55:08+00:00"
+    },
+    "space": {
+      "lastExpandedAt": "2026-07-26T14:55:27+00:00"
+    },
+    "web3": {
+      "lastExpandedAt": "2026-07-26T14:55:43+00:00"
+    },
+    "materials": {
+      "lastExpandedAt": "2026-07-26T14:56:03+00:00"
+    },
+    "manufacturing": {
+      "lastExpandedAt": "2026-07-26T14:56:22+00:00"
+    },
+    "fusion": {
+      "lastExpandedAt": "2026-07-26T14:56:55+00:00"
+    },
+    "track-1ccjq49": {
+      "lastExpandedAt": "2026-07-26T14:57:16+00:00"
+    }
+  },
+  "added": [
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "GPT (语言模型)",
+      "addedAt": "2026-07-26T14:53:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "大型语言模型列表",
+      "addedAt": "2026-07-26T14:53:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "GPT-3",
+      "addedAt": "2026-07-26T14:53:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "大型语言模型",
+      "addedAt": "2026-07-26T14:53:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Transformer架构",
+      "addedAt": "2026-07-26T14:53:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "机器人学",
+      "addedAt": "2026-07-26T14:53:28+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "人工智慧叛變",
+      "addedAt": "2026-07-26T14:53:28+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "机器人学术语表",
+      "addedAt": "2026-07-26T14:53:28+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "锂离子电池",
+      "addedAt": "2026-07-26T14:54:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "電動車電池",
+      "addedAt": "2026-07-26T14:54:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "全釩氧化還原液流電池",
+      "addedAt": "2026-07-26T14:54:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "固態電解質",
+      "addedAt": "2026-07-26T14:54:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "鋰空氣電池",
+      "addedAt": "2026-07-26T14:54:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "sampleCompanies",
+      "value": "新能源科技",
+      "addedAt": "2026-07-26T14:54:23+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "sources",
+      "value": "http://www.atlbattery.com",
+      "addedAt": "2026-07-26T14:54:23+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "基因工程",
+      "addedAt": "2026-07-26T14:54:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "生物信息学",
+      "addedAt": "2026-07-26T14:54:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "化学信息学",
+      "addedAt": "2026-07-26T14:54:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "比较基因组学",
+      "addedAt": "2026-07-26T14:54:47+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "中性原子量子计算机",
+      "addedAt": "2026-07-26T14:55:08+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "量子计算机",
+      "addedAt": "2026-07-26T14:55:08+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "通訊衛星",
+      "addedAt": "2026-07-26T14:55:27+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "SpaceX Starship",
+      "addedAt": "2026-07-26T14:55:27+00:00",
+      "evidence": [
+        "google-suggest",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "聚酰亚胺",
+      "addedAt": "2026-07-26T14:56:03+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "散热器",
+      "addedAt": "2026-07-26T14:56:03+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "可编程逻辑控制器",
+      "addedAt": "2026-07-26T14:56:22+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "核聚变",
+      "addedAt": "2026-07-26T14:56:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "国际热核聚变实验反应堆",
+      "addedAt": "2026-07-26T14:56:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "磁化内衬惯性核聚变",
+      "addedAt": "2026-07-26T14:56:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "慣性局限融合",
+      "addedAt": "2026-07-26T14:56:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "核融合-裂變混合核能",
+      "addedAt": "2026-07-26T14:56:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "私人股权投资",
+      "addedAt": "2026-07-26T14:57:16+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sampleCompanies",
+      "value": "CMC资本",
+      "addedAt": "2026-07-26T14:57:16+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    }
+  ],
   "removed": []
 }

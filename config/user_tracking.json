@@ -34,7 +34,12 @@
         "SOTA",
         "AMD",
         "Wafer-Scale",
-        "MiMo"
+        "MiMo",
+        "GPT (语言模型)",
+        "大型语言模型列表",
+        "GPT-3",
+        "大型语言模型",
+        "Transformer架构"
       ],
       "people": [
         "Sam Altman",
@@ -91,7 +96,10 @@
         "RAG",
         "WAIC",
         "RSS",
-        "AMD"
+        "AMD",
+        "机器人学",
+        "人工智慧叛變",
+        "机器人学术语表"
       ],
       "people": [
         "汪滔",
@@ -167,7 +175,12 @@
         "钠离子电池",
         "储能",
         "电池回收",
-        "光伏钙钛矿"
+        "光伏钙钛矿",
+        "锂离子电池",
+        "電動車電池",
+        "全釩氧化還原液流電池",
+        "固態電解質",
+        "鋰空氣電池"
       ],
       "people": [
         "Google DeepMind @GoogleDeepMind"
@@ -178,7 +191,8 @@
         "Redwood Materials",
         "蜂巢能源",
         "Commonwealth Fusion Systems",
-        "Helion Energy"
+        "Helion Energy",
+        "新能源科技"
       ]
     },
     {
@@ -196,7 +210,11 @@
         "蛋白质设计",
         "AI制药",
         "细胞治疗",
-        "合成生物学"
+        "合成生物学",
+        "基因工程",
+        "生物信息学",
+        "化学信息学",
+        "比较基因组学"
       ],
       "people": [],
       "sampleCompanies": [
@@ -223,7 +241,9 @@
         "光子量子",
         "容错量子计算",
         "量子芯片",
-        "量子网络"
+        "量子网络",
+        "中性原子量子计算机",
+        "量子计算机"
       ],
       "people": [],
       "sampleCompanies": [
@@ -248,7 +268,9 @@
         "在轨服务",
         "商业空间站",
         "可回收火箭",
-        "低轨卫星"
+        "低轨卫星",
+        "通訊衛星",
+        "SpaceX Starship"
       ],
       "people": [],
       "sampleCompanies": [
@@ -301,7 +323,9 @@
         "超材料",
         "高温超导",
         "氧化镓",
-        "电子皮肤"
+        "电子皮肤",
+        "聚酰亚胺",
+        "散热器"
       ],
       "people": [],
       "sampleCompanies": [
@@ -323,7 +347,8 @@
         "工业机器人",
         "数字孪生",
         "机器视觉",
-        "柔性制造"
+        "柔性制造",
+        "可编程逻辑控制器"
       ],
       "people": [],
       "sampleCompanies": [
@@ -345,7 +370,12 @@
         "高温超导磁体",
         "等离子体约束",
         "聚变净能量增益",
-        "氚燃料循环"
+        "氚燃料循环",
+        "核聚变",
+        "国际热核聚变实验反应堆",
+        "磁化内衬惯性核聚变",
+        "慣性局限融合",
+        "核融合-裂變混合核能"
       ],
       "people": [
         "杨钊",
@@ -377,7 +407,8 @@
         "A轮",
         "Pre-IPO",
         "退出",
-        "科创板"
+        "科创板",
+        "私人股权投资"
       ],
       "people": [],
       "sampleCompanies": [
@@ -392,7 +423,8 @@
         "高榕创投",
         "高瓴",
         "深创投",
-        "拓锋投资"
+        "拓锋投资",
+        "CMC资本"
       ]
     }
   ],
@@ -2515,6 +2547,21 @@
       "ticker": "",
       "keywords": [
         "风险投资"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-item-aacc27ff",
+      "name": "新能源科技 官方网站",
+      "url": "http://www.atlbattery.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "新能源科技",
+      "ticker": "",
+      "keywords": [
+        "新能源科技"
       ],
       "enabled": true
     }
