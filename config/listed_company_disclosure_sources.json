@@ -5,7 +5,8 @@
     "maxAgeDays": 1095,
     "requestTimeout": 18,
     "requestAttempts": 2,
-    "fallbackEnabled": true
+    "fallbackEnabled": true,
+    "usIrMaxPages": 12
   },
   "officialSources": {
     "sse": {
@@ -55,6 +56,68 @@
     "mobileye": "0001910139",
     "aurora": "0001828108",
     "joby": "0001819848"
+  },
+  "usInvestorRelations": {
+    "pony-ai": {
+      "name": "Pony AI Investor Relations",
+      "url": "https://ir.pony.ai/financials/sec-filings",
+      "host": "ir.pony.ai",
+      "layout": "q4"
+    },
+    "weride": {
+      "name": "WeRide Investor Relations",
+      "url": "https://ir.weride.ai/financials-filings/sec-filings",
+      "host": "ir.weride.ai",
+      "layout": "q4"
+    },
+    "rigetti": {
+      "name": "Rigetti Investor Relations",
+      "url": "https://investors.rigetti.com/financial-information/sec-filings",
+      "host": "investors.rigetti.com",
+      "layout": "q4"
+    },
+    "ionq": {
+      "name": "IonQ Investor Relations",
+      "url": "https://investors.ionq.com/financials/sec-filings/",
+      "host": "investors.ionq.com",
+      "layout": "q4"
+    },
+    "rocket-lab": {
+      "name": "Rocket Lab Investor Relations",
+      "url": "https://investors.rocketlabcorp.com/financial-information/sec-filings",
+      "host": "investors.rocketlabcorp.com",
+      "layout": "q4"
+    },
+    "tempus-ai": {
+      "name": "Tempus AI Investor Relations",
+      "url": "https://investors.tempus.com/financials/sec-filings",
+      "host": "investors.tempus.com",
+      "layout": "q4"
+    },
+    "recursion": {
+      "name": "Recursion Investor Relations",
+      "url": "https://ir.recursion.com/financials-filings/sec-filings",
+      "host": "ir.recursion.com",
+      "layout": "q4"
+    },
+    "mobileye": {
+      "name": "Mobileye Investor Relations",
+      "url": "https://ir.mobileye.com/financial-information/sec-filings",
+      "host": "ir.mobileye.com",
+      "layout": "q4"
+    },
+    "aurora": {
+      "name": "Aurora Investor Relations",
+      "url": "https://ir.aurora.tech/sec-filings/all-sec-filings",
+      "host": "ir.aurora.tech",
+      "layout": "corporate-ir"
+    },
+    "joby": {
+      "name": "Joby Investor Relations",
+      "url": "https://ir.jobyaviation.com/sec-filings/all-sec-filings",
+      "host": "ir.jobyaviation.com",
+      "layout": "corporate-ir"
+    }
   },
   "extraListings": [
     {
