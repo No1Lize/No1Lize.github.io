@@ -92,7 +92,9 @@ function strings(value: unknown, limit = 30, itemLimit = 180) {
 
 function records(value: unknown) {
   return Array.isArray(value)
-    ? value.filter((item): item is Record<string, unknown> => Boolean(item) && typeof item === "object")
+    ? value.filter(
+        (item): item is Record<string, unknown> => Boolean(item) && typeof item === "object",
+      )
     : [];
 }
 
@@ -163,7 +165,9 @@ function normalizeEquityProfile(value: unknown): CompanyEquityProfile | undefine
     changes: normalizeChanges(row.changes),
     externalInvestments: normalizeInvestments(row.externalInvestments),
     sourceNames: strings(row.sourceNames, 8, 80),
-    sourceUrls: strings(row.sourceUrls, 12, 1200).filter((item) => /^https?:\/\//iu.test(item)),
+    sourceUrls: strings(row.sourceUrls, 12, 1200).filter((item) =>
+      /^https?:\/\//iu.test(item),
+    ),
     evidenceStatus: text(row.evidenceStatus, 40) || "pending",
     verifiedAt: text(row.verifiedAt, 40) || undefined,
   };
@@ -183,7 +187,7 @@ function normalizeProfessionalSources(value: unknown): ProfessionalSourceStatus[
     .slice(0, 8);
 }
 
-const snapshot = rawVentureProfiles as RawSnapshot;
+const snapshot = rawVentureProfiles as unknown as RawSnapshot;
 
 export const professionalVentureGeneratedAt = text(
   snapshot.professionalSourceGeneratedAt,
