@@ -10,7 +10,7 @@ export type ListedDisclosureEvent = {
   id: string;
   companySlug: string;
   companyName: string;
-  market: "A股" | "港股";
+  market: "A股" | "港股" | "美股";
   ticker: string;
   exchange: string;
   listingRole: string;
@@ -21,6 +21,10 @@ export type ListedDisclosureEvent = {
   source: ListedDisclosureSource;
   discoveredVia: string;
   fallback: boolean;
+  form?: string;
+  accessionNumber?: string;
+  reportDate?: string;
+  cik?: string;
 };
 
 export type ListedCompanyDisclosure = {
@@ -29,7 +33,7 @@ export type ListedCompanyDisclosure = {
   updatedAt: string;
   status: "ok" | "retained" | "partial";
   listings: {
-    market: "A股" | "港股";
+    market: "A股" | "港股" | "美股";
     ticker: string;
     exchange: string;
     listingRole: string;
@@ -45,6 +49,18 @@ type ListedDisclosureSnapshot = {
   companyCount: number;
   eventCount: number;
   companies: Record<string, ListedCompanyDisclosure>;
+  cninfoStructured?: {
+    schemaVersion: number;
+    provider: string;
+    attemptedListingCount: number;
+    acceptedEventCount: number;
+  };
+  secStructured?: {
+    schemaVersion: number;
+    provider: string;
+    attemptedListingCount: number;
+    acceptedEventCount: number;
+  };
 };
 
 const snapshot = rawDisclosureSnapshot as ListedDisclosureSnapshot;
