@@ -17,6 +17,16 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Reconcile tracking metadata
+        run: |
+          python3 tools/migrate_article_entities.py
+          python3 tools/refine_eastmoney_snapshot.py
+          python3 tools/enrich_tracking_snapshot.py
+          python3 tools/crawl_articles.py --validate-only
+          python3 tools/validate_eastmoney_snapshot.py
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
