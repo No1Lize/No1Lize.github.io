@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CompanyEquityEvidence } from "@/components/company-equity-evidence";
+import { ExternalDatabaseLinks } from "@/components/external-database-links";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
+import { companyDatabaseLinks } from "@/lib/external-database-links";
 import { intelligenceEvents, snapshotDate } from "@/lib/intelligence-data";
 import {
   getCompanyResearch,
@@ -285,6 +287,9 @@ export default async function CompanyDetail({
 
           <Section id="股权与工商核验" title="股权、股东与工商变更核验">
             <CompanyEquityEvidence slug={slug} />
+            <ExternalDatabaseLinks
+              links={companyDatabaseLinks(company.name, company.region)}
+            />
           </Section>
 
           <Section id="上市与退出表现" title="上市、并购与退出表现">

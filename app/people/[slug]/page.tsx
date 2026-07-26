@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ExternalDatabaseLinks } from "@/components/external-database-links";
+import { personDatabaseLinks } from "@/lib/external-database-links";
 import { researchPeople, type PersonMaterial } from "@/lib/people-data";
 import { getPersonProfile } from "@/lib/research-content";
 
@@ -130,6 +132,10 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
 
           <Section id="公开材料" title="全部公开材料">
             <MaterialList materials={person.materials} empty="暂无可追溯公开材料。" />
+            <ExternalDatabaseLinks
+              links={personDatabaseLinks(person.name)}
+              lead="以下入口跳转到外部商业数据库检索该人物的任职、持股与创投记录；数据在对方平台查看，本站不抓取、不缓存其内容。"
+            />
           </Section>
         </article>
 

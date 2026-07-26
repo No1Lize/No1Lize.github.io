@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ExternalDatabaseLinks } from "@/components/external-database-links";
 import { ResearchReportLibrary } from "@/components/research-report-library";
 import {
   FinancialSeriesChart,
@@ -21,6 +22,7 @@ import {
   marketProfiles,
   type MarketMetric,
 } from "@/lib/market-profile-data";
+import { companyDatabaseLinks } from "@/lib/external-database-links";
 import { ipoProfiles } from "@/lib/research-content";
 import { relatedResearchReports } from "@/lib/research-report-data";
 
@@ -339,6 +341,12 @@ export default async function IpoDetail({
                 <small>CIK {facts.cik} · {facts.entityName}</small>
               </a>
             )}
+            <ExternalDatabaseLinks
+              links={companyDatabaseLinks(
+                displayName,
+                company.market === "美股" ? "美国" : "中国",
+              )}
+            />
           </Section>
 
           <Section id="研报与行业研究" title="研报与行业研究">
