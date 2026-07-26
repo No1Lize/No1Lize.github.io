@@ -13,6 +13,7 @@ on:
       - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
       - tools/crawl_with_wechat_registry.py
+      - tools/professional_media_progress.py
       - tools/professional_media_sources.py
       - tools/validate_professional_media_snapshot.py
       - tools/adaptive_public_sources.py
@@ -88,6 +89,7 @@ jobs:
       - name: Validate source, disclosure and retention plans
         run: |
           python -m py_compile \
+            tools/professional_media_progress.py \
             tools/professional_media_sources.py \
             tools/validate_professional_media_snapshot.py \
             tools/crawl_listed_company_disclosures.py \
@@ -96,6 +98,7 @@ jobs:
             tools/snapshot_retention.py \
             tools/crawl_with_wechat_registry.py
           python -m unittest \
+            tests.test_professional_media_progress \
             tests.test_professional_media_sources \
             tests.test_listed_company_disclosures \
             tests.test_cninfo_structured_disclosures \
