@@ -1,0 +1,93 @@
+name: Professional venture refresh artifact
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/professional-venture-refresh-artifact.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run public professional-source discovery
+        env:
+          PROFESSIONAL_SOURCE_ENABLE_PAID: "false"
+          PROFESSIONAL_SOURCE_PUBLIC_DISCOVERY: "true"
+          PROFESSIONAL_SOURCE_MAX_COMPANIES: "20"
+          PROFESSIONAL_SOURCE_INCLUDE_EXTERNAL_INVESTMENTS: "false"
+          PROFESSIONAL_SOURCE_INCLUDE_BENEFICIARIES: "false"
+        run: |
+          python -m py_compile tools/enrich_professional_venture_sources.py
+          python -m unittest -v tests.test_professional_venture_sources
+          python tools/enrich_professional_venture_sources.py --max-companies 20
+          python tools/enrich_professional_venture_sources.py --validate-only
+      - name: Generate execution diagnostics
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          from collections import Counter
+          from pathlib import Path
+
+          root = Path('.')
+          payload = json.loads((root / 'public/data/venture_profiles.json').read_text(encoding='utf-8'))
+          status_counts = Counter()
+          source_records = Counter()
+          companies_with_jingdata = []
+          companies_with_equity = []
+          companies = payload.get('companies') or {}
+          for slug, profile in companies.items():
+              if not isinstance(profile, dict):
+                  continue
+              equity = profile.get('equityProfile') or {}
+              if isinstance(equity, dict) and (
+                  equity.get('shareholders')
+                  or equity.get('changes')
+                  or equity.get('registeredCapital')
+                  or equity.get('creditCode')
+              ):
+                  companies_with_equity.append(slug)
+              for source in profile.get('professionalSources') or []:
+                  if not isinstance(source, dict):
+                      continue
+                  name = str(source.get('name') or '')
+                  status = str(source.get('status') or '')
+                  status_counts[f'{name}:{status}'] += 1
+                  source_records[name] += int(source.get('records') or 0)
+                  if name == '鲸准' and status == 'success':
+                      companies_with_jingdata.append(slug)
+          report = {
+              'generatedAt': dt.datetime.now(dt.timezone.utc).isoformat(timespec='seconds'),
+              'snapshotGeneratedAt': payload.get('professionalSourceGeneratedAt'),
+              'paidApiEnabled': False,
+              'qccPaidCalls': 0,
+              'tianyanchaPaidCalls': 0,
+              'companyProfileCount': len(companies),
+              'professionalStatusCount': len(payload.get('professionalSourceStatus') or []),
+              'statusCounts': dict(sorted(status_counts.items())),
+              'sourceRecordCounts': dict(sorted(source_records.items())),
+              'companiesWithJingdataPublicPages': sorted(set(companies_with_jingdata)),
+              'companiesWithStructuredEquity': sorted(set(companies_with_equity)),
+          }
+          path = root / 'diagnostics/professional-venture-source-refresh.json'
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          print(json.dumps(report, ensure_ascii=False))
+          PY
+      - name: Upload generated snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: professional-venture-refresh-data
+          path: |
+            public/data/venture_profiles.json
+            diagnostics/professional-venture-source-refresh.json
+          if-no-files-found: error
+          retention-days: 2
