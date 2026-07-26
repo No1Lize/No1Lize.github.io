@@ -26,7 +26,12 @@ class WeChatRegistryBridgeTest(unittest.TestCase):
         names = {item["name"] for item in sources}
         self.assertIn("量子位", names)
         self.assertIn("机器之心", names)
-        self.assertTrue(all(item.get("expectedAccounts") for item in sources))
+        configured = [item for item in sources if not item.get("genericDiscovery")]
+        generic = [item for item in sources if item.get("genericDiscovery")]
+        self.assertTrue(configured)
+        self.assertTrue(all(item.get("expectedAccounts") for item in configured))
+        self.assertEqual(len(generic), 1)
+        self.assertFalse(generic[0].get("expectedAccounts"))
 
     def test_bridge_rejects_wrong_account_before_entity_parsing(self) -> None:
         spec = {

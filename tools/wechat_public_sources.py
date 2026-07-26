@@ -163,6 +163,11 @@ def generated_wechat_sources(
     return sources
 
 
+# Stable reference used by unit tests and callers that need the account-agnostic
+# generator even after the optional registry bridge installs its runtime wrapper.
+base_generated_wechat_sources = generated_wechat_sources
+
+
 class WeChatPageParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)

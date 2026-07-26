@@ -242,20 +242,27 @@ def _clean_project_background(
         and clean_text(article.get("type"), 60)
         not in {"融资", "产业投资", "IPO", "并购", "监管文件"}
     ]
-    evidence = [
+    stable_evidence = [
         profile.get("background", ""),
         profile.get("technology", ""),
         profile.get("researchTechnology", ""),
         *non_capital_articles,
     ]
+    project = (
+        profile.get("projectBackground")
+        if isinstance(profile.get("projectBackground"), dict)
+        else {}
+    )
     problem = _select_required_sentence(
-        evidence,
+        [project.get("problemSolved", ""), *stable_evidence],
+        required_aliases=company.aliases,
         required_terms=PROBLEM_TERMS,
         excluded_pattern=CAPITAL_MARKET_RE,
         limit=460,
     )
     market = _select_required_sentence(
-        evidence,
+        [project.get("marketOpportunity", ""), *stable_evidence],
+        required_aliases=company.aliases,
         required_terms=MARKET_TERMS,
         excluded_pattern=CAPITAL_MARKET_RE,
         limit=460,

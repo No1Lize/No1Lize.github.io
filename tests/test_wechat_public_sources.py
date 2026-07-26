@@ -24,7 +24,7 @@ class WeChatPublicSourcesTest(unittest.TestCase):
                 "sampleCompanies": ["Recursion Pharmaceuticals"],
             },
         ]
-        sources = wechat.generated_wechat_sources(tracks, object())
+        sources = wechat.base_generated_wechat_sources(tracks, object())
         self.assertEqual(len(sources), 2)
         self.assertEqual(sources[0]["adapter"], "wechat_search")
         self.assertEqual(sources[0]["sector"], "商业航天")
