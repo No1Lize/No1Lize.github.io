@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T00:31:33+00:00",
+  "generatedAt": "2026-07-26T00:45:43+00:00",
   "articleCount": 504,
   "articles": [
     {
@@ -4009,7 +4009,8 @@
         "AI agent",
         "Claude",
         "ChatGPT",
-        "API"
+        "API",
+        "Claude Agent"
       ],
       "wechatAccountConfigId": "aitopics",
       "wechatContentMode": "original-page"
@@ -6172,7 +6173,8 @@
         "机器人",
         "具身智能",
         "世界模型",
-        "灵巧手"
+        "灵巧手",
+        "RSS"
       ],
       "wechatAccountConfigId": "aitechuang",
       "wechatContentMode": "original-page"
@@ -6719,7 +6721,8 @@
         "人形机器人",
         "VLA",
         "世界模型",
-        "WAIC"
+        "WAIC",
+        "RSS"
       ],
       "wechatAccountConfigId": "aitechuang",
       "wechatContentMode": "original-page"
@@ -6983,7 +6986,8 @@
         "基础模型",
         "ChatGPT",
         "强化学习",
-        "API"
+        "API",
+        "SOTA"
       ],
       "wechatAccountConfigId": "aitopics",
       "wechatContentMode": "original-page"
@@ -7074,6 +7078,7 @@
       "wechatAccount": "DeepTech深科技",
       "mentionedCompanies": [],
       "mentionedPeople": [
+        "胡莉花",
         "Michael Rubenstein",
         "Phantom Twist",
         "美国",
@@ -8366,7 +8371,8 @@
         "智能体",
         "Agent",
         "多模态",
-        "Claude"
+        "Claude",
+        "SOTA"
       ],
       "wechatAccountConfigId": "qbitai",
       "wechatContentMode": "original-page"
@@ -8558,7 +8564,8 @@
       "matchedTrackingTerms": [
         "Agent",
         "Claude",
-        "API"
+        "API",
+        "Claude Agent"
       ],
       "wechatAccountConfigId": "jiqizhixin",
       "wechatContentMode": "original-page"
@@ -15876,14 +15883,16 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "error",
       "scanned": 15,
-      "accepted": 1,
+      "accepted": 0,
       "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-energy",
@@ -15985,7 +15994,7 @@
       "id": "user-track-wechat-jiqizhixin-robotics",
       "name": "机器之心",
       "status": "partial",
-      "scanned": 25,
+      "scanned": 26,
       "accepted": 4,
       "failed": 5,
       "platform": "微信",
@@ -16617,15 +16626,15 @@
     }
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T00:31:33+00:00",
+    "generatedAt": "2026-07-26T00:45:43+00:00",
     "configuredSources": 30,
-    "successfulSources": 12,
-    "acceptedArticles": 41,
-    "fullTextArticles": 41,
+    "successfulSources": 11,
+    "acceptedArticles": 40,
+    "fullTextArticles": 40,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 18,
-    "mentionedCompanyLinks": 46,
-    "mentionedPeopleLinks": 103
+    "retainedSources": 19,
+    "mentionedCompanyLinks": 44,
+    "mentionedPeopleLinks": 100
   }
 }
