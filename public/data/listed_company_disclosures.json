@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-26T05:32:23+00:00",
-  "companyCount": 5,
-  "eventCount": 110,
+  "generatedAt": "2026-07-26T06:54:49+00:00",
+  "companyCount": 15,
+  "eventCount": 120,
   "companies": {
     "bgi-genomics": {
       "slug": "bgi-genomics",
@@ -2299,6 +2299,426 @@
       ],
       "officialEventCount": 18,
       "fallbackEventCount": 0
+    },
+    "pony-ai": {
+      "slug": "pony-ai",
+      "name": "小马智行",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "PONY",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-pony-ai-98bf7fdddd1a09b1cf",
+          "companySlug": "pony-ai",
+          "companyName": "小马智行",
+          "market": "美股",
+          "ticker": "PONY",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-22",
+          "documentType": "定期报告与业绩",
+          "title": "小马智行 SEC Form 20-F — Registration of securities of foreign private issuers pursuant to section 12(b) or (g)",
+          "summary": "Ticker PONY · Form 20-F · Filed 2026-04-22 · Document date 2025-12-31 · Verified official filing detail maintained by Pony AI Investor Relations",
+          "source": {
+            "name": "Pony AI Investor Relations",
+            "url": "https://ir.pony.ai/sec-filings/sec-filing/20-f/0001104659-26-046406",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "20-F",
+          "documentDate": "2025-12-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "weride": {
+      "slug": "weride",
+      "name": "文远知行",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "WRD",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-weride-dcc3286a0002b767af",
+          "companySlug": "weride",
+          "companyName": "文远知行",
+          "market": "美股",
+          "ticker": "WRD",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-23",
+          "documentType": "定期报告与业绩",
+          "title": "文远知行 SEC Form 20-F — Registration of securities of foreign private issuers pursuant to section 12(b) or (g)",
+          "summary": "Ticker WRD · Form 20-F · Filed 2026-04-23 · Document date 2025-12-31 · Verified official filing detail maintained by WeRide Investor Relations",
+          "source": {
+            "name": "WeRide Investor Relations",
+            "url": "https://ir.weride.ai/sec-filings/sec-filing/20-f/0001104659-26-047323",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "20-F",
+          "documentDate": "2025-12-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "rigetti": {
+      "slug": "rigetti",
+      "name": "Rigetti Computing",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "RGTI",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-rigetti-93cfcdd3bb45866f5a",
+          "companySlug": "rigetti",
+          "companyName": "Rigetti Computing",
+          "market": "美股",
+          "ticker": "RGTI",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-11",
+          "documentType": "定期报告与业绩",
+          "title": "Rigetti Computing SEC Form 10-Q — Quarterly report which provides a continuing view of the company's financial position",
+          "summary": "Ticker RGTI · Form 10-Q · Filed 2026-05-11 · Document date 2026-03-31 · Verified official filing detail maintained by Rigetti Investor Relations",
+          "source": {
+            "name": "Rigetti Investor Relations",
+            "url": "https://investors.rigetti.com/sec-filings/sec-filing/10-q/0001104659-26-058641",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "ionq": {
+      "slug": "ionq",
+      "name": "IonQ",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "IONQ",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-ionq-3a11da45ccbe982962",
+          "companySlug": "ionq",
+          "companyName": "IonQ",
+          "market": "美股",
+          "ticker": "IONQ",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-07",
+          "documentType": "定期报告与业绩",
+          "title": "IonQ SEC Form 10-Q — Quarterly Report",
+          "summary": "Ticker IONQ · Form 10-Q · Filed 2026-05-07 · Document date 2026-03-31 · Verified official filing detail maintained by IonQ Investor Relations",
+          "source": {
+            "name": "IonQ Investor Relations",
+            "url": "https://investors.ionq.com/financials/sec-filings/sec-filings-details/default.aspx?FilingId=19421418",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "rocket-lab": {
+      "slug": "rocket-lab",
+      "name": "Rocket Lab",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "RKLB",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-rocket-lab-a7f22658a55cdc65ea",
+          "companySlug": "rocket-lab",
+          "companyName": "Rocket Lab",
+          "market": "美股",
+          "ticker": "RKLB",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-07",
+          "documentType": "定期报告与业绩",
+          "title": "Rocket Lab SEC Form 10-Q — Quarterly report which provides a continuing view of the company's financial position",
+          "summary": "Ticker RKLB · Form 10-Q · Filed 2026-05-07 · Document date 2026-03-31 · Verified official filing detail maintained by Rocket Lab Investor Relations",
+          "source": {
+            "name": "Rocket Lab Investor Relations",
+            "url": "https://investors.rocketlabcorp.com/sec-filings/sec-filing/10-q/0001819994-26-000028",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "tempus-ai": {
+      "slug": "tempus-ai",
+      "name": "Tempus AI",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "TEM",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-tempus-ai-f10fb7012fef1e8964",
+          "companySlug": "tempus-ai",
+          "companyName": "Tempus AI",
+          "market": "美股",
+          "ticker": "TEM",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-05",
+          "documentType": "定期报告与业绩",
+          "title": "Tempus AI SEC Form 10-Q — Quarterly report which provides a continuing view of the company's financial position",
+          "summary": "Ticker TEM · Form 10-Q · Filed 2026-05-05 · Document date 2026-03-31 · Verified official filing detail maintained by Tempus AI Investor Relations",
+          "source": {
+            "name": "Tempus AI Investor Relations",
+            "url": "https://investors.tempus.com/sec-filings/sec-filing/10-q/0001193125-26-206356",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "recursion": {
+      "slug": "recursion",
+      "name": "Recursion Pharmaceuticals",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "RXRX",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-recursion-340e330f3f7a884818",
+          "companySlug": "recursion",
+          "companyName": "Recursion Pharmaceuticals",
+          "market": "美股",
+          "ticker": "RXRX",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-06",
+          "documentType": "定期报告与业绩",
+          "title": "Recursion Pharmaceuticals SEC Form 10-Q — Quarterly report which provides a continuing view of the company's financial position",
+          "summary": "Ticker RXRX · Form 10-Q · Filed 2026-05-06 · Document date 2026-03-31 · Verified official filing detail maintained by Recursion Investor Relations",
+          "source": {
+            "name": "Recursion Investor Relations",
+            "url": "https://ir.recursion.com/sec-filings/sec-filing/10-q/0001601830-26-000078",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "mobileye": {
+      "slug": "mobileye",
+      "name": "Mobileye",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "MBLY",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-mobileye-31e70bbe68ff41a319",
+          "companySlug": "mobileye",
+          "companyName": "Mobileye",
+          "market": "美股",
+          "ticker": "MBLY",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-23",
+          "documentType": "定期报告与业绩",
+          "title": "Mobileye SEC Form 10-Q — Quarterly report which provides a continuing view of the company's financial position",
+          "summary": "Ticker MBLY · Form 10-Q · Filed 2026-04-23 · Document date 2026-03-28 · Verified official filing detail maintained by Mobileye Investor Relations",
+          "source": {
+            "name": "Mobileye Investor Relations",
+            "url": "https://ir.mobileye.com/sec-filings/sec-filing/10-q/0001104659-26-047712",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-28"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "aurora": {
+      "slug": "aurora",
+      "name": "Aurora Innovation",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "AUR",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-aurora-8e56ee20584c1b1344",
+          "companySlug": "aurora",
+          "companyName": "Aurora Innovation",
+          "market": "美股",
+          "ticker": "AUR",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-06",
+          "documentType": "定期报告与业绩",
+          "title": "Aurora Innovation SEC Form 10-Q — Quarterly report under Sections 13 or 15(d)",
+          "summary": "Ticker AUR · Form 10-Q · Filed 2026-05-06 · Document date 2026-03-31 · Verified official filing detail maintained by Aurora Investor Relations",
+          "source": {
+            "name": "Aurora Investor Relations",
+            "url": "https://ir.aurora.tech/sec-filings/all-sec-filings/content/0001828108-26-000052/aur-20260331.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "joby": {
+      "slug": "joby",
+      "name": "Joby Aviation",
+      "updatedAt": "2026-07-26T06:54:49+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "美股",
+          "ticker": "JOBY",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-joby-c924f7e547fe71eb98",
+          "companySlug": "joby",
+          "companyName": "Joby Aviation",
+          "market": "美股",
+          "ticker": "JOBY",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-06",
+          "documentType": "定期报告与业绩",
+          "title": "Joby Aviation SEC Form 10-Q — Quarterly report under Sections 13 or 15(d)",
+          "summary": "Ticker JOBY · Form 10-Q · Filed 2026-05-06 · Document date 2026-03-31 · Verified official filing detail maintained by Joby Investor Relations",
+          "source": {
+            "name": "Joby Investor Relations",
+            "url": "https://ir.jobyaviation.com/sec-filings/all-sec-filings/content/0001819848-26-000324/joby-20260331.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-ir-baseline",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "verifiedBaseline": true,
+          "form": "10-Q",
+          "documentDate": "2026-03-31"
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
     }
   },
   "sourceStatus": [
@@ -2412,6 +2832,236 @@
       "accepted": 18,
       "fallback": false,
       "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-pony-ai-pony",
+      "companySlug": "pony-ai",
+      "name": "小马智行",
+      "market": "美股",
+      "ticker": "PONY",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Pony AI Investor Relations",
+      "sourceUrl": "https://ir.pony.ai/financials/sec-filings",
+      "sourceHost": "ir.pony.ai",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://ir.pony.ai/sec-filings/sec-filing/20-f/0001104659-26-046406",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-weride-wrd",
+      "companySlug": "weride",
+      "name": "文远知行",
+      "market": "美股",
+      "ticker": "WRD",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "WeRide Investor Relations",
+      "sourceUrl": "https://ir.weride.ai/financials-filings/sec-filings",
+      "sourceHost": "ir.weride.ai",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://ir.weride.ai/sec-filings/sec-filing/20-f/0001104659-26-047323",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-rigetti-rgti",
+      "companySlug": "rigetti",
+      "name": "Rigetti Computing",
+      "market": "美股",
+      "ticker": "RGTI",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Rigetti Investor Relations",
+      "sourceUrl": "https://investors.rigetti.com/financial-information/sec-filings",
+      "sourceHost": "investors.rigetti.com",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://investors.rigetti.com/sec-filings/sec-filing/10-q/0001104659-26-058641",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-ionq-ionq",
+      "companySlug": "ionq",
+      "name": "IonQ",
+      "market": "美股",
+      "ticker": "IONQ",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "IonQ Investor Relations",
+      "sourceUrl": "https://investors.ionq.com/financials/sec-filings/",
+      "sourceHost": "investors.ionq.com",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://investors.ionq.com/financials/sec-filings/sec-filings-details/default.aspx?FilingId=19421418",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-rocket-lab-rklb",
+      "companySlug": "rocket-lab",
+      "name": "Rocket Lab",
+      "market": "美股",
+      "ticker": "RKLB",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Rocket Lab Investor Relations",
+      "sourceUrl": "https://investors.rocketlabcorp.com/financial-information/sec-filings",
+      "sourceHost": "investors.rocketlabcorp.com",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://investors.rocketlabcorp.com/sec-filings/sec-filing/10-q/0001819994-26-000028",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-tempus-ai-tem",
+      "companySlug": "tempus-ai",
+      "name": "Tempus AI",
+      "market": "美股",
+      "ticker": "TEM",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Tempus AI Investor Relations",
+      "sourceUrl": "https://investors.tempus.com/financials/sec-filings",
+      "sourceHost": "investors.tempus.com",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://investors.tempus.com/sec-filings/sec-filing/10-q/0001193125-26-206356",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-recursion-rxrx",
+      "companySlug": "recursion",
+      "name": "Recursion Pharmaceuticals",
+      "market": "美股",
+      "ticker": "RXRX",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Recursion Investor Relations",
+      "sourceUrl": "https://ir.recursion.com/financials-filings/sec-filings",
+      "sourceHost": "ir.recursion.com",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://ir.recursion.com/sec-filings/sec-filing/10-q/0001601830-26-000078",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-mobileye-mbly",
+      "companySlug": "mobileye",
+      "name": "Mobileye",
+      "market": "美股",
+      "ticker": "MBLY",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Mobileye Investor Relations",
+      "sourceUrl": "https://ir.mobileye.com/financial-information/sec-filings",
+      "sourceHost": "ir.mobileye.com",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://ir.mobileye.com/sec-filings/sec-filing/10-q/0001104659-26-047712",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-aurora-aur",
+      "companySlug": "aurora",
+      "name": "Aurora Innovation",
+      "market": "美股",
+      "ticker": "AUR",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Aurora Investor Relations",
+      "sourceUrl": "https://ir.aurora.tech/sec-filings/all-sec-filings",
+      "sourceHost": "ir.aurora.tech",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://ir.aurora.tech/sec-filings/all-sec-filings/content/0001828108-26-000052/aur-20260331.htm",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
+    },
+    {
+      "id": "us-ir-disclosure-joby-joby",
+      "companySlug": "joby",
+      "name": "Joby Aviation",
+      "market": "美股",
+      "ticker": "JOBY",
+      "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+      "provider": "verified-official-ir-baseline",
+      "sourceName": "Joby Investor Relations",
+      "sourceUrl": "https://ir.jobyaviation.com/sec-filings/all-sec-filings",
+      "sourceHost": "ir.jobyaviation.com",
+      "status": "ok",
+      "attempted": true,
+      "scanned": 1,
+      "accepted": 1,
+      "liveAccepted": 0,
+      "baselineAccepted": 1,
+      "baselineUrl": "https://ir.jobyaviation.com/sec-filings/all-sec-filings/content/0001819848-26-000324/joby-20260331.htm",
+      "discoveryModes": [
+        "verified-official-baseline"
+      ],
+      "errors": []
     }
   ],
   "cninfoStructured": {
@@ -2419,5 +3069,14 @@
     "provider": "cninfo-structured-api",
     "attemptedListingCount": 3,
     "acceptedEventCount": 54
+  },
+  "usIrStructured": {
+    "schemaVersion": 1,
+    "provider": "official-company-ir-sec-filings",
+    "attemptedListingCount": 10,
+    "acceptedEventCount": 10,
+    "verifiedBaselineCount": 10,
+    "directSecAccess": "blocked-by-sec-for-shared-ci-ip",
+    "retentionPolicy": "live-official-discovery-plus-verified-baseline"
   }
 }
