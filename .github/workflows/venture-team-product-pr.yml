@@ -56,25 +56,36 @@ jobs:
             tests.test_finalize_venture_profiles \
             tests.test_venture_entity_semantics \
             tests.test_stabilize_venture_profiles
-      - name: Align entity-specific research evidence
-        run: python tools/refine_venture_research_evidence.py
-      - name: Check research evidence fixed point
-        run: python tools/refine_venture_research_evidence.py --check
-      - name: Normalize cross-entity consistency
-        run: python tools/normalize_venture_profiles.py
-      - name: Stabilize terminal quality gates
-        run: python tools/stabilize_venture_profiles.py
-      - name: Check terminal quality fixed point
+      - name: Reach the complete venture pipeline fixed point
+        shell: bash
         run: |
+          set -euo pipefail
+          converged=false
+          for pass in $(seq 1 8); do
+            cp public/data/venture_profiles.json /tmp/venture-before.json
+            python tools/refine_venture_research_evidence.py
+            python tools/normalize_venture_profiles.py
+            python tools/stabilize_venture_profiles.py
+            if cmp -s /tmp/venture-before.json public/data/venture_profiles.json; then
+              echo "Complete venture pipeline converged on pass ${pass}."
+              converged=true
+              break
+            fi
+          done
+          if [ "$converged" != true ]; then
+            echo "Complete venture pipeline did not converge within 8 passes."
+            exit 1
+          fi
+      - name: Check all venture quality fixed points
+        run: |
+          python tools/refine_venture_research_evidence.py --check
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
-      - name: Validate crawler snapshot contract
-        run: python tools/crawl_venture_profiles.py --validate-only
-      - name: Validate enrichment snapshot contract
-        run: python tools/enrich_venture_profiles.py --validate-only
-      - name: Recheck research evidence after all gates
-        run: python tools/refine_venture_research_evidence.py --check
+      - name: Validate crawler and enrichment contracts
+        run: |
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
       - uses: actions/setup-node@v4
         with:
           node-version: 22
