@@ -1,14 +1,13 @@
 "use client";
 
-import { ArrowUpRight, ChevronRight, Info, Search } from "lucide-react";
+import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
 import qualityStyles from "@/components/dashboard-quality.module.css";
 import { institutionCatalog } from "@/lib/catalog-data";
 import {
   focusCompanies,
-  heatMethodology,
   type EventType,
   type IntelligenceEvent,
 } from "@/lib/intelligence-data";
@@ -37,18 +36,12 @@ const eventTypes = [
 const enabledSectorNames = new Set(
   trackedSectors.flatMap((sector) => sector.aliases),
 );
-const rankedSectors = [...trackedSectors].sort(
-  (left, right) =>
-    right.heat - left.heat || right.events - left.events || left.name.localeCompare(right.name),
-);
 
-export function Dashboard() {
+export function Dashboard({ children }: { children: ReactNode }) {
   const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
   const [query, setQuery] = useState("");
-  const [sortOrder, setSortOrder] = useState<"importance" | "time">("importance");
-  const [showMethod, setShowMethod] = useState(false);
 
   const activeArticles = useMemo(
     () => articles.filter((item) => enabledSectorNames.has(item.sector)),
@@ -102,16 +95,14 @@ export function Dashboard() {
             .toLowerCase();
           return searchableText.includes(normalizedQuery);
         })
-        .sort((a, b) => {
-          const timeComparison = b.publishedAt.localeCompare(a.publishedAt);
-          const importanceComparison = b.importance - a.importance;
-          return sortOrder === "importance"
-            ? importanceComparison || timeComparison
-            : timeComparison || importanceComparison;
-        }),
-    [activeArticles, eventType, normalizedQuery, region, sortOrder],
+        .sort(
+          (a, b) =>
+            b.publishedAt.localeCompare(a.publishedAt) ||
+            b.importance - a.importance,
+        ),
+    [activeArticles, eventType, normalizedQuery, region],
   );
-  const displayedEvents = visibleEvents.slice(0, normalizedQuery ? 100 : 30);
+  const displayedEvents = visibleEvents.slice(0, 80);
   const sourceCount = new Set(activeArticles.map((item) => item.source.url)).size;
   const platformCount = new Set(
     activeArticles.map((item) => item.source.platform).filter(Boolean),
@@ -200,8 +191,8 @@ export function Dashboard() {
             </div>
             <span>
               {displayedEvents.length < visibleEvents.length
-                ? `显示 ${displayedEvents.length} / ${visibleEvents.length} 条可追溯记录`
-                : `${visibleEvents.length} 条可追溯记录`}
+                ? `显示最新 ${displayedEvents.length} / ${visibleEvents.length} 条可追溯记录`
+                : `最新 ${visibleEvents.length} 条可追溯记录`}
             </span>
           </div>
 
@@ -213,14 +204,6 @@ export function Dashboard() {
             </div>
             <select value={eventType} onChange={(event) => setEventType(event.target.value as (typeof eventTypes)[number])} aria-label="事件类型">
               {eventTypes.map((item) => <option key={item}>{item}</option>)}
-            </select>
-            <select
-              value={sortOrder}
-              onChange={(event) => setSortOrder(event.target.value as "importance" | "time")}
-              aria-label="事件排序"
-            >
-              <option value="importance">重要度优先</option>
-              <option value="time">时间优先</option>
             </select>
             <label className="inline-search">
               <Search size={15} />
@@ -264,31 +247,7 @@ export function Dashboard() {
           </div>
         </div>
 
-        <aside className="side-column">
-          <div className="section-heading compact">
-            <div>
-              <p className="section-index">02 / SECTOR HEAT</p>
-              <h2>赛道热度</h2>
-            </div>
-            <button className="method-button" onClick={() => setShowMethod(!showMethod)}><Info size={15} /> 口径</button>
-          </div>
-          {showMethod && <p className="method-note">{heatMethodology}</p>}
-          <div className="heat-list">
-            {rankedSectors.slice(0, 7).map((sector, index) => (
-              <Link href={`/technology/${sector.slug}`} className="heat-row" key={sector.slug}>
-                <span className="heat-rank">{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <strong>{sector.name}</strong>
-                  <span>{sector.events} 事件 · 完整度 {sector.completeness}%</span>
-                </div>
-                <div className="heat-meter"><i style={{ width: `${sector.heat}%` }} /></div>
-                <b>{sector.heat}</b>
-              </Link>
-            ))}
-          </div>
-          <Link className="text-link" href="/technology">查看全部 {trackedSectors.length} 个启用赛道 <ChevronRight size={15} /></Link>
-          <Link className="text-link" href="/tracking">管理追踪配置 <ChevronRight size={15} /></Link>
-        </aside>
+        {children}
       </section>
 
       <section className="lower-grid">
