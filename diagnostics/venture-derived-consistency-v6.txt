@@ -1,0 +1,96 @@
+exit performance helper: applied
+product change tracking: applied
+derived technology rebuild: applied
+exit performance recomputation: applied
+derived consistency regression: applied
+production derived assertions: applied
+test_catalog_parser_reads_both_entity_kinds (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_catalog_parser_reads_both_entity_kinds) ... ok
+test_chinese_amount_and_round_are_extracted (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_chinese_amount_and_round_are_extracted) ... ok
+test_company_profile_extracts_background_products_team_and_financing (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_company_profile_extracts_background_products_team_and_financing) ... ok
+test_institution_profile_extracts_team_recent_investments_and_classics (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_institution_profile_extracts_team_recent_investments_and_classics) ... ok
+test_listed_company_receives_transparent_capital_market_fallback (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_listed_company_receives_transparent_capital_market_fallback) ... ok
+test_previous_richer_profile_is_retained (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_previous_richer_profile_is_retained) ... ok
+test_public_page_extracts_json_ld_team_and_classifies_links (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_public_page_extracts_json_ld_team_and_classifies_links) ... ok
+test_quality_gate_requires_complete_catalog_coverage (tests.test_venture_profile_extraction.VentureProfileExtractionTests.test_quality_gate_requires_complete_catalog_coverage) ... ok
+test_products_prioritize_catalog_and_reject_document_navigation (tests.test_venture_profile_noise_filters.VentureProfileNoiseFilterTests.test_products_prioritize_catalog_and_reject_document_navigation) ... ok
+test_retained_history_is_resanitized_after_homepage_timeout (tests.test_venture_profile_noise_filters.VentureProfileNoiseFilterTests.test_retained_history_is_resanitized_after_homepage_timeout) ... ok
+test_team_extraction_rejects_navigation_and_role_fragments (tests.test_venture_profile_noise_filters.VentureProfileNoiseFilterTests.test_team_extraction_rejects_navigation_and_role_fragments) ... ok
+test_does_not_fabricate_disclosed_amounts_or_exit_events (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_does_not_fabricate_disclosed_amounts_or_exit_events) ... ok
+test_enriches_every_company_and_institution_with_shared_schema (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enriches_every_company_and_institution_with_shared_schema) ... ok
+test_enrichment_is_idempotent (tests.test_venture_profile_enrichment.VentureProfileEnrichmentTests.test_enrichment_is_idempotent) ... ok
+test_aligns_background_products_team_and_capital_events (tests.test_refine_venture_research_evidence.VentureEvidenceAlignmentTests.test_aligns_background_products_team_and_capital_events) ... ok
+test_builds_recent_investment_only_from_explicit_investment_evidence (tests.test_refine_venture_research_evidence.VentureEvidenceAlignmentTests.test_builds_recent_investment_only_from_explicit_investment_evidence) ... ok
+test_is_idempotent (tests.test_refine_venture_research_evidence.VentureEvidenceAlignmentTests.test_is_idempotent) ... ok
+test_project_background_does_not_feed_mutable_background_back (tests.test_refine_venture_research_evidence.VentureEvidenceAlignmentTests.test_project_background_does_not_feed_mutable_background_back) ... ok
+test_brand_and_role_fragments_are_removed_from_team (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_brand_and_role_fragments_are_removed_from_team) ... ok
+test_false_policy_and_homepage_events_are_removed (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_false_policy_and_homepage_events_are_removed) ... ok
+test_payload_normalization_updates_all_entity_types_and_quality_gate (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_payload_normalization_updates_all_entity_types_and_quality_gate) ... ok
+test_product_suffixes_events_and_document_labels_are_removed (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_product_suffixes_events_and_document_labels_are_removed) ... ok
+test_structured_product_cards_follow_cleaned_products (tests.test_normalize_venture_profiles.VentureProfileConsistencyTests.test_structured_product_cards_follow_cleaned_products) ... ok
+test_capital_events_require_explicit_transaction_evidence (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_capital_events_require_explicit_transaction_evidence) ... ok
+test_company_profile_reapplies_team_and_event_filters (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_company_profile_reapplies_team_and_event_filters) ... ok
+test_products_preserve_catalog_and_remove_editorial_labels (tests.test_venture_profile_postprocess.VentureProfilePostprocessTests.test_products_preserve_catalog_and_remove_editorial_labels) ... ok
+test_removes_address_and_investor_relations_tail (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_removes_address_and_investor_relations_tail) ... ok
+test_removes_anthropic_navigation_tail (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_removes_anthropic_navigation_tail) ... ok
+test_removes_ir_page_title_prefix (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_removes_ir_page_title_prefix) ... ok
+test_removes_long_product_navigation_run (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_removes_long_product_navigation_run) ... ok
+test_snapshot_sanitation_is_idempotent (tests.test_venture_narrative_sanitizer.VentureNarrativeSanitizerTests.test_snapshot_sanitation_is_idempotent) ... ok
+test_capital_markets_require_transaction_not_exchange_boilerplate (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_capital_markets_require_transaction_not_exchange_boilerplate) ... ok
+test_classic_cases_preserve_analysis_fields_and_require_evidence (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_classic_cases_preserve_analysis_fields_and_require_evidence) ... ok
+test_financing_rejects_round_like_product_copy (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_financing_rejects_round_like_product_copy) ... ok
+test_products_reject_reporting_and_investor_relations_labels (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_products_reject_reporting_and_investor_relations_labels) ... ok
+test_products_remove_pure_research_but_keep_api (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_products_remove_pure_research_but_keep_api) ... ok
+test_recent_investments_use_actual_one_year_window (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_recent_investments_use_actual_one_year_window) ... ok
+test_snapshot_finalization_is_idempotent (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_snapshot_finalization_is_idempotent) ... ok
+test_team_preserves_structured_experience (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_team_preserves_structured_experience) ... ok
+test_team_rejects_investor_relations_fragments (tests.test_finalize_venture_profiles.VentureProfileFinalizerTests.test_team_rejects_investor_relations_fragments) ... ok
+test_capital_summary_matches_structural_finalizer (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_capital_summary_matches_structural_finalizer) ... ok
+test_catalog_fallback_and_research_technology_filter (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_catalog_fallback_and_research_technology_filter) ... ok
+test_complex_snapshot_reaches_fixed_point_in_one_call (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_complex_snapshot_reaches_fixed_point_in_one_call) ... ok
+test_current_snapshot_removes_known_product_and_prose_noise (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_current_snapshot_removes_known_product_and_prose_noise) ... FAIL
+test_is_idempotent (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_is_idempotent) ... ok
+test_keeps_entity_subject_financing (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_keeps_entity_subject_financing) ... ok
+test_recomputes_derived_fields_after_semantic_removal (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_recomputes_derived_fields_after_semantic_removal) ... ok
+test_rejects_editorial_products_and_navigation_team_names (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_editorial_products_and_navigation_team_names) ... ok
+test_rejects_official_aggregation_and_clickbait_capital_events (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_official_aggregation_and_clickbait_capital_events) ... ok
+test_rejects_third_party_financing_and_year_product (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_third_party_financing_and_year_product) ... FAIL
+test_rejects_web_dates_files_events_and_clickbait_prose (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_web_dates_files_events_and_clickbait_prose) ... FAIL
+test_trims_investor_relations_page_chrome (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_trims_investor_relations_page_chrome) ... ok
+test_converges_when_gates_need_multiple_passes (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_converges_when_gates_need_multiple_passes) ... ok
+test_current_snapshot_and_catalog_share_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_current_snapshot_and_catalog_share_fixed_point) ... ok
+test_real_gates_share_one_terminal_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_real_gates_share_one_terminal_fixed_point) ... ok
+test_rejects_a_cross_gate_cycle (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_rejects_a_cross_gate_cycle) ... ok
+test_rejects_non_positive_pass_limit (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_rejects_non_positive_pass_limit) ... ok
+test_short_generated_technology_is_a_shared_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_short_generated_technology_is_a_shared_fixed_point) ... ok
+
+======================================================================
+FAIL: test_current_snapshot_removes_known_product_and_prose_noise (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_current_snapshot_removes_known_product_and_prose_noise)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 240, in test_current_snapshot_removes_known_product_and_prose_noise
+    self.assertNotIn(
+AssertionError: '工艺革新' unexpectedly found in '核心技术与产品包括谷神星、智神星系列运载火箭、“边界” 动力系统、工艺革新。'
+
+======================================================================
+FAIL: test_rejects_third_party_financing_and_year_product (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_third_party_financing_and_year_product)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 77, in test_rejects_third_party_financing_and_year_product
+    self.assertIn("Anthropic builds reliable", profile["technology"])
+AssertionError: 'Anthropic builds reliable' not found in '核心技术与产品包括Claude 模型、Claude Platform。'
+
+======================================================================
+FAIL: test_rejects_web_dates_files_events_and_clickbait_prose (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_web_dates_files_events_and_clickbait_prose)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 197, in test_rejects_web_dates_files_events_and_clickbait_prose
+    self.assertEqual(
+AssertionError: '核心技术与产品包括Claude Platform。' != 'Anthropic develops Claude Platform for enterprise AI.'
+- 核心技术与产品包括Claude Platform。
++ Anthropic develops Claude Platform for enterprise AI.
+
+
+----------------------------------------------------------------------
+Ran 58 tests in 0.978s
+
+FAILED (failures=3)
