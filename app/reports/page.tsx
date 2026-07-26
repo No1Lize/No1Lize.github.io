@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
 import { ResearchReportLibrary } from "@/components/research-report-library";
 import { reports } from "@/lib/catalog-data";
-import {
-  researchReportGeneratedAt,
-  researchReports,
-} from "@/lib/research-report-data";
+import { researchReportGeneratedAt, researchReports } from "@/lib/research-report-data";
 import styles from "./reports.module.css";
 
 export const metadata: Metadata = {
@@ -25,6 +23,8 @@ export default function ReportsPage() {
         </p>
       </header>
 
+      <ChannelUpdateDirectory channel="reports" />
+
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
           <div>
@@ -34,16 +34,11 @@ export default function ReportsPage() {
           <div className={styles.stats}>
             <strong>{researchReports.length}</strong>
             <span>份已归档 PDF</span>
-            <small>
-              {researchReportGeneratedAt
-                ? `更新 ${researchReportGeneratedAt.slice(0, 10)}`
-                : "等待首次抓取"}
-            </small>
+            <small>{researchReportGeneratedAt ? `更新 ${researchReportGeneratedAt.slice(0, 10)}` : "等待首次抓取"}</small>
           </div>
         </div>
         <p className={styles.note}>
-          点击任意研报进入站内 PDF 阅读页。系统仅保存公开可直接下载且通过 PDF 文件校验的原文，
-          不绕过登录、付费或访问权限。
+          点击任意研报进入站内 PDF 阅读页。系统仅保存公开可直接下载且通过 PDF 文件校验的原文，不绕过登录、付费或访问权限。
         </p>
         <ResearchReportLibrary reports={researchReports} />
       </section>
@@ -61,16 +56,10 @@ export default function ReportsPage() {
             <Link href={`/reports/${report.slug}`} key={report.slug}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <div>
-                <p>
-                  {report.type} · {report.date}
-                </p>
+                <p>{report.type} · {report.date}</p>
                 <h2>{report.title}</h2>
                 <strong>{report.summary}</strong>
-                <div>
-                  {report.tags.map((tag) => (
-                    <i key={tag}>{tag}</i>
-                  ))}
-                </div>
+                <div>{report.tags.map((tag) => <i key={tag}>{tag}</i>)}</div>
               </div>
               <small>{report.sources} 个来源</small>
             </Link>
