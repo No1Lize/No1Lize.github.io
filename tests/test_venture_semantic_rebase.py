@@ -116,6 +116,24 @@ class VentureSemanticRebaseTests(unittest.TestCase):
         )
         self.assertEqual(cleaned[0]["technicalHighlights"], [])
 
+    def test_unsourced_catalog_description_is_not_a_technical_highlight(self) -> None:
+        profile = {
+            "name": "智元机器人",
+            "slug": "agibot",
+            "products": ["灵犀"],
+            "technologyProducts": [{
+                "name": "灵犀",
+                "category": "机器人 / 硬件",
+                "description": "核心技术与产品包括远征、灵犀、A2 旗舰版。",
+                "technicalHighlights": ["核心技术与产品包括远征、灵犀、A2 旗舰版。"],
+                "sourceUrl": "",
+            }],
+        }
+        refined = refiner._refine_products(profile, [])
+        self.assertIn("尚未识别", refined[0]["description"])
+        self.assertEqual(refined[0]["technicalHighlights"], [])
+        self.assertEqual(refined[0]["sourceUrl"], "")
+
 
 if __name__ == "__main__":
     unittest.main()
