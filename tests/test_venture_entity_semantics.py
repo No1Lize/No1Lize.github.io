@@ -88,16 +88,27 @@ class VentureEntitySemanticTests(unittest.TestCase):
                     "slug": "anthropic",
                     "name": "Anthropic",
                     "background": "Anthropic builds reliable AI systems.",
-                    "technology": "Anthropic develops Claude Platform.",
+                    "technology": "核心技术与产品包括Pharma.AI 平台、Claude Platform、https:、A15D1080.png、New paper explores a model。",
                     "products": [
                         "Anthropic",
                         "英特尔深化智能生态合作",
+                        "开始对话",
+                        "https:",
+                        "www.example.com",
+                        "A15D1080.png",
+                        "New paper explores Insilico Medicine's generative AI platform Chemistry42",
+                        "Cost-Effective Drug Discovery",
+                        "Nach01",
+                        "Pharma.AI 平台",
                         "Claude Platform",
                     ],
                     "team": [
                         {"name": "Spotlight Megan Holston-Alexander Hear", "role": "Partner"},
                         {"name": "Chris Lyons. The Next", "role": "Partner"},
                         {"name": "Chris Lyons. Black History", "role": "Partner"},
+                        {"name": "ML Angela Yeung Awards", "role": "CTO"},
+                        {"name": "Solutions Platform Overview AI", "role": "Partner"},
+                        {"name": "Sun Microsystems", "role": "Founder"},
                         {"name": "Megan Holston-Alexander", "role": "Partner"},
                     ],
                     "financing": [],
@@ -114,6 +125,7 @@ class VentureEntitySemanticTests(unittest.TestCase):
                     "strategy": "Example Capital invests in AI.",
                     "team": [
                         {"name": "General Partner", "role": "Partner"},
+                        {"name": "Moses Singer", "role": "CEO"},
                         {"name": "Jane Doe", "role": "Partner"},
                     ],
                     "sources": [],
@@ -124,7 +136,11 @@ class VentureEntitySemanticTests(unittest.TestCase):
         cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
         self.assertEqual(
             cleaned["companies"]["anthropic"]["products"],
-            ["Claude Platform"],
+            ["Pharma.AI 平台", "Claude Platform"],
+        )
+        self.assertEqual(
+            cleaned["companies"]["anthropic"]["technology"],
+            "核心技术与产品包括Pharma.AI 平台、Claude Platform。",
         )
         self.assertEqual(
             [row["name"] for row in cleaned["companies"]["anthropic"]["team"]],
@@ -134,8 +150,8 @@ class VentureEntitySemanticTests(unittest.TestCase):
             [row["name"] for row in cleaned["institutions"]["fund"]["team"]],
             ["Jane Doe"],
         )
-        self.assertEqual(diagnostics["removedProducts"], 2)
-        self.assertEqual(diagnostics["removedTeamMembers"], 4)
+        self.assertEqual(diagnostics["removedProducts"], 9)
+        self.assertEqual(diagnostics["removedTeamMembers"], 8)
 
     def test_trims_investor_relations_page_chrome(self) -> None:
         payload = {
