@@ -347,8 +347,14 @@ def _refine_products(
         old = existing.get(_compact(name), {})
         if not description:
             old_description = sanitize_narrative(old.get("description", ""), limit=420)
-            if old_description and any(
-                _alias_in_text(alias, old_description) for alias in aliases
+            old_source_url = normalize_url(old.get("sourceUrl", ""))
+            if (
+                old_description
+                and old_source_url
+                and _contains_any(old_description, TECH_TERMS)
+                and any(_alias_in_text(alias, old_description) for alias in aliases)
+                and "尚未识别到可独立核对的技术说明" not in old_description
+                and "具体技术参数以原始来源为准" not in old_description
             ):
                 description = old_description
         if not description:
