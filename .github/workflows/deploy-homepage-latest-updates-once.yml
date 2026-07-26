@@ -11,10 +11,12 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  issues: write
+  pull-requests: write
 
 concurrency:
   group: homepage-latest-updates-deploy-once
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -51,9 +53,35 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     environment:
-      name: github-pages-homepage-latest-updates
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  notify:
+    if: always()
+    needs: [build, deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report deployment result to PR 52
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BUILD_RESULT: ${{ needs.build.result }}
+          DEPLOY_RESULT: ${{ needs.deploy.result }}
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+        shell: bash
+        run: |
+          body=$(cat <<EOF
+          ### Homepage deployment status
+          - Build: \`${BUILD_RESULT}\`
+          - Deploy: \`${DEPLOY_RESULT}\`
+          - Page: ${PAGE_URL:-not available}
+          - Source: \`${GITHUB_SHA}\`
+          - Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}
+          EOF
+          )
+          gh api "repos/${GITHUB_REPOSITORY}/issues/52/comments" -f body="$body"
