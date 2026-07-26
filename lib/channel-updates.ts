@@ -2,6 +2,10 @@ import rawArticles from "@/public/data/articles.json";
 import rawPeople from "@/public/data/people.json";
 import rawResearchReports from "@/public/data/research_reports.json";
 import { companies, institutionCatalog } from "@/lib/catalog-data";
+import {
+  normalizeChannelUpdateDate,
+  type ChannelUpdateDatePrecision,
+} from "@/lib/channel-update-date";
 import { trackedSectors } from "@/lib/tracked-sectors";
 
 export type ChannelUpdateKey =
@@ -20,6 +24,8 @@ export type ChannelUpdateItem = {
   label: string;
   context: string;
   date: string;
+  dateOriginal: string;
+  datePrecision: ChannelUpdateDatePrecision;
   sortAt: string;
   keywords: string[];
 };
@@ -111,6 +117,8 @@ const materialTypeLabels: Record<string, string> = {
   authored_work: "著作",
   shareholder_letter: "股东信",
   public_document: "公开材料",
+  official_profile: "官方资料",
+  biography: "人物资料",
 };
 
 const enabledSectorNames = new Set(
@@ -166,14 +174,6 @@ function firstMatchedTerm(
     ?.value;
 }
 
-function isIsoDate(value: string) {
-  return /^\d{4}-\d{2}-\d{2}/u.test(value);
-}
-
-function safeDate(value: string | undefined, fallback: string) {
-  return value && isIsoDate(value) ? value.slice(0, 10) : fallback.slice(0, 10);
-}
-
 function dedupeAndSort(items: ChannelUpdateItem[]) {
   const seen = new Set<string>();
   return items
@@ -185,7 +185,7 @@ function dedupeAndSort(items: ChannelUpdateItem[]) {
     })
     .sort(
       (left, right) =>
-        right.sortAt.localeCompare(left.sortAt) || right.date.localeCompare(left.date),
+        right.sortAt.localeCompare(left.sortAt) || right.title.localeCompare(left.title, "zh-CN"),
     );
 }
 
@@ -194,6 +194,10 @@ function articleToUpdate(
   context: string,
   keywords: string[],
 ): ChannelUpdateItem {
+  const normalizedDate = normalizeChannelUpdateDate(
+    article.publishedAt,
+    articlesPayload.generatedAt,
+  );
   return {
     id: article.id,
     title: article.title,
@@ -202,8 +206,10 @@ function articleToUpdate(
     source: article.source.platform || article.source.name,
     label: article.type,
     context,
-    date: article.publishedAt,
-    sortAt: article.publishedAt,
+    date: normalizedDate.displayDate,
+    dateOriginal: normalizedDate.originalDate,
+    datePrecision: normalizedDate.precision,
+    sortAt: normalizedDate.sortAt,
     keywords: uniqueKeywords([
       article.type,
       article.sector,
@@ -221,7 +227,7 @@ function technologyDirectory(): ChannelUpdateDirectory {
     );
   return {
     title: "赛道更新目录",
-    description: "当前启用赛道的最新公开事件，可按赛道、事件类型和地区关键词筛选，并按时间排序。",
+    description: "当前启用赛道的最新公开事件，可按赛道、事件类型和地区关键词筛选，并按统一日期排序。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -274,7 +280,11 @@ function institutionsDirectory(): ChannelUpdateDirectory {
 function reportsDirectory(): ChannelUpdateDirectory {
   const items = researchReportsPayload.reports.map((report) => {
     const href = report.originalPdfUrl || report.sourcePageUrl || "";
-    const sortAt = safeDate(report.archivedAt, report.publishedAt);
+    const orderingDate = report.archivedAt || report.publishedAt;
+    const normalizedDate = normalizeChannelUpdateDate(
+      orderingDate,
+      researchReportsPayload.generatedAt,
+    );
     return {
       id: report.id,
       title: report.title,
@@ -283,14 +293,16 @@ function reportsDirectory(): ChannelUpdateDirectory {
       source: report.sourceName || report.institution,
       label: report.reportType,
       context: `${report.institution} · ${report.sector}`,
-      date: report.publishedAt,
-      sortAt,
+      date: normalizedDate.displayDate,
+      dateOriginal: normalizedDate.originalDate,
+      datePrecision: normalizedDate.precision,
+      sortAt: normalizedDate.sortAt,
       keywords: uniqueKeywords([report.reportType, report.sector, report.institution]),
     } satisfies ChannelUpdateItem;
   });
   return {
     title: "研报更新目录",
-    description: "新归档的公开研报与 PDF 原文，可按报告类型、赛道和研究机构关键词筛选。",
+    description: "新归档的公开研报与 PDF 原文，可按报告类型、赛道和研究机构关键词筛选；显示日期与排序日期保持一致。",
     generatedAt: researchReportsPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -299,8 +311,10 @@ function reportsDirectory(): ChannelUpdateDirectory {
 function peopleDirectory(): ChannelUpdateDirectory {
   const items = peoplePayload.people.flatMap((person) =>
     (person.materials ?? []).map((material, index) => {
-      const fallback = person.updatedAt || peoplePayload.generatedAt;
-      const sortAt = safeDate(material.date, fallback);
+      const normalizedDate = normalizeChannelUpdateDate(
+        material.date,
+        peoplePayload.generatedAt,
+      );
       const materialLabel = materialTypeLabels[material.type] || "人物材料";
       return {
         id: `${person.slug}-${index}-${normalize(material.title)}`,
@@ -310,15 +324,17 @@ function peopleDirectory(): ChannelUpdateDirectory {
         source: material.source,
         label: materialLabel,
         context: person.name,
-        date: material.date || fallback.slice(0, 10),
-        sortAt,
+        date: normalizedDate.displayDate,
+        dateOriginal: normalizedDate.originalDate,
+        datePrecision: normalizedDate.precision,
+        sortAt: normalizedDate.sortAt,
         keywords: uniqueKeywords([person.name, materialLabel]),
       } satisfies ChannelUpdateItem;
     }),
   );
   return {
     title: "人物材料更新目录",
-    description: "人物演讲、采访、公开对话、论文与著作等材料，可按人物和材料类型关键词筛选。",
+    description: "人物演讲、采访、公开对话、论文与著作等材料；相对时间会换算为约计日期，再与精确日期统一排序。",
     generatedAt: peoplePayload.generatedAt,
     items: dedupeAndSort(items),
   };
