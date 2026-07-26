@@ -24,7 +24,21 @@ jobs:
       - name: Verify professional venture data boundary
         run: node --import tsx --test tests/professional-venture-data.test.ts
       - name: Build GitHub Pages artifact
-        run: npm run build:pages
+        id: pages-build
+        continue-on-error: true
+        shell: bash
+        run: npm run build:pages > pages-build.log 2>&1
+      - name: Upload Pages build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: professional-venture-pages-build-log
+          path: pages-build.log
+          if-no-files-found: error
+          retention-days: 2
+      - name: Enforce Pages build result
+        if: steps.pages-build.outcome != 'success'
+        run: exit 1
       - name: Discover and verify a rendered company page
         shell: bash
         run: |
