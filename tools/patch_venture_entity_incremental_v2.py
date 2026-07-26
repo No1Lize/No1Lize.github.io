@@ -2,9 +2,9 @@
 """Incrementally harden venture entity semantics against remaining page noise.
 
 This patch targets the already-deployed first-generation entity validators. It
-adds URL/CTA product rejection, navigation and organization-name rejection for
-team members, and deterministic technology reconstruction when prose still
-contains labels removed from the product list.
+adds URL/CTA/file/editorial product rejection, navigation and organization-name
+rejection for team members, and deterministic technology reconstruction when
+prose still contains labels removed from the product list.
 """
 
 from __future__ import annotations
@@ -43,19 +43,35 @@ PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
         '''PRODUCT_EDITORIAL_RE = re.compile(
     r"\\b(?:press release|latest news|newsroom|things to know|crew undocks|"
     r"journey home|announces?|launches?|introduces?|partnership|collaboration|"
-    r"read more|learn more|start chat|free chat|try now)\\b|"
+    r"read more|learn more|start chat|free chat|try now|new paper|explores?|"
+    r"nominates?|applauded|positive topline|developed using|for the treatment|"
+    r"enabling rapid|development with)\\b|"
     r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|"
     r"访谈|观点|生态合作|开始对话|免费对话|立即体验|体验全新|交付速度|再提升)",
     re.IGNORECASE,
 )
 PRODUCT_URL_RE = re.compile(
-    r"(?:https?:|www\\.)|(?:\\.(?:com|cn|ai|io|org|net)\\b)|"
-    r"\\b(?:qnimgs?|imgs?|images?|cdn)\\b",
+    r"(?:https?://|^https?:$|^www\\.)|\\b(?:qnimgs?|imgs?|images?|cdn)\\b",
     re.IGNORECASE,
 )
+PRODUCT_FILE_RE = re.compile(
+    r"\\.(?:png|jpe?g|webp|svg|gif|pdf)(?:[?#].*)?$",
+    re.IGNORECASE,
+)
+PRODUCT_SENTENCE_RE = re.compile(
+    r"^(?:the first\\b|new paper\\b|development with\\b)|"
+    r"\\b(?:nominates?|applauded|positive topline|for the treatment|"
+    r"developed using|enabling rapid)\\b",
+    re.IGNORECASE,
+)
+PRODUCT_EXACT_NOISE = {
+    "cost-effective drug discovery",
+    "drug discovery",
+    "nach01",
+}
 PERSON_CJK_RE = re.compile(r"^[\\u3400-\\u9fff·]{2,8}$")
 ''',
-        "editorial and URL product guards",
+        "editorial URL file and sentence product guards",
     )
     replace_once(
         TARGET,
@@ -91,9 +107,12 @@ PERSON_ORG_SUFFIXES = (
 ''',
         '''        or PRODUCT_EDITORIAL_RE.search(item)
         or PRODUCT_URL_RE.search(item)
+        or PRODUCT_FILE_RE.search(item)
+        or PRODUCT_SENTENCE_RE.search(item)
+        or item.casefold().strip(" .") in PRODUCT_EXACT_NOISE
         or len(compact) < 2
 ''',
-        "URL product validation",
+        "URL file and sentence product validation",
     )
     replace_once(
         TARGET,
@@ -125,6 +144,8 @@ PERSON_ORG_SUFFIXES = (
             not technology
             or PRODUCT_EDITORIAL_RE.search(raw_technology)
             or PRODUCT_URL_RE.search(raw_technology)
+            or PRODUCT_FILE_RE.search(raw_technology)
+            or PRODUCT_SENTENCE_RE.search(raw_technology)
         ):
             technology = f"核心技术与产品包括{'、'.join(products[:8])}。"
 ''',
@@ -142,17 +163,22 @@ def patch_tests() -> None:
                         "Claude Platform",
                     ],
 ''',
-        '''                    "technology": "核心技术与产品包括Claude Platform、https:、www.example.com、英特尔深化智能生态合作。",
+        '''                    "technology": "核心技术与产品包括Pharma.AI 平台、Claude Platform、https:、A15D1080.png、New paper explores a model。",
                     "products": [
                         "Anthropic",
                         "英特尔深化智能生态合作",
                         "开始对话",
                         "https:",
                         "www.example.com",
+                        "A15D1080.png",
+                        "New paper explores Insilico Medicine's generative AI platform Chemistry42",
+                        "Cost-Effective Drug Discovery",
+                        "Nach01",
+                        "Pharma.AI 平台",
                         "Claude Platform",
                     ],
 ''',
-        "editorial product and technology fixtures",
+        "editorial file product and technology fixtures",
     )
     replace_once(
         TESTS,
@@ -191,21 +217,21 @@ def patch_tests() -> None:
 ''',
         '''        self.assertEqual(
             cleaned["companies"]["anthropic"]["products"],
-            ["Claude Platform"],
+            ["Pharma.AI 平台", "Claude Platform"],
         )
         self.assertEqual(
             cleaned["companies"]["anthropic"]["technology"],
-            "核心技术与产品包括Claude Platform。",
+            "核心技术与产品包括Pharma.AI 平台、Claude Platform。",
         )
 ''',
-        "clean technology assertion",
+        "clean product and technology assertion",
     )
     replace_once(
         TESTS,
         '''        self.assertEqual(diagnostics["removedProducts"], 2)
         self.assertEqual(diagnostics["removedTeamMembers"], 4)
 ''',
-        '''        self.assertEqual(diagnostics["removedProducts"], 5)
+        '''        self.assertEqual(diagnostics["removedProducts"], 9)
         self.assertEqual(diagnostics["removedTeamMembers"], 8)
 ''',
         "entity removal counts",
