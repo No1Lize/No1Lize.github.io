@@ -35,6 +35,7 @@ jobs:
           python tools/patch_venture_person_sentence_names.py
           python tools/patch_venture_short_summary_fallback.py
           python tools/patch_venture_terminal_entity_contract.py
+          python tools/patch_venture_short_technology_fallback.py
       - name: Run semantic and terminal regressions
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
