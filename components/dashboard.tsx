@@ -37,7 +37,7 @@ const enabledSectorNames = new Set(
   trackedSectors.flatMap((sector) => sector.aliases),
 );
 
-export function Dashboard({ sidebar }: { sidebar: ReactNode }) {
+export function Dashboard({ children }: { children: ReactNode }) {
   const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
@@ -247,7 +247,7 @@ export function Dashboard({ sidebar }: { sidebar: ReactNode }) {
           </div>
         </div>
 
-        {sidebar}
+        {children}
       </section>
 
       <section className="lower-grid">
