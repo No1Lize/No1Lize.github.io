@@ -1,0 +1,142 @@
+name: Deploy channel date normalization once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deploy-channel-date-fix-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: channel-date-normalization-deploy-once
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        id: install
+        continue-on-error: true
+        run: npm install --no-audit --no-fund > /tmp/install.log 2>&1
+      - name: Type-check
+        id: typecheck
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: npx tsc --noEmit > /tmp/typecheck.log 2>&1
+      - name: Run unit tests
+        id: tests
+        if: steps.install.outcome == 'success' && steps.typecheck.outcome == 'success'
+        continue-on-error: true
+        run: npm run test:unit > /tmp/tests.log 2>&1
+      - name: Build Pages
+        id: build
+        if: steps.install.outcome == 'success' && steps.typecheck.outcome == 'success' && steps.tests.outcome == 'success'
+        continue-on-error: true
+        run: npm run build:pages > /tmp/build.log 2>&1
+      - name: Verify rendered people directory dates
+        id: rendered
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          candidates = [Path('out/people/index.html'), Path('out/people.html')]
+          page = next((path for path in candidates if path.exists()), None)
+          if page is None:
+              raise SystemExit('people page output not found')
+          text = page.read_text(encoding='utf-8')
+          required = ['按关键词分类', '时间最新', '约 2022-07-26', '约 2025-11-26']
+          missing = [value for value in required if value not in text]
+          if missing:
+              raise SystemExit(f'missing rendered markers: {missing}')
+          print(f'verified {page}')
+          PY
+      - name: Record build result
+        if: always()
+        run: |
+          mkdir -p diagnostics
+          python - <<'PY'
+          import json, pathlib
+          def tail(path):
+              file = pathlib.Path(path)
+              return file.read_text(errors='replace')[-12000:] if file.exists() else ''
+          data = {
+              'sourceCommit': '${{ github.sha }}',
+              'featureCommit': '565d92168538b7fdaaa808040964de3402eceb31',
+              'runId': '${{ github.run_id }}',
+              'install': '${{ steps.install.outcome }}',
+              'typecheck': '${{ steps.typecheck.outcome }}',
+              'tests': '${{ steps.tests.outcome }}',
+              'build': '${{ steps.build.outcome }}',
+              'rendered': '${{ steps.rendered.outcome }}',
+              'deployOutcome': 'pending',
+              'deployed': False,
+              'typecheckLog': tail('/tmp/typecheck.log'),
+              'testLog': tail('/tmp/tests.log'),
+              'buildLog': tail('/tmp/build.log'),
+          }
+          pathlib.Path('diagnostics/channel-date-normalization-deploy.json').write_text(
+              json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8'
+          )
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add diagnostics/channel-date-normalization-deploy.json
+          git commit -m 'ci: record channel date normalization build' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Enforce verification
+        if: always()
+        run: |
+          test '${{ steps.install.outcome }}' = success
+          test '${{ steps.typecheck.outcome }}' = success
+          test '${{ steps.tests.outcome }}' = success
+          test '${{ steps.build.outcome }}' = success
+          test '${{ steps.rendered.outcome }}' = success
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages-channel-date-normalization
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+      - name: Confirm deployment
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          path = pathlib.Path('diagnostics/channel-date-normalization-deploy.json')
+          data = json.loads(path.read_text()) if path.exists() else {}
+          data.update({
+              'deployOutcome': '${{ steps.deployment.outcome }}',
+              'pageUrl': '${{ steps.deployment.outputs.page_url }}',
+              'deployed': '${{ steps.deployment.outcome }}' == 'success',
+          })
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add diagnostics/channel-date-normalization-deploy.json
+          git commit -m 'ci: confirm channel date normalization deployment' || true
+          git pull --rebase origin main
+          git push origin HEAD:main
