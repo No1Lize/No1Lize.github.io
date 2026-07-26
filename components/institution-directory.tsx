@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   institutionDirectory,
   institutionRankingCategories,
@@ -55,8 +55,6 @@ export function InstitutionDirectory() {
     });
   }, [category, query, region]);
 
-  useEffect(() => setPage(1), [category, query, region]);
-
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
   const visible = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
@@ -69,21 +67,30 @@ export function InstitutionDirectory() {
           <input
             aria-label="搜索投资机构"
             value={query}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => {
+              setQuery(event.target.value);
+              setPage(1);
+            }}
             placeholder="搜索机构简称、全称、类型或榜单"
           />
         </label>
         <select
           aria-label="地区筛选"
           value={region}
-          onChange={(event) => setRegion(event.target.value as (typeof regions)[number])}
+          onChange={(event) => {
+            setRegion(event.target.value as (typeof regions)[number]);
+            setPage(1);
+          }}
         >
           {regions.map((item) => <option key={item}>{item}</option>)}
         </select>
         <select
           aria-label="榜单类型筛选"
           value={category}
-          onChange={(event) => setCategory(event.target.value as InstitutionRankingCategory | "全部")}
+          onChange={(event) => {
+            setCategory(event.target.value as InstitutionRankingCategory | "全部");
+            setPage(1);
+          }}
         >
           <option>全部</option>
           {institutionRankingCategories.map((item) => <option key={item}>{item}</option>)}
