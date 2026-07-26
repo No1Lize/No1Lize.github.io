@@ -47,7 +47,7 @@ export function Dashboard() {
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
   const [query, setQuery] = useState("");
-  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+  const [sortOrder, setSortOrder] = useState<"importance" | "time">("importance");
   const [showMethod, setShowMethod] = useState(false);
 
   const activeArticles = useMemo(
@@ -103,11 +103,11 @@ export function Dashboard() {
           return searchableText.includes(normalizedQuery);
         })
         .sort((a, b) => {
-          const timeComparison =
-            sortOrder === "newest"
-              ? b.publishedAt.localeCompare(a.publishedAt)
-              : a.publishedAt.localeCompare(b.publishedAt);
-          return timeComparison || b.importance - a.importance;
+          const timeComparison = b.publishedAt.localeCompare(a.publishedAt);
+          const importanceComparison = b.importance - a.importance;
+          return sortOrder === "importance"
+            ? importanceComparison || timeComparison
+            : timeComparison || importanceComparison;
         }),
     [activeArticles, eventType, normalizedQuery, region, sortOrder],
   );
@@ -216,11 +216,11 @@ export function Dashboard() {
             </select>
             <select
               value={sortOrder}
-              onChange={(event) => setSortOrder(event.target.value as "newest" | "oldest")}
-              aria-label="时间排序"
+              onChange={(event) => setSortOrder(event.target.value as "importance" | "time")}
+              aria-label="事件排序"
             >
-              <option value="newest">时间：最新优先</option>
-              <option value="oldest">时间：最早优先</option>
+              <option value="importance">重要度优先</option>
+              <option value="time">时间优先</option>
             </select>
             <label className="inline-search">
               <Search size={15} />
