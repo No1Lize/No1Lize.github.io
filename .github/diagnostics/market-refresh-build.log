@@ -7,15 +7,15 @@ https://nextjs.org/telemetry
 ▲ Next.js 16.2.6 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 8.5s
+✓ Compiled successfully in 6.4s
   Running TypeScript ...
-  Finished TypeScript in 5.4s ...
+  Finished TypeScript in 4.5s ...
   Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/128) ...
-  Generating static pages using 3 workers (32/128) 
-  Generating static pages using 3 workers (64/128) 
-  Generating static pages using 3 workers (96/128) 
-✓ Generating static pages using 3 workers (128/128) in 1453ms
+  Generating static pages using 3 workers (0/168) ...
+  Generating static pages using 3 workers (42/168) 
+  Generating static pages using 3 workers (84/168) 
+  Generating static pages using 3 workers (126/168) 
+✓ Generating static pages using 3 workers (168/168) in 1399ms
   Finalizing page optimization ...
 
 Route (app)
@@ -41,16 +41,21 @@ Route (app)
 │ └ [+12 more paths]
 ├ ○ /people
 ├ ● /people/[slug]
-│ ├ /people/warren-buffett
-│ ├ /people/charlie-munger
-│ ├ /people/duan-yongping
-│ └ [+3 more paths]
+│ ├ /people/frank-wang
+│ ├ /people/li-zexiang
+│ ├ /people/wang-xingxing
+│ └ [+19 more paths]
 ├ ○ /reports
 ├ ● /reports/[slug]
 │ ├ /reports/ai-capital-2026
 │ ├ /reports/humanoid-robotics
 │ ├ /reports/ai-chips
 │ └ [+2 more paths]
+├ ● /reports/pdf/[slug]
+│ ├ /reports/pdf/eastmoney-ap202607261827357010
+│ ├ /reports/pdf/eastmoney-ap202607261827354335
+│ ├ /reports/pdf/public-99650e337832e3626abf
+│ └ [+20 more paths]
 ├ ○ /robots.txt
 ├ ○ /search
 ├ ○ /sitemap.xml
@@ -59,7 +64,7 @@ Route (app)
 │ ├ /technology/ai
 │ ├ /technology/robotics
 │ ├ /technology/semiconductor
-│ └ [+8 more paths]
+│ └ [+9 more paths]
 └ ○ /tracking
 
 
