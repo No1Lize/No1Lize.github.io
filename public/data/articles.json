@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T15:12:59+00:00",
-  "articleCount": 1021,
+  "generatedAt": "2026-07-26T15:28:28+00:00",
+  "articleCount": 1023,
   "articles": [
     {
       "id": "user-track-track-1ccjq49-google-cn-b8cc45d59946ead9",
@@ -12410,8 +12410,8 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-aitechuang-ai-6741096badf52a95",
-      "sourceId": "user-track-wechat-aitechuang-ai",
+      "id": "user-track-wechat-aitechuang-robotics-6741096badf52a95",
+      "sourceId": "user-track-wechat-aitechuang-robotics",
       "title": "现场直击：高昂真机成本锁死具身进化，Google 科学家用视频世界模型破局｜RSS 2026",
       "summary": "Sherry Yang 独家解密 World Gym：两张 A100 跑通云端演练，让机器人从失败中自我恢复 作者丨 张 璐 编辑丨 齐铖湧 在机器人技术狂飙突进的今天，具身智能领域正面临着一个行业性的 核心困境 ： 我们已经拥有了高容量的深度神经网络，但 现实世界中高昂的交互与试错成本，成为了阻碍机器人通往AGI的最大瓶颈 。 在虚拟世界里，游戏和代码的执行成本几乎为零，因此我们见证了 AlphaGo 的奇迹和大语言模型在编程大赛中夺冠。但在物理世界中，机器人每一次真机试错，都伴随着昂贵的时间成本、设备损耗与安全隐患。 如果无法将这种高交互成本降下来，机器人就无法像大模型那样利用海量数据疯狂自我进化。 在机器人顶级学术会议 RSS 的现场，来自 Google 实验室和纽约大学（NYU）的助理教授 Sherry Yang 给出了答案。 她的演讲题目是： 《在世界模型中评估与提升物理代理》（Evaluating and Improving Physical Agents in a World Model） ，在演讲中，她提出了一个极具颠覆性的范式： 直接利用可控的视频生成模型来作为真实世",
       "type": "公司动态",
@@ -12440,14 +12440,16 @@
         "的助理"
       ],
       "matchedTrackingTerms": [
-        "大模型",
-        "Agents",
-        "ChatGPT",
+        "机器人",
+        "具身智能",
+        "世界模型",
         "强化学习",
-        "GPT-3"
+        "RSS",
+        "机器人学"
       ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page"
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-track-track-1ccjq49-google-us-ffa88a51f47c5abd",
@@ -15481,6 +15483,44 @@
       ],
       "wechatAccountConfigId": "deeptechchina",
       "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-robotics-c07012b46b90e158",
+      "sourceId": "user-track-wechat-aitechuang-robotics",
+      "title": "WAIC 观察：通用具身智能要在有生之年实现，急需「物理 AI 基建狂魔」",
+      "summary": "今天的物理 AI，不只比“武功”，更得拼“内力”。 作者 丨 齐铖湧 董子博 编辑丨马晓宁 WAIC 2026 到了最后一天，逛了无数个具身展台，心里不禁有了不少感慨。 柔性抓取可以抓异形物体了，长程任务也更复杂了——技术飞快进步，好像通用具身离我们已经不远。但 Demo 越炫，人气越足，作为一个参加过 n 次的 WAIC“老人”，就越觉得这届 WAIC 似乎少了些什么—— 模型吹得天花乱坠，底层的数据基建却鲜少有人谈及。 数据，无疑是具身智能行业中“房间里的大象”——在 WAIC 上随便和一位从业者深谈两句，大家都会不约而同地陷入同一种焦虑：实在太缺数据了。 在AI科技评论看来，要构建具身智能的数据基础设施，必须同时回答两个极其硬核的问题： 第一，你能搞到多少数据？ 第二，这些异构的、非结构化的数据，能不能被有效地共同学习？ 带着这两个问题，在今年的 WAIC 现场，有一家公司展台吸引了 AI 科技评论的关注：跨维智能（以下简称“跨维”）。 用一句话来说： 要实现通用的具身智能，跨维想做的，是“物理 AI 基建狂魔”。 要让具身智能通用泛化，首先要做到智能的涌现，去理解复杂多变的真实",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "阿里云 / Qwen",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b216aa7eca87c5305f613d9fc0fba02e39c7325dfd7c99fb02ef623a67fc106fecc54b448&idx=1&mid=2247739641&sn=62c440fbf1321b4afc9b76609948a4b5",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "齐铖湧 董子博"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "人形机器人",
+        "VLA",
+        "世界模型",
+        "WAIC",
+        "RSS"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-track-quantum-google-us-dcd21c6a54addd9f",
@@ -20140,8 +20180,8 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-aitechuang-robotics-6bc398cf6e91c0c1",
-      "sourceId": "user-track-wechat-aitechuang-robotics",
+      "id": "user-track-wechat-aitechuang-ai-6bc398cf6e91c0c1",
+      "sourceId": "user-track-wechat-aitechuang-ai",
       "title": "独家｜姚顺雨前同事田永龙加盟腾讯",
       "summary": "鹅厂AI版图再添一员猛将 作者丨 成妍菁 编辑丨 董子博 AI科技评论独家获悉， OpenAI 前研究员 Yonglong Tian（田永龙）已于近期加入腾讯， 知情人士透露，其后续或将参与参与 VLM（视觉语言模型）相关研发。 一位与其相熟的人士向雷峰网表示， 田永龙在圈内口碑不错，“人挺好，与姚顺雨关系也不错”。 田永龙此前在 OpenAI 担任 Member of Technical Staff，主要研究方向包括计算机视觉、视觉表征学习（Representation Learning）以及生成式模型。在 OpenAI 之前，他曾在“谷歌系”深耕多年。2022年底，他加入位于剑桥的Google Research担任高级研究科学家，随后于2024年5月转入Google DeepMind。 据了解，田永龙与腾讯混元核心成员姚顺雨有过 OpenAI 阶段的共事经历。从履历路径来看，田永龙属于典型的“视觉系”研究员。 其本科毕业于清华大学，随后在香港中文大学获得研究硕士学位，之后赴 MIT 攻读博士，博士期间，其研究重点集中在对比学习、视觉表征学习等方向，并参与过 SupContrast",
       "type": "公司动态",
@@ -20176,10 +20216,14 @@
         "任高级研究",
         "攻读"
       ],
-      "matchedTrackingTerms": [],
+      "matchedTrackingTerms": [
+        "多模态",
+        "计算机视觉",
+        "Agent",
+        "DeepMind"
+      ],
       "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人"
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-techpp-ee1113e4f3e71af6",
@@ -20851,6 +20895,42 @@
       "trackSlugs": [
         "manufacturing"
       ]
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-materials-b2185c32a1575652",
+      "sourceId": "user-track-wechat-deeptechchina-materials",
+      "title": "Anthropic也要造芯片了，还挖了OpenAI的芯片工程师",
+      "summary": "继 OpenAI 发布首款自研 AI 芯片之后 ，Anthropic 也在加快向芯片领域延伸。 据 The Information 报道， Anthropic 正在与三星接洽，讨论由后者参与制造一款定制 AI 芯片。 双方目前仍处于探索阶段，Anthropic 尚未确定芯片的具体用途、性能指标，也没有明确它将如何集成到服务器和数据中心。 部分媒体称，双方的讨论涉及三星的 2 纳米制程和先进封装能力。不过，Anthropic 和三星均未确认这些细节。面对媒体询问，Anthropic 也没有进一步表态， 只强调包含谷歌、亚马逊和英伟达芯片在内的多元化硬件架构仍将是其算力战略的重要组成部分。 Anthropic一直在扩大芯片供应链 Anthropic 过去给外界的印象，主要是一家专注于模型研究和 AI 安全的公司。但实际上，它与芯片底层的联系早已不止于采购算力。 2024 年，Anthropic 宣布深化与亚马逊的合作。亚马逊云科技（AWS）成为其主要云服务和训练合作伙伴，亚马逊对 Anthropic 的总投资则增加至 80 亿美元。 双方的合作并不是简单地把 Claude 部署到 AWS",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-04",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777a9cab00020dc7056cb04a65c7aaadb7181a179a4ba5682421e00707f6c39babea0489a83&idx=1&mid=2649800147&sn=b9b2844a91662aaafa75ce7779d6c6bd",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "胡莉花"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Clive Chan",
+        "Hock Tan",
+        "Sam Altman",
+        "Greg Brockman"
+      ],
+      "matchedTrackingTerms": [],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "新材料"
     },
     {
       "id": "professional-media-it-news-africa-23fbd2513989bfec",
@@ -37095,10 +37175,10 @@
     {
       "id": "user-track-wechat-aitechuang-ai",
       "name": "AI科技评论",
-      "status": "ok",
+      "status": "partial",
       "scanned": 17,
       "accepted": 4,
-      "failed": 0,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -37107,10 +37187,10 @@
     {
       "id": "user-track-wechat-aitechuang-robotics",
       "name": "AI科技评论",
-      "status": "partial",
+      "status": "ok",
       "scanned": 18,
-      "accepted": 3,
-      "failed": 1,
+      "accepted": 4,
+      "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -37209,10 +37289,10 @@
     {
       "id": "user-track-wechat-deeptechchina-materials",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "partial",
       "scanned": 15,
-      "accepted": 1,
-      "failed": 0,
+      "accepted": 2,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -38068,15 +38148,15 @@
     "retainedPreviousSourceCount": 37
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T15:12:59+00:00",
+    "generatedAt": "2026-07-26T15:28:28+00:00",
     "configuredSources": 33,
     "successfulSources": 11,
-    "acceptedArticles": 40,
-    "fullTextArticles": 40,
+    "acceptedArticles": 42,
+    "fullTextArticles": 42,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
     "retainedSources": 22,
-    "mentionedCompanyLinks": 47,
-    "mentionedPeopleLinks": 108
+    "mentionedCompanyLinks": 50,
+    "mentionedPeopleLinks": 112
   }
 }
