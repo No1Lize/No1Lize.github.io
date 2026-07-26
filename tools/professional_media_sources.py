@@ -1,16 +1,16 @@
 """Load and route the owner-curated professional technology media catalog.
 
-The catalog may contain many media outlets, so the crawler does not issue one
-request per website. Sources are grouped by primary sector into bounded Bing
-RSS discovery queries. Every returned URL is checked against the original media
-host and, when a source uses a section path, against that path as well.
+Every enabled outlet becomes an independent, bounded discovery source. This
+prevents large publications from consuming a shared result page and makes the
+formal snapshot expose one execution status per registered media outlet. Every
+returned URL is checked against the original media host and, when a source uses
+a section path, against that path as well.
 """
 
 from __future__ import annotations
 
 import copy
 import json
-from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 from urllib.parse import urlsplit
@@ -116,86 +116,87 @@ def enabled_sources(path: Path = REGISTRY_PATH) -> list[dict[str, Any]]:
     return [source for source in load_registry(path)["sources"] if source["enabled"]]
 
 
-def _chunks(values: Sequence[dict[str, Any]], size: int) -> Iterable[list[dict[str, Any]]]:
-    for index in range(0, len(values), size):
-        yield list(values[index : index + size])
-
-
 def grouped_specs(
     tracks: Sequence[dict[str, Any]],
     tracking: Any,
     path: Path = REGISTRY_PATH,
 ) -> list[dict[str, Any]]:
-    """Build a small number of allowlisted discovery sources for the full catalog."""
+    """Build one independently executable, allowlisted source per media outlet."""
 
     payload = load_registry(path)
     settings = payload["settings"]
-    max_hosts = max(2, min(int(settings.get("maxHostsPerGroup", 8) or 8), 12))
-    max_items = max(4, min(int(settings.get("maxItemsPerGroup", 12) or 12), 20))
+    max_items = max(
+        2,
+        min(
+            int(
+                settings.get(
+                    "maxItemsPerSource",
+                    min(int(settings.get("maxItemsPerGroup", 4) or 4), 4),
+                )
+                or 4
+            ),
+            6,
+        ),
+    )
     event_terms = _unique(settings.get("eventTerms", []), 18)
-    event_query = " OR ".join(event_terms)
     track_by_name = {
         _clean(track.get("name"), 60).casefold(): track
         for track in tracks
         if isinstance(track, dict)
     }
 
-    by_sector: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for source in payload["sources"]:
-        if source["enabled"]:
-            by_sector[source["primarySector"]].append(source)
-
     specs: list[dict[str, Any]] = []
-    for sector in sorted(by_sector):
-        sources = sorted(
-            by_sector[sector],
-            key=lambda source: (source["priority"], int(source.get("order", 0))),
-        )
+    sources = sorted(
+        (source for source in payload["sources"] if source["enabled"]),
+        key=lambda source: (source["priority"], int(source.get("order", 0))),
+    )
+    for source in sources:
+        sector = source["primarySector"]
         track = track_by_name.get(sector.casefold())
         track_terms = tracking._track_terms(track) if track else [sector]
-        for group_index, group in enumerate(_chunks(sources, max_hosts), start=1):
-            focus_terms = [term for source in group for term in source.get("focus", [])]
-            query_terms = tracking._unique([sector, *track_terms, *focus_terms], 18)
-            site_query = " OR ".join(
-                f"site:{source['searchScope']}" for source in group
-            )
-            term_query = tracking._quoted_or_query(query_terms, 18)
-            query = f"({site_query}) ({term_query}) ({event_query})"
-            source_id = f"professional-media-{_slug(sector)}-{group_index:02d}"
-            specs.append(
-                {
-                    "id": source_id,
-                    "name": f"专业科技媒体 · {sector} · {group_index:02d}",
-                    "url": tracking._bing_rss(query),
-                    "sourceUrl": group[0]["url"],
-                    "adapter": "rss",
-                    "platform": "专业科技媒体",
-                    "sourceCategory": "media",
-                    "sourceLevel": "媒体报道",
-                    "region": "全球",
-                    "sector": sector,
-                    "maxItems": max_items,
-                    "keywords": query_terms,
-                    "strictTitleKeywords": False,
-                    "allowedHosts": _unique(
-                        (source["host"] for source in group), max_hosts
-                    ),
-                    "professionalMedia": [
-                        {
-                            "id": source["id"],
-                            "name": source["name"],
-                            "url": source["url"],
-                            "host": source["host"],
-                            "pathPrefix": _path(source["url"]),
-                            "region": source["region"],
-                            "focus": source.get("focus", []),
-                            "priority": source["priority"],
-                        }
-                        for source in group
-                    ],
-                    "enabled": True,
-                }
-            )
+        relevance_terms = tracking._unique(
+            [sector, *track_terms, *source.get("focus", [])],
+            20,
+        )
+        discovery_terms = tracking._unique(
+            [*relevance_terms, *event_terms],
+            28,
+        )
+        query = (
+            f"site:{source['searchScope']} "
+            f"({tracking._quoted_or_query(discovery_terms, 28)})"
+        )
+        source_id = f"professional-media-{_slug(source['id'])}"
+        media_row = {
+            "id": source["id"],
+            "name": source["name"],
+            "url": source["url"],
+            "host": source["host"],
+            "pathPrefix": _path(source["url"]),
+            "region": source["region"],
+            "focus": source.get("focus", []),
+            "priority": source["priority"],
+        }
+        specs.append(
+            {
+                "id": source_id,
+                "name": source["name"],
+                "url": tracking._bing_rss(query),
+                "sourceUrl": source["url"],
+                "adapter": "rss",
+                "platform": source["name"],
+                "sourceCategory": "media",
+                "sourceLevel": "媒体报道",
+                "region": source["region"],
+                "sector": sector,
+                "maxItems": max_items,
+                "keywords": relevance_terms,
+                "strictTitleKeywords": False,
+                "allowedHosts": [source["host"]],
+                "professionalMedia": [media_row],
+                "enabled": True,
+            }
+        )
     return specs
 
 
@@ -227,24 +228,24 @@ def attribute_article(
     source = article.get("source")
     if not isinstance(source, dict):
         return None
-    media = match_media(str(source.get("url", "")), rows)
-    if not media:
+    matched = match_media(str(source.get("url", "")), rows)
+    if not matched:
         return None
     result = copy.deepcopy(article)
     next_source = dict(source)
-    next_source["name"] = media["name"]
-    next_source["platform"] = media["name"]
+    next_source["name"] = matched["name"]
+    next_source["platform"] = matched["name"]
     result["source"] = next_source
-    result["professionalMediaId"] = media["id"]
-    result["professionalMediaUrl"] = media["url"]
-    result["professionalMediaFocus"] = list(media.get("focus", []))[:12]
-    if result.get("region") == "全球" and media.get("region") in VALID_REGIONS:
-        result["region"] = media["region"]
+    result["professionalMediaId"] = matched["id"]
+    result["professionalMediaUrl"] = matched["url"]
+    result["professionalMediaFocus"] = list(matched.get("focus", []))[:12]
+    if result.get("region") == "全球" and matched.get("region") in VALID_REGIONS:
+        result["region"] = matched["region"]
     return result
 
 
 def install(crawler: Any) -> None:
-    """Enforce original-domain attribution on grouped professional media feeds."""
+    """Enforce original-domain attribution on professional media feeds."""
 
     original_parse = crawler.parse_feed_items
     if getattr(original_parse, "_professional_media_attribution", False):
