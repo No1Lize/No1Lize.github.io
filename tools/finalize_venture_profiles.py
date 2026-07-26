@@ -411,7 +411,11 @@ def finalize_snapshot(
         catalog_product = spec.product if spec else ""
         products_before = len(profile.get("products", []))
         events_before = len(profile.get("financing", [])) + len(profile.get("capitalMarkets", []))
-        profile["background"] = sanitize_narrative(profile.get("background", ""), limit=900)
+        profile["background"] = sanitize_narrative(
+            profile.get("background", ""),
+            fallback=spec.summary if spec else "",
+            limit=900,
+        )
         profile["technology"] = sanitize_narrative(profile.get("technology", ""), limit=900)
         profile["researchTechnology"] = sanitize_narrative(
             profile.get("researchTechnology", ""),
@@ -420,7 +424,11 @@ def finalize_snapshot(
         )
         if isinstance(profile.get("projectBackground"), dict):
             project = profile["projectBackground"]
-            project["summary"] = sanitize_narrative(project.get("summary", ""), limit=900)
+            project["summary"] = sanitize_narrative(
+                project.get("summary", ""),
+                fallback=profile["background"],
+                limit=900,
+            )
             project["problemSolved"] = sanitize_narrative(project.get("problemSolved", ""), limit=520)
             project["marketOpportunity"] = sanitize_narrative(project.get("marketOpportunity", ""), limit=520)
         profile["products"] = finalize_products(profile.get("products", []), catalog_product)

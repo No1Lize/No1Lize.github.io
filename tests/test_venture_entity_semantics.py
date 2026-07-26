@@ -81,6 +81,60 @@ class VentureEntitySemanticTests(unittest.TestCase):
         self.assertEqual(diagnostics["removedFinancing"], 1)
         self.assertEqual(diagnostics["removedProducts"], 1)
 
+    def test_rejects_editorial_products_and_navigation_team_names(self) -> None:
+        payload = {
+            "companies": {
+                "anthropic": {
+                    "slug": "anthropic",
+                    "name": "Anthropic",
+                    "background": "Anthropic builds reliable AI systems.",
+                    "technology": "Anthropic develops Claude Platform.",
+                    "products": [
+                        "Anthropic",
+                        "英特尔深化智能生态合作",
+                        "Claude Platform",
+                    ],
+                    "team": [
+                        {"name": "Spotlight Megan Holston-Alexander Hear", "role": "Partner"},
+                        {"name": "Megan Holston-Alexander", "role": "Partner"},
+                    ],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "technologyProducts": [],
+                    "sources": [],
+                }
+            },
+            "institutions": {
+                "fund": {
+                    "slug": "fund",
+                    "name": "Example Capital",
+                    "overview": "Example Capital is a venture firm.",
+                    "strategy": "Example Capital invests in AI.",
+                    "team": [
+                        {"name": "General Partner", "role": "Partner"},
+                        {"name": "Jane Doe", "role": "Partner"},
+                    ],
+                    "sources": [],
+                }
+            },
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+        self.assertEqual(
+            cleaned["companies"]["anthropic"]["products"],
+            ["Claude Platform"],
+        )
+        self.assertEqual(
+            [row["name"] for row in cleaned["companies"]["anthropic"]["team"]],
+            ["Megan Holston-Alexander"],
+        )
+        self.assertEqual(
+            [row["name"] for row in cleaned["institutions"]["fund"]["team"]],
+            ["Jane Doe"],
+        )
+        self.assertEqual(diagnostics["removedProducts"], 2)
+        self.assertEqual(diagnostics["removedTeamMembers"], 2)
+
     def test_trims_investor_relations_page_chrome(self) -> None:
         payload = {
             "companies": {
