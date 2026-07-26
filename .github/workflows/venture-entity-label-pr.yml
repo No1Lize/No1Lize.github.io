@@ -34,6 +34,7 @@ jobs:
           python tools/patch_venture_entity_labels_v1.py
           python tools/patch_venture_person_sentence_names.py
           python tools/patch_venture_short_summary_fallback.py
+          python tools/patch_venture_terminal_entity_contract.py
       - name: Run semantic and terminal regressions
         env:
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
@@ -170,6 +171,7 @@ jobs:
             tools/enforce_venture_entity_semantics.py \
             tools/finalize_venture_profiles.py \
             tests/test_venture_entity_semantics.py \
+            tests/test_stabilize_venture_profiles.py \
             public/data/venture_profiles.json
           git commit -m "fix: reject venture editorial labels as entities"
           git push origin "HEAD:${HEAD_REF}"
