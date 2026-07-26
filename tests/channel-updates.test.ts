@@ -69,7 +69,6 @@ test("channel updates are newest-first and link to original public sources", () 
     const items = getChannelUpdateDirectory(channel).items;
     assert.ok(items.every((item) => /^https?:\/\//u.test(item.href)));
     assert.ok(items.every((item) => item.title && item.source && item.date));
-    assert.ok(items.every((item) => item.keywords.length > 0));
     assert.ok(
       items.every((item) =>
         item.datePrecision === "undated"
@@ -120,28 +119,44 @@ test("channel directories deduplicate repeated original links", () => {
   }
 });
 
-test("keyword options classify every channel and report accurate counts", () => {
+test("filter options are exactly the visible green event labels", () => {
+  for (const channel of channels) {
+    const items = getChannelUpdateDirectory(channel).items;
+    assert.ok(items.every((item) => item.keywords.length === 1));
+    assert.ok(items.every((item) => item.keywords[0] === item.label));
+
+    const optionLabels = collectChannelUpdateKeywords(items).map((option) => option.keyword);
+    const visibleLabels = [...new Set(items.map((item) => item.label))];
+    assert.deepEqual(
+      [...optionLabels].sort((left, right) => left.localeCompare(right, "zh-CN")),
+      [...visibleLabels].sort((left, right) => left.localeCompare(right, "zh-CN")),
+      `${channel} exposes filters that are not visible event labels`,
+    );
+  }
+});
+
+test("event label options classify every channel and report accurate counts", () => {
   for (const channel of channels) {
     const items = getChannelUpdateDirectory(channel).items;
     const options = collectChannelUpdateKeywords(items);
-    assert.ok(options.length > 0, `${channel} has no keyword options`);
+    assert.ok(options.length > 0, `${channel} has no event label options`);
 
     for (const option of options) {
-      const actual = items.filter((item) => item.keywords.includes(option.keyword)).length;
-      assert.equal(option.count, actual, `${channel} keyword count is wrong for ${option.keyword}`);
+      const actual = items.filter((item) => item.label === option.keyword).length;
+      assert.equal(option.count, actual, `${channel} event count is wrong for ${option.keyword}`);
     }
   }
 });
 
-test("keyword-filtered updates remain time ordered", () => {
+test("event-filtered updates remain time ordered", () => {
   for (const channel of channels) {
     const items = getChannelUpdateDirectory(channel).items;
     const keyword = collectChannelUpdateKeywords(items)[0]?.keyword;
-    assert.ok(keyword, `${channel} has no keyword to test`);
+    assert.ok(keyword, `${channel} has no event label to test`);
 
     const newest = filterAndSortChannelUpdates({ items, keyword, sortOrder: "newest" });
     assert.ok(newest.length > 0);
-    assert.ok(newest.every((item) => item.keywords.includes(keyword)));
+    assert.ok(newest.every((item) => item.label === keyword));
     for (let index = 1; index < newest.length; index += 1) {
       assert.ok(newest[index - 1].sortAt.localeCompare(newest[index].sortAt) >= 0);
     }

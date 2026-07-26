@@ -21,11 +21,11 @@ export function ChannelUpdateDirectoryClient({
   channel: ChannelUpdateKey;
   directory: ChannelUpdateDirectory;
 }) {
-  const keywordSelectId = useId();
+  const eventTypeSelectId = useId();
   const sortSelectId = useId();
   const [keyword, setKeyword] = useState(ALL_CHANNEL_UPDATE_KEYWORDS);
   const [sortOrder, setSortOrder] = useState<ChannelUpdateSortOrder>("newest");
-  const keywordOptions = useMemo(
+  const eventTypeOptions = useMemo(
     () => collectChannelUpdateKeywords(directory.items),
     [directory.items],
   );
@@ -75,22 +75,22 @@ export function ChannelUpdateDirectoryClient({
             <div className={styles.controlIntro}>
               <Tags size={17} aria-hidden="true" />
               <div>
-                <strong>按关键词分类</strong>
-                <span>选择关键词后，目录按标准化日期重新排列；“约”表示由相对时间换算。</span>
+                <strong>按事件类型筛选</strong>
+                <span>筛选项只使用每条记录前面的绿色标签，结果按标准化日期排序。</span>
               </div>
             </div>
 
-            <label className={styles.control} htmlFor={keywordSelectId}>
-              <span>关键词</span>
+            <label className={styles.control} htmlFor={eventTypeSelectId}>
+              <span>事件类型</span>
               <select
-                id={keywordSelectId}
+                id={eventTypeSelectId}
                 value={keyword}
                 onChange={(event) => setKeyword(event.target.value)}
               >
                 <option value={ALL_CHANNEL_UPDATE_KEYWORDS}>
-                  全部关键词（{directory.items.length}）
+                  全部事件（{directory.items.length}）
                 </option>
-                {keywordOptions.map((option) => (
+                {eventTypeOptions.map((option) => (
                   <option key={option.keyword} value={option.keyword}>
                     {option.keyword}（{option.count}）
                   </option>
@@ -148,7 +148,6 @@ export function ChannelUpdateDirectoryClient({
                         >
                           {item.date}
                         </time>
-                        {isFiltered && item.label !== keyword && <i>{keyword}</i>}
                         {item.id === latestDatedItemId && <b>时间最新</b>}
                       </div>
                       <h3>{item.title}</h3>
@@ -164,8 +163,8 @@ export function ChannelUpdateDirectoryClient({
             </div>
           ) : (
             <div className={styles.empty}>
-              <strong>该关键词下暂无更新</strong>
-              <p>请选择其他关键词，或切换回“全部关键词”。</p>
+              <strong>该事件类型下暂无更新</strong>
+              <p>请选择其他事件类型，或切换回“全部事件”。</p>
             </div>
           )}
         </>

@@ -189,11 +189,7 @@ function dedupeAndSort(items: ChannelUpdateItem[]) {
     );
 }
 
-function articleToUpdate(
-  article: ArticleRecord,
-  context: string,
-  keywords: string[],
-): ChannelUpdateItem {
+function articleToUpdate(article: ArticleRecord, context: string): ChannelUpdateItem {
   const normalizedDate = normalizeChannelUpdateDate(
     article.publishedAt,
     articlesPayload.generatedAt,
@@ -210,24 +206,17 @@ function articleToUpdate(
     dateOriginal: normalizedDate.originalDate,
     datePrecision: normalizedDate.precision,
     sortAt: normalizedDate.sortAt,
-    keywords: uniqueKeywords([
-      article.type,
-      article.sector,
-      article.region,
-      ...keywords,
-    ]),
+    keywords: uniqueKeywords([article.type]),
   };
 }
 
 function technologyDirectory(): ChannelUpdateDirectory {
   const items = articlesPayload.articles
     .filter((article) => enabledSectorNames.has(article.sector))
-    .map((article) =>
-      articleToUpdate(article, `${article.sector} · ${article.region}`, [article.sector]),
-    );
+    .map((article) => articleToUpdate(article, `${article.sector} · ${article.region}`));
   return {
     title: "赛道更新目录",
-    description: "当前启用赛道的最新公开事件，可按赛道、事件类型和地区关键词筛选，并按统一日期排序。",
+    description: "当前启用赛道的最新公开事件，仅按记录前的绿色事件标签筛选，并按统一日期排序。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -241,16 +230,11 @@ function companiesDirectory(): ChannelUpdateDirectory {
     const mentionedCompany = article.mentionedCompanies?.[0] ?? "";
     if (!article.companySlug && !matchedCompany && !explicitCompany && !mentionedCompany) return [];
     const companyName = explicitCompany || mentionedCompany || matchedCompany || "公司动态";
-    return [
-      articleToUpdate(article, `${companyName} · ${article.sector}`, [
-        companyName,
-        article.sector,
-      ]),
-    ];
+    return [articleToUpdate(article, `${companyName} · ${article.sector}`)];
   });
   return {
     title: "公司更新目录",
-    description: "与已收录公司直接相关的融资、产品、经营和资本市场更新，可按公司、赛道和事件关键词筛选。",
+    description: "与已收录公司直接相关的融资、产品、经营和资本市场更新，仅按绿色事件标签筛选。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -262,16 +246,11 @@ function institutionsDirectory(): ChannelUpdateDirectory {
     const explicitInstitution = article.institutions?.[0] ?? "";
     if (!matchedInstitution && !explicitInstitution && !capitalEventTypes.has(article.type)) return [];
     const institution = explicitInstitution || matchedInstitution || "资本动态";
-    return [
-      articleToUpdate(article, `${institution} · ${article.sector}`, [
-        institution,
-        article.sector,
-      ]),
-    ];
+    return [articleToUpdate(article, `${institution} · ${article.sector}`)];
   });
   return {
     title: "资本与机构更新目录",
-    description: "投资机构、融资、并购与 IPO 相关公开进展，可按机构、赛道和事件关键词筛选。",
+    description: "投资机构、融资、并购与 IPO 相关公开进展，仅按记录前的绿色事件标签筛选。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -297,12 +276,12 @@ function reportsDirectory(): ChannelUpdateDirectory {
       dateOriginal: normalizedDate.originalDate,
       datePrecision: normalizedDate.precision,
       sortAt: normalizedDate.sortAt,
-      keywords: uniqueKeywords([report.reportType, report.sector, report.institution]),
+      keywords: uniqueKeywords([report.reportType]),
     } satisfies ChannelUpdateItem;
   });
   return {
     title: "研报更新目录",
-    description: "新归档的公开研报与 PDF 原文，可按报告类型、赛道和研究机构关键词筛选；显示日期与排序日期保持一致。",
+    description: "新归档的公开研报与 PDF 原文，仅按记录前的绿色报告类型标签筛选。",
     generatedAt: researchReportsPayload.generatedAt,
     items: dedupeAndSort(items),
   };
@@ -328,13 +307,13 @@ function peopleDirectory(): ChannelUpdateDirectory {
         dateOriginal: normalizedDate.originalDate,
         datePrecision: normalizedDate.precision,
         sortAt: normalizedDate.sortAt,
-        keywords: uniqueKeywords([person.name, materialLabel]),
+        keywords: uniqueKeywords([materialLabel]),
       } satisfies ChannelUpdateItem;
     }),
   );
   return {
     title: "人物材料更新目录",
-    description: "人物演讲、采访、公开对话、论文与著作等材料；相对时间会换算为约计日期，再与精确日期统一排序。",
+    description: "人物演讲、采访、公开对话、论文与著作等材料，仅按记录前的绿色材料类型标签筛选。",
     generatedAt: peoplePayload.generatedAt,
     items: dedupeAndSort(items),
   };
