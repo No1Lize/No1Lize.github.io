@@ -25,7 +25,30 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
 def patch_semantics() -> None:
     text = TARGET.read_text(encoding="utf-8")
 
-    helper = '''def _exit_performance(
+    helper = '''def _contains_product_noise(value: Any) -> bool:
+    text = clean_text(value, 1600)
+    if not text:
+        return False
+    for raw in re.split(r"[、，,;/。]", text):
+        item = clean_text(raw, 300).strip(" .。:：")
+        if not item:
+            continue
+        if (
+            PRODUCT_EDITORIAL_RE.search(item)
+            or PRODUCT_URL_RE.search(item)
+            or PRODUCT_FILE_RE.search(item)
+            or PRODUCT_SENTENCE_RE.search(item)
+            or PRODUCT_DATE_LABEL_RE.fullmatch(item)
+            or PRODUCT_NAV_PREFIX_RE.search(item)
+            or PRODUCT_FRAGMENT_RE.search(item)
+            or PRODUCT_GENERIC_RE.fullmatch(item)
+            or item.casefold().strip(" .") in PRODUCT_EXACT_NOISE
+        ):
+            return True
+    return False
+
+
+def _exit_performance(
     events: Sequence[dict[str, Any]], *, listed: bool = False
 ) -> dict[str, str]:
     latest = sorted(
@@ -70,11 +93,11 @@ def patch_semantics() -> None:
 
 '''
     marker = "def _enforce_snapshot_once(\n"
-    if "def _exit_performance(" not in text:
+    if "def _contains_product_noise(" not in text:
         if marker not in text:
-            raise SystemExit("exit performance insertion marker not found")
+            raise SystemExit("derived helper insertion marker not found")
         text = text.replace(marker, helper + marker, 1)
-        print("exit performance helper: applied")
+        print("derived helpers: applied")
 
     old_products = '''        original_products = profile.get("products", [])
         products = [
@@ -102,14 +125,16 @@ def patch_semantics() -> None:
             if _valid_product(item, aliases)
         ]
         products = list(dict.fromkeys(products))[:16]
-        products_changed = original_product_items != products
+        removed_products = [
+            item for item in original_product_items if item not in products
+        ]
         diagnostics["removedProducts"] += max(
             0,
             len(original_product_items) - len(products),
         )
         profile["products"] = products
 '''
-    text = replace_once(text, old_products, new_products, "product change tracking")
+    text = replace_once(text, old_products, new_products, "removed product tracking")
 
     old_technology = '''        raw_technology = clean_text(profile.get("technology", ""), 1400)
         technology = _relevant_clauses(
@@ -133,15 +158,16 @@ def patch_semantics() -> None:
         technology = _relevant_clauses(
             raw_technology, aliases, products, limit=900
         )
+        removed_in_technology = any(
+            _contains_any(raw_technology, (item,))
+            for item in removed_products
+        )
         rebuild_technology = bool(
             products
             and (
-                products_changed
+                removed_in_technology
+                or _contains_product_noise(raw_technology)
                 or not technology
-                or PRODUCT_EDITORIAL_RE.search(raw_technology)
-                or PRODUCT_URL_RE.search(raw_technology)
-                or PRODUCT_FILE_RE.search(raw_technology)
-                or PRODUCT_SENTENCE_RE.search(raw_technology)
             )
         )
         if rebuild_technology:
@@ -153,13 +179,17 @@ def patch_semantics() -> None:
         research_technology = _relevant_clauses(
             raw_research_technology, aliases, products, limit=900
         )
+        removed_in_research = any(
+            _contains_any(raw_research_technology, (item,))
+            for item in removed_products
+        )
         profile["researchTechnology"] = (
             technology
-            if products_changed
+            if removed_in_research or _contains_product_noise(raw_research_technology)
             else (research_technology or technology)
         )
 '''
-    text = replace_once(text, old_technology, new_technology, "derived technology rebuild")
+    text = replace_once(text, old_technology, new_technology, "targeted technology rebuild")
 
     old_capital = '''        profile["capitalSummary"] = _capital_summary(profile["financing"])
         profile["evidenceScore"] = evidence_score(profile, "company")
