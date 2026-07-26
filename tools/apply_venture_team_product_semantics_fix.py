@@ -27,20 +27,6 @@ REPLACEMENTS = [
 ''',
     ),
     (
-        '''def refine_snapshot(
-    snapshot: dict[str, Any], articles_payload: dict[str, Any], catalog_text: str
-) -> tuple[dict[str, Any], dict[str, int]]:
-''',
-        '''def refine_snapshot(
-    snapshot: dict[str, Any],
-    articles_payload: dict[str, Any],
-    catalog_text: str,
-    *,
-    _depth: int = 0,
-) -> tuple[dict[str, Any], dict[str, int]]:
-''',
-    ),
-    (
         '''    evidence_values = [
         profile.get("researchTechnology", ""),
         profile.get("technology", ""),
@@ -48,13 +34,11 @@ REPLACEMENTS = [
         *(_article_text(article) for article in articles[:40]),
     ]
 ''',
-        '''    # Prefer product-specific article evidence over generic catalog-style
-    # technology summaries, then fall back to normalized profile narratives.
+        '''    # Product descriptions must use immutable source evidence. Reading
+    # normalized profile narratives here creates a two-state oscillation because
+    # the terminal semantic gate may replace those narratives after this pass.
     evidence_values = [
         *(_article_text(article) for article in articles[:40]),
-        profile.get("researchTechnology", ""),
-        profile.get("technology", ""),
-        profile.get("background", ""),
     ]
 ''',
     ),
@@ -106,15 +90,6 @@ REPLACEMENTS = [
     # entity-semantic gate. Reusing the canonical gate keeps product, team and
     # capital-event semantics identical across every publication stage.
     cleaned, _ = enforce_snapshot(cleaned, catalog_text)
-    # The first pass may normalize evidence fields that affect the next pass.
-    # Return the actual refinement fixed point from one public invocation.
-    if cleaned != snapshot and _depth < 7:
-        cleaned, _ = refine_snapshot(
-            cleaned,
-            articles_payload,
-            catalog_text,
-            _depth=_depth + 1,
-        )
     return cleaned, diagnostics
 ''',
     ),
