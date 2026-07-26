@@ -44,8 +44,12 @@ PAGE_CHROME_RE = re.compile(
 YEAR_ONLY_RE = re.compile(r"^(?:19|20)\d{2}$")
 NUMERIC_ONLY_RE = re.compile(r"^[\d.,%+-]+$")
 FINANCING_ACTION_RE = re.compile(
-    r"\b(?:rais(?:e|ed|es|ing)|funding round|financing round|"
-    r"series\s+[a-z0-9]+|seed round|pre-seed|secured .{0,40} funding|"
+    r"\b(?:rais(?:e|ed|es|ing)(?!\s+(?:full[- ]year\s+)?guidance\b)|"
+    r"funding round|financing round|"
+    r"series\s+[a-z0-9]+\s+(?:funding|financing|round)|"
+    r"first close.{0,80}(?:funding|financing)|"
+    r"complet(?:e|ed|es|ing).{0,80}(?:funding|financing)|"
+    r"seed round|pre-seed|secured .{0,40} funding|"
     r"closes? .{0,40} round|investment in|invests? in|valuation)\b|"
     r"(?:完成|获得|宣布|获).{0,30}(?:融资|投资)|"
     r"(?:融资|募资|领投|跟投|战略投资|估值)",
@@ -65,6 +69,21 @@ FIRST_PERSON_FINANCING_RE = re.compile(
 RELATIONAL_MENTION_RE = re.compile(
     r"\b(?:researchers? from|investors? including|including|from|backed by|"
     r"advisers? from|employees? from)\b",
+    re.IGNORECASE,
+)
+THIRD_PARTY_ROUNDUP_RE = re.compile(
+    r"\b(?:weekly roundup|week in review|funding roundup|deal roundup)\b|"
+    r"(?:创投周报|投融资周报|融资周报|一周融资|本周融资)",
+    re.IGNORECASE,
+)
+TRANSACTION_DETAIL_RE = re.compile(
+    r"(?:[$€£¥]\s?\d|\d+(?:\.\d+)?\s?(?:million|billion|亿元|亿美元|万元)|"
+    r"\bseries\s+[a-z0-9]+\b|(?:天使|种子|pre[- ]?[a-z]|[a-z][0-9]?)轮|"
+    r"first close|valuation|估值)",
+    re.IGNORECASE,
+)
+TRANSPARENT_TECH_PLACEHOLDER_RE = re.compile(
+    r"尚未识别到可独立核对的技术说明|具体技术参数以原始来源为准",
     re.IGNORECASE,
 )
 CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\n]+|(?<=\.)\s+(?=[A-Z\u3400-\u9fff])")
@@ -96,6 +115,9 @@ PRODUCT_SENTENCE_RE = re.compile(
     re.IGNORECASE,
 )
 PRODUCT_EXACT_NOISE = {
+    "api", "apis", "model", "models", "platform", "platforms",
+    "service", "services", "software", "hardware", "system", "systems",
+    "模型", "平台", "服务", "软件", "硬件", "系统",
     "cost-effective drug discovery",
     "drug discovery",
     "nach01",
@@ -308,10 +330,30 @@ def _subject_evidence(
     )
     title_has_action = action_re.search(title) is not None
 
-    # Third-party media rows must identify both the entity and event in the title.
-    # This rejects clickbait headlines whose body merely mentions an acquisition.
-    if not source_is_official and not (title_has_alias and title_has_action):
-        return False
+    # Third-party media rows must identify both the entity and event in the title,
+    # avoid roundup headlines, and provide a concrete transaction detail or a
+    # materially richer summary. Keyword-only weekly digests are not facts.
+    if not source_is_official:
+        if not (title_has_alias and title_has_action):
+            return False
+        if THIRD_PARTY_ROUNDUP_RE.search(title):
+            return False
+        investors = row.get("investors", []) if isinstance(row.get("investors"), list) else []
+        has_detail = bool(
+            clean_text(row.get("amount"), 80)
+            or clean_text(row.get("round"), 80)
+            or investors
+            or TRANSACTION_DETAIL_RE.search(evidence)
+        )
+        title_key = _compact(title)
+        summary_key = _compact(summary)
+        has_distinct_summary = bool(
+            summary_key
+            and summary_key != title_key
+            and len(summary_key) >= len(title_key) + 12
+        )
+        if not has_detail and not has_distinct_summary:
+            return False
 
     alias_positions = [
         lowered.find(alias.casefold())
@@ -422,10 +464,11 @@ def _sanitize_technology_products(
         row["description"] = description
         highlights = row.get("technicalHighlights", [])
         row["technicalHighlights"] = [
-            clean_text(item, 260)
+            clean_text(item, 220)
             for item in highlights
-            if clean_text(item, 260)
+            if clean_text(item, 220)
             and _contains_any(item, direct_terms)
+            and not TRANSPARENT_TECH_PLACEHOLDER_RE.search(clean_text(item, 220))
         ][:6] if isinstance(highlights, list) else []
         result.append(row)
         seen.add(key)
