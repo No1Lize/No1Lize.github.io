@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-26T05:04:26+00:00",
+  "generatedAt": "2026-07-26T05:27:10+00:00",
   "companyCount": 5,
-  "eventCount": 56,
+  "eventCount": 110,
   "companies": {
     "bgi-genomics": {
       "slug": "bgi-genomics",
       "name": "华大基因",
-      "updatedAt": "2026-07-26T05:04:26+00:00",
-      "status": "partial",
+      "updatedAt": "2026-07-26T05:27:10+00:00",
+      "status": "ok",
       "listings": [
         {
           "market": "A股",
@@ -17,15 +17,376 @@
           "listingRole": "primary"
         }
       ],
-      "events": [],
-      "officialEventCount": 0,
+      "events": [
+        {
+          "id": "disclosure-bgi-genomics-9675c2b2e6ca85ea3b",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-18",
+          "documentType": "股份回购",
+          "title": "关于回购股份事项前十名股东和前十名无限售条件股东持股情况的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225377667",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-18/1225377667.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-53b4854f643d6ede36",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-16",
+          "documentType": "股份回购",
+          "title": "关于控股股东提议公司回购股份的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225374424",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-16/1225374424.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-116b71aa0a51a8f1b8",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-02",
+          "documentType": "股权激励",
+          "title": "关于第二期员工持股计划出售完毕暨提前终止的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225345582",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-02/1225345582.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-71a750d3bd77b071d5",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-29",
+          "documentType": "并购与资产交易",
+          "title": "关于收购重庆新一产生命科技有限公司100%股权暨关联交易的进展公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225337724",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-05-29/1225337724.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-4f856ca1a8bbc1896d",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-29",
+          "documentType": "股权激励",
+          "title": "关于第二期员工持股计划首次授予部分第三个锁定期届满暨解锁条件未成就的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225337725",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-05-29/1225337725.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-e63ed8f1a4d99f351f",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-24",
+          "documentType": "并购与资产交易",
+          "title": "关于收购重庆新一产生命科技有限公司100%股权暨关联交易的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225182713",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182713.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-c9867c25875cb32410",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-24",
+          "documentType": "定期报告与业绩",
+          "title": "2025年年度报告摘要",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225193298",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225193298.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-9e22df3e9534040baa",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-24",
+          "documentType": "重大经营与风险",
+          "title": "关于参与投资设立石家庄市华大生物医学创业投资合伙企业（有限合伙）暨关联交易的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225182714",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225182714.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-95a91c59ecee954a7c",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-24",
+          "documentType": "定期报告与业绩",
+          "title": "2026年一季度报告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225193309",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225193309.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-7b82d2b57dbe5a881a",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-24",
+          "documentType": "定期报告与业绩",
+          "title": "2025年年度报告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1225193299",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225193299.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-2a0128bbf7573d6f86",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-27",
+          "documentType": "重大经营与风险",
+          "title": "关于2026年度日常关联交易预计的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224952871",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-01-28/1224952871.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-2396d8a08548ab6808",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-27",
+          "documentType": "重大经营与风险",
+          "title": "关于放弃参股公司增资优先认购权暨关联交易的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224952870",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-01-28/1224952870.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-12070c989a9891a9bb",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-27",
+          "documentType": "定期报告与业绩",
+          "title": "2025年度业绩预告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224952866",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-01-28/1224952866.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-e1a06d47e59e365fe1",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-23",
+          "documentType": "证券发行与融资",
+          "title": "募集资金管理制度（2025年10月）",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224729871",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224729871.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-d002e4f35106b36430",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-23",
+          "documentType": "重大经营与风险",
+          "title": "关于全资子公司拟与关联方联合申报科技项目暨关联交易的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224729848",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224729848.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-a03f332cc59178a79e",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-23",
+          "documentType": "定期报告与业绩",
+          "title": "2025年三季度报告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224729840",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224729840.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-48fa9335da60f87cf5",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-23",
+          "documentType": "重大经营与风险",
+          "title": "关于增加2025年度日常关联交易预计额度的公告",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224729847",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224729847.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-bgi-genomics-2c02b5258b6ec399f8",
+          "companySlug": "bgi-genomics",
+          "companyName": "华大基因",
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-23",
+          "documentType": "重大经营与风险",
+          "title": "关联交易管理制度（2025年10月）",
+          "summary": "证券代码 300676 · 华大基因 · 文件类型 PDF · 公告编号 1224729870",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-10-24/1224729870.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        }
+      ],
+      "officialEventCount": 18,
       "fallbackEventCount": 0
     },
     "cambricon": {
       "slug": "cambricon",
       "name": "寒武纪",
-      "updatedAt": "2026-07-26T05:04:26+00:00",
-      "status": "retained",
+      "updatedAt": "2026-07-26T05:27:10+00:00",
+      "status": "ok",
       "listings": [
         {
           "market": "A股",
@@ -35,6 +396,366 @@
         }
       ],
       "events": [
+        {
+          "id": "disclosure-cambricon-ef91395765aac25b3a",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-11",
+          "documentType": "证券发行与融资",
+          "title": "关于注销部分募集资金理财产品专用结算账户的公告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225365351",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-12/1225365351.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-7e37221c88ae32400b",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-22",
+          "documentType": "证券发行与融资",
+          "title": "中信证券股份有限公司关于中科寒武纪科技股份有限公司2022年度向特定对象发行A股股票募投项目结项并将节余募集资金永久补充流动资金的核查意见",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225327195",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-05-23/1225327195.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-1ab3161c1b829df805",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-22",
+          "documentType": "证券发行与融资",
+          "title": "关于2022年度向特定对象发行A股股票募投项目结项并将节余募集资金永久补充流动资金的公告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225327207",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-05-23/1225327207.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-89595ca5d4587f0351",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-29",
+          "documentType": "定期报告与业绩",
+          "title": "2026年第一季度报告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225264337",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225264337.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-f308a6421440f8430d",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-12",
+          "documentType": "证券发行与融资",
+          "title": "天健会计师事务所（特殊普通合伙）关于中科寒武纪科技股份有限公司年度募集资金存放、管理与使用情况的鉴证报告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225007341",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-03-13/1225007341.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-b626ddffc1dd3b0c13",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-12",
+          "documentType": "证券发行与融资",
+          "title": "中信证券股份有限公司关于中科寒武纪科技股份有限公司2025年度募集资金存放、管理与实际使用情况的专项核查意见",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225007350",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-03-13/1225007350.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-720178746db533dab0",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-12",
+          "documentType": "证券发行与融资",
+          "title": "关于公司2025年度募集资金存放、管理与实际使用情况的专项报告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225007367",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-03-13/1225007367.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-5a6d311b1202b0ce00",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-12",
+          "documentType": "定期报告与业绩",
+          "title": "2025年年度报告摘要",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225007365",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-03-13/1225007365.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-4969cc739243aa98f7",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-12",
+          "documentType": "定期报告与业绩",
+          "title": "2025年年度报告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1225007336",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-03-13/1225007336.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-12200e69a661d06772",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-02-27",
+          "documentType": "定期报告与业绩",
+          "title": "2025年度业绩快报公告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224988268",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-02-28/1224988268.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-9c7ad3d5d4aa716c56",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-30",
+          "documentType": "定期报告与业绩",
+          "title": "2025年年度业绩预告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224959389",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-01-31/1224959389.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-12139173f535f50d1e",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-11-21",
+          "documentType": "证券发行与融资",
+          "title": "关于设立募集资金专项账户并签订募集资金专户存储监管协议的公告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224821281",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-11-22/1224821281.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-9d46a771f70b8f1aa0",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-11-10",
+          "documentType": "重大经营与风险",
+          "title": "关联交易管理制度",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224797001",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-11-11/1224797001.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-45e41139b1c2a724a3",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-11-10",
+          "documentType": "证券发行与融资",
+          "title": "募集资金管理制度",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224797008",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-11-11/1224797008.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-ffd337043fbbe2b48a",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-31",
+          "documentType": "证券发行与融资",
+          "title": "关于使用部分暂时闲置募集资金进行现金管理的公告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224781723",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-11-01/1224781723.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-de4e33efd8ec43542c",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-31",
+          "documentType": "证券发行与融资",
+          "title": "关于使用部分闲置募集资金暂时补充流动资金的公告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224781730",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-11-01/1224781730.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-ce9b6a5a27853e3eb5",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-31",
+          "documentType": "证券发行与融资",
+          "title": "中信证券股份有限公司关于中科寒武纪科技股份有限公司使用自有资金支付募投项目所需资金并以募集资金等额置换的核查意见",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224781733",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-11-01/1224781733.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-cambricon-aafb592f07fe76df6d",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-31",
+          "documentType": "证券发行与融资",
+          "title": "关于使用自有资金支付募投项目所需资金并以募集资金等额置换的公告",
+          "summary": "证券代码 688256 · 寒武纪 · 文件类型 PDF · 公告编号 1224781732",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2025-11-01/1224781732.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
         {
           "id": "disclosure-cambricon-sse-listing-20200717",
           "companySlug": "cambricon",
@@ -56,13 +777,13 @@
           "fallback": false
         }
       ],
-      "officialEventCount": 1,
+      "officialEventCount": 19,
       "fallbackEventCount": 0
     },
     "catl": {
       "slug": "catl",
       "name": "宁德时代",
-      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "updatedAt": "2026-07-26T05:27:10+00:00",
       "status": "ok",
       "listings": [
         {
@@ -79,6 +800,26 @@
         }
       ],
       "events": [
+        {
+          "id": "disclosure-catl-f97b3005c272bf3b25",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-24",
+          "documentType": "股份回购",
+          "title": "关于回购公司股份方案的公告暨回购股份报告书",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225441582",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-25/1225441582.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
         {
           "id": "disclosure-catl-bb4479f0726d36b3a0",
           "companySlug": "catl",
@@ -97,6 +838,26 @@
             "level": "监管文件"
           },
           "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-b5067ca914c4f1f4d1",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-24",
+          "documentType": "证券发行与融资",
+          "title": "关于2026年半年度募集资金存放与使用情况的专项报告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225441590",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-25/1225441590.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
           "fallback": false
         },
         {
@@ -140,6 +901,26 @@
           "fallback": false
         },
         {
+          "id": "disclosure-catl-812316a4268ed72182",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-24",
+          "documentType": "定期报告与业绩",
+          "title": "2026年半年度报告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225441586",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-25/1225441586.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
           "id": "disclosure-catl-7c3b81becd20bc3472",
           "companySlug": "catl",
           "companyName": "宁德时代",
@@ -177,6 +958,26 @@
             "level": "监管文件"
           },
           "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-3ff23cd689c96d67ff",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-24",
+          "documentType": "定期报告与业绩",
+          "title": "2026年半年度报告摘要",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225441585",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-07-25/1225441585.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
           "fallback": false
         },
         {
@@ -260,6 +1061,26 @@
           "fallback": false
         },
         {
+          "id": "disclosure-catl-6775f1c8f430f53fc0",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-25",
+          "documentType": "证券发行与融资",
+          "title": "宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）在深圳证券交易所上市的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225387554",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-25/1225387554.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
           "id": "disclosure-catl-890d64e7587a09dca1",
           "companySlug": "catl",
           "companyName": "宁德时代",
@@ -280,6 +1101,46 @@
           "fallback": false
         },
         {
+          "id": "disclosure-catl-024ca94f4152477d7f",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-18",
+          "documentType": "证券发行与融资",
+          "title": "宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）发行结果公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225377939",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-18/1225377939.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-e75fab83a573169658",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-17",
+          "documentType": "证券发行与融资",
+          "title": "宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）票面利率公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225376442",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-17/1225376442.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
           "id": "disclosure-catl-55b26b5c072bdffffe",
           "companySlug": "catl",
           "companyName": "宁德时代",
@@ -297,6 +1158,26 @@
             "level": "监管文件"
           },
           "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-e87d37f391b4128b67",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-16",
+          "documentType": "证券发行与融资",
+          "title": "宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行公司债券更名公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225373022",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-16/1225373022.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
           "fallback": false
         },
         {
@@ -360,6 +1241,86 @@
           "fallback": false
         },
         {
+          "id": "disclosure-catl-49bb303471a0c0b8b9",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-16",
+          "documentType": "证券发行与融资",
+          "title": "宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）发行公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225373026",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-16/1225373026.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-42ae64f064c37ffa2c",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-16",
+          "documentType": "证券发行与融资",
+          "title": "宁德时代新能源科技股份有限公司2026年面向专业投资者公开发行科技创新公司债券（第二期）募集说明书",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225373024",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-16/1225373024.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-bb81d14b8008e71811",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-04",
+          "documentType": "股权激励",
+          "title": "关于选举2026年A股员工持股计划管理委员会委员的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225352615",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-04/1225352615.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-537b4792c75aa18662",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-04",
+          "documentType": "股权激励",
+          "title": "关于2026年A股员工持股计划完成非交易过户的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225352616",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-06-04/1225352616.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
           "id": "disclosure-catl-7afb6980ed221944d6",
           "companySlug": "catl",
           "companyName": "宁德时代",
@@ -420,6 +1381,26 @@
           "fallback": false
         },
         {
+          "id": "disclosure-catl-bb89bc4b94b852aad3",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-30",
+          "documentType": "证券发行与融资",
+          "title": "关于完成配售H股的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225274804",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225274804.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
           "id": "disclosure-catl-dcda680b3f1c743d9f",
           "companySlug": "catl",
           "companyName": "宁德时代",
@@ -438,15 +1419,115 @@
           },
           "discoveredVia": "official-direct-index",
           "fallback": false
+        },
+        {
+          "id": "disclosure-catl-7146c3f36c4923f33f",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-28",
+          "documentType": "证券发行与融资",
+          "title": "关于根据一般性授权配售新H股的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225223116",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225223116.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-9d7bb7a5b258bf8546",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-22",
+          "documentType": "股权激励",
+          "title": "关于授予2026年A股员工持股计划预留份额的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225150151",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-22/1225150151.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-fab1643dc9bfceb62b",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-15",
+          "documentType": "定期报告与业绩",
+          "title": "2026年一季度报告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225107946",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225107946.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-7c20947c1e706cee04",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-15",
+          "documentType": "股权激励",
+          "title": "关于调整股权激励计划及员工持股计划相关价格的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225107945",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225107945.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-5641a61dc8ddd460c5",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-15",
+          "documentType": "股权激励",
+          "title": "上海市通力律师事务所关于宁德时代新能源科技股份有限公司调整股权激励计划及员工持股计划相关价格的法律意见书",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225107949",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225107949.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
         }
       ],
-      "officialEventCount": 18,
+      "officialEventCount": 36,
       "fallbackEventCount": 0
     },
     "horizon-robotics": {
       "slug": "horizon-robotics",
       "name": "地平线机器人",
-      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "updatedAt": "2026-07-26T05:27:06+00:00",
       "status": "ok",
       "listings": [
         {
@@ -844,7 +1925,7 @@
     "xtalpi": {
       "slug": "xtalpi",
       "name": "晶泰科技",
-      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "updatedAt": "2026-07-26T05:27:06+00:00",
       "status": "ok",
       "listings": [
         {
@@ -1228,15 +2309,23 @@
       "market": "A股",
       "ticker": "688256",
       "exchange": "上海证券交易所",
-      "provider": "official",
-      "status": "error",
+      "provider": "official+cninfo-structured",
+      "status": "ok",
       "scanned": 72,
-      "accepted": 0,
+      "accepted": 18,
       "fallback": false,
       "errors": [],
       "fallbackScanned": 0,
       "fallbackAccepted": 0,
-      "fallbackErrors": []
+      "fallbackErrors": [
+        "search:ParseError:not well-formed (invalid token): line 1, column 41"
+      ],
+      "structuredProvider": "cninfo-structured-api",
+      "structuredAttempted": true,
+      "structuredOrgIdResolved": true,
+      "structuredScanned": 120,
+      "structuredAccepted": 18,
+      "structuredErrors": []
     },
     {
       "id": "exchange-disclosure-catl-a-300750",
@@ -1245,15 +2334,25 @@
       "market": "A股",
       "ticker": "300750",
       "exchange": "深圳证券交易所",
-      "provider": "official",
-      "status": "error",
+      "provider": "official+cninfo-structured",
+      "status": "ok",
       "scanned": 72,
-      "accepted": 0,
+      "accepted": 18,
       "fallback": false,
-      "errors": [],
+      "errors": [
+        "search:ParseError:not well-formed (invalid token): line 1, column 41"
+      ],
       "fallbackScanned": 0,
       "fallbackAccepted": 0,
-      "fallbackErrors": []
+      "fallbackErrors": [
+        "search:ParseError:not well-formed (invalid token): line 1, column 41"
+      ],
+      "structuredProvider": "cninfo-structured-api",
+      "structuredAttempted": true,
+      "structuredOrgIdResolved": true,
+      "structuredScanned": 120,
+      "structuredAccepted": 18,
+      "structuredErrors": []
     },
     {
       "id": "exchange-disclosure-bgi-genomics-a-300676",
@@ -1262,15 +2361,25 @@
       "market": "A股",
       "ticker": "300676",
       "exchange": "深圳证券交易所",
-      "provider": "official",
-      "status": "error",
+      "provider": "official+cninfo-structured",
+      "status": "ok",
       "scanned": 72,
-      "accepted": 0,
+      "accepted": 18,
       "fallback": false,
-      "errors": [],
+      "errors": [
+        "search:ParseError:not well-formed (invalid token): line 1, column 41"
+      ],
       "fallbackScanned": 0,
       "fallbackAccepted": 0,
-      "fallbackErrors": []
+      "fallbackErrors": [
+        "search:ParseError:not well-formed (invalid token): line 1, column 41"
+      ],
+      "structuredProvider": "cninfo-structured-api",
+      "structuredAttempted": true,
+      "structuredOrgIdResolved": true,
+      "structuredScanned": 120,
+      "structuredAccepted": 18,
+      "structuredErrors": []
     },
     {
       "id": "exchange-disclosure-horizon-robotics-hk-09660",
@@ -1312,7 +2421,15 @@
       "scanned": 105,
       "accepted": 18,
       "fallback": false,
-      "errors": []
+      "errors": [
+        "search:ParseError:not well-formed (invalid token): line 1, column 41"
+      ]
     }
-  ]
+  ],
+  "cninfoStructured": {
+    "schemaVersion": 1,
+    "provider": "cninfo-structured-api",
+    "attemptedListingCount": 3,
+    "acceptedEventCount": 54
+  }
 }
