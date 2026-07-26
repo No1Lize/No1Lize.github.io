@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply stricter team-biography and product-highlight semantics once."""
+"""Apply stricter team, product and entity-safe evidence semantics once."""
 
 from pathlib import Path
 
@@ -8,6 +8,24 @@ SOURCE = ROOT / "tools" / "refine_venture_research_evidence.py"
 TEST = ROOT / "tests" / "test_refine_venture_research_evidence.py"
 
 REPLACEMENTS = [
+    (
+        '''try:
+    from .sanitize_venture_narratives import sanitize_narrative
+''',
+        '''try:
+    from .enforce_venture_entity_semantics import enforce_snapshot
+    from .sanitize_venture_narratives import sanitize_narrative
+''',
+    ),
+    (
+        '''except ImportError:
+    from sanitize_venture_narratives import sanitize_narrative
+''',
+        '''except ImportError:
+    from enforce_venture_entity_semantics import enforce_snapshot
+    from sanitize_venture_narratives import sanitize_narrative
+''',
+    ),
     (
         '''            if _contains_any(sentence, TECH_TERMS)
             and any(alias.casefold() in sentence.casefold() for alias in aliases)
@@ -37,6 +55,26 @@ REPLACEMENTS = [
                 or not BIOGRAPHY_RE.search(value)
             ):
                 value = ""
+''',
+    ),
+    (
+        '''    quality["passed"] = all(
+        bool(check.get("passed"))
+        for check in checks.values()
+        if isinstance(check, dict) and "passed" in check
+    )
+    return cleaned, diagnostics
+''',
+        '''    quality["passed"] = all(
+        bool(check.get("passed"))
+        for check in checks.values()
+        if isinstance(check, dict) and "passed" in check
+    )
+    # Evidence refinement must not reintroduce facts rejected by the terminal
+    # entity-semantic gate. Reusing the canonical gate keeps product, team and
+    # capital-event semantics identical across every publication stage.
+    cleaned, _ = enforce_snapshot(cleaned, catalog_text)
+    return cleaned, diagnostics
 ''',
     ),
 ]
