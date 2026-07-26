@@ -38,13 +38,14 @@ export function ChannelUpdateDirectoryClient({
       }),
     [directory.items, keyword, sortOrder],
   );
-  const latestDate = visibleItems.reduce(
-    (latest, item) => (item.sortAt > latest ? item.sortAt : latest),
-    "",
-  );
-  const latestCount = latestDate
-    ? visibleItems.filter((item) => item.sortAt === latestDate).length
-    : 0;
+  const latestDatedItemId = useMemo(() => {
+    let latest: (typeof visibleItems)[number] | undefined;
+    for (const item of visibleItems) {
+      if (item.datePrecision === "undated") continue;
+      if (!latest || item.sortAt > latest.sortAt) latest = item;
+    }
+    return latest?.id ?? "";
+  }, [visibleItems]);
   const isFiltered = keyword !== ALL_CHANNEL_UPDATE_KEYWORDS;
 
   return (
@@ -75,7 +76,7 @@ export function ChannelUpdateDirectoryClient({
               <Tags size={17} aria-hidden="true" />
               <div>
                 <strong>按关键词分类</strong>
-                <span>选择一个关键词后，目录按所选时间顺序重新排列。</span>
+                <span>选择关键词后，目录按标准化日期重新排列；“约”表示由相对时间换算。</span>
               </div>
             </div>
 
@@ -122,37 +123,44 @@ export function ChannelUpdateDirectoryClient({
 
           {visibleItems.length ? (
             <div className={styles.list}>
-              {visibleItems.map((item, index) => (
-                <a
-                  className={styles.item}
-                  href={item.href}
-                  key={item.id}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <span className={styles.index}>
-                    {String(index + 1).padStart(3, "0")}
-                  </span>
-                  <div className={styles.content}>
-                    <div className={styles.meta}>
-                      <span>{item.label}</span>
-                      <time>{item.date}</time>
-                      {isFiltered && item.label !== keyword && (
-                        <i>{keyword}</i>
-                      )}
-                      {item.sortAt === latestDate && (
-                        <b>{latestCount > 1 ? `本轮新增 ${latestCount}` : "本轮新增"}</b>
-                      )}
+              {visibleItems.map((item, index) => {
+                const sourceDateTitle =
+                  item.dateOriginal && item.dateOriginal !== item.date
+                    ? `来源时间标注：${item.dateOriginal}`
+                    : undefined;
+                return (
+                  <a
+                    className={styles.item}
+                    href={item.href}
+                    key={item.id}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    <span className={styles.index}>
+                      {String(index + 1).padStart(3, "0")}
+                    </span>
+                    <div className={styles.content}>
+                      <div className={styles.meta}>
+                        <span>{item.label}</span>
+                        <time
+                          dateTime={item.datePrecision === "undated" ? undefined : item.sortAt}
+                          title={sourceDateTitle}
+                        >
+                          {item.date}
+                        </time>
+                        {isFiltered && item.label !== keyword && <i>{keyword}</i>}
+                        {item.id === latestDatedItemId && <b>时间最新</b>}
+                      </div>
+                      <h3>{item.title}</h3>
+                      <p>{item.summary}</p>
+                      <small>
+                        {item.context} · {item.source}
+                      </small>
                     </div>
-                    <h3>{item.title}</h3>
-                    <p>{item.summary}</p>
-                    <small>
-                      {item.context} · {item.source}
-                    </small>
-                  </div>
-                  <ArrowUpRight className={styles.arrow} size={18} aria-hidden="true" />
-                </a>
-              ))}
+                    <ArrowUpRight className={styles.arrow} size={18} aria-hidden="true" />
+                  </a>
+                );
+              })}
             </div>
           ) : (
             <div className={styles.empty}>
