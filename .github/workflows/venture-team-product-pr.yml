@@ -8,7 +8,11 @@ on:
       - .github/workflows/venture-team-product-pr.yml
       - tools/apply_venture_team_product_semantics_fix.py
       - tools/refine_venture_research_evidence.py
+      - tools/enforce_venture_entity_semantics.py
+      - tools/finalize_venture_profiles.py
       - tests/test_refine_venture_research_evidence.py
+      - tests/test_venture_entity_semantics.py
+      - lib/catalog-data.ts
       - public/data/venture_profiles.json
 
 permissions:
@@ -106,18 +110,24 @@ jobs:
             .github/workflows/apply-venture-team-product-fix.yml \
             .github/workflows/reprocess-venture-snapshot-once.yml \
             .github/workflows/venture-team-product-pr.yml \
+            .github/workflows/venture-evidence-diff-pr.yml \
             .venture-team-product-trigger
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
             tools/refine_venture_research_evidence.py \
+            tools/enforce_venture_entity_semantics.py \
+            tools/finalize_venture_profiles.py \
             tests/test_refine_venture_research_evidence.py \
+            tests/test_venture_entity_semantics.py \
+            lib/catalog-data.ts \
             public/data/venture_profiles.json
           git add -u \
             tools/apply_venture_team_product_semantics_fix.py \
             .github/workflows/apply-venture-team-product-fix.yml \
             .github/workflows/reprocess-venture-snapshot-once.yml \
             .github/workflows/venture-team-product-pr.yml \
+            .github/workflows/venture-evidence-diff-pr.yml \
             .venture-team-product-trigger
           git commit -m 'fix: unify venture evidence and entity semantics'
           git push origin HEAD:${{ github.head_ref }}
