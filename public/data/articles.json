@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T16:15:47+00:00",
-  "articleCount": 1023,
+  "generatedAt": "2026-07-26T16:43:06+00:00",
+  "articleCount": 1022,
   "articles": [
     {
       "id": "user-track-track-1ccjq49-google-cn-b8cc45d59946ead9",
@@ -16191,6 +16191,45 @@
       ]
     },
     {
+      "id": "user-track-wechat-jiqizhixin-ai-e9364ca5ee341c18",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "打破模态壁垒，11B通用底座，上智院开放多模态科学基础模型「神珍」",
+      "summary": "机器之心编辑部 人工智能（AI）模型在科学发现中的角色，正经历着一场从「工程缝合者」向「智能推演者」的深刻蜕变。 过去几年，AI for Science 领域涌现出众多性能优异的专用模型，蛋白质结构预测、分子生成、材料设计等单一任务频现进展。然而，在科研场景中，实质性的突破往往诞生于跨模态的交界地带。 以疾病研究为例，面对基因序列、蛋白质构象与药理活性数据交织而成的复杂因果网络，研究者需要的不是预测精准的蛋白质模型，而是一个能同时「阅读」序列语言、「理解」空间构象、「推演」动态交互的统一框架。 最近，由上海科学智能研究院（下称「上智院」）发布并开放的科学多模态基础模型 ——「神珍」，有力回应了这一需求。 作为一款总参数量为 110 亿的统一基座模型，「神珍」并非简单地将多个专用模型打包，而是从底层模态对齐入手，在一个统一架构内同时支撑科学理解与多类结果生成，现已覆盖 DNA、RNA、蛋白质、小分子、地球系统与医学影像六类科学数据。 科学智能新思路 2020 年，AlphaFold2 成功从氨基酸序列直接预测蛋白质的三维结构，证明了 AI 模型在单一科学任务上的潜力。以之为代表的专用模型",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "阿里云 / Qwen",
+      "publishedAt": "2026-07-19",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67a6eb391f3780e995a3a4afb84a33e942bbd9e397b15b0cda4914eb7163fcd4b3ed3acb4&idx=2&mid=2651045392&sn=3e0bb526b397cdf97d27d15e37a0608e",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注科学大模型的"
+      ],
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [
+        "上智院院长",
+        "旦大学特聘",
+        "学科背景的",
+        "它把"
+      ],
+      "matchedTrackingTerms": [
+        "基础模型",
+        "大模型",
+        "推理",
+        "多模态"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "user-track-wechat-aitopics-ai-5ec382030539814e",
       "sourceId": "user-track-wechat-aitopics-ai",
       "title": "WAIC华山论剑，罕见AI新共识：机器人ChatGPT时刻，最快两年！",
@@ -16435,6 +16474,39 @@
         "semiconductor",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-robotics-eb36d7f607b80c35",
+      "sourceId": "user-track-wechat-jiqizhixin-robotics",
+      "title": "WAIC直击：200家机器人企业同场竞技，但物理AI的入场券属于闭环玩家",
+      "summary": "编辑｜杜伟 2026 年的 WAIC 展馆里，机器人已经多到很难成为新闻。 它们跳舞、递水、整理物品，在固定展台上完成一套套流畅动作。可演示越顺滑，越容易掩盖行业真正的难题。只要把货架换一个位置、把灯光调暗，或者让任务持续几个小时，演示中的确定性就可能迅速消失。 今年超过 200 家具身智能企业挤进了 WAIC，行业竞争看上去仍围绕本体、关节和动作展开。但展台背后，一场更关键的较量已经开始：谁能让模型持续理解变化中的现实，谁能规模化获得更多真实操作经验，谁又能把机器人运行中的失败重新变成训练数据。 这正是「物理 AI」受到关注并迅速升温的原因之一。它的竞争已经超出单台机器人的性能，真正拉开差距的，是数据、模型、终端与场景能否形成持续迭代的闭环。 在这条更长、更难的路上，京东是一位特殊玩家。它本身是领先的电商巨头，却选择押注物理 AI，上半年陆续开源 JoyAI 系列多款模型，围绕真实世界的感知、交互和行动构建更完整的技术体系，并设下了「建设全球最大物理世界运营中心」的战略目标。 在今天上午结束的「AI 进入物理世界」京东分论坛上，其对外集中展示了这套布局 。除了首次集体亮相的 JoyA",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-18",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e679f0b391f0e6434e6ae3f6236bbddb0e218ec31965f6950942db250c25077ef305a40bb4&idx=1&mid=2651045262&sn=4e9f234cb8189b966d219c24af3c6eee",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "并且",
+        "过去"
+      ],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "VLA",
+        "世界模型",
+        "WAIC"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-deeptechchina-materials-b0c6106bda145f8a",
@@ -20011,8 +20083,41 @@
       ]
     },
     {
-      "id": "user-track-wechat-qbitai-robotics-ba425ecd1c304768",
+      "id": "user-track-wechat-qbitai-robotics-7ef545ed3faab70c",
       "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "60000小时炼出新开源VLA！20多种机器人都能用",
+      "summary": "金磊 发自 凹非寺 量子位 | 公众号 QbitAI 整整 60000小时 的预训练数据。 一个新 VLA （视觉-语言-动作），就这么水灵灵地被“喂”了出来，而且还是 开源 的那种。 这就是 蚂蚁灵波 刚刚发布的 LingBot-VLA 2.0 ，一个面向复杂物理世界任务的通用VLA模型。 先来聊聊这60000小时真实物理数据是怎么来的。 其实它包含两个部分，其中50000小时来自机器人轨迹数据，覆盖20种机器人构型；另外10000小时来自第一视角人类操作视频。 而距蚂蚁灵波1月发布 LingBot-VLA 1.0 仅半年时间来， 数据规模 从20000小时直接 乘了个3 。 那么效果又如何呢？ 来，直接上结果： 我们从视频中可以看到，机器人先从操作台上拿起饮料、水果放进篮子里，再拎起篮子移动到冰箱前，打开冰箱门、把东西一件件放进去，最后关上冰箱门。 一整套长序列的移动操作，一气呵成，相当丝滑。 不过有一说一，数据规模还仅仅是LingBot-VLA 2.0亮点的一隅，在细扒相关技术报告后我们发现： 支持20多种机器人构型； 从双臂扩展到头部、腰部、移动底盘、灵巧手等更完整的动作空间；",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-08",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5699487ba0a6bdb1c5f2677248b84989dd836c96502d90eb4fdf52a87f7e65&idx=1&mid=2247902258&sn=09ea927102a45e58d2de764072287fc9",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "人形机器人",
+        "VLA",
+        "机器人",
+        "灵巧手"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-ba425ecd1c304768",
+      "sourceId": "user-track-wechat-qbitai-ai",
       "title": "刚刚，OpenAI首席未来学家离职！曾被马斯克骂蠢驴",
       "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 刚刚，OpenAI首席未来学家 Joshua Achiam 在X上宣布离职。 这并不是一个普通员工变动。 在OpenAI内部， 首席未来学家 这个职位夹在AI安全、政策和公司使命之间，负责研究AI继续变强之后，可能给世界带来的风险和机会。 而Joshua Achiam，正是OpenAI这条安全与使命线上的核心人物之一。 9年前的2017，他以实习生身份加入OpenAI。早期，他是一名专注于AI安全的研究科学家，做过深度强化学习里的安全约束研究。 后来，他领导过OpenAI的 Mission Alignment （使命对齐）团队，负责维护这家公司最初那句使命： 确保AGI造福全人类。 今年2月，OpenAI解散Mission Alignment团队，Joshua转任公司首席未来学家。 只不过，短短5个月后，Joshua就宣布自己将在7月24日正式离开这家待了9年的公司。 至于离职原因，Joshua并没有透露太多。 他只是表示，自己离开并不是因为某个具体事件，也不是一时兴起，而是已经思考了很长一段时间。 为了安全的AGI 在X长文",
       "type": "公司动态",
@@ -20049,41 +20154,8 @@
         "Noam Brown"
       ],
       "matchedTrackingTerms": [
+        "ChatGPT",
         "强化学习"
-      ],
-      "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人"
-    },
-    {
-      "id": "user-track-wechat-qbitai-robotics-7ef545ed3faab70c",
-      "sourceId": "user-track-wechat-qbitai-robotics",
-      "title": "60000小时炼出新开源VLA！20多种机器人都能用",
-      "summary": "金磊 发自 凹非寺 量子位 | 公众号 QbitAI 整整 60000小时 的预训练数据。 一个新 VLA （视觉-语言-动作），就这么水灵灵地被“喂”了出来，而且还是 开源 的那种。 这就是 蚂蚁灵波 刚刚发布的 LingBot-VLA 2.0 ，一个面向复杂物理世界任务的通用VLA模型。 先来聊聊这60000小时真实物理数据是怎么来的。 其实它包含两个部分，其中50000小时来自机器人轨迹数据，覆盖20种机器人构型；另外10000小时来自第一视角人类操作视频。 而距蚂蚁灵波1月发布 LingBot-VLA 1.0 仅半年时间来， 数据规模 从20000小时直接 乘了个3 。 那么效果又如何呢？ 来，直接上结果： 我们从视频中可以看到，机器人先从操作台上拿起饮料、水果放进篮子里，再拎起篮子移动到冰箱前，打开冰箱门、把东西一件件放进去，最后关上冰箱门。 一整套长序列的移动操作，一气呵成，相当丝滑。 不过有一说一，数据规模还仅仅是LingBot-VLA 2.0亮点的一隅，在细扒相关技术报告后我们发现： 支持20多种机器人构型； 从双臂扩展到头部、腰部、移动底盘、灵巧手等更完整的动作空间；",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-08",
-      "importance": 76,
-      "source": {
-        "name": "量子位",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5699487ba0a6bdb1c5f2677248b84989dd836c96502d90eb4fdf52a87f7e65&idx=1&mid=2247902258&sn=09ea927102a45e58d2de764072287fc9",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "关注前沿科技"
-      ],
-      "wechatAccount": "量子位",
-      "mentionedCompanies": [],
-      "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "具身智能",
-        "人形机器人",
-        "VLA",
-        "机器人",
-        "灵巧手"
       ],
       "wechatAccountConfigId": "qbitai",
       "wechatContentMode": "original-page"
@@ -20290,40 +20362,6 @@
         "semiconductor",
         "track-1ccjq49"
       ]
-    },
-    {
-      "id": "user-track-wechat-jiqizhixin-robotics-bfadd5d517f112bb",
-      "sourceId": "user-track-wechat-jiqizhixin-robotics",
-      "title": "蛰伏三年，前大疆员工做了款消费级纺织机，拿下红杉、顺为、米哈游等数亿融资｜产品观察",
-      "summary": "机器之心转载 浪爪智能（CLAWLAB）创始人胡文鑫，是当下硬件赛道一个不太按常理出牌的人。 工程师背景出身，曾就职于大疆、美团等头部大厂，拿过顶级机构的钱，履历足以支撑他选择任何一个被市场验证过的热门赛道，在最短时间内做出产品、讲故事、滚动融资。 但胡文鑫扎进了一个过去三十年几乎无人问津的品类：家用纺织机。 而浪爪智能已经在过去几年，连续完成数轮超亿元融资，其中其中 Pre-A2 轮由元璟资本领投，老股东顺为资本超额加注，Pre-A3 轮由米哈游领投，老股东元璟及顺为大幅超额加注。 很少有人知道胡文鑫具体在做什么。浪爪智能成立于 2022 年 12 月，近几年里，团队刻意保持水下状态 ——BP 从不外发，没有主动路演或公司传播，有投资人对产品方向感兴趣就直接到办公室看 Demo。他认为，纺织作为一个历史悠久的方向，天然切中 “衣食住行” 的首位，是一件足够大且真的需求，而定制化 DIY 是在刚需满足后，大家向内探索、向外表达的下一步需求。这三年多里，他主要专注 3 件事情：锚定消费级纺织 DIY 天花板最高的方向沿途攻坚；积累足够多的弹药为后续品类大爆发做准备；以及建立足够开放、极致",
-      "type": "融资",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "大疆",
-      "publishedAt": "2026-07-07",
-      "importance": 91,
-      "source": {
-        "name": "机器之心",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e670bfb391f9a9b107d150eb32557ac21ff848dc5c740db30849ce1852f59634cae3aa8445&idx=2&mid=2651043009&sn=9d10e98c30231971fc7a8c357340cd9b",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "黄楠"
-      ],
-      "wechatAccount": "机器之心",
-      "mentionedCompanies": [
-        "大疆",
-        "字节跳动"
-      ],
-      "mentionedPeople": [
-        "对产品工具"
-      ],
-      "matchedTrackingTerms": [
-        "机器人"
-      ],
-      "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page"
     },
     {
       "id": "user-track-wechat-deeptechchina-ai-6e3732a3d35e5abd",
@@ -20687,56 +20725,6 @@
         "semiconductor",
         "track-1ccjq49"
       ]
-    },
-    {
-      "id": "user-track-wechat-jiqizhixin-ai-14f22a779cca86cd",
-      "sourceId": "user-track-wechat-jiqizhixin-ai",
-      "title": "Claude、GLM、GPT谁才是真正的AI软件工程师？首个持续更新Visual Spec-to-App Benchmark发布",
-      "summary": "近年来，Coding Agent 正以前所未有的速度发展。从 Claude Code、OpenAI Codex 到 Cursor、Gemini CLI，大语言模型已经能够自主完成编码、调试、运行甚至部署整个 Web 应用，「AI 软件工程师」正逐渐成为现实。然而，一个新的问题也随之出现： 如果不 给 AI 一个 GitHub Issue，而是 给它一张 Figma 设计稿，它还能开发出一个真正可以交付的产品吗？ 过去几年，SWE-bench、OpenHands 等 Benchmark 极大推动了 Coding Agent 的发展，但它们主要关注代码仓库维护和 GitHub Issue 修复。相比之下，真实的软件开发通常始于一份产品需求（PRD）和一张 Figma 设计稿，需要开发者从零构建完整的 Web 应用。这意味着，Coding Agent 面临的挑战已经从 Code Generation 逐渐演进为 Product Generation。然而，目前仍然缺少一个能够系统评测这一能力的公开 Benchmark。 为了解决这一问题，来自 University of Arizona、Zo",
-      "type": "产品发布",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-06",
-      "importance": 82,
-      "source": {
-        "name": "机器之心",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e677c9b391fedf06a9fffe72163f3a40739cc1a48c8bca48e19cea01ce6f4acca1870d9743&idx=3&mid=2651042743&sn=f4ee3a607d462954f404a1414f41cb9c",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "wechatAccount": "机器之心",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Google",
-        "Anthropic",
-        "智谱AI"
-      ],
-      "mentionedPeople": [
-        "Junjia Guo",
-        "Arizona Electrical",
-        "Computer Engineering",
-        "Jingdi Chen",
-        "Agentic AI",
-        "Online Leaderboard",
-        "Yuhang Yao",
-        "Jiawei Zhou"
-      ],
-      "matchedTrackingTerms": [
-        "推理",
-        "Agent",
-        "多模态",
-        "强化学习",
-        "AI agent",
-        "Claude",
-        "Agents",
-        "gpt-5",
-        "OpenAI Codex",
-        "Gemini",
-        "agentic ai"
-      ],
-      "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-app-developer-magazine-93048fe5e7a0c79b",
@@ -21924,44 +21912,6 @@
       "trackSlugs": [
         "semiconductor"
       ]
-    },
-    {
-      "id": "user-track-wechat-qbitai-ai-24fc3720e59e81a1",
-      "sourceId": "user-track-wechat-qbitai-ai",
-      "title": "跟Claude谈个恋爱怎么了？Nature最新研究：真能给人聊傻了",
-      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 停停停！再这么跟AI聊下去，真要出事了。 最近，一刷小红书、抖音，总能刷到各种调教Claude的帖子。搜索“Claude人设”、“人机恋”，也是满屏教程。 这些教程教你怎么给Claude一个傲娇男友人设，怎么用system prompt让“他”吃醋、撒娇、发小脾气。 毫不夸张的说，Claude已经，俨然成为了新一代电子老公。 乍一看，这可能只是年轻人向AI讨要点情绪价值。 你甚至可能还会说：Claude又不像GPT那么舔，它是出了名的犟种，有时候还跟你对着干呢。但精神科医生们担心的恰恰不只是谄媚—— 当AI越来越像一个”真人”，不管它是顺着你还是偶尔跟你拌嘴，它带来的或许都不只是陪伴。 最近，发表于Nature旗下《Digital Psychiatry and Neuroscience》的一项研究指出—— 聊天机器人并不需要故意诱导什么，它只要持续顺着你、理解你、陪着你，就都有可能把一个正常人聊到开始怀疑现实。 而在部分真实临床案例中，后果甚至发展到了丢掉工作、住进精神病院，以及多次试图自杀的程度。 这是怎么一回事？ Clau",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-06-25",
-      "importance": 76,
-      "source": {
-        "name": "量子位",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6d5edfade44801e52119a3747f9b284195c8b45fe435ca14227aa97f99fef63a33e15f1a&idx=2&mid=2247899692&sn=0a7f73e1559acc292a3cdd7fc172b133",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "anthropic",
-      "authors": [
-        "关注前沿科技"
-      ],
-      "wechatAccount": "量子位",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Anthropic"
-      ],
-      "mentionedPeople": [
-        "Hamilton Morrin",
-        "Fiona Fung"
-      ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "Claude",
-        "ChatGPT"
-      ],
-      "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-mobilesyrup-2880aaa5ead20e81",
@@ -37316,14 +37266,16 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "error",
       "scanned": 15,
-      "accepted": 1,
+      "accepted": 0,
       "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-eefocus-semiconductor",
@@ -37429,7 +37381,7 @@
       "status": "partial",
       "scanned": 26,
       "accepted": 6,
-      "failed": 7,
+      "failed": 6,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -37441,7 +37393,7 @@
       "status": "partial",
       "scanned": 26,
       "accepted": 4,
-      "failed": 7,
+      "failed": 6,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -37481,7 +37433,7 @@
       "status": "partial",
       "scanned": 18,
       "accepted": 6,
-      "failed": 8,
+      "failed": 7,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -37492,7 +37444,7 @@
       "name": "量子位",
       "status": "partial",
       "scanned": 21,
-      "accepted": 4,
+      "accepted": 3,
       "failed": 8,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
@@ -38161,15 +38113,15 @@
     "retainedPreviousSourceCount": 37
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T16:15:47+00:00",
+    "generatedAt": "2026-07-26T16:43:06+00:00",
     "configuredSources": 33,
-    "successfulSources": 12,
-    "acceptedArticles": 42,
-    "fullTextArticles": 42,
+    "successfulSources": 11,
+    "acceptedArticles": 40,
+    "fullTextArticles": 40,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 21,
-    "mentionedCompanyLinks": 60,
-    "mentionedPeopleLinks": 105
+    "retainedSources": 22,
+    "mentionedCompanyLinks": 51,
+    "mentionedPeopleLinks": 96
   }
 }
