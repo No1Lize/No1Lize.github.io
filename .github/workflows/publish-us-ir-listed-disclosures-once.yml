@@ -1,0 +1,184 @@
+name: Validate official US IR filing coverage once
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-us-ir-listed-disclosures-once.yml
+      - tools/us_ir_sec_disclosures.py
+      - tests/test_us_ir_sec_disclosures.py
+      - config/listed_company_disclosure_sources.json
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: publish-us-ir-listed-disclosures-once
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build and validate all-market disclosure snapshot
+        id: verify
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          : > diagnostics/us-ir-listed-company-validation.log
+
+          python -m py_compile \
+            tools/crawl_listed_company_disclosures.py \
+            tools/cninfo_structured_disclosures.py \
+            tools/sec_structured_disclosures.py \
+            tools/us_ir_sec_disclosures.py \
+            >> diagnostics/us-ir-listed-company-validation.log 2>&1
+          compile_exit=$?
+
+          python -m unittest \
+            tests.test_listed_company_disclosures \
+            tests.test_cninfo_structured_disclosures \
+            tests.test_sec_structured_disclosures \
+            tests.test_sec_configured_disclosures \
+            tests.test_us_ir_sec_disclosures \
+            tests.test_scheduled_sync_workflow \
+            >> diagnostics/us-ir-listed-company-validation.log 2>&1
+          test_exit=$?
+
+          python tools/bootstrap_listed_company_disclosures.py \
+            >> diagnostics/us-ir-listed-company-validation.log 2>&1
+          bootstrap_exit=$?
+          python tools/crawl_listed_company_disclosures.py \
+            >> diagnostics/us-ir-listed-company-validation.log 2>&1
+          exchange_exit=$?
+          python tools/cninfo_structured_disclosures.py --require-events \
+            >> diagnostics/us-ir-listed-company-validation.log 2>&1
+          cninfo_exit=$?
+          python -m tools.us_ir_sec_disclosures --require-events \
+            >> diagnostics/us-ir-listed-company-validation.log 2>&1
+          ir_exit=$?
+          python -m tools.us_ir_sec_disclosures --check --require-events \
+            >> diagnostics/us-ir-listed-company-validation.log 2>&1
+          check_exit=$?
+
+          COMPILE_EXIT=$compile_exit TEST_EXIT=$test_exit \
+          BOOTSTRAP_EXIT=$bootstrap_exit EXCHANGE_EXIT=$exchange_exit \
+          CNINFO_EXIT=$cninfo_exit IR_EXIT=$ir_exit CHECK_EXIT=$check_exit \
+          python - <<'PY'
+          import json
+          import os
+          from datetime import UTC, datetime
+          from pathlib import Path
+
+          snapshot = json.loads(
+              Path("public/data/listed_company_disclosures.json").read_text(encoding="utf-8")
+          )
+          log = Path("diagnostics/us-ir-listed-company-validation.log").read_text(
+              encoding="utf-8", errors="replace"
+          )
+          codes = {
+              "compile": int(os.environ["COMPILE_EXIT"]),
+              "tests": int(os.environ["TEST_EXIT"]),
+              "bootstrap": int(os.environ["BOOTSTRAP_EXIT"]),
+              "exchange": int(os.environ["EXCHANGE_EXIT"]),
+              "cninfo": int(os.environ["CNINFO_EXIT"]),
+              "usIr": int(os.environ["IR_EXIT"]),
+              "check": int(os.environ["CHECK_EXIT"]),
+          }
+          statuses = [
+              status
+              for status in snapshot.get("sourceStatus", [])
+              if isinstance(status, dict)
+              and str(status.get("id", "")).startswith("us-ir-disclosure-")
+          ]
+          companies = snapshot.get("companies", {})
+          passed = (
+              all(code == 0 for code in codes.values())
+              and int(snapshot.get("companyCount", 0)) == 15
+              and isinstance(companies, dict)
+              and len(companies) == 15
+              and len(statuses) == 10
+              and all(int(status.get("accepted", 0) or 0) > 0 for status in statuses)
+          )
+          report = {
+              "generatedAt": datetime.now(UTC).replace(microsecond=0).isoformat(),
+              "passed": passed,
+              "exitCodes": codes,
+              "snapshot": {
+                  "generatedAt": snapshot.get("generatedAt"),
+                  "companyCount": snapshot.get("companyCount", 0),
+                  "eventCount": snapshot.get("eventCount", 0),
+                  "companySlugs": sorted(companies) if isinstance(companies, dict) else [],
+                  "cninfoStructured": snapshot.get("cninfoStructured", {}),
+                  "usIrStructured": snapshot.get("usIrStructured", {}),
+                  "usIrStatuses": [
+                      {
+                          "companySlug": status.get("companySlug"),
+                          "ticker": status.get("ticker"),
+                          "status": status.get("status"),
+                          "sourceName": status.get("sourceName"),
+                          "sourceHost": status.get("sourceHost"),
+                          "scanned": status.get("scanned", 0),
+                          "accepted": status.get("accepted", 0),
+                          "errors": status.get("errors", []),
+                      }
+                      for status in statuses
+                  ],
+              },
+              "logTail": log.splitlines()[-220:],
+          }
+          Path("diagnostics/us-ir-listed-company-validation.json").write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(report["snapshot"], ensure_ascii=False))
+          print(f"passed={str(passed).lower()}")
+          PY
+
+          passed=$(python - <<'PY'
+          import json
+          print(str(json.load(open("diagnostics/us-ir-listed-company-validation.json"))["passed"]).lower())
+          PY
+          )
+          echo "passed=$passed" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Commit formal snapshot or diagnostics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/publish-us-ir-listed-disclosures-once.yml
+          git add \
+            diagnostics/us-ir-listed-company-validation.json \
+            diagnostics/us-ir-listed-company-validation.log
+          if [ "${{ steps.verify.outputs.passed }}" = "true" ]; then
+            git add public/data/listed_company_disclosures.json
+            message="data: publish disclosures for all 15 listed companies"
+          else
+            git restore public/data/listed_company_disclosures.json
+            message="diagnostics: record official US IR filing validation failure"
+          fi
+          git commit -m "$message"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+      - name: Publish company pages
+        if: steps.verify.outputs.passed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
