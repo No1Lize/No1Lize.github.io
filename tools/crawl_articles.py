@@ -628,7 +628,9 @@ def infer_sector(title: str, summary: str, fallback: str = "AI / AGI") -> str:
         (("space", "rocket", "satellite", "航天", "火箭", "卫星"), "商业航天"),
         (("manufacturing", "industrial", "制造", "工业"), "智能制造"),
         (("material", "材料"), "新材料"),
-        (("blockchain", "crypto", "web3", "区块链"), "Web3 / 区块链"),
+        # Label must equal the enabled track name; "Web3 / 区块链" entries were
+        # filtered out by the exact sector match on the technology channel.
+        (("blockchain", "crypto", "web3", "区块链"), "Web3"),
         (("ai", "model", "agent", "人工智能", "大模型", "智能体"), "AI / AGI"),
     )
     for keywords, sector in rules:

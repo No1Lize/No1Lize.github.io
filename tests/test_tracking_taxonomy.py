@@ -122,7 +122,8 @@ class TrackingTaxonomyTests(unittest.TestCase):
         self.assertEqual(spec["region"], "中国")
         self.assertEqual(spec["allowedHosts"], ["toutiao.com"])
         self.assertIn("site%3Atoutiao.com", spec["url"])
-        self.assertIn("bing.com/search", spec["url"])
+        self.assertIn("news.google.com/rss/search", spec["url"])
+        self.assertIn("ceid=CN", spec["url"])
         for term in ("机器人", "具身智能", "宇树科技", "王兴兴"):
             self.assertIn(term, spec["keywords"])
 

@@ -58,7 +58,8 @@ export function fallbackTrackCoverage(slug: string, name: string): TrackCoverage
     name,
     status: "pending",
     label: "等待爬取",
-    expectedSources: 3,
+    // Four discovery routes per track: google-cn, google-us, bing, toutiao.
+    expectedSources: 4,
     completedSources: 0,
     healthySources: 0,
     failedSources: 0,

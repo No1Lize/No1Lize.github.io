@@ -225,7 +225,10 @@ def generated_track_sources(
                 toutiao_source_spec(
                     slug,
                     track["name"],
-                    tracking_module._bing_rss(f"site:{TOUTIAO_HOST} {query}"),
+                    # Google News RSS honors site: restriction; Bing RSS was
+                    # observed returning off-site results that the toutiao.com
+                    # host whitelist then filtered down to zero items.
+                    _google_news_url(f"site:{TOUTIAO_HOST} {query}", chinese=True),
                     terms,
                 ),
             ]

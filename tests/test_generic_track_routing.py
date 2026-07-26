@@ -64,12 +64,14 @@ class GenericTrackRoutingTests(unittest.TestCase):
                 self.assertTrue(
                     any("bing.com/search" in source["url"] for source in actual)
                 )
+                # google-cn, google-us, plus the toutiao route that now rides
+                # Google News because Bing RSS ignored site: restrictions.
                 self.assertEqual(
                     sum(
                         "news.google.com/rss/search" in source["url"]
                         for source in actual
                     ),
-                    2,
+                    3,
                 )
                 self.assertEqual(
                     sum(
