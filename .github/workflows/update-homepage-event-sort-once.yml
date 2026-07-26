@@ -1,0 +1,90 @@
+name: Update homepage event sorting once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update-homepage-event-sort-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-homepage-event-sort-once
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Replace homepage sorting options
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('components/dashboard.tsx')
+          text = path.read_text(encoding='utf-8')
+          replacements = [
+              (
+                  '  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");',
+                  '  const [sortOrder, setSortOrder] = useState<"importance" | "time">("importance");',
+              ),
+              (
+                  '''        .sort((a, b) => {\n          const timeComparison =\n            sortOrder === "newest"\n              ? b.publishedAt.localeCompare(a.publishedAt)\n              : a.publishedAt.localeCompare(b.publishedAt);\n          return timeComparison || b.importance - a.importance;\n        }),''',
+                  '''        .sort((a, b) => {\n          const timeComparison = b.publishedAt.localeCompare(a.publishedAt);\n          const importanceComparison = b.importance - a.importance;\n          return sortOrder === "importance"\n            ? importanceComparison || timeComparison\n            : timeComparison || importanceComparison;\n        }),''',
+              ),
+              (
+                  '''              onChange={(event) => setSortOrder(event.target.value as "newest" | "oldest")}\n              aria-label="时间排序"\n            >\n              <option value="newest">时间：最新优先</option>\n              <option value="oldest">时间：最早优先</option>''',
+                  '''              onChange={(event) => setSortOrder(event.target.value as "importance" | "time")}\n              aria-label="事件排序"\n            >\n              <option value="importance">重要度优先</option>\n              <option value="time">时间优先</option>''',
+              ),
+          ]
+
+          for old, new in replacements:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'expected exactly one match, found {count}: {old[:80]!r}')
+              text = text.replace(old, new, 1)
+
+          forbidden = ('"newest" | "oldest"', '时间：最新优先', '时间：最早优先')
+          if any(item in text for item in forbidden):
+              raise SystemExit('old sorting contract remains in dashboard.tsx')
+          required = ('"importance" | "time"', '重要度优先', '时间优先')
+          if not all(item in text for item in required):
+              raise SystemExit('new sorting contract is incomplete')
+
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Validate frontend
+        run: |
+          set -euo pipefail
+          npm run install:ci
+          npm run lint -- components/dashboard.tsx
+      - name: Commit permanent change and self-clean
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/update-homepage-event-sort-once.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add components/dashboard.tsx
+          git add -u .github/workflows/update-homepage-event-sort-once.yml
+          git commit -m 'fix: add importance and time event sorting'
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" = 3 ]; then
+              exit 1
+            fi
+            sleep 5
+          done
