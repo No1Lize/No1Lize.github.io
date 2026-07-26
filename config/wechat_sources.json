@@ -118,6 +118,45 @@
       "people": ["梁孟松", "魏少军", "张忠谋"]
     },
     {
+      "id": "semiconductor-technology",
+      "name": "半导体技术",
+      "enabled": true,
+      "region": "中国",
+      "sourceLevel": "媒体报道",
+      "defaultSector": "半导体",
+      "sectorKeywords": {
+        "半导体": ["半导体", "芯片", "集成电路", "晶圆", "封装测试", "可靠性测试", "失效分析", "工艺设备"]
+      },
+      "companies": ["中芯国际", "华虹半导体", "台积电", "英伟达", "长江存储", "北方华创", "中微公司"],
+      "people": []
+    },
+    {
+      "id": "chiptrend-ic",
+      "name": "芯潮IC",
+      "enabled": true,
+      "region": "中国",
+      "sourceLevel": "媒体报道",
+      "defaultSector": "半导体",
+      "sectorKeywords": {
+        "半导体": ["半导体", "芯片", "集成电路", "晶圆厂", "设备", "材料", "封装", "产业投资", "融资", "IPO"]
+      },
+      "companies": ["中芯国际", "华虹半导体", "台积电", "英伟达", "寒武纪", "长江存储", "北方华创", "中微公司"],
+      "people": ["顾文军", "石侃"]
+    },
+    {
+      "id": "eefocus",
+      "name": "与非网",
+      "enabled": true,
+      "region": "中国",
+      "sourceLevel": "媒体报道",
+      "defaultSector": "半导体",
+      "sectorKeywords": {
+        "半导体": ["半导体", "芯片", "集成电路", "AI芯片", "EDA", "晶圆", "先进封装", "功率半导体", "产业研究"]
+      },
+      "companies": ["中芯国际", "华虹半导体", "台积电", "英伟达", "寒武纪", "长江存储", "北方华创", "中微公司"],
+      "people": []
+    },
+    {
       "id": "gg-lithium",
       "name": "高工锂电",
       "enabled": true,
