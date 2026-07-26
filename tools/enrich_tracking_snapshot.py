@@ -251,10 +251,11 @@ def build_coverage(
             }
         )
 
+        route_count = len(expected_ids)
         if completed == 0:
             status = "pending"
             label = "等待爬取"
-            message = "配置已写入，但三路赛道发现源尚未完成首次运行。"
+            message = f"配置已写入，但 {route_count} 路赛道发现源尚未完成首次运行。"
         elif completed < len(expected_ids):
             status = "partial"
             label = "部分完成"
@@ -262,7 +263,7 @@ def build_coverage(
         elif matched > 0 and failed == 0:
             status = "ready"
             label = "已完成"
-            message = f"三路发现均已尝试，当前匹配 {matched} 条公开事件。"
+            message = f"{route_count} 路发现均已尝试，当前匹配 {matched} 条公开事件。"
         elif matched > 0:
             status = "partial"
             label = "部分可用"
@@ -270,11 +271,11 @@ def build_coverage(
         elif failed == completed:
             status = "error"
             label = "爬取失败"
-            message = "三路发现源均失败，请检查外部搜索服务或工作流日志。"
+            message = f"{route_count} 路发现源均失败，请检查外部搜索服务或工作流日志。"
         else:
             status = "empty"
             label = "已运行但无命中"
-            message = "三路发现均已尝试，但当前快照没有满足匹配条件的文章。"
+            message = f"{route_count} 路发现均已尝试，但当前快照没有满足匹配条件的文章。"
 
         coverage[slug] = {
             "slug": slug,

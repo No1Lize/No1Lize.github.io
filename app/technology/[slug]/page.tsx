@@ -46,7 +46,7 @@ function emptyEventMessage(status: string, message: string): string {
   if (status === "partial") {
     return `赛道爬虫仅部分完成：${message}`;
   }
-  return message || "三路发现源均已运行，但当前没有满足归属条件的公开事件。";
+  return message || "全部发现源均已运行，但当前没有满足归属条件的公开事件。";
 }
 
 export function generateStaticParams() {
@@ -184,7 +184,7 @@ export default async function SectorDetail({
                 <strong>
                   {coverage.completedSources}/{coverage.expectedSources}
                 </strong>
-                <p>Bing、Google News 中文和 Google News 英文三路发现。</p>
+                <p>Bing、Google News 中英文与今日头条四路发现。</p>
               </div>
               <div className={styles.summaryCard}>
                 <span>扫描 / 接收</span>

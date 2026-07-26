@@ -18,9 +18,11 @@ from urllib.parse import quote_plus, urlsplit
 try:  # Imported by tests as tools.crawl_with_tracking.
     from . import crawl_articles as crawler
     from . import tracking_quality
+    from . import tracking_taxonomy
 except ImportError:  # Executed directly with ``python tools/...``.
     import crawl_articles as crawler
     import tracking_quality
+    import tracking_taxonomy
 
 
 TRACKING_PATH = crawler.ROOT / "config" / "user_tracking.json"
@@ -234,6 +236,14 @@ def _generated_track_sources(tracks: list[dict[str, Any]]) -> list[dict[str, Any
                 "strictTitleKeywords": False,
                 "enabled": True,
             }
+        )
+        sources.append(
+            tracking_taxonomy.toutiao_source_spec(
+                track["slug"],
+                track["name"],
+                _bing_rss(f"site:{tracking_taxonomy.TOUTIAO_HOST} {query}"),
+                terms,
+            )
         )
     return sources
 

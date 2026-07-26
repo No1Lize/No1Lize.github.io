@@ -76,6 +76,12 @@ class TrackingSnapshotEnrichmentTests(unittest.TestCase):
                     "accepted": 0,
                 },
                 {
+                    "id": "user-track-fusion-toutiao",
+                    "status": "empty",
+                    "scanned": 0,
+                    "accepted": 0,
+                },
+                {
                     "id": "user-track-energy-bing",
                     "status": "empty",
                     "scanned": 0,
@@ -93,6 +99,12 @@ class TrackingSnapshotEnrichmentTests(unittest.TestCase):
                     "scanned": 0,
                     "accepted": 0,
                 },
+                {
+                    "id": "user-track-energy-toutiao",
+                    "status": "empty",
+                    "scanned": 0,
+                    "accepted": 0,
+                },
             ],
         }
 
@@ -103,7 +115,7 @@ class TrackingSnapshotEnrichmentTests(unittest.TestCase):
         self.assertIn("fusion", by_id["fusion-technology"]["trackSlugs"])
         self.assertIn("fusion", by_id["fusion-company"]["trackSlugs"])
         fusion = enriched["trackCoverage"]["fusion"]
-        self.assertEqual(fusion["completedSources"], 3)
+        self.assertEqual(fusion["completedSources"], 4)
         self.assertEqual(fusion["matchedArticles"], 2)
         self.assertEqual(fusion["backfilledArticles"], 2)
         self.assertEqual(fusion["independentSources"], 2)

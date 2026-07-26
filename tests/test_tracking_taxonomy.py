@@ -41,13 +41,14 @@ class TrackingTaxonomyTests(unittest.TestCase):
         sources = taxonomy.generated_track_sources(tracks, tracking)
         by_id = {source["id"]: source for source in sources}
 
-        self.assertEqual(len(sources), 6)
+        self.assertEqual(len(sources), 8)
         self.assertEqual(
             set(taxonomy.expected_source_ids("fusion")),
             {
                 "user-track-fusion-bing",
                 "user-track-fusion-google-cn",
                 "user-track-fusion-google-us",
+                "user-track-fusion-toutiao",
             },
         )
         for suffix in taxonomy.TRACK_SOURCE_SUFFIXES:
@@ -92,10 +93,38 @@ class TrackingTaxonomyTests(unittest.TestCase):
                     }
                 ]
             )
-            self.assertEqual(len(generated), 3)
+            self.assertEqual(len(generated), 4)
         finally:
             tracking._track_terms = original_track_terms
             tracking._generated_track_sources = original_generated
+
+    def test_every_track_gets_a_whitelisted_toutiao_source(self) -> None:
+        tracks = [
+            {
+                "slug": "robotics",
+                "name": "机器人",
+                "keywords": ["具身智能"],
+                "people": ["王兴兴"],
+                "sampleCompanies": ["宇树科技"],
+            }
+        ]
+
+        sources = taxonomy.generated_track_sources(tracks, tracking)
+        toutiao = [
+            source
+            for source in sources
+            if source["id"] == "user-track-robotics-toutiao"
+        ]
+        self.assertEqual(len(toutiao), 1)
+        spec = toutiao[0]
+        self.assertEqual(spec["platform"], "今日头条")
+        self.assertEqual(spec["sourceLevel"], "媒体报道")
+        self.assertEqual(spec["region"], "中国")
+        self.assertEqual(spec["allowedHosts"], ["toutiao.com"])
+        self.assertIn("site%3Atoutiao.com", spec["url"])
+        self.assertIn("bing.com/search", spec["url"])
+        for term in ("机器人", "具身智能", "宇树科技", "王兴兴"):
+            self.assertIn(term, spec["keywords"])
 
 
 if __name__ == "__main__":

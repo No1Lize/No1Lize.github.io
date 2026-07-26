@@ -7,7 +7,7 @@ from tools import tracking_taxonomy as taxonomy
 
 
 class GenericTrackRoutingTests(unittest.TestCase):
-    def test_arbitrary_named_tracks_generate_three_search_sources_each(self) -> None:
+    def test_arbitrary_named_tracks_generate_four_search_sources_each(self) -> None:
         payload = {
             "schemaVersion": 1,
             "tracks": [
@@ -50,7 +50,7 @@ class GenericTrackRoutingTests(unittest.TestCase):
             sources = tracking._generated_track_sources(tracks)
 
             self.assertEqual(len(tracks), 3)
-            self.assertEqual(len(sources), 9)
+            self.assertEqual(len(sources), 12)
             self.assertEqual(
                 {source["sector"] for source in sources},
                 {"可控核聚变", "脑机接口", "低空经济"},
@@ -70,6 +70,12 @@ class GenericTrackRoutingTests(unittest.TestCase):
                         for source in actual
                     ),
                     2,
+                )
+                self.assertEqual(
+                    sum(
+                        "site%3Atoutiao.com" in source["url"] for source in actual
+                    ),
+                    1,
                 )
                 for source in actual:
                     self.assertIn(source["sector"], source["keywords"])
