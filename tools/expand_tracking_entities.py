@@ -33,17 +33,22 @@ import re
 import sys
 import time
 import unicodedata
+from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote, quote_plus
+from urllib.parse import quote, quote_plus, urlparse
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 LEDGER_PATH = ROOT / "config" / "tracking_auto_discovery.json"
+# The site's own crawled corpus is the primary supply of professional
+# entities: whatever recurs in a track's accepted articles is, by
+# construction, industry vocabulary rather than encyclopedia language.
+ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 
 USER_AGENT = (
     "No1LizeResearch/1.0 (+https://github.com/No1Lize/No1Lize.github.io; "
@@ -62,6 +67,7 @@ MAX_TRACK_PEOPLE = 25
 MAX_TRACK_COMPANIES = 30
 ACCEPT_THRESHOLD = 3.0
 SEED_ACCEPT_THRESHOLD = 2.0
+RELAXED_ACCEPT_THRESHOLD = 1.4
 
 COMPANY_CLASSES = {
     "Q4830453",  # business
@@ -141,6 +147,42 @@ GENERIC_TRACKING_KEYWORDS = {
     "下载",
     "培训",
     "招标",
+    # Calendar words picked out of news titles are never tracking keywords.
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+    "sunday",
+    # Title-case English filler that survives the capitalization filter.
+    "the",
+    "how",
+    "why",
+    "what",
+    "when",
+    "where",
+    "who",
+    "quarter",
+    "earnings",
+    "financial results",
+    "earnings call",
+    "first quarter",
+    "second quarter",
+    "third quarter",
+    "fourth quarter",
 }
 GENERIC_SUFFIXES = ("是什么", "什么意思", "怎么样", "官网", "招聘", "股吧", "股票")
 
@@ -226,6 +268,135 @@ class Candidate:
     website: str = ""
     region: str = "全球"
     handle: str = ""
+    # Kind hint from the corpus (company/person); used when Wikidata does not
+    # know the entity — common for young Chinese startups and investors.
+    hint: str = ""
+
+
+GENERIC_ENTITY_NAMES = {
+    "",
+    "科技产业",
+    "持续更新",
+    "未识别",
+    "未分类",
+    "公司",
+    "行业",
+    "产业",
+    "AI 研究",
+    "研究机构",
+    "媒体",
+    "资本动态",
+    "公司动态",
+}
+# Aggregators, indexes and login-walled platforms never become media sources.
+DENY_SOURCE_HOSTS = {
+    "news.google.com",
+    "google.com",
+    "bing.com",
+    "cn.bing.com",
+    "baidu.com",
+    "weixin.qq.com",
+    "mp.weixin.qq.com",
+    "x.com",
+    "twitter.com",
+    "toutiao.com",
+    "www.toutiao.com",
+    "youtube.com",
+    "sogou.com",
+    "arxiv.org",
+    "openalex.org",
+    # Regulator and exchange disclosure channels have dedicated adapters and
+    # must not be re-added as generic media sources.
+    "sec.gov",
+    "hkexnews.hk",
+    "www1.hkexnews.hk",
+    "cninfo.com.cn",
+    "sse.com.cn",
+    "szse.cn",
+}
+
+QUOTED_TITLE_TERM = re.compile(r"[《「【“\"]([^》」】”\"]{2,14})[》」】”\"]")
+LATIN_TITLE_TERM = re.compile(
+    r"[A-Za-z][A-Za-z0-9+&.\-]*(?:\s+[A-Z][A-Za-z0-9+&.\-]*){0,2}",
+)
+CJK_TITLE_RUN = re.compile(r"[㐀-鿿]{2,8}")
+
+
+def extract_title_terms(title: str) -> set[str]:
+    terms: set[str] = set()
+    for match in QUOTED_TITLE_TERM.finditer(title):
+        terms.add(match.group(1).strip())
+    for match in LATIN_TITLE_TERM.finditer(title):
+        value = match.group(0).strip(" .-")
+        # Keep branded/technical tokens (HBM4, CoWoS, OpenAI); plain
+        # lowercase English words are stopword-grade, and a lowercase first
+        # token ("and Google") marks a mid-phrase fragment.
+        if 2 <= len(value) <= 30 and not value.islower() and not value[0].islower():
+            terms.add(value)
+    for match in CJK_TITLE_RUN.finditer(title):
+        terms.add(match.group(0))
+    return {term for term in terms if term}
+
+
+def source_host(url: str) -> str:
+    host = urlparse(url).netloc.lower()
+    return host[4:] if host.startswith("www.") else host
+
+
+def load_track_corpus() -> dict[str, dict[str, Any]]:
+    payload = load_json(ARTICLES_PATH, None)
+    articles = payload.get("articles") if isinstance(payload, dict) else None
+    stats: dict[str, dict[str, Any]] = {}
+    if not isinstance(articles, list):
+        return stats
+    for article in articles:
+        if not isinstance(article, dict):
+            continue
+        slugs = article.get("trackSlugs")
+        if not isinstance(slugs, list) or not slugs:
+            continue
+        title = str(article.get("title") or "")
+        source = article.get("source") or {}
+        source_name = str(source.get("name") or source.get("platform") or "")
+        host = source_host(str(source.get("url") or ""))
+        region = str(article.get("region") or "全球")
+        companies = [str(article.get("company") or "")] + [
+            str(value) for value in article.get("mentionedCompanies") or []
+        ]
+        people = [str(value) for value in article.get("mentionedPeople") or []]
+        title_terms = extract_title_terms(title)
+        for slug in slugs:
+            row = stats.setdefault(
+                str(slug),
+                {
+                    "companies": Counter(),
+                    "people": Counter(),
+                    "terms": Counter(),
+                    "termSources": {},
+                    "sources": {},
+                },
+            )
+            for company in companies:
+                cleaned = clean_candidate(company)
+                if cleaned and cleaned not in GENERIC_ENTITY_NAMES:
+                    row["companies"][cleaned] += 1
+            for person in people:
+                cleaned = clean_candidate(person)
+                if cleaned and cleaned not in GENERIC_ENTITY_NAMES:
+                    row["people"][cleaned] += 1
+            for term in title_terms:
+                row["terms"][term] += 1
+                row["termSources"].setdefault(term, set()).add(source_name)
+            if host and host not in DENY_SOURCE_HOSTS:
+                srow = row["sources"].setdefault(
+                    host,
+                    {"count": 0, "names": Counter(), "regions": Counter()},
+                )
+                srow["count"] += 1
+                if source_name:
+                    srow["names"][source_name] += 1
+                srow["regions"][region] += 1
+    return stats
 
 
 class PublicWebClient:
@@ -522,12 +693,51 @@ def has_cjk(value: str) -> bool:
     return bool(re.search(r"[㐀-鿿]", value))
 
 
-def gather_candidates(
-    client: PublicWebClient, seeds: list[str]
-) -> dict[str, Candidate]:
-    pool: dict[str, Candidate] = {}
+def google_news_titles(
+    client: PublicWebClient, query: str, chinese: bool
+) -> list[str]:
+    encoded = quote_plus(query)
+    locale = (
+        "hl=zh-CN&gl=CN&ceid=CN:zh-Hans" if chinese else "hl=en-US&gl=US&ceid=US:en"
+    )
+    body = client.text(
+        f"https://news.google.com/rss/search?q={encoded}&{locale}",
+    )
+    titles = re.findall(r"<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</title>", body)
+    # First <title> is the channel's own name.
+    return [decode_html(title) for title in titles[1:]][:20]
 
-    def bump(value: str, weight: float, evidence: str) -> None:
+
+def decode_html(value: str) -> str:
+    return (
+        value.replace("&amp;", "&")
+        .replace("&lt;", "<")
+        .replace("&gt;", ">")
+        .replace("&quot;", '"')
+        .replace("&#39;", "'")
+    )
+
+
+def gather_candidates(
+    client: PublicWebClient,
+    track: dict[str, Any],
+    seeds: list[str],
+    corpus_row: dict[str, Any] | None,
+    seeding: bool,
+) -> dict[str, Candidate]:
+    """Merge the corpus (primary), industry news, and reference-web signals.
+
+    Professional-first ranking: entities recurring in the track's own
+    accepted articles score highest, fresh news co-occurrence confirms them,
+    and encyclopedia relations only supplement — the track NAME is never fed
+    to Wikipedia in expand mode, which is what used to surface textbook
+    physics terms instead of industry vocabulary.
+    """
+
+    pool: dict[str, Candidate] = {}
+    track_name = clean_candidate(str(track.get("name") or ""))
+
+    def bump(value: str, weight: float, evidence: str, hint: str = "") -> None:
         cleaned = clean_candidate(value)
         if not cleaned or len(cleaned) > 60:
             return
@@ -537,27 +747,74 @@ def gather_candidates(
         candidate = pool.setdefault(key, Candidate(value=cleaned))
         candidate.score += weight
         candidate.evidence.add(evidence)
+        if hint and not candidate.hint:
+            candidate.hint = hint
+
+    if corpus_row:
+        for company, count in corpus_row["companies"].most_common(15):
+            if count >= 2:
+                bump(
+                    company,
+                    1.8 + min(1.8, 0.6 * count),
+                    "corpus-company",
+                    hint="company",
+                )
+        for person, count in corpus_row["people"].most_common(10):
+            if count >= 2:
+                bump(person, 2.0 + min(1.6, 0.6 * count), "corpus-person", hint="person")
+        for term, count in corpus_row["terms"].most_common(60):
+            if count < 3 or len(corpus_row["termSources"].get(term, ())) < 2:
+                continue
+            # Pure-Latin fragments below three characters are almost always
+            # broken tokens ("SK" from SK海力士), not standalone terms.
+            if re.fullmatch(r"[A-Za-z]{1,2}", term):
+                continue
+            bump(term, 1.2 + min(1.8, 0.3 * count), "corpus-term")
+
+    news_titles: list[str] = []
+    news_seeds = [track_name, *seeds[:1]] if track_name else seeds[:2]
+    for query in dict.fromkeys(filter(None, news_seeds)):
+        try:
+            news_titles += google_news_titles(client, query, has_cjk(query))
+        except BudgetExhausted:
+            break
+    for title in news_titles:
+        for term in extract_title_terms(title):
+            bump(term, 0.6, "news-term")
 
     for seed in seeds:
+        if not seeding and track_name and normalize_term(seed) == normalize_term(track_name):
+            continue
         lang = "zh" if has_cjk(seed) else "en"
         try:
             title = wikipedia_resolve(client, seed, lang)
             if title:
+                # Seeding a brand-new track has no corpus yet, so reference
+                # relations stay a first-class signal there.
                 for related in wikipedia_morelike(client, title, lang):
-                    bump(related, 2.0, "wikipedia-morelike")
+                    bump(related, 2.0 if seeding else 1.5, "wikipedia-morelike")
             if has_cjk(seed):
                 for suggestion in baidu_suggest(client, seed):
-                    trimmed = suggestion.replace(seed, " ").strip()
                     bump(suggestion, 1.0, "baidu-suggest")
-                    if trimmed and trimmed != suggestion:
-                        bump(f"{seed} {trimmed}".strip(), 0.0, "baidu-suggest")
             else:
                 for suggestion in google_suggest(client, seed):
                     bump(suggestion, 1.0, "google-suggest")
                 for concept in openalex_related_concepts(client, seed):
-                    bump(concept, 2.0, "openalex-related")
+                    bump(concept, 1.2, "openalex-related")
         except BudgetExhausted:
             break
+
+    # Fresh-news co-occurrence confirms a candidate as active industry
+    # vocabulary rather than reference-only language.
+    if news_titles:
+        lowered_titles = [title.lower() for title in news_titles]
+        for candidate in pool.values():
+            if "news-term" in candidate.evidence and len(candidate.evidence) == 1:
+                continue
+            needle = candidate.value.lower()
+            if len(needle) >= 2 and any(needle in title for title in lowered_titles):
+                candidate.score += 1.5
+                candidate.evidence.add("news-confirmed")
     return pool
 
 
@@ -567,6 +824,7 @@ def expand_track(
     ledger: dict[str, Any],
     track: dict[str, Any],
     all_track_names: set[str],
+    corpus_row: dict[str, Any] | None,
     dry_run: bool,
 ) -> dict[str, Any]:
     seeding = not (track.get("keywords") or [])
@@ -579,7 +837,7 @@ def expand_track(
     if not seeds:
         return summary
 
-    pool = gather_candidates(client, seeds)
+    pool = gather_candidates(client, track, seeds, corpus_row, seeding)
     threshold = SEED_ACCEPT_THRESHOLD if seeding else ACCEPT_THRESHOLD
     ranked = sorted(
         (c for c in pool.values() if c.score >= threshold),
@@ -597,6 +855,24 @@ def expand_track(
     existing_all = (
         existing["keywords"] | existing["people"] | existing["sampleCompanies"]
     )
+    # Entities configured under ANY track stay where they are: articles that
+    # span tracks (an AI-chip story naming OpenAI) must not leak one track's
+    # companies into another track's keyword list.
+    for other in config.get("tracks", []):
+        for kind in ("keywords", "people", "sampleCompanies"):
+            for value in other.get(kind) or []:
+                cleaned = re.sub(r"@\S+", "", str(value)).strip()
+                if cleaned:
+                    existing_all.add(normalize_term(cleaned))
+    for listed in config.get("listedCompanies", []):
+        for field_name in ("name", "ticker"):
+            cleaned = clean_candidate(str(listed.get(field_name) or ""))
+            if cleaned:
+                existing_all.add(normalize_term(cleaned))
+    for source in config.get("sources", []):
+        cleaned = clean_candidate(str(source.get("company") or ""))
+        if cleaned:
+            existing_all.add(normalize_term(cleaned))
     blocked = {
         kind: blocked_values(ledger, track, kind)
         for kind in ("keywords", "people", "sampleCompanies", "sources")
@@ -638,7 +914,10 @@ def expand_track(
                 info = wikidata_lookup(client, candidate.value)
             except BudgetExhausted:
                 info = {}
-        kind = str(info.get("kind") or "keyword")
+        # Corpus hints break ties for entities Wikidata does not know yet
+        # (young startups, Chinese investors): the crawler already labelled
+        # them as company/person context in accepted articles.
+        kind = str(info.get("kind") or candidate.hint or "keyword")
 
         if kind == "person" and caps["people"] > len(added["people"]):
             label = validate_person(candidate.value, str(info.get("handle") or ""))
@@ -706,7 +985,7 @@ def expand_track(
             (
                 candidate
                 for candidate in pool.values()
-                if SEED_ACCEPT_THRESHOLD <= candidate.score < threshold
+                if RELAXED_ACCEPT_THRESHOLD <= candidate.score < threshold
             ),
             key=lambda candidate: candidate.score,
             reverse=True,
@@ -729,6 +1008,58 @@ def expand_track(
             existing_all.add(value_key)
         if added["keywords"]:
             summary["relaxed"] = True
+
+    # Promote repeatedly productive but unconfigured publishers into media
+    # sources: domains that already delivered ≥2 accepted articles for this
+    # track are proven professional outlets for it.
+    if corpus_row and caps["sources"] > len(added["sources"]):
+        existing_hosts = {
+            source_host(str(source.get("url") or ""))
+            for source in config.get("sources", [])
+        }
+        existing_hosts.discard("")
+        ranked_hosts = sorted(
+            corpus_row["sources"].items(),
+            key=lambda item: item[1]["count"],
+            reverse=True,
+        )
+        for host, srow in ranked_hosts:
+            if len(added["sources"]) >= caps["sources"]:
+                break
+            if srow["count"] < 2 or host in existing_hosts:
+                continue
+            url = f"https://{host}/"
+            if (
+                normalize_term(url) in blocked["sources"]
+                or normalize_term(url) in existing["sources"]
+            ):
+                continue
+            top_names = srow["names"].most_common(1)
+            name = clean_candidate(top_names[0][0]) if top_names else host
+            region = (
+                srow["regions"].most_common(1)[0][0]
+                if srow["regions"]
+                else "全球"
+            )
+            if region not in {"中国", "美国", "全球"}:
+                region = "全球"
+            added["sources"].append(
+                {
+                    "id": f"source-auto-media-{slugify(host)}",
+                    "name": f"{name or host} · {track.get('name')}信源",
+                    "url": url,
+                    "sourceType": "listing-search",
+                    "sourceCategory": "media",
+                    "region": region,
+                    "sector": str(track.get("name") or "未分类"),
+                    "company": "",
+                    "ticker": "",
+                    "keywords": [str(track.get("name") or "")],
+                    "enabled": True,
+                }
+            )
+            existing["sources"].add(normalize_term(url))
+            existing_hosts.add(host)
 
     summary["poolSize"] = len(pool)
     if dry_run:
@@ -836,11 +1167,37 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
     }
 
     client = PublicWebClient(args.max_requests, fetch_text=fetch_text)
+    corpus = load_track_corpus()
     summaries = []
     for track in tracks:
         summaries.append(
-            expand_track(client, config, ledger, track, all_track_names, args.dry_run)
+            expand_track(
+                client,
+                config,
+                ledger,
+                track,
+                all_track_names,
+                corpus.get(str(track.get("slug"))),
+                args.dry_run,
+            )
         )
+
+    if client.used_requests > 0 and client.failed_requests == client.used_requests:
+        # Fully offline: honor the no-fabrication contract — even corpus-only
+        # additions wait for a run that can cross-check the public web.
+        print(
+            json.dumps(
+                {
+                    "changed": False,
+                    "offline": True,
+                    "requestsUsed": client.used_requests,
+                    "requestsFailed": client.failed_requests,
+                    "tracks": [],
+                },
+                ensure_ascii=False,
+            )
+        )
+        return 0
 
     changed = any(
         any(summary["added"][kind] for kind in summary["added"])

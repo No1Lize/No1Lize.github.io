@@ -122,14 +122,18 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         base = Path(self.tmp.name)
         self.config_path = base / "user_tracking.json"
         self.ledger_path = base / "tracking_auto_discovery.json"
+        self.articles_path = base / "articles.json"
         self._original_config = expander.CONFIG_PATH
         self._original_ledger = expander.LEDGER_PATH
+        self._original_articles = expander.ARTICLES_PATH
         expander.CONFIG_PATH = self.config_path
         expander.LEDGER_PATH = self.ledger_path
+        expander.ARTICLES_PATH = self.articles_path
 
     def tearDown(self) -> None:
         expander.CONFIG_PATH = self._original_config
         expander.LEDGER_PATH = self._original_ledger
+        expander.ARTICLES_PATH = self._original_articles
         self.tmp.cleanup()
 
     def _write_config(self, config: dict) -> None:
@@ -162,7 +166,11 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         }
 
     def test_expands_keywords_companies_and_sources_from_public_web(self) -> None:
-        self._write_config(self._base_config())
+        # v2: the track NAME is no longer fed to Wikipedia, so cross-seed
+        # confirmation comes from two concrete keyword seeds.
+        self._write_config(
+            self._base_config(keywords=["人形机器人整机", "双足机器人"])
+        )
         rc = expander.run(["--only-track", "robotics"], fetch_text=_fake_fetch)
         self.assertEqual(rc, 0)
 
@@ -241,6 +249,65 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         self.assertIn(("keywords", "灵巧手"), removed)
         track = self._read_config()["tracks"][0]
         self.assertNotIn("灵巧手", track["keywords"])
+
+    def test_corpus_mining_promotes_professional_entities(self) -> None:
+        """The site's own crawled articles are the primary supply: recurring
+        companies, people, title terms and productive publisher domains for a
+        track become config candidates without relying on encyclopedias."""
+
+        self._write_config(
+            self._base_config(slug="semiconductor", name="半导体", keywords=["HBM"])
+        )
+        article = {
+            "trackSlugs": ["semiconductor"],
+            "title": "中芯国际宣布 CoWoS-L 先进封装产能翻倍，HBM4 需求旺盛",
+            "region": "中国",
+            "company": "中芯国际",
+            "mentionedCompanies": ["中芯国际"],
+            "mentionedPeople": ["梁孟松"],
+            "source": {"name": "科创板日报", "url": "https://www.chinastarmarket.cn/a/1"},
+        }
+        articles = []
+        for index in range(4):
+            row = json.loads(json.dumps(article))
+            row["source"]["url"] = f"https://www.chinastarmarket.cn/a/{index}"
+            # Terms must recur across at least two distinct outlets.
+            row["source"]["name"] = "科创板日报" if index % 2 == 0 else "集微网"
+            articles.append(row)
+        self.articles_path.write_text(
+            json.dumps({"articles": articles}, ensure_ascii=False),
+            encoding="utf-8",
+        )
+
+        def corpus_fetch(url: str) -> str:
+            if "news.google.com" in url:
+                return (
+                    "<rss><channel><title>feed</title>"
+                    "<item><title>中芯国际扩产 CoWoS-L 封装线</title></item>"
+                    "</channel></rss>"
+                )
+            if "wbsearchentities" in url:
+                return json.dumps({"search": []})
+            return ""
+
+        rc = expander.run(["--only-track", "semiconductor"], fetch_text=corpus_fetch)
+        self.assertEqual(rc, 0)
+        config = self._read_config()
+        track = config["tracks"][0]
+        self.assertIn("中芯国际", track["sampleCompanies"])
+        self.assertIn("梁孟松", track["people"])
+        self.assertTrue(
+            any("CoWoS" in keyword for keyword in track["keywords"]),
+            f"expected CoWoS term in {track['keywords']}",
+        )
+        media = [
+            source
+            for source in config["sources"]
+            if source["url"] == "https://chinastarmarket.cn/" or
+               source["url"] == "https://www.chinastarmarket.cn/"
+        ]
+        self.assertTrue(media, "productive publisher domain must become a source")
+        self.assertEqual(media[0]["sourceCategory"], "media")
 
     def test_diverse_seed_tracks_fall_back_to_relaxed_keywords(self) -> None:
         """Regression: tracks whose seeds share no related pages (GPU vs 先进
