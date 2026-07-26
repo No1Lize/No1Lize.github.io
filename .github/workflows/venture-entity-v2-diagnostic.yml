@@ -1,0 +1,140 @@
+name: Venture entity v2 audit diagnostics
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - .venture-entity-v2-diagnostic-trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: venture-entity-v2-diagnostic-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  diagnose:
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == github.repository_owner &&
+      github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch, test and clean
+        run: |
+          python tools/patch_venture_entity_incremental_v2.py
+          python -m unittest \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
+          python tools/enforce_venture_entity_semantics.py
+          python tools/stabilize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+      - name: Audit structured entities
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          python - <<'PY' > diagnostics/venture-entity-v2-audit.txt 2>&1
+          import json
+          from tools.enforce_venture_entity_semantics import (
+              CATALOG_PATH,
+              SNAPSHOT_PATH,
+              _valid_person_name,
+              _valid_product,
+              parse_catalog,
+          )
+
+          payload = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+          companies, _ = parse_catalog(CATALOG_PATH.read_text(encoding="utf-8"))
+          aliases_by_slug = {row.slug: row.aliases for row in companies}
+          known_bad_products = {
+              "英特尔深化智能生态合作", "开始对话",
+              "DeepSeek 免费对话 体验全新旗舰模型",
+              "🎉 DeepSeek-V4 预览版本发布",
+              "15 Things to Know about Ax-1", "Ax-1 Crew Undocks from ISS",
+              "Axiom Astronauts Begin Journey Home", "https:",
+              "www.galactic-energy.cn", "qnimgs",
+          }
+          known_bad_people = {
+              "Spotlight Megan Holston-Alexander Hear",
+              "Chris Lyons. The Next", "Chris Lyons. Black History",
+              "ML Angela Yeung Awards", "Solutions Platform Overview AI",
+              "Sun Microsystems", "Moses Singer",
+          }
+
+          product_names = set()
+          team_names = set()
+          for slug, profile in payload.get("companies", {}).items():
+              aliases = (profile.get("name", ""), slug, *aliases_by_slug.get(slug, ()))
+              for item in profile.get("products", []):
+                  product_names.add(item)
+                  assert _valid_product(item, aliases), f"{slug}: invalid product {item!r}"
+              for row in profile.get("team", []):
+                  if isinstance(row, dict):
+                      name = row.get("name", "")
+                      team_names.add(name)
+                      assert _valid_person_name(name), f"{slug}: invalid team name {name!r}"
+          for slug, profile in payload.get("institutions", {}).items():
+              for row in profile.get("team", []):
+                  if isinstance(row, dict):
+                      name = row.get("name", "")
+                      team_names.add(name)
+                      assert _valid_person_name(name), f"{slug}: invalid team name {name!r}"
+
+          remaining_products = sorted(known_bad_products & product_names)
+          remaining_people = sorted(known_bad_people & team_names)
+          assert not remaining_products, f"known bad products remain: {remaining_products}"
+          assert not remaining_people, f"known bad people remain: {remaining_people}"
+          technology = payload.get("companies", {}).get("galactic-energy", {}).get("technology", "")
+          assert "https:" not in technology, technology
+          assert "www.galactic-energy.cn" not in technology, technology
+          assert "qnimgs" not in technology, technology
+          checks = payload.get("qualityGate", {}).get("checks", {})
+          assert checks.get("entitySemanticConsistency", {}).get("passed") is True, checks
+          assert checks.get("sharedTerminalFixedPoint", {}).get("passed") is True, checks
+          print(json.dumps({
+              "products": len(product_names),
+              "teamNames": len(team_names),
+              "galacticTechnology": technology,
+              "qualityChecks": checks,
+          }, ensure_ascii=False, indent=2))
+          PY
+          status=$?
+          cat diagnostics/venture-entity-v2-audit.txt
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add diagnostics/venture-entity-v2-audit.txt
+            git commit -m "ci: record venture entity v2 audit failure"
+            git push origin "HEAD:${HEAD_REF}"
+          fi
+          exit "$status"
+      - name: Commit permanent files
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .venture-entity-v2-diagnostic-trigger
+          rm -rf diagnostics
+          git add \
+            tools/enforce_venture_entity_semantics.py \
+            tests/test_venture_entity_semantics.py \
+            public/data/venture_profiles.json
+          git commit -m "fix: remove residual venture entity noise"
+          git push origin "HEAD:${HEAD_REF}"
