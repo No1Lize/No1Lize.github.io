@@ -51,6 +51,15 @@ python3 tools/crawl_articles.py --validate-only
 - 提交使用与 `/tracking` 管理页共用的仓库所有者 Fine-grained Token（Contents: Read and write，保存在当前标签页 sessionStorage）；
 - 原文件写入 `public/data/uploads/<频道>/`，索引写入 `public/data/channel_documents.json`（单文件上限 25MB），提交即触发 Pages 重建；重建完成前列表内的新条目临时指向仓库原文件。
 
+## 追踪实体自动发现
+
+`.github/workflows/tracking-discovery.yml` 基于现有关键词、人物、公司与信息源，从公开无鉴权接口（维基百科相关条目、Wikidata 实体分类与官网、OpenAlex 相关概念、百度/谷歌搜索联想）发现紧密相关实体，直接写入 `config/user_tracking.json` 对应追踪区域，随后触发一次完整抓取刷新：
+
+- 管理页新增赛道（关键词为空）推送配置后，工作流立即用赛道名在网络上取词，直接种入关键词区域；
+- 每日 13:30（台北时间）对最久未扩展的赛道轮转执行完整扩展（关键词/人物/样本公司/公司官网源），候选需通过与 `/tracking` 管理页一致的校验规则；
+- 自动添加记录保存在 `config/tracking_auto_discovery.json`，管理页会标注"自动"；管理员删除或忽略过的条目成为 tombstone，永不重复添加；
+- 网络不可用时不做任何修改，绝不虚构实体；提交前会先跑 `validate:tracking` 与 `validate:taxonomy`。
+
 更新策略：
 
 1. 成功刷新某来源时，用本次批次替换该来源的旧生成数据；

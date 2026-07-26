@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { ipoCompanies } from "@/lib/catalog-data";
 import { normalizeMarketTicker } from "@/lib/listed-company-identity";
 import {
@@ -22,6 +22,7 @@ import {
   type TrackingSourceType,
   type UserTrackingConfig,
 } from "@/lib/user-tracking";
+import autoDiscoveryLedger from "@/config/tracking_auto_discovery.json";
 import styles from "./user-tracking-panel.module.css";
 
 const API_ROOT = "https://api.github.com";
@@ -95,6 +96,32 @@ const SOURCE_CATEGORY_LABELS: Record<TrackingSourceCategory, string> = {
   media: "媒体 / 资讯平台",
   person: "人物 / 账号 / 博客",
 };
+
+type AutoDiscoveryLedger = {
+  added?: { track?: string; kind?: string; value?: string }[];
+};
+
+function normalizeAutoValue(value: string): string {
+  return value.normalize("NFKC").replace(/\s+/g, " ").trim().toLocaleLowerCase("zh-CN");
+}
+
+const autoAddedEntries = (
+  (autoDiscoveryLedger as AutoDiscoveryLedger).added ?? []
+).filter((row) => row && typeof row.value === "string");
+const AUTO_ADDED_KEYS = new Set(
+  autoAddedEntries.map(
+    (row) => `${row.track}|${row.kind}|${normalizeAutoValue(String(row.value))}`,
+  ),
+);
+const AUTO_ADDED_SOURCE_URLS = new Set(
+  autoAddedEntries
+    .filter((row) => row.kind === "sources")
+    .map((row) => normalizeAutoValue(String(row.value))),
+);
+
+function isAutoAdded(trackSlug: string, kind: string, value: string): boolean {
+  return AUTO_ADDED_KEYS.has(`${trackSlug}|${kind}|${normalizeAutoValue(value)}`);
+}
 
 function encodeBase64(value: string): string {
   const bytes = new TextEncoder().encode(value);
@@ -199,7 +226,10 @@ export function UserTrackingPanel({
   const remoteShaRef = useRef("");
   const saveQueueRef = useRef<Promise<void>>(Promise.resolve());
 
-  const track = config.tracks[active];
+  // Clamp at render time so deleting the last track never leaves the
+  // selection pointing past the end (no state write needed).
+  const activeIndex = Math.min(active, Math.max(0, config.tracks.length - 1));
+  const track = config.tracks[activeIndex];
   const connected = Boolean(username && remoteSha);
   const enabledTracks = useMemo(
     () => config.tracks.filter((item) => item.enabled),
@@ -229,12 +259,6 @@ export function UserTrackingPanel({
     });
     return matches.slice(0, 12);
   }, [catalogQuery]);
-
-  useEffect(() => {
-    if (active >= config.tracks.length) {
-      setActive(Math.max(0, config.tracks.length - 1));
-    }
-  }, [active, config.tracks.length]);
 
   function setMessage(
     message: string,
@@ -428,7 +452,7 @@ export function UserTrackingPanel({
     if (!track) return;
     update({
       ...config,
-      tracks: config.tracks.filter((_, index) => index !== active),
+      tracks: config.tracks.filter((_, index) => index !== activeIndex),
       listedCompanies: config.listedCompanies.map((company) =>
         company.sector === track.name
           ? { ...company, sector: "未分类" }
@@ -447,7 +471,7 @@ export function UserTrackingPanel({
     update({
       ...config,
       tracks: config.tracks.map((item, index) =>
-        index === active ? { ...item, enabled: !item.enabled } : item,
+        index === activeIndex ? { ...item, enabled: !item.enabled } : item,
       ),
     });
   }
@@ -488,7 +512,7 @@ export function UserTrackingPanel({
     update({
       ...config,
       tracks: config.tracks.map((item, index) =>
-        index === active
+        index === activeIndex
           ? { ...item, [field]: [...item[field], value] }
           : item,
       ),
@@ -500,7 +524,7 @@ export function UserTrackingPanel({
     update({
       ...config,
       tracks: config.tracks.map((item, index) =>
-        index === active
+        index === activeIndex
           ? {
               ...item,
               [field]: item[field].filter((entry) => entry !== value),
@@ -825,7 +849,7 @@ export function UserTrackingPanel({
                 {config.tracks.map((item, index) => (
                   <button
                     className={styles.trackTab}
-                    data-active={index === active}
+                    data-active={index === activeIndex}
                     key={item.slug}
                     onClick={() => setActive(index)}
                   >
@@ -896,11 +920,20 @@ export function UserTrackingPanel({
                               <button
                                 className={styles.tag}
                                 key={value}
+                                title={
+                                  isAutoAdded(track.slug, field, value)
+                                    ? "由自动发现添加；删除后会进入忽略清单，不再自动加回"
+                                    : undefined
+                                }
                                 onClick={() =>
                                   removeListItem(field, value)
                                 }
                               >
-                                {value} ×
+                                {value}
+                                {isAutoAdded(track.slug, field, value) && (
+                                  <i> · 自动</i>
+                                )}{" "}
+                                ×
                               </button>
                             ))}
                             {!track[field].length && (
@@ -1351,6 +1384,11 @@ export function UserTrackingPanel({
                         {source.ticker ? ` · ${source.ticker}` : ""}
                         {source.listedCompanyId
                           ? " · 上市公司关联源"
+                          : ""}
+                        {AUTO_ADDED_SOURCE_URLS.has(
+                          normalizeAutoValue(source.url),
+                        )
+                          ? " · 自动发现"
                           : ""}
                       </div>
                     </div>

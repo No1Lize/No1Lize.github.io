@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import {
   TrackingRecommendations,
@@ -294,9 +294,17 @@ function filterDismissed(
   };
 }
 
+const emptyMountSubscribe = () => () => {};
+
 export function TrackingRecommendationsBridge() {
   const { articles } = useArticles();
-  const [mounted, setMounted] = useState(false);
+  // useSyncExternalStore-based mount probe avoids setState inside the
+  // effect (client snapshot is true, server snapshot false).
+  const mounted = useSyncExternalStore(
+    emptyMountSubscribe,
+    () => true,
+    () => false,
+  );
   const [dismissalVersion, setDismissalVersion] = useState(0);
   const [snapshot, setSnapshot] = useState<PanelSnapshot>({
     sector: "",
@@ -307,7 +315,6 @@ export function TrackingRecommendationsBridge() {
   });
 
   useEffect(() => {
-    setMounted(true);
     let frame = 0;
     let previous = "";
 

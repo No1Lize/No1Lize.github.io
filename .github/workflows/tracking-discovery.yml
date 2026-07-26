@@ -1,0 +1,96 @@
+name: Tracking entity discovery
+
+# Expands the tracking config from public web sources: related keywords,
+# people, companies and official-site sources for every enabled track, and
+# immediate keyword seeding for brand-new tracks that still have no
+# keywords. Auto-added entries the owner later deletes become tombstones in
+# config/tracking_auto_discovery.json and are never re-added.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - config/user_tracking.json
+  schedule:
+    - cron: "30 13 * * *"
+      timezone: "Asia/Taipei"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "full = expand rotation + seeding; seed-only = only new tracks"
+        default: "full"
+        type: choice
+        options: [full, seed-only]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: tracking-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    # A push made by this workflow's own commit must not restart it.
+    if: >-
+      github.event_name != 'push' ||
+      !contains(github.event.head_commit.message, '[auto-discovery]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Expand tracking entities from public web sources
+        id: expand
+        run: |
+          set -euo pipefail
+          MODE="full"
+          if [ "${{ github.event_name }}" = "push" ]; then
+            MODE="seed-only"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ inputs.mode }}"
+          fi
+          echo "mode=$MODE"
+          if [ "$MODE" = "seed-only" ]; then
+            python tools/expand_tracking_entities.py --seed-new-only | tee /tmp/discovery.json
+          else
+            python tools/expand_tracking_entities.py --max-tracks 4 | tee /tmp/discovery.json
+          fi
+          CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/discovery.json'))['changed']).lower())")
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        if: steps.expand.outputs.changed == 'true'
+        with:
+          node-version: 22
+      - name: Validate the expanded config before committing
+        if: steps.expand.outputs.changed == 'true'
+        run: |
+          npm install
+          npm run validate:tracking
+          npm run validate:taxonomy
+      - name: Commit expanded config and trigger a full refresh
+        if: steps.expand.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add config/user_tracking.json config/tracking_auto_discovery.json
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          git commit -m "config: expand tracking entities from public web sources [auto-discovery]"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              break
+            fi
+            git pull --rebase origin main
+            if [ "$attempt" = "3" ]; then
+              exit 1
+            fi
+          done
+          gh workflow run scheduled-sync.yml --ref main
