@@ -1,0 +1,76 @@
+name: Publish validated intelligence snapshot
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-validated-intelligence-snapshot.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: publish-validated-intelligence-snapshot
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download validated full-source artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/${{ github.repository }}/actions/artifacts/8627760856/zip > /tmp/full-source-refresh.zip
+          rm -rf /tmp/full-source-refresh
+          mkdir -p /tmp/full-source-refresh
+          unzip -q /tmp/full-source-refresh.zip -d /tmp/full-source-refresh
+          test -f /tmp/full-source-refresh/articles.json
+          cp /tmp/full-source-refresh/articles.json public/data/articles.json
+      - name: Revalidate snapshot against current main
+        run: |
+          python tools/snapshot_retention.py --check
+          python tools/validate_professional_media_snapshot.py --require-articles
+          python tools/crawl_articles.py --validate-only
+          python tools/validate_full_refresh.py
+          python tools/validate_eastmoney_snapshot.py
+          python tools/validate_user_source_coverage.py
+      - name: Commit validated snapshot
+        id: publish
+        run: |
+          if git diff --quiet -- public/data/articles.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/articles.json
+          git commit -m "data: publish validated full-source intelligence snapshot"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            git pull --rebase origin main
+            python tools/snapshot_retention.py --check
+            python tools/validate_professional_media_snapshot.py --require-articles
+            python tools/crawl_articles.py --validate-only
+            python tools/validate_full_refresh.py
+            python tools/validate_eastmoney_snapshot.py
+            python tools/validate_user_source_coverage.py
+          done
+          exit 1
+      - name: Publish Pages
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
