@@ -39,7 +39,7 @@ jobs:
         with:
           node-version: "22"
       - name: Install dependencies
-        run: npm run install:ci
+        run: npm install
       - name: Type-check update directory
         run: npx tsc --noEmit
       - name: Run focused update-directory tests
