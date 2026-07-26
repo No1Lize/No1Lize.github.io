@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-26T15:10:35+00:00",
+  "updatedAt": "2026-07-26T15:15:55+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-26T15:07:10+00:00"
+      "lastExpandedAt": "2026-07-26T15:12:48+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-26T15:07:27+00:00"
+      "lastExpandedAt": "2026-07-26T15:13:05+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-26T15:07:43+00:00"
+      "lastExpandedAt": "2026-07-26T15:13:21+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-26T15:08:17+00:00"
+      "lastExpandedAt": "2026-07-26T15:13:44+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-26T15:08:34+00:00"
+      "lastExpandedAt": "2026-07-26T15:14:01+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-26T15:08:52+00:00"
+      "lastExpandedAt": "2026-07-26T15:14:18+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-26T15:09:08+00:00"
+      "lastExpandedAt": "2026-07-26T15:14:33+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-26T15:09:22+00:00"
+      "lastExpandedAt": "2026-07-26T15:14:47+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-26T15:09:39+00:00"
+      "lastExpandedAt": "2026-07-26T15:15:03+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-26T15:09:55+00:00"
+      "lastExpandedAt": "2026-07-26T15:15:19+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-26T15:10:20+00:00"
+      "lastExpandedAt": "2026-07-26T15:15:38+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-26T15:10:35+00:00"
+      "lastExpandedAt": "2026-07-26T15:15:55+00:00"
     }
   },
   "added": [
@@ -455,6 +455,339 @@
       "kind": "keywords",
       "value": "磁局限融合",
       "addedAt": "2026-07-26T15:10:20+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Reward hacking",
+      "addedAt": "2026-07-26T15:12:48+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Reinforcement learning",
+      "addedAt": "2026-07-26T15:12:48+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "AI safety",
+      "addedAt": "2026-07-26T15:12:48+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "机器人伦理学",
+      "addedAt": "2026-07-26T15:13:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "人形機器人",
+      "addedAt": "2026-07-26T15:13:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "協作式機器人",
+      "addedAt": "2026-07-26T15:13:05+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "杂质半导体",
+      "addedAt": "2026-07-26T15:13:21+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "简并半导体",
+      "addedAt": "2026-07-26T15:13:21+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "絕緣體",
+      "addedAt": "2026-07-26T15:13:21+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "發電",
+      "addedAt": "2026-07-26T15:13:44+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "低溫儲能",
+      "addedAt": "2026-07-26T15:13:44+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "V2G",
+      "addedAt": "2026-07-26T15:13:44+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "氫能載具",
+      "addedAt": "2026-07-26T15:13:44+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "抽水蓄能电站",
+      "addedAt": "2026-07-26T15:13:44+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "基因組學",
+      "addedAt": "2026-07-26T15:14:01+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "生物製藥",
+      "addedAt": "2026-07-26T15:14:01+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "发酵",
+      "addedAt": "2026-07-26T15:14:01+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "秀爾演算法",
+      "addedAt": "2026-07-26T15:14:18+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "D-Wave 系统公司",
+      "addedAt": "2026-07-26T15:14:18+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "绝热量子计算机",
+      "addedAt": "2026-07-26T15:14:18+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "新西兰航天局",
+      "addedAt": "2026-07-26T15:14:33+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "火箭派",
+      "addedAt": "2026-07-26T15:14:33+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "阿丽亚娜空间",
+      "addedAt": "2026-07-26T15:14:33+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "Polygon (blockchain)",
+      "addedAt": "2026-07-26T15:14:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "Blockchain game",
+      "addedAt": "2026-07-26T15:14:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "Decentralized autonomous organization",
+      "addedAt": "2026-07-26T15:14:47+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "鳳鼻頭",
+      "addedAt": "2026-07-26T15:15:03+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "大林蒲",
+      "addedAt": "2026-07-26T15:15:03+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "洲際液化天然氣接收站",
+      "addedAt": "2026-07-26T15:15:03+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "智慧家庭",
+      "addedAt": "2026-07-26T15:15:19+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "智慧電網",
+      "addedAt": "2026-07-26T15:15:19+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "物联网",
+      "addedAt": "2026-07-26T15:15:19+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "普林斯顿等离子体物理实验室",
+      "addedAt": "2026-07-26T15:15:38+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "偏滤器",
+      "addedAt": "2026-07-26T15:15:38+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "老虎全球管理",
+      "addedAt": "2026-07-26T15:15:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "博裕资本",
+      "addedAt": "2026-07-26T15:15:55+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "紅杉資本",
+      "addedAt": "2026-07-26T15:15:55+00:00",
       "evidence": [
         "wikipedia-morelike"
       ]
