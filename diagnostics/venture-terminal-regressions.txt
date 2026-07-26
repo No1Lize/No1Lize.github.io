@@ -1,0 +1,177 @@
+test_capital_summary_matches_structural_finalizer (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_capital_summary_matches_structural_finalizer) ... ok
+test_catalog_fallback_and_research_technology_filter (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_catalog_fallback_and_research_technology_filter) ... ERROR
+test_complex_snapshot_reaches_fixed_point_in_one_call (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_complex_snapshot_reaches_fixed_point_in_one_call) ... ERROR
+test_current_snapshot_removes_known_product_and_prose_noise (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_current_snapshot_removes_known_product_and_prose_noise) ... ERROR
+test_is_idempotent (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_is_idempotent) ... ERROR
+test_keeps_entity_subject_financing (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_keeps_entity_subject_financing) ... ok
+test_rejects_editorial_products_and_navigation_team_names (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_editorial_products_and_navigation_team_names) ... ERROR
+test_rejects_third_party_financing_and_year_product (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_third_party_financing_and_year_product) ... ERROR
+test_rejects_web_dates_files_events_and_clickbait_prose (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_web_dates_files_events_and_clickbait_prose) ... ERROR
+test_trims_investor_relations_page_chrome (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_trims_investor_relations_page_chrome) ... ERROR
+test_converges_when_gates_need_multiple_passes (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_converges_when_gates_need_multiple_passes) ... ok
+test_current_snapshot_and_catalog_share_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_current_snapshot_and_catalog_share_fixed_point) ... ERROR
+test_real_gates_share_one_terminal_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_real_gates_share_one_terminal_fixed_point) ... ERROR
+test_rejects_a_cross_gate_cycle (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_rejects_a_cross_gate_cycle) ... ok
+test_rejects_non_positive_pass_limit (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_rejects_non_positive_pass_limit) ... ok
+test_short_generated_technology_is_a_shared_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_short_generated_technology_is_a_shared_fixed_point) ... ok
+
+======================================================================
+ERROR: test_catalog_fallback_and_research_technology_filter (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_catalog_fallback_and_research_technology_filter)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 266, in test_catalog_fallback_and_research_technology_filter
+    cleaned, _ = semantics.enforce_snapshot(payload, CATALOG)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_complex_snapshot_reaches_fixed_point_in_one_call (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_complex_snapshot_reaches_fixed_point_in_one_call)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 342, in test_complex_snapshot_reaches_fixed_point_in_one_call
+    first, diagnostics = semantics.enforce_snapshot(copy.deepcopy(payload), CATALOG)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_current_snapshot_removes_known_product_and_prose_noise (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_current_snapshot_removes_known_product_and_prose_noise)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 196, in test_current_snapshot_removes_known_product_and_prose_noise
+    cleaned, _ = semantics.enforce_snapshot(payload, catalog_text)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_is_idempotent (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_is_idempotent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 369, in test_is_idempotent
+    first, _ = semantics.enforce_snapshot(copy.deepcopy(payload), CATALOG)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_rejects_editorial_products_and_navigation_team_names (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_editorial_products_and_navigation_team_names)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 125, in test_rejects_editorial_products_and_navigation_team_names
+    cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_rejects_third_party_financing_and_year_product (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_third_party_financing_and_year_product)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 72, in test_rejects_third_party_financing_and_year_product
+    cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_rejects_web_dates_files_events_and_clickbait_prose (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_web_dates_files_events_and_clickbait_prose)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 182, in test_rejects_web_dates_files_events_and_clickbait_prose
+    cleaned, diagnostics = semantics.enforce_snapshot(payload, CATALOG)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_trims_investor_relations_page_chrome (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_trims_investor_relations_page_chrome)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_entity_semantics.py", line 232, in test_trims_investor_relations_page_chrome
+    cleaned, _ = semantics.enforce_snapshot(payload, CATALOG)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_current_snapshot_and_catalog_share_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_current_snapshot_and_catalog_share_fixed_point)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_stabilize_venture_profiles.py", line 37, in test_current_snapshot_and_catalog_share_fixed_point
+    stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, catalog_text)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/stabilize_venture_profiles.py", line 47, in stabilize_snapshot
+    semantic, semantic_diagnostics = enforce_snapshot(structural, catalog_text)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+======================================================================
+ERROR: test_real_gates_share_one_terminal_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_real_gates_share_one_terminal_fixed_point)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_stabilize_venture_profiles.py", line 89, in test_real_gates_share_one_terminal_fixed_point
+    stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, CATALOG)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/stabilize_venture_profiles.py", line 47, in stabilize_snapshot
+    semantic, semantic_diagnostics = enforce_snapshot(structural, catalog_text)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 627, in enforce_snapshot
+    next_payload, diagnostics = _enforce_snapshot_once(current, catalog_text)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/enforce_venture_entity_semantics.py", line 507, in _enforce_snapshot_once
+    or PRODUCT_URL_RE.search(raw_technology)
+       ^^^^^^^^^^^^^^
+NameError: name 'PRODUCT_URL_RE' is not defined. Did you mean: 'PRODUCT_URL_FILE_RE'?
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.178s
+
+FAILED (errors=10)
