@@ -16,7 +16,7 @@ class UsIrSecDisclosuresTest(unittest.TestCase):
             self.assertEqual(ir.normalized_host(source.url), source.host)
             self.assertIn(source.layout, {"q4", "corporate-ir"})
 
-    def test_q4_page_uses_bounded_high_density_query(self) -> None:
+    def test_first_page_is_canonical_and_later_pages_are_bounded(self) -> None:
         source = ir.IRSource(
             "ionq",
             "IonQ Investor Relations",
@@ -24,6 +24,7 @@ class UsIrSecDisclosuresTest(unittest.TestCase):
             "investors.ionq.com",
             "q4",
         )
+        self.assertEqual(ir.page_url(source, 0), source.url)
         url = ir.page_url(source, 2)
         self.assertIn("page=2", url)
         self.assertIn("items_per_page=100", url)
