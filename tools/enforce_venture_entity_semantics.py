@@ -44,8 +44,12 @@ PAGE_CHROME_RE = re.compile(
 YEAR_ONLY_RE = re.compile(r"^(?:19|20)\d{2}$")
 NUMERIC_ONLY_RE = re.compile(r"^[\d.,%+-]+$")
 FINANCING_ACTION_RE = re.compile(
-    r"\b(?:rais(?:e|ed|es|ing)|funding round|financing round|"
-    r"series\s+[a-z0-9]+|seed round|pre-seed|secured .{0,40} funding|"
+    r"\b(?:rais(?:e|ed|es|ing)(?!\s+(?:full[- ]year\s+)?guidance\b)|"
+    r"funding round|financing round|"
+    r"series\s+[a-z0-9]+\s+(?:funding|financing|round)|"
+    r"first close.{0,80}(?:funding|financing)|"
+    r"complet(?:e|ed|es|ing).{0,80}(?:funding|financing)|"
+    r"seed round|pre-seed|secured .{0,40} funding|"
     r"closes? .{0,40} round|investment in|invests? in|valuation)\b|"
     r"(?:完成|获得|宣布|获).{0,30}(?:融资|投资)|"
     r"(?:融资|募资|领投|跟投|战略投资|估值)",
@@ -96,6 +100,9 @@ PRODUCT_SENTENCE_RE = re.compile(
     re.IGNORECASE,
 )
 PRODUCT_EXACT_NOISE = {
+    "api", "apis", "model", "models", "platform", "platforms",
+    "service", "services", "software", "hardware", "system", "systems",
+    "模型", "平台", "服务", "软件", "硬件", "系统",
     "cost-effective drug discovery",
     "drug discovery",
     "nach01",
@@ -422,9 +429,9 @@ def _sanitize_technology_products(
         row["description"] = description
         highlights = row.get("technicalHighlights", [])
         row["technicalHighlights"] = [
-            clean_text(item, 260)
+            clean_text(item, 220)
             for item in highlights
-            if clean_text(item, 260)
+            if clean_text(item, 220)
             and _contains_any(item, direct_terms)
         ][:6] if isinstance(highlights, list) else []
         result.append(row)

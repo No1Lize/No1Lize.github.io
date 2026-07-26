@@ -30,10 +30,10 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
                     "slug": "agibot",
                     "name": "智元机器人",
                     "status": "partial",
-                    "background": "智元机器人启动港股上市，目标估值400亿港元。",
+                    "background": "智元机器人正式在港股上市，目标估值400亿港元。",
                     "projectBackground": {
-                        "summary": "智元机器人启动港股上市，目标估值400亿港元。",
-                        "problemSolved": "智元机器人启动港股上市。",
+                        "summary": "智元机器人正式在港股上市，目标估值400亿港元。",
+                        "problemSolved": "智元机器人正式在港股上市。",
                         "marketOpportunity": "目标估值400亿港元。",
                     },
                     "technology": "远征A3采用全尺寸人形机器人架构。",
@@ -65,7 +65,7 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
                         {
                             "name": "邓泰华",
                             "role": "创始人",
-                            "summary": "智元机器人参加产业大会。",
+                            "summary": "邓泰华出席智元机器人生态大会。",
                             "background": "",
                             "previousExperience": "",
                             "sourceUrl": "https://example.com/team",
@@ -83,7 +83,7 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
                         {
                             "date": "2026-07-25",
                             "type": "产业投资",
-                            "title": "智元机器人启动港股上市",
+                            "title": "智元机器人正式在港股上市",
                             "summary": "公司计划进入港股公开市场。",
                             "sourceUrl": "https://example.com/ipo",
                         }
@@ -114,7 +114,7 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
                 {
                     "company": "智元机器人",
                     "companySlug": "agibot",
-                    "title": "智元机器人启动港股上市",
+                    "title": "智元机器人正式在港股上市",
                     "summary": "公司计划进入港股公开市场。",
                     "type": "产业投资",
                     "publishedAt": "2026-07-25",
@@ -177,6 +177,7 @@ class VentureEvidenceAlignmentTests(unittest.TestCase):
         self.assertIn("远征A3", products["远征"]["description"])
         self.assertNotIn("远征A3", products["灵犀"]["description"])
         self.assertIn("尚未识别", products["灵犀"]["description"])
+        self.assertEqual(products["灵犀"]["technicalHighlights"], [])
         self.assertNotIn("远征A3", products["A2 旗舰版"]["description"])
 
         team = {item["name"]: item for item in company["team"]}

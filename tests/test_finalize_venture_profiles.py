@@ -111,6 +111,19 @@ class VentureProfileFinalizerTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertIn("raises", rows[0]["title"])
 
+    def test_financing_keeps_explicit_first_close(self) -> None:
+        rows = finalizer.finalize_financing(
+            [{
+                "date": "2026-07-08",
+                "type": "融资",
+                "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
+                "summary": "SambaNova completed the first close of $1 billion in strategic financing.",
+                "round": "strategic",
+                "sourceUrl": "https://sambanova.ai/press/financing",
+            }]
+        )
+        self.assertEqual(len(rows), 1)
+
     def test_recent_investments_use_actual_one_year_window(self) -> None:
         rows = finalizer.finalize_recent_investments(
             [

@@ -101,8 +101,11 @@ TEAM_NAME_NOISE_TERMS = (
 )
 
 STRONG_FINANCING_RE = re.compile(
-    r"\b(?:rais(?:e|ed|es|ing)|funding round|financing round|"
+    r"\b(?:rais(?:e|ed|es|ing)(?!\s+(?:full[- ]year\s+)?guidance\b)|"
+    r"funding round|financing round|"
     r"seed round|pre-seed funding|secured .{0,40} funding|"
+    r"first close.{0,80}(?:funding|financing)|"
+    r"complet(?:e|ed|es|ing).{0,80}(?:funding|financing)|"
     r"backed by|led by|investment from|closes? .{0,40} round)\b|"
     r"(?:完成|获得|宣布|获).{0,30}(?:融资|投资)|"
     r"(?:融资|募资|领投|跟投|战略投资|估值)",
@@ -271,7 +274,7 @@ def finalize_technology_products(
                 "technicalHighlights": _unique_strings(
                     raw.get("technicalHighlights", []) if isinstance(raw.get("technicalHighlights"), list) else [],
                     6,
-                    260,
+                    220,
                 ),
                 "sourceUrl": normalize_url(raw.get("sourceUrl", "")),
             }
