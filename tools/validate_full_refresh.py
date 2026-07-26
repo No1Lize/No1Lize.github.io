@@ -9,12 +9,19 @@ from pathlib import Path
 try:
     from . import crawl_articles
     from . import crawl_official_companies
+    from . import crawl_with_tracking
+    from . import wechat_source_registry
 except ImportError:
     import crawl_articles
     import crawl_official_companies
+    import crawl_with_tracking
+    import wechat_source_registry
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
+# The verified, sector-aware WeChat registry replaces this legacy broad Bing
+# probe at runtime. Requiring both would incorrectly fail a complete run.
+RUNTIME_REPLACED_SOURCE_IDS = {"wechat-public-index"}
 
 
 def _enabled_ids(rows: object) -> set[str]:
@@ -60,14 +67,31 @@ def main() -> int:
     expected_core.update(_enabled_ids(config.get("xProfiles")))
     expected_core.update(_enabled_ids(config.get("papers")))
     expected_core.update(_enabled_ids(config.get("publicDiscovery")))
+    expected_core.difference_update(RUNTIME_REPLACED_SOURCE_IDS)
+
+    tracking_config = crawl_with_tracking.load_tracking()
+    enabled_tracks = crawl_with_tracking._enabled_tracks(tracking_config)
+    expected_wechat = {
+        str(spec.get("id"))
+        for spec in wechat_source_registry.generated_wechat_sources(
+            enabled_tracks,
+            crawl_with_tracking,
+        )
+        if spec.get("id") and spec.get("enabled", True) is not False
+    }
 
     official_specs = crawl_official_companies.load_registry()
     expected_official = {spec.source_id for spec in official_specs}
 
     missing_core = sorted(expected_core - status_id_set)
+    missing_wechat = sorted(expected_wechat - status_id_set)
     missing_official = sorted(expected_official - status_id_set)
     if missing_core:
         errors.append(f"missing core source statuses: {', '.join(missing_core)}")
+    if missing_wechat:
+        errors.append(
+            "missing verified WeChat source statuses: " + ", ".join(missing_wechat)
+        )
     if missing_official:
         errors.append(
             "missing official company statuses: " + ", ".join(missing_official)
@@ -94,6 +118,7 @@ def main() -> int:
     summary = {
         "sourceStatuses": len(statuses),
         "expectedCoreSources": len(expected_core),
+        "expectedWeChatSources": len(expected_wechat),
         "expectedOfficialCompanies": len(expected_official),
         "latestPublishedAt": audit.get("latestPublishedAt"),
         "todayArticleCount": audit.get("todayArticleCount"),
