@@ -18,6 +18,10 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "config" / "professional_technology_media_sources.json"
 VALID_REGIONS = {"中国", "美国", "全球"}
+DIRECT_TIMEOUT_SECONDS = 8
+DIRECT_ATTEMPTS = 1
+DIRECT_FEED_LIMIT = 2
+DIRECT_CANDIDATE_LIMIT = 8
 
 
 def _clean(value: Any, limit: int = 500) -> str:
@@ -183,7 +187,7 @@ def grouped_specs(
                 "name": source["name"],
                 "url": tracking._bing_rss(query),
                 "sourceUrl": source["url"],
-                "adapter": "rss",
+                "adapter": "professional_media",
                 "platform": source["name"],
                 "sourceCategory": "media",
                 "sourceLevel": "媒体报道",
@@ -194,6 +198,12 @@ def grouped_specs(
                 "strictTitleKeywords": False,
                 "allowedHosts": [source["host"]],
                 "professionalMedia": [media_row],
+                "directRequestBudget": {
+                    "timeoutSeconds": DIRECT_TIMEOUT_SECONDS,
+                    "attempts": DIRECT_ATTEMPTS,
+                    "feedLimit": DIRECT_FEED_LIMIT,
+                    "candidateLimit": DIRECT_CANDIDATE_LIMIT,
+                },
                 "enabled": True,
             }
         )
@@ -244,23 +254,249 @@ def attribute_article(
     return result
 
 
-def install(crawler: Any) -> None:
-    """Enforce original-domain attribution on professional media feeds."""
+def _article_url(article: dict[str, Any]) -> str:
+    source = article.get("source") if isinstance(article.get("source"), dict) else {}
+    return str(source.get("url") or "").strip()
+
+
+def _dedupe_attributed(
+    articles: Iterable[dict[str, Any]],
+    rows: Sequence[dict[str, Any]],
+    crawler: Any,
+    limit: int,
+) -> list[dict[str, Any]]:
+    result: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for article in articles:
+        attributed = attribute_article(article, rows)
+        if not attributed:
+            continue
+        url = crawler.normalize_url(_article_url(attributed))
+        if not url or url in seen:
+            continue
+        result.append(attributed)
+        seen.add(url)
+        if len(result) >= limit:
+            break
+    return result
+
+
+def crawl_professional_source(
+    spec: dict[str, Any],
+    user_agent: str,
+    crawler: Any,
+    generic: Any,
+    primary_crawl: Any,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Try public-search RSS, then directly inspect the registered media site."""
+
+    rows = spec.get("professionalMedia")
+    if not isinstance(rows, list) or not rows:
+        raise ValueError("professional media source is missing registry metadata")
+
+    max_items = max(1, int(spec.get("maxItems", 4) or 4))
+    budget = spec.get("directRequestBudget")
+    budget = budget if isinstance(budget, dict) else {}
+    timeout = max(3, min(int(budget.get("timeoutSeconds", DIRECT_TIMEOUT_SECONDS)), 12))
+    attempts = max(1, min(int(budget.get("attempts", DIRECT_ATTEMPTS)), 2))
+    feed_limit = max(0, min(int(budget.get("feedLimit", DIRECT_FEED_LIMIT)), 4))
+    candidate_limit = max(
+        1,
+        min(int(budget.get("candidateLimit", DIRECT_CANDIDATE_LIMIT)), 12),
+    )
+
+    scanned = 0
+    failures = 0
+    errors: list[str] = []
+    strategies: list[str] = []
+    collected: list[dict[str, Any]] = []
+
+    discovery_spec = {**spec, "adapter": "rss", "url": spec["url"]}
+    strategies.append("public-search-rss")
+    try:
+        primary_items, primary_status = primary_crawl(discovery_spec, user_agent)
+        collected.extend(primary_items)
+        scanned += max(1, int(primary_status.get("scanned", 0) or 0))
+        failures += int(primary_status.get("failed", 0) or 0)
+        if primary_status.get("error"):
+            errors.append(f"search {primary_status['error']}")
+    except Exception as exc:
+        scanned += 1
+        failures += 1
+        errors.append(f"search {type(exc).__name__}: {exc}")
+
+    attributed = _dedupe_attributed(collected, rows, crawler, max_items)
+    source_url = str(spec.get("sourceUrl") or "").strip()
+    body = ""
+    if len(attributed) < max_items:
+        strategies.append("original-site")
+        try:
+            body = crawler.fetch_text(
+                source_url,
+                user_agent,
+                timeout=timeout,
+                attempts=attempts,
+            )
+            scanned += 1
+        except Exception as exc:
+            failures += 1
+            errors.append(f"site {type(exc).__name__}: {exc}")
+
+    if body and len(attributed) < max_items:
+        language = generic.detect_language(
+            source_url,
+            body,
+            str(spec.get("sourceLanguage") or ""),
+        )
+        keywords = generic.localize_keywords(spec.get("keywords", []), language)
+        runtime_spec = {
+            **spec,
+            "adapter": "generic_web",
+            "url": source_url,
+            "sourceUrl": source_url,
+            "sourceLanguage": language,
+            "keywords": keywords,
+            "platform": spec["name"],
+        }
+
+        feeds = generic.discover_feeds(source_url, body)[:feed_limit]
+        if feeds:
+            strategies.append("original-feed")
+        for feed in feeds:
+            if len(attributed) >= max_items:
+                break
+            try:
+                feed_spec = {
+                    **runtime_spec,
+                    "url": feed,
+                    "allowedHosts": list(spec.get("allowedHosts", [])),
+                }
+                feed_items = crawler.parse_feed_items(
+                    crawler.fetch_text(
+                        feed,
+                        user_agent,
+                        timeout=timeout,
+                        attempts=attempts,
+                    ),
+                    feed_spec,
+                )
+                scanned += 1
+                collected.extend(feed_items)
+                attributed = _dedupe_attributed(collected, rows, crawler, max_items)
+            except Exception as exc:
+                failures += 1
+                errors.append(f"feed {type(exc).__name__}: {exc}")
+
+        candidates = generic.discover_candidates(
+            source_url,
+            body,
+            keywords,
+            limit=candidate_limit,
+        )
+        if candidates:
+            strategies.append("original-articles")
+        for candidate in candidates:
+            if len(attributed) >= max_items:
+                break
+            try:
+                article = generic.parse_article(
+                    runtime_spec,
+                    candidate,
+                    crawler.fetch_text(
+                        candidate,
+                        user_agent,
+                        timeout=timeout,
+                        attempts=attempts,
+                    ),
+                    crawler,
+                    keywords,
+                )
+                scanned += 1
+                if article:
+                    collected.append(article)
+                    attributed = _dedupe_attributed(collected, rows, crawler, max_items)
+            except Exception as exc:
+                failures += 1
+                errors.append(f"article {type(exc).__name__}: {exc}")
+
+    rejected = max(0, len(collected) - len(attributed))
+    if attributed and failures == 0:
+        status_name = "ok"
+    elif attributed:
+        status_name = "partial"
+    elif failures:
+        status_name = "error"
+    else:
+        status_name = "empty"
+
+    status = crawler._status(
+        spec["id"],
+        spec["name"],
+        status_name,
+        scanned,
+        len(attributed),
+        failed=failures,
+        platform=spec["name"],
+        error="; ".join(errors[:4]) if errors and not attributed else None,
+    )
+    status.update(
+        {
+            "attempted": True,
+            "adapter": "professional-media-v1",
+            "canonicalSourceUrl": source_url,
+            "discoveryUrl": str(spec.get("url") or ""),
+            "strategies": strategies,
+            "candidateArticles": len(collected),
+            "rejectedOutsideRegistry": rejected,
+            "requestBudget": {
+                "timeoutSeconds": timeout,
+                "attempts": attempts,
+                "feedLimit": feed_limit,
+                "candidateLimit": candidate_limit,
+                "stopAfterAccepted": max_items,
+            },
+        }
+    )
+    return attributed, status
+
+
+def install(crawler: Any, generic: Any | None = None) -> None:
+    """Enforce original-domain attribution and direct execution for media sources."""
 
     original_parse = crawler.parse_feed_items
-    if getattr(original_parse, "_professional_media_attribution", False):
+    if not getattr(original_parse, "_professional_media_attribution", False):
+        def parse_feed_items(body: str, spec: dict[str, Any]) -> list[dict[str, Any]]:
+            articles = original_parse(body, spec)
+            rows = spec.get("professionalMedia")
+            if not isinstance(rows, list):
+                return articles
+            return [
+                attributed
+                for article in articles
+                if (attributed := attribute_article(article, rows)) is not None
+            ]
+
+        setattr(parse_feed_items, "_professional_media_attribution", True)
+        crawler.parse_feed_items = parse_feed_items
+
+    if generic is None:
+        return
+    original_crawl = crawler._crawl_config_source
+    if getattr(original_crawl, "_professional_media_direct", False):
         return
 
-    def parse_feed_items(body: str, spec: dict[str, Any]) -> list[dict[str, Any]]:
-        articles = original_parse(body, spec)
-        rows = spec.get("professionalMedia")
-        if not isinstance(rows, list):
-            return articles
-        return [
-            attributed
-            for article in articles
-            if (attributed := attribute_article(article, rows)) is not None
-        ]
+    def crawl_source(
+        spec: dict[str, Any], user_agent: str
+    ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+        if spec.get("adapter") != "professional_media":
+            return original_crawl(spec, user_agent)
+        return crawl_professional_source(
+            spec,
+            user_agent,
+            crawler,
+            generic,
+            original_crawl,
+        )
 
-    setattr(parse_feed_items, "_professional_media_attribution", True)
-    crawler.parse_feed_items = parse_feed_items
+    setattr(crawl_source, "_professional_media_direct", True)
+    crawler._crawl_config_source = crawl_source

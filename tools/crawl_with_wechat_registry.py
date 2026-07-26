@@ -95,7 +95,10 @@ def _install_professional_media() -> None:
 
     setattr(custom_sources, "_professional_media_catalog", True)
     base._custom_sources = custom_sources
-    professional_media_sources.install(base.tracking.crawler)
+    professional_media_sources.install(
+        base.tracking.crawler,
+        base.generic_web_sources,
+    )
     prefixes = tuple(base.tracking.USER_SOURCE_PREFIXES)
     if "professional-media-" not in prefixes:
         base.tracking.USER_SOURCE_PREFIXES = (*prefixes, "professional-media-")

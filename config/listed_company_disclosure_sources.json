@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "settings": {
+    "maxItemsPerListing": 18,
+    "maxAgeDays": 1095,
+    "requestTimeout": 18,
+    "requestAttempts": 2,
+    "fallbackEnabled": true
+  },
+  "officialSources": {
+    "sse": {
+      "name": "上海证券交易所",
+      "homepage": "https://www.sse.com.cn/",
+      "hosts": ["sse.com.cn"]
+    },
+    "szse": {
+      "name": "深圳证券交易所",
+      "homepage": "https://www.szse.cn/index/index.html",
+      "hosts": ["szse.cn"]
+    },
+    "cninfo": {
+      "name": "巨潮资讯",
+      "homepage": "https://www.cninfo.com.cn/new/index.jsp",
+      "hosts": ["cninfo.com.cn"]
+    },
+    "hkex": {
+      "name": "香港交易所披露易",
+      "homepage": "https://www.hkexnews.hk/index_c.htm",
+      "hosts": ["hkexnews.hk"]
+    },
+    "eastmoney": {
+      "name": "东方财富公告",
+      "homepage": "https://data.eastmoney.com/notices/",
+      "hosts": ["eastmoney.com"]
+    }
+  },
+  "hkexStockIds": {
+    "horizon-robotics": "1000238030",
+    "xtalpi": "1000225298",
+    "catl": "1000259940"
+  },
+  "extraListings": [
+    {
+      "catalogSlug": "catl",
+      "name": "宁德时代",
+      "market": "港股",
+      "ticker": "03750",
+      "sector": "新能源",
+      "enabled": true,
+      "listingRole": "secondary"
+    }
+  ]
+}

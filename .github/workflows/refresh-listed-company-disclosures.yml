@@ -1,0 +1,75 @@
+name: Refresh listed-company disclosures
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "35 1 * * *"
+  push:
+    branches: [main]
+    paths:
+      - config/listed_company_disclosure_sources.json
+      - config/user_tracking.json
+      - tools/bootstrap_listed_company_disclosures.py
+      - tools/crawl_listed_company_disclosures.py
+      - tests/test_listed_company_disclosures.py
+      - lib/listed-company-disclosure-data.ts
+      - lib/venture-profile-data-with-disclosures.ts
+      - tsconfig.json
+      - .github/workflows/refresh-listed-company-disclosures.yml
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: listed-company-disclosure-refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate disclosure crawler
+        run: |
+          python -m py_compile \
+            tools/bootstrap_listed_company_disclosures.py \
+            tools/crawl_listed_company_disclosures.py
+          python -m unittest tests.test_listed_company_disclosures
+      - name: Bootstrap verified official documents
+        run: python tools/bootstrap_listed_company_disclosures.py
+      - name: Refresh official exchange disclosures
+        run: python tools/crawl_listed_company_disclosures.py
+      - name: Require verified disclosure events
+        run: python tools/crawl_listed_company_disclosures.py --validate-only --require-events
+      - name: Commit disclosure snapshot
+        id: update
+        run: |
+          if git diff --quiet -- public/data/listed_company_disclosures.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/listed_company_disclosures.json
+          git commit -m "data: refresh official listed-company disclosures"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Publish company pages
+        if: steps.update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
