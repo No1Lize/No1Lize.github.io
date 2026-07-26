@@ -17541,5 +17541,16 @@
       "lastRun": "2026-07-26T02:37:41+00:00",
       "message": "三路发现均已尝试，当前匹配 229 条公开事件。"
     }
+  },
+  "snapshotRetention": {
+    "schemaVersion": 1,
+    "strategy": "newest-published-first",
+    "capacity": 1200,
+    "overflowAction": "discard-oldest",
+    "sortFields": [
+      "publishedAt:desc",
+      "importance:desc",
+      "id:desc"
+    ]
   }
 }
