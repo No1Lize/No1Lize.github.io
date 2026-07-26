@@ -1,8 +1,80 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T02:18:12+00:00",
-  "articleCount": 503,
+  "generatedAt": "2026-07-26T02:23:31+00:00",
+  "articleCount": 543,
   "articles": [
+    {
+      "id": "tmtpost-babcbdefef5c120a",
+      "sourceId": "tmtpost",
+      "title": "特斯拉正在变成一家AI公司",
+      "summary": "如果你还用汽车公司的框架来理解特斯拉，你可能会越来越看不懂它在成为什么。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-26",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8078858.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "tmtpost-a769169723e04633",
+      "sourceId": "tmtpost",
+      "title": "光模块的\"科技股幻觉\"：当芯片厂商开始定义游戏规则",
+      "summary": "——从PC行业的\"独立显卡→集成显卡\"历史，看光模块行业的估值坐标系切换",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-26",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8075155.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "tmtpost-a4d96cd80a820e29",
+      "sourceId": "tmtpost",
+      "title": "Edge AI Daily 早报（7月26日）",
+      "summary": "OpenAI全球性宕机超8小时，暴露9亿用户对单一AI供应商的深度依赖危机，标志着AI从尝鲜工具转变为水电煤级基础设施。同时，AI Agent生态呈现加速分工趋势：xAI放弃自建搜索接入Exa，Runta获a16z领投2000万美元构建Agent安全执行层，吴恩达开源OpenWorker定位桌面AI同事。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-26",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8079667.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "tmtpost-94bf646e366dd23e",
+      "sourceId": "tmtpost",
+      "title": "当AI学会“看人下菜碟”",
+      "summary": "87%概率选择撒谎。o3晚期检查点在承诺测试中的表现，揭开了AI“奖励追逐”的真相。",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-26",
+      "importance": 76,
+      "source": {
+        "name": "钛媒体",
+        "url": "https://www.tmtpost.com/8078572.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
     {
       "id": "sina-finance-af9d99698a928c81",
       "sourceId": "sina-finance",
@@ -190,6 +262,25 @@
       "trackSlugs": [
         "semiconductor"
       ]
+    },
+    {
+      "id": "anthropic-c34a327604b5be4a",
+      "sourceId": "anthropic",
+      "title": "Introducing Claude Opus 5",
+      "summary": "Opus 5 is a step change improvement for the Opus tier powering long-running agents while delivering improvements in coding and professional work.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-25",
+      "importance": 82,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-opus-5",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "x-openai-b913404590ad590a",
@@ -1265,31 +1356,7 @@
         "url": "https://www.tmtpost.com/8078921.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "tmtpost-8b80c8c5f261b97b",
-      "sourceId": "tmtpost",
-      "title": "赛马结束，大厂各寻Agent主心骨",
-      "summary": "大厂Agent，不再养蛊。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-25",
-      "importance": 76,
-      "source": {
-        "name": "钛媒体",
-        "url": "https://www.tmtpost.com/8078733.html",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "tmtpost-5b59b4e86f4eb108",
@@ -1307,10 +1374,7 @@
         "url": "https://www.tmtpost.com/8079208.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "tmtpost-396927f2b7f30338",
@@ -1328,10 +1392,7 @@
         "url": "https://www.tmtpost.com/8078916.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "semiconductor"
-      ]
+      }
     },
     {
       "id": "tmtpost-2ce0c001df3cdd98",
@@ -1349,33 +1410,25 @@
         "url": "https://www.tmtpost.com/8079365.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
     },
     {
-      "id": "prnewswire-tech-e58e4355ef751850",
-      "sourceId": "prnewswire-tech",
-      "title": "Shanghai Electric präsentiert auf der WAIC 2026 sein Portfolio an Robotern mit verkörperter Intelligenz sowie KI-native Lösungen für intelligente Fabriken",
-      "summary": "Mit humanoiden Robotern, die über 41 Freiheitsgrade verfügen, Rohrinspektionsrobotern mit einer Positioniergenauigkeit von ±1 mm sowie 51 industrietauglichen KI-Agenten SHANGHAI, 25. Juli 2026 /PRNewswire/ -- Arbeitsabläufe bei der Fertigung hochwertiger Ausrüstung finden häufig auf engem...",
+      "id": "techcrunch-venture-fa1e09837e303d54",
+      "sourceId": "techcrunch-venture",
+      "title": "Elon Musk’s Boring Company reportedly raising funding at a $20 billion valuation",
+      "summary": "Elon Musk's tunneling startup is reportedly in talks for a major new funding round.",
       "type": "公司动态",
-      "region": "全球",
-      "sector": "机器人",
+      "region": "美国",
+      "sector": "AI / AGI",
       "company": "科技产业",
       "publishedAt": "2026-07-25",
       "importance": 76,
       "source": {
-        "name": "PR Newswire Consumer Technology",
-        "url": "https://www.prnewswire.com/news-releases/shanghai-electric-prasentiert-auf-der-waic-2026-sein-portfolio-an-robotern-mit-verkorperter-intelligenz-sowie-ki-native-losungen-fur-intelligente-fabriken-302834515.html",
+        "name": "TechCrunch Venture",
+        "url": "https://techcrunch.com/2026/07/25/elon-musks-boring-company-reportedly-raising-funding-at-a-20-billion-valuation",
         "level": "媒体报道",
-        "platform": "新闻稿"
-      },
-      "trackSlugs": [
-        "robotics",
-        "web3",
-        "track-1ccjq49"
-      ]
+        "platform": "专业媒体"
+      }
     },
     {
       "id": "prnewswire-tech-dcf86ade37a2941f",
@@ -1391,12 +1444,9 @@
       "source": {
         "name": "PR Newswire Consumer Technology",
         "url": "https://www.prnewswire.com/news-releases/tencent-brings-together-ai-and-games-to-help-preserve-and-share-cultural-heritage-of-new-unesco-site-in-jingdezhen-302834576.html",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "新闻稿"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "prnewswire-tech-ad34eef05a465814",
@@ -1412,12 +1462,9 @@
       "source": {
         "name": "PR Newswire Consumer Technology",
         "url": "https://www.prnewswire.com/news-releases/spolonos-shanghai-electric-na-vetrhu-waic-2026-predstavuje-rieenia-pre-inteligentne-tovarne-na-baze-ai-302834510.html",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "新闻稿"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
     },
     {
       "id": "prnewswire-tech-a16dea6ed47194cd",
@@ -1433,13 +1480,27 @@
       "source": {
         "name": "PR Newswire Consumer Technology",
         "url": "https://www.prnewswire.com/news-releases/naver-partners-with-brookfield-and-nvidia-to-expand-koreas-national-ai-factory-infrastructure-buildout-302834577.html",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "新闻稿"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
+    },
+    {
+      "id": "prnewswire-tech-529e71fd46b5ee92",
+      "sourceId": "prnewswire-tech",
+      "title": "Tesla Owns Nearly 1 in 5 AI Answers About EVs. New 5W Index Ranks the Top 25 EV Brands by AI Citation Share.",
+      "summary": "EV charging networks — Electrify America, EVgo, ChargePoint — are nearly invisible inside AI answers despite operating the infrastructure the entire category depends on. MIAMI, July 25, 2026 /PRNewswire/ -- 5W AI Communications, the AI Communications Firm, today released the 5W AI...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/tesla-owns-nearly-1-in-5-ai-answers-about-evs-new-5w-index-ranks-the-top-25-ev-brands-by-ai-citation-share-302834703.html",
+        "level": "官方披露",
+        "platform": "新闻稿"
+      }
     },
     {
       "id": "prnewswire-tech-1ffa00303cfe75e3",
@@ -1455,22 +1516,18 @@
       "source": {
         "name": "PR Newswire Consumer Technology",
         "url": "https://www.prnewswire.com/news-releases/hyundai-motor-group-executive-chair-euisun-chung-announces-physical-ai-vision-at-san-francisco-ai-summit-302834583.html",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "新闻稿"
-      },
-      "trackSlugs": [
-        "manufacturing",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "leiphone-cd7d93fb23273493",
-      "sourceId": "user-source-source-track-108mw2h",
+      "sourceId": "leiphone",
       "title": "AI 3D产业路线首次公开讨论：Hi3D闭门会释放哪些新趋势？",
-      "summary": "AI 3D产业路线首次公开讨论。",
+      "summary": "深圳，7月23日——Hi3D实体创意生态闭门会在深圳举行。围绕“探索AI驱动的下一代可制造生态”，Hi3D与3D打印硬件、制造、创作者及Maker领域嘉宾共同探讨AI 3D从数字生成走向实体制造的新趋势。 这也是数美万物创始人兼CEO任利锋创业后首次代表Hi3D 面向媒体、设备厂商及产业伙伴系统分享Hi3D过去一年的技术进展与产业思考。数美万物联合创始人兼算法负责人贾荣飞也在现场分享了过去一年Hi3D在算法模型优化上，里程碑式的进步。 现场，Hi3D公布了即将上线的新一代 Hi3D 3.0 2048³ 模型，定义新一代3D通用大模型SOTA。并首次系统阐述其“实体创意生态”布局：AI 3D正在从单纯的模型生成工具，进一步连接创意、模型、设备、材料和制造，让数字世界里的想法真正进入物理世界。 从“表达普惠”走向“创造普惠” “我们坚信，技术应该服务于人的创造欲与表达欲。” 任利锋表示，过去互联网通过文字、图片和短视频不断降低内容表达门槛，而AI与桌面制造技术的发展，让AI 3D用户在两年间翻了九倍，推动下一轮变化从数字世界进入物理世界。 Hi3D希望推动的是从“表达普惠”走向“创造普惠”",
       "type": "公司动态",
       "region": "中国",
-      "sector": "AI / AGI",
+      "sector": "智能制造",
       "company": "科技产业",
       "publishedAt": "2026-07-25",
       "importance": 76,
@@ -1478,7 +1535,7 @@
         "name": "雷峰网",
         "url": "https://www.leiphone.com/category/weiwu/VqgEeeerbpYbQcUF.html",
         "level": "媒体报道",
-        "platform": "雷峰网"
+        "platform": "专业媒体"
       },
       "qualityScore": 15,
       "qualitySignals": [
@@ -1488,6 +1545,24 @@
       "trackSlugs": [
         "ai"
       ]
+    },
+    {
+      "id": "leiphone-a7d35bd446e126c3",
+      "sourceId": "leiphone",
+      "title": "奇瑞“不客气”了！风云A9打破15万级纯电“潜规则”",
+      "summary": "站在全球2000万辆销售规模的新起点上，奇瑞开始加码纯电路线。 7月25日，奇瑞风云品牌首款纯电车型风云A9在成都正式上市，新车定位“长续航智美纯电B级轿跑”，整车尺寸为4836×1896×1489mm，轴距为2900mm，并搭载5项同级独有和4项同级领先核心技术体验，3个不同版本的整体售价区间为10.99万-12.99万元。 根据雷峰网了解，从2023年风云序列回归以来，奇瑞已经先后推出插混和增程车型。此次，风云A9上市之后，奇瑞风云序列将正式完成插混、增程、纯电三大动力路线的全覆盖。 值得注意的是，这也是奇瑞全球第2000万辆下线车型。作为中国品牌“走出去”的探路者，从2001年试水整车出口中东，到2007年斩获首个百万销量，再到如今跨越2000万辆大关，奇瑞走了整整26年。截至目前，奇瑞业务覆盖全球130多个国家和地区，海外雇员超2万人。 奇瑞集团董事长尹同跃在发布会现场表示，站在新的起点上，奇瑞要在产品、品牌、全球化等多个维度进行全面升级。他总结道，下一个30年，奇瑞的最重要的课题是，不断突破能源制约、出行边界、产业瓶颈，做一家不断为全球用户创造美好生活方式的科技生态公司。 比",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-25",
+      "importance": 76,
+      "source": {
+        "name": "雷峰网",
+        "url": "https://www.leiphone.com/category/transportation/JUMeihhqkG3LSj0L.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
     },
     {
       "id": "user-track-semiconductor-google-cn-2737b52935eddadd",
@@ -1585,13 +1660,9 @@
       "source": {
         "name": "PR Newswire Consumer Technology",
         "url": "https://www.prnewswire.com/news-releases/care-career-announces-acquisition-of-mas-medical-staffing-completing-its-first-acquisition-phase-and-expanding-annual-revenue-beyond-150-million-with-a-path-to-exceed-a-quarter-billion-by-the-end-of-2026-through-additional-acqu-302834472.html",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "新闻稿"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-source-source-track-1r4ht2r-d3bf63388aba343b",
@@ -1663,11 +1734,7 @@
         "url": "https://www.leiphone.com/category/private/rMXnmau3OSE7evhI.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "robotics"
-      ]
+      }
     },
     {
       "id": "leiphone-8f97239f29babf1c",
@@ -1685,32 +1752,30 @@
         "url": "https://www.leiphone.com/category/industrynews/vo4S5zqGS1pUhVCr.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "anthropic-413ef8ab41769726",
-      "sourceId": "official-anthropic",
+      "sourceId": "anthropic",
       "title": "Apply for Anthropic’s AI for Science rare disease research grants",
       "summary": "Anthropic is sharing a focused call for AI for Science applications centered specifically on rare genetic diseases. Accepted applicants will receive up to $50,000 in Claude credits over six months, with the goal of building a community of researchers looking into how AI can reshape our understanding of rare disease.",
       "type": "技术突破",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
       "publishedAt": "2026-07-24",
       "importance": 85,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/rare-disease-research-grants",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
       },
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
+      ],
+      "companySlug": "anthropic"
     },
     {
       "id": "anthropic-26b4e01c469da5de",
@@ -1720,18 +1785,16 @@
       "type": "技术突破",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
       "publishedAt": "2026-07-24",
       "importance": 85,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/economic-futures-research-fund-agenda",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "anthropic-0221b1d0649ec5f2",
@@ -1741,19 +1804,16 @@
       "type": "技术突破",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
       "publishedAt": "2026-07-24",
       "importance": 85,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/canadian-ai-research",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-track-fusion-bing-08522c1588fb889a",
@@ -1809,30 +1869,9 @@
       ]
     },
     {
-      "id": "leiphone-f679235d047fabf6",
-      "sourceId": "leiphone",
-      "title": "Acemate携手2026中国网球公开赛，AI网球训练机器人走进职业赛事场景",
-      "summary": "2026年7月22日，Acemate与2026中国网球公开赛正式完成签约。根据合作内容，Acemate 将以 2026 中国网球公开赛唯一指定网球训练机器人供应商 的身份，进入中网合作场景。 这次合作的意义，并不止于一次赛事合作官宣。 对于Acemate来说，这是AI网球训练机器人从日常训练、俱乐部体验、共享球场等场景，进一步走向职业赛事体系的重要节点。它意味着，AI网球训练机器人这一新品类，正在进入更真实、更高规格、更具公众关注度的网球场景中。 中国网球公开赛是亚洲级别最高的男女综合性国际网球赛事之一。作为连接中国网球与世界网球的重要赛事平台，中网不仅承载顶级竞技内容，也持续拓展赛事体验、球迷互动与运动科技融合场景。 Acemate 此次进入中网合作场景，正是基于双方对“网球训练体验升级”的共同关注。 区别于传统发球设备，Acemate AI网球训练机器人具备移动、接球、发球、人机对拉、训练数据记录与分析等能力。通过 AI 视觉感知与机器人运动控制，Acemate希望让单人网球训练不再停留于单向喂球，而是逐步接近真实回合中的移动、判断与连续对练。 在网球训练中，许多用户长期面临约不到",
-      "type": "商业进展",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 84,
-      "source": {
-        "name": "雷峰网",
-        "url": "https://www.leiphone.com/category/industrynews/pjdTWH7byariX47G.html",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
-    },
-    {
       "id": "ionq-7eb057b02a7a9cc8",
-      "sourceId": "official-ionq",
-      "title": "IonQ | IonQ to Announce Second Quarter 2026 Financial Results on August 5",
+      "sourceId": "ionq",
+      "title": "IonQ to Announce Second Quarter 2026 Financial Results on August 5",
       "summary": "IonQ (NYSE: IONQ) will release its Q2 2026 financial results after market close on Wednesday, August 5, 2026, followed by a conference call at 4:30 PM ET.",
       "type": "财报",
       "region": "美国",
@@ -2015,11 +2054,7 @@
         "url": "https://www.leiphone.com/category/industrynews/urzkJ71nAWLXBAFT.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "leiphone-4bfc0363c5c9f548",
@@ -2037,10 +2072,7 @@
         "url": "https://www.leiphone.com/category/ai/9BvD2TFs3u6gMHPr.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "space"
-      ]
+      }
     },
     {
       "id": "anthropic-ad504bbdb221cc44",
@@ -2050,38 +2082,35 @@
       "type": "产品发布",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
       "publishedAt": "2026-07-24",
       "importance": 82,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/claude-for-teachers",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "relatedSources": [
-        {
-          "name": "Anthropic 官方来源",
-          "url": "https://www.anthropic.com/news/claude-opus-5",
-          "level": "媒体报道",
-          "platform": "Anthropic 官方来源",
-          "title": "Introducing Claude Opus 5",
-          "publishedAt": "2026-07-25"
-        },
-        {
-          "name": "Anthropic 官方来源",
-          "url": "https://www.anthropic.com/news/claude-sonnet-5",
-          "level": "媒体报道",
-          "platform": "Anthropic 官方来源",
-          "title": "Introducing Claude Sonnet 5",
-          "publishedAt": "2026-07-24"
-        }
-      ],
-      "duplicateCount": 2,
-      "eventClusterId": "75c1cc06a0a9778c",
-      "trackSlugs": [
-        "ai"
-      ]
+      }
+    },
+    {
+      "id": "anthropic-4307222bc7e5f2e4",
+      "sourceId": "anthropic",
+      "title": "Introducing Claude Sonnet 5",
+      "summary": "Our most agentic Sonnet yet, with top-tier intelligence for coding and everyday professional work.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-07-24",
+      "importance": 82,
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/news/claude-sonnet-5",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "user-x-elonmusk-860155f0313cca50",
@@ -2269,83 +2298,86 @@
     },
     {
       "id": "anthropic-fdd9745edc3aad4e",
-      "sourceId": "official-anthropic",
+      "sourceId": "anthropic",
       "title": "Redeploying Claude Fable 5",
       "summary": "Anthropic is redeploying Claude Fable 5 starting July 1 following the lifting of export controls, with updated cybersecurity safeguards and a new industry jailbreak framework.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/redeploying-fable-5",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
       },
       "trackSlugs": [
         "ai"
-      ]
+      ],
+      "companySlug": "anthropic"
     },
     {
       "id": "anthropic-9d9e4fbe80b29906",
-      "sourceId": "official-anthropic",
+      "sourceId": "anthropic",
       "title": "Donating another $20 million to Public First Action",
       "summary": "Anthropic is contributing an additional $20 million to Public First Action, bringing our total support to $40 million.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/donation-public-first-action",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
       },
       "trackSlugs": [
         "ai"
-      ]
+      ],
+      "companySlug": "anthropic"
     },
     {
       "id": "anthropic-8dbb2238c30b71eb",
-      "sourceId": "official-anthropic",
+      "sourceId": "anthropic",
       "title": "Inviting hard questions",
       "summary": "We're asking the public for their hardest questions about AI, and committing to show our work as we address them.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
       "publishedAt": "2026-07-24",
       "importance": 80,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/hard-questions",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
       },
       "trackSlugs": [
         "ai"
-      ]
+      ],
+      "companySlug": "anthropic"
     },
     {
       "id": "xai-ff9a5c1479e9780e",
-      "sourceId": "user-source-source-xai",
+      "sourceId": "xai",
       "title": "Grok in Google Workspace",
       "summary": "Use the Grok add-on for Google Workspace to work directly in Sheets, Slides, and Docs.",
       "type": "公司动态",
       "region": "美国",
-      "sector": "商业航天",
-      "company": "科技产业",
+      "sector": "AI / AGI",
+      "company": "xAI",
       "publishedAt": "2026-07-24",
       "importance": 76,
       "source": {
-        "name": "xAI 官方来源",
+        "name": "xAI",
         "url": "https://x.ai/news/introducing-google-workspace-addon",
-        "level": "媒体报道",
-        "platform": "xAI 官方来源"
+        "level": "官方披露",
+        "platform": "官方网站"
       },
       "qualityScore": 44,
       "qualitySignals": [
@@ -2356,7 +2388,8 @@
         "ai",
         "space",
         "track-1ccjq49"
-      ]
+      ],
+      "companySlug": "xai"
     },
     {
       "id": "user-track-manufacturing-google-us-d7ea0536b42c774b",
@@ -3181,13 +3214,9 @@
       "source": {
         "name": "PR Newswire Consumer Technology",
         "url": "https://www.prnewswire.com/news-releases/as-ada-anniversary-approaches-university-of-phoenix-survey-highlights-ais-potential-to-advance-accessibility-in-work-and-learning-302834448.html",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "新闻稿"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "leiphone-f14579b03e851ba4",
@@ -3205,10 +3234,25 @@
         "url": "https://www.leiphone.com/category/robot/dICn6qnKyVa7JRPS.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
+    },
+    {
+      "id": "leiphone-c0d889c7d185a8c8",
+      "sourceId": "leiphone",
+      "title": "腾讯混元组织架构再升级，合并大语言模型和多模态团队，加速模型研发",
+      "summary": "7 月 23 日，腾讯宣布混元多模态模型部门与大语言模型部门合并，成立基础模型部，统一由腾讯首席 AI 科学家姚顺雨管理，以进一步提升模型研发和协同效率，探索全模态模型的智能上限。 以大语言模型为基础，腾讯混元构建了图像、视频、语音、3D 生成模型等完整的模型矩阵。2026 年以来，腾讯混元模型迭代速度不断加快，与腾讯公司业务的协同也持续增强。 7 月正式上线的大语言模型 Hy3，展现出显著强于同尺寸模型且比肩参数规模 2-5 倍的旗舰模型的智能水平，已在 WorkBuddy/CodeBuddy、元宝、Marvis、ima 等多个业务接入，API 已在腾讯云 TokenHub 以及多个海外平台上线。发布一周后， Hy3 总调用量较上一代模型（Hy2）增长超 68 倍，WorkBuddy 自选模型的用户中，选择 Hy3 的占比达到 60%。 混元多模态模型也在持续进化。4 月发布并开源的混元 3D 世界模型 2.0（Hy World 2.0）能够根据文字、图片、视频等不同类型输入，自动生成、重建和模拟 3D 世界，同时支持多格式 3D 资产导出，能与现有的游戏工作流无缝对接，快速生成游戏",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "腾讯 / 元宝",
+      "publishedAt": "2026-07-24",
+      "importance": 76,
+      "source": {
+        "name": "雷峰网",
+        "url": "https://www.leiphone.com/category/industrynews/LNHgLirIT5DvYfcV.html",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
     },
     {
       "id": "leiphone-b2df2f5439e460b3",
@@ -3226,11 +3270,7 @@
         "url": "https://www.leiphone.com/category/industrynews/wbuuGeiADHNlBBOR.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "leiphone-9f267790adc1df48",
@@ -3248,10 +3288,7 @@
         "url": "https://www.leiphone.com/category/industrynews/VoghxG89WgJ2E9ZI.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
     },
     {
       "id": "leiphone-72ae32165e5d77b3",
@@ -3269,10 +3306,7 @@
         "url": "https://www.leiphone.com/category/industrynews/vsowsDM4mNuFGkb5.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "leiphone-325700dd41cdb9d3",
@@ -3290,10 +3324,7 @@
         "url": "https://www.leiphone.com/category/industrynews/3nVbWR1oDzJjmXOH.html",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "energy"
-      ]
+      }
     },
     {
       "id": "anthropic-a66075dc0af41a68",
@@ -3303,19 +3334,16 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
       "publishedAt": "2026-07-24",
       "importance": 76,
       "source": {
         "name": "Anthropic",
         "url": "https://www.anthropic.com/news/anthropic-economic-index-connector",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-source-source-track-1r4ht2r-42104edf9af8a377",
@@ -3518,11 +3546,7 @@
         "url": "https://arxiv.org/abs/2607.21068v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "arxiv-ai-a16478581c8ed1d2",
@@ -3540,10 +3564,7 @@
         "url": "https://arxiv.org/abs/2607.21196v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "arxiv-ai-865b32f99fa3a334",
@@ -3561,11 +3582,7 @@
         "url": "https://arxiv.org/abs/2607.21518v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-source-source-openai-eea6230f612ad113",
@@ -3951,20 +3968,20 @@
     },
     {
       "id": "xai-6415582bccdc3afe",
-      "sourceId": "user-source-source-xai",
+      "sourceId": "xai",
       "title": "Workflows in Grok Build",
       "summary": "Grok Build can now write and run workflows: orchestration scripts that fan a task out across hundreds of parallel agents, verify the results, and report back in one background run.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
       "publishedAt": "2026-07-23",
       "importance": 76,
       "source": {
-        "name": "xAI 官方来源",
+        "name": "xAI",
         "url": "https://x.ai/news/workflows",
-        "level": "媒体报道",
-        "platform": "xAI 官方来源"
+        "level": "官方披露",
+        "platform": "官方网站"
       },
       "qualityScore": 56,
       "qualitySignals": [
@@ -3975,7 +3992,8 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
+      ],
+      "companySlug": "xai"
     },
     {
       "id": "user-track-wechat-aitopics-ai-686c95754f414c83",
@@ -4325,10 +4343,7 @@
         "url": "https://techcrunch.com/2026/07/22/travis-kalanicks-robotics-company-raises-1-7b-led-by-a16z",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
     },
     {
       "id": "user-track-quantum-google-us-e966ad12b68b0b9e",
@@ -4390,8 +4405,8 @@
     },
     {
       "id": "rocket-lab-e0976f427052f3c2",
-      "sourceId": "official-rocket-lab",
-      "title": "Rocket Lab Announces Date of Second Quarter 2026 Financial Results | Wed, 07/22/2026 - 18:00",
+      "sourceId": "rocket-lab",
+      "title": "Rocket Lab Announces Date of Second Quarter 2026 Financial Results",
       "summary": "LONG BEACH, Calif., July 22, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today announced that it will release its financial results for the second quarter 2026 following the close of the U.S.",
       "type": "财报",
       "region": "美国",
@@ -4401,7 +4416,7 @@
       "publishedAt": "2026-07-22",
       "importance": 84,
       "source": {
-        "name": "Rocket Lab",
+        "name": "Rocket Lab Investor Relations",
         "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-announces-date-second-quarter-2026-financial-results",
         "level": "官方披露",
         "platform": "官方网站"
@@ -4413,8 +4428,8 @@
     },
     {
       "id": "official-weride-3de1ac9a4a12973f",
-      "sourceId": "official-weride",
-      "title": "WeRide to Report Second Quarter and First Half 2026 Financial Results on Wednesday, August 12, 2026 | WeRide Inc.",
+      "sourceId": "weride",
+      "title": "WeRide to Report Second Quarter and First Half 2026 Financial Results on Wednesday, August 12, 2026",
       "summary": "NEW YORK, July 22, 2026 (GLOBE NEWSWIRE) -- WeRide Inc. (“WeRide” or the “Company”) (NASDAQ: WRD; HKEX: 0800), a global leader in autonomous driving technology, today announced that it will release its unaudited financial results for the second quarter 2026 and unaudited interim results for the",
       "type": "财报",
       "region": "中国",
@@ -4424,7 +4439,7 @@
       "publishedAt": "2026-07-22",
       "importance": 84,
       "source": {
-        "name": "文远知行",
+        "name": "WeRide Investor Relations",
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-report-second-quarter-and-first-half-2026-financial",
         "level": "官方披露",
         "platform": "官方网站"
@@ -4516,11 +4531,7 @@
         "url": "https://arxiv.org/abs/2607.20131v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "arxiv-ai-a9bd45c0053118b5",
@@ -4538,11 +4549,7 @@
         "url": "https://arxiv.org/abs/2607.19967v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "arxiv-ai-9b0fe436bddd5fb8",
@@ -4560,10 +4567,7 @@
         "url": "https://arxiv.org/abs/2607.20675v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "arxiv-ai-7eec5e5ae0e43f24",
@@ -4581,11 +4585,7 @@
         "url": "https://arxiv.org/abs/2607.20759v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "arxiv-ai-50dff6887b06e4fb",
@@ -4603,11 +4603,7 @@
         "url": "https://arxiv.org/abs/2607.19675v1",
         "level": "原始材料",
         "platform": "arXiv"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "openai-bf70d809f9542eee",
@@ -4617,7 +4613,7 @@
       "type": "产品发布",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "OpenAI",
       "publishedAt": "2026-07-22",
       "importance": 82,
       "source": {
@@ -4629,7 +4625,8 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
+      ],
+      "companySlug": "openai"
     },
     {
       "id": "x-deepmind-418b2a4920222053",
@@ -4954,20 +4951,20 @@
     },
     {
       "id": "xai-68223e75ebd40eaa",
-      "sourceId": "user-source-source-xai",
+      "sourceId": "xai",
       "title": "Bringing Grok 4.5 to iOS, Android, Web, and X",
       "summary": "Grok 4.5, our most intelligent model yet, is now on grok.com, X, iOS, and Android.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
       "publishedAt": "2026-07-22",
       "importance": 76,
       "source": {
-        "name": "xAI 官方来源",
+        "name": "xAI",
         "url": "https://x.ai/news/grok-4-5-everywhere",
-        "level": "媒体报道",
-        "platform": "xAI 官方来源"
+        "level": "官方披露",
+        "platform": "官方网站"
       },
       "qualityScore": 44,
       "qualitySignals": [
@@ -4976,7 +4973,8 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "ai"
-      ]
+      ],
+      "companySlug": "xai"
     },
     {
       "id": "user-track-wechat-jiqizhixin-robotics-ea66672861053092",
@@ -5646,11 +5644,7 @@
         "url": "https://techcrunch.com/podcast/menlo-ventures-matt-murphy-explains-what-ai-startups-founders-must-do-differently",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "openai-c5c5248230951857",
@@ -5703,7 +5697,7 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "OpenAI",
       "publishedAt": "2026-07-22",
       "importance": 76,
       "source": {
@@ -5715,7 +5709,26 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
+      ],
+      "companySlug": "openai"
+    },
+    {
+      "id": "google-ai-blog-7c49a9cf52e16d8b",
+      "sourceId": "google-ai-blog",
+      "title": "3 Google updates from Galaxy Unpacked 2026",
+      "summary": "Gentle Monster glasses, Warby Parker glasses, a prompt asking for the history behind a pictured building, and a prompt asking to book a table at a pictured restaurant",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "Google AI",
+        "url": "https://blog.google/products-and-platforms/platforms/android/galaxy-unpacked-2026",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "deepmind-blog-e08c4d4e6d11f25f",
@@ -5731,13 +5744,9 @@
       "source": {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/accelerating-the-frontiers-of-scientific-discovery-googles-40m-commitment-to-the-genesis-mission",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "techcrunch-venture-a2ce7357e3ec5e67",
@@ -5755,10 +5764,7 @@
         "url": "https://techcrunch.com/2026/07/21/this-uber-alumn-just-raised-a-10m-pre-seed-to-build-portable-nuclear-enegry",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "energy"
-      ]
+      }
     },
     {
       "id": "user-track-wechat-aitopics-robotics-bc3352dc463c4d88",
@@ -5822,7 +5828,7 @@
     },
     {
       "id": "catl-0c3a1e9ca68ead8a",
-      "sourceId": "official-catl",
+      "sourceId": "catl",
       "title": "CATL and Solarpro Sign 2 GWh Sodium-ion Battery Storage Agreement for Eastern Europe",
       "summary": "CATL and Solarpro Technology AD (Solarpro) announced the signing of a strategic cooperation agreement for 2 GWh sodium-ion systems. This marks a significant milestone in advancing the adoption of next-generation storage technologies and the transition toward more resilient and sustainable energy systems in Eastern Europe.Contemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative technologies, committed to providing premier solutions and services for new energ",
       "type": "商业进展",
@@ -5833,7 +5839,7 @@
       "publishedAt": "2026-07-21",
       "importance": 84,
       "source": {
-        "name": "宁德时代",
+        "name": "CATL",
         "url": "https://www.catl.com/en/news/6916.html",
         "level": "官方披露",
         "platform": "官方网站"
@@ -5857,24 +5863,9 @@
       "source": {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/introducing-gemini-36-flash-35-flash-lite-and-35-flash-cyber",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "relatedSources": [
-        {
-          "name": "Google DeepMind",
-          "url": "https://deepmind.google/blog/introducing-gemini-3-5-flash-cyber",
-          "level": "媒体报道",
-          "platform": "Google DeepMind",
-          "title": "Introducing Gemini 3.5 Flash Cyber",
-          "publishedAt": "2026-07-21"
-        }
-      ],
-      "duplicateCount": 1,
-      "eventClusterId": "485876286a524303",
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "x-deepmind-516885163694548c",
@@ -6028,18 +6019,16 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
+      "companySlug": "xai",
       "publishedAt": "2026-07-21",
       "importance": 76,
       "source": {
         "name": "xAI",
         "url": "https://x.ai/news/introducing-outlook-addin",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "user-track-wechat-jiqizhixin-ai-c0d45e1e53039127",
@@ -6388,11 +6377,7 @@
         "url": "https://techcrunch.com/2026/07/20/natural-raises-30m-to-reinvent-payments-for-ai-agents-and-take-on-stripe",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "techcrunch-venture-47112a31dd861591",
@@ -6410,11 +6395,7 @@
         "url": "https://techcrunch.com/2026/07/20/inference-startup-infinity-raises-15m-from-touring-capital-openai-and-athropic-researchers",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "x-anthropic-a56e2e1b8de6e480",
@@ -6564,18 +6545,16 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
+      "companySlug": "xai",
       "publishedAt": "2026-07-20",
       "importance": 76,
       "source": {
         "name": "xAI",
         "url": "https://x.ai/news/introducing-excel-addin",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "user-track-wechat-jiqizhixin-robotics-e938d6e9cdc06ba6",
@@ -6620,7 +6599,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "机器人",
-      "company": "阿里云 / Qwen",
+      "company": "科技产业",
       "publishedAt": "2026-07-20",
       "importance": 76,
       "source": {
@@ -6721,10 +6700,7 @@
         "url": "https://techcrunch.com/2026/07/20/strictlyvc-returns-to-new-york-city-september-10-to-celebrate-a-huge-year-for-the-citys-startup-community",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "openai-a907415b440a72c9",
@@ -6839,7 +6815,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "阿里云 / Qwen",
+      "company": "科技产业",
       "publishedAt": "2026-07-19",
       "importance": 76,
       "source": {
@@ -7064,11 +7040,7 @@
         "url": "https://techcrunch.com/2026/07/17/neil-rimer-thinks-the-ai-money-is-coming-back-out",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "techcrunch-venture-d23288edfc8ba818",
@@ -7086,16 +7058,12 @@
         "url": "https://techcrunch.com/2026/07/17/nuclear-startup-valar-atomics-in-talks-to-raise-new-funding-at-6b-valuation",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "pony-ai-8c654a7098bce8e3",
-      "sourceId": "official-pony-ai",
-      "title": "PONY AI Inc. to Report Second Quarter and Interim Financial Results for 2026 on August 18, 2026 | 2026-07-17",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. to Report Second Quarter and Interim Financial Results for 2026 on August 18, 2026",
       "summary": "NEW YORK, July 17, 2026 (GLOBE NEWSWIRE) -- Pony AI Inc. (“Pony.ai” or the “Company”) (NASDAQ: PONY; HKEX: 2026), a global leader in achieving large-scale mass production and commercialization of autonomous driving technology, today announced that it will report its unaudited financial results for",
       "type": "财报",
       "region": "中国",
@@ -7105,7 +7073,7 @@
       "publishedAt": "2026-07-17",
       "importance": 84,
       "source": {
-        "name": "小马智行",
+        "name": "Pony.ai Investor Relations",
         "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-report-second-quarter-and-interim-financial-results",
         "level": "官方披露",
         "platform": "官方网站"
@@ -7117,8 +7085,8 @@
     },
     {
       "id": "official-weride-0490c2ff99a87ed4",
-      "sourceId": "official-weride",
-      "title": "WeRide Named Among China's Top 10 AI Case Studies for UAE Autonomous Driving Deployment, the Only Autonomous Driving Company Recognized | WeRide Inc.",
+      "sourceId": "weride",
+      "title": "WeRide Named Among China's Top 10 AI Case Studies for UAE Autonomous Driving Deployment, the Only Autonomous Driving Company Recognized",
       "summary": "SHANGHAI, July 17, 2026 (GLOBE NEWSWIRE) -- WeRide (NASDAQ: WRD; HKEX: 0800), a global leader in autonomous driving technology, today announced that its autonomous driving deployment in the United Arab Emirates (UAE) has been selected as one of the Top 10 examples of international cooperation in",
       "type": "商业进展",
       "region": "中国",
@@ -7128,7 +7096,7 @@
       "publishedAt": "2026-07-17",
       "importance": 84,
       "source": {
-        "name": "文远知行",
+        "name": "WeRide Investor Relations",
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-named-among-chinas-top-10-ai-case-studies-uae-autonomous",
         "level": "官方披露",
         "platform": "官方网站"
@@ -7139,8 +7107,8 @@
     },
     {
       "id": "official-weride-5f25f502d1acd526",
-      "sourceId": "official-weride",
-      "title": "WeRide Introduces WITT, a Physical AI Cognitive Foundation Model Built on Atomic Physical Facts | WeRide Inc.",
+      "sourceId": "weride",
+      "title": "WeRide Introduces WITT, a Physical AI Cognitive Foundation Model Built on Atomic Physical Facts",
       "summary": "New model transforms real-world operational data into trusted facts and trusted facts into learning signals for Physical AI systems Key Highlights WeRide unveils WITT (World Intelligence Toward Truth), a Physical AI Cognitive Foundation Model designed to build AI cognition of the physical world",
       "type": "产品发布",
       "region": "中国",
@@ -7150,7 +7118,7 @@
       "publishedAt": "2026-07-17",
       "importance": 82,
       "source": {
-        "name": "文远知行",
+        "name": "WeRide Investor Relations",
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-introduces-witt-physical-ai-cognitive-foundation-model",
         "level": "官方披露",
         "platform": "官方网站"
@@ -7159,6 +7127,24 @@
         "robotics",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "deepmind-blog-969044f63ea6bfa4",
+      "sourceId": "deepmind-blog",
+      "title": "Introducing Gemini 3.5 Flash Cyber",
+      "summary": "Google introduces Gemini 3.5 Flash Cyber, a lightweight cybersecurity model to find and patch vulnerabilities.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-17",
+      "importance": 82,
+      "source": {
+        "name": "Google DeepMind",
+        "url": "https://deepmind.google/blog/introducing-gemini-3-5-flash-cyber",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-agibot-987eaad372de436d",
@@ -7283,10 +7269,7 @@
         "url": "https://techcrunch.com/2026/07/17/no-product-no-problem-this-disrupt-2026-session-shows-how-to-get-pre-seed-funding-with-conviction-storytelling",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "user-track-manufacturing-google-us-eef80b2cff2bcdfb",
@@ -7332,11 +7315,7 @@
         "url": "https://techcrunch.com/2026/07/16/ai-powered-travel-agency-fora-hits-unicorn-status-raises-60m",
         "level": "媒体报道",
         "platform": "专业媒体"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "official-svlot-533fb0d2467f8088",
@@ -7362,7 +7341,7 @@
     },
     {
       "id": "catl-da49e430cb7409e3",
-      "sourceId": "official-catl",
+      "sourceId": "catl",
       "title": "Alfen and CATL Reach 5 GWh Sodium-Ion Battery Storage Partnership in Europe",
       "summary": "Alfen N.V., a leading European energy solutions provider, and Contemporary Amperex Technology Co., Limited (CATL), the world's largest battery manufacturer, today announced their collaboration to deploy 5 GWh of CATL's advanced sodium-ion battery energy storage systems across Europe. This brings the two companies' long-standing partnership to a new level, opening a new chapter of diversified, technology-driven development supporting EContemporary Amperex Technology Co., Limited (CATL) is a globa",
       "type": "商业进展",
@@ -7373,7 +7352,7 @@
       "publishedAt": "2026-07-16",
       "importance": 84,
       "source": {
-        "name": "宁德时代",
+        "name": "CATL",
         "url": "https://www.catl.com/en/news/6900.html",
         "level": "官方披露",
         "platform": "官方网站"
@@ -7385,20 +7364,20 @@
     },
     {
       "id": "xai-c5fe4e158440bf6a",
-      "sourceId": "user-source-source-xai",
+      "sourceId": "xai",
       "title": "Introducing Grok 4.5",
       "summary": "Grok 4.5 is SpaceXAI's smartest model built for coding, agentic tasks, and knowledge work.",
       "type": "产品发布",
       "region": "美国",
-      "sector": "商业航天",
-      "company": "科技产业",
+      "sector": "AI / AGI",
+      "company": "xAI",
       "publishedAt": "2026-07-16",
       "importance": 82,
       "source": {
-        "name": "xAI 官方来源",
+        "name": "xAI",
         "url": "https://x.ai/news/grok-4-5",
-        "level": "媒体报道",
-        "platform": "xAI 官方来源"
+        "level": "官方披露",
+        "platform": "官方网站"
       },
       "qualityScore": 71,
       "qualitySignals": [
@@ -7409,7 +7388,8 @@
       "trackSlugs": [
         "ai",
         "space"
-      ]
+      ],
+      "companySlug": "xai"
     },
     {
       "id": "user-track-wechat-deeptechchina-ai-1a5575661075543a",
@@ -7570,19 +7550,16 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
+      "companySlug": "xai",
       "publishedAt": "2026-07-16",
       "importance": 76,
       "source": {
         "name": "xAI",
         "url": "https://x.ai/news/grok-automations",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-source-source-track-108mw2h-998749e94b152998",
@@ -7667,29 +7644,6 @@
       ]
     },
     {
-      "id": "techcrunch-venture-74347f39d772137d",
-      "sourceId": "techcrunch-venture",
-      "title": "Founders Fund hires former OpenAI exec Ryan Beiermeister (and not because of her ‘Mafia’ skills)",
-      "summary": "Ryan Beiermeister, who demonstrated cool analysis in the Founders Fund YouTube series \"Mafia,\" has joined the firm as a partner.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-16",
-      "importance": 76,
-      "source": {
-        "name": "TechCrunch Venture",
-        "url": "https://techcrunch.com/2026/07/16/founders-fund-hires-former-openai-exec-ryan-beiermeister-and-not-because-of-her-mafia-skills",
-        "level": "媒体报道",
-        "platform": "专业媒体"
-      },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "openai-a5ab872c216c2f94",
       "sourceId": "openai",
       "title": "Safety and alignment in an era of long-horizon models",
@@ -7712,10 +7666,46 @@
       ]
     },
     {
+      "id": "google-ai-blog-23c6974aa4b45f04",
+      "sourceId": "google-ai-blog",
+      "title": "Connect more of your apps to Search",
+      "summary": "Connected apps rendering",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-16",
+      "importance": 76,
+      "source": {
+        "name": "Google AI",
+        "url": "https://blog.google/products-and-platforms/products/search/connected-apps",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "google-ai-blog-0560403cacf5a7a1",
+      "sourceId": "google-ai-blog",
+      "title": "Create, edit and star in videos with two Google Vids updates",
+      "summary": "Text \"Gemini Omni and Personal Avatars in Google Vids\" surrounded by various images",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-16",
+      "importance": 76,
+      "source": {
+        "name": "Google AI",
+        "url": "https://blog.google/products-and-platforms/products/workspace/gemini-omni-personal-avatars",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "deepmind-blog-16e13c52f7cd02d4",
-      "sourceId": "user-source-source-google-deepmind",
-      "title": "Google DeepMind and Isomorphic Labs approach to bioresilience",
-      "summary": "Google DeepMind and Isomorphic Labs approach to bioresilience, using AI models to support prevention, detection and response.",
+      "sourceId": "deepmind-blog",
+      "title": "Our approach to bioresilience",
+      "summary": "Google DeepMind and Isomorphic Labs are sharing our joint approach to bioresilience and AI models.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
@@ -7725,8 +7715,8 @@
       "source": {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/our-approach-to-bioresilience",
-        "level": "媒体报道",
-        "platform": "Google DeepMind"
+        "level": "官方披露",
+        "platform": "官方网站"
       },
       "qualityScore": 56,
       "qualitySignals": [
@@ -7834,12 +7824,7 @@
         "level": "媒体报道",
         "platform": "专业媒体"
       },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai",
-        "biotech",
-        "track-1ccjq49"
-      ]
+      "companySlug": "openai"
     },
     {
       "id": "x-anthropic-3c4995a0689e4cc7",
@@ -7927,19 +7912,16 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
+      "companySlug": "xai",
       "publishedAt": "2026-07-15",
       "importance": 76,
       "source": {
         "name": "xAI",
         "url": "https://x.ai/news/grok-build-open-source",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-source-source-scale-ai-cad0eb53ba97cbdf",
@@ -8082,7 +8064,7 @@
       "type": "产品发布",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "OpenAI",
       "publishedAt": "2026-07-14",
       "importance": 82,
       "source": {
@@ -8094,34 +8076,8 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "deepmind-blog-13a6d9819972b9b7",
-      "sourceId": "user-source-source-google-deepmind",
-      "title": "AI in Indian Education: Atal Innovation Mission and Google launch ATL Saathi",
-      "summary": "Atal Innovation Mission launches ATL Saathi, a Gemini powered AI assistant empowering India's educators to nurture the next generation of innovators.",
-      "type": "产品发布",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-14",
-      "importance": 82,
-      "source": {
-        "name": "Google DeepMind",
-        "url": "https://deepmind.google/blog/empowering-indias-next-generation-of-innovators-with-atl-saathi",
-        "level": "媒体报道",
-        "platform": "Google DeepMind"
-      },
-      "qualityScore": 25,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "未命中有效追踪词"
       ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai"
-      ]
+      "companySlug": "openai"
     },
     {
       "id": "official-databricks-51a362398334d7dc",
@@ -8172,6 +8128,24 @@
       ]
     },
     {
+      "id": "google-ai-blog-bbfc4b37a73bf479",
+      "sourceId": "google-ai-blog",
+      "title": "Celebrating 25 years of visual search innovation",
+      "summary": "Google Images logo surrounded by illustrations of people searching for different images",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-14",
+      "importance": 76,
+      "source": {
+        "name": "Google AI",
+        "url": "https://blog.google/products-and-platforms/products/search/google-images-25th-anniversary",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "weride-3147ecc2ed5534aa",
       "sourceId": "weride",
       "title": "WeRide Accelerates Global Expansion of Its End-to-End Intelligent Driving Solution",
@@ -8188,10 +8162,33 @@
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-accelerates-global-expansion-its-end-end-intelligent",
         "level": "官方披露",
         "platform": "官方网站"
+      }
+    },
+    {
+      "id": "deepmind-blog-13a6d9819972b9b7",
+      "sourceId": "deepmind-blog",
+      "title": "Empowering India’s next generation of innovators with ATL Saathi",
+      "summary": "Google and AIM launched ATL Saathi, a Gemini-powered AI tool empowering Indian educators in robotics labs.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-13",
+      "importance": 82,
+      "source": {
+        "name": "Google DeepMind",
+        "url": "https://deepmind.google/blog/empowering-indias-next-generation-of-innovators-with-atl-saathi",
+        "level": "官方披露",
+        "platform": "官方网站"
       },
+      "qualityScore": 25,
+      "qualitySignals": [
+        "包含明确事件动作",
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
       "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
+        "ai"
       ]
     },
     {
@@ -8241,7 +8238,7 @@
     },
     {
       "id": "catl-821ed428caa29f17",
-      "sourceId": "official-catl",
+      "sourceId": "catl",
       "title": "CATL Receives the 2026 Volkswagen Group Award",
       "summary": "Recently, CATL was granted the 2026 Volkswagen Group Award . With outstanding overall performance in battery technology R&D, supply chain stability, and efficient global execution, CATL stands as the sole power battery manufacturer and the only enterprise from Chinese mainland to be recognized this year.CATL has been supplying NCM battery cells for Volkswagen's MEB platform since 2018. This yearContemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative techno",
       "type": "技术突破",
@@ -8252,7 +8249,7 @@
       "publishedAt": "2026-07-12",
       "importance": 85,
       "source": {
-        "name": "宁德时代",
+        "name": "CATL",
         "url": "https://www.catl.com/en/news/6896.html",
         "level": "官方披露",
         "platform": "官方网站"
@@ -8423,7 +8420,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "OpenAI",
+      "company": "科技产业",
       "publishedAt": "2026-07-11",
       "importance": 76,
       "source": {
@@ -8985,7 +8982,7 @@
     },
     {
       "id": "figure-fee9ecb80b1b2486",
-      "sourceId": "official-figure-ai",
+      "sourceId": "figure",
       "title": "Notice Regarding Unauthorized Attempts to Sell Figure Stock",
       "summary": "Notice Regarding Unauthorized Attempts to Sell Figure Stock",
       "type": "公司动态",
@@ -9249,8 +9246,8 @@
     },
     {
       "id": "rocket-lab-936838d0cd88a66b",
-      "sourceId": "official-rocket-lab",
-      "title": "Rocket Lab Delivers Mission Success for Space Force: Completes Historic Launch and On-Orbit Satellite Tracking Mission in Record Time | Tue, 07/07/2026 - 16:30",
+      "sourceId": "rocket-lab",
+      "title": "Rocket Lab Delivers Mission Success for Space Force: Completes Historic Launch and On-Orbit Satellite Tracking Mission in Record Time",
       "summary": "Following a record-shattering responsive launch, Rocket Lab completes complex on-orbit rendezvous and proximity operations, proving the Company’s ability to track and inspect target satellites on short notice, delivering success for the U.S. Space Force’s VICTUS HAZE mission.",
       "type": "产品发布",
       "region": "美国",
@@ -9260,7 +9257,7 @@
       "publishedAt": "2026-07-07",
       "importance": 82,
       "source": {
-        "name": "Rocket Lab",
+        "name": "Rocket Lab Investor Relations",
         "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-delivers-mission-success-space-force-completes",
         "level": "官方披露",
         "platform": "官方网站"
@@ -9328,13 +9325,9 @@
       "source": {
         "name": "Google AI",
         "url": "https://blog.google/innovation-and-ai/technology/developers-tools/expanding-managed-agents-gemini-api",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "xai-fb328d59b08e2389",
@@ -9344,18 +9337,16 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
+      "companySlug": "xai",
       "publishedAt": "2026-07-06",
       "importance": 76,
       "source": {
         "name": "xAI",
         "url": "https://x.ai/news/new-flagship-voices",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "user-track-wechat-deeptechchina-biotech-7ca93f5df9d6d53f",
@@ -9448,13 +9439,9 @@
       "source": {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/google-deepmind-and-a24-announce-first-of-its-kind-research-partnership",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "official-landspace-2f4bc926d2e24d39",
@@ -9508,19 +9495,16 @@
       "type": "产品发布",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "xAI",
+      "companySlug": "xai",
       "publishedAt": "2026-07-01",
       "importance": 82,
       "source": {
         "name": "xAI",
         "url": "https://x.ai/news/grok-voice-agent-builder",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-track-wechat-qbitai-robotics-78857392e1eaf0bc",
@@ -9530,7 +9514,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "Anthropic",
+      "company": "科技产业",
       "publishedAt": "2026-07-01",
       "importance": 76,
       "source": {
@@ -9601,13 +9585,9 @@
       "source": {
         "name": "Google AI",
         "url": "https://blog.google/products-and-platforms/products/education/nyc-ai-summit",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "google-ai-blog-dc57fe4bb7657854",
@@ -9623,12 +9603,9 @@
       "source": {
         "name": "Google AI",
         "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-june-2026",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "user-source-source-sierra-9306f9e441e2a78f",
@@ -9737,12 +9714,9 @@
       "source": {
         "name": "Google AI",
         "url": "https://blog.google/company-news/inside-google/around-the-globe/google-europe/united-kingdom/unlocking-britains-next-era-of-productivity-building-a-nation-of-ai-trailblazers",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "figure-e3a34ddc58f460b9",
@@ -9761,15 +9735,30 @@
         "url": "https://www.figure.ai/news/f-03-at-bmw",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
+    },
+    {
+      "id": "deepmind-blog-8cc1837ba6892f6f",
+      "sourceId": "deepmind-blog",
+      "title": "Start building with Nano Banana 2 Lite and Gemini Omni Flash",
+      "summary": "Google DeepMind 发布相关公开信息，完整内容见原文。",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-06-30",
+      "importance": 76,
+      "source": {
+        "name": "Google DeepMind",
+        "url": "https://deepmind.google/blog/start-building-with-nano-banana-2-lite-and-gemini-omni-flash",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "rocket-lab-646cca419121edea",
-      "sourceId": "official-rocket-lab",
-      "title": "Rocket Lab to Acquire Iridium in Historic Deal, Creating A Fully Vertically Integrated Space Powerhouse Primed for Growth | Mon, 06/29/2026 - 07:00",
+      "sourceId": "rocket-lab",
+      "title": "Rocket Lab to Acquire Iridium in Historic Deal, Creating A Fully Vertically Integrated Space Powerhouse Primed for Growth",
       "summary": "Unites Rocket Lab's leading launch and satellite manufacturing capabilities with Iridium's global network, spectrum, and experience to unlock critical space applications. Adds material revenue scale and is significantly accretive to Rocket Lab's cash flow generation and profitability.",
       "type": "并购",
       "region": "美国",
@@ -9779,7 +9768,7 @@
       "publishedAt": "2026-06-29",
       "importance": 89,
       "source": {
-        "name": "Rocket Lab",
+        "name": "Rocket Lab Investor Relations",
         "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-acquire-iridium-historic-deal-creating-fully",
         "level": "官方披露",
         "platform": "官方网站"
@@ -9908,18 +9897,14 @@
       "source": {
         "name": "Google AI",
         "url": "https://blog.google/innovation-and-ai/technology/ai/full-stack-ai-explainer",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "rocket-lab-9af61072332208a9",
-      "sourceId": "official-rocket-lab",
-      "title": "Rocket Lab Completes 10th Consecutive Launch with 100% Mission Success for Synspective | Fri, 06/26/2026 - 14:49",
+      "sourceId": "rocket-lab",
+      "title": "Rocket Lab Completes 10th Consecutive Launch with 100% Mission Success for Synspective",
       "summary": "MAHIA, New Zealand, June 26, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today announced it has successfully placed another satellite into orbit for Synspective, achieving a significant milestone as the tenth dedicated launch",
       "type": "产品发布",
       "region": "美国",
@@ -9929,7 +9914,7 @@
       "publishedAt": "2026-06-27",
       "importance": 82,
       "source": {
-        "name": "Rocket Lab",
+        "name": "Rocket Lab Investor Relations",
         "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-completes-10th-consecutive-launch-100-mission-success",
         "level": "官方披露",
         "platform": "官方网站"
@@ -9978,11 +9963,7 @@
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-inc-announces-results-annual-general-meeting",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-track-wechat-qbitai-ai-457c47be6e9702c7",
@@ -10067,10 +10048,7 @@
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-genesis-named-generative-ai-platform-year-following-atti",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
     },
     {
       "id": "rocket-lab-6319d77a5caa4fd1",
@@ -10089,11 +10067,7 @@
         "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/nasa-selects-rocket-lab-launch-sun-earth-sciences-missions",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "space",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "sec-5b946507aeb51793",
@@ -10116,6 +10090,24 @@
       "trackSlugs": [
         "semiconductor"
       ]
+    },
+    {
+      "id": "google-ai-blog-823e02f8667ea9dc",
+      "sourceId": "google-ai-blog",
+      "title": "Our latest Google Finance upgrades, including a new app",
+      "summary": "The Google Finance logo, surrounded by elements of the user interface",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-06-25",
+      "importance": 76,
+      "source": {
+        "name": "Google AI",
+        "url": "https://blog.google/products-and-platforms/products/search/google-finance-updates-june-2026",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "user-track-semiconductor-google-us-04c021e25843ec64",
@@ -10159,16 +10151,13 @@
       "source": {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/introducing-computer-use-in-gemini-3-5-flash",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
+      }
     },
     {
       "id": "catl-deca19cdde9a8a47",
-      "sourceId": "official-catl",
+      "sourceId": "catl",
       "title": "First Heavy-Duty Humanoid Robot Powered by CATL Batteries Goes Live in CATL Factory",
       "summary": "CATL and Galbot have officially signed a global strategic cooperation agreement. The partnership will focus on upgrading smart manufacturing lines, accelerating the global expansion and large-scale application of AI humanoid robots, and jointly developing the world's first aftermarket service standard for AI humanoid robots.0150 kg-Class Payload: Designed for Hazardous, Repetitive and Physically Demanding Manufacturing TasksCentral to the colContemporary Amperex Technology Co., Limited (CATL) is",
       "type": "公司动态",
@@ -10179,7 +10168,7 @@
       "publishedAt": "2026-06-24",
       "importance": 80,
       "source": {
-        "name": "宁德时代",
+        "name": "CATL",
         "url": "https://www.catl.com/en/news/6881.html",
         "level": "官方披露",
         "platform": "官方网站"
@@ -10229,10 +10218,7 @@
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-geely-farizon-and-kwoon-chung-launch-right-hand-drive",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
     },
     {
       "id": "rocket-lab-d7d0cdb101b345c0",
@@ -10251,11 +10237,7 @@
         "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-shatters-responsive-space-record-launches-us-space",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "space",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "sec-dfe2ee1e87e5f3df",
@@ -10281,8 +10263,8 @@
     },
     {
       "id": "pony-ai-8de493e35a421304",
-      "sourceId": "official-pony-ai",
-      "title": "PONY AI Inc. and ComfortDelGro Expand Singapore Autonomous Mobility Service with Consumer-Facing App Access | 2026-06-22",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. and ComfortDelGro Expand Singapore Autonomous Mobility Service with Consumer-Facing App Access",
       "summary": "SINGAPORE, June 22, 2026 — Pony AI Inc. (“Pony.ai” or the “Company”) (NASDAQ: PONY; HKEX: 2026), a global leader in achieving large-scale mass production and commercialization of autonomous driving technology, today announced that its autonomous mobility service in Singapore, operated in",
       "type": "公司动态",
       "region": "中国",
@@ -10292,7 +10274,7 @@
       "publishedAt": "2026-06-22",
       "importance": 80,
       "source": {
-        "name": "小马智行",
+        "name": "Pony.ai Investor Relations",
         "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-and-comfortdelgro-expand-singapore-autonomous",
         "level": "官方披露",
         "platform": "官方网站"
@@ -10364,7 +10346,7 @@
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "OpenAI",
       "publishedAt": "2026-06-22",
       "importance": 76,
       "source": {
@@ -10376,7 +10358,8 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
+      ],
+      "companySlug": "openai"
     },
     {
       "id": "catl-b015a52b1048b036",
@@ -10395,11 +10378,7 @@
         "url": "https://www.catl.com/en/news/6861.html",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "energy",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "sec-89523400b3c0eb3a",
@@ -10473,54 +10452,6 @@
       ]
     },
     {
-      "id": "deepmind-blog-3d293869c3ae6239",
-      "sourceId": "user-source-source-google-deepmind",
-      "title": "Securing internal systems against increasingly capable and imperfectly aligned AI",
-      "summary": "Discover our AI Control Roadmap: a defense-in-depth system to securely manage advanced, potentially misaligned AI agents.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-06-18",
-      "importance": 76,
-      "source": {
-        "name": "Google DeepMind",
-        "url": "https://deepmind.google/blog/securing-the-future-of-ai-agents",
-        "level": "媒体报道",
-        "platform": "Google DeepMind"
-      },
-      "qualityScore": 37,
-      "qualitySignals": [
-        "摘要命中 3 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "google-ai-blog-4ca5042e690d6cce",
-      "sourceId": "google-ai-blog",
-      "title": "New research shows how AMIE, our medical AI, could help manage health conditions.",
-      "summary": "Research in “Nature” shows our conversational AI system matches primary care physicians in complex disease management.",
-      "type": "技术突破",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-06-17",
-      "importance": 85,
-      "source": {
-        "name": "Google AI",
-        "url": "https://blog.google/innovation-and-ai/models-and-research/google-research/amie-for-disease-management-in-nature",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
       "id": "weride-aeba74c5033037c0",
       "sourceId": "weride",
       "title": "WeRide and Uber Plan to Launch Commercial Robotaxi Service in Zurich, Expanding European Partnership",
@@ -10537,16 +10468,12 @@
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-and-uber-plan-launch-commercial-robotaxi-service-zurich",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "ionq-413679ee959900db",
-      "sourceId": "official-ionq",
-      "title": "IonQ | IonQ Launches Clavis XG Multiplex for Metro Fiber Networks",
+      "sourceId": "ionq",
+      "title": "IonQ Launches Clavis XG Multiplex for Metro Fiber Networks",
       "summary": "IonQ announces Clavis XG Multiplex, allowing quantum and classical traffic to coexist on existing fiber networks for cost-effective, practical QKD security.",
       "type": "产品发布",
       "region": "美国",
@@ -10655,6 +10582,33 @@
       ]
     },
     {
+      "id": "deepmind-blog-3d293869c3ae6239",
+      "sourceId": "deepmind-blog",
+      "title": "Securing the future of AI agents",
+      "summary": "Securing internal systems with an AI Control Roadmap, combining traditional safeguards and real-time monitoring.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-06-16",
+      "importance": 76,
+      "source": {
+        "name": "Google DeepMind",
+        "url": "https://deepmind.google/blog/securing-the-future-of-ai-agents",
+        "level": "官方披露",
+        "platform": "官方网站"
+      },
+      "qualityScore": 37,
+      "qualitySignals": [
+        "摘要命中 3 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "deepmind-blog-212a353b8729f563",
       "sourceId": "deepmind-blog",
       "title": "Unlocking UK house-building with AI-accelerated planning",
@@ -10668,13 +10622,9 @@
       "source": {
         "name": "Google DeepMind",
         "url": "https://deepmind.google/blog/unlocking-uk-house-building-with-ai-accelerated-planning",
-        "level": "媒体报道",
+        "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "user-source-source-sierra-026f4937a180719c",
@@ -10722,11 +10672,7 @@
         "url": "https://ir.weride.ai/news-releases/news-release-details/weride-achieves-record-six-consecutive-wins-china-urban",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "official-biren-6e58af97a7d256ea",
@@ -10793,10 +10739,7 @@
         "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-join-nasdaq-100-index",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "space"
-      ]
+      }
     },
     {
       "id": "official-commonwealth-fusion-ded54885a80d1d16",
@@ -10910,28 +10853,6 @@
       ]
     },
     {
-      "id": "deepmind-blog-94d085538b2ed7ae",
-      "sourceId": "deepmind-blog",
-      "title": "Investing in multi-agent AI safety research",
-      "summary": "Google DeepMind and partners announce a $10M funding call for multi-agent safety research.",
-      "type": "技术突破",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-06-10",
-      "importance": 85,
-      "source": {
-        "name": "Google DeepMind",
-        "url": "https://deepmind.google/blog/investing-in-multi-agent-ai-safety-research",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "weride-ea51bb2e7aa4675c",
       "sourceId": "weride",
       "title": "Slovak Prime Minister Meets WeRide, Signals Support for Multi-Product Autonomous Vehicle Deployment",
@@ -10948,16 +10869,12 @@
         "url": "https://ir.weride.ai/news-releases/news-release-details/slovak-prime-minister-meets-weride-signals-support-multi-product",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "ionq-5fe7ff33ae9b29e1",
-      "sourceId": "official-ionq",
-      "title": "IonQ | IonQ Posts Q1 2026 Earnings with Record Revenue",
+      "sourceId": "ionq",
+      "title": "IonQ Posts Q1 2026 Earnings with Record Revenue",
       "summary": "The company reported Record GAAP Revenues of $64.7 Million, Representing 755% Year-On-Year Growth, Fueled by Quantum Computing Growth and Expansion of the Quantum Platform and raised full year guidance.",
       "type": "财报",
       "region": "美国",
@@ -11160,10 +11077,7 @@
         "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-announces-autonomous-mobility-testing-program",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics"
-      ]
+      }
     },
     {
       "id": "official-relativity-space-95efe01a17e29612",
@@ -11249,11 +11163,7 @@
         "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-announces-results-annual-general-meeting",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "sec-afd068b8ef146d99",
@@ -11278,27 +11188,6 @@
       ]
     },
     {
-      "id": "google-ai-blog-9b819b28485237e7",
-      "sourceId": "google-ai-blog",
-      "title": "The latest AI news we announced in May 2026",
-      "summary": "May AI recap",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-06-05",
-      "importance": 76,
-      "source": {
-        "name": "Google AI",
-        "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-may-2026",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
       "id": "catl-033eb5aa625d8330",
       "sourceId": "catl",
       "title": "CATL Statement Regarding May 21, 2026 U.S. Congressional Report",
@@ -11315,11 +11204,7 @@
         "url": "https://www.catl.com/en/news/6832.html",
         "level": "官方披露",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "energy",
-        "track-1ccjq49"
-      ]
+      }
     },
     {
       "id": "sec-9c69473425523ef0",
@@ -11434,6 +11319,25 @@
       ]
     },
     {
+      "id": "pony-ai-64d115c69ead1804",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. Announces Inclusion of its Class A Ordinary Shares in the Shanghai-Hong Kong Stock Connect Program",
+      "summary": "GUANGZHOU, China, June 3, 2026 -- Pony AI Inc. (“Pony.ai” or the “Company”) (NASDAQ: PONY; HKEX: 2026), a global leader in achieving large-scale mass production and commercialization of autonomous driving technology, today announced that the Company’s Class A ordinary shares listed and traded on",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "小马智行",
+      "companySlug": "pony-ai",
+      "publishedAt": "2026-06-03",
+      "importance": 76,
+      "source": {
+        "name": "Pony.ai Investor Relations",
+        "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-announces-inclusion-its-class-ordinary-shares-0",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-axiom-space-9899d13ca9096803",
       "sourceId": "official-axiom-space",
       "title": "Axiom Space Establishes Swiss Subsidiary to Anchor European Engagement, Space Collaboration",
@@ -11455,6 +11359,101 @@
         "space",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "catl-fc32525551d386ef",
+      "sourceId": "catl",
+      "title": "CATL Launches World’s Largest Energy Storage Testbed, Advancing Industry into Era of Real-World Validation",
+      "summary": "CATL Launches World’s Largest Energy Storage Testbed, Advancing Industry into Era of Real-World ValidationContemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative technologies, committed to providing premier solutions and services for new energy applications worldwide.",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "companySlug": "catl",
+      "publishedAt": "2026-06-01",
+      "importance": 82,
+      "source": {
+        "name": "CATL",
+        "url": "https://www.catl.com/en/news/6815.html",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "rocket-lab-cee4660863186e84",
+      "sourceId": "rocket-lab",
+      "title": "Rocket Lab Achieves Milestone for Missile Defense Constellation, Passes System Requirements Review for SDA Tracking Layer Tranche 3",
+      "summary": "Rocket Lab’s vertically integrated approach delivers speed and performance, advancing missile defense capabilities to provide next-generation warning and tracking against hypersonic threats LONG BEACH, Calif., May 27, 2026 (GLOBE NEWSWIRE) -- Rocket Lab USA, Inc.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "Rocket Lab",
+      "companySlug": "rocket-lab",
+      "publishedAt": "2026-05-27",
+      "importance": 76,
+      "source": {
+        "name": "Rocket Lab Investor Relations",
+        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-achieves-milestone-missile-defense-constellation",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "rocket-lab-f990acd19ff658f2",
+      "sourceId": "rocket-lab",
+      "title": "Rocket Lab Adds Mars-Proven Robotics Capabilities with Completion of Motiv Space Systems Acquisition",
+      "summary": "Acquisition brings Mars heritage for complex planetary missions, as well as precision mechanisms essential for next-generation space infrastructure including orbital data centers and constellations LONG BEACH, Calif., May 26, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global",
+      "type": "并购",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "Rocket Lab",
+      "companySlug": "rocket-lab",
+      "publishedAt": "2026-05-26",
+      "importance": 89,
+      "source": {
+        "name": "Rocket Lab Investor Relations",
+        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-adds-mars-proven-robotics-capabilities-completion",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "pony-ai-f7c1d407aad50058",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. Reports First Quarter 2026 Financial Results with Continued Growth in Robotaxi Revenues and Expanding Fleet Deployment",
+      "summary": "Robotaxi revenues growth — Robotaxi revenues grew by 395.4% year-over-year in Q1, with fare-charging revenues rising by 456.5%. Updating 2026 growth targets — We raise our 2026 Robotaxi revenues target from 3 times to more than 3.5 times the level in 2025 and year-end Robotaxi fleet size target",
+      "type": "财报",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "小马智行",
+      "companySlug": "pony-ai",
+      "publishedAt": "2026-05-26",
+      "importance": 84,
+      "source": {
+        "name": "Pony.ai Investor Relations",
+        "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-reports-first-quarter-2026-financial-results",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "figure-0708b7e94d92fdac",
+      "sourceId": "figure",
+      "title": "Figure Signs Agreement with Catalyst Brands to Scale Humanoid Operations",
+      "summary": "Today we are announcing a commercial agreement with Catalyst Brands to deploy Figure humanoids into their distribution and logistics network.",
+      "type": "商业进展",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "Figure AI",
+      "companySlug": "figure-ai",
+      "publishedAt": "2026-05-26",
+      "importance": 84,
+      "source": {
+        "name": "Figure AI",
+        "url": "https://www.figure.ai/news/figure-signs-agreement-with-catalyst-brands",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-pony-ai-92dd1826175eaebc",
@@ -11503,6 +11502,44 @@
       ]
     },
     {
+      "id": "catl-67feef48e652bd57",
+      "sourceId": "catl",
+      "title": "CATL and Solarpro Technology AD recently commissioned Bulgaria’s largest battery energy storage",
+      "summary": "CATL, in collaboration with Solarpro Technology AD, has successfully connected a 602 MWh large-scale battery energy storage project in Bulgaria to the country's electricity grid. Located in Burgas, Bulgaria, the new facility marks a major milestone in the country's energy transition and increases its total energy storage capacity by 10%. It also strengthens the integration of renewable energy sources such as wind and solar while supportinContemporary Amperex Technology Co., Limited (CATL) is a g",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "companySlug": "catl",
+      "publishedAt": "2026-05-26",
+      "importance": 76,
+      "source": {
+        "name": "CATL",
+        "url": "https://www.catl.com/en/news/6851.html",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "rocket-lab-d683a0b838e82612",
+      "sourceId": "rocket-lab",
+      "title": "Mission Success: Rocket Lab Completes 9th Electron Launch for Synspective",
+      "summary": "MAHIA, New Zealand, May 22, 2026 (GLOBE NEWSWIRE) -- Rocket Lab Corporation (Nasdaq: RKLB), a global leader in launch services and space systems, today announced the successful deployment of the latest satellite for Synspective, marking the ninth dedicated mission Rocket Lab has completed for the",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "Rocket Lab",
+      "companySlug": "rocket-lab",
+      "publishedAt": "2026-05-22",
+      "importance": 82,
+      "source": {
+        "name": "Rocket Lab Investor Relations",
+        "url": "https://investors.rocketlabcorp.com/news-releases/news-release-details/mission-success-rocket-lab-completes-9th-electron-launch",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-rigetti-421927cd0e15792b",
       "sourceId": "official-rigetti",
       "title": "Rigetti Signs Letter of Intent with U.S. Government for Quantum Computing Research | Rigetti & Co, LLC",
@@ -11547,6 +11584,25 @@
       ]
     },
     {
+      "id": "ionq-063b9511f4cdb7cc",
+      "sourceId": "ionq",
+      "title": "IonQ to Announce First Quarter 2026 Financial Results on May 6",
+      "summary": "IonQ (NYSE: IONQ) will release its Q1 2026 financial results after market close on Wednesday, May 6, 2026, followed by a conference call at 4:30 PM ET.",
+      "type": "财报",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-05-20",
+      "importance": 84,
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/news/ionq-to-report-first-quarter-2026-financial-results-on-may-6-2026",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-moore-threads-dd8aed953dbdbf01",
       "sourceId": "official-moore-threads",
       "title": "摩尔线程重磅发布 MTT AICUBE：搭载全域智能体“小麦”，打造家庭 AI 中枢",
@@ -11567,6 +11623,24 @@
       "trackSlugs": [
         "semiconductor"
       ]
+    },
+    {
+      "id": "venturebeat-ai-4b0b581f96fdff4b",
+      "sourceId": "venturebeat-ai",
+      "title": "Google just redesigned the search box for the first time in 25 years — here’s why it matters more than you think.",
+      "summary": "For a quarter century, the Google search box has been one of the most recognizable interfaces in computing: a thin white rectangle, a blinking cursor, a few typed words, and a list of blue links. On Tuesday, Google will formally retire that paradigm. At its annual I/O developer conference , Google announced a sweeping redesign of the search box itself — the literal text field where billions of queries begin every day — transforming it from a simple keyword input into a dynamic, AI-driven convers",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "科技产业",
+      "publishedAt": "2026-05-19",
+      "importance": 76,
+      "source": {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/technology/google-just-redesigned-the-search-box-for-the-first-time-in-25-years-heres-why-it-matters-more-than-you-think",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
     },
     {
       "id": "official-moore-threads-5868a45713dc1772",
@@ -11724,8 +11798,122 @@
       ]
     },
     {
+      "id": "pony-ai-92f337f98a4923b2",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. Labor Day Holiday Robotaxi Paid Orders Surge More Than Sixfold",
+      "summary": "GUANGZHOU, China, May 8, 2026 -- Pony AI Inc. (“Pony.ai” or the “Company”) (NASDAQ: PONY; HKEX: 2026), a global leader in achieving large-scale mass production and commercialization of autonomous driving technology, today reported a sharp increase in robotaxi demand during China’s Labor Day holiday",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "小马智行",
+      "companySlug": "pony-ai",
+      "publishedAt": "2026-05-08",
+      "importance": 76,
+      "source": {
+        "name": "Pony.ai Investor Relations",
+        "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-labor-day-holiday-robotaxi-paid-orders-surge-more",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "figure-3e3ccf98e3c10568",
+      "sourceId": "figure",
+      "title": "Helix 02 Bedroom Tidy",
+      "summary": "Two Helix 02-equipped humanoids reset a bedroom in under two minutes, opening doors, hanging clothes, putting away headphones, closing a book, taking out trash, pushing a chair under a desk, and working together to make a bed.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "Figure AI",
+      "companySlug": "figure-ai",
+      "publishedAt": "2026-05-08",
+      "importance": 76,
+      "source": {
+        "name": "Figure AI",
+        "url": "https://www.figure.ai/news/helix-02-bedroom-tidy",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "catl-c04a101844e1f825",
+      "sourceId": "catl",
+      "title": "CATL Subsidiary CAIT Partners up with Togg on Bedrock Chassis",
+      "summary": "Contemporary Amperex Intelligent Technology (Shanghai) Limited (CAIT), CATL’s skateboard chassis arm, has entered into a strategic partnership with Turkish automotive brand Togg to jointly develop chassis platform for its new B-segment vehicle family, marking the first overseas passenger vehicle project for the platform.Togg CEO Gürcan Karakaş, CATL Chief Customer Officer Libin Tan, and CAIT CEO Hanbing Yang signed the agreement for their respectContemporary Amperex Technology Co., Limited (CATL",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "companySlug": "catl",
+      "publishedAt": "2026-05-07",
+      "importance": 76,
+      "source": {
+        "name": "CATL",
+        "url": "https://www.catl.com/en/news/6814.html",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "pony-ai-79ce66c31389b012",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. to Report First Quarter 2026 Financial Results on May 26, 2026",
+      "summary": "NEW YORK, May 06, 2026 (GLOBE NEWSWIRE) -- Pony AI Inc. (“Pony.ai” or the “Company”) (NASDAQ: PONY; HKEX: 2026), a global leader in achieving large-scale mass production and commercialization of autonomous driving technology, today announced that it will report its unaudited financial results for",
+      "type": "财报",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "小马智行",
+      "companySlug": "pony-ai",
+      "publishedAt": "2026-05-06",
+      "importance": 84,
+      "source": {
+        "name": "Pony.ai Investor Relations",
+        "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-report-first-quarter-2026-financial-results-may-26",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "ionq-b37932e407fd000e",
+      "sourceId": "ionq",
+      "title": "Automated 3-Day InSAR Monitoring: Precision Ground Deformation",
+      "summary": "IonQ launches fully automated 3-day repeat InSAR time series data. Achieve millimeter-precision monitoring for urban subsidence, infrastructure, and national security at scale.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-05-04",
+      "importance": 76,
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/news/ionq-launches-commercial-insar-capability-enabling-automated-millimeter-scale-earth-monitoring",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "ionq-d9f413032ed7aad5",
+      "sourceId": "ionq",
+      "title": "Niccolo’s 2025 Letter to Shareholders",
+      "summary": "IonQ 发布“Niccolo’s 2025 Letter to Shareholders”；完整事实与数据见原文。",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-04-30",
+      "importance": 76,
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/news/ionq-2025-letter-to-shareholders",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-figure-ai-5039e121e026686f",
-      "sourceId": "official-figure-ai",
+      "sourceId": "figure",
       "title": "Ramping Figure 03 Production",
       "summary": "Figure has cleared the gap from prototype to scalable fleet with BotQ, our high-volume manufacturing facility.",
       "type": "公司动态",
@@ -11745,6 +11933,25 @@
         "robotics",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "ionq-9815fb41a83779fa",
+      "sourceId": "ionq",
+      "title": "IonQ and Florida LambdaRail to Launch 100-Mile Quantum-Safe Network",
+      "summary": "IonQ (NYSE: IONQ) and Florida LambdaRail announce a landmark agreement to build a quantum-secure corridor in Florida, linking research institutions via QKD technology.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-04-27",
+      "importance": 82,
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/news/ionq-and-florida-lambdarail-launch-first-statewide-quantum-safe-network-initiative-in-united-states",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-moore-threads-1153860a1451d73f",
@@ -11776,7 +11983,7 @@
       "type": "公司动态",
       "region": "中国",
       "sector": "AI / AGI",
-      "company": "科技产业",
+      "company": "DeepSeek",
       "publishedAt": "2026-04-24",
       "importance": 80,
       "source": {
@@ -11788,7 +11995,46 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
-      ]
+      ],
+      "companySlug": "deepseek"
+    },
+    {
+      "id": "pony-ai-a715f3b7e12b7e29",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. Announces New-Generation Autonomous Driving Domain Controller Built on NVIDIA DRIVE Hyperion",
+      "summary": "GUANGZHOU, China, April 25, 2026 -- Pony AI Inc. (“Pony.ai” or the “Company”) (NASDAQ: PONY; HKEX: 2026), a global leader in achieving large-scale mass production and commercialization of autonomous driving technology, today announced its upgraded domain controller for Level 4 (“L4”) autonomous",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "小马智行",
+      "companySlug": "pony-ai",
+      "publishedAt": "2026-04-24",
+      "importance": 76,
+      "source": {
+        "name": "Pony.ai Investor Relations",
+        "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-announces-new-generation-autonomous-driving-domain",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
+      "id": "pony-ai-3687ac4adf6e055a",
+      "sourceId": "pony-ai",
+      "title": "PONY AI Inc. Drives Commercialization at Scale with Lower-Cost Robotaxis and New L4 Light Truck",
+      "summary": "At Auto China 2026, Pony.ai outlined new steps to advance Robotaxi commercialization through lower-cost Gen-7 vehicles and an upgraded world model to improve “Virtual Driver” training efficiency. By 2027, the total vehicle cost of Pony.ai’s Robotaxi in the China market, including the base vehicle",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "小马智行",
+      "companySlug": "pony-ai",
+      "publishedAt": "2026-04-24",
+      "importance": 76,
+      "source": {
+        "name": "Pony.ai Investor Relations",
+        "url": "https://ir.pony.ai/news-releases/news-release-details/pony-ai-inc-drives-commercialization-scale-lower-cost-robotaxis",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-horizon-robotics-f6a26c41b1a7e1b5",
@@ -11812,6 +12058,25 @@
         "robotics",
         "semiconductor"
       ]
+    },
+    {
+      "id": "ionq-86c6c20486c4ec1c",
+      "sourceId": "ionq",
+      "title": "IonQ Unveils Definitive Blueprint for Fault-Tolerant Quantum Computing",
+      "summary": "Meta Description: IonQ sets a new industry standard with a full-stack technical report detailing the path to 10,000+ qubits and scalable, error-corrected quantum systems.",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-04-22",
+      "importance": 82,
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/news/ionq-publishes-definitive-technical-report-establishing-its-fault-tolerant-quantum-computing-trajectory---setting-a-new-standard-for-technical-specificity-and-transparency",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-horizon-robotics-30e09d78f913acf8",
@@ -11878,6 +12143,25 @@
       "trackSlugs": [
         "energy"
       ]
+    },
+    {
+      "id": "ionq-161f791bf6006b6d",
+      "sourceId": "ionq",
+      "title": "IonQ Achieves First Photonic Interconnect Milestone for Networked Commercial Quantum Systems",
+      "summary": "IonQ successfully links two remote quantum systems via photonic interconnects. Discover how this AFRL-backed milestone paves the way for scalable, networked quantum computing.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-04-14",
+      "importance": 76,
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/news/ionq-achieves-key-photonic-interconnect-milestone-demonstrating-networked-quantum-systems-using-entanglement",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-relativity-space-9916b33a832d5c75",
@@ -11955,7 +12239,6 @@
       "region": "中国",
       "sector": "AI / AGI",
       "company": "科技产业",
-      "companySlug": "zhipu-ai",
       "publishedAt": "2026-03-31",
       "importance": 80,
       "source": {
@@ -11978,7 +12261,6 @@
       "region": "中国",
       "sector": "AI / AGI",
       "company": "科技产业",
-      "companySlug": "zhipu-ai",
       "publishedAt": "2026-03-30",
       "importance": 80,
       "source": {
@@ -12057,6 +12339,25 @@
       "trackSlugs": [
         "space"
       ]
+    },
+    {
+      "id": "figure-1c8fb7694b6ce7e2",
+      "sourceId": "figure",
+      "title": "Helix 02 Living Room Tidy",
+      "summary": "Helix 02 Living Room Tidy",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "Figure AI",
+      "companySlug": "figure-ai",
+      "publishedAt": "2026-03-09",
+      "importance": 76,
+      "source": {
+        "name": "Figure AI",
+        "url": "https://www.figure.ai/news/helix-02-living-room-tidy",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-horizon-robotics-862cee3791a802e5",
@@ -12149,7 +12450,7 @@
     },
     {
       "id": "official-figure-ai-c6840b1905087377",
-      "sourceId": "official-figure-ai",
+      "sourceId": "figure",
       "title": "Introducing Helix 02: Full-Body Autonomy",
       "summary": "Introducing Helix 02: Full-Body Autonomy",
       "type": "产品发布",
@@ -12169,6 +12470,117 @@
         "ai",
         "robotics"
       ]
+    },
+    {
+      "id": "venturebeat-ai-7f9102717fb19b93",
+      "sourceId": "venturebeat-ai",
+      "title": "Railway secures $100 million to challenge AWS with AI-native cloud infrastructure",
+      "summary": "Railway , a San Francisco-based cloud platform that has quietly amassed two million developers without spending a dollar on marketing, announced Thursday that it raised $100 million in a Series B funding round, as surging demand for artificial intelligence applications exposes the limitations of legacy cloud infrastructure. TQ Ventures led the round, with participation from FPV Ventures , Redpoint , and Unusual Ventures . The investment values Railway as one of the most significant infrastructur",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-01-22",
+      "importance": 76,
+      "source": {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "venturebeat-ai-99a74fa8e5c3257d",
+      "sourceId": "venturebeat-ai",
+      "title": "Claude Code costs up to $200 a month. Goose does the same thing for free.",
+      "summary": "The artificial intelligence coding revolution comes with a catch: it's expensive. Claude Code , Anthropic's terminal-based AI agent that can write, debug, and deploy code autonomously, has captured the imagination of software developers worldwide. But its pricing — ranging from $20 to $200 per month depending on usage — has sparked a growing rebellion among the very programmers it aims to serve. Now, a free alternative is gaining traction. Goose , an open-source AI agent developed by Block (the",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "Anthropic",
+      "publishedAt": "2026-01-19",
+      "importance": 76,
+      "source": {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      },
+      "companySlug": "anthropic"
+    },
+    {
+      "id": "venturebeat-ai-2f6e8f891c0a8aeb",
+      "sourceId": "venturebeat-ai",
+      "title": "Listen Labs raises $69M after viral billboard hiring stunt to scale AI customer interviews",
+      "summary": "Alfred Wahlforss was running out of options. His startup, Listen Labs , needed to hire over 100 engineers, but competing against Mark Zuckerberg's $100 million offers seemed impossible. So he spent $5,000 — a fifth of his marketing budget — on a billboard in San Francisco displaying what looked like gibberish: five strings of random numbers. The numbers were actually AI tokens. Decoded, they led to a coding challenge: build an algorithm to act as a digital bouncer at Berghain, the Berlin nightcl",
+      "type": "融资",
+      "region": "美国",
+      "sector": "新材料",
+      "company": "科技产业",
+      "publishedAt": "2026-01-16",
+      "importance": 91,
+      "source": {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "venturebeat-ai-0d32aa6b6a8fd310",
+      "sourceId": "venturebeat-ai",
+      "title": "Salesforce rolls out new Slackbot AI agent as it battles Microsoft and Google in workplace AI",
+      "summary": "Salesforce on Tuesday launched an entirely rebuilt version of Slackbot , the company's workplace assistant, transforming it from a simple notification tool into what executives describe as a fully powered AI agent capable of searching enterprise data, drafting documents, and taking action on behalf of employees. The new Slackbot, now generally available to Business+ and Enterprise+ customers, is Salesforce's most aggressive move yet to position Slack at the center of the emerging \"agentic AI\" mo",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "科技产业",
+      "publishedAt": "2026-01-13",
+      "importance": 76,
+      "source": {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      }
+    },
+    {
+      "id": "venturebeat-ai-157324a9612f0389",
+      "sourceId": "venturebeat-ai",
+      "title": "Anthropic launches Cowork, a Claude Desktop agent that works in your files — no coding required",
+      "summary": "Anthropic released Cowork on Monday, a new AI agent capability that extends the power of its wildly successful Claude Code tool to non-technical users — and according to company insiders, the team built the entire feature in approximately a week and a half, largely using Claude Code itself. The launch marks a major inflection point in the race to deliver practical AI agents to mainstream users, positioning Anthropic to compete not just with OpenAI and Google in conversational AI, but with Micros",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "Anthropic",
+      "publishedAt": "2026-01-12",
+      "importance": 82,
+      "source": {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/technology/anthropic-launches-cowork-a-claude-desktop-agent-that-works-in-your-files-no",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      },
+      "companySlug": "anthropic"
+    },
+    {
+      "id": "venturebeat-ai-fe052daa70a8c4c9",
+      "sourceId": "venturebeat-ai",
+      "title": "Nous Research's NousCoder-14B is an open-source coding model landing right in the Claude Code moment",
+      "summary": "Nous Research , the open-source artificial intelligence startup backed by crypto venture firm Paradigm , released a new competitive programming model on Monday that it says matches or exceeds several larger proprietary systems — trained in just four days using 48 of Nvidia's latest B200 graphics processors . The model, called NousCoder-14B , is another entry in a crowded field of AI coding assistants, but arrives at a particularly charged moment: Claude Code , the agentic programming tool from r",
+      "type": "技术突破",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "Anthropic",
+      "publishedAt": "2026-01-07",
+      "importance": 85,
+      "source": {
+        "name": "VentureBeat AI",
+        "url": "https://venturebeat.com/technology/nous-researchs-nouscoder-14b-is-an-open-source-coding-model-landing-right-in",
+        "level": "媒体报道",
+        "platform": "专业媒体"
+      },
+      "companySlug": "anthropic"
     },
     {
       "id": "official-mobileye-9bd9dce1719f03a1",
@@ -12259,6 +12671,25 @@
         "semiconductor",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "figure-5ad436675449eb5b",
+      "sourceId": "figure",
+      "title": "F.02 Contributed to the Production of 30,000 Cars at BMW",
+      "summary": "F.02 Contributed to the Production of 30,000 Cars at BMW",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "Figure AI",
+      "companySlug": "figure-ai",
+      "publishedAt": "2025-11-19",
+      "importance": 76,
+      "source": {
+        "name": "Figure AI",
+        "url": "https://www.figure.ai/news/production-at-bmw",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
     },
     {
       "id": "official-xai-3ba15a3903f44c86",
@@ -12372,7 +12803,7 @@
     },
     {
       "id": "official-figure-ai-524187fe83b05d5f",
-      "sourceId": "official-figure-ai",
+      "sourceId": "figure",
       "title": "Introducing Figure 03",
       "summary": "Introducing Figure 03",
       "type": "产品发布",
@@ -12394,6 +12825,25 @@
       ]
     },
     {
+      "id": "figure-c2a2a879a1c152e0",
+      "sourceId": "figure",
+      "title": "Project Go-Big: Internet-Scale Humanoid Pretraining and Direct Human-to-Robot Transfer",
+      "summary": "Project Go-Big: Internet-Scale Humanoid Pretraining and Direct Human-to-Robot Transfer",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "Figure AI",
+      "companySlug": "figure-ai",
+      "publishedAt": "2025-09-18",
+      "importance": 76,
+      "source": {
+        "name": "Figure AI",
+        "url": "https://www.figure.ai/news/project-go-big",
+        "level": "官方披露",
+        "platform": "官方网站"
+      }
+    },
+    {
       "id": "official-zhipu-ai-bc6206a7912656eb",
       "sourceId": "official-zhipu-ai",
       "title": "Z.ai - Inspiring AGI to Benefit Humanity",
@@ -12402,7 +12852,6 @@
       "region": "中国",
       "sector": "AI / AGI",
       "company": "科技产业",
-      "companySlug": "zhipu-ai",
       "publishedAt": "2025-08-25",
       "importance": 80,
       "source": {
@@ -12761,7 +13210,6 @@
       "region": "中国",
       "sector": "AI / AGI",
       "company": "科技产业",
-      "companySlug": "zhipu-ai",
       "publishedAt": "2024-09-10",
       "importance": 80,
       "source": {
@@ -14384,9 +14832,9 @@
     {
       "id": "sina-finance",
       "name": "新浪财经",
-      "status": "ok",
-      "scanned": 2,
-      "accepted": 2,
+      "status": "empty",
+      "scanned": 0,
+      "accepted": 0,
       "failed": 0,
       "platform": "新浪"
     },
@@ -14403,8 +14851,8 @@
       "id": "tmtpost",
       "name": "钛媒体",
       "status": "ok",
-      "scanned": 6,
-      "accepted": 6,
+      "scanned": 8,
+      "accepted": 8,
       "failed": 0,
       "platform": "专业媒体"
     },
@@ -16265,7 +16713,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-deepmind",
@@ -16275,7 +16723,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-demis",
@@ -16285,7 +16733,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-feifei-li",
@@ -16295,7 +16743,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-kaiming-he",
@@ -16305,7 +16753,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-karpathy",
@@ -16315,7 +16763,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-lecun",
@@ -16325,7 +16773,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-openai",
@@ -16335,7 +16783,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X returned HTTP 429 after delayed retry; circuit opened and previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-sam-altman",
@@ -16345,7 +16793,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "x-shunyu-yao",
@@ -16355,7 +16803,7 @@
       "accepted": 0,
       "failed": 1,
       "platform": "X",
-      "error": "X rate-limit cooldown active (179s); previous snapshot retained"
+      "error": "HTTP Error 429: Too Many Requests"
     },
     {
       "id": "xai",
@@ -16371,12 +16819,12 @@
     "passed": true,
     "checks": {
       "minimumArticles": {
-        "actual": 464,
+        "actual": 543,
         "required": 50,
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 116,
+        "actual": 125,
         "required": 6,
         "passed": true
       },
@@ -16391,7 +16839,7 @@
         "passed": true
       },
       "minimumPlatforms": {
-        "actual": 31,
+        "actual": 30,
         "required": 4,
         "passed": true
       },
@@ -16401,17 +16849,17 @@
         "passed": true
       },
       "minimumChinaArticles": {
-        "actual": 128,
+        "actual": 180,
         "required": 8,
         "passed": true
       },
       "minimumUsArticles": {
-        "actual": 237,
+        "actual": 264,
         "required": 20,
         "passed": true
       },
       "maximumSingleSourceShare": {
-        "actual": 0.0496,
+        "actual": 0.0424,
         "required": 0.45,
         "passed": true
       },
@@ -16421,238 +16869,11 @@
         "passed": true
       },
       "uniqueUrls": {
-        "actual": 464,
-        "required": 464,
+        "actual": 543,
+        "required": 543,
         "passed": true
       }
     },
-    "invalidArticles": [],
-    "trackingQuality": {
-      "scoredUserArticles": 384,
-      "acceptedUserArticles": 191,
-      "rejectedUserArticles": 193,
-      "clusteredDuplicates": 6,
-      "minimumScore": 31
-    }
-  },
-  "trackingConfigHash": "6ab74b6c66e4aa7f936654288e729c6e70ebd295b4bf0f62bfacdca88628867a",
-  "trackingEnrichedAt": "2026-07-25T16:54:15+00:00",
-  "trackCoverage": {
-    "ai": {
-      "slug": "ai",
-      "name": "AI / AGI",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 3,
-      "failedSources": 0,
-      "scanned": 21,
-      "accepted": 21,
-      "matchedArticles": 278,
-      "backfilledArticles": 18,
-      "independentSources": 278,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 278 条公开事件。"
-    },
-    "robotics": {
-      "slug": "robotics",
-      "name": "机器人",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 3,
-      "failedSources": 0,
-      "scanned": 24,
-      "accepted": 24,
-      "matchedArticles": 73,
-      "backfilledArticles": 8,
-      "independentSources": 73,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 73 条公开事件。"
-    },
-    "semiconductor": {
-      "slug": "semiconductor",
-      "name": "半导体",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 2,
-      "failedSources": 0,
-      "scanned": 16,
-      "accepted": 16,
-      "matchedArticles": 46,
-      "backfilledArticles": 0,
-      "independentSources": 46,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 46 条公开事件。"
-    },
-    "energy": {
-      "slug": "energy",
-      "name": "新能源",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 3,
-      "failedSources": 0,
-      "scanned": 20,
-      "accepted": 20,
-      "matchedArticles": 26,
-      "backfilledArticles": 0,
-      "independentSources": 26,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 26 条公开事件。"
-    },
-    "biotech": {
-      "slug": "biotech",
-      "name": "生物科技",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 2,
-      "failedSources": 0,
-      "scanned": 16,
-      "accepted": 16,
-      "matchedArticles": 13,
-      "backfilledArticles": 0,
-      "independentSources": 13,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 13 条公开事件。"
-    },
-    "quantum": {
-      "slug": "quantum",
-      "name": "量子计算",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 3,
-      "failedSources": 0,
-      "scanned": 24,
-      "accepted": 24,
-      "matchedArticles": 17,
-      "backfilledArticles": 0,
-      "independentSources": 17,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 17 条公开事件。"
-    },
-    "space": {
-      "slug": "space",
-      "name": "商业航天",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 3,
-      "failedSources": 0,
-      "scanned": 24,
-      "accepted": 24,
-      "matchedArticles": 37,
-      "backfilledArticles": 0,
-      "independentSources": 37,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 37 条公开事件。"
-    },
-    "web3": {
-      "slug": "web3",
-      "name": "Web3",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 3,
-      "failedSources": 0,
-      "scanned": 24,
-      "accepted": 24,
-      "matchedArticles": 4,
-      "backfilledArticles": 3,
-      "independentSources": 4,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 4 条公开事件。"
-    },
-    "materials": {
-      "slug": "materials",
-      "name": "新材料",
-      "status": "empty",
-      "label": "已运行但无命中",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 2,
-      "failedSources": 0,
-      "scanned": 10,
-      "accepted": 10,
-      "matchedArticles": 0,
-      "backfilledArticles": 0,
-      "independentSources": 0,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，但当前快照没有满足匹配条件的文章。"
-    },
-    "manufacturing": {
-      "slug": "manufacturing",
-      "name": "智能制造",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 2,
-      "failedSources": 0,
-      "scanned": 16,
-      "accepted": 16,
-      "matchedArticles": 8,
-      "backfilledArticles": 2,
-      "independentSources": 8,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 8 条公开事件。"
-    },
-    "fusion": {
-      "slug": "fusion",
-      "name": "可控核聚变",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 2,
-      "failedSources": 0,
-      "scanned": 16,
-      "accepted": 16,
-      "matchedArticles": 1,
-      "backfilledArticles": 0,
-      "independentSources": 1,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 1 条公开事件。"
-    },
-    "track-1ccjq49": {
-      "slug": "track-1ccjq49",
-      "name": "风险投资",
-      "status": "ready",
-      "label": "已完成",
-      "expectedSources": 3,
-      "completedSources": 3,
-      "healthySources": 2,
-      "failedSources": 0,
-      "scanned": 16,
-      "accepted": 16,
-      "matchedArticles": 207,
-      "backfilledArticles": 207,
-      "independentSources": 207,
-      "lastRun": "2026-07-25T16:54:14+00:00",
-      "message": "三路发现均已尝试，当前匹配 207 条公开事件。"
-    }
-  },
-  "wechatIngestion": {
-    "generatedAt": "2026-07-26T02:18:12+00:00",
-    "configuredSources": 33,
-    "successfulSources": 10,
-    "acceptedArticles": 39,
-    "fullTextArticles": 39,
-    "indexOnlyArticles": 0,
-    "removedProxyRecords": 0,
-    "retainedSources": 23,
-    "mentionedCompanyLinks": 46,
-    "mentionedPeopleLinks": 102
+    "invalidArticles": []
   }
 }
