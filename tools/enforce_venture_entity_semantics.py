@@ -70,10 +70,33 @@ RELATIONAL_MENTION_RE = re.compile(
 CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\n]+|(?<=\.)\s+(?=[A-Z\u3400-\u9fff])")
 PRODUCT_EDITORIAL_RE = re.compile(
     r"\b(?:press release|latest news|newsroom|things to know|crew undocks|"
-    r"journey home|announces?|launches?|introduces?|partnership|collaboration)\b|"
-    r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|访谈|观点|生态合作)",
+    r"journey home|announces?|launches?|introduces?|partnership|collaboration|"
+    r"read more|learn more|start chat|free chat|try now|new paper|explores?|"
+    r"nominates?|applauded|positive topline|developed using|for the treatment|"
+    r"enabling rapid|development with)\b|"
+    r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|"
+    r"访谈|观点|生态合作|开始对话|免费对话|立即体验|体验全新|交付速度|再提升)",
     re.IGNORECASE,
 )
+PRODUCT_URL_RE = re.compile(
+    r"(?:https?://|^https?:$|^www\.)|\b(?:qnimgs?|imgs?|images?|cdn)\b",
+    re.IGNORECASE,
+)
+PRODUCT_FILE_RE = re.compile(
+    r"\.(?:png|jpe?g|webp|svg|gif|pdf)(?:[?#].*)?$",
+    re.IGNORECASE,
+)
+PRODUCT_SENTENCE_RE = re.compile(
+    r"^(?:the first\b|new paper\b|development with\b)|"
+    r"\b(?:nominates?|applauded|positive topline|for the treatment|"
+    r"developed using|enabling rapid)\b",
+    re.IGNORECASE,
+)
+PRODUCT_EXACT_NOISE = {
+    "cost-effective drug discovery",
+    "drug discovery",
+    "nach01",
+}
 PERSON_CJK_RE = re.compile(r"^[\u3400-\u9fff·]{2,8}$")
 PERSON_LATIN_TOKEN_RE = re.compile(r"^[A-Z][A-Za-z'’.-]*$")
 PERSON_PARTICLES = {"de", "del", "da", "di", "van", "von", "la", "le"}
@@ -82,7 +105,12 @@ PERSON_NOISE_TOKENS = {
     "newsroom", "profile", "people", "about", "featured", "general",
     "partner", "managing", "principal", "director", "founder", "cofounder",
     "chief", "officer", "president", "executive",
-    "the", "next", "black", "history",
+    "the", "next", "black", "history", "awards", "solutions", "platform",
+    "overview", "providers", "program", "programs", "events", "resources",
+}
+PERSON_ORGANIZATION_NAMES = {
+    "moses singer",
+    "sun microsystems",
 }
 PERSON_ORG_SUFFIXES = (
     "团队", "部门", "研究院", "实验室", "资本", "基金", "公司", "集团",
@@ -186,6 +214,10 @@ def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
         or YEAR_ONLY_RE.fullmatch(item)
         or NUMERIC_ONLY_RE.fullmatch(item)
         or PRODUCT_EDITORIAL_RE.search(item)
+        or PRODUCT_URL_RE.search(item)
+        or PRODUCT_FILE_RE.search(item)
+        or PRODUCT_SENTENCE_RE.search(item)
+        or item.casefold().strip(" .") in PRODUCT_EXACT_NOISE
         or len(compact) < 2
     ):
         return False
@@ -195,7 +227,11 @@ def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
 
 def _valid_person_name(value: Any) -> bool:
     name = clean_text(value, 120).strip(" ,，:：;；-|｜")
-    if not name or any(name.endswith(suffix) for suffix in PERSON_ORG_SUFFIXES):
+    if (
+        not name
+        or name.casefold().strip(" .") in PERSON_ORGANIZATION_NAMES
+        or any(name.endswith(suffix) for suffix in PERSON_ORG_SUFFIXES)
+    ):
         return False
     if PERSON_CJK_RE.fullmatch(name):
         return True
@@ -457,10 +493,17 @@ def _enforce_snapshot_once(
                 or clean_text(spec.summary, 900)
             )
         profile["background"] = background
+        raw_technology = clean_text(profile.get("technology", ""), 1400)
         technology = _relevant_clauses(
-            profile.get("technology", ""), aliases, products, limit=900
+            raw_technology, aliases, products, limit=900
         )
-        if not technology and products:
+        if products and (
+            not technology
+            or PRODUCT_EDITORIAL_RE.search(raw_technology)
+            or PRODUCT_URL_RE.search(raw_technology)
+            or PRODUCT_FILE_RE.search(raw_technology)
+            or PRODUCT_SENTENCE_RE.search(raw_technology)
+        ):
             technology = f"核心技术与产品包括{'、'.join(products[:8])}。"
         profile["technology"] = technology
         research_technology = _relevant_clauses(
