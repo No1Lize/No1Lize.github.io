@@ -1,0 +1,64 @@
+name: Verify professional venture UI live
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/verify-professional-venture-live.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build and verify local static page
+        run: |
+          npx tsc --noEmit
+          node --import tsx --test tests/professional-venture-data.test.ts
+          npm run build:pages
+          page='out/companies/deepseek/index.html'
+          test -f "$page"
+          grep -Fq '股权、股东与工商变更核验' "$page"
+          grep -Fq '专业来源执行状态' "$page"
+          grep -Fq '企查查' "$page"
+          grep -Fq '天眼查' "$page"
+          grep -Fq '鲸准' "$page"
+      - name: Wait for and verify live GitHub Pages page
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://no1lize.github.io/companies/deepseek/'
+          for attempt in $(seq 1 24); do
+            curl -fsSL --retry 2 --retry-delay 2 "${url}?verify=${GITHUB_SHA}-${attempt}" -o live-company.html || true
+            if grep -Fq '股权、股东与工商变更核验' live-company.html 2>/dev/null \
+              && grep -Fq '专业来源执行状态' live-company.html \
+              && grep -Fq '企查查' live-company.html \
+              && grep -Fq '天眼查' live-company.html \
+              && grep -Fq '鲸准' live-company.html; then
+              printf '{"verified":true,"url":"%s","attempt":%s,"sourceCommit":"%s"}\n' \
+                "$url" "$attempt" "$GITHUB_SHA" > live-verification.json
+              exit 0
+            fi
+            sleep 15
+          done
+          printf '{"verified":false,"url":"%s","sourceCommit":"%s"}\n' \
+            "$url" "$GITHUB_SHA" > live-verification.json
+          exit 1
+      - name: Upload verification record
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: professional-venture-live-verification
+          path: |
+            live-verification.json
+            live-company.html
+          if-no-files-found: warn
+          retention-days: 2
