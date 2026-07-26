@@ -1,0 +1,111 @@
+name: Validate precise venture product evidence
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .venture-product-precision-trigger
+      - .github/workflows/venture-product-precision-pr.yml
+      - tools/apply_product_evidence_precision_fix.py
+      - tools/apply_product_alias_separator_fix.py
+
+permissions:
+  contents: write
+
+concurrency:
+  group: venture-product-precision-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Apply precise product evidence rules
+        run: |
+          python tools/apply_product_evidence_precision_fix.py
+          python tools/apply_product_alias_separator_fix.py
+      - name: Compile and test venture pipeline
+        run: |
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/refine_venture_research_evidence.py \
+            tools/normalize_venture_profiles.py \
+            tools/finalize_venture_profiles.py \
+            tools/enforce_venture_entity_semantics.py \
+            tools/stabilize_venture_profiles.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles \
+            tests.test_venture_semantic_rebase
+      - name: Reprocess latest formal snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          converged=false
+          for pass in $(seq 1 8); do
+            cp public/data/venture_profiles.json /tmp/venture-before.json
+            python tools/refine_venture_research_evidence.py
+            python tools/normalize_venture_profiles.py
+            python tools/stabilize_venture_profiles.py
+            if cmp -s /tmp/venture-before.json public/data/venture_profiles.json; then
+              converged=true
+              echo "Complete venture pipeline converged on pass ${pass}."
+              break
+            fi
+          done
+          test "$converged" = true
+      - name: Validate publication gates
+        run: |
+          python tools/refine_venture_research_evidence.py --check
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate frontend consumption
+        run: |
+          npm install
+          node --import tsx --test tests/venture-profile-data.test.ts tests/catalog.test.ts
+      - name: Commit precise product evidence and clean temporary files
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f \
+            tools/apply_product_evidence_precision_fix.py \
+            tools/apply_product_alias_separator_fix.py \
+            .github/workflows/venture-product-precision-pr.yml \
+            .venture-product-precision-trigger
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add \
+            tools/refine_venture_research_evidence.py \
+            tests/test_venture_semantic_rebase.py \
+            public/data/venture_profiles.json
+          git add -u \
+            tools/apply_product_evidence_precision_fix.py \
+            tools/apply_product_alias_separator_fix.py \
+            .github/workflows/venture-product-precision-pr.yml \
+            .venture-product-precision-trigger
+          git commit -m 'fix: require exact technical product evidence'
+          git push origin HEAD:${{ github.head_ref }}
