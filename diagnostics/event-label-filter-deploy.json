@@ -6,6 +6,12 @@
   "tests": "success",
   "build": "success",
   "rendered": "success",
-  "deployOutcome": "pending",
-  "deployed": false
+  "deployOutcome": "success",
+  "deployed": true,
+  "pageUrl": "https://no1lize.github.io/",
+  "renderedAssertions": [
+    "按事件类型筛选",
+    "全部事件"
+  ],
+  "legacyKeywordUiAbsent": true
 }
