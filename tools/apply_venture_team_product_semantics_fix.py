@@ -41,6 +41,24 @@ REPLACEMENTS = [
 ''',
     ),
     (
+        '''    evidence_values = [
+        profile.get("researchTechnology", ""),
+        profile.get("technology", ""),
+        profile.get("background", ""),
+        *(_article_text(article) for article in articles[:40]),
+    ]
+''',
+        '''    # Prefer product-specific article evidence over generic catalog-style
+    # technology summaries, then fall back to normalized profile narratives.
+    evidence_values = [
+        *(_article_text(article) for article in articles[:40]),
+        profile.get("researchTechnology", ""),
+        profile.get("technology", ""),
+        profile.get("background", ""),
+    ]
+''',
+    ),
+    (
         '''            if _contains_any(sentence, TECH_TERMS)
             and any(alias.casefold() in sentence.casefold() for alias in aliases)
 ''',
