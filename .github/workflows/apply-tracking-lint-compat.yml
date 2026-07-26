@@ -22,7 +22,9 @@ jobs:
         with:
           node-version: 22
       - name: Apply minimal compatibility patch
-        run: python tools/patch_tracking_lint_compat.py
+        run: |
+          sed -i '0,/if new in text:/s//if new and new in text:/' tools/patch_tracking_lint_compat.py
+          python tools/patch_tracking_lint_compat.py
       - run: npm install
       - name: Verify full lint
         env:
