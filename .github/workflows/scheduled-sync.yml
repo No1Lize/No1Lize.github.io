@@ -9,6 +9,8 @@ on:
       - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
       - tools/crawl_with_wechat_registry.py
+      - tools/professional_media_sources.py
+      - tools/validate_professional_media_snapshot.py
       - tools/adaptive_public_sources.py
       - tools/generic_web_sources.py
       - tools/wechat_public_sources.py
@@ -44,6 +46,7 @@ on:
       - tools/migrate_article_entities.py
       - tests/**/*.py
       - config/intelligence_sources.json
+      - config/professional_technology_media_sources.json
       - config/wechat_sources.json
       - config/wechat_public_indexes.json
       - config/official_company_sources.json
@@ -61,7 +64,7 @@ permissions:
 
 concurrency:
   group: public-article-refresh
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   crawl:
@@ -74,12 +77,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Validate professional media source plan
+        run: |
+          python -m py_compile \
+            tools/professional_media_sources.py \
+            tools/validate_professional_media_snapshot.py \
+            tools/crawl_with_wechat_registry.py
+          python -m unittest tests.test_professional_media_sources
       - name: Start a clean full-source status ledger
         run: python tools/prepare_full_refresh.py
       - name: Crawl core, tracking, professional media, X and WeChat sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/crawl_with_wechat_registry.py --source all
+      - name: Require executed professional media groups and original-domain articles
+        run: python tools/validate_professional_media_snapshot.py --require-articles
       - name: Crawl all fixed and user-configured official company sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
@@ -133,6 +145,7 @@ jobs:
             python tools/enrich_tracking_snapshot.py
             python tools/refresh_people_profiles_with_video.py
             python tools/finalize_full_refresh.py
+            python tools/validate_professional_media_snapshot.py --require-articles
             python tools/crawl_articles.py --validate-only
             python tools/validate_full_refresh.py
             python tools/validate_eastmoney_snapshot.py
