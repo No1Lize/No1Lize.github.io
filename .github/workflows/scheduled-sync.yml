@@ -70,7 +70,7 @@ permissions:
 
 concurrency:
   group: public-article-refresh
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   crawl:
@@ -94,6 +94,7 @@ jobs:
           python -m unittest \
             tests.test_professional_media_sources \
             tests.test_listed_company_disclosures \
+            tests.test_scheduled_sync_workflow \
             tests.test_snapshot_retention
       - name: Start a clean full-source status ledger
         run: python tools/prepare_full_refresh.py
