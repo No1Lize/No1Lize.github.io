@@ -57,10 +57,13 @@ def resolve_ticker_ciks(
     index_fetcher: Callable[..., dict[str, Any]] = sec.fetch_json,
 ) -> tuple[dict[str, str], dict[str, Any]]:
     resolved, missing = configured_ticker_ciks(listings, config)
+    configured_tickers = sorted(resolved)
     metadata: dict[str, Any] = {
         "configuredListingCount": len(listings) - len(missing),
+        "configuredTickers": configured_tickers,
         "dynamicLookupAttempted": bool(missing),
         "dynamicResolvedCount": 0,
+        "dynamicResolvedTickers": [],
         "dynamicLookupErrors": [],
     }
     if not missing:
@@ -79,24 +82,78 @@ def resolve_ticker_ciks(
         metadata["dynamicLookupErrors"] = [f"{type(exc).__name__}:{exc}"]
 
     for listing in missing:
-        cik = normalize_cik(dynamic.get(listing.ticker.upper()))
+        ticker = listing.ticker.upper()
+        cik = normalize_cik(dynamic.get(ticker))
         if cik:
-            resolved[listing.ticker.upper()] = cik
+            resolved[ticker] = cik
             metadata["dynamicResolvedCount"] += 1
+            metadata["dynamicResolvedTickers"].append(ticker)
     return resolved, metadata
+
+
+def verify_submission_identity(
+    payload: dict[str, Any],
+    *,
+    expected_ticker: str,
+    expected_cik: str,
+) -> None:
+    actual_cik = normalize_cik(payload.get("cik"))
+    if actual_cik and actual_cik != normalize_cik(expected_cik):
+        raise RuntimeError(
+            f"SEC submission CIK mismatch: expected {expected_cik}, got {actual_cik}"
+        )
+    tickers = payload.get("tickers", [])
+    actual_tickers = {
+        str(value or "").upper().strip()
+        for value in tickers
+        if str(value or "").strip()
+    } if isinstance(tickers, list) else set()
+    if actual_tickers and expected_ticker.upper() not in actual_tickers:
+        raise RuntimeError(
+            "SEC submission ticker mismatch: "
+            f"expected {expected_ticker}, got {sorted(actual_tickers)}"
+        )
+
+
+def verified_submissions_fetcher(
+    ticker_ciks: dict[str, str],
+    *,
+    fetcher: Callable[..., dict[str, Any]] = sec.fetch_json,
+) -> Callable[..., dict[str, Any]]:
+    expected_by_cik = {
+        normalize_cik(cik): ticker.upper()
+        for ticker, cik in ticker_ciks.items()
+        if normalize_cik(cik)
+    }
+
+    def fetch(url: str, *, timeout: int, attempts: int) -> dict[str, Any]:
+        payload = fetcher(url, timeout=timeout, attempts=attempts)
+        match = re.search(r"CIK(\d{1,10})\.json", url, flags=re.IGNORECASE)
+        if not match:
+            raise RuntimeError(f"unrecognized SEC submissions URL: {url}")
+        cik = normalize_cik(match.group(1))
+        expected_ticker = expected_by_cik.get(cik)
+        if not expected_ticker:
+            raise RuntimeError(f"SEC CIK is not registered for this run: {cik}")
+        verify_submission_identity(
+            payload,
+            expected_ticker=expected_ticker,
+            expected_cik=cik,
+        )
+        return payload
+
+    return fetch
 
 
 def apply_registry_metadata(
     snapshot: dict[str, Any],
     listings: list[sec.USListing],
-    ticker_ciks: dict[str, str],
     registry_metadata: dict[str, Any],
 ) -> dict[str, Any]:
     result = json.loads(json.dumps(snapshot, ensure_ascii=False))
-    configured_slugs = {
-        listing.catalog_slug
-        for listing in listings
-        if listing.ticker.upper() in ticker_ciks
+    configured_tickers = {
+        str(value).upper()
+        for value in registry_metadata.get("configuredTickers", [])
     }
     statuses = [
         status
@@ -110,7 +167,7 @@ def apply_registry_metadata(
             continue
         status["cikSource"] = (
             "configured-official-registry"
-            if listing.catalog_slug in configured_slugs
+            if listing.ticker.upper() in configured_tickers
             else "dynamic-sec-ticker-index"
         )
     result["sourceStatus"] = statuses
@@ -182,11 +239,16 @@ def main() -> int:
     settings = config["settings"]
     ticker_ciks, registry_metadata = resolve_ticker_ciks(listings, config)
     snapshot = base.load_previous(sec.OUTPUT_PATH)
-    enriched = sec.enrich_snapshot(snapshot, listings, ticker_ciks, settings)
+    enriched = sec.enrich_snapshot(
+        snapshot,
+        listings,
+        ticker_ciks,
+        settings,
+        submissions_fetcher=verified_submissions_fetcher(ticker_ciks),
+    )
     enriched = apply_registry_metadata(
         enriched,
         listings,
-        ticker_ciks,
         registry_metadata,
     )
     errors = (
