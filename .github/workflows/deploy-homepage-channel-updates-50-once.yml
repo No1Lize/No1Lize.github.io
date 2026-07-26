@@ -1,0 +1,105 @@
+name: Deploy homepage channel updates 50 once
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deploy-homepage-channel-updates-50-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: homepage-channel-updates-50-once
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Type-check
+        run: npx tsc --noEmit
+      - name: Run focused tests
+        run: node --import tsx --test tests/channel-updates.test.ts
+      - name: Build Pages
+        run: npm run build:pages
+      - name: Verify 50 rendered updates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          html = Path('out/index.html').read_text(encoding='utf-8')
+          count = len(re.findall(r'class="heat-row"', html))
+          if count != 50:
+              raise SystemExit(f'expected 50 homepage channel updates, found {count}')
+          if '并展示最新' not in html or '50' not in html:
+              raise SystemExit('homepage limit explanation was not rendered')
+          print(f'verified {count} homepage channel updates')
+          PY
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Record deployment and remove one-time workflow
+        env:
+          SOURCE_COMMIT: ${{ github.sha }}
+          RUN_ID: ${{ github.run_id }}
+          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p diagnostics
+            python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = {
+              'sourceCommit': os.environ['SOURCE_COMMIT'],
+              'runId': os.environ['RUN_ID'],
+              'typecheck': 'success',
+              'tests': 'success',
+              'build': 'success',
+              'renderedUpdateCount': 50,
+              'deployOutcome': 'success',
+              'deployed': True,
+              'pageUrl': os.environ.get('PAGE_URL') or 'https://no1lize.github.io/',
+          }
+          Path('diagnostics/homepage-channel-updates-50-deploy.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+            rm -f .github/workflows/deploy-homepage-channel-updates-50-once.yml
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add diagnostics/homepage-channel-updates-50-deploy.json
+            git add -u .github/workflows/deploy-homepage-channel-updates-50-once.yml
+            git commit -m 'ci: confirm 50 homepage channel updates deployed'
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            sleep 5
+          done
+          exit 1
