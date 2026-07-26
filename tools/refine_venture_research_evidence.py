@@ -94,8 +94,10 @@ MARKET_TERMS = (
 )
 TECH_TERMS = (
     "模型", "算法", "架构", "平台", "系统", "芯片", "传感器", "训练", "推理",
-    "多模态", "自主", "model", "algorithm", "architecture", "platform",
-    "system", "chip", "training", "inference", "autonomous",
+    "多模态", "自主", "接口", "软件", "硬件", "量子", "聚变", "机器人", "无人驾驶",
+    "model", "algorithm", "architecture", "platform", "system", "chip",
+    "training", "inference", "autonomous", "api", "software", "hardware",
+    "quantum", "fusion", "robot", "driverless", "gpu", "processor", "computing",
 )
 ROUND_RE = re.compile(
     r"(?:Series\s+[A-Z][0-9]?\b|Pre[- ]?Seed|Seed|Angel|Growth|Strategic|"
@@ -132,6 +134,27 @@ def _sentences(value: Any, limit: int = 100) -> list[str]:
 def _contains_any(value: str, terms: Sequence[str]) -> bool:
     lowered = value.casefold()
     return any(term.casefold() in lowered for term in terms)
+
+
+def _alias_in_text(alias: Any, value: Any) -> bool:
+    """Match Latin aliases as complete tokens and CJK aliases as substrings."""
+    token = clean_text(alias, 160)
+    text = clean_text(value, 4000)
+    if not token or not text:
+        return False
+    if re.fullmatch(r"[A-Za-z0-9.+_ /-]+", token):
+        parts = re.findall(r"[A-Za-z0-9]+", token)
+        if not parts:
+            return False
+        pattern = r"[\s._+/-]+".join(re.escape(part) for part in parts)
+        return bool(
+            re.search(
+                rf"(?<![A-Za-z0-9]){pattern}(?![A-Za-z0-9])",
+                text,
+                re.IGNORECASE,
+            )
+        )
+    return token.casefold() in text.casefold()
 
 
 def _source_url(article: dict[str, Any]) -> str:
@@ -204,14 +227,14 @@ def _select_required_sentence(
     excluded_pattern: re.Pattern[str] | None = None,
     limit: int = 520,
 ) -> str:
-    aliases = [clean_text(alias, 120).casefold() for alias in required_aliases if clean_text(alias, 120)]
+    aliases = [clean_text(alias, 120) for alias in required_aliases if clean_text(alias, 120)]
     candidates: list[tuple[int, str]] = []
     for value in values:
         for sentence in _sentences(value):
             lowered = sentence.casefold()
             if excluded_pattern and excluded_pattern.search(sentence):
                 continue
-            alias_hits = sum(alias in lowered for alias in aliases)
+            alias_hits = sum(_alias_in_text(alias, sentence) for alias in aliases)
             term_hits = sum(term.casefold() in lowered for term in required_terms)
             if aliases and not alias_hits:
                 continue
@@ -277,12 +300,21 @@ def _clean_project_background(
     }
 
 def _product_aliases(product: str) -> list[str]:
-    aliases = [clean_text(product, 160)]
-    aliases.extend(
-        match.group(0)
-        for match in re.finditer(r"[A-Za-z][A-Za-z0-9.+_-]{1,}", product)
-        if len(match.group(0)) >= 2
-    )
+    """Return the full label plus distinctive model codes, not brand fragments."""
+    full = clean_text(product, 160)
+    aliases = [full]
+    generic = {
+        "api", "model", "platform", "system", "engine", "chip", "robot",
+        "agent", "software", "hardware", "station", "cloud", "data", "ai",
+        "gpu", "cpu", "npu", "lpu",
+    }
+    for match in re.finditer(r"[A-Za-z][A-Za-z0-9.+_-]{1,}", full):
+        token = match.group(0)
+        lowered = token.casefold()
+        if lowered in generic:
+            continue
+        if any(char.isdigit() for char in token) or (token.isupper() and len(token) >= 2):
+            aliases.append(token)
     return list(dict.fromkeys(alias for alias in aliases if len(alias) >= 2))
 
 
@@ -308,6 +340,7 @@ def _refine_products(
         description = _select_required_sentence(
             evidence_values,
             required_aliases=aliases,
+            required_terms=TECH_TERMS,
             excluded_pattern=CAPITAL_MARKET_RE,
             limit=420,
         )
@@ -315,7 +348,7 @@ def _refine_products(
         if not description:
             old_description = sanitize_narrative(old.get("description", ""), limit=420)
             if old_description and any(
-                alias.casefold() in old_description.casefold() for alias in aliases
+                _alias_in_text(alias, old_description) for alias in aliases
             ):
                 description = old_description
         if not description:
@@ -327,17 +360,23 @@ def _refine_products(
             sentence
             for sentence in _sentences(description, 6)
             if _contains_any(sentence, TECH_TERMS)
-            and any(alias.casefold() in sentence.casefold() for alias in aliases)
+            and any(_alias_in_text(alias, sentence) for alias in aliases)
             and "尚未识别到可独立核对的技术说明" not in sentence
         ][:3]
         source_url = ""
         for article in articles:
-            text = _article_text(article).casefold()
-            if any(alias.casefold() in text for alias in aliases) and _source_url(article):
+            article_text = _article_text(article)
+            if (
+                description
+                and description.casefold() in article_text.casefold()
+                and _source_url(article)
+            ):
                 source_url = _source_url(article)
                 break
         if not source_url:
-            source_url = normalize_url(old.get("sourceUrl", ""))
+            old_description = sanitize_narrative(old.get("description", ""), limit=420)
+            if old_description == description:
+                source_url = normalize_url(old.get("sourceUrl", ""))
         result.append(
             {
                 "name": name,

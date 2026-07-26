@@ -55,6 +55,26 @@ class VentureSemanticRebaseTests(unittest.TestCase):
             [],
         )
 
+    def test_product_evidence_requires_exact_alias_and_technical_context(self) -> None:
+        self.assertFalse(refiner._alias_in_text("ARC", "collaborative research agreement"))
+        self.assertTrue(refiner._alias_in_text("ARC", "ARC fusion power system"))
+        self.assertEqual(
+            refiner._select_required_sentence(
+                ["Meet Axiom Space Project Astronaut Emiliano Ventura."],
+                required_aliases=("Axiom Station",),
+                required_terms=refiner.TECH_TERMS,
+            ),
+            "",
+        )
+        self.assertIn(
+            "Wafer-Scale Engine",
+            refiner._select_required_sentence(
+                ["AMD and Cerebras combine the Wafer-Scale Engine for AI inference."],
+                required_aliases=("Wafer Scale Engine", "WSE"),
+                required_terms=refiner.TECH_TERMS,
+            ).replace("-", "-"),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
