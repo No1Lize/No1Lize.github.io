@@ -240,7 +240,7 @@
       "name": "Anduril Industries",
       "updatedAt": "2026-07-25T17:43:00+00:00",
       "status": "partial",
-      "background": "",
+      "background": "开发自主系统、传感器和国防软件平台。",
       "technology": "Lattice 平台与多类自主飞行器。",
       "products": [
         "Lattice 平台",
@@ -266,10 +266,10 @@
         "https://www.anduril.com/leadership: FetchError: HTTPError: HTTP Error 404: Not Found",
         "https://www.anduril.com/products: FetchError: HTTPError: HTTP Error 404: Not Found"
       ],
-      "evidenceScore": 28,
+      "evidenceScore": 40,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "开发自主系统、传感器和国防软件平台。",
         "problemSolved": "Anduril Industries builds advanced autonomous systems and defense technology to protect US and allied forces.",
         "marketOpportunity": ""
       },
@@ -541,10 +541,7 @@
       "technology": "Axiom Station 与私人宇航任务。",
       "products": [
         "Axiom Station",
-        "私人宇航任务",
-        "15 Things to Know about Ax-1",
-        "Ax-1 Crew Undocks from ISS",
-        "Axiom Astronauts Begin Journey Home"
+        "私人宇航任务"
       ],
       "team": [],
       "financing": [],
@@ -622,27 +619,6 @@
           "description": "Axiom Station 与私人宇航任务。",
           "technicalHighlights": [],
           "sourceUrl": ""
-        },
-        {
-          "name": "15 Things to Know about Ax-1",
-          "category": "技术产品",
-          "description": "Axiom Space to Establish Japan Subsidiary to Serve Growing Asia-Pacific Demand.",
-          "technicalHighlights": [],
-          "sourceUrl": "https://www.axiomspace.com/news/axiom-space-establishes-swiss-subsidiary"
-        },
-        {
-          "name": "Ax-1 Crew Undocks from ISS",
-          "category": "技术产品",
-          "description": "Axiom Space Establishes Swiss Subsidiary to Anchor European Engagement, Space Collaboration.",
-          "technicalHighlights": [],
-          "sourceUrl": "https://www.axiomspace.com/news/axiom-space-establishes-swiss-subsidiary"
-        },
-        {
-          "name": "Axiom Astronauts Begin Journey Home",
-          "category": "技术产品",
-          "description": "Meet Axiom Space Project Astronaut Emiliano Ventura.",
-          "technicalHighlights": [],
-          "sourceUrl": "https://www.axiomspace.com/news/axiom-space-celebrates-national-moon-day-hosts-reddit-ama-on-axemu-spacesuit"
         }
       ],
       "capitalSummary": {
@@ -1318,22 +1294,6 @@
       ],
       "team": [
         {
-          "name": "Michael James Chief Architect",
-          "role": "Co-Founder",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.cerebras.ai/company"
-        },
-        {
-          "name": "Gary Lauterbach Chief Technology",
-          "role": "Co-Founder",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.cerebras.ai/company"
-        },
-        {
           "name": "ML Angela Yeung Awards",
           "role": "CTO",
           "summary": "",
@@ -1414,7 +1374,7 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 98,
+      "evidenceScore": 92,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "研发面向 AI 训练和推理的晶圆级计算系统。",
@@ -1584,7 +1544,7 @@
       "name": "Databricks",
       "updatedAt": "2026-07-25T17:42:56+00:00",
       "status": "ok",
-      "background": "",
+      "background": "提供统一数据、分析与 AI 平台。",
       "technology": "Lakehouse、数据治理与机器学习工具。",
       "products": [
         "Lakehouse",
@@ -1611,28 +1571,12 @@
           "sourceUrl": "https://www.databricks.com/company/about-us"
         },
         {
-          "name": "Partner Spotlight Cloud Providers",
-          "role": "Partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.databricks.com/company/about-us"
-        },
-        {
           "name": "Solutions Platform Overview AI",
           "role": "Partner",
           "summary": "",
           "background": "",
           "previousExperience": "",
           "sourceUrl": "https://www.databricks.com/company/about-us"
-        },
-        {
-          "name": "Overview Partner Program Find",
-          "role": "Partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.databricks.com/company/leadership-team"
         }
       ],
       "financing": [],
@@ -1688,10 +1632,10 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 75,
+      "evidenceScore": 81,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "提供统一数据、分析与 AI 平台。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -1770,8 +1714,7 @@
         "DeepSeek V3",
         "DeepSeek Coder V2",
         "开始对话",
-        "DeepSeek 免费对话 体验全新旗舰模型",
-        "🎉 DeepSeek-V4 预览版本发布"
+        "DeepSeek 免费对话 体验全新旗舰模型"
       ],
       "team": [],
       "financing": [],
@@ -1863,15 +1806,6 @@
           "description": "技术线这块招的最多，这点也符合人们对DeepSeek的一贯印象。",
           "technicalHighlights": [],
           "sourceUrl": "https://api-docs.deepseek.com/zh-cn"
-        },
-        {
-          "name": "🎉 DeepSeek-V4 预览版本发布",
-          "category": "模型",
-          "description": "公开资料将🎉 DeepSeek-V4 预览版本发布列为该公司的核心产品或技术平台，尚未识别到可独立核对的技术说明。",
-          "technicalHighlights": [
-            "公开资料将🎉 DeepSeek-V4 预览版本发布列为该公司的核心产品或技术平台，尚未识别到可独立核对的技术说明。"
-          ],
-          "sourceUrl": ""
         }
       ],
       "capitalSummary": {
@@ -1896,7 +1830,7 @@
       "name": "远景能源",
       "updatedAt": "2026-07-25T17:43:19+00:00",
       "status": "partial",
-      "background": "",
+      "background": "提供风电、储能和零碳能源解决方案。",
       "technology": "核心技术与产品包括智能风机、储能系统、能源管理。",
       "products": [
         "智能风机",
@@ -1923,10 +1857,10 @@
         "thin page: https://www.envision-group.com/leadership",
         "thin page: https://www.envision-group.com/products"
       ],
-      "evidenceScore": 28,
+      "evidenceScore": 40,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "提供风电、储能和零碳能源解决方案。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -2134,7 +2068,7 @@
       "name": "Form Energy",
       "updatedAt": "2026-07-25T17:42:59+00:00",
       "status": "retained",
-      "background": "",
+      "background": "开发面向电网长时储能的铁空气电池。",
       "technology": "核心技术与产品包括多日储能系统。",
       "products": [
         "多日储能系统"
@@ -2171,10 +2105,10 @@
         "thin page: https://formenergy.com/products",
         "本轮公开页面信息少于上一版，已保留更完整的历史档案。"
       ],
-      "evidenceScore": 42,
+      "evidenceScore": 54,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "开发面向电网长时储能的铁空气电池。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -2214,7 +2148,7 @@
       "name": "傅利叶智能",
       "updatedAt": "2026-07-25T17:43:31+00:00",
       "status": "partial",
-      "background": "",
+      "background": "研发康复机器人和通用人形机器人平台。",
       "technology": "核心技术与产品包括康复机器人、GR 系列人形机器人。",
       "products": [
         "康复机器人",
@@ -2240,10 +2174,10 @@
         "thin page: https://www.fftai.com/leadership",
         "thin page: https://www.fftai.com/products"
       ],
-      "evidenceScore": 28,
+      "evidenceScore": 40,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "研发康复机器人和通用人形机器人平台。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -2290,7 +2224,7 @@
       "name": "星河动力",
       "updatedAt": "2026-07-25T17:43:33+00:00",
       "status": "ok",
-      "background": "",
+      "background": "研发固体与液体商业运载火箭。",
       "technology": "核心技术与产品包括谷神星、智神星系列运载火箭、“边界” 动力系统、工艺革新、星河动力 CQ-50 发动机交付速度再提升、https:、www.galactic-energy.cn、qnimgs。",
       "products": [
         "谷神星",
@@ -2363,10 +2297,10 @@
       "warnings": [
         "http://www.galactic-energy.cn/about: FetchError: HTTPError: HTTP Error 404: Not Found"
       ],
-      "evidenceScore": 58,
+      "evidenceScore": 70,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "研发固体与液体商业运载火箭。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -2865,14 +2799,6 @@
       ],
       "team": [
         {
-          "name": "Bernardo Cremades Jr. Co",
-          "role": "Managing Partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.harvey.ai/en-US/solutions/mid-sized-firms"
-        },
-        {
           "name": "Moses Singer",
           "role": "CEO",
           "summary": "",
@@ -2950,7 +2876,7 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 84,
+      "evidenceScore": 81,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "面向律师事务所和企业法务提供生成式 AI 工作平台。",
@@ -3018,14 +2944,6 @@
         "TIME | TIME100 Most Influential Companies of 2026"
       ],
       "team": [
-        {
-          "name": "Helion Team",
-          "role": "",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.helionenergy.com/newsroom/helion-raises-465-million-series-g-funding-round-to-meet-surging-global-demand-for-power"
-        },
         {
           "name": "Bill Ford",
           "role": "Chairman",
@@ -3109,7 +3027,7 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 94,
+      "evidenceScore": 91,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "研发基于脉冲磁约束路线的聚变发电系统。",
@@ -3178,7 +3096,7 @@
       "name": "地平线机器人",
       "updatedAt": "2026-07-25T17:43:23+00:00",
       "status": "ok",
-      "background": "",
+      "background": "提供乘用车高级辅助驾驶计算方案。",
       "technology": "核心技术与产品包括征程系列芯片、驾驶软件、Horizon Journey_Smart Driving Chip_Smart Driving Platform-Horizon Robotics、Horizon Robotics Rolls Out HSD Urban Driving Assistance System for Mass Production、Global Debut with Chery Automobile Scheduled for September、Horizon SuperDrive ™ Full-scenario Assisted Driving System、Building a Breakthrough Benchmark System Setting a New Benchmark for the Full-Scenario Assisted Driving Experience.",
       "products": [
         "征程系列芯片",
@@ -3237,10 +3155,10 @@
       "warnings": [
         "https://www.horizon.auto/En/Index/search/wd/Computing Solutions: InvalidURL: URL can't contain control characters. '/En/Index/search/wd/Computing Solutions' (found at least ' ')"
       ],
-      "evidenceScore": 44,
+      "evidenceScore": 56,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "提供乘用车高级辅助驾驶计算方案。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -3507,14 +3425,6 @@
       ],
       "team": [
         {
-          "name": "FL Fellow. Jordan Shapiro",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://investors.ionq.com/governance/executive-management/default.aspx"
-        },
-        {
           "name": "Marco Pistoia",
           "role": "CEO",
           "summary": "",
@@ -3533,14 +3443,6 @@
         {
           "name": "Specialty Sales",
           "role": "Partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://investors.ionq.com/governance/executive-management/default.aspx"
-        },
-        {
-          "name": "Quantum Computing Dr. Chris",
-          "role": "President",
           "summary": "",
           "background": "",
           "previousExperience": "",
@@ -3809,7 +3711,7 @@
       "name": "蓝箭航天",
       "updatedAt": "2026-07-25T17:43:25+00:00",
       "status": "ok",
-      "background": "",
+      "background": "研发液体燃料商业运载火箭及发动机。",
       "technology": "核心技术与产品包括朱雀系列运载火箭、朱雀三号（ ZQ-3 ）、天鹊（ TQ-12A ） 80 吨级 液氧甲烷发动机。",
       "products": [
         "朱雀系列运载火箭",
@@ -3870,10 +3772,10 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 48,
+      "evidenceScore": 60,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "研发液体燃料商业运载火箭及发动机。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -4113,31 +4015,7 @@
       ],
       "team": [
         {
-          "name": "Corner Newsroom Leadership President",
-          "role": "CEO",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.mobileye.com/about/management/"
-        },
-        {
-          "name": "Chief Technology Officer Chief",
-          "role": "CEO",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.mobileye.com/about/management/"
-        },
-        {
           "name": "Business Development",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.mobileye.com/about/management/"
-        },
-        {
-          "name": "Engineering Executive Vice President",
           "role": "President",
           "summary": "",
           "background": "",
@@ -4154,14 +4032,6 @@
         },
         {
           "name": "Intelligent Mobility Solutions Division",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.mobileye.com/about/management/"
-        },
-        {
-          "name": "Marketing Senior Vice President",
           "role": "President",
           "summary": "",
           "background": "",
@@ -4222,7 +4092,7 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 87,
+      "evidenceScore": 81,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "提供高级辅助驾驶芯片、感知软件、地图和自动驾驶方案。",
@@ -4697,7 +4567,7 @@
       "name": "起源太空",
       "updatedAt": "2026-07-25T17:43:43+00:00",
       "status": "retained",
-      "background": "",
+      "background": "研发空间资源探测与在轨服务相关技术。",
       "technology": "核心技术与产品包括空间望远镜、机器人和任务服务。",
       "products": [
         "空间望远镜",
@@ -4711,10 +4581,10 @@
         "homepage FetchError: URLError: <urlopen error timed out>",
         "本轮公开页面信息少于上一版，已保留更完整的历史档案。"
       ],
-      "evidenceScore": 24,
+      "evidenceScore": 36,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "研发空间资源探测与在轨服务相关技术。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -4960,20 +4830,12 @@
       "name": "PsiQuantum",
       "updatedAt": "2026-07-25T17:42:59+00:00",
       "status": "ok",
-      "background": "",
+      "background": "以光子路线开发容错量子计算系统。",
       "technology": "核心技术与产品包括硅光子量子计算架构。",
       "products": [
         "硅光子量子计算架构"
       ],
       "team": [
-        {
-          "name": "As Executive Vice President",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.psiquantum.com/news-import/psiquantum-strengthens-executive-leadership-with-new-appointments"
-        },
         {
           "name": "Pete Shadbolt",
           "role": "Co-Founder",
@@ -5036,10 +4898,10 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 66,
+      "evidenceScore": 75,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "以光子路线开发容错量子计算系统。",
         "problemSolved": "",
         "marketOpportunity": "PsiQuantum today announced the appointments of Rob Soderbery as Executive Vice President and Sriram Sitaraman as Chief Information Officer, adding two veteran technology leaders to the executive team as the company continues scaling its engineering, operational, and commercial capabilities."
       },
@@ -5152,7 +5014,7 @@
       "name": "Redwood Materials",
       "updatedAt": "2026-07-25T17:43:00+00:00",
       "status": "ok",
-      "background": "",
+      "background": "建设电池材料回收与闭环供应链。",
       "technology": "核心技术与产品包括电池回收、正极材料、铜箔、Time Magazine Time100 Next、Time Magazine Time100 Climate 2024。",
       "products": [
         "电池回收",
@@ -5226,10 +5088,10 @@
       "warnings": [
         "https://www.redwoodmaterials.com/company: FetchError: HTTPError: HTTP Error 404: Not Found"
       ],
-      "evidenceScore": 62,
+      "evidenceScore": 74,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "建设电池材料回收与闭环供应链。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -5318,14 +5180,6 @@
       ],
       "team": [
         {
-          "name": "As Chief Technology Officer",
-          "role": "Chief Technology Officer",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.relativityspace.com/leadership"
-        },
-        {
           "name": "Horizon Manufacturing Technologies Quan",
           "role": "President",
           "summary": "",
@@ -5381,7 +5235,7 @@
       "warnings": [
         "https://www.relativityspace.com/company: FetchError: HTTPError: HTTP Error 404: Not Found"
       ],
-      "evidenceScore": 74,
+      "evidenceScore": 71,
       "researchModelVersion": 3,
       "projectBackground": {
         "summary": "开发面向商业发射的可重复使用运载火箭。",
@@ -5612,31 +5466,7 @@
       ],
       "team": [
         {
-          "name": "Sir Peter Beck Founder",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.rocketlabusa.com/about/team/"
-        },
-        {
-          "name": "Lab Executive Leadership Founder",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.rocketlabusa.com/about/team/"
-        },
-        {
           "name": "Neutron Alek Derejian Vice",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.rocketlabusa.com/about/team/"
-        },
-        {
-          "name": "New Zealand Operations Dr.",
           "role": "President",
           "summary": "",
           "background": "",
@@ -5661,14 +5491,6 @@
         },
         {
           "name": "Global Information Technology Sandy",
-          "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.rocketlabusa.com/about/team/"
-        },
-        {
-          "name": "Macintosh Hardware Systems Engineering.",
           "role": "President",
           "summary": "",
           "background": "",
@@ -6197,14 +6019,6 @@
         {
           "name": "Corporate Development Brian Hamilton",
           "role": "President",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://shield.ai/company-leadership/"
-        },
-        {
-          "name": "Henoch Senbetta As Chief",
-          "role": "CEO",
           "summary": "",
           "background": "",
           "previousExperience": "",
@@ -6744,7 +6558,7 @@
       "name": "蜂巢能源",
       "updatedAt": "2026-07-25T17:43:27+00:00",
       "status": "ok",
-      "background": "",
+      "background": "研发动力电池和储能电池产品。",
       "technology": "核心技术与产品包括电芯、模组、电池包、储能系统。",
       "products": [
         "电芯",
@@ -6817,10 +6631,10 @@
       "warnings": [
         "https://www.svolt.cn/about/news: FetchError: HTTPError: HTTP Error 404: Not Found"
       ],
-      "evidenceScore": 62,
+      "evidenceScore": 74,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "研发动力电池和储能电池产品。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -7631,7 +7445,7 @@
       "name": "小鹏汇天",
       "updatedAt": "2026-07-25T17:43:36+00:00",
       "status": "partial",
-      "background": "",
+      "background": "研发面向低空出行的飞行汽车产品。",
       "technology": "核心技术与产品包括分体式飞行汽车、电动垂直起降飞行器、A868。",
       "products": [
         "分体式飞行汽车",
@@ -7692,10 +7506,10 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 48,
+      "evidenceScore": 60,
       "researchModelVersion": 3,
       "projectBackground": {
-        "summary": "",
+        "summary": "研发面向低空出行的飞行汽车产品。",
         "problemSolved": "",
         "marketOpportunity": ""
       },
@@ -7937,8 +7751,7 @@
         "GLM-5V-Turbo",
         "GLM-PC 基座模型",
         "CogAgent-9B 开源",
-        "智谱",
-        "英特尔深化智能生态合作"
+        "智谱"
       ],
       "team": [],
       "financing": [],
@@ -8073,15 +7886,6 @@
           "description": "智谱推出 AutoClaw（澳龙）——国内首款一键安装的本地 OpenClaw 客户端。",
           "technicalHighlights": [],
           "sourceUrl": "https://www.zhipuai.cn/zh/news/152"
-        },
-        {
-          "name": "英特尔深化智能生态合作",
-          "category": "模型",
-          "description": "公开资料将英特尔深化智能生态合作列为该公司的核心产品或技术平台，尚未识别到可独立核对的技术说明。",
-          "technicalHighlights": [
-            "公开资料将英特尔深化智能生态合作列为该公司的核心产品或技术平台，尚未识别到可独立核对的技术说明。"
-          ],
-          "sourceUrl": ""
         }
       ],
       "capitalSummary": {
@@ -8110,32 +7914,7 @@
       "status": "partial",
       "overview": "Andreessen Horowitz (a16z) is a venture capital firm in Silicon Valley, California, investing in bold founders, innovators, and entrepreneurs building the future through technology. Announcing CLF III The Cultural Leadership Fund (CLF) at a16z was founded to address gaps in access and equity for Black communities in technology. Announcing CLF III Megan Holston-Alexander The Cultural Leadership Fund (CLF) at a16z was founded to address gaps in access and equity for Black communities in technology.",
       "strategy": "All In: Introducing Our 2024 Cultural Leadership Fund Nonprofit Partners The Cultural Leadership Fund (CLF) remains focused on bringing African Americans into tech at the earliest stages of innovation. a16z pioneered the platform model—the largest team of operators in venture, from marketing and talent to legal and policy, dedicated to helping founders at every stage. Andreessen Horowitz (a16z) is a venture capital firm in Silicon Valley, California, investing in bold founders, innovators, and entrepreneurs building the future through technology.",
-      "team": [
-        {
-          "name": "Spotlight Megan Holston-Alexander Hear",
-          "role": "Partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://a16z.com/clf/"
-        },
-        {
-          "name": "Chris Lyons. The Next",
-          "role": "partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://a16z.com/clf/"
-        },
-        {
-          "name": "Chris Lyons. Black History",
-          "role": "partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://a16z.com/clf/"
-        }
-      ],
+      "team": [],
       "recentInvestments": [],
       "portfolio": [],
       "classicCases": [],
@@ -8190,7 +7969,7 @@
         }
       ],
       "warnings": [],
-      "evidenceScore": 69,
+      "evidenceScore": 48,
       "researchModelVersion": 3,
       "recentYearSummary": {
         "periodStart": "2025-07-25",
@@ -10045,24 +9824,8 @@
           "sourceUrl": "https://www.ycombinator.com/about"
         },
         {
-          "name": "Jon Levy Managing Director",
-          "role": "Partner",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.ycombinator.com/people"
-        },
-        {
           "name": "Startup Co",
           "role": "Founder",
-          "summary": "",
-          "background": "",
-          "previousExperience": "",
-          "sourceUrl": "https://www.ycombinator.com/people"
-        },
-        {
-          "name": "Garry Tan President",
-          "role": "CEO",
           "summary": "",
           "background": "",
           "previousExperience": "",

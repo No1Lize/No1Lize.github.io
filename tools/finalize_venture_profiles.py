@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 try:
+    from .enforce_venture_entity_semantics import _valid_person_name, _valid_product
     from .sanitize_venture_narratives import sanitize_narrative
     from .sanitize_venture_profiles import (
         sanitize_capital_events,
@@ -34,6 +35,7 @@ try:
         sanitize_team_members,
     )
 except ImportError:
+    from enforce_venture_entity_semantics import _valid_person_name, _valid_product
     from sanitize_venture_narratives import sanitize_narrative
     from sanitize_venture_profiles import (
         sanitize_capital_events,
@@ -181,11 +183,19 @@ def _product_noise(value: Any) -> bool:
     return bool(PRODUCT_PERIOD_RE.fullmatch(item))
 
 
-def finalize_products(values: Sequence[Any], catalog_product: str) -> list[str]:
+def finalize_products(
+    values: Sequence[Any],
+    catalog_product: str,
+    aliases: Sequence[str] = (),
+) -> list[str]:
     normalized_values = _split_product_values(values)
     normalized_catalog = "、".join(_split_product_values([catalog_product]))
     products = sanitize_products(normalized_values, normalized_catalog)
-    return [item for item in products if not _product_noise(item)][:10]
+    return [
+        item
+        for item in products
+        if not _product_noise(item) and _valid_product(item, aliases)
+    ][:10]
 
 
 def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[str, str]]:
@@ -196,7 +206,10 @@ def finalize_team(values: Sequence[Any], aliases: Sequence[str]) -> list[dict[st
     result: list[dict[str, str]] = []
     for row in sanitize_team_members(values, aliases):
         name = clean_text(row.get("name"), 120)
-        if any(term in name.casefold() for term in TEAM_NAME_NOISE_TERMS):
+        if (
+            any(term in name.casefold() for term in TEAM_NAME_NOISE_TERMS)
+            or not _valid_person_name(name)
+        ):
             continue
         original = originals.get(name.casefold(), {})
         result.append(
@@ -411,8 +424,18 @@ def finalize_snapshot(
         catalog_product = spec.product if spec else ""
         products_before = len(profile.get("products", []))
         events_before = len(profile.get("financing", [])) + len(profile.get("capitalMarkets", []))
-        profile["background"] = sanitize_narrative(profile.get("background", ""), limit=900)
-        profile["technology"] = sanitize_narrative(profile.get("technology", ""), limit=900)
+        profile["background"] = sanitize_narrative(
+            profile.get("background", ""),
+            fallback=spec.summary if spec else "",
+            limit=900,
+        )
+        raw_technology = clean_text(profile.get("technology", ""), 900)
+        profile["technology"] = sanitize_narrative(raw_technology, limit=900)
+        if (
+            not profile["technology"]
+            and raw_technology.startswith("核心技术与产品包括")
+        ):
+            profile["technology"] = raw_technology
         profile["researchTechnology"] = sanitize_narrative(
             profile.get("researchTechnology", ""),
             fallback=profile.get("technology", ""),
@@ -420,10 +443,16 @@ def finalize_snapshot(
         )
         if isinstance(profile.get("projectBackground"), dict):
             project = profile["projectBackground"]
-            project["summary"] = sanitize_narrative(project.get("summary", ""), limit=900)
+            project["summary"] = sanitize_narrative(
+                project.get("summary", ""),
+                fallback=profile["background"],
+                limit=900,
+            )
             project["problemSolved"] = sanitize_narrative(project.get("problemSolved", ""), limit=520)
             project["marketOpportunity"] = sanitize_narrative(project.get("marketOpportunity", ""), limit=520)
-        profile["products"] = finalize_products(profile.get("products", []), catalog_product)
+        profile["products"] = finalize_products(
+            profile.get("products", []), catalog_product, aliases
+        )
         profile["technologyProducts"] = finalize_technology_products(
             profile.get("technologyProducts", []), profile["products"]
         )

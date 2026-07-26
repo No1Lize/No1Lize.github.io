@@ -68,6 +68,26 @@ RELATIONAL_MENTION_RE = re.compile(
     re.IGNORECASE,
 )
 CLAUSE_SPLIT_RE = re.compile(r"[。！？!?；;\n]+|(?<=\.)\s+(?=[A-Z\u3400-\u9fff])")
+PRODUCT_EDITORIAL_RE = re.compile(
+    r"\b(?:press release|latest news|newsroom|things to know|crew undocks|"
+    r"journey home|announces?|launches?|introduces?|partnership|collaboration)\b|"
+    r"(?:新闻|资讯|发布|推出|宣布|携手|深化|合作|签约|亮相|荣获|入选|大会|峰会|访谈|观点|生态合作)",
+    re.IGNORECASE,
+)
+PERSON_CJK_RE = re.compile(r"^[\u3400-\u9fff·]{2,8}$")
+PERSON_LATIN_TOKEN_RE = re.compile(r"^[A-Z][A-Za-z'’.-]*$")
+PERSON_PARTICLES = {"de", "del", "da", "di", "van", "von", "la", "le"}
+PERSON_NOISE_TOKENS = {
+    "spotlight", "hear", "read", "view", "more", "team", "leadership",
+    "newsroom", "profile", "people", "about", "featured", "general",
+    "partner", "managing", "principal", "director", "founder", "cofounder",
+    "chief", "officer", "president", "executive",
+    "the", "next", "black", "history",
+}
+PERSON_ORG_SUFFIXES = (
+    "团队", "部门", "研究院", "实验室", "资本", "基金", "公司", "集团",
+    "委员会", "中心", "办公室", "业务部", "事业部",
+)
 
 
 def _compact(value: Any) -> str:
@@ -158,11 +178,41 @@ def _sanitize_background(value: Any) -> str:
     return sanitize_narrative(_trim_page_chrome(value), limit=900)
 
 
-def _valid_product(value: Any) -> bool:
+def _valid_product(value: Any, aliases: Sequence[str] = ()) -> bool:
     item = clean_text(value, 200).strip()
-    if not item or YEAR_ONLY_RE.fullmatch(item) or NUMERIC_ONLY_RE.fullmatch(item):
+    compact = _compact(item)
+    if (
+        not item
+        or YEAR_ONLY_RE.fullmatch(item)
+        or NUMERIC_ONLY_RE.fullmatch(item)
+        or PRODUCT_EDITORIAL_RE.search(item)
+        or len(compact) < 2
+    ):
         return False
-    return len(_compact(item)) >= 2
+    alias_compacts = {_compact(alias) for alias in aliases if _compact(alias)}
+    return compact not in alias_compacts
+
+
+def _valid_person_name(value: Any) -> bool:
+    name = clean_text(value, 120).strip(" ,，:：;；-|｜")
+    if not name or any(name.endswith(suffix) for suffix in PERSON_ORG_SUFFIXES):
+        return False
+    if PERSON_CJK_RE.fullmatch(name):
+        return True
+    tokens = [token for token in name.split() if token]
+    if not 2 <= len(tokens) <= 6:
+        return False
+    lowered = {token.casefold().strip(".,") for token in tokens}
+    if lowered & PERSON_NOISE_TOKENS:
+        return False
+    if any("." in token and len(token.strip(".")) > 1 for token in tokens):
+        return False
+    if not PERSON_LATIN_TOKEN_RE.fullmatch(tokens[0]) or not PERSON_LATIN_TOKEN_RE.fullmatch(tokens[-1]):
+        return False
+    return all(
+        PERSON_LATIN_TOKEN_RE.fullmatch(token) or token.casefold() in PERSON_PARTICLES
+        for token in tokens[1:-1]
+    )
 
 
 def _subject_evidence(
@@ -245,6 +295,8 @@ def _sanitize_team(values: Any) -> list[dict[str, Any]]:
             continue
         row = copy.deepcopy(raw)
         name = clean_text(row.get("name"), 120)
+        if not _valid_person_name(name):
+            continue
         summary = clean_text(row.get("summary"), 420)
         background = clean_text(row.get("background"), 420)
         previous = clean_text(row.get("previousExperience"), 420)
@@ -362,6 +414,7 @@ def _enforce_snapshot_once(
         "removedProducts": 0,
         "removedFinancing": 0,
         "removedCapitalMarkets": 0,
+        "removedTeamMembers": 0,
         "clearedTeamSummaries": 0,
         "replacedTechnologyDescriptions": 0,
     }
@@ -387,7 +440,7 @@ def _enforce_snapshot_once(
         products = [
             clean_text(item, 180)
             for item in original_products
-            if _valid_product(item)
+            if _valid_product(item, aliases)
         ] if isinstance(original_products, list) else []
         products = list(dict.fromkeys(products))[:16]
         diagnostics["removedProducts"] += max(
@@ -399,7 +452,10 @@ def _enforce_snapshot_once(
 
         background = _sanitize_background(profile.get("background", ""))
         if not background and spec:
-            background = sanitize_narrative(spec.summary, limit=900)
+            background = (
+                sanitize_narrative(spec.summary, limit=900)
+                or clean_text(spec.summary, 900)
+            )
         profile["background"] = background
         technology = _relevant_clauses(
             profile.get("technology", ""), aliases, products, limit=900
@@ -424,6 +480,11 @@ def _enforce_snapshot_once(
 
         team_before = copy.deepcopy(profile.get("team", []))
         profile["team"] = _sanitize_team(profile.get("team", []))
+        diagnostics["removedTeamMembers"] += max(
+            0,
+            (len(team_before) if isinstance(team_before, list) else 0)
+            - len(profile["team"]),
+        )
         for old, new in zip(team_before, profile["team"]):
             if isinstance(old, dict) and isinstance(new, dict):
                 diagnostics["clearedTeamSummaries"] += sum(
@@ -479,7 +540,13 @@ def _enforce_snapshot_once(
         profile["strategy"] = _relevant_clauses(
             profile.get("strategy", ""), aliases, (), limit=900
         )
-        profile["team"] = _sanitize_team(profile.get("team", []))
+        institution_team = profile.get("team", [])
+        profile["team"] = _sanitize_team(institution_team)
+        diagnostics["removedTeamMembers"] += max(
+            0,
+            (len(institution_team) if isinstance(institution_team, list) else 0)
+            - len(profile["team"]),
+        )
         profile["evidenceScore"] = evidence_score(profile, "institution")
         if profile != before:
             diagnostics["changedInstitutions"] += 1

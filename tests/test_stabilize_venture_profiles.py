@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import json
 import unittest
 from unittest.mock import patch
 
@@ -21,6 +22,34 @@ export type IpoCompany = {};
 
 
 class VentureProfileStabilizerTests(unittest.TestCase):
+    def test_current_snapshot_and_catalog_share_fixed_point(self) -> None:
+        catalog_text = stabilizer.CATALOG_PATH.read_text(encoding="utf-8")
+        payload = json.loads(stabilizer.SNAPSHOT_PATH.read_text(encoding="utf-8"))
+        companies, _ = semantics.parse_catalog(catalog_text)
+        specs = {company.slug: company for company in companies}
+
+        self.assertIn("anduril", specs)
+        self.assertEqual(
+            specs["anduril"].summary,
+            "开发自主系统、传感器和国防软件平台。",
+        )
+
+        stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, catalog_text)
+        structural_check, _ = finalizer.finalize_snapshot(stabilized, catalog_text)
+        semantic_check, _ = semantics.enforce_snapshot(stabilized, catalog_text)
+
+        self.assertTrue(diagnostics["converged"])
+        self.assertEqual(
+            stabilized["companies"]["anduril"]["background"],
+            "开发自主系统、传感器和国防软件平台。",
+        )
+        self.assertEqual(
+            stabilized["companies"]["anduril"]["projectBackground"]["summary"],
+            "开发自主系统、传感器和国防软件平台。",
+        )
+        self.assertEqual(structural_check, stabilized)
+        self.assertEqual(semantic_check, stabilized)
+
     def test_real_gates_share_one_terminal_fixed_point(self) -> None:
         payload = {
             "schemaVersion": 2,
@@ -34,9 +63,15 @@ class VentureProfileStabilizerTests(unittest.TestCase):
                     "background": "",
                     "technology": "Lattice 平台与多类自主飞行器。",
                     "researchTechnology": "Anduril Industries develops Lattice autonomous systems.",
-                    "products": ["Lattice 平台与多类自主飞行器"],
+                    "products": [
+                        "Anduril Industries",
+                        "英特尔深化智能生态合作",
+                        "Lattice 平台与多类自主飞行器",
+                    ],
                     "technologyProducts": [],
-                    "team": [],
+                    "team": [
+                        {"name": "Chris Lyons. The Next", "role": "Partner"},
+                    ],
                     "financing": [],
                     "capitalMarkets": [],
                     "sources": [],
@@ -59,6 +94,53 @@ class VentureProfileStabilizerTests(unittest.TestCase):
         self.assertTrue(diagnostics["converged"])
         self.assertEqual(company["background"], "开发自主系统、传感器和国防软件平台。")
         self.assertEqual(company["products"], ["Lattice 平台", "多类自主飞行器"])
+        self.assertEqual(company["team"], [])
+        self.assertEqual(structural_check, stabilized)
+        self.assertEqual(semantic_check, stabilized)
+
+    def test_short_generated_technology_is_a_shared_fixed_point(self) -> None:
+        catalog = """
+        export type Company = {};
+        export const companies: Company[] = [
+          { slug:"form-energy", name:"Form Energy", englishName:"Form Energy", region:"美国", sector:"新能源", stage:"成长期", status:"运营中", founded:"2017", headquarters:"Massachusetts", summary:"开发多日储能系统。", product:"多日储能系统", source:official("Form Energy","https://formenergy.com/"), confidence:0.96 },
+        ];
+        export type Institution = {};
+        export const institutionCatalog: Institution[] = [];
+        export type IpoCompany = {};
+        """
+        payload = {
+            "schemaVersion": 2,
+            "generatedAt": "2026-07-25T17:44:03+00:00",
+            "companies": {
+                "form-energy": {
+                    "slug": "form-energy",
+                    "name": "Form Energy",
+                    "background": "开发多日储能系统。",
+                    "technology": "核心技术与产品包括多日储能系统。",
+                    "researchTechnology": "核心技术与产品包括多日储能系统。",
+                    "products": ["多日储能系统"],
+                    "technologyProducts": [],
+                    "team": [],
+                    "financing": [],
+                    "capitalMarkets": [],
+                    "sources": [],
+                    "projectBackground": {
+                        "summary": "开发多日储能系统。",
+                        "problemSolved": "",
+                        "marketOpportunity": "",
+                    },
+                }
+            },
+            "institutions": {},
+            "qualityGate": {"passed": True, "checks": {}},
+        }
+        stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, catalog)
+        company = stabilized["companies"]["form-energy"]
+        self.assertTrue(diagnostics["converged"])
+        self.assertEqual(company["technology"], "核心技术与产品包括多日储能系统。")
+        self.assertEqual(company["researchTechnology"], company["technology"])
+        structural_check, _ = finalizer.finalize_snapshot(stabilized, catalog)
+        semantic_check, _ = semantics.enforce_snapshot(stabilized, catalog)
         self.assertEqual(structural_check, stabilized)
         self.assertEqual(semantic_check, stabilized)
 
