@@ -22,23 +22,27 @@ class ProfessionalMediaSourcesTest(unittest.TestCase):
         self.assertEqual(business_insider["host"], "businessinsider.com")
         self.assertIn("Android Authority", business_insider["correctedFrom"])
 
-    def test_grouped_specs_cover_every_source_exactly_once(self) -> None:
+    def test_every_media_outlet_has_an_independent_execution_source(self) -> None:
         tracks = tracking._enabled_tracks(tracking.load_tracking())
         specs = media.grouped_specs(tracks, tracking)
-        covered = [
-            row["id"]
-            for spec in specs
-            for row in spec.get("professionalMedia", [])
-        ]
-        expected = [source["id"] for source in media.enabled_sources()]
-        self.assertEqual(set(covered), set(expected))
-        self.assertEqual(len(covered), len(expected))
-        self.assertTrue(specs)
+        enabled = media.enabled_sources()
+
+        self.assertEqual(len(specs), 100)
+        self.assertEqual(len({spec["id"] for spec in specs}), 100)
+        self.assertEqual(
+            {spec["professionalMedia"][0]["id"] for spec in specs},
+            {source["id"] for source in enabled},
+        )
+
         for spec in specs:
-            self.assertLessEqual(len(spec["allowedHosts"]), 8)
             self.assertEqual(spec["adapter"], "rss")
             self.assertEqual(spec["sourceLevel"], "媒体报道")
             self.assertTrue(spec["url"].startswith("https://www.bing.com/search?"))
+            self.assertEqual(len(spec["allowedHosts"]), 1)
+            self.assertEqual(len(spec["professionalMedia"]), 1)
+            self.assertLessEqual(spec["maxItems"], 6)
+            media_id = spec["professionalMedia"][0]["id"]
+            self.assertEqual(spec["id"], f"professional-media-{media_id}")
 
     def test_original_media_name_is_preserved(self) -> None:
         row = {
@@ -52,11 +56,11 @@ class ProfessionalMediaSourcesTest(unittest.TestCase):
         }
         article = {
             "id": "example",
-            "sourceId": "professional-media-risk-01",
+            "sourceId": "professional-media-techcrunch",
             "region": "全球",
             "source": {
-                "name": "专业科技媒体 · 风险投资 · 01",
-                "platform": "专业科技媒体",
+                "name": "TechCrunch",
+                "platform": "TechCrunch",
                 "url": "https://techcrunch.com/2026/07/26/example/",
                 "level": "媒体报道",
             },
