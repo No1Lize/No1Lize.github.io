@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import json
+from datetime import date, datetime, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 try:
     from . import crawl_articles
@@ -19,6 +21,13 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
+TAIPEI = ZoneInfo("Asia/Taipei")
+# At the first morning runs, many publishers have not posted yet. From 10:00
+# Taipei onward, a formal snapshot must contain a meaningful same-day batch
+# from more than one publisher, rather than merely carrying forward history.
+FRESHNESS_GATE_HOUR = 10
+MIN_TODAY_ARTICLES = 8
+MIN_TODAY_SOURCES = 3
 # The verified, sector-aware WeChat registry replaces this legacy broad Bing
 # probe at runtime. Requiring both would incorrectly fail a complete run.
 RUNTIME_REPLACED_SOURCE_IDS = {"wechat-public-index"}
@@ -36,6 +45,22 @@ def _enabled_ids(rows: object) -> set[str]:
     }
 
 
+def _parse_completed_at(value: str) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(TAIPEI)
+    except ValueError:
+        return None
+
+
+def _parse_local_date(value: object) -> date | None:
+    try:
+        return date.fromisoformat(str(value or ""))
+    except ValueError:
+        return None
+
+
 def main() -> int:
     payload = json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
     audit = payload.get("refreshAudit")
@@ -49,8 +74,17 @@ def main() -> int:
         errors.append("snapshot was not finalized by the full refresh pipeline")
 
     completed_at = str(audit.get("completedAt") or "")
+    completed_local = _parse_completed_at(completed_at)
     if not completed_at:
         errors.append("missing refresh completion timestamp")
+    elif completed_local is None:
+        errors.append("invalid refresh completion timestamp")
+
+    local_date = _parse_local_date(audit.get("localDate"))
+    if local_date is None:
+        errors.append("missing or invalid refresh local date")
+    elif completed_local and local_date != completed_local.date():
+        errors.append("refresh local date does not match completion timestamp")
 
     status_ids = [str(item.get("id") or "") for item in statuses]
     status_id_set = {value for value in status_ids if value}
@@ -115,14 +149,53 @@ def main() -> int:
         if incomplete_tracks:
             errors.append("incomplete track coverage: " + ", ".join(incomplete_tracks))
 
+    latest_published_at = str(audit.get("latestPublishedAt") or "")
+    today_article_count = int(audit.get("todayArticleCount", 0) or 0)
+    today_source_count = int(audit.get("todaySourceCount", 0) or 0)
+    freshness_enforced = bool(
+        completed_local and completed_local.hour >= FRESHNESS_GATE_HOUR
+    )
+
+    if local_date:
+        minimum_recent_date = (local_date - timedelta(days=1)).isoformat()
+        if not latest_published_at or latest_published_at < minimum_recent_date:
+            errors.append(
+                f"latest article is stale: {latest_published_at or 'missing'}"
+            )
+
+    if freshness_enforced and local_date:
+        expected_date = local_date.isoformat()
+        if latest_published_at != expected_date:
+            errors.append(
+                f"latest article date {latest_published_at or 'missing'} is not {expected_date}"
+            )
+        if today_article_count < MIN_TODAY_ARTICLES:
+            errors.append(
+                f"insufficient same-day articles: {today_article_count} < {MIN_TODAY_ARTICLES}"
+            )
+        if today_source_count < MIN_TODAY_SOURCES:
+            errors.append(
+                f"insufficient same-day source diversity: {today_source_count} < {MIN_TODAY_SOURCES}"
+            )
+
+    expected_total = len(expected_core | expected_wechat | expected_official)
+    attempted_expected = len(
+        (expected_core | expected_wechat | expected_official) & status_id_set
+    )
+    coverage_rate = attempted_expected / expected_total if expected_total else 0.0
+
     summary = {
         "sourceStatuses": len(statuses),
         "expectedCoreSources": len(expected_core),
         "expectedWeChatSources": len(expected_wechat),
         "expectedOfficialCompanies": len(expected_official),
-        "latestPublishedAt": audit.get("latestPublishedAt"),
-        "todayArticleCount": audit.get("todayArticleCount"),
-        "todaySourceCount": audit.get("todaySourceCount"),
+        "expectedSourceCoverageRate": round(coverage_rate, 4),
+        "latestPublishedAt": latest_published_at,
+        "todayArticleCount": today_article_count,
+        "todaySourceCount": today_source_count,
+        "freshnessEnforced": freshness_enforced,
+        "minimumTodayArticles": MIN_TODAY_ARTICLES if freshness_enforced else 0,
+        "minimumTodaySources": MIN_TODAY_SOURCES if freshness_enforced else 0,
         "errors": errors,
     }
     print(json.dumps(summary, ensure_ascii=False))
