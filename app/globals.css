@@ -127,7 +127,16 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .market-divider { display: flex; justify-content: center; align-items: center; gap: 8px; color: var(--faint); font-size: 9px; }
 .market-divider i { height: 48px; width: 1px; background: var(--border); transform: rotate(18deg); }
 
-.content-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(350px, .8fr); gap: 32px; padding-top: 34px; }
+.content-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(290px, .72fr) minmax(320px, .78fr); gap: 30px; padding-top: 34px; }
+.headlines-column { min-width: 0; border-left: 1px solid var(--border); padding-left: 26px; }
+.headline-list { border-top: 1px solid var(--border); max-height: 1080px; overflow: auto; scrollbar-color: var(--border) transparent; }
+.headline-item { display: flex; gap: 10px; align-items: flex-start; padding: 11px 4px; border-bottom: 1px solid var(--border-soft); transition: background .18s ease; }
+.headline-item:hover { background: color-mix(in srgb, var(--surface-3) 72%, transparent); }
+.headline-index { padding-top: 2px; color: var(--faint); font: 10px/1.4 Inter, sans-serif; letter-spacing: .1em; }
+.headline-body { min-width: 0; }
+.headline-body strong { display: block; color: var(--text); font-size: 13px; font-weight: 500; line-height: 1.55; }
+.headline-body small { display: block; margin-top: 4px; color: var(--faint); font-size: 10px; }
+.headline-body small b { border: 1px solid var(--border); margin-right: 5px; padding: 1px 5px; color: var(--green-bright); font-weight: 650; }
 .primary-column { min-width: 0; }
 .side-column { border-left: 1px solid var(--border); padding-left: 30px; }
 /* Sidebar stack: channel updates panel first, the intel snapshot card below
@@ -318,6 +327,7 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
   .market-divider { display: none; }
   .market-summary, .market-summary:last-child { justify-content: space-between; border-bottom: 1px solid var(--border-soft); }
   .content-grid, .lower-grid { grid-template-columns: 1fr; }
+  .headlines-column { border-left: 0; border-top: 1px solid var(--border); padding: 28px 0 0; }
   .side-column { border-left: 0; border-top: 1px solid var(--border); padding: 28px 0 0; }
   .side-column-stack { border-left: 0; border-top: 1px solid var(--border); padding: 28px 0 0; }
   .side-column-stack > .side-column { border-top: 0; padding-top: 0; }
@@ -379,3 +389,8 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .document-preview-frame { width: 100%; height: 78vh; border: 1px solid var(--border); background: #525659; }
 .document-preview-image { max-width: 100%; border: 1px solid var(--border); }
 .document-preview-text { max-height: 72vh; overflow: auto; white-space: pre-wrap; word-break: break-word; border: 1px solid var(--border); background: var(--surface); padding: 20px 22px; color: var(--text); font-size: 14px; line-height: 1.9; font-family: inherit; }
+
+@media (max-width: 1250px) and (min-width: 901px) {
+  .content-grid { grid-template-columns: minmax(0, 1.35fr) minmax(300px, .8fr); }
+  .side-column-stack { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--border); padding: 26px 0 0; }
+}

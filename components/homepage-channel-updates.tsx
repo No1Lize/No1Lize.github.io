@@ -66,7 +66,7 @@ export function HomepageChannelUpdates() {
     <aside className="side-column">
       <div className="section-heading compact">
         <div>
-          <p className="section-index">02 / CHANNEL UPDATES</p>
+          <p className="section-index">03 / CHANNEL UPDATES</p>
           <h2>频道最新更新</h2>
         </div>
         <span>{updates.length} 条</span>

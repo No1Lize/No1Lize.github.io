@@ -37,7 +37,13 @@ const enabledSectorNames = new Set(
   trackedSectors.flatMap((sector) => sector.aliases),
 );
 
-export function Dashboard({ children }: { children: ReactNode }) {
+export function Dashboard({
+  middle,
+  children,
+}: {
+  middle?: ReactNode;
+  children: ReactNode;
+}) {
   const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
@@ -223,6 +229,8 @@ export function Dashboard({ children }: { children: ReactNode }) {
           </div>
         </div>
 
+        {middle}
+
         <div className="side-column-stack">
           {children}
           <div className="snapshot-card">
@@ -255,7 +263,7 @@ export function Dashboard({ children }: { children: ReactNode }) {
       <section className="lower-grid">
         <div className="panel">
           <div className="section-heading compact">
-            <div><p className="section-index">03 / FOCUS COMPANIES</p><h2>本周重点项目</h2></div>
+            <div><p className="section-index">04 / FOCUS COMPANIES</p><h2>本周重点项目</h2></div>
             <Link href="/companies">全部案例</Link>
           </div>
           <div className="company-grid">
@@ -271,7 +279,7 @@ export function Dashboard({ children }: { children: ReactNode }) {
 
         <div className="panel institution-panel">
           <div className="section-heading compact">
-            <div><p className="section-index">04 / INSTITUTIONS</p><h2>机构活跃度</h2></div>
+            <div><p className="section-index">05 / INSTITUTIONS</p><h2>机构活跃度</h2></div>
             <Link href="/institutions">机构库</Link>
           </div>
           {institutions.slice(0, 6).map((institution) => (
