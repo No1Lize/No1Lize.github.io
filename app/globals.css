@@ -107,7 +107,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 h1, h2, h3, p { margin-top: 0; }
 h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif; letter-spacing: -.025em; max-width: 850px; margin-bottom: 18px; }
 .intro-copy { max-width: 790px; color: var(--muted); font-size: 16px; margin-bottom: 0; }
-.snapshot-card { max-width: 360px; border: 1px solid var(--border); background: linear-gradient(135deg, var(--surface-2), var(--surface)); padding: 22px; box-shadow: var(--shadow); }
+.snapshot-card { border: 1px solid var(--border); background: linear-gradient(135deg, var(--surface-2), var(--surface)); padding: 22px; box-shadow: var(--shadow); }
 .snapshot-top, .snapshot-meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; }
 .status-pill { display: inline-flex; align-items: center; color: var(--green-bright); }
 .snapshot-card > strong { display: block; font-size: 52px; line-height: 1; margin-top: 23px; font-weight: 500; letter-spacing: -.06em; }
@@ -130,6 +130,10 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
 .content-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(350px, .8fr); gap: 32px; padding-top: 34px; }
 .primary-column { min-width: 0; }
 .side-column { border-left: 1px solid var(--border); padding-left: 30px; }
+/* Sidebar stack: channel updates panel first, the intel snapshot card below
+   it. The stack owns the column divider so the card aligns with the aside. */
+.side-column-stack { display: grid; gap: 30px; align-content: start; min-width: 0; border-left: 1px solid var(--border); padding-left: 30px; }
+.side-column-stack > .side-column { border-left: 0; padding-left: 0; }
 .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 18px; }
 .section-heading h2 { font: 500 25px/1.25 "Noto Serif SC", serif; margin: 0; }
 .section-heading > span, .section-heading a { color: var(--faint); font-size: 12px; }
@@ -315,6 +319,8 @@ h1 { font: 500 clamp(32px, 4.2vw, 58px)/1.15 "Noto Serif SC", "Songti SC", serif
   .market-summary, .market-summary:last-child { justify-content: space-between; border-bottom: 1px solid var(--border-soft); }
   .content-grid, .lower-grid { grid-template-columns: 1fr; }
   .side-column { border-left: 0; border-top: 1px solid var(--border); padding: 28px 0 0; }
+  .side-column-stack { border-left: 0; border-top: 1px solid var(--border); padding: 28px 0 0; }
+  .side-column-stack > .side-column { border-top: 0; padding-top: 0; }
   .page-header { grid-template-columns: 1fr; gap: 15px; }
   .page-header .eyebrow { margin-bottom: 0; }
   .catalog-grid { grid-template-columns: repeat(2, 1fr); }

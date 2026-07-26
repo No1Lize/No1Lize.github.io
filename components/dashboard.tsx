@@ -150,30 +150,6 @@ export function Dashboard({ children }: { children: ReactNode }) {
             持续读取公司与监管披露、金融创投媒体、新浪、X、微信公开索引及开放论文数据库，连接中美科技公司的产品、融资、经营、研究与资本市场进展。
           </p>
         </div>
-        <div className="snapshot-card">
-          <div className="snapshot-top">
-            <span>最新情报 · {latestPublishedAt || "暂无"}</span>
-            <span className="status-pill"><i /> {freshnessLabel}</span>
-          </div>
-          <strong>{String(activeArticles.length).padStart(2, "0")}</strong>
-          <p>
-            {qualityGate?.passed === false
-              ? "数据质量门未通过"
-              : isLive && latestPublishedAt !== processedAt
-                ? "数据已处理，但最新情报仍待刷新"
-                : "当前启用赛道的可追溯公开情报"}
-          </p>
-          <div className="snapshot-meta">
-            <span>{healthySourceCount || sourceCount} 个有效来源</span>
-            <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>
-            <span>数据处理 · {processedAt}</span>
-          </div>
-          {trackingQuality && (
-            <p className={qualityStyles.trackingSummary}>
-              用户追踪：{trackingQuality.acceptedUserArticles} 条通过 · {trackingQuality.rejectedUserArticles} 条过滤 · {trackingQuality.clusteredDuplicates} 条重复报道已聚合
-            </p>
-          )}
-        </div>
       </section>
 
       <section className="market-strip" aria-label="中美科技投资概览">
@@ -247,7 +223,33 @@ export function Dashboard({ children }: { children: ReactNode }) {
           </div>
         </div>
 
-        {children}
+        <div className="side-column-stack">
+          {children}
+          <div className="snapshot-card">
+            <div className="snapshot-top">
+              <span>最新情报 · {latestPublishedAt || "暂无"}</span>
+              <span className="status-pill"><i /> {freshnessLabel}</span>
+            </div>
+            <strong>{String(activeArticles.length).padStart(2, "0")}</strong>
+            <p>
+              {qualityGate?.passed === false
+                ? "数据质量门未通过"
+                : isLive && latestPublishedAt !== processedAt
+                  ? "数据已处理，但最新情报仍待刷新"
+                  : "当前启用赛道的可追溯公开情报"}
+            </p>
+            <div className="snapshot-meta">
+              <span>{healthySourceCount || sourceCount} 个有效来源</span>
+              <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>
+              <span>数据处理 · {processedAt}</span>
+            </div>
+            {trackingQuality && (
+              <p className={qualityStyles.trackingSummary}>
+                用户追踪：{trackingQuality.acceptedUserArticles} 条通过 · {trackingQuality.rejectedUserArticles} 条过滤 · {trackingQuality.clusteredDuplicates} 条重复报道已聚合
+              </p>
+            )}
+          </div>
+        </div>
       </section>
 
       <section className="lower-grid">
