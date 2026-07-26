@@ -19,11 +19,12 @@ jobs:
           node-version: "22"
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Type-check
+        run: npx tsc --noEmit
+      - name: Verify professional venture data boundary
+        run: node --import tsx --test tests/professional-venture-data.test.ts
       - name: Build GitHub Pages artifact
-        run: |
-          npx tsc --noEmit
-          node --import tsx --test tests/professional-venture-data.test.ts
-          npm run build:pages
+        run: npm run build:pages
       - name: Discover and verify a rendered company page
         shell: bash
         run: |
