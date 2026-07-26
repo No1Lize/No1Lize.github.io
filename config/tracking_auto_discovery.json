@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-26T16:12:04+00:00",
+  "updatedAt": "2026-07-26T23:47:00+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-26T16:09:34+00:00"
+      "lastExpandedAt": "2026-07-26T23:44:11+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-26T16:09:47+00:00"
+      "lastExpandedAt": "2026-07-26T23:44:27+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-26T16:10:01+00:00"
+      "lastExpandedAt": "2026-07-26T23:44:43+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-26T16:10:16+00:00"
+      "lastExpandedAt": "2026-07-26T23:44:59+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-26T16:10:29+00:00"
+      "lastExpandedAt": "2026-07-26T23:45:14+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-26T16:10:43+00:00"
+      "lastExpandedAt": "2026-07-26T23:45:29+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-26T16:10:55+00:00"
+      "lastExpandedAt": "2026-07-26T23:45:43+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-26T16:11:08+00:00"
+      "lastExpandedAt": "2026-07-26T23:45:58+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-26T16:11:20+00:00"
+      "lastExpandedAt": "2026-07-26T23:46:12+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-26T16:11:33+00:00"
+      "lastExpandedAt": "2026-07-26T23:46:26+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-26T16:11:47+00:00"
+      "lastExpandedAt": "2026-07-26T23:46:42+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-26T16:12:04+00:00"
+      "lastExpandedAt": "2026-07-26T23:47:00+00:00"
     }
   },
   "added": [
@@ -1709,6 +1709,270 @@
       "kind": "keywords",
       "value": "Army Police (Brazil)",
       "addedAt": "2026-07-26T16:12:04+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "具身智能机器人",
+      "addedAt": "2026-07-26T23:44:27+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "蔡自兴",
+      "addedAt": "2026-07-26T23:44:27+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "化石",
+      "addedAt": "2026-07-26T23:44:27+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "集成电路",
+      "addedAt": "2026-07-26T23:44:43+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "隔膜 (电学)",
+      "addedAt": "2026-07-26T23:44:59+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "固態氧化物燃料電池",
+      "addedAt": "2026-07-26T23:44:59+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "磷酸锗铝锂",
+      "addedAt": "2026-07-26T23:44:59+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "GICS",
+      "addedAt": "2026-07-26T23:45:14+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "位居",
+      "addedAt": "2026-07-26T23:45:14+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "ESG",
+      "addedAt": "2026-07-26T23:45:14+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "阈值定理",
+      "addedAt": "2026-07-26T23:45:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "安德鲁·斯蒂恩",
+      "addedAt": "2026-07-26T23:45:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "正算子值测度",
+      "addedAt": "2026-07-26T23:45:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "工作完成",
+      "addedAt": "2026-07-26T23:45:43+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "卫星电话",
+      "addedAt": "2026-07-26T23:45:43+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "北斗卫星导航系统",
+      "addedAt": "2026-07-26T23:45:43+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "Insurance",
+      "addedAt": "2026-07-26T23:45:58+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "高熵氧化物",
+      "addedAt": "2026-07-26T23:46:12+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "窄带隙半导体",
+      "addedAt": "2026-07-26T23:46:12+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "原子层沉积",
+      "addedAt": "2026-07-26T23:46:12+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "控制系統",
+      "addedAt": "2026-07-26T23:46:26+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "現場總線",
+      "addedAt": "2026-07-26T23:46:26+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "倍福",
+      "addedAt": "2026-07-26T23:46:26+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "超導體",
+      "addedAt": "2026-07-26T23:46:42+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "鐵基超導體",
+      "addedAt": "2026-07-26T23:46:42+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "二硼化鎂",
+      "addedAt": "2026-07-26T23:46:42+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Phenylephrine",
+      "addedAt": "2026-07-26T23:47:00+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Gamma ray",
+      "addedAt": "2026-07-26T23:47:00+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Military Police (Brazil)",
+      "addedAt": "2026-07-26T23:47:00+00:00",
       "evidence": [
         "wikipedia-morelike"
       ]
