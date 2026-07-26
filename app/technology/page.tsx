@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
 import { SectorChart } from "@/components/sector-chart";
 import { trackedSectors } from "@/lib/tracked-sectors";
 
@@ -22,6 +23,8 @@ export default function TechnologyPage() {
           管理赛道、关键词与信息源 →
         </Link>
       </header>
+
+      <ChannelUpdateDirectory channel="technology" />
 
       <section className="data-panel">
         <div className="section-heading">
