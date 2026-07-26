@@ -1,0 +1,1 @@
+export const HOMEPAGE_CHANNEL_UPDATE_LIMIT = 50;
