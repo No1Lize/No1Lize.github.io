@@ -5,10 +5,15 @@ on:
     branches: [main]
     paths:
       - .github/workflows/reprocess-venture-team-navigation-once.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
   actions: write
+
+concurrency:
+  group: venture-team-navigation-reprocess
+  cancel-in-progress: true
 
 jobs:
   reprocess:
