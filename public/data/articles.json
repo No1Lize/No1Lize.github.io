@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T10:02:17+00:00",
-  "articleCount": 879,
+  "generatedAt": "2026-07-26T13:29:34+00:00",
+  "articleCount": 878,
   "articles": [
     {
       "id": "user-source-source-track-rcvvao-2-b552a4acea704321",
@@ -11812,45 +11812,6 @@
       ]
     },
     {
-      "id": "user-track-wechat-jiqizhixin-ai-987432f619930d89",
-      "sourceId": "user-track-wechat-jiqizhixin-ai",
-      "title": "阿里荣膺 ACL 2026 最佳资源论文奖，揭示AI Agent的专家能力鸿沟",
-      "summary": "过去一年，Deep Research Agent 被视为大模型落地的下一个突破口，它们会检索、能用工具、可多步推理，在一个个榜单上高歌猛进。但把它们放到真实世界的专业场景里，表现是否也同样亮眼？ 先从一个每天都在发生、却少有人细想的问题说起：每一笔跨境货物通关，都必须先回答一个看似不起眼、却牵动巨大利益的问题：这件商品的海关编码（HS Code，商品名称及编码协调制度）是什么？这串编码是支撑全球每年约 26 万亿美元贸易的商品「唯一数字身份证」，直接决定关税计算与合规成败。如果报错，轻则多缴税款，重则货物滞留、触发合规风险。 那么，如果让今天最强的一批 AI Agent 去做这件跨境电商关务专员每天都在做的工作：给一件商品报出正确的海关编码，结果会怎样？ 答案可能出乎意料： 表现最 好的 系统也只能做对约 49.4%，而一位从业十年的人类专家能达到 95%。 这道接近腰斩的差距背后，藏着当前 AI Agent 一块被长期忽视的能力盲区， 面对人类专家编写的层级规则，先进的 Deep Search Agent 集体「失灵」了。 正是这项工作，让阿里巴巴 ATH-MaaS（Alibaba",
-      "type": "技术突破",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-19",
-      "importance": 85,
-      "source": {
-        "name": "机器之心",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67a6eb391f378d613b9568b33fe98ad28561aaa17d5216f8dc2d4952fceda5ced72c59238&idx=3&mid=2651045392&sn=a5c40252a6af8fadd7707725b31cd3e3",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "wechatAccount": "机器之心",
-      "mentionedCompanies": [
-        "DeepSeek",
-        "Anthropic",
-        "阿里云 / Qwen",
-        "智谱AI"
-      ],
-      "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "基础模型",
-        "大模型",
-        "推理",
-        "Agent",
-        "多模态",
-        "AI agent",
-        "Grok",
-        "Claude",
-        "gpt-5"
-      ],
-      "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "official-agibot-efc0a60a38596fb6",
       "sourceId": "official-agibot",
       "title": "从虚拟生成到物理求真：智元姚卯青剖析世界模型核心密码-智元创新（上海）科技股份有限公司",
@@ -14688,8 +14649,8 @@
       ]
     },
     {
-      "id": "user-track-wechat-qbitai-robotics-032105c91d8d3133",
-      "sourceId": "user-track-wechat-qbitai-robotics",
+      "id": "user-track-wechat-qbitai-ai-032105c91d8d3133",
+      "sourceId": "user-track-wechat-qbitai-ai",
       "title": "大三本科生一作，交出7.92倍加速的投机解码新答卷！DeepSeek和阶跃星辰双双引用",
       "summary": "Domino团队 投稿 量子位 | 公众号 QbitAI DeepSeek的投机解码框架DSpark，让“如何把大模型推理做得更快”再次成为热点。 论文中仍有不少细节可挖。比如，作者提到了约一个月前来自上海交通大学等机构的工作 Domino ，并指出其CausalEncoder的设计与DSpark的理念相似。此外，Domino算法也在阶跃星辰发布的JetSpec中被提及。 而这篇论文的第一作者 黄佳诺 ，目前还是一名 大三的本科生 。 如果想理解DSpark中draft-model侧的关键设计，不妨先读Domino。Domino更像一个干净的研究原型，用更简单、更集中的结构讲清楚一个核心问题：如何在parallel backbone的低开销基础上，轻量地补回draft block内部的串行依赖，兼顾扩散与自回归的双重优势。 △ Domino方法总览。 核心问题：并行很快，但缺少因果依赖 投机解码的基本思路是：先让轻量draft model一次猜出多个未来token，再交给target model批量验证。它的速度取决于两个因素： draft要足够快，也要足够准。 这就带来一个trade",
       "type": "公司动态",
@@ -14718,10 +14679,11 @@
         "Linfeng Zhang",
         "黄佳诺"
       ],
-      "matchedTrackingTerms": [],
+      "matchedTrackingTerms": [
+        "大模型"
+      ],
       "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人"
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-108mw2h-9ef077e89ba8dadc",
@@ -15187,8 +15149,8 @@
       ]
     },
     {
-      "id": "user-track-wechat-deeptechchina-ai-6e3732a3d35e5abd",
-      "sourceId": "user-track-wechat-deeptechchina-ai",
+      "id": "user-track-wechat-deeptechchina-biotech-6e3732a3d35e5abd",
+      "sourceId": "user-track-wechat-deeptechchina-biotech",
       "title": "诺奖得主和Claude联手发论文，结论是：AI时代更需“笨功夫”",
       "summary": "7 月，诺贝尔物理学奖得主乔治·帕里西（Giorgio Parisi）与意大利物理学家弗朗西斯科·赞波尼（Francesco Zamponi）在《统计力学：理论与实验》（ JSTAT ）发表论文，题为《阻塞临界指数一个恒等式的证明》，篇幅仅十余页。 在摘要末尾，两位作者写下这样一句话： “证明通过与 Claude（Sonnet 4.6 与 Opus 4.7）的互动获得，并由我们完成验证。” 在与 Claude 进行 40 轮对话后，他们联手终结了一个困扰复杂系统统计物理领域十二年的猜想。 2021 年，意大利理论物理学家帕里西被授予诺贝尔物理学奖，理由是“发现了从原子到行星尺度物理系统中无序与涨落的相互作用”。他在学术生涯中一直致力于自旋玻璃（spin glass）理论研究，并发明副本对称性破缺（RSB）方法，用于揭示看似混乱无序的复杂系统背后的深层规律。 图 | 乔治·帕里西（Giorgio Parisi）（来源：https://www.parisigiorgio.it/） 这次合作发生的一年多前，2025 年初，帕里西演示过一则近乎讽刺的实验：他成功说服一个大型语言模型接受“5×4",
       "type": "技术突破",
@@ -15212,12 +15174,10 @@
         "Anthropic"
       ],
       "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "机器学习",
-        "Claude"
-      ],
+      "matchedTrackingTerms": [],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page"
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "生物科技"
     },
     {
       "id": "official-anduril-8d72dce938f5c050",
@@ -15396,6 +15356,52 @@
       ]
     },
     {
+      "id": "user-track-wechat-jiqizhixin-ai-14f22a779cca86cd",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "Claude、GLM、GPT谁才是真正的AI软件工程师？首个持续更新Visual Spec-to-App Benchmark发布",
+      "summary": "近年来，Coding Agent 正以前所未有的速度发展。从 Claude Code、OpenAI Codex 到 Cursor、Gemini CLI，大语言模型已经能够自主完成编码、调试、运行甚至部署整个 Web 应用，「AI 软件工程师」正逐渐成为现实。然而，一个新的问题也随之出现： 如果不 给 AI 一个 GitHub Issue，而是 给它一张 Figma 设计稿，它还能开发出一个真正可以交付的产品吗？ 过去几年，SWE-bench、OpenHands 等 Benchmark 极大推动了 Coding Agent 的发展，但它们主要关注代码仓库维护和 GitHub Issue 修复。相比之下，真实的软件开发通常始于一份产品需求（PRD）和一张 Figma 设计稿，需要开发者从零构建完整的 Web 应用。这意味着，Coding Agent 面临的挑战已经从 Code Generation 逐渐演进为 Product Generation。然而，目前仍然缺少一个能够系统评测这一能力的公开 Benchmark。 为了解决这一问题，来自 University of Arizona、Zo",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-06",
+      "importance": 82,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e677c9b391fedf06a9fffe72163f3a40739cc1a48c8bca48e19cea01ce6f4acca1870d9743&idx=3&mid=2651042743&sn=f4ee3a607d462954f404a1414f41cb9c",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "智谱AI"
+      ],
+      "mentionedPeople": [
+        "Junjia Guo",
+        "Arizona Electrical",
+        "Computer Engineering",
+        "Jingdi Chen",
+        "Agentic AI",
+        "Online Leaderboard",
+        "Yuhang Yao",
+        "Jiawei Zhou"
+      ],
+      "matchedTrackingTerms": [
+        "推理",
+        "Agent",
+        "多模态",
+        "强化学习",
+        "AI agent",
+        "Claude",
+        "Agents",
+        "gpt-5"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "xai-fb328d59b08e2389",
       "sourceId": "xai",
       "title": "21 New Flagship Grok Voices",
@@ -15417,8 +15423,8 @@
       ]
     },
     {
-      "id": "user-track-wechat-deeptechchina-biotech-7ca93f5df9d6d53f",
-      "sourceId": "user-track-wechat-deeptechchina-biotech",
+      "id": "user-track-wechat-deeptechchina-ai-7ca93f5df9d6d53f",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
       "title": "AI产业正在围着OpenAI和Anthropic两家公司打转",
       "summary": "过去半个月，AI 行业似乎迎来了一个短暂的平静期。预期中的 GPT-5.6 和 Gemini 3.5 Pro 并未到来，除了 Sonnet 5 的发布和 Fable 5 的回归，并没有什么重磅模型面世。但穿透平静的表象，我们可能正在目睹 AI 产业结构迎来的一场前所未有的密集重组。 6 月 24 日， OpenAI 发布了它的第一颗自研芯片 Jalapeño ，一颗专为推理设计的加速器，与 Broadcom 联合开发，从设计到流片只用了九个月。同一天，OpenAI 宣布与 Broadcom 签下 10 GW 的算力部署合作协议。一家模型公司开始造芯片，这在两年前几乎不可想象。 一周后的新闻密度更高。7 月 1 日， 彭博社报道 Meta 正在组建名为 Meta Compute 的云业务部门，计划对外出售 AI 算力 ，Meta 股价当天上涨 9%，CoreWeave 下跌 14%，Nebius 下跌 17%。7 月 2 日，微软宣布成立 Frontier Company，投入 25 亿美元、配备 6000 名工程师，专门帮企业客户部署 AI。 7 月 3 日，韩国媒体披露 Meta 正",
       "type": "公司动态",
@@ -15440,16 +15446,21 @@
       "mentionedCompanies": [
         "OpenAI",
         "Anthropic",
+        "xAI",
         "字节跳动"
       ],
       "mentionedPeople": [
         "Frontier Company",
         "SB Neo"
       ],
-      "matchedTrackingTerms": [],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Grok",
+        "Claude",
+        "gpt-5"
+      ],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "生物科技"
+      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-track-fosl0s-c4936c6564289934",
@@ -16478,44 +16489,6 @@
       "trackSlugs": [
         "semiconductor"
       ]
-    },
-    {
-      "id": "user-track-wechat-qbitai-ai-24fc3720e59e81a1",
-      "sourceId": "user-track-wechat-qbitai-ai",
-      "title": "跟Claude谈个恋爱怎么了？Nature最新研究：真能给人聊傻了",
-      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 停停停！再这么跟AI聊下去，真要出事了。 最近，一刷小红书、抖音，总能刷到各种调教Claude的帖子。搜索“Claude人设”、“人机恋”，也是满屏教程。 这些教程教你怎么给Claude一个傲娇男友人设，怎么用system prompt让“他”吃醋、撒娇、发小脾气。 毫不夸张的说，Claude已经，俨然成为了新一代电子老公。 乍一看，这可能只是年轻人向AI讨要点情绪价值。 你甚至可能还会说：Claude又不像GPT那么舔，它是出了名的犟种，有时候还跟你对着干呢。但精神科医生们担心的恰恰不只是谄媚—— 当AI越来越像一个”真人”，不管它是顺着你还是偶尔跟你拌嘴，它带来的或许都不只是陪伴。 最近，发表于Nature旗下《Digital Psychiatry and Neuroscience》的一项研究指出—— 聊天机器人并不需要故意诱导什么，它只要持续顺着你、理解你、陪着你，就都有可能把一个正常人聊到开始怀疑现实。 而在部分真实临床案例中，后果甚至发展到了丢掉工作、住进精神病院，以及多次试图自杀的程度。 这是怎么一回事？ Clau",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-06-25",
-      "importance": 76,
-      "source": {
-        "name": "量子位",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6d5edfade44801e52119a3747f9b284195c8b45fe435ca14227aa97f99fef63a33e15f1a&idx=2&mid=2247899692&sn=0a7f73e1559acc292a3cdd7fc172b133",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "anthropic",
-      "authors": [
-        "关注前沿科技"
-      ],
-      "wechatAccount": "量子位",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Anthropic"
-      ],
-      "mentionedPeople": [
-        "Hamilton Morrin",
-        "Fiona Fung"
-      ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "Claude",
-        "ChatGPT"
-      ],
-      "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-anduril-industries-4ecbc1c409f2e0d8",
@@ -30596,7 +30569,7 @@
       "status": "partial",
       "scanned": 37,
       "accepted": 6,
-      "failed": 7,
+      "failed": 11,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -30608,7 +30581,7 @@
       "status": "partial",
       "scanned": 38,
       "accepted": 1,
-      "failed": 7,
+      "failed": 10,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -30659,10 +30632,10 @@
     {
       "id": "user-track-wechat-deeptechchina-ai",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "partial",
       "scanned": 16,
       "accepted": 5,
-      "failed": 0,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -30683,10 +30656,10 @@
     {
       "id": "user-track-wechat-deeptechchina-materials",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "ok",
       "scanned": 15,
       "accepted": 1,
-      "failed": 1,
+      "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -30695,14 +30668,16 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "error",
       "scanned": 15,
-      "accepted": 1,
+      "accepted": 0,
       "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-eefocus-semiconductor",
@@ -30808,7 +30783,7 @@
       "status": "partial",
       "scanned": 25,
       "accepted": 6,
-      "failed": 6,
+      "failed": 7,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -30871,8 +30846,8 @@
       "name": "量子位",
       "status": "partial",
       "scanned": 19,
-      "accepted": 4,
-      "failed": 7,
+      "accepted": 3,
+      "failed": 8,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -31530,15 +31505,15 @@
     "retainedPreviousSourceCount": 31
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T10:02:17+00:00",
+    "generatedAt": "2026-07-26T13:29:34+00:00",
     "configuredSources": 33,
-    "successfulSources": 12,
-    "acceptedArticles": 42,
-    "fullTextArticles": 42,
+    "successfulSources": 11,
+    "acceptedArticles": 40,
+    "fullTextArticles": 40,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 21,
-    "mentionedCompanyLinks": 48,
-    "mentionedPeopleLinks": 106
+    "retainedSources": 22,
+    "mentionedCompanyLinks": 44,
+    "mentionedPeopleLinks": 108
   }
 }
