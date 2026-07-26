@@ -134,6 +134,12 @@ class VentureSemanticRebaseTests(unittest.TestCase):
         self.assertEqual(refined[0]["technicalHighlights"], [])
         self.assertEqual(refined[0]["sourceUrl"], "")
 
+    def test_rejects_navigation_phrases_as_team_names(self) -> None:
+        self.assertFalse(semantics._valid_person_name("Discover For App Developers"))
+        self.assertFalse(semantics._valid_person_name("Explore Our Technology"))
+        self.assertFalse(semantics._valid_person_name("Learn With Developers"))
+        self.assertTrue(semantics._valid_person_name("Megan Holston-Alexander"))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -154,6 +154,10 @@ PERSON_NOISE_TOKENS = {
     "chief", "officer", "president", "executive",
     "the", "next", "black", "history", "awards", "solutions", "platform",
     "overview", "providers", "program", "programs", "events", "resources",
+    "discover", "explore", "learn", "browse", "build", "create", "support",
+    "developer", "developers", "app", "apps", "application", "applications",
+    "documentation", "docs", "community", "customers", "services", "technology",
+    "for", "with", "and", "our", "your", "all", "using", "how", "why", "what",
 }
 PERSON_ORGANIZATION_NAMES = {
     "moses singer",
