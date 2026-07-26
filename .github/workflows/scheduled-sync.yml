@@ -8,6 +8,7 @@ on:
       - tools/crawl_listed_company_disclosures.py
       - tools/cninfo_structured_disclosures.py
       - tools/sec_structured_disclosures.py
+      - tools/sec_configured_disclosures.py
       - tools/snapshot_retention.py
       - tools/crawl_with_tracking.py
       - tools/crawl_tracked_articles.py
@@ -95,6 +96,7 @@ jobs:
             tools/crawl_listed_company_disclosures.py \
             tools/cninfo_structured_disclosures.py \
             tools/sec_structured_disclosures.py \
+            tools/sec_configured_disclosures.py \
             tools/snapshot_retention.py \
             tools/crawl_with_wechat_registry.py
           python -m unittest \
@@ -103,6 +105,7 @@ jobs:
             tests.test_listed_company_disclosures \
             tests.test_cninfo_structured_disclosures \
             tests.test_sec_structured_disclosures \
+            tests.test_sec_configured_disclosures \
             tests.test_scheduled_sync_workflow \
             tests.test_snapshot_retention
       - name: Start a clean full-source status ledger
@@ -124,9 +127,9 @@ jobs:
       - name: Resolve every US-listed company through SEC EDGAR
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
-        run: python tools/sec_structured_disclosures.py --require-events
+        run: python tools/sec_configured_disclosures.py --require-events
       - name: Require complete listed-company disclosure coverage
-        run: python tools/sec_structured_disclosures.py --check --require-events
+        run: python tools/sec_configured_disclosures.py --check --require-events
       - name: Crawl all fixed and user-configured official company sources
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
@@ -194,7 +197,7 @@ jobs:
             python tools/snapshot_retention.py
             python tools/finalize_full_refresh.py
             python tools/snapshot_retention.py --check
-            python tools/sec_structured_disclosures.py --check --require-events
+            python tools/sec_configured_disclosures.py --check --require-events
             python tools/validate_professional_media_snapshot.py --require-articles
             python tools/crawl_articles.py --validate-only
             python tools/validate_full_refresh.py
