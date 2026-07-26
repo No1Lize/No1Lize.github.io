@@ -1,0 +1,29 @@
+test_capital_summary_matches_structural_finalizer (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_capital_summary_matches_structural_finalizer) ... ok
+test_catalog_fallback_and_research_technology_filter (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_catalog_fallback_and_research_technology_filter) ... ok
+test_complex_snapshot_reaches_fixed_point_in_one_call (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_complex_snapshot_reaches_fixed_point_in_one_call) ... ok
+test_is_idempotent (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_is_idempotent) ... ok
+test_keeps_entity_subject_financing (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_keeps_entity_subject_financing) ... ok
+test_rejects_editorial_products_and_navigation_team_names (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_editorial_products_and_navigation_team_names) ... ok
+test_rejects_third_party_financing_and_year_product (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_rejects_third_party_financing_and_year_product) ... ok
+test_trims_investor_relations_page_chrome (tests.test_venture_entity_semantics.VentureEntitySemanticTests.test_trims_investor_relations_page_chrome) ... ok
+test_converges_when_gates_need_multiple_passes (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_converges_when_gates_need_multiple_passes) ... ok
+test_current_snapshot_and_catalog_share_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_current_snapshot_and_catalog_share_fixed_point) ... ERROR
+test_real_gates_share_one_terminal_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_real_gates_share_one_terminal_fixed_point) ... ok
+test_rejects_a_cross_gate_cycle (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_rejects_a_cross_gate_cycle) ... ok
+test_rejects_non_positive_pass_limit (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_rejects_non_positive_pass_limit) ... ok
+
+======================================================================
+ERROR: test_current_snapshot_and_catalog_share_fixed_point (tests.test_stabilize_venture_profiles.VentureProfileStabilizerTests.test_current_snapshot_and_catalog_share_fixed_point)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_stabilize_venture_profiles.py", line 37, in test_current_snapshot_and_catalog_share_fixed_point
+    stabilized, diagnostics = stabilizer.stabilize_snapshot(payload, catalog_text)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/No1Lize.github.io/No1Lize.github.io/tools/stabilize_venture_profiles.py", line 83, in stabilize_snapshot
+    raise RuntimeError(
+RuntimeError: venture terminal gates entered a cycle before reaching a shared fixed point
+
+----------------------------------------------------------------------
+Ran 13 tests in 1.000s
+
+FAILED (errors=1)
