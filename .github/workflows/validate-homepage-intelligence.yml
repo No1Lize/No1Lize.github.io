@@ -26,4 +26,19 @@ jobs:
       - name: Type-check application
         run: npx tsc --noEmit
       - name: Build GitHub Pages output
-        run: npm run build:pages
+        id: pages-build
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build:pages 2>&1 | tee homepage-pages-build.log
+      - name: Upload Pages build diagnostics
+        if: steps.pages-build.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-pages-build-log
+          path: homepage-pages-build.log
+          if-no-files-found: error
+      - name: Enforce Pages build result
+        if: steps.pages-build.outcome == 'failure'
+        run: exit 1
