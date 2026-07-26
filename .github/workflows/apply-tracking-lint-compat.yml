@@ -1,0 +1,41 @@
+name: Apply tracking lint compatibility
+
+on:
+  pull_request:
+    paths:
+      - .tracking-lint-compat-trigger
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply minimal compatibility patch
+        run: python tools/patch_tracking_lint_compat.py
+      - run: npm install
+      - name: Verify full lint
+        run: npm run lint
+      - name: Commit compatibility fixes
+        env:
+          HEAD_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .tracking-lint-compat-trigger
+          git add \
+            components/tracking-admin-module-recommendations.tsx \
+            components/tracking-recommendations-bridge.tsx \
+            components/user-tracking-panel.tsx
+          git commit -m "fix: satisfy React tracking lint rules"
+          git push origin "HEAD:${HEAD_REF}"
