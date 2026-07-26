@@ -76,6 +76,11 @@ class UsIrSecDisclosuresTest(unittest.TestCase):
             self.assertEqual(event["source"]["name"], "IonQ Investor Relations")
             self.assertTrue(event["regulatoryMirror"])
 
+    def test_compact_form_labels_are_normalized(self) -> None:
+        self.assertEqual(ir.extract_form("06/22/2026 Form8-K Current report"), "8-K")
+        self.assertEqual(ir.extract_form("05/07/2026 Form10-Q Quarterly Report"), "10-Q")
+        self.assertEqual(ir.extract_form("04/30/2026 FormDEF 14A Proxy"), "DEF 14A")
+
     def test_normalizes_schedule_ownership_forms(self) -> None:
         self.assertEqual(ir.extract_form("SCHEDULE 13G/A"), "SC 13G/A")
         self.assertEqual(
