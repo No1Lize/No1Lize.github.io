@@ -157,6 +157,8 @@ PERSON_NOISE_TOKENS = {
     "discover", "explore", "learn", "browse", "build", "create", "support",
     "developer", "developers", "app", "apps", "application", "applications",
     "documentation", "docs", "community", "customers", "services", "technology",
+    "experience", "stories", "story", "launch", "research", "hub", "contact",
+    "login", "portfolio", "jobs", "careers", "insights", "news", "updates",
     "for", "with", "and", "our", "your", "all", "using", "how", "why", "what",
 }
 PERSON_ORGANIZATION_NAMES = {
