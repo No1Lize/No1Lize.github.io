@@ -262,8 +262,12 @@ export function ChannelDocumentImport({
     [applyEntries],
   );
 
+  const processedFilesRef = useRef<File[] | null>(null);
   useEffect(() => {
     if (!incomingFiles?.length) return;
+    // Guard against StrictMode double-invocation re-ingesting the same drop.
+    if (processedFilesRef.current === incomingFiles) return;
+    processedFilesRef.current = incomingFiles;
     void ingestFiles(incomingFiles);
     onIncomingConsumed();
   }, [incomingFiles, ingestFiles, onIncomingConsumed]);
