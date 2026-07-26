@@ -46,7 +46,15 @@ jobs:
             tools/enforce_venture_entity_semantics.py \
             tools/stabilize_venture_profiles.py
       - name: Test evidence refinement semantics
-        run: python -m unittest -v tests.test_refine_venture_research_evidence
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest -v tests.test_refine_venture_research_evidence 2>&1 | tee /tmp/evidence-test.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: venture-evidence-test-log
+          path: /tmp/evidence-test.log
       - name: Test terminal entity semantics
         run: python -m unittest -v tests.test_venture_entity_semantics
       - name: Test remaining Python regressions
