@@ -9,6 +9,7 @@ It stores metadata and short factual summaries, not full filing text.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -18,7 +19,7 @@ from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 try:
@@ -76,6 +77,7 @@ FORM_LABELS = {
     "公司治理与股东事项": "proxy and shareholder governance filing",
     "股权变动": "beneficial ownership filing",
 }
+ALLOWED_SEC_DOCUMENT_TYPES = set(FORM_LABELS)
 
 
 @dataclass(frozen=True)
@@ -186,7 +188,10 @@ def _column(values: dict[str, Any], key: str) -> list[Any]:
 
 def _archive_url(cik: str, accession: str, primary_document: str) -> str:
     accession_compact = re.sub(r"\D", "", accession)
-    cik_compact = str(int(cik))
+    try:
+        cik_compact = str(int(cik))
+    except (TypeError, ValueError):
+        return ""
     document = quote(primary_document.strip(), safe="._-/")
     if not accession_compact or not document:
         return ""
@@ -254,21 +259,14 @@ def parse_submissions(
         summary_parts = [
             f"Ticker {listing.ticker}",
             f"Form {form}",
+            label,
             f"Filed {filed}",
             f"Report period {report_date}" if report_date else "",
             f"Accession {accession}" if accession else "",
         ]
+        digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:18]
         event = {
-            "id": base.event_id(
-                base.Listing(
-                    listing.catalog_slug,
-                    listing.name,
-                    "美股",
-                    listing.ticker,
-                    listing.sector,
-                ),
-                url,
-            ),
+            "id": f"disclosure-{listing.catalog_slug}-{digest}",
             "companySlug": listing.catalog_slug,
             "companyName": listing.name,
             "market": "美股",
@@ -331,22 +329,24 @@ def enrich_snapshot(
     *,
     submissions_fetcher=fetch_json,
 ) -> dict[str, Any]:
+    rows = list(listings)
     result = json.loads(json.dumps(snapshot, ensure_ascii=False))
     companies = result.setdefault("companies", {})
     statuses = [
         status for status in result.get("sourceStatus", []) if isinstance(status, dict)
     ]
-    us_ids = {listing.source_id for listing in listings}
+    us_ids = {listing.source_id for listing in rows}
     statuses = [status for status in statuses if str(status.get("id", "")) not in us_ids]
     max_age_days = max(365, int(settings.get("maxAgeDays", 1095)))
     per_listing_limit = max(1, min(int(settings.get("maxItemsPerListing", 18)), 30))
     company_limit = max(1, min(per_listing_limit * 2, 60))
     generated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
 
-    for listing in listings:
+    for listing in rows:
         cik = ticker_ciks.get(listing.ticker.upper(), "")
         errors: list[str] = []
         incoming: list[dict[str, Any]] = []
+        scanned = 0
         if cik:
             try:
                 payload = submissions_fetcher(
@@ -354,6 +354,13 @@ def enrich_snapshot(
                     timeout=int(settings.get("requestTimeout", 18)),
                     attempts=int(settings.get("requestAttempts", 2)),
                 )
+                recent = (
+                    payload.get("filings", {}).get("recent", {})
+                    if isinstance(payload, dict)
+                    else {}
+                )
+                forms = recent.get("form", []) if isinstance(recent, dict) else []
+                scanned = len(forms) if isinstance(forms, list) else 0
                 incoming = parse_submissions(
                     payload,
                     listing,
@@ -414,11 +421,7 @@ def enrich_snapshot(
                 "attempted": True,
                 "cikResolved": bool(cik),
                 "cik": cik,
-                "scanned": len(
-                    (payload.get("filings", {}).get("recent", {}).get("form", []))
-                    if cik and "payload" in locals() and isinstance(payload, dict)
-                    else []
-                ),
+                "scanned": scanned,
                 "accepted": len(incoming),
                 "retainedPrevious": not incoming and bool(merged),
                 "errors": errors,
@@ -437,7 +440,7 @@ def enrich_snapshot(
     result["secStructured"] = {
         "schemaVersion": 1,
         "provider": PROVIDER,
-        "attemptedListingCount": len(list(listings)),
+        "attemptedListingCount": len(rows),
         "acceptedEventCount": sum(
             int(status.get("accepted", 0) or 0)
             for status in statuses
@@ -448,22 +451,70 @@ def enrich_snapshot(
 
 
 def is_sec_archive_url(url: str) -> bool:
-    host = base.normalized_host(url)
-    path = str(url).split("?", 1)[0]
+    parts = urlsplit(str(url or ""))
+    host = (parts.hostname or "").casefold().removeprefix("www.")
     return (
         (host == "sec.gov" or host.endswith(".sec.gov"))
-        and "/Archives/edgar/data/" in path
+        and "/archives/edgar/data/" in parts.path.casefold()
     )
+
+
+def _base_only_snapshot(
+    snapshot: dict[str, Any],
+    exchange_listings: Iterable[base.Listing],
+) -> dict[str, Any]:
+    rows = list(exchange_listings)
+    allowed_slugs = {listing.catalog_slug for listing in rows}
+    filtered = json.loads(json.dumps(snapshot, ensure_ascii=False))
+    companies: dict[str, Any] = {}
+    for slug, company in filtered.get("companies", {}).items():
+        if slug not in allowed_slugs or not isinstance(company, dict):
+            continue
+        next_company = dict(company)
+        next_company["events"] = [
+            event
+            for event in company.get("events", [])
+            if isinstance(event, dict) and event.get("market") in {"A股", "港股"}
+        ]
+        next_company["listings"] = [
+            listing
+            for listing in company.get("listings", [])
+            if isinstance(listing, dict) and listing.get("market") in {"A股", "港股"}
+        ]
+        next_company["officialEventCount"] = sum(
+            not bool(event.get("fallback")) for event in next_company["events"]
+        )
+        next_company["fallbackEventCount"] = sum(
+            bool(event.get("fallback")) for event in next_company["events"]
+        )
+        companies[slug] = next_company
+    filtered["companies"] = companies
+    filtered["sourceStatus"] = [
+        status
+        for status in filtered.get("sourceStatus", [])
+        if isinstance(status, dict)
+        and not str(status.get("id", "")).startswith("sec-disclosure-")
+    ]
+    filtered["companyCount"] = len(companies)
+    filtered["eventCount"] = sum(
+        len(company.get("events", [])) for company in companies.values()
+    )
+    return filtered
 
 
 def validate_enrichment(
     snapshot: dict[str, Any],
     listings: Iterable[USListing] | None = None,
     *,
+    exchange_listings: Iterable[base.Listing] | None = None,
     require_events: bool = False,
 ) -> list[str]:
     rows = list(listings or load_us_listings())
-    errors = base.validate_snapshot(snapshot)
+    exchange_rows = list(exchange_listings or base.load_listings())
+    errors = base.validate_snapshot(
+        _base_only_snapshot(snapshot, exchange_rows),
+        exchange_rows,
+    )
     statuses = {
         str(status.get("id", "")): status
         for status in snapshot.get("sourceStatus", [])
@@ -472,6 +523,12 @@ def validate_enrichment(
     companies = snapshot.get("companies", {})
     if not isinstance(companies, dict):
         return [*errors, "companies must be an object"]
+
+    expected_slugs = {listing.catalog_slug for listing in [*exchange_rows, *rows]}
+    missing_profiles = sorted(expected_slugs - set(companies))
+    if missing_profiles:
+        errors.append("missing listed-company profiles: " + ", ".join(missing_profiles))
+
     for listing in rows:
         status = statuses.get(listing.source_id)
         if not status:
@@ -485,6 +542,17 @@ def validate_enrichment(
         if not isinstance(company, dict):
             errors.append(f"missing SEC company disclosure profile: {listing.catalog_slug}")
             continue
+        listing_markers = [
+            marker
+            for marker in company.get("listings", [])
+            if isinstance(marker, dict)
+        ]
+        if not any(
+            marker.get("market") == "美股"
+            and str(marker.get("ticker", "")).upper() == listing.ticker
+            for marker in listing_markers
+        ):
+            errors.append(f"missing SEC listing marker: {listing.source_id}")
         events = [
             event
             for event in company.get("events", [])
@@ -496,8 +564,14 @@ def validate_enrichment(
             url = _event_url(event)
             if not is_sec_archive_url(url):
                 errors.append(f"SEC filing URL outside EDGAR archive: {url}")
-            if event.get("source", {}).get("name") != "美国证券交易委员会 SEC":
+            source = event.get("source") if isinstance(event.get("source"), dict) else {}
+            if source.get("name") != "美国证券交易委员会 SEC":
                 errors.append(f"invalid SEC source label: {event.get('id', 'unknown')}")
+            if event.get("documentType") not in ALLOWED_SEC_DOCUMENT_TYPES:
+                errors.append(f"invalid SEC document type: {event.get('id', 'unknown')}")
+            if not base.normalize_date(str(event.get("publishedAt", ""))):
+                errors.append(f"invalid SEC filing date: {event.get('id', 'unknown')}")
+
     metadata = snapshot.get("secStructured", {})
     if not isinstance(metadata, dict):
         errors.append("secStructured metadata missing")
@@ -506,6 +580,21 @@ def validate_enrichment(
             errors.append("secStructured attempted listing count mismatch")
         if require_events and int(metadata.get("acceptedEventCount", 0)) <= 0:
             errors.append("SEC structured query produced no filing events")
+
+    cninfo = snapshot.get("cninfoStructured", {})
+    if exchange_rows and any(row.market == "A股" for row in exchange_rows):
+        if not isinstance(cninfo, dict) or int(cninfo.get("acceptedEventCount", 0)) <= 0:
+            errors.append("CNINFO structured A-share coverage missing from final snapshot")
+
+    if int(snapshot.get("companyCount", -1)) != len(companies):
+        errors.append("companyCount does not match listed-company profiles")
+    expected_event_count = sum(
+        len(company.get("events", []))
+        for company in companies.values()
+        if isinstance(company, dict)
+    )
+    if int(snapshot.get("eventCount", -1)) != expected_event_count:
+        errors.append("eventCount does not match all listed-company events")
     return errors
 
 
