@@ -95,6 +95,10 @@ def main() -> None:
     SOURCE.write_text(source, encoding="utf-8")
 
     test = TEST.read_text(encoding="utf-8")
+    test = test.replace(
+        "智元机器人启动港股上市",
+        "智元机器人正式在港股上市",
+    )
     test = replace_once(
         test,
         '"summary": "智元机器人参加产业大会。",',
