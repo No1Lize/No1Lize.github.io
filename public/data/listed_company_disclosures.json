@@ -1,8 +1,1318 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "",
-  "companyCount": 0,
-  "eventCount": 0,
-  "companies": {},
-  "sourceStatus": []
+  "generatedAt": "2026-07-26T05:04:26+00:00",
+  "companyCount": 5,
+  "eventCount": 56,
+  "companies": {
+    "bgi-genomics": {
+      "slug": "bgi-genomics",
+      "name": "华大基因",
+      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "status": "partial",
+      "listings": [
+        {
+          "market": "A股",
+          "ticker": "300676",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [],
+      "officialEventCount": 0,
+      "fallbackEventCount": 0
+    },
+    "cambricon": {
+      "slug": "cambricon",
+      "name": "寒武纪",
+      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "status": "retained",
+      "listings": [
+        {
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-cambricon-sse-listing-20200717",
+          "companySlug": "cambricon",
+          "companyName": "寒武纪",
+          "market": "A股",
+          "ticker": "688256",
+          "exchange": "上海证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2020-07-17",
+          "documentType": "招股与上市",
+          "title": "关于中科寒武纪科技股份有限公司人民币普通股股票科创板上市交易的公告",
+          "summary": "上海证券交易所上市公告确认寒武纪证券代码为688256，并于2020年7月20日起在科创板上市交易。",
+          "source": {
+            "name": "上海证券交易所",
+            "url": "https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20200717_78749873.shtml",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-bootstrap",
+          "fallback": false
+        }
+      ],
+      "officialEventCount": 1,
+      "fallbackEventCount": 0
+    },
+    "catl": {
+      "slug": "catl",
+      "name": "宁德时代",
+      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary"
+        },
+        {
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-catl-bb4479f0726d36b3a0",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-07-24",
+          "documentType": "重大经营与风险",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 24/07/2026 22:30 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Trading Update] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401883.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-b4766a960a051afd0a",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-07-24",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 24/07/2026 22:27 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401877.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-9b0b7a67b98eeaed73",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-07-24",
+          "documentType": "重大经营与风险",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 24/07/2026 22:18 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Business Update] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401827.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-7c3b81becd20bc3472",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-07-24",
+          "documentType": "重大经营与风险",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 24/07/2026 22:32 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Trading Update] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401887.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-7576b425b03e831be9",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-07-24",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 24/07/2026 22:24 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401863.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-08bd1803b09201fb07",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-07-24",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 24/07/2026 21:56 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401617.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-051364ea6c500fcaa6",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-07-24",
+          "documentType": "重大经营与风险",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 24/07/2026 21:59 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Business Update] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401623.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-54bc64e53c587171ea",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-26",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 26/06/2026 21:10 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0626/2026062602344.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-f9eecd363a8bf8f757",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-25",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 25/06/2026 18:53 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0625/2026062501327.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-890d64e7587a09dca1",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-18",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 18/06/2026 18:48 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0618/2026061801299.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-55b26b5c072bdffffe",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-17",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 17/06/2026 19:46 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0617/2026061701575.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-be5d9cde98ecb70ca5",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-16",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 16/06/2026 22:11 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0616/2026061601843.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-be4a3c95c23830a5cd",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-16",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 16/06/2026 22:23 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0616/2026061601869.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-551344049069b9896a",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-16",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 16/06/2026 22:16 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0616/2026061601857.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-7afb6980ed221944d6",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-06-01",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 01/06/2026 19:22 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0601/2026060103447.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-c65d1b506ef705fdc4",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-04-30",
+          "documentType": "证券发行与融资",
+          "title": "COMPLETION OF PLACING OF H SHARES",
+          "summary": "Release Time: 30/04/2026 19:57 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Placing / Issue of Shares under a General Mandate] COMPLETION OF PLACING OF H SHARES ( 38KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0430/2026043003336.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-c49bad815b3906ae07",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-04-30",
+          "documentType": "证券发行与融资",
+          "title": "An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section",
+          "summary": "Release Time: 30/04/2026 21:03 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Overseas Regulatory Announcement - Issue of Securities and Related Matters] An announcement has just been published by the issuer in the Chinese section of this website, a corresponding version of which may or may not be published in this section ( 1KB , HTM)",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0430/2026043003701.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-catl-dcda680b3f1c743d9f",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "港股",
+          "ticker": "03750",
+          "exchange": "香港交易所",
+          "listingRole": "secondary",
+          "publishedAt": "2026-04-28",
+          "documentType": "证券发行与融资",
+          "title": "PLACING OF NEW H SHARES UNDER GENERAL MANDATE",
+          "summary": "Release Time: 28/04/2026 08:00 Stock Code: 03750 Stock Short Name: CATL Document: Announcements and Notices - [Placing / Issue of Shares under a General Mandate] PLACING OF NEW H SHARES UNDER GENERAL MANDATE ( 72KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0428/2026042800267.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        }
+      ],
+      "officialEventCount": 18,
+      "fallbackEventCount": 0
+    },
+    "horizon-robotics": {
+      "slug": "horizon-robotics",
+      "name": "地平线机器人",
+      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-horizon-robotics-2a0ccebcd63f7ed0c3",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-23",
+          "documentType": "证券发行与融资",
+          "title": "PRICING OF US$450,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027",
+          "summary": "Release Time: 23/07/2026 07:00 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Issue of Convertible Securities / Issue of Shares under a General Mandate] PRICING OF US$450,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027 ( 117KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0723/2026072300027.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-c1d342124d08026fa2",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-22",
+          "documentType": "证券发行与融资",
+          "title": "INSIDE INFORMATION PROPOSED ISSUE OF CONVERTIBLE BOND UNDER GENERAL MANDATE",
+          "summary": "Release Time: 22/07/2026 19:39 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Inside Information / Issue of Convertible Securities / Issue of Shares under a General Mandate] INSIDE INFORMATION PROPOSED ISSUE OF CONVERTIBLE BOND UNDER GENERAL MANDATE ( 48KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0722/2026072200995.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-7199b05100e1b5487a",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-21",
+          "documentType": "定期报告与业绩",
+          "title": "INSIDE INFORMATION UPDATE ON FINANCIAL PERFORMANCE",
+          "summary": "Release Time: 21/07/2026 12:00 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Profit Warning / Inside Information] INSIDE INFORMATION UPDATE ON FINANCIAL PERFORMANCE ( 52KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0721/2026072100145.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-7f3f2839704bbea57b",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-19",
+          "documentType": "股份回购",
+          "title": "PROPOSED GRANTING OF GENERAL MANDATES TO REPURCHASE SHARES AND TO ISSUE SHARES PROPOSED RE-ELECTION OF DIRECTORS PROPOSED RE-APPOINTMENT OF AUDITOR AND NOTICE OF THE ANNUAL GENERAL MEETING",
+          "summary": "Release Time: 19/05/2026 16:30 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Circulars - [General Mandate / Explanatory Statement for Repurchase of Shares / Re-election or Appointment of Director... More Circulars - [General Mandate / Explanatory Statement for Repurchase of Shares / Re-election or Appointment of Director subject to Shareholders' Approval / Other] ] PROPOSED GRANTING OF GENERAL MANDATES",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0519/2026051900262.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-d9595ced71ad793f70",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-30",
+          "documentType": "定期报告与业绩",
+          "title": "Annual Report 2025",
+          "summary": "Release Time: 30/04/2026 17:10 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Financial Statements/ESG Information - [Annual Report / Environmental, Social and Governance Information/Report] Annual Report 2025 ( 11MB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0430/2026043001830.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-94bae0de8339529f2b",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-24",
+          "documentType": "股权激励",
+          "title": "GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN",
+          "summary": "Release Time: 24/04/2026 22:21 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Share Scheme] GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN ( 56KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042403562.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-c901c5ad7c8680a843",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-19",
+          "documentType": "定期报告与业绩",
+          "title": "(1) ANNUAL RESULTS ANNOUNCEMENT FOR THE YEAR ENDED DECEMBER 31, 2025; AND (2) INSIDE INFORMATION",
+          "summary": "Release Time: 19/03/2026 18:15 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Final Results / Inside Information] (1) ANNUAL RESULTS ANNOUNCEMENT FOR THE YEAR ENDED DECEMBER 31, 2025; AND (2) INSIDE INFORMATION ( 126KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0319/2026031900927.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-179847c6b466f9a1c3",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-15",
+          "documentType": "股权激励",
+          "title": "GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN",
+          "summary": "Release Time: 15/01/2026 20:47 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Share Scheme] GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN ( 54KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0115/2026011501097.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-0576c0f1e7d9732339",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-15",
+          "documentType": "股权激励",
+          "title": "GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN",
+          "summary": "Release Time: 15/10/2025 20:30 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Share Scheme] GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN ( 56KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1015/2025101501180.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-84f42967ed80e51b2f",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-10-10",
+          "documentType": "证券发行与融资",
+          "title": "COMPLETION OF PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE",
+          "summary": "Release Time: 10/10/2025 06:07 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Placing / Issue of Shares under a General Mandate] COMPLETION OF PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE ( 60KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1010/2025101000001.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-b672219a92db08b4be",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-09-29",
+          "documentType": "定期报告与业绩",
+          "title": "Interim Report 2025",
+          "summary": "Release Time: 29/09/2025 17:15 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Financial Statements/ESG Information - [Interim/Half-Year Report] Interim Report 2025 ( 1MB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0929/2025092901221.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-8220888c7bc25c3492",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-09-26",
+          "documentType": "证券发行与融资",
+          "title": "PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE",
+          "summary": "Release Time: 26/09/2025 07:00 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Placing / Issue of Shares under a General Mandate] PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE ( 91KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0926/2025092600053.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-7e602ee592ffe2bcc8",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-07-04",
+          "documentType": "股权激励",
+          "title": "GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN",
+          "summary": "Release Time: 04/07/2025 19:40 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Share Scheme] GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN ( 54KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0704/2025070401876.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-cdf4bf2acc0b2c1288",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-06-23",
+          "documentType": "证券发行与融资",
+          "title": "COMPLETION OF PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE",
+          "summary": "Release Time: 23/06/2025 22:29 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Placing / Issue of Shares under a General Mandate] COMPLETION OF PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE ( 69KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0623/2025062301365.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-2b1ed88b247aaecb8b",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-06-12",
+          "documentType": "证券发行与融资",
+          "title": "PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE",
+          "summary": "Release Time: 12/06/2025 07:00 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Placing / Issue of Shares under a General Mandate] PLACING OF EXISTING SHARES AND TOP-UP SUBSCRIPTION OF NEW SHARES UNDER GENERAL MANDATE ( 461KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0612/2025061200015.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-a89fd534c8d6c896b8",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-05-19",
+          "documentType": "股份回购",
+          "title": "PROPOSED GRANTING OF GENERAL MANDATES TO REPURCHASE SHARES AND TO ISSUE SHARES PROPOSED RE-ELECTION OF DIRECTORS PROPOSED RE-APPOINTMENT OF AUDITOR PROPOSED AMENDMENTS TO THE ARTICLES OF ASSOCIATION AND NOTICE OF THE ANNUAL GENERAL MEETING",
+          "summary": "Release Time: 19/05/2025 16:30 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Circulars - [General Mandate / Explanatory Statement for Repurchase of Shares / Re-election or Appointment of Director... More Circulars - [General Mandate / Explanatory Statement for Repurchase of Shares / Re-election or Appointment of Director subject to Shareholders' Approval / Amendment of Constitutional Documents / Other]",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0519/2025051900377.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-6a10c4a72f74b66a5b",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-04-29",
+          "documentType": "股权激励",
+          "title": "GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN",
+          "summary": "Release Time: 29/04/2025 21:54 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Announcements and Notices - [Share Scheme] GRANT OF AWARDS PURSUANT TO THE POST-IPO SHARE INCENTIVE PLAN ( 54KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0429/2025042904754.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-robotics-31dc44147f2f9c6dab",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-04-21",
+          "documentType": "定期报告与业绩",
+          "title": "Annual Report 2024",
+          "summary": "Release Time: 21/04/2025 18:41 Stock Code: 09660 Stock Short Name: HORIZONROBOT-W Document: Financial Statements/ESG Information - [Annual Report / Environmental, Social and Governance Information/Report] Annual Report 2024 ( 8MB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0421/2025042100203.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-horizon-hkex-global-offering-20241016",
+          "companySlug": "horizon-robotics",
+          "companyName": "地平线机器人",
+          "market": "港股",
+          "ticker": "09660",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2024-10-16",
+          "documentType": "招股与上市",
+          "title": "全球發售",
+          "summary": "香港交易所披露易发布地平线机器人全球发售招股章程，文件包含公司业务、管理层、基石投资者、财务资料及募集资金用途。",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2024/1016/2024101600023_c.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "verified-official-bootstrap",
+          "fallback": false
+        }
+      ],
+      "officialEventCount": 19,
+      "fallbackEventCount": 0
+    },
+    "xtalpi": {
+      "slug": "xtalpi",
+      "name": "晶泰科技",
+      "updatedAt": "2026-07-26T05:04:26+00:00",
+      "status": "ok",
+      "listings": [
+        {
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary"
+        }
+      ],
+      "events": [
+        {
+          "id": "disclosure-xtalpi-f2c6f1076ff78e0f7e",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-24",
+          "documentType": "定期报告与业绩",
+          "title": "PROFIT WARNING",
+          "summary": "Release Time: 24/07/2026 22:37 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Profit Warning / Inside Information] PROFIT WARNING ( 69KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0724/2026072401900.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-4ea62e6ec593936097",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-02",
+          "documentType": "股权激励",
+          "title": "GRANT OF SHARE OPTIONS AND RESTRICTED SHARE UNITS",
+          "summary": "Release Time: 02/07/2026 20:28 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Share Scheme] GRANT OF SHARE OPTIONS AND RESTRICTED SHARE UNITS ( 79KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0702/2026070203757.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-edcb353a464539e5d2",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-09",
+          "documentType": "重大经营与风险",
+          "title": "VOLUNTARY ANNOUNCEMENT STRATEGIC PARTNERSHIP WITH A LEADING BIOPHARMA COMPANY TO DEVELOP ORAL SMALL MOLECULE THERAPEUTICS FOR A GPCR TARGET, WITH A TOTAL POTENTIAL DEAL VALUE OF OVER US$400 MILLION",
+          "summary": "Release Time: 09/06/2026 22:25 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Other - Business Update] VOLUNTARY ANNOUNCEMENT STRATEGIC PARTNERSHIP WITH A LEADING BIOPHARMA COMPANY TO DEVELOP ORAL SMALL MOLECULE THERAPEUTICS FOR A GPCR TARGET, WITH A TOTAL POTENTIAL DEAL VALUE OF OVER US$400 MILLION ( 68KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0609/2026060901622.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-570403e780ce0912f4",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-06-09",
+          "documentType": "股份回购",
+          "title": "VOLUNTARY ANNOUNCEMENT ON-MARKET SHARE REPURCHASE",
+          "summary": "Release Time: 09/06/2026 12:18 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Other - Miscellaneous] VOLUNTARY ANNOUNCEMENT ON-MARKET SHARE REPURCHASE ( 65KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0609/2026060900229.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-7a10fc678d786b3c04",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-31",
+          "documentType": "重大经营与风险",
+          "title": "VOLUNTARY ANNOUNCEMENT BUSINESS UPDATE",
+          "summary": "Release Time: 31/05/2026 19:01 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Other - Business Update] VOLUNTARY ANNOUNCEMENT BUSINESS UPDATE ( 67KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0531/2026053100215.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-3cccf17cc6d2957107",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-05-27",
+          "documentType": "重大经营与风险",
+          "title": "VOLUNTARY ANNOUNCEMENT UPDATES IN RELATION TO THE COLLABORATION WITH DOVETREE",
+          "summary": "Release Time: 27/05/2026 21:19 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Other - Business Update] VOLUNTARY ANNOUNCEMENT UPDATES IN RELATION TO THE COLLABORATION WITH DOVETREE ( 64KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0527/2026052701684.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-f967ba776cdf6cf79f",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-17",
+          "documentType": "定期报告与业绩",
+          "title": "Annual Report 2025",
+          "summary": "Release Time: 17/04/2026 20:53 Stock Code: 02228 Stock Short Name: XTALPI Document: Financial Statements/ESG Information - [Annual Report / Environmental, Social and Governance Information/Report] Annual Report 2025 ( 11MB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0417/2026041701551.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-e3cfa45a2ca98632b9",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-17",
+          "documentType": "股权激励",
+          "title": "PROPOSALS FOR GRANTING OF GENERAL MANDATES TO REPURCHASE SHARES AND TO ISSUE SHARES, RE-APPOINTMENT OF AUDITOR, RE-ELECTION OF DIRECTORS, PROPOSED ADOPTION OF NEW MEMORANDUM AND ARTICLES OF ASSOCIATION, PROPOSED ADOPTION OF THE 2026 SHARE SCHEME; AND NOTICE OF ANNUAL GENERAL MEETING",
+          "summary": "Release Time: 17/04/2026 20:55 Stock Code: 02228 Stock Short Name: XTALPI Document: Circulars - [General Mandate / Re-election or Appointment of Director subject to Shareholders' Approval / Explanatory... More Circulars - [General Mandate / Re-election or Appointment of Director subject to Shareholders' Approval / Explanatory Statement for Repurchase of Shares / Amendment of Constitutional Documents / Share Scheme] ]",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0417/2026041701563.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-cb28691896c0a4f387",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-17",
+          "documentType": "股权激励",
+          "title": "(1) PROPOSED ADOPTION OF THE NEW SHARE SCHEME; AND (2) PROPOSED ADOPTION OF NEW MEMORANDUM AND ARTICLES OF ASSOCIATION",
+          "summary": "Release Time: 17/04/2026 20:49 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Share Scheme / Amendment of Constitutional Documents] (1) PROPOSED ADOPTION OF THE NEW SHARE SCHEME; AND (2) PROPOSED ADOPTION OF NEW MEMORANDUM AND ARTICLES OF ASSOCIATION ( 65KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0417/2026041701537.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-8c70984759350a67fc",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-04-09",
+          "documentType": "股权激励",
+          "title": "GRANT OF SHARE OPTIONS AND RESTRICTED SHARE UNITS",
+          "summary": "Release Time: 09/04/2026 22:29 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Share Scheme] GRANT OF SHARE OPTIONS AND RESTRICTED SHARE UNITS ( 77KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0409/2026040902220.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-99650e337832e3626a",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-25",
+          "documentType": "定期报告与业绩",
+          "title": "ANNUAL RESULTS ANNOUNCEMENT FOR THE YEAR ENDED 31 DECEMBER 2025",
+          "summary": "Release Time: 25/03/2026 18:18 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Final Results] ANNUAL RESULTS ANNOUNCEMENT FOR THE YEAR ENDED 31 DECEMBER 2025 ( 338KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0325/2026032501035.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-5c9f85010f8a4cb12a",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-03-03",
+          "documentType": "定期报告与业绩",
+          "title": "POSITIVE PROFIT ALERT TURNAROUND FROM NET LOSS TO NET PROFIT",
+          "summary": "Release Time: 03/03/2026 18:00 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Profit Warning / Inside Information] POSITIVE PROFIT ALERT TURNAROUND FROM NET LOSS TO NET PROFIT ( 67KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0303/2026030301645.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-1136b8760e7484c68b",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-02-09",
+          "documentType": "重大经营与风险",
+          "title": "VOLUNTARY ANNOUNCEMENT LEADING AUTOMATION CAPABILITIES OF XTALPI RECOGNIZED BY GLOBAL CHEMICAL GIANT- SUCCESSFUL LAUNCH OF ADVANCED AUTOMATED WORKSTATION AT BASF",
+          "summary": "Release Time: 09/02/2026 20:33 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Other - Business Update] VOLUNTARY ANNOUNCEMENT LEADING AUTOMATION CAPABILITIES OF XTALPI RECOGNIZED BY GLOBAL CHEMICAL GIANT- SUCCESSFUL LAUNCH OF ADVANCED AUTOMATED WORKSTATION AT BASF ( 69KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0209/2026020901048.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-dfc8aff4c83977e461",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-29",
+          "documentType": "证券发行与融资",
+          "title": "Publication of the Offering Circular - XtalPi Holdings Limited - HK$2,866,000,000 Zero Coupon Convertible Bonds Due 2027",
+          "summary": "Release Time: 29/01/2026 12:06 Stock Code: 02228 Stock Short Name: XTALPI Document: Debt and Structured Products - [Offering Circular and Pricing Supplement - Debt Securities] Publication of the Offering Circular - XtalPi Holdings Limited - HK$2,866,000,000 Zero Coupon Convertible Bonds Due 2027 ( 2MB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0129/2026012900273.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-c565190bbf0d32e4d8",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-28",
+          "documentType": "证券发行与融资",
+          "title": "COMPLETION OF THE ISSUE OF HK$2,866,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027",
+          "summary": "Release Time: 28/01/2026 18:23 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Issue of Convertible Securities / Issue of Shares under a General Mandate] COMPLETION OF THE ISSUE OF HK$2,866,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027 ( 199KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0128/2026012800647.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-4f9d0e7bdce92fa6bc",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-28",
+          "documentType": "证券发行与融资",
+          "title": "Notice of Listing on The Stock Exchange of Hong Kong Limited - XtalPi Holdings Limited - HK$2,866,000,000 Zero Coupon Convertible Bonds Due 2027",
+          "summary": "Release Time: 28/01/2026 18:24 Stock Code: 02228 Stock Short Name: XTALPI Document: Debt and Structured Products - [Formal Notice - Debt Securities] Notice of Listing on The Stock Exchange of Hong Kong Limited - XtalPi Holdings Limited - HK$2,866,000,000 Zero Coupon Convertible Bonds Due 2027 ( 187KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0128/2026012800655.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-59744d25392057bf4c",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-01-08",
+          "documentType": "证券发行与融资",
+          "title": "PROPOSED ISSUE OF HK$2,866,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027",
+          "summary": "Release Time: 08/01/2026 06:50 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Issue of Convertible Securities / Issue of Shares under a General Mandate] PROPOSED ISSUE OF HK$2,866,000,000 ZERO COUPON CONVERTIBLE BONDS DUE 2027 ( 117KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0108/2026010800041.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        },
+        {
+          "id": "disclosure-xtalpi-7cd8bc9e6f35042aaf",
+          "companySlug": "xtalpi",
+          "companyName": "晶泰科技",
+          "market": "港股",
+          "ticker": "02228",
+          "exchange": "香港交易所",
+          "listingRole": "primary",
+          "publishedAt": "2025-11-10",
+          "documentType": "重大经营与风险",
+          "title": "VOLUNTARY ANNOUNCEMENT - XTALPI'S AI INNOVATIVE R&D PLATFORM SUCCESSFULLY DEVELOPED NEW MOLECULES \"GEMINI\" FOR HAIR GROWTH AND OBTAINED KEY INTERNATIONAL CERTIFICATES",
+          "summary": "Release Time: 10/11/2025 18:41 Stock Code: 02228 Stock Short Name: XTALPI Document: Announcements and Notices - [Other - Business Update] VOLUNTARY ANNOUNCEMENT - XTALPI'S AI INNOVATIVE R&D PLATFORM SUCCESSFULLY DEVELOPED NEW MOLECULES \"GEMINI\" FOR HAIR GROWTH AND OBTAINED KEY INTERNATIONAL CERTIFICATES ( 421KB )",
+          "source": {
+            "name": "香港交易所披露易",
+            "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/1110/2025111000852.pdf",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-direct-index",
+          "fallback": false
+        }
+      ],
+      "officialEventCount": 18,
+      "fallbackEventCount": 0
+    }
+  },
+  "sourceStatus": [
+    {
+      "id": "exchange-disclosure-cambricon-a-688256",
+      "companySlug": "cambricon",
+      "name": "寒武纪",
+      "market": "A股",
+      "ticker": "688256",
+      "exchange": "上海证券交易所",
+      "provider": "official",
+      "status": "error",
+      "scanned": 72,
+      "accepted": 0,
+      "fallback": false,
+      "errors": [],
+      "fallbackScanned": 0,
+      "fallbackAccepted": 0,
+      "fallbackErrors": []
+    },
+    {
+      "id": "exchange-disclosure-catl-a-300750",
+      "companySlug": "catl",
+      "name": "宁德时代",
+      "market": "A股",
+      "ticker": "300750",
+      "exchange": "深圳证券交易所",
+      "provider": "official",
+      "status": "error",
+      "scanned": 72,
+      "accepted": 0,
+      "fallback": false,
+      "errors": [],
+      "fallbackScanned": 0,
+      "fallbackAccepted": 0,
+      "fallbackErrors": []
+    },
+    {
+      "id": "exchange-disclosure-bgi-genomics-a-300676",
+      "companySlug": "bgi-genomics",
+      "name": "华大基因",
+      "market": "A股",
+      "ticker": "300676",
+      "exchange": "深圳证券交易所",
+      "provider": "official",
+      "status": "error",
+      "scanned": 72,
+      "accepted": 0,
+      "fallback": false,
+      "errors": [],
+      "fallbackScanned": 0,
+      "fallbackAccepted": 0,
+      "fallbackErrors": []
+    },
+    {
+      "id": "exchange-disclosure-horizon-robotics-hk-09660",
+      "companySlug": "horizon-robotics",
+      "name": "地平线机器人",
+      "market": "港股",
+      "ticker": "09660",
+      "exchange": "香港交易所",
+      "provider": "official",
+      "status": "ok",
+      "scanned": 98,
+      "accepted": 18,
+      "fallback": false,
+      "errors": []
+    },
+    {
+      "id": "exchange-disclosure-xtalpi-hk-02228",
+      "companySlug": "xtalpi",
+      "name": "晶泰科技",
+      "market": "港股",
+      "ticker": "02228",
+      "exchange": "香港交易所",
+      "provider": "official",
+      "status": "ok",
+      "scanned": 105,
+      "accepted": 18,
+      "fallback": false,
+      "errors": []
+    },
+    {
+      "id": "exchange-disclosure-catl-hk-03750",
+      "companySlug": "catl",
+      "name": "宁德时代",
+      "market": "港股",
+      "ticker": "03750",
+      "exchange": "香港交易所",
+      "provider": "official",
+      "status": "ok",
+      "scanned": 105,
+      "accepted": 18,
+      "fallback": false,
+      "errors": []
+    }
+  ]
 }
