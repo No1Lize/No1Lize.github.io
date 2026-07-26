@@ -57,12 +57,13 @@ def enrich_candidate(
         video_materials.extend(discover_person_video_materials(candidate))
     except Exception:
         pass
-    try:
-        video_materials.extend(
-            discover_embedded_wechat_video_materials(candidate, articles)
-        )
-    except Exception:
-        pass
+    if articles:
+        try:
+            video_materials.extend(
+                discover_embedded_wechat_video_materials(candidate, articles)
+            )
+        except Exception:
+            pass
     return merge_video_materials(profile, video_materials)
 
 
