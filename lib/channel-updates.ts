@@ -2,6 +2,7 @@ import rawArticles from "@/public/data/articles.json";
 import rawPeople from "@/public/data/people.json";
 import rawResearchReports from "@/public/data/research_reports.json";
 import { companies, institutionCatalog } from "@/lib/catalog-data";
+import { getChannelDocumentUpdateItems } from "@/lib/channel-documents";
 import {
   normalizeChannelUpdateDate,
   type ChannelUpdateDatePrecision,
@@ -218,7 +219,10 @@ function technologyDirectory(): ChannelUpdateDirectory {
     title: "赛道更新目录",
     description: "当前启用赛道的最新公开事件，仅按记录前的绿色事件标签筛选，并按统一日期排序。",
     generatedAt: articlesPayload.generatedAt,
-    items: dedupeAndSort(items),
+    items: dedupeAndSort([
+      ...getChannelDocumentUpdateItems("technology"),
+      ...items,
+    ]),
   };
 }
 
@@ -236,7 +240,10 @@ function companiesDirectory(): ChannelUpdateDirectory {
     title: "公司更新目录",
     description: "与已收录公司直接相关的融资、产品、经营和资本市场更新，仅按绿色事件标签筛选。",
     generatedAt: articlesPayload.generatedAt,
-    items: dedupeAndSort(items),
+    items: dedupeAndSort([
+      ...getChannelDocumentUpdateItems("companies"),
+      ...items,
+    ]),
   };
 }
 
@@ -252,7 +259,10 @@ function institutionsDirectory(): ChannelUpdateDirectory {
     title: "资本与机构更新目录",
     description: "投资机构、融资、并购与 IPO 相关公开进展，仅按记录前的绿色事件标签筛选。",
     generatedAt: articlesPayload.generatedAt,
-    items: dedupeAndSort(items),
+    items: dedupeAndSort([
+      ...getChannelDocumentUpdateItems("institutions"),
+      ...items,
+    ]),
   };
 }
 
@@ -283,7 +293,10 @@ function reportsDirectory(): ChannelUpdateDirectory {
     title: "研报更新目录",
     description: "新归档的公开研报与 PDF 原文，仅按记录前的绿色报告类型标签筛选。",
     generatedAt: researchReportsPayload.generatedAt,
-    items: dedupeAndSort(items),
+    items: dedupeAndSort([
+      ...getChannelDocumentUpdateItems("reports"),
+      ...items,
+    ]),
   };
 }
 
@@ -315,7 +328,10 @@ function peopleDirectory(): ChannelUpdateDirectory {
     title: "人物材料更新目录",
     description: "人物演讲、采访、公开对话、论文与著作等材料，仅按记录前的绿色材料类型标签筛选。",
     generatedAt: peoplePayload.generatedAt,
-    items: dedupeAndSort(items),
+    items: dedupeAndSort([
+      ...getChannelDocumentUpdateItems("people"),
+      ...items,
+    ]),
   };
 }
 

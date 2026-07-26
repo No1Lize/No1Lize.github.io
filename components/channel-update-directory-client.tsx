@@ -1,7 +1,16 @@
 "use client";
 
-import { ArrowDownUp, ArrowUpRight, Clock3, RadioTower, Tags } from "lucide-react";
-import { useId, useMemo, useState } from "react";
+import {
+  ArrowDownUp,
+  ArrowUpRight,
+  Clock3,
+  RadioTower,
+  Tags,
+  Upload,
+} from "lucide-react";
+import { useId, useMemo, useRef, useState } from "react";
+import type { DragEvent } from "react";
+import { ChannelDocumentImport } from "@/components/channel-document-import";
 import {
   ALL_CHANNEL_UPDATE_KEYWORDS,
   collectChannelUpdateKeywords,
@@ -10,9 +19,14 @@ import {
 } from "@/lib/channel-update-filter";
 import type {
   ChannelUpdateDirectory,
+  ChannelUpdateItem,
   ChannelUpdateKey,
 } from "@/lib/channel-updates";
 import styles from "./channel-update-directory.module.css";
+
+function hasDraggedFiles(event: DragEvent<HTMLElement>): boolean {
+  return Array.from(event.dataTransfer?.types ?? []).includes("Files");
+}
 
 export function ChannelUpdateDirectoryClient({
   channel,
@@ -25,18 +39,37 @@ export function ChannelUpdateDirectoryClient({
   const sortSelectId = useId();
   const [keyword, setKeyword] = useState(ALL_CHANNEL_UPDATE_KEYWORDS);
   const [sortOrder, setSortOrder] = useState<ChannelUpdateSortOrder>("newest");
+  const [importOpen, setImportOpen] = useState(false);
+  const [incomingFiles, setIncomingFiles] = useState<File[] | null>(null);
+  const [dragActive, setDragActive] = useState(false);
+  const [localItems, setLocalItems] = useState<ChannelUpdateItem[]>([]);
+  const dragDepthRef = useRef(0);
+
+  const allItems = useMemo(() => {
+    if (!localItems.length) return directory.items;
+    const existing = new Set(directory.items.map((item) => item.id));
+    return [
+      ...localItems.filter((item) => !existing.has(item.id)),
+      ...directory.items,
+    ];
+  }, [directory.items, localItems]);
+  const localIds = useMemo(
+    () => new Set(localItems.map((item) => item.id)),
+    [localItems],
+  );
+
   const eventTypeOptions = useMemo(
-    () => collectChannelUpdateKeywords(directory.items),
-    [directory.items],
+    () => collectChannelUpdateKeywords(allItems),
+    [allItems],
   );
   const visibleItems = useMemo(
     () =>
       filterAndSortChannelUpdates({
-        items: directory.items,
+        items: allItems,
         keyword,
         sortOrder,
       }),
-    [directory.items, keyword, sortOrder],
+    [allItems, keyword, sortOrder],
   );
   const latestDatedItemId = useMemo(() => {
     let latest: (typeof visibleItems)[number] | undefined;
@@ -48,8 +81,53 @@ export function ChannelUpdateDirectoryClient({
   }, [visibleItems]);
   const isFiltered = keyword !== ALL_CHANNEL_UPDATE_KEYWORDS;
 
+  function onDragEnter(event: DragEvent<HTMLElement>) {
+    if (!hasDraggedFiles(event)) return;
+    event.preventDefault();
+    dragDepthRef.current += 1;
+    setDragActive(true);
+  }
+
+  function onDragOver(event: DragEvent<HTMLElement>) {
+    if (!hasDraggedFiles(event)) return;
+    event.preventDefault();
+  }
+
+  function onDragLeave(event: DragEvent<HTMLElement>) {
+    if (!hasDraggedFiles(event)) return;
+    dragDepthRef.current = Math.max(0, dragDepthRef.current - 1);
+    if (dragDepthRef.current === 0) setDragActive(false);
+  }
+
+  function onDrop(event: DragEvent<HTMLElement>) {
+    if (!hasDraggedFiles(event)) return;
+    event.preventDefault();
+    dragDepthRef.current = 0;
+    setDragActive(false);
+    const files = Array.from(event.dataTransfer?.files ?? []);
+    if (!files.length) return;
+    setIncomingFiles(files);
+    setImportOpen(true);
+  }
+
   return (
-    <section className={styles.directory} aria-labelledby={`${channel}-updates-title`}>
+    <section
+      className={styles.directory}
+      aria-labelledby={`${channel}-updates-title`}
+      data-drag-active={dragActive || undefined}
+      onDragEnter={onDragEnter}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+      onDrop={onDrop}
+    >
+      {dragActive && (
+        <div className={styles.dropOverlay} aria-hidden="true">
+          <Upload size={22} />
+          <strong>松开文件，导入到{directory.title}</strong>
+          <span>支持 PDF / Word / PPT / 文本 / 图片</span>
+        </div>
+      )}
+
       <div className={styles.header}>
         <div className={styles.heading}>
           <p className="section-index">LATEST CRAWLED UPDATES</p>
@@ -58,6 +136,14 @@ export function ChannelUpdateDirectoryClient({
             <h2 id={`${channel}-updates-title`}>{directory.title}</h2>
           </div>
           <p>{directory.description}</p>
+          <button
+            type="button"
+            className={styles.importToggle}
+            onClick={() => setImportOpen((open) => !open)}
+          >
+            <Upload size={13} aria-hidden="true" />
+            {importOpen ? "收起导入面板" : "导入文档信源（拖拽 / Ctrl+V）"}
+          </button>
         </div>
         <div className={styles.snapshot}>
           <span>{isFiltered ? "筛选结果" : "公开资料快照"}</span>
@@ -69,7 +155,21 @@ export function ChannelUpdateDirectoryClient({
         </div>
       </div>
 
-      {directory.items.length ? (
+      <ChannelDocumentImport
+        channel={channel}
+        open={importOpen}
+        incomingFiles={incomingFiles}
+        onIncomingConsumed={() => setIncomingFiles(null)}
+        onClose={() => setImportOpen(false)}
+        onSaved={(item) =>
+          setLocalItems((previous) => [
+            item,
+            ...previous.filter((existing) => existing.id !== item.id),
+          ])
+        }
+      />
+
+      {allItems.length ? (
         <>
           <div className={styles.controls}>
             <div className={styles.controlIntro}>
@@ -88,7 +188,7 @@ export function ChannelUpdateDirectoryClient({
                 onChange={(event) => setKeyword(event.target.value)}
               >
                 <option value={ALL_CHANNEL_UPDATE_KEYWORDS}>
-                  全部事件（{directory.items.length}）
+                  全部事件（{allItems.length}）
                 </option>
                 {eventTypeOptions.map((option) => (
                   <option key={option.keyword} value={option.keyword}>
@@ -148,6 +248,7 @@ export function ChannelUpdateDirectoryClient({
                         >
                           {item.date}
                         </time>
+                        {localIds.has(item.id) && <i>已提交 · 等待站点重建</i>}
                         {item.id === latestDatedItemId && <b>时间最新</b>}
                       </div>
                       <h3>{item.title}</h3>
@@ -171,7 +272,7 @@ export function ChannelUpdateDirectoryClient({
       ) : (
         <div className={styles.empty}>
           <strong>尚未发现可展示的更新</strong>
-          <p>下一次数据抓取完成后，新记录会自动出现在这里。</p>
+          <p>下一次数据抓取完成后，新记录会自动出现在这里；也可以通过上方导入面板添加本地文档信源。</p>
         </div>
       )}
     </section>

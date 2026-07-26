@@ -42,6 +42,15 @@ python3 tools/crawl_articles.py --validate-only
 
 来源、筛选关键词、域名白名单和质量门配置位于 `config/intelligence_sources.json`。抓取结果写入 `public/data/articles.json`，并按规范化 URL 与事件指纹去重。
 
+## 手动文档信源导入
+
+新兴科技、创业案例、投资机构、研究报告、人物研究五个频道的"更新目录"支持管理员导入本地文档作为信源：
+
+- 直接把 PDF / docx / doc / pptx / ppt / txt / md / 图片拖到更新目录，或点击"导入文档信源"后 Ctrl+V 粘贴文件、截图与剪贴板文本；
+- PDF（pdfjs-dist，worker 固定在 `public/vendor/pdf.worker.min.mjs`，需与 package.json 中 pdfjs-dist 版本一致）、docx 与 pptx 在浏览器内解析正文，自动生成可编辑的抽取式摘要，摘要展示在文件链接上方；
+- 提交使用与 `/tracking` 管理页共用的仓库所有者 Fine-grained Token（Contents: Read and write，保存在当前标签页 sessionStorage）；
+- 原文件写入 `public/data/uploads/<频道>/`，索引写入 `public/data/channel_documents.json`（单文件上限 25MB），提交即触发 Pages 重建；重建完成前列表内的新条目临时指向仓库原文件。
+
 更新策略：
 
 1. 成功刷新某来源时，用本次批次替换该来源的旧生成数据；
