@@ -1,48 +1,50 @@
-commit=367d8f554dc8e2c4d90416608bc7f96c3949f74c
-generated_at=2026-07-25T14:20:36Z
-tracking_blob=bdc9c4994595cfd25f1007d905b5bb119a8b246d
+commit=5c55ef4c453f0a4091253a5c5c2e68005cb310fc
+generated_at=2026-07-27T03:26:55Z
+tracking_blob=b8ed8e9cc433f17b96623f6448d32f8358b9bfd6
 
 ===== crawl_user_sources =====
 Loaded 10 enabled US-listed companies from config/user_tracking.json.
-source=prnewswire-tech accepted=8 seconds=0.18
-source=techcrunch-venture accepted=12 seconds=0.22
-source=venturebeat-ai accepted=7 seconds=0.28
-source=google-ai-blog accepted=10 seconds=0.30
-source=deepmind-blog accepted=10 seconds=0.52
-source=leiphone accepted=12 seconds=2.57
-source=sina-finance accepted=2 seconds=2.58
-source=tmtpost accepted=6 seconds=3.40
-Tracking quality: {"scoredUserArticles": 227, "acceptedUserArticles": 227, "rejectedUserArticles": 0, "clusteredDuplicates": 5, "minimumScore": 31}
-Updated public/data/articles.json (527 articles, 10 financial profiles).
-{"sources": ["feeds"], "incoming": 269, "total": 527, "financialProfiles": 10, "healthySources": 113, "qualityPassed": true, "errors": []}
+source=techcrunch-venture accepted=12 seconds=0.14
+source=prnewswire-tech accepted=8 seconds=0.15
+source=venturebeat-ai accepted=7 seconds=0.34
+source=google-ai-blog accepted=10 seconds=0.21
+source=deepmind-blog accepted=10 seconds=0.31
+source=sina-finance accepted=3 seconds=2.24
+source=tmtpost accepted=4 seconds=3.18
+source=leiphone accepted=12 seconds=3.36
+Tracking quality: {"scoredUserArticles": 885, "acceptedUserArticles": 884, "rejectedUserArticles": 1, "clusteredDuplicates": 26, "minimumScore": 31}
+Updated public/data/articles.json (1173 articles, 10 financial profiles).
+{"sources": ["feeds"], "incoming": 898, "total": 1173, "financialProfiles": 10, "healthySources": 253, "qualityPassed": true, "errors": []}
 
 ===== migrate =====
-{"clearedFakeCompanies": 9, "recoveredSpecializedStatuses": 0, "relabelledSources": 30, "removedFakeCompanySlugs": 9, "removedLegacyStatuses": 0, "removedNonArticles": 0}
+{"clearedFakeCompanies": 35, "recoveredSpecializedStatuses": 0, "relabelledSources": 32, "removedFakeCompanySlugs": 16, "removedLegacyStatuses": 0, "removedNonArticles": 4}
 
 ===== refine_eastmoney =====
-{"eastmoneySeen": 7, "eastmoneyKept": 7, "eastmoneyNewKept": 0, "eastmoneyRetainedKept": 0, "removedRoundups": [], "removedUnrelated": []}
+{"eastmoneySeen": 6, "eastmoneyKept": 6, "eastmoneyNewKept": 0, "eastmoneyRetainedKept": 0, "removedRoundups": [], "removedUnrelated": []}
 
 ===== enrich_tracking =====
-{"trackingConfigHash": "b0cfc58267fffbcb8ffca44dc396b77d70bc9c4d8cdfa141917e1d84f49db05e", "tracks": 12, "matched": 799}
+{"trackingConfigHash": "0d9b878283f2a588d6a7f778f150eb80e799500eccdffe929dde153b538d9289", "tracks": 13, "matched": 2170}
 
 ===== validate_quality =====
-{"passed": true, "checks": {"minimumArticles": {"actual": 527, "required": 50, "passed": true}, "minimumHealthySources": {"actual": 113, "required": 6, "passed": true}, "minimumRegions": {"actual": 3, "required": 2, "passed": true}, "minimumSourceLevels": {"actual": 5, "required": 3, "passed": true}, "minimumPlatforms": {"actual": 32, "required": 4, "passed": true}, "minimumEventTypes": {"actual": 12, "required": 6, "passed": true}, "minimumChinaArticles": {"actual": 139, "required": 8, "passed": true}, "minimumUsArticles": {"actual": 290, "required": 20, "passed": true}, "maximumSingleSourceShare": {"actual": 0.0531, "required": 0.45, "passed": true}, "invalidArticles": {"actual": 0, "required": 0, "passed": true}, "uniqueUrls": {"actual": 527, "required": 527, "passed": true}}, "invalidArticles": []}
+{"passed": true, "checks": {"minimumArticles": {"actual": 1169, "required": 50, "passed": true}, "minimumHealthySources": {"actual": 253, "required": 6, "passed": true}, "minimumRegions": {"actual": 3, "required": 2, "passed": true}, "minimumSourceLevels": {"actual": 5, "required": 3, "passed": true}, "minimumPlatforms": {"actual": 125, "required": 4, "passed": true}, "minimumEventTypes": {"actual": 13, "required": 6, "passed": true}, "minimumChinaArticles": {"actual": 242, "required": 8, "passed": true}, "minimumUsArticles": {"actual": 639, "required": 20, "passed": true}, "maximumSingleSourceShare": {"actual": 0.0197, "required": 0.45, "passed": true}, "invalidArticles": {"actual": 0, "required": 0, "passed": true}, "uniqueUrls": {"actual": 1169, "required": 1169, "passed": true}}, "invalidArticles": []}
 
 ===== validate_eastmoney =====
 {
   "enabled": true,
   "attempted": true,
-  "attemptStatusCount": 2,
+  "attemptStatusCount": 4,
   "detailStatusCount": 1,
-  "acceptedByCrawler": 7,
-  "eastmoneyRecords": 7,
-  "detailArticles": 7,
+  "acceptedByCrawler": 6,
+  "eastmoneyRecords": 6,
+  "detailArticles": 6,
   "detailSourceIds": [
     "official-user-东方财富"
   ],
   "missingDetailStatusIds": [],
-  "attributedArticles": 0,
-  "companies": [],
+  "attributedArticles": 1,
+  "companies": [
+    "月之暗面"
+  ],
   "badUrls": [],
   "genericDuplicates": [],
   "mediaAsCompany": [],
@@ -54,10 +56,10 @@ Updated public/data/articles.json (527 articles, 10 financial profiles).
 ===== validate_user_source_coverage =====
 {
   "passed": true,
-  "enabledConfiguredSources": 33,
-  "expectedRuntimeStatuses": 33,
-  "attemptedRuntimeStatuses": 33,
-  "productiveRuntimeStatuses": 26,
+  "enabledConfiguredSources": 145,
+  "expectedRuntimeStatuses": 145,
+  "attemptedRuntimeStatuses": 145,
+  "productiveRuntimeStatuses": 114,
   "unroutableSources": [],
   "missingStatuses": [],
   "adapterMismatches": [],
@@ -67,22 +69,30 @@ Updated public/data/articles.json (527 articles, 10 financial profiles).
 }
 
 ===== full_unittest =====
-......................official=two fatal=RuntimeError: blocked
-..............................................................................................................................
+...........................official=two fatal=RuntimeError: blocked
+..................................................................................................................................................................................................................................................................................................................................................
 ----------------------------------------------------------------------
-Ran 148 tests in 0.089s
+Ran 365 tests in 16.422s
 
 OK
 No snapshot changes (1 articles).
+{"changed": true, "requestsUsed": 10, "requestsFailed": 0, "tracks": [{"track": "semiconductor", "mode": "expand", "added": {"keywords": ["CoWoS-L"], "people": ["梁孟松"], "sampleCompanies": ["中芯国际"], "sources": [{"id": "source-auto-media-chinastarmarket-cn", "name": "科创板日报 · 半导体信源", "url": "https://chinastarmarket.cn/", "sourceType": "listing-search", "sourceCategory": "media", "region": "中国", "sector": "半导体", "company": "", "ticker": "", "keywords": ["半导体"], "enabled": true}]}, "poolSize": 9}]}
+{"changed": true, "requestsUsed": 8, "requestsFailed": 0, "tracks": [{"track": "semiconductor", "mode": "expand", "added": {"keywords": ["GPU主题关联技术甲", "GPU主题关联技术乙", "先进封装主题关联技术甲"], "people": [], "sampleCompanies": [], "sources": []}, "relaxed": true, "poolSize": 4}]}
+{"changed": true, "requestsUsed": 13, "requestsFailed": 0, "tracks": [{"track": "robotics", "mode": "expand", "added": {"keywords": ["灵巧手"], "people": [], "sampleCompanies": ["宇树科技", "Figure AI"], "sources": [{"id": "source-auto-item-2a729fb4", "name": "宇树科技 官方网站", "url": "https://www.unitree.com/", "sourceType": "listing-search", "sourceCategory": "company", "region": "中国", "sector": "人形机器人", "company": "宇树科技", "ticker": "", "keywords": ["宇树科技"], "enabled": true}]}, "poolSize": 5}]}
+{"changed": true, "requestsUsed": 4, "requestsFailed": 0, "tracks": [{"track": "robotics", "mode": "expand", "added": {"keywords": ["灵巧手", "宇树科技", "Figure AI"], "people": [], "sampleCompanies": [], "sources": []}, "relaxed": true, "poolSize": 5}]}
+{"changed": false, "offline": true, "requestsUsed": 3, "requestsFailed": 3, "tracks": []}
+{"changed": true, "requestsUsed": 4, "requestsFailed": 0, "tracks": [{"track": "robotics", "mode": "expand", "added": {"keywords": ["宇树科技", "Figure AI"], "people": [], "sampleCompanies": [], "sources": []}, "relaxed": true, "poolSize": 5}]}
+{"changed": false, "requestsUsed": 0, "requestsFailed": 0, "tracks": []}
+{"changed": true, "requestsUsed": 4, "requestsFailed": 0, "tracks": [{"track": "embodied", "mode": "seed", "added": {"keywords": ["灵巧手", "宇树科技", "Figure AI"], "people": [], "sampleCompanies": [], "sources": []}, "poolSize": 5}]}
 
 ===== snapshot =====
 {
-  "generatedAt": "2026-07-25T14:32:54+00:00",
-  "articleCount": 527,
-  "minimumArticlesActual": 527,
-  "uniqueUrlsActual": 527,
-  "uniqueUrlsRequired": 527,
-  "userSourceStatuses": 33,
-  "productiveUserSources": 26,
-  "trackingConfigHash": "b0cfc58267fffbcb8ffca44dc396b77d70bc9c4d8cdfa141917e1d84f49db05e"
+  "generatedAt": "2026-07-27T03:38:48+00:00",
+  "articleCount": 1169,
+  "minimumArticlesActual": 1169,
+  "uniqueUrlsActual": 1169,
+  "uniqueUrlsRequired": 1169,
+  "userSourceStatuses": 145,
+  "productiveUserSources": 113,
+  "trackingConfigHash": "0d9b878283f2a588d6a7f778f150eb80e799500eccdffe929dde153b538d9289"
 }
