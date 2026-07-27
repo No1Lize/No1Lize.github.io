@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import unittest
 import xml.etree.ElementTree as ET
 from types import SimpleNamespace
@@ -116,7 +117,10 @@ class SearchIndexFeedRedirectTests(unittest.TestCase):
 
     def test_batch_response_parser_handles_nested_json(self) -> None:
         inner = '["garturlres","https://www.toutiao.com/article/456/"]'
-        response = '\n\n' + str([["wrb.fr", "Fbv4je", inner]]).replace("'", '"')
+        response = "\n\n" + json.dumps(
+            [["wrb.fr", "Fbv4je", inner]],
+            ensure_ascii=False,
+        )
         self.assertEqual(
             redirects._parse_batch_response(response),
             "https://www.toutiao.com/article/456/",
