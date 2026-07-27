@@ -37,6 +37,23 @@ test("favorite payload normalization keeps safe structured recommendation signal
   assert.equal(favorite.sources[0]?.name, "OpenAI");
 });
 
+test("favorite payload normalization preserves article reader query parameters", () => {
+  const href =
+    "/read/?url=https%3A%2F%2Fexample.com%2Farticle&title=Test&fid=homepage%3Aarticle%3Aabc";
+  const favorite = normalizeFavorite({
+    id: "homepage:article:abc",
+    href,
+    title: "Test",
+    summary: "Reader entry",
+    channel: "companies",
+    channelLabel: "创业案例",
+    savedAt: "2026-07-27T00:00:00.000Z",
+  });
+
+  assert.ok(favorite);
+  assert.equal(favorite.href, href);
+});
+
 test("favorite payload parser deduplicates ids and rejects invalid records", () => {
   const payload = JSON.stringify({
     schemaVersion: FAVORITES_SCHEMA_VERSION,
