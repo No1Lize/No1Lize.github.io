@@ -1,0 +1,60 @@
+.mount {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.eventMount {
+  margin: 9px 0 0 10px;
+}
+
+.feedMount {
+  margin-left: 10px;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 24px;
+  padding: 3px 7px;
+  border: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--surface) 84%, transparent);
+  color: var(--faint);
+  font: 500 10px/1 Inter, "Noto Sans SC", sans-serif;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    color 0.16s ease;
+}
+
+.button:hover {
+  border-color: var(--green);
+  background: var(--surface-2);
+  color: var(--green-bright);
+}
+
+.button[data-saved="true"] {
+  border-color: color-mix(in srgb, var(--green) 76%, var(--border));
+  background: color-mix(in srgb, var(--green) 14%, var(--surface));
+  color: var(--green-bright);
+}
+
+.button:focus-visible {
+  outline: 1px solid var(--green-bright);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .button span {
+    display: none;
+  }
+
+  .button {
+    width: 25px;
+    padding: 3px;
+  }
+}
