@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IntelligenceFavoriteControls } from "@/components/homepage-favorite-controls";
 import { Providers } from "@/components/providers";
 import { SiteHeader } from "@/components/site-header";
+import { WechatShareCompat } from "@/components/wechat-share-compat";
 import "./globals.css";
 import "./ipo/[slug]/market-detail.css";
 
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <SiteHeader />
           {children}
           <IntelligenceFavoriteControls />
+          <WechatShareCompat />
           <footer className="site-footer">
             <div>
               <strong>丽泽路1号</strong>
