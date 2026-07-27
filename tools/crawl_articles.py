@@ -30,7 +30,7 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
-from datetime import UTC, date, datetime, timedelta
+from datetime import UTC, date, datetime
 from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
@@ -38,6 +38,7 @@ from typing import Any, Iterable, Sequence
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, quote_plus, urlencode, urljoin, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +50,7 @@ MAX_NEWS_PER_SOURCE = 10
 MAX_FILINGS_PER_COMPANY = 6
 REQUEST_TIMEOUT = 18
 REQUEST_ATTEMPTS = 3
+PUBLICATION_TIMEZONE = ZoneInfo("Asia/Taipei")
 TRACKING_PARAMETERS = {
     "utm_source",
     "utm_medium",
@@ -370,13 +372,14 @@ def fetch_text(
 def normalize_date(value: str | int | float | None) -> str | None:
     if value is None or value == "":
         return None
+    latest_allowed = datetime.now(PUBLICATION_TIMEZONE).date()
     if isinstance(value, (int, float)) or str(value).isdigit():
         try:
             number = float(value)
             if number > 10_000_000_000:
                 number /= 1000
             parsed = datetime.fromtimestamp(number, tz=UTC).date()
-            if parsed <= datetime.now(UTC).date() + timedelta(days=2):
+            if parsed <= latest_allowed:
                 return parsed.isoformat()
             return None
         except (OSError, OverflowError, ValueError):
@@ -386,7 +389,7 @@ def normalize_date(value: str | int | float | None) -> str | None:
     if iso_match:
         try:
             parsed = date.fromisoformat(iso_match.group(0))
-            if parsed > datetime.now(UTC).date() + timedelta(days=2):
+            if parsed > latest_allowed:
                 return None
             return parsed.isoformat()
         except ValueError:
@@ -399,7 +402,7 @@ def normalize_date(value: str | int | float | None) -> str | None:
     if localized:
         try:
             parsed = date(*(int(part) for part in localized.groups()))
-            if parsed > datetime.now(UTC).date() + timedelta(days=2):
+            if parsed > latest_allowed:
                 return None
             return parsed.isoformat()
         except ValueError:
@@ -408,7 +411,7 @@ def normalize_date(value: str | int | float | None) -> str | None:
         parsed_dt = parsedate_to_datetime(text)
         if parsed_dt:
             parsed_date = parsed_dt.date()
-            if parsed_date <= datetime.now(UTC).date() + timedelta(days=2):
+            if parsed_date <= latest_allowed:
                 return parsed_date.isoformat()
     except (TypeError, ValueError, OverflowError):
         pass
@@ -421,7 +424,7 @@ def normalize_date(value: str | int | float | None) -> str | None:
     if named:
         try:
             parsed = datetime.strptime(" ".join(named.groups()), "%B %d %Y").date()
-            if parsed <= datetime.now(UTC).date() + timedelta(days=2):
+            if parsed <= latest_allowed:
                 return parsed.isoformat()
             return None
         except ValueError:
