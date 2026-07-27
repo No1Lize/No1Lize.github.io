@@ -1,0 +1,26 @@
+name: Temporary build diagnostics
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-build-diagnostics.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm install
+      - name: Capture Pages build diagnostics
+        run: npm run build:pages > build-diagnostics.txt 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-diagnostics
+          path: build-diagnostics.txt
+          if-no-files-found: error
