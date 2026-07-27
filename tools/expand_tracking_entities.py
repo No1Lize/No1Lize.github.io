@@ -176,6 +176,8 @@ GENERIC_TRACKING_KEYWORDS = {
     "where",
     "who",
     "quarter",
+    "build",
+    "release",
     "earnings",
     "financial results",
     "earnings call",

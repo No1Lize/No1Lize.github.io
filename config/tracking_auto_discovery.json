@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-27T09:07:02+00:00",
+  "updatedAt": "2026-07-27T09:11:04+00:00",
   "tracks": {
     "ai": {
       "lastExpandedAt": "2026-07-27T09:06:00+00:00"
@@ -1032,37 +1032,9 @@
       ]
     },
     {
-      "track": "robotics",
-      "kind": "people",
-      "value": "Brandon Tseng Brandon Tseng",
-      "addedAt": "2026-07-27T09:02:58+00:00",
-      "evidence": [
-        "sample-company-core-team",
-        "verified-company-profile"
-      ]
-    },
-    {
-      "track": "ai",
-      "kind": "keywords",
-      "value": "Build",
-      "addedAt": "2026-07-27T09:06:00+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
-    },
-    {
       "track": "ai",
       "kind": "keywords",
       "value": "Microsoft",
-      "addedAt": "2026-07-27T09:06:00+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
-    },
-    {
-      "track": "ai",
-      "kind": "keywords",
-      "value": "Release",
       "addedAt": "2026-07-27T09:06:00+00:00",
       "evidence": [
         "corpus-term"
@@ -1117,6 +1089,24 @@
       "kind": "people",
       "value": "同創業者兼",
       "removedAt": "2026-07-27T09:01:37+00:00"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Build",
+      "removedAt": "2026-07-27T09:11:04+00:00"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Release",
+      "removedAt": "2026-07-27T09:11:04+00:00"
+    },
+    {
+      "track": "robotics",
+      "kind": "people",
+      "value": "Brandon Tseng Brandon Tseng",
+      "removedAt": "2026-07-27T09:11:04+00:00"
     }
   ]
 }
