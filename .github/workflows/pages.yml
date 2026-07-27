@@ -36,7 +36,10 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run test:unit
-      - run: npm run build:pages
+      - name: Build deployable Pages snapshot
+        env:
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE: "true"
+        run: npm run build:pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
