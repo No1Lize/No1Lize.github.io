@@ -1,9 +1,7 @@
 name: Temporary crawler diagnostics
 
 on:
-  push:
-    branches:
-      - fix/frontend-baseline-checks-clean-20260727
+  pull_request:
     paths:
       - ".github/workflows/temporary-crawler-diagnostics.yml"
 
