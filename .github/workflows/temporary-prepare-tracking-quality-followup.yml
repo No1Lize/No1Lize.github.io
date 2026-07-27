@@ -8,6 +8,10 @@ on:
     paths:
       - ".github/workflows/temporary-prepare-tracking-quality-followup.yml"
       - ".github/temporary-tracking-quality-followup-trigger"
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-prepare-tracking-quality-followup.yml"
+      - ".github/temporary-tracking-quality-followup-trigger"
 
 permissions:
   contents: write
