@@ -239,11 +239,36 @@ def validate_keyword(value: str) -> str:
     return raw
 
 
+PERSON_NAME_NOISE_RE = re.compile(
+    r"(?:\b(?:company|business|corporate|global|development|sales|marketing|"
+    r"supply\s+chain|manufacturing|technologies?|systems?|senior|vice|president|"
+    r"officer|cfo|cto|ceo|team|leadership|management|press|news|post|co)\b|"
+    r"关注|作为|参加|出席|共同|主题演讲|演讲|负责|表示|介绍|宣布|致辞|担任|"
+    r"现任|曾任|来自|团队|公司|集团|部门|供应链|业务发展)",
+    re.IGNORECASE,
+)
+
+
+def likely_person_name(value: str) -> bool:
+    raw = clean_candidate(value)[:100]
+    name = re.sub(r"\s+@(?:[A-Za-z0-9_]{1,15})$", "", raw).strip()
+    if not name or re.search(r"https?://|@", name):
+        return False
+    if PERSON_NAME_NOISE_RE.search(name):
+        return False
+    if re.fullmatch(r"[㐀-鿿·•]{2,8}", name):
+        return 2 <= len(name.replace("·", "").replace("•", "")) <= 5
+    if re.search(r"[㐀-鿿]", name):
+        return len(name) <= 40
+    words = name.split()
+    return 2 <= len(words) <= 5 and all(
+        re.fullmatch(r"[A-Za-z][A-Za-z'.-]*", word) for word in words
+    )
+
+
 def validate_person(display_name: str, handle: str = "") -> str:
     name = clean_candidate(display_name)[:100]
-    if not name or not re.search(r"[A-Za-z0-9㐀-鿿]", name):
-        return ""
-    if re.search(r"https?://|@", name):
+    if not likely_person_name(name):
         return ""
     if handle and re.fullmatch(r"[A-Za-z0-9_]{1,15}", handle):
         return f"{name} @{handle}"
@@ -271,6 +296,17 @@ class Candidate:
     # Kind hint from the corpus (company/person); used when Wikidata does not
     # know the entity — common for young Chinese startups and investors.
     hint: str = ""
+
+
+def evidence_is_professional(evidence: set[str] | list[str]) -> bool:
+    values = set(evidence)
+    return "news-confirmed" in values or any(
+        value.startswith("corpus-") for value in values
+    )
+
+
+def candidate_has_professional_evidence(candidate: Candidate) -> bool:
+    return evidence_is_professional(candidate.evidence)
 
 
 GENERIC_ENTITY_NAMES = {
@@ -610,6 +646,55 @@ def config_values(track: dict[str, Any], kind: str, config: dict[str, Any]) -> l
             if source.get("sector") == track.get("name")
         ]
     return [str(value) for value in track.get(kind, [])]
+
+
+def prune_low_quality_auto_entries(
+    ledger: dict[str, Any], config: dict[str, Any]
+) -> list[dict[str, str]]:
+    """Remove prior automatic noise while preserving owner-entered values.
+
+    Existing non-custom tracks only retain automatically discovered keywords
+    confirmed by the accepted article corpus or current industry news. New
+    custom tracks keep reference-web seed terms until they have a corpus.
+    """
+
+    tracks = {
+        str(track.get("slug")): track
+        for track in config.get("tracks", [])
+        if isinstance(track, dict)
+    }
+    kept: list[dict[str, Any]] = []
+    pruned: list[dict[str, str]] = []
+    for row in ledger.get("added", []):
+        if not isinstance(row, dict):
+            continue
+        track = tracks.get(str(row.get("track") or ""))
+        kind = str(row.get("kind") or "")
+        value = str(row.get("value") or "")
+        evidence = {
+            str(item) for item in row.get("evidence", []) if str(item)
+        }
+        invalid = False
+        if track and kind == "people":
+            invalid = not likely_person_name(value)
+        elif track and kind == "keywords" and not track.get("custom"):
+            invalid = bool(evidence) and not evidence_is_professional(evidence)
+        if not invalid or not track or kind not in {
+            "keywords", "people", "sampleCompanies"
+        }:
+            kept.append(row)
+            continue
+        values = track.get(kind)
+        if isinstance(values, list):
+            target = normalize_term(value)
+            track[kind] = [
+                item for item in values if normalize_term(str(item)) != target
+            ]
+        pruned.append(
+            {"track": str(row.get("track") or ""), "kind": kind, "value": value}
+        )
+    ledger["added"] = kept
+    return pruned
 
 
 def sync_tombstones(ledger: dict[str, Any], config: dict[str, Any]) -> None:
@@ -963,6 +1048,8 @@ def expand_track(
             continue
 
         if caps["keywords"] > len(added["keywords"]):
+            if not seeding and not candidate_has_professional_evidence(candidate):
+                continue
             keyword = validate_keyword(candidate.value)
             if not keyword or normalize_term(keyword) in blocked["keywords"]:
                 continue
@@ -986,6 +1073,7 @@ def expand_track(
                 candidate
                 for candidate in pool.values()
                 if RELAXED_ACCEPT_THRESHOLD <= candidate.score < threshold
+                and candidate_has_professional_evidence(candidate)
             ),
             key=lambda candidate: candidate.score,
             reverse=True,
@@ -1158,6 +1246,7 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
         ledger.setdefault(key, fallback)
 
     sync_tombstones(ledger, config)
+    pruned = prune_low_quality_auto_entries(ledger, config)
 
     tracks = pick_tracks(
         config, ledger, args.only_track, args.seed_new_only, args.max_tracks
@@ -1182,7 +1271,11 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
             )
         )
 
-    if client.used_requests > 0 and client.failed_requests == client.used_requests:
+    if (
+        client.used_requests > 0
+        and client.failed_requests == client.used_requests
+        and not pruned
+    ):
         # Fully offline: honor the no-fabrication contract — even corpus-only
         # additions wait for a run that can cross-check the public web.
         print(
@@ -1193,13 +1286,14 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
                     "requestsUsed": client.used_requests,
                     "requestsFailed": client.failed_requests,
                     "tracks": [],
+                    "pruned": [],
                 },
                 ensure_ascii=False,
             )
         )
         return 0
 
-    changed = any(
+    changed = bool(pruned) or any(
         any(summary["added"][kind] for kind in summary["added"])
         for summary in summaries
     )
@@ -1223,6 +1317,7 @@ def run(argv: list[str] | None = None, fetch_text: FetchText | None = None) -> i
                 "requestsUsed": client.used_requests,
                 "requestsFailed": client.failed_requests,
                 "tracks": summaries,
+                "pruned": pruned,
             },
             ensure_ascii=False,
         )

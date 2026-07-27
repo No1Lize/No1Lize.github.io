@@ -29,6 +29,8 @@ def _fake_fetch(url: str) -> str:
                 }
             }
         )
+    if host == "news.google.com":
+        return "<rss><channel><title>feed</title><item><title>灵巧手</title></item></channel></rss>"
     if host == "suggestion.baidu.com":
         return 'window.baidu.sug({q:"seed",p:false,s:["人形机器人 灵巧手","人形机器人 触觉传感器"]});'
     if host == "suggestqueries.google.com":
@@ -309,11 +311,9 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         self.assertTrue(media, "productive publisher domain must become a source")
         self.assertEqual(media[0]["sourceCategory"], "media")
 
-    def test_diverse_seed_tracks_fall_back_to_relaxed_keywords(self) -> None:
-        """Regression: tracks whose seeds share no related pages (GPU vs 先进
-        封装 vs LPU) produced zero additions because no candidate was
-        confirmed by two seeds; the relaxed pass must still surface a few
-        keyword candidates instead of freezing the track."""
+    def test_reference_only_relations_do_not_pollute_existing_tracks(self) -> None:
+        """Existing tracks must not import encyclopedia-only relations when
+        no accepted article or current news confirms them."""
 
         self._write_config(
             self._base_config(
@@ -330,8 +330,25 @@ class ExpandTrackingEntitiesTests(unittest.TestCase):
         added = [
             keyword for keyword in track["keywords"] if "关联技术" in keyword
         ]
-        self.assertTrue(added, "relaxed pass must add single-source keywords")
-        self.assertLessEqual(len(added), 3)
+        self.assertEqual(added, [])
+
+    def test_prunes_reference_only_keywords_and_role_fragments(self) -> None:
+        config = self._base_config(
+            keywords=["人形机器人整机", "植物分类学"],
+            people=["Alice Chen", "Company Development", "作为自动驾"],
+        )
+        ledger = expander.empty_ledger()
+        ledger["added"] = [
+            {"track": "robotics", "kind": "keywords", "value": "植物分类学", "evidence": ["wikipedia-morelike"]},
+            {"track": "robotics", "kind": "people", "value": "Company Development", "evidence": ["sample-company-core-team"]},
+            {"track": "robotics", "kind": "people", "value": "作为自动驾", "evidence": ["sample-company-core-team"]},
+        ]
+        pruned = expander.prune_low_quality_auto_entries(ledger, config)
+        self.assertEqual(len(pruned), 3)
+        track = config["tracks"][0]
+        self.assertEqual(track["keywords"], ["人形机器人整机"])
+        self.assertEqual(track["people"], ["Alice Chen"])
+        self.assertEqual(ledger["added"], [])
 
     def test_ignored_recommendations_block_candidates(self) -> None:
         self._write_config(
