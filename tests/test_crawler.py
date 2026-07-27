@@ -2,8 +2,10 @@ import json
 import tempfile
 import unittest
 from dataclasses import replace
+from datetime import datetime, timedelta
 from pathlib import Path
 from unittest.mock import patch
+from zoneinfo import ZoneInfo
 
 import tools.crawl_official_companies as official_companies
 from tools.crawl_articles import (
@@ -69,9 +71,12 @@ class CrawlerTests(unittest.TestCase):
         )
 
     def test_date_validation_rejects_malformed_and_future_dates(self) -> None:
+        today = datetime.now(ZoneInfo("Asia/Taipei")).date()
         self.assertIsNone(normalize_date("2026-52-26"))
         self.assertIsNone(normalize_date("January 1, 2099"))
         self.assertIsNone(normalize_date("4070908800"))
+        self.assertEqual(normalize_date(today.isoformat()), today.isoformat())
+        self.assertIsNone(normalize_date((today + timedelta(days=1)).isoformat()))
         self.assertEqual(normalize_date("Fri, 24 Jul 2026 08:00:00 GMT"), "2026-07-24")
         self.assertEqual(normalize_date("发布于 2026年6月17日"), "2026-06-17")
         self.assertEqual(normalize_date("2025/11/19"), "2025-11-19")
