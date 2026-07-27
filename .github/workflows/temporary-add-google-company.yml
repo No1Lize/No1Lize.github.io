@@ -1,0 +1,40 @@
+name: Temporary add Google company
+
+on:
+  push:
+    branches:
+      - fix/frontend-baseline-checks-20260727
+    paths:
+      - ".github/workflows/temporary-add-google-company.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/frontend-baseline-checks-20260727
+          fetch-depth: 0
+      - name: Add missing Google company route
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("lib/catalog-data.ts")
+          content = path.read_text(encoding="utf-8")
+          if 'slug:"google"' in content:
+              raise SystemExit(0)
+          marker = "export const companies: Company[] = [\n"
+          entry = '  { slug:"google", name:"Google", region:"美国", sector:"AI / AGI", stage:"已上市", status:"已上市", founded:"1998", headquarters:"Mountain View", summary:"开发搜索、云计算、人工智能与面向消费者和企业的软件服务。", product:"Google Search、Google Cloud、Gemini 与相关 AI 产品。", source:official("Google","https://about.google/"), confidence:0.99 },\n'
+          if marker not in content:
+              raise SystemExit("companies catalog marker not found")
+          path.write_text(content.replace(marker, marker + entry, 1), encoding="utf-8")
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/catalog-data.ts
+          git diff --cached --quiet || git commit -m "fix: add missing Google company route"
+          git push origin HEAD:fix/frontend-baseline-checks-20260727
