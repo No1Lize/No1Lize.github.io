@@ -1,10 +1,10 @@
 {
   "compileStatus": 0,
-  "testStatus": 1,
+  "testStatus": 0,
   "installStatus": 0,
   "typeStatus": 0,
   "runtimeStatus": 0,
-  "passed": false,
+  "passed": true,
   "runtime": {
     "spec": {
       "id": "user-track-wechat-qbitai-ai",
@@ -14,51 +14,19 @@
         "量子位"
       ]
     },
-    "searchUrl": "https://weixin.sogou.com/weixin?type=2&query=%E9%87%8F%E5%AD%90%E4%BD%8D%20%E5%A4%A7%E6%A8%A1%E5%9E%8B&page=1&ie=utf8",
-    "candidateCount": 9,
-    "candidates": [
-      {
-        "title": "MEET2024l 量子位 智能未来大会今日举行,AI 大模型 工场作为 大模型 行业媒体支持",
-        "account": "",
-        "publishedAt": "2023-12-14",
-        "resultUrl": "https://weixin.sogou.com/link?url=dn9a_-gY295K0Rci_xozVXfdMkSQTLW6cwJThYulHEtVjXrGTiVgS7NgZgeD6x4mQGFh9p9eDT4JQb7dri3AFFqXa8Fplpd9HGtlnElgqOnSdDdK3eywp4JUvBmRQapbQLUmFgfJP_fiYzfIR35_6qr7ro9bJJlHwzr5qABucNq9nhUnzWwIkjdy3hxriFQSXUI-zqUHsJ9KbSZVTs7dr-5uHsQbolHHJNf43XDH2KqAtD0nEG8xgTjFlZjID8MMZS1MsT2guWthWLv6O878UA..&type=2&query=%E9%87%8F%E5%AD%90%E4%BD%8D+%E5%A4%A7%E6%A8%A1%E5%9E%8B&token=A87973EDB5AFCC6120267651D5CEFFF021C352896A64E3CC",
-        "directUrl": "https://mp.weixin.qq.com/s?src=11%C3%97tamp%3D1784996812&ver=6864&signature=eemywU14gzAJdoai8KJMJhAt1fKmsSqMKFR6vyN%2A-v1bbV5AFt7PqdoqWM0GpiQPmcJWRNOaocELcKEBlt09dxyzhXAVTYf9Xp8-b3XG1I8HJwym9Z0DIXnIsx0znTEs&new=1",
-        "pageLength": 31616,
-        "parsed": false
-      },
-      {
-        "title": "一览科技CTO陈锡言: 大模型 阴影下的技术创业机会——链接 大模型 与用户| 量子位 ·视点分享回顾",
-        "account": "",
-        "publishedAt": "2023-06-04",
-        "resultUrl": "https://weixin.sogou.com/link?url=dn9a_-gY295K0Rci_xozVXfdMkSQTLW6cwJThYulHEtVjXrGTiVgS7NgZgeD6x4mQGFh9p9eDT4JQb7dri3AFFqXa8Fplpd96CNBJ14geU5HfW_Vz12pT2l7NNmhuqqMi54RP6DWvzTszdopP_O8rcMsxpG55LkHQn4UnYXdGZtyx4JOF36rSOgagWft5YY7-jIr3zNKDk9aMFSmqmUDJ0S7e69oPl1cwxz2fxuJ-D_VxSd7D2ks9nk4OScsp4sObquVWK7OMA3vzHZXxeLdyg..&type=2&query=%E9%87%8F%E5%AD%90%E4%BD%8D+%E5%A4%A7%E6%A8%A1%E5%9E%8B&token=A87973EDB5AFCC6120267651D5CEFFF021C352896A64E3CC",
-        "directUrl": "https://mp.weixin.qq.com/s?src=11%C3%97tamp%3D1784996812&ver=6864&signature=donQdF3jE3j3LscNlmyYAzvWdZ-fzeANxdb6J8Smj-LICSMXDbj--7mel7NBUm14sOFB0lz89yCMdYa-JdYZS72cYLJYdynJTd%2AVDsoMrQMhTENUHaOjV2XNYSvGdz5U&new=1",
-        "pageLength": 31616,
-        "parsed": false
-      }
-    ],
+    "searchUrl": "https://weixin.sogou.com/weixin?type=2&query=%E9%87%8F%E5%AD%90%E4%BD%8D%20%E5%A4%A7%E6%A8%A1%E5%9E%8B&page=1&ie=utf8&tsn=1",
+    "candidateCount": 0,
+    "candidates": [],
     "accepted": []
   },
   "logTail": [
-    "..F........",
-    "======================================================================",
-    "FAIL: test_reassembles_split_javascript_wechat_url (tests.test_wechat_sogou_index.WeChatSogouIndexTest.test_reassembles_split_javascript_wechat_url)",
+    "...............",
     "----------------------------------------------------------------------",
-    "Traceback (most recent call last):",
-    "  File \"/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_wechat_sogou_index.py\", line 65, in test_reassembles_split_javascript_wechat_url",
-    "    self.assertEqual(",
-    "AssertionError: 'http[22 chars]?src=11%C3%97tamp%3D1784995758&ver=6864&signature=abc123&new=1' != 'http[22 chars]?src=11&timestamp=1784995758&ver=6864&signature=abc123&new=1'",
-    "- https://mp.weixin.qq.com/s?src=11%C3%97tamp%3D1784995758&ver=6864&signature=abc123&new=1",
-    "?                                  ^^^^^^    ^^^",
-    "+ https://mp.weixin.qq.com/s?src=11&timestamp=1784995758&ver=6864&signature=abc123&new=1",
-    "?                                  ^^^^^^    ^",
+    "Ran 15 tests in 0.015s",
     "",
-    "",
-    "----------------------------------------------------------------------",
-    "Ran 11 tests in 0.011s",
-    "",
-    "FAILED (failures=1)",
+    "OK",
     "npm warn deprecated tsconfck@3.1.6: unmaintained",
     "",
-    "added 506 packages in 38s"
+    "added 509 packages in 41s"
   ]
 }
