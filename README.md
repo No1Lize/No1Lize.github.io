@@ -60,10 +60,13 @@ python3 tools/crawl_articles.py --validate-only
 
 ## 追踪实体自动发现
 
-`.github/workflows/tracking-discovery.yml` 基于现有关键词、人物、公司与信息源，从公开无鉴权接口（维基百科相关条目、Wikidata 实体分类与官网、OpenAlex 相关概念、百度/谷歌搜索联想）发现紧密相关实体，直接写入 `config/user_tracking.json` 对应追踪区域，随后触发一次完整抓取刷新：
+`.github/workflows/tracking-discovery.yml` 基于现有关键词、人物、样本公司与信息源，从公开无鉴权接口和仓库内已有的可追溯人物材料中扩展紧密相关实体，直接写入 `config/user_tracking.json` 对应追踪区域，随后触发一次完整抓取刷新：
 
+- 每个赛道会把“样本公司”与已核验公司档案匹配，优先提取创始人、联合创始人、CEO、CTO、首席科学家和研究负责人等核心团队成员；
+- 对已确认身份，X handle 会进入公开时间线抓取；微信公开材料、知乎、即刻、小红书、微博、Bilibili、GitHub、LinkedIn、YouTube、Medium、Substack、个人博客和媒体专栏等精确公开入口会登记为人物信源；
+- 只使用仓库已有材料或公开实体声明中的精确 URL，不猜测账号，不访问登录后内容、私有接口或受限页面；
 - 管理页新增赛道（关键词为空）推送配置后，工作流立即用赛道名在网络上取词，直接种入关键词区域；
-- 每日 13:30（台北时间）对最久未扩展的赛道轮转执行完整扩展（关键词/人物/样本公司/公司官网源），候选需通过与 `/tracking` 管理页一致的校验规则；
+- 每日 13:30（台北时间）对最久未扩展的赛道轮转执行完整扩展（关键词、人物、样本公司、团队公开入口和公司官网源），候选需通过与 `/tracking` 管理页一致的校验规则；
 - 自动添加记录保存在 `config/tracking_auto_discovery.json`，管理页会标注"自动"；管理员删除或忽略过的条目成为 tombstone，永不重复添加；
 - 网络不可用时不做任何修改，绝不虚构实体；提交前会先跑 `validate:tracking` 与 `validate:taxonomy`。
 
