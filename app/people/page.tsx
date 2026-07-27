@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Users } from "lucide-react";
 import Link from "next/link";
-import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
+import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "人物研究",
@@ -31,24 +33,36 @@ export default function PeoplePage() {
         </div>
       </header>
 
-      <ChannelUpdateDirectory channel="people" />
-
-      <div className="people-grid">
-        {researchPeople.map((person) => (
-          <Link href={`/people/${person.slug}`} key={person.slug}>
-            <div className="person-monogram">{person.name.slice(0, 1)}</div>
-            <p>{person.englishName}</p>
-            <h2>{person.name}</h2>
-            <span>{person.role}</span>
-            <strong>{person.summary}</strong>
-            <div>
-              {person.sectors.map((sector) => <i key={sector}>{sector}</i>)}
-              {person.concepts.slice(0, Math.max(0, 4 - person.sectors.length)).map((concept) => <i key={concept}>{concept}</i>)}
-            </div>
-            <small>{statusLabels[person.status]} · {person.materials.length} 条可追溯材料</small>
-          </Link>
-        ))}
-      </div>
+      <ChannelSplitLayout
+        channel="people"
+        eyebrow="LATEST PEOPLE DIRECTORY"
+        title="关键人物档案"
+        description="按人物进入其背景、所属机构、核心观点、公开账号、演讲资料和可追溯原始来源。"
+        count={researchPeople.length}
+        countLabel="公开人物快照"
+        statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
+        icon={<Users size={19} aria-hidden="true" />}
+        bodyClassName={styles.body}
+      >
+        <div className="people-grid">
+          {researchPeople.map((person) => (
+            <Link href={`/people/${person.slug}`} key={person.slug}>
+              <div className="person-monogram">{person.name.slice(0, 1)}</div>
+              <p>{person.englishName}</p>
+              <h2>{person.name}</h2>
+              <span>{person.role}</span>
+              <strong>{person.summary}</strong>
+              <div>
+                {person.sectors.map((sector) => <i key={sector}>{sector}</i>)}
+                {person.concepts
+                  .slice(0, Math.max(0, 4 - person.sectors.length))
+                  .map((concept) => <i key={concept}>{concept}</i>)}
+              </div>
+              <small>{statusLabels[person.status]} · {person.materials.length} 条可追溯材料</small>
+            </Link>
+          ))}
+        </div>
+      </ChannelSplitLayout>
     </main>
   );
 }
