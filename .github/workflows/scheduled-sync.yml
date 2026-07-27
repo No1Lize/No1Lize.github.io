@@ -69,7 +69,7 @@ on:
       - config/user_tracking.json
       - .github/workflows/scheduled-sync.yml
   schedule:
-    - cron: "0 7-23/2 * * *"
+    - cron: "0 4-22/2 * * *"
       timezone: "Asia/Taipei"
   workflow_dispatch:
 
