@@ -28,6 +28,9 @@ export type FavoriteInput = {
   sources?: FavoriteSource[];
   region?: "中国" | "美国" | "全球";
   company?: string;
+  publishedAt?: string;
+  importance?: number;
+  eventType?: string;
 };
 
 export type FavoriteItem = Omit<
@@ -108,11 +111,15 @@ function normalizeSources(value: unknown): FavoriteSource[] {
 }
 
 function normalizeHref(value: unknown): string {
-  const href = cleanText(value, 500);
+  const href = cleanText(value, 1000);
   if (!href) return "";
   if (href.startsWith("/") && !href.startsWith("//")) {
     try {
       const url = new URL(href, "https://vciq.local");
+      if (url.pathname === "/read/" || url.pathname === "/read") {
+        const original = validHttpUrl(url.searchParams.get("url"));
+        if (original) return original;
+      }
       const pathname = url.pathname.endsWith("/")
         ? url.pathname
         : `${url.pathname}/`;
@@ -122,6 +129,17 @@ function normalizeHref(value: unknown): string {
     }
   }
   return validHttpUrl(href);
+}
+
+function normalizePublishedAt(value: unknown): string | undefined {
+  const date = cleanText(value, 20);
+  return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : undefined;
+}
+
+function normalizeImportance(value: unknown): number | undefined {
+  const number = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(number)) return undefined;
+  return Math.max(0, Math.min(100, Math.round(number)));
 }
 
 const CHANNELS = new Set<FavoriteChannel>([
@@ -156,6 +174,9 @@ export function normalizeFavorite(
     raw.region === "中国" || raw.region === "美国" || raw.region === "全球"
       ? raw.region
       : undefined;
+  const publishedAt = normalizePublishedAt(raw.publishedAt);
+  const importance = normalizeImportance(raw.importance);
+  const eventType = cleanText(raw.eventType, 40);
 
   return {
     id,
@@ -171,6 +192,9 @@ export function normalizeFavorite(
     ...(cleanText(raw.company, 120)
       ? { company: cleanText(raw.company, 120) }
       : {}),
+    ...(publishedAt ? { publishedAt } : {}),
+    ...(importance !== undefined ? { importance } : {}),
+    ...(eventType ? { eventType } : {}),
     savedAt,
   };
 }
