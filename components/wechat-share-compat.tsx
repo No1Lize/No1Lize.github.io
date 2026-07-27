@@ -11,7 +11,7 @@ type ShareTarget = {
   url: string;
 };
 
-type DesktopPlatform = "Windows" | "macOS";
+const FAVORITE_SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
 
 function cleanText(value: string | null | undefined): string {
   return (value ?? "").normalize("NFKC").replace(/\s+/g, " ").trim();
@@ -29,18 +29,32 @@ function isWechatBrowser(): boolean {
   return /MicroMessenger/i.test(navigator.userAgent);
 }
 
-function desktopPlatform(): DesktopPlatform | null {
+function desktopPlatform(): "Windows" | "macOS" | "Linux" | null {
   if (typeof navigator === "undefined") return null;
   const userAgent = navigator.userAgent;
   if (/Mobile|Android|iPhone|iPad|iPod/i.test(userAgent)) return null;
   if (/Windows/i.test(userAgent)) return "Windows";
   if (/Macintosh|Mac OS X/i.test(userAgent)) return "macOS";
+  if (/Linux|X11/i.test(userAgent)) return "Linux";
   return null;
+}
+
+function isShareTarget(value: unknown): value is ShareTarget {
+  if (!value || typeof value !== "object") return false;
+  const candidate = value as Partial<ShareTarget>;
+  return (
+    typeof candidate.title === "string" &&
+    typeof candidate.summary === "string" &&
+    typeof candidate.url === "string" &&
+    Boolean(candidate.title.trim()) &&
+    Boolean(candidate.url.trim())
+  );
 }
 
 function targetFromButton(button: HTMLElement): ShareTarget | null {
   const card = button.closest<HTMLElement>(".favorite-intelligence-card, .favorite-card");
   if (!card) return null;
+
   const link = card.querySelector<HTMLAnchorElement>(
     ".favorite-intelligence-link[href], .favorite-card-main[href]",
   );
@@ -50,6 +64,7 @@ function targetFromButton(button: HTMLElement): ShareTarget | null {
   );
   const href = link?.getAttribute("href") || link?.href || "";
   if (!title || !href) return null;
+
   return { title, summary, url: absoluteUrl(href) };
 }
 
@@ -76,48 +91,21 @@ export function WechatShareCompat() {
   const [target, setTarget] = useState<ShareTarget | null>(null);
   const [notice, setNotice] = useState("");
 
-  const invokeSystemShare = async (item: ShareTarget) => {
-    if (typeof navigator.share !== "function") {
-      setTarget(item);
-      setNotice("当前浏览器没有系统分享能力，请扫码或复制原始链接。");
-      return;
-    }
-
-    const text = item.summary ? `${item.title}\n${item.summary.slice(0, 140)}` : item.title;
-    const payload: ShareData = { title: item.title, text, url: item.url };
-
-    if (typeof navigator.canShare === "function" && !navigator.canShare(payload)) {
-      setTarget(item);
-      setNotice("当前系统不能接收这类分享数据，请扫码或复制原始链接。");
-      return;
-    }
-
-    try {
-      await navigator.share(payload);
-    } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") return;
-      setTarget(item);
-      setNotice("系统分享没有完成，请改用微信扫码或复制原始链接。");
-    }
-  };
-
   useEffect(() => {
-    const onClick = (event: MouseEvent) => {
-      const element = event.target instanceof Element ? event.target : null;
-      const button = element?.closest<HTMLElement>("button.favorite-share");
-      if (!button) return;
+    const openQrShare = (item: ShareTarget) => {
+      const normalized = { ...item, url: absoluteUrl(item.url) };
+      setTarget(normalized);
 
-      const item = targetFromButton(button);
-      if (!item) return;
-
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      setNotice("");
+      const platform = desktopPlatform();
+      if (platform) {
+        setNotice(`${platform} 已直接进入二维码分享模式，不会调用操作系统分享面板。`);
+        return;
+      }
 
       if (isWechatBrowser()) {
-        setTarget(item);
-        const text = `${item.title}${item.summary ? `\n${item.summary.slice(0, 140)}` : ""}\n${item.url}`;
+        const text = `${normalized.title}${
+          normalized.summary ? `\n${normalized.summary.slice(0, 140)}` : ""
+        }\n${normalized.url}`;
         void copyText(text).then((copied) =>
           setNotice(
             copied
@@ -128,20 +116,39 @@ export function WechatShareCompat() {
         return;
       }
 
-      const platform = desktopPlatform();
-      if (platform) {
-        // Windows 与 macOS 桌面端不再调用操作系统分享面板，
-        // 直接打开站内二维码分享界面，避免系统弹窗和桌面微信接收失败。
-        setTarget(item);
-        setNotice(`${platform} 桌面端已直接进入二维码分享模式。`);
-        return;
-      }
-
-      void invokeSystemShare(item);
+      setNotice("已打开二维码分享界面。扫码或复制的链接均直接指向原始情报。");
     };
 
-    document.addEventListener("click", onClick, true);
-    return () => document.removeEventListener("click", onClick, true);
+    const onShareRequest = (event: Event) => {
+      const detail = (event as CustomEvent<unknown>).detail;
+      if (!isShareTarget(detail)) return;
+      openQrShare(detail);
+    };
+
+    // Capture fallback supports a mixed-cache deployment where an older
+    // favorite-card bundle is still present. It blocks the old click handler
+    // before that handler can call navigator.share().
+    const onLegacyButtonClick = (event: MouseEvent) => {
+      const element = event.target instanceof Element ? event.target : null;
+      const button = element?.closest<HTMLElement>("button.favorite-share");
+      if (!button) return;
+
+      const item = targetFromButton(button);
+      if (!item) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation();
+      openQrShare(item);
+    };
+
+    window.addEventListener(FAVORITE_SHARE_REQUEST_EVENT, onShareRequest);
+    document.addEventListener("click", onLegacyButtonClick, true);
+
+    return () => {
+      window.removeEventListener(FAVORITE_SHARE_REQUEST_EVENT, onShareRequest);
+      document.removeEventListener("click", onLegacyButtonClick, true);
+    };
   }, []);
 
   if (!target || typeof document === "undefined") return null;
@@ -178,12 +185,12 @@ export function WechatShareCompat() {
           </button>
 
           <div className="wechat-share-copy">
-            <span>WECHAT SHARE</span>
+            <span>WECHAT QR SHARE</span>
             <h3 id="wechat-share-title">{target.title}</h3>
             <p>
               {platform
-                ? `${platform} 桌面端已跳过操作系统分享弹窗。请直接使用手机微信扫码，或复制原始链接发送给微信好友。`
-                : "请使用微信扫码或复制链接。分享链接均直接指向原始情报。"}
+                ? `${platform} 桌面端已完全跳过操作系统分享弹窗。请使用手机微信扫码，或复制原始链接发送给微信好友。`
+                : "本站已关闭操作系统分享面板，统一使用微信二维码和原始链接分享。"}
             </p>
           </div>
 
