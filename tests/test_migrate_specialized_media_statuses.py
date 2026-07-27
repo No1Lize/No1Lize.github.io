@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import unittest
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
-from tools.migrate_article_entities import migrate
+from tools.migrate_article_entities import load_company_route_slugs, migrate
 
 
 SOURCE_ID = "official-user-东方财富"
@@ -57,6 +59,58 @@ def status(source_id: str = SOURCE_ID) -> dict:
 
 
 class SpecializedMediaStatusMigrationTests(unittest.TestCase):
+    def test_invalid_future_date_is_removed(self) -> None:
+        future = datetime.now(ZoneInfo("Asia/Taipei")).date() + timedelta(days=1)
+        invalid = article(source_id="official-anthropic")
+        invalid["publishedAt"] = future.isoformat()
+        payload = {
+            "articleCount": 1,
+            "articles": [invalid],
+            "sourceStatus": [],
+        }
+
+        migrated, report = migrate(
+            payload,
+            tracking(),
+            remove_invalid_dates=True,
+        )
+
+        self.assertEqual(migrated["articles"], [])
+        self.assertEqual(migrated["articleCount"], 0)
+        self.assertEqual(report["removedInvalidDates"], 1)
+
+    def test_unknown_company_route_is_unlinked(self) -> None:
+        unknown = article(source_id="official-google")
+        unknown["company"] = "Google"
+        unknown["companySlug"] = "google"
+        known = article(source_id="official-anthropic")
+        known["id"] = "anthropic-detail"
+        known["company"] = "Anthropic"
+        known["companySlug"] = "anthropic"
+        payload = {
+            "articleCount": 2,
+            "articles": [unknown, known],
+            "sourceStatus": [],
+        }
+
+        migrated, report = migrate(
+            payload,
+            tracking(),
+            company_route_slugs={"anthropic"},
+        )
+
+        by_id = {item["id"]: item for item in migrated["articles"]}
+        self.assertNotIn("companySlug", by_id["eastmoney-detail"])
+        self.assertEqual(by_id["anthropic-detail"]["companySlug"], "anthropic")
+        self.assertEqual(report["removedUnknownCompanySlugs"], 1)
+
+    def test_production_company_routes_exclude_google(self) -> None:
+        routes = load_company_route_slugs()
+
+        self.assertIn("openai", routes)
+        self.assertIn("anthropic", routes)
+        self.assertNotIn("google", routes)
+
     def test_status_is_preserved_when_surviving_article_uses_source_id(self) -> None:
         payload = {
             "articleCount": 1,
