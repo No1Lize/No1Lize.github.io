@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
+import { FavoriteButton } from "@/components/favorite-button";
 import { ResearchReportLibrary } from "@/components/research-report-library";
 import {
   FinancialSeriesChart,
@@ -113,7 +114,37 @@ export default async function IpoDetail({
           <p className="eyebrow">
             {company.market} · {company.sector}
           </p>
-          <h1>{displayName}</h1>
+          <div className="detail-title-row">
+            <h1>{displayName}</h1>
+            <FavoriteButton
+              item={{
+                id: `ipo:${company.slug}`,
+                href: `/ipo/${company.slug}`,
+                title: `${displayName}上市跟踪`,
+                summary: detailDescription,
+                channel: "ipo",
+                channelLabel: "上市跟踪",
+                keywords: [company.sector],
+                sectors: [company.sector],
+                sources: [
+                  company.source,
+                  ...companyEvents.slice(0, 12).map((event) => event.source),
+                ].flatMap((source) =>
+                  source
+                    ? [
+                        {
+                          name: source.name,
+                          url: source.url,
+                          level: source.level,
+                        },
+                      ]
+                    : [],
+                ),
+                region: company.market === "美股" ? "美国" : "中国",
+                company: displayName,
+              }}
+            />
+          </div>
           <p className="market-hero-description">{heroDescription}</p>
           <div className="hero-chips">
             <span>{company.ticker}</span>

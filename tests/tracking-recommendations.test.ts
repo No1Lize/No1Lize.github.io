@@ -3,6 +3,7 @@ import test from "node:test";
 
 import { isAllowedDisplayedKeywordRecommendation } from "../lib/tracking-recommendation-policy";
 import { recommendTrackingAdditions } from "../lib/tracking-recommendations";
+import type { FavoriteItem } from "../lib/favorites";
 import type { LiveIntelligenceEvent } from "../lib/use-articles";
 
 const articles: LiveIntelligenceEvent[] = [
@@ -193,4 +194,70 @@ test("existing source hosts are removed from recommendations", () => {
   });
 
   assert.ok(!result.sources.some((item) => new URL(item.source.url).hostname === "openai.com"));
+});
+
+test("favorite content receives top keyword and source recommendation weight", () => {
+  const favorite: FavoriteItem = {
+    id: "technology:favorite-protocol",
+    href: "/technology/favorite-protocol/",
+    title: "FavoriteProtocol 技术档案",
+    summary: "收藏的 AI 协议研究内容。",
+    channel: "technology",
+    channelLabel: "新兴科技",
+    keywords: ["FavoriteProtocol"],
+    sectors: ["AI / AGI"],
+    sources: [
+      {
+        name: "Research Media B",
+        url: "https://research-b.example.com/analysis/grpo",
+        level: "媒体报道",
+      },
+    ],
+    region: "全球",
+    savedAt: "2099-01-07T00:00:00.000Z",
+  };
+
+  const result = recommendTrackingAdditions(
+    articles,
+    "AI / AGI",
+    {},
+    [favorite],
+  );
+
+  assert.equal(result.keywords[0]?.value, "FavoriteProtocol");
+  assert.match(result.keywords[0]?.reason ?? "", /收藏内容优先提炼/);
+  assert.equal(
+    new URL(result.sources[0]?.source.url ?? "https://invalid/").hostname,
+    "research-b.example.com",
+  );
+  assert.match(result.sources[0]?.reason ?? "", /收藏/);
+});
+
+test("favorite signals remain isolated to their matching sector", () => {
+  const favorite: FavoriteItem = {
+    id: "technology:favorite-protocol",
+    href: "/technology/favorite-protocol/",
+    title: "FavoriteProtocol 技术档案",
+    summary: "收藏的 AI 协议研究内容。",
+    channel: "technology",
+    channelLabel: "新兴科技",
+    keywords: ["FavoriteProtocol"],
+    sectors: ["AI / AGI"],
+    sources: [
+      {
+        name: "Research Media B",
+        url: "https://research-b.example.com/analysis/grpo",
+      },
+    ],
+    region: "全球",
+    savedAt: "2099-01-07T00:00:00.000Z",
+  };
+
+  const result = recommendTrackingAdditions([], "商业航天", {}, [favorite]);
+  assert.ok(!result.keywords.some((item) => item.value === "FavoriteProtocol"));
+  assert.ok(
+    !result.sources.some(
+      (item) => new URL(item.source.url).hostname === "research-b.example.com",
+    ),
+  );
 });

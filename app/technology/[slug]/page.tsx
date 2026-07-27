@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
+import { FavoriteButton } from "@/components/favorite-button";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
 import { hanghangchaResearchLink } from "@/lib/external-database-links";
 import {
@@ -134,7 +135,30 @@ export default async function SectorDetail({
           <p className={styles.eyebrow}>
             SECTOR DOSSIER · {coverage.label} · {sector.events} 项公开事件
           </p>
-          <h1>{sector.name}</h1>
+          <div className="detail-title-row">
+            <h1>{sector.name}</h1>
+            <FavoriteButton
+              item={{
+                id: `technology:${sector.slug}`,
+                href: `/technology/${sector.slug}`,
+                title: sector.name,
+                summary: sector.definition,
+                channel: "technology",
+                channelLabel: "新兴科技",
+                keywords: [
+                  ...sector.subsectors,
+                  ...sector.tracking.keywords,
+                ],
+                sectors: [sector.name, ...sector.aliases],
+                sources: events.slice(0, 12).map((event) => ({
+                  name: event.source.name,
+                  url: event.source.url,
+                  level: event.source.level,
+                })),
+                region: "全球",
+              }}
+            />
+          </div>
           <p className={styles.heroDescription}>{sector.definition}</p>
           <div className={styles.chips}>
             {sector.subsectors.map((item) => (

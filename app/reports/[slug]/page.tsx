@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FavoriteButton } from "@/components/favorite-button";
 import { companies, reports } from "@/lib/catalog-data";
 import { intelligenceEvents, snapshotDate } from "@/lib/intelligence-data";
 import { reportContent } from "@/lib/research-content";
@@ -61,7 +62,27 @@ export default async function ReportDetail({
         <p className="eyebrow">
           {report.type} · 更新 {snapshotDate}
         </p>
-        <h1>{report.title}</h1>
+        <div className="detail-title-row">
+          <h1>{report.title}</h1>
+          <FavoriteButton
+            item={{
+              id: `report:${report.slug}`,
+              href: `/reports/${report.slug}`,
+              title: report.title,
+              summary: report.summary,
+              channel: "reports",
+              channelLabel: "研究报告",
+              keywords: report.tags,
+              sectors: content.eventSectors,
+              sources: sources.slice(0, 16).map((source) => ({
+                name: source.name,
+                url: source.url,
+                level: source.level,
+              })),
+              region: "全球",
+            }}
+          />
+        </div>
         <p>{content.thesis}</p>
         <div>
           {report.tags.map((tag) => (

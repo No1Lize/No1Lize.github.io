@@ -19,6 +19,7 @@ import {
   type TrackingRecommendationSet,
   type TrackingSourceRecommendation,
 } from "@/lib/tracking-recommendations";
+import { useFavorites } from "@/components/use-favorites";
 import { useArticles } from "@/lib/use-articles";
 
 const LIST_FIELD_META = {
@@ -298,6 +299,7 @@ const emptyMountSubscribe = () => () => {};
 
 export function TrackingRecommendationsBridge() {
   const { articles } = useArticles();
+  const favorites = useFavorites();
   // useSyncExternalStore-based mount probe avoids setState inside the
   // effect (client snapshot is true, server snapshot false).
   const mounted = useSyncExternalStore(
@@ -352,15 +354,16 @@ export function TrackingRecommendationsBridge() {
   }, []);
 
   const recommendations = useMemo(() => {
+    void dismissalVersion;
     if (!snapshot.sector) return EMPTY_RECOMMENDATIONS;
     const generated = recommendTrackingAdditions(articles, snapshot.sector, {
       keywords: snapshot.keywords,
       people: snapshot.people,
       companies: snapshot.companies,
       sources: snapshot.sources,
-    });
+    }, favorites);
     return filterDismissed(generated, snapshot.sector);
-  }, [articles, dismissalVersion, snapshot]);
+  }, [articles, dismissalVersion, favorites, snapshot]);
 
   if (!mounted || !snapshot.sector) return null;
 

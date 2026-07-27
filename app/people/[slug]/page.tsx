@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
+import { FavoriteButton } from "@/components/favorite-button";
 import {
   hanghangchaResearchLink,
   personDatabaseLinks,
@@ -66,7 +67,31 @@ export default async function PersonDetail({ params }: { params: Promise<{ slug:
       <header className="entity-hero person-hero">
         <div>
           <p className="eyebrow">人物档案 · {person.englishName}</p>
-          <h1>{person.name}</h1>
+          <div className="detail-title-row">
+            <h1>{person.name}</h1>
+            <FavoriteButton
+              item={{
+                id: `person:${person.slug}`,
+                href: `/people/${person.slug}`,
+                title: person.name,
+                summary: person.background || person.summary,
+                channel: "people",
+                channelLabel: "人物研究",
+                keywords: [
+                  ...person.concepts,
+                  ...person.products,
+                ],
+                sectors: person.sectors,
+                sources: person.materials.slice(0, 16).map((material) => ({
+                  name: material.source,
+                  url: material.url,
+                  level: "原始材料",
+                })),
+                region: "全球",
+                company: person.organizations[0] ?? "",
+              }}
+            />
+          </div>
           <p>{person.role}</p>
           <div className="hero-chips">
             {person.sectors.map((sector) => <span key={sector}>{sector}</span>)}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FavoriteButton } from "@/components/favorite-button";
 import {
   formatReportFileSize,
   researchReportBySlug,
@@ -54,6 +55,27 @@ export default async function ResearchReportPdfReader({
             <p>{report.summary}</p>
           </div>
           <div className={styles.actions}>
+            <FavoriteButton
+              item={{
+                id: `report-pdf:${report.slug}`,
+                href: `/reports/pdf/${report.slug}`,
+                title: report.title,
+                summary: report.summary,
+                channel: "reports",
+                channelLabel: "研究报告",
+                keywords: [report.sector],
+                sectors: [report.sector],
+                sources: [
+                  {
+                    name: report.sourceName,
+                    url: report.sourcePageUrl,
+                    level: "原始材料",
+                  },
+                ],
+                region: report.market === "美股" ? "美国" : report.market ? "中国" : "全球",
+                ...(report.companyName ? { company: report.companyName } : {}),
+              }}
+            />
             <a href={report.localPdfUrl} download>
               下载归档 PDF
             </a>

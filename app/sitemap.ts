@@ -14,7 +14,7 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://vciq.github.io";
   const paths = [
-    "", "/technology", "/companies", "/institutions", "/ipo", "/reports", "/people", "/search", "/tracking",
+    "", "/technology", "/companies", "/institutions", "/ipo", "/reports", "/people", "/favorites", "/search", "/tracking",
     ...trackedSectors.map((item) => `/technology/${item.slug}`),
     ...companies.map((item) => `/companies/${item.slug}`),
     ...institutionCatalog.map((item) => `/institutions/${item.slug}`),

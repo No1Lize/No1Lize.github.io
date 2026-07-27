@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FavoriteButton } from "@/components/favorite-button";
 import { companies, institutionCatalog } from "@/lib/catalog-data";
 import { intelligenceEvents, snapshotDate } from "@/lib/intelligence-data";
 import { getInstitutionProfile } from "@/lib/research-content";
@@ -108,7 +109,31 @@ export default async function InstitutionDetail({
           <p className="eyebrow">
             {institution.region} · {institution.type}
           </p>
-          <h1>{institution.name}</h1>
+          <div className="detail-title-row">
+            <h1>{institution.name}</h1>
+            <FavoriteButton
+              item={{
+                id: `institution:${institution.slug}`,
+                href: `/institutions/${institution.slug}`,
+                title: institution.name,
+                summary: overview,
+                channel: "institutions",
+                channelLabel: "投资机构",
+                keywords: institution.sectors,
+                sectors: [
+                  ...institution.sectors,
+                  ...relatedEvents.map((event) => event.sector),
+                ],
+                sources: sources.slice(0, 16).map((source) => ({
+                  name: source.name,
+                  url: source.url,
+                  level: source.level,
+                })),
+                region: institution.region,
+                company: institution.name,
+              }}
+            />
+          </div>
           <p>{institution.englishName}</p>
           <div className="hero-chips">
             <span>{institution.stages}</span>

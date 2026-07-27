@@ -13,6 +13,7 @@ const navItems = [
   ["上市跟踪", "/ipo"],
   ["研究报告", "/reports"],
   ["人物研究", "/people"],
+  ["收藏", "/favorites"],
 ];
 
 // The persisted theme lives in localStorage; expose it as an external store

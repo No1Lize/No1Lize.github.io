@@ -4,6 +4,7 @@ import {
   type TrackingRecommendation,
   type TrackingRecommendationSet,
 } from "@/lib/tracking-recommendations";
+import type { FavoriteItem } from "@/lib/favorites";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 type ExistingTrackingValues = {
@@ -144,11 +145,13 @@ export function recommendPolicyCheckedTrackingAdditions(
   articles: LiveIntelligenceEvent[],
   selectedSector: string,
   existing: ExistingTrackingValues = {},
+  favorites: FavoriteItem[] = [],
 ): TrackingRecommendationSet {
   const recommendations = recommendTrackingAdditions(
     articles,
     selectedSector,
     existing,
+    favorites,
   );
   return {
     ...recommendations,

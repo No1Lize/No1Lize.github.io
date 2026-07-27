@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CompanyEquityEvidence } from "@/components/company-equity-evidence";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
+import { FavoriteButton } from "@/components/favorite-button";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
 import {
   companyDatabaseLinks,
@@ -117,7 +118,31 @@ export default async function CompanyDetail({
           <p className="eyebrow">
             {company.region} · {company.sector} · {company.status}
           </p>
-          <h1>{company.name}</h1>
+          <div className="detail-title-row">
+            <h1>{company.name}</h1>
+            <FavoriteButton
+              item={{
+                id: `company:${company.slug}`,
+                href: `/companies/${company.slug}`,
+                title: company.name,
+                summary: background,
+                channel: "companies",
+                channelLabel: "创业案例",
+                keywords: technologyProducts.flatMap((item) => [
+                  item.name,
+                  item.category ?? "",
+                ]),
+                sectors: [company.sector],
+                sources: sources.slice(0, 16).map((source) => ({
+                  name: source.name,
+                  url: source.url,
+                  level: source.level,
+                })),
+                region: company.region,
+                company: company.name,
+              }}
+            />
+          </div>
           <p>{company.englishName}</p>
           <div className="hero-chips">
             <span>{company.stage}</span>

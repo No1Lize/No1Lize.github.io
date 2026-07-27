@@ -22,6 +22,7 @@ import {
   recommendTrackingAdditions,
   type TrackingSourceRecommendation,
 } from "@/lib/tracking-recommendations";
+import { useFavorites } from "@/components/use-favorites";
 import { useArticles } from "@/lib/use-articles";
 import type { TrackingListedCompany } from "@/lib/user-tracking";
 
@@ -189,6 +190,7 @@ const emptyMountSubscribe = () => () => {};
 
 export function TrackingAdminModuleRecommendations() {
   const { articles } = useArticles();
+  const favorites = useFavorites();
   // useSyncExternalStore-based mount probe avoids setState inside the
   // effect (client snapshot is true, server snapshot false).
   const mounted = useSyncExternalStore(
@@ -242,6 +244,7 @@ export function TrackingAdminModuleRecommendations() {
   }, []);
 
   const listedRecommendations = useMemo(() => {
+    void dismissalVersion;
     if (!snapshot.sector) return [];
     return recommendListedCompanies(
       articles,
@@ -259,10 +262,11 @@ export function TrackingAdminModuleRecommendations() {
   }, [articles, dismissalVersion, snapshot.listedKeys, snapshot.sector]);
 
   const sourceRecommendations = useMemo(() => {
+    void dismissalVersion;
     if (!snapshot.sector) return [];
     const discovered = recommendTrackingAdditions(articles, snapshot.sector, {
       sources: snapshot.sourceUrls,
-    }).sources;
+    }, favorites).sources;
     return mergeSources(
       discovered,
       fallbackSourceRecommendations(snapshot.sector, snapshot.sourceUrls),
@@ -271,7 +275,13 @@ export function TrackingAdminModuleRecommendations() {
       (item) =>
         !isRecommendationDismissed(snapshot.sector, "sources", item.value),
     );
-  }, [articles, dismissalVersion, snapshot.sector, snapshot.sourceUrls]);
+  }, [
+    articles,
+    dismissalVersion,
+    favorites,
+    snapshot.sector,
+    snapshot.sourceUrls,
+  ]);
 
   async function addListed(item: ListedCompanyRecommendation) {
     const section = sectionByTitle(LISTED_TITLE);

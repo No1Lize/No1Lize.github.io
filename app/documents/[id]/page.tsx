@@ -3,6 +3,7 @@ import path from "node:path";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FavoriteButton } from "@/components/favorite-button";
 import {
   channelDocumentTypeLabel,
   getAllChannelDocuments,
@@ -90,7 +91,23 @@ export default async function DocumentReaderPage({
     <main className="page-shell subpage document-reader">
       <header className="page-header">
         <p className="eyebrow">DOCUMENT SOURCE · 手动导入信源</p>
-        <h1>{record.title}</h1>
+        <div className="detail-title-row">
+          <h1>{record.title}</h1>
+          <FavoriteButton
+            item={{
+              id: `document:${record.id}`,
+              href: `/documents/${record.id}`,
+              title: record.title,
+              summary: record.summary,
+              channel: record.channel,
+              channelLabel: channelName,
+              keywords: [],
+              sectors: [],
+              sources: [],
+              region: "全球",
+            }}
+          />
+        </div>
         <p className="document-reader-meta">
           {channelDocumentTypeLabel(record.fileType)} · {record.fileName} ·{" "}
           {sizeLabel(record.fileSize)}

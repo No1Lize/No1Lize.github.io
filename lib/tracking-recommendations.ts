@@ -9,6 +9,7 @@ import {
   companyRecommendationAllowedForSector,
   companySourceAllowedForSector,
 } from "@/lib/tracking-company-sector-policy";
+import type { FavoriteItem } from "@/lib/favorites";
 import type { LiveIntelligenceEvent } from "@/lib/use-articles";
 
 export type TrackingRecommendation = {
@@ -206,6 +207,72 @@ function urlHost(value: string): string {
   }
 }
 
+function favoriteMatchesSector(
+  favorite: FavoriteItem,
+  selectedSector: string,
+): boolean {
+  if (
+    favorite.sectors.some((sector) =>
+      trackingSectorsMatch(sector, selectedSector),
+    )
+  ) {
+    return true;
+  }
+  const text = [
+    favorite.title,
+    favorite.summary,
+    ...favorite.keywords,
+    ...favorite.sectors,
+  ]
+    .join(" ")
+    .toLocaleLowerCase("zh-CN");
+  return trackingSectorSeedTerms(selectedSector).some((term) => {
+    const key = normalizedKey(term);
+    return key.length >= 2 && text.includes(key);
+  });
+}
+
+function relevantFavorites(
+  favorites: FavoriteItem[],
+  selectedSector: string,
+): FavoriteItem[] {
+  return favorites.filter((favorite) =>
+    favoriteMatchesSector(favorite, selectedSector),
+  );
+}
+
+function favoriteAffinity(
+  article: LiveIntelligenceEvent,
+  favorites: FavoriteItem[],
+): number {
+  if (!favorites.length) return 0;
+  const articleHost = urlHost(article.source.url);
+  const articleTextValue = articleText(article).toLocaleLowerCase("zh-CN");
+  let strongest = 0;
+  for (const favorite of favorites) {
+    let score = 0;
+    const sourceMatch = favorite.sources.some(
+      (source) => urlHost(source.url) === articleHost,
+    );
+    if (sourceMatch) score += 120;
+    const title = normalizedKey(favorite.title);
+    const company = normalizedKey(favorite.company ?? "");
+    if (
+      (title.length >= 3 && articleTextValue.includes(title)) ||
+      (company.length >= 3 && articleTextValue.includes(company))
+    ) {
+      score += 80;
+    }
+    const matchingKeywords = favorite.keywords.filter((keyword) => {
+      const key = normalizedKey(keyword);
+      return key.length >= 2 && articleTextValue.includes(key);
+    }).length;
+    score += Math.min(90, matchingKeywords * 30);
+    strongest = Math.max(strongest, score);
+  }
+  return Math.min(220, strongest);
+}
+
 function articleText(article: LiveIntelligenceEvent): string {
   return `${article.title} ${article.summary} ${article.company}`.normalize("NFKC");
 }
@@ -225,7 +292,10 @@ function sourceWeight(article: LiveIntelligenceEvent): number {
   }
 }
 
-function scoreArticles(items: LiveIntelligenceEvent[]): number {
+function scoreArticles(
+  items: LiveIntelligenceEvent[],
+  favorites: FavoriteItem[] = [],
+): number {
   if (!items.length) return 0;
   const uniqueSources = new Set(items.map((item) => item.source.url)).size;
   const importance =
@@ -236,17 +306,28 @@ function scoreArticles(items: LiveIntelligenceEvent[]): number {
   const authority =
     items.reduce((sum, item) => sum + sourceWeight(item), 0) / items.length;
   const recent = items.filter((item) => daysAgo(item.publishedAt) <= 30).length;
+  const favoriteBoost = Math.max(
+    0,
+    ...items.map((item) => favoriteAffinity(item, favorites)),
+  );
   return Math.round(
     items.length * 10 +
       uniqueSources * 7 +
       importance * 0.22 +
       quality * 0.18 +
       authority * 10 +
-      recent * 4,
+      recent * 4 +
+      favoriteBoost,
   );
 }
 
-function reasonFor(items: LiveIntelligenceEvent[]): string {
+function reasonFor(
+  items: LiveIntelligenceEvent[],
+  favorites: FavoriteItem[] = [],
+): string {
+  if (items.some((item) => favoriteAffinity(item, favorites) > 0)) {
+    return `收藏内容优先关联 · ${items.length} 条当前赛道情报`;
+  }
   const recent = items.filter((item) => daysAgo(item.publishedAt) <= 30).length;
   const authoritative = items.filter((item) => sourceWeight(item) >= 0.8).length;
   if (recent >= 2) return `近30天在 ${recent} 条相关情报中出现`;
@@ -371,6 +452,7 @@ function dynamicKeywordCandidates(
   articles: LiveIntelligenceEvent[],
   selectedSector: string,
   existing: Set<string>,
+  favorites: FavoriteItem[],
 ): TrackingRecommendation[] {
   const blockedEntities = structuredEntityKeys(articles);
   const candidates = new Map<string, DynamicCandidate>();
@@ -453,9 +535,72 @@ function dynamicKeywordCandidates(
           items.length === 1
             ? "动态发现：高质量官方首发中的新技术实体"
             : `动态发现：${items.length} 条情报、${candidate.sources.size} 个独立来源`,
-        score: scoreArticles(items) + 18 + candidate.sources.size * 5,
+        score: scoreArticles(items, favorites) + 18 + candidate.sources.size * 5,
       };
     })
+    .sort(
+      (left, right) =>
+        right.score - left.score || left.label.localeCompare(right.label),
+    )
+    .slice(0, 18);
+}
+
+function isFavoriteKeyword(
+  value: string,
+  selectedSector: string,
+): boolean {
+  const term = normalize(value);
+  const key = normalizedKey(term);
+  if (!term || term.length < 2 || term.length > 80) return false;
+  if (key === normalizedKey(selectedSector) || GENERIC_TERMS.has(key)) return false;
+  if (/^https?:|www\.|@\w+/i.test(term) || /^\d+$/.test(term)) return false;
+  if (/\.(?:pdf|docx?|pptx?|txt|md|jpe?g|png|webp)$/i.test(term)) return false;
+  if (
+    isKnownTrackingSeedTerm(term) &&
+    !isTrackingTermAllowedForSector(term, selectedSector)
+  ) {
+    return false;
+  }
+  return /[A-Za-z0-9\u3400-\u9fff]/.test(term);
+}
+
+function favoriteKeywordCandidates(
+  favorites: FavoriteItem[],
+  selectedSector: string,
+  existing: Set<string>,
+): TrackingRecommendation[] {
+  const groups = new Map<
+    string,
+    { label: string; favorites: Set<string>; sourceHosts: Set<string> }
+  >();
+  for (const favorite of relevantFavorites(favorites, selectedSector)) {
+    for (const raw of favorite.keywords) {
+      const label = normalize(raw);
+      const key = normalizedKey(label);
+      if (existing.has(key) || !isFavoriteKeyword(label, selectedSector)) continue;
+      const current = groups.get(key) ?? {
+        label,
+        favorites: new Set<string>(),
+        sourceHosts: new Set<string>(),
+      };
+      current.favorites.add(favorite.id);
+      for (const source of favorite.sources) {
+        const host = urlHost(source.url);
+        if (host) current.sourceHosts.add(host);
+      }
+      groups.set(key, current);
+    }
+  }
+  return [...groups.values()]
+    .map((candidate) => ({
+      value: candidate.label,
+      label: candidate.label,
+      reason: `收藏内容优先提炼 · ${candidate.favorites.size} 项收藏关联`,
+      score:
+        240 +
+        candidate.favorites.size * 35 +
+        Math.min(40, candidate.sourceHosts.size * 8),
+    }))
     .sort(
       (left, right) =>
         right.score - left.score || left.label.localeCompare(right.label),
@@ -467,6 +612,7 @@ function keywordCandidates(
   articles: LiveIntelligenceEvent[],
   selectedSector: string,
   existing: Set<string>,
+  favorites: FavoriteItem[],
 ): TrackingRecommendation[] {
   const candidates = new Map<
     string,
@@ -491,8 +637,8 @@ function keywordCandidates(
     .map((candidate) => ({
       value: candidate.label,
       label: candidate.label,
-      reason: reasonFor(candidate.articles),
-      score: scoreArticles(candidate.articles),
+      reason: reasonFor(candidate.articles, favorites),
+      score: scoreArticles(candidate.articles, favorites),
     }))
     .sort(
       (left, right) =>
@@ -501,8 +647,9 @@ function keywordCandidates(
 
   const merged = new Map<string, TrackingRecommendation>();
   for (const item of [
+    ...favoriteKeywordCandidates(favorites, selectedSector, existing),
     ...seeded,
-    ...dynamicKeywordCandidates(articles, selectedSector, existing),
+    ...dynamicKeywordCandidates(articles, selectedSector, existing, favorites),
   ]) {
     const key = normalizedKey(item.value);
     const current = merged.get(key);
@@ -660,9 +807,16 @@ function sourceCandidates(
   articles: LiveIntelligenceEvent[],
   selectedSector: string,
   existingUrls: string[],
+  favorites: FavoriteItem[],
 ): TrackingSourceRecommendation[] {
   const existingHosts = new Set(existingUrls.map(urlHost).filter(Boolean));
   const groups = new Map<string, LiveIntelligenceEvent[]>();
+  const selectedFavorites = relevantFavorites(favorites, selectedSector);
+  const favoriteHosts = new Set(
+    selectedFavorites.flatMap((favorite) =>
+      favorite.sources.map((source) => urlHost(source.url)).filter(Boolean),
+    ),
+  );
 
   for (const article of articles) {
     const host = urlHost(article.source.url);
@@ -681,10 +835,12 @@ function sourceCandidates(
     groups.set(host, group);
   }
 
-  return [...groups.entries()]
+  const rankedArticleSources = [...groups.entries()]
     .filter(
-      ([, items]) =>
-        items.length >= 2 || items.some((item) => sourceWeight(item) >= 1),
+      ([host, items]) =>
+        favoriteHosts.has(host) ||
+        items.length >= 2 ||
+        items.some((item) => sourceWeight(item) >= 1),
     )
     .map(([host, items]) => {
       const representative = [...items].sort(
@@ -710,13 +866,19 @@ function sourceCandidates(
       const authoritative = items.filter(
         (item) => sourceWeight(item) >= 0.8,
       ).length;
-      const reason = `${items.length} 条当前赛道情报 · ${authoritative} 条高可信记录`;
+      const isFavoriteSource = favoriteHosts.has(host);
+      const reason = isFavoriteSource
+        ? `收藏信源优先参考 · ${items.length} 条当前赛道情报`
+        : `${items.length} 条当前赛道情报 · ${authoritative} 条高可信记录`;
       const url = `https://${host}/`;
       return {
         value: url,
         label: name,
         reason,
-        score: scoreArticles(items) + authoritative * 5,
+        score:
+          scoreArticles(items, selectedFavorites) +
+          authoritative * 5 +
+          (isFavoriteSource ? 180 : 0),
         source: {
           name,
           url,
@@ -733,7 +895,66 @@ function sourceCandidates(
           ],
         },
       };
-    })
+    });
+
+  const favoriteSources = new Map<string, TrackingSourceRecommendation>();
+  for (const favorite of selectedFavorites) {
+    for (const source of favorite.sources) {
+      const host = urlHost(source.url);
+      if (
+        !host ||
+        existingHosts.has(host) ||
+        BLOCKED_RECOMMENDATION_HOSTS.has(host)
+      ) {
+        continue;
+      }
+      const current = favoriteSources.get(host);
+      const isEntitySource = ["companies", "institutions", "ipo"].includes(
+        favorite.channel,
+      );
+      const sourceCategory: TrackingSourceRecommendation["source"]["sourceCategory"] =
+        favorite.channel === "people"
+          ? "person"
+          : isEntitySource
+            ? "company"
+            : "media";
+      const keywords = [
+        favorite.company ?? "",
+        ...favorite.keywords,
+        selectedSector,
+      ].filter(
+        (value) =>
+          isFavoriteKeyword(value, selectedSector) ||
+          value === selectedSector,
+      );
+      const candidate: TrackingSourceRecommendation = {
+        value: `https://${host}/`,
+        label: normalize(source.name) || host,
+        reason: "收藏内容信源 · 优先加入抓取参考",
+        score: (current?.score ?? 245) + 35,
+        source: {
+          name: normalize(source.name) || host,
+          url: `https://${host}/`,
+          sourceType: "listing-search",
+          sourceCategory,
+          region: favorite.region ?? "全球",
+          sector: selectedSector,
+          company: isEntitySource ? favorite.company ?? favorite.title : "",
+          ticker: "",
+          keywords: [...new Set(keywords)].slice(0, 12),
+        },
+      };
+      favoriteSources.set(host, candidate);
+    }
+  }
+
+  const merged = new Map<string, TrackingSourceRecommendation>();
+  for (const item of [...rankedArticleSources, ...favoriteSources.values()]) {
+    const host = urlHost(item.source.url);
+    const current = merged.get(host);
+    if (!current || item.score > current.score) merged.set(host, item);
+  }
+  return [...merged.values()]
     .sort(
       (left, right) =>
         right.score - left.score || left.label.localeCompare(right.label),
@@ -745,22 +966,30 @@ export function recommendTrackingAdditions(
   articles: LiveIntelligenceEvent[],
   selectedSector: string,
   existing: ExistingTrackingValues = {},
+  favorites: FavoriteItem[] = [],
 ): TrackingRecommendationSet {
   const sectorArticles = articles.filter((article) =>
     trackingSectorsMatch(article.sector, selectedSector),
   );
+  const selectedFavorites = relevantFavorites(favorites, selectedSector);
   const keywordSet = new Set((existing.keywords ?? []).map(normalizedKey));
   const peopleSet = new Set((existing.people ?? []).map(normalizedKey));
   const companySet = new Set((existing.companies ?? []).map(normalizedKey));
 
   return {
-    keywords: keywordCandidates(sectorArticles, selectedSector, keywordSet),
+    keywords: keywordCandidates(
+      sectorArticles,
+      selectedSector,
+      keywordSet,
+      selectedFavorites,
+    ),
     people: peopleCandidates(sectorArticles, peopleSet),
     companies: companyCandidates(sectorArticles, selectedSector, companySet),
     sources: sourceCandidates(
       sectorArticles,
       selectedSector,
       existing.sources ?? [],
+      selectedFavorites,
     ),
   };
 }
