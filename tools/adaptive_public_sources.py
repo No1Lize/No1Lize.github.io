@@ -33,7 +33,7 @@ from urllib.request import Request, urlopen
 BROWSER_USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "Chrome/124.0 Safari/537.36 No1LizePublicResearch/1.0"
+    "Chrome/124.0 Safari/537.36 VCIQPublicResearch/1.0"
 )
 DEFAULT_HISTORY_LIMIT = 20
 MAX_ADAPTIVE_TIMEOUT = 12
