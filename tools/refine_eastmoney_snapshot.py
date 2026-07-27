@@ -286,6 +286,7 @@ def refine_snapshot(
     eastmoney_new_kept = 0
     eastmoney_retained_kept = 0
     eastmoney_unknown_kept = 0
+    eastmoney_counts_by_source: dict[str, dict[str, int]] = {}
 
     for raw in snapshot.get("articles", []):
         if not isinstance(raw, dict):
@@ -300,12 +301,26 @@ def refine_snapshot(
         if relevant:
             kept.append(article)
             eastmoney_kept += 1
+            source_id = _clean(article.get("sourceId"), 120)
+            source_counts = eastmoney_counts_by_source.setdefault(
+                source_id,
+                {
+                    "kept": 0,
+                    "new_kept": 0,
+                    "retained_kept": 0,
+                    "unknown_kept": 0,
+                },
+            )
+            source_counts["kept"] += 1
             if origin == EASTMONEY_ORIGIN_NEW:
                 eastmoney_new_kept += 1
+                source_counts["new_kept"] += 1
             elif origin == EASTMONEY_ORIGIN_RETAINED:
                 eastmoney_retained_kept += 1
+                source_counts["retained_kept"] += 1
             else:
                 eastmoney_unknown_kept += 1
+                source_counts["unknown_kept"] += 1
         elif reason == "roundup":
             removed_roundups.append(_clean(article.get("title"), 300))
         else:
@@ -319,12 +334,21 @@ def refine_snapshot(
     for status in source_status:
         status_id = _clean(status.get("id"), 120)
         if status_id.startswith("official-user-东方财富"):
+            source_counts = eastmoney_counts_by_source.get(
+                status_id,
+                {
+                    "kept": 0,
+                    "new_kept": 0,
+                    "retained_kept": 0,
+                    "unknown_kept": 0,
+                },
+            )
             _update_eastmoney_status(
                 status,
-                kept=eastmoney_kept,
-                new_kept=eastmoney_new_kept,
-                retained_kept=eastmoney_retained_kept,
-                unknown_kept=eastmoney_unknown_kept,
+                kept=source_counts["kept"],
+                new_kept=source_counts["new_kept"],
+                retained_kept=source_counts["retained_kept"],
+                unknown_kept=source_counts["unknown_kept"],
             )
 
     result = dict(snapshot)
