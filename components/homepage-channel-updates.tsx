@@ -1,5 +1,4 @@
-import { ArrowUpRight, ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import styles from "@/components/homepage-columns.module.css";
 import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "@/lib/homepage-channel-update-config";
 import {
@@ -109,19 +108,6 @@ export function HomepageChannelUpdates() {
           </a>
         ))}
       </div>
-
-      <nav className={styles.channelNav} aria-label="聚合频道入口">
-        {homepageChannels.map((channel) => (
-          <Link
-            className="text-link"
-            href={channel.href}
-            key={channel.key}
-            style={{ marginRight: 14 }}
-          >
-            {channel.number} {channel.label} <ChevronRight size={15} />
-          </Link>
-        ))}
-      </nav>
     </aside>
   );
 }
