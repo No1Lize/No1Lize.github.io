@@ -4,6 +4,10 @@ import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
+import {
+  HomepageSortToggle,
+  type HomepageSortMode,
+} from "@/components/homepage-sort-toggle";
 import styles from "@/components/homepage-research-panels.module.css";
 import { institutionCatalog } from "@/lib/catalog-data";
 import {
@@ -55,6 +59,7 @@ export function Dashboard({
   } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
+  const [eventSort, setEventSort] = useState<HomepageSortMode>("importance");
   const [query, setQuery] = useState("");
 
   const activeArticles = useMemo(
@@ -112,14 +117,17 @@ export function Dashboard({
             .toLowerCase();
           return searchableText.includes(normalizedQuery);
         })
-        .sort(
-          (a, b) =>
-            b.publishedAt.localeCompare(a.publishedAt) ||
-            b.importance - a.importance,
+        .sort((a, b) =>
+          eventSort === "importance"
+            ? b.importance - a.importance ||
+              b.publishedAt.localeCompare(a.publishedAt)
+            : b.publishedAt.localeCompare(a.publishedAt) ||
+              b.importance - a.importance,
         ),
-    [activeArticles, eventType, normalizedQuery, region],
+    [activeArticles, eventSort, eventType, normalizedQuery, region],
   );
   const displayedEvents = visibleEvents.slice(0, 80);
+  const eventOrderLabel = eventSort === "importance" ? "重要性" : "最新时间";
   const sourceCount = new Set(activeArticles.map((item) => item.source.url)).size;
   const platformCount = new Set(
     activeArticles.map((item) => item.source.platform).filter(Boolean),
@@ -194,8 +202,8 @@ export function Dashboard({
             </div>
             <span>
               {displayedEvents.length < visibleEvents.length
-                ? `显示最新 ${displayedEvents.length} / ${visibleEvents.length} 条可追溯记录`
-                : `最新 ${visibleEvents.length} 条可追溯记录`}
+                ? `按${eventOrderLabel}显示 ${displayedEvents.length} / ${visibleEvents.length} 条可追溯记录`
+                : `按${eventOrderLabel}显示 ${visibleEvents.length} 条可追溯记录`}
             </span>
           </div>
 
@@ -220,6 +228,11 @@ export function Dashboard({
             >
               {eventTypes.map((item) => <option key={item}>{item}</option>)}
             </select>
+            <HomepageSortToggle
+              value={eventSort}
+              onChange={setEventSort}
+              ariaLabel="关键事件排序方式"
+            />
             <label className="inline-search">
               <Search size={15} />
               <input
