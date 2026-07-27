@@ -2,9 +2,16 @@ name: Temporary prepare tracking quality follow-up
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - ci/run-tracking-quality-followup-20260727
     paths:
       - ".github/workflows/temporary-prepare-tracking-quality-followup.yml"
+      - ".github/temporary-tracking-quality-followup-trigger"
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-prepare-tracking-quality-followup.yml"
+      - ".github/temporary-tracking-quality-followup-trigger"
 
 permissions:
   contents: write
