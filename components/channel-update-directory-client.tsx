@@ -24,6 +24,14 @@ import type {
 } from "@/lib/channel-updates";
 import styles from "./channel-update-directory.module.css";
 
+const channelLabels: Record<ChannelUpdateKey, string> = {
+  technology: "新兴科技",
+  companies: "创业案例",
+  institutions: "投资机构",
+  reports: "研究报告",
+  people: "人物研究",
+};
+
 function hasDraggedFiles(event: DragEvent<HTMLElement>): boolean {
   return Array.from(event.dataTransfer?.types ?? []).includes("Files");
 }
@@ -95,6 +103,7 @@ export function ChannelUpdateDirectoryClient({
 
   function onDragLeave(event: DragEvent<HTMLElement>) {
     if (!hasDraggedFiles(event)) return;
+    event.preventDefault();
     dragDepthRef.current = Math.max(0, dragDepthRef.current - 1);
     if (dragDepthRef.current === 0) setDragActive(false);
   }
@@ -235,6 +244,19 @@ export function ChannelUpdateDirectoryClient({
                     key={item.id}
                     rel="noreferrer"
                     target="_blank"
+                    data-intelligence-item="true"
+                    data-intelligence-title={item.title}
+                    data-intelligence-summary={item.summary}
+                    data-intelligence-type={item.label}
+                    data-intelligence-date={
+                      item.datePrecision === "undated" ? undefined : item.sortAt
+                    }
+                    data-intelligence-source={item.source}
+                    data-intelligence-source-level={item.label}
+                    data-intelligence-context={item.context}
+                    data-intelligence-keywords={item.keywords.join("|")}
+                    data-intelligence-channel={channel}
+                    data-intelligence-channel-label={channelLabels[channel]}
                   >
                     <span className={styles.index}>
                       {String(index + 1).padStart(3, "0")}
@@ -251,9 +273,9 @@ export function ChannelUpdateDirectoryClient({
                         {localIds.has(item.id) && <i>已提交 · 等待站点重建</i>}
                         {item.id === latestDatedItemId && <b>时间最新</b>}
                       </div>
-                      <h3>{item.title}</h3>
-                      <p>{item.summary}</p>
-                      <small>
+                      <h3 data-intelligence-title>{item.title}</h3>
+                      <p data-intelligence-summary>{item.summary}</p>
+                      <small data-intelligence-source>
                         {item.context} · {item.source}
                       </small>
                     </div>
