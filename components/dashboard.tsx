@@ -4,7 +4,7 @@ import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState, type ReactNode } from "react";
 import { EventQualityIndicator } from "@/components/event-quality-indicator";
-import qualityStyles from "@/components/dashboard-quality.module.css";
+import styles from "@/components/homepage-research-panels.module.css";
 import { institutionCatalog } from "@/lib/catalog-data";
 import {
   focusCompanies,
@@ -170,9 +170,19 @@ export function Dashboard({
       </section>
 
       <section className="market-strip" aria-label="中美科技投资概览">
-        <MarketSummary market="中国" sources={marketSourceCount("中国")} events={String(chinaCount).padStart(2, "0")} sector={topSector("中国")} />
+        <MarketSummary
+          market="中国"
+          sources={marketSourceCount("中国")}
+          events={String(chinaCount).padStart(2, "0")}
+          sector={topSector("中国")}
+        />
         <div className="market-divider"><span>CN</span><i /><span>US</span></div>
-        <MarketSummary market="美国" sources={marketSourceCount("美国")} events={String(usCount).padStart(2, "0")} sector={topSector("美国")} />
+        <MarketSummary
+          market="美国"
+          sources={marketSourceCount("美国")}
+          events={String(usCount).padStart(2, "0")}
+          sector={topSector("美国")}
+        />
       </section>
 
       <section className="content-grid">
@@ -192,15 +202,32 @@ export function Dashboard({
           <div className="filter-bar">
             <div className="segmented" aria-label="地区筛选">
               {regions.map((item) => (
-                <button className={region === item ? "active" : ""} key={item} onClick={() => setRegion(item)}>{item}</button>
+                <button
+                  className={region === item ? "active" : ""}
+                  key={item}
+                  onClick={() => setRegion(item)}
+                >
+                  {item}
+                </button>
               ))}
             </div>
-            <select value={eventType} onChange={(event) => setEventType(event.target.value as (typeof eventTypes)[number])} aria-label="事件类型">
+            <select
+              value={eventType}
+              onChange={(event) =>
+                setEventType(event.target.value as (typeof eventTypes)[number])
+              }
+              aria-label="事件类型"
+            >
               {eventTypes.map((item) => <option key={item}>{item}</option>)}
             </select>
             <label className="inline-search">
               <Search size={15} />
-              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="搜索公司、事件或媒体" aria-label="搜索公司、事件或媒体" />
+              <input
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="搜索公司、事件或媒体"
+                aria-label="搜索公司、事件或媒体"
+              />
             </label>
           </div>
 
@@ -219,7 +246,12 @@ export function Dashboard({
                   </div>
                   <h3><EventTitle item={item} /></h3>
                   <p>{item.summary}</p>
-                  <a className="source-link" href={item.source.url} target="_blank" rel="noreferrer">
+                  <a
+                    className="source-link"
+                    href={item.source.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     {item.source.level} · {item.source.platform ? `${item.source.platform} · ` : ""}{item.source.name}
                     <ArrowUpRight size={14} />
                   </a>
@@ -244,57 +276,134 @@ export function Dashboard({
 
         <div className="side-column-stack">
           {children}
-          <div className="snapshot-card">
-            <div className="snapshot-top">
-              <span>最新情报 · {latestPublishedAt || "暂无"}</span>
-              <span className="status-pill"><i /> {freshnessLabel}</span>
-            </div>
-            <strong>{String(activeArticles.length).padStart(2, "0")}</strong>
-            <p>{freshness.description}</p>
-            <div className="snapshot-meta">
-              <span>{healthySourceCount || sourceCount} 个有效来源</span>
-              <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>
-              <span>数据处理 · {processedAt}</span>
-            </div>
-            {trackingQuality && (
-              <p className={qualityStyles.trackingSummary}>
-                用户追踪：{trackingQuality.acceptedUserArticles} 条通过 · {trackingQuality.rejectedUserArticles} 条过滤 · {trackingQuality.clusteredDuplicates} 条重复报道已聚合
-              </p>
-            )}
-          </div>
         </div>
       </section>
 
-      <section className="lower-grid">
-        <div className="panel">
-          <div className="section-heading compact">
-            <div><p className="section-index">04 / FOCUS COMPANIES</p><h2>本周重点项目</h2></div>
-            <Link href="/companies">全部案例</Link>
+      <section className={styles.researchGrid} aria-label="首页研究概览">
+        <article className={`${styles.panel} ${styles.snapshotPanel}`}>
+          <header className={styles.panelHeader}>
+            <div>
+              <p>04 / INTEL SNAPSHOT</p>
+              <h2>情报快照</h2>
+            </div>
+            <span className={styles.panelMeta}>{freshnessLabel}</span>
+          </header>
+
+          <div className={styles.panelBody}>
+            <div className={styles.snapshotLead}>
+              <div className={styles.snapshotStatus}>
+                <span>最新情报 · {latestPublishedAt || "暂无"}</span>
+                <strong>{freshnessLabel}</strong>
+              </div>
+              <strong className={styles.snapshotValue}>
+                {String(activeArticles.length).padStart(2, "0")}
+              </strong>
+              <p className={styles.snapshotDescription}>{freshness.description}</p>
+            </div>
+
+            <dl className={styles.metricGrid}>
+              <div>
+                <dt>有效来源</dt>
+                <dd>{healthySourceCount || sourceCount}</dd>
+              </div>
+              <div>
+                <dt>平台类型</dt>
+                <dd>{platformCount}</dd>
+              </div>
+              <div>
+                <dt>启用赛道</dt>
+                <dd>{sectorCount}</dd>
+              </div>
+              <div>
+                <dt>数据处理</dt>
+                <dd>{processedAt}</dd>
+              </div>
+            </dl>
+
+            <div className={styles.qualityLedger}>
+              <div className={styles.qualityHeader}>
+                <span>USER TRACKING QUALITY</span>
+                <strong>{qualityGate?.passed === false ? "REVIEW" : "PASSED"}</strong>
+              </div>
+              {trackingQuality ? (
+                <div className={styles.qualityStats}>
+                  <div>
+                    <span>通过</span>
+                    <strong>{trackingQuality.acceptedUserArticles}</strong>
+                  </div>
+                  <div>
+                    <span>过滤</span>
+                    <strong>{trackingQuality.rejectedUserArticles}</strong>
+                  </div>
+                  <div>
+                    <span>重复聚合</span>
+                    <strong>{trackingQuality.clusteredDuplicates}</strong>
+                  </div>
+                </div>
+              ) : (
+                <p className={styles.qualityEmpty}>等待用户追踪质量统计。</p>
+              )}
+            </div>
           </div>
-          <div className="company-grid">
-            {focusCompanies.slice(0, 6).map((company) => (
-              <Link className="company-card" href={`/companies/${company.slug}`} key={company.slug}>
-                <div className="company-monogram">{company.name.slice(0, 2).toUpperCase()}</div>
-                <div><h3>{company.name}</h3><p>{company.focus}</p></div>
-                <span>{company.region} · {company.stage}</span>
+        </article>
+
+        <article className={styles.panel}>
+          <header className={styles.panelHeader}>
+            <div>
+              <p>05 / FOCUS COMPANIES</p>
+              <h2>本周重点项目</h2>
+            </div>
+            <Link className={styles.panelLink} href="/companies">全部案例</Link>
+          </header>
+
+          <div className={styles.companyList}>
+            {focusCompanies.slice(0, 6).map((company, index) => (
+              <Link
+                className={styles.companyCard}
+                href={`/companies/${company.slug}`}
+                key={company.slug}
+              >
+                <div className={styles.cardTop}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <i>{company.name.slice(0, 2).toUpperCase()}</i>
+                </div>
+                <h3>{company.name}</h3>
+                <p>{company.focus}</p>
+                <small>{company.region} · {company.stage}</small>
               </Link>
             ))}
           </div>
-        </div>
+        </article>
 
-        <div className="panel institution-panel">
-          <div className="section-heading compact">
-            <div><p className="section-index">05 / INSTITUTIONS</p><h2>机构活跃度</h2></div>
-            <Link href="/institutions">机构库</Link>
+        <article className={styles.panel}>
+          <header className={styles.panelHeader}>
+            <div>
+              <p>06 / INSTITUTIONS</p>
+              <h2>机构活跃度</h2>
+            </div>
+            <Link className={styles.panelLink} href="/institutions">机构库</Link>
+          </header>
+
+          <div className={styles.institutionList}>
+            {institutions.slice(0, 6).map((institution, index) => (
+              <Link
+                className={styles.institutionRow}
+                href={`/institutions/${institution.slug}`}
+                key={institution.name}
+              >
+                <span className={styles.institutionIndex}>
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div className={styles.institutionMain}>
+                  <strong>{institution.name}</strong>
+                  <small>{institution.region} · {institution.sectors.join(" / ")}</small>
+                </div>
+                <span className={styles.institutionLabel}>公开组合</span>
+                <b>{institution.portfolioCount}</b>
+              </Link>
+            ))}
           </div>
-          {institutions.slice(0, 6).map((institution) => (
-            <Link className="institution-row" href={`/institutions/${institution.slug}`} key={institution.name}>
-              <div><strong>{institution.name}</strong><span>{institution.region} · {institution.sectors.join(" / ")}</span></div>
-              <span className="institution-sample">公开组合</span>
-              <b>{institution.portfolioCount}</b>
-            </Link>
-          ))}
-        </div>
+        </article>
       </section>
     </>
   );
@@ -308,10 +417,23 @@ function EventTitle({ item }: { item: IntelligenceEvent }) {
   );
 }
 
-function MarketSummary({ market, sources, events, sector }: { market: string; sources: number; events: string; sector: string }) {
+function MarketSummary({
+  market,
+  sources,
+  events,
+  sector,
+}: {
+  market: string;
+  sources: number;
+  events: string;
+  sector: string;
+}) {
   return (
     <div className="market-summary">
-      <div className="market-name"><span>{market === "中国" ? "CN" : "US"}</span><strong>{market}</strong></div>
+      <div className="market-name">
+        <span>{market === "中国" ? "CN" : "US"}</span>
+        <strong>{market}</strong>
+      </div>
       <dl>
         <div><dt>样本事件</dt><dd>{events}</dd></div>
         <div><dt>原始来源</dt><dd>{sources}</dd></div>
