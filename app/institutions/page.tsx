@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
-import { institutionCatalog } from "@/lib/catalog-data";
+import { InstitutionDirectory } from "@/components/institution-directory";
+import {
+  institutionDirectoryStats,
+  institutionRankingSources,
+} from "@/lib/institution-ranking-data";
 
 export const metadata: Metadata = {
   title: "投资机构",
-  description: "中美头部科技投资机构公开档案。",
+  description: "基于清科与投中专业榜单整理的中国股权投资机构目录，并连接现有中美机构研究档案。",
 };
 
 export default function InstitutionsPage() {
@@ -14,33 +17,37 @@ export default function InstitutionsPage() {
       <header className="page-header">
         <p className="eyebrow">04 / INVESTMENT INSTITUTIONS</p>
         <h1>投资机构</h1>
-        <p>20 家中美科技投资机构，按市场、阶段与公开投资主题组织，并连接代表性组合与近期公司事件。</p>
+        <p>
+          以清科 2025 年早期、VC、PE、国资、CVC 与并购主榜为机构名单基础，
+          结合投中年度榜单分类框架，并连接现有机构官网、研究档案与近期公司事件。
+        </p>
       </header>
 
       <ChannelUpdateDirectory channel="institutions" />
 
       <div className="comparison-banner">
-        <div><span>中国机构</span><strong>{institutionCatalog.filter((item) => item.region === "中国").length}</strong></div>
-        <div><span>美国机构</span><strong>{institutionCatalog.filter((item) => item.region === "美国").length}</strong></div>
-        <p>从机构策略进入公司与事件，观察资本在不同技术方向上的实际配置。</p>
+        <div><span>中国榜单机构</span><strong>{institutionDirectoryStats.china}</strong></div>
+        <div><span>海外代表机构</span><strong>{institutionDirectoryStats.us}</strong></div>
+        <p>
+          共 {institutionDirectoryStats.total} 家机构、{institutionDirectoryStats.rankedRecords} 条清科榜单记录；
+          {institutionDirectoryStats.detailedProfiles} 家已连接站内研究档案。
+        </p>
       </div>
 
-      <section className="catalog-grid institutions-grid">
-        {institutionCatalog.map((institution) => (
-          <Link href={`/institutions/${institution.slug}`} className="catalog-card" key={institution.slug}>
-            <div className="catalog-top"><span>{institution.region}</span><span>{institution.type}</span></div>
-            <div className="catalog-title">
-              <i>{institution.name.slice(0, 2).toUpperCase()}</i>
-              <div><h2>{institution.name}</h2><p>{institution.englishName}</p></div>
-            </div>
-            <dl>
-              <div><dt>阶段</dt><dd>{institution.stages}</dd></div>
-              <div><dt>重点赛道</dt><dd>{institution.sectors.join(" / ")}</dd></div>
-            </dl>
-            <span className="verified-source">官网 · {institution.source.name}</span>
-          </Link>
+      <p className="method-note">
+        榜单来源：{" "}
+        {institutionRankingSources.map((source, index) => (
+          <span key={source.url}>
+            {index > 0 && "；"}
+            <a className="source-link" href={source.url} target="_blank" rel="noreferrer">
+              {source.publisher}《{source.title}》
+            </a>
+          </span>
         ))}
-      </section>
+        。仅保留原始页面明确披露的名次；未排序榜单统一标记为“入选”，不推断具体位次。
+      </p>
+
+      <InstitutionDirectory />
     </main>
   );
 }
