@@ -1,42 +1,45 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-27T00:11:07+00:00",
+  "updatedAt": "2026-07-27T03:15:46+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-27T00:08:18+00:00"
+      "lastExpandedAt": "2026-07-27T03:13:09+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-27T00:08:34+00:00"
+      "lastExpandedAt": "2026-07-27T03:13:25+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-27T00:08:49+00:00"
+      "lastExpandedAt": "2026-07-27T03:13:41+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-27T00:09:04+00:00"
+      "lastExpandedAt": "2026-07-27T03:13:57+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-27T00:09:19+00:00"
+      "lastExpandedAt": "2026-07-27T03:14:13+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-27T00:09:33+00:00"
+      "lastExpandedAt": "2026-07-27T03:14:28+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-27T00:09:47+00:00"
+      "lastExpandedAt": "2026-07-27T03:14:43+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-27T00:10:02+00:00"
+      "lastExpandedAt": "2026-07-27T03:14:59+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-27T00:10:16+00:00"
+      "lastExpandedAt": "2026-07-27T03:15:14+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-27T00:10:31+00:00"
+      "lastExpandedAt": "2026-07-27T03:15:29+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-27T00:10:46+00:00"
+      "lastExpandedAt": "2026-07-27T03:15:46+00:00"
     },
     "track-1ccjq49": {
       "lastExpandedAt": "2026-07-27T00:11:07+00:00"
+    },
+    "track-1p8ob4k": {
+      "lastExpandedAt": "2026-07-27T03:12:46+00:00"
     }
   },
   "added": [
@@ -2261,6 +2264,287 @@
       "kind": "keywords",
       "value": "Counts per minute",
       "addedAt": "2026-07-27T00:11:07+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1p8ob4k",
+      "kind": "keywords",
+      "value": "Temu",
+      "addedAt": "2026-07-27T03:12:46+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "计算机辅助设计",
+      "addedAt": "2026-07-27T03:13:25+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "女性人形機器人",
+      "addedAt": "2026-07-27T03:13:25+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "人型机器人学",
+      "addedAt": "2026-07-27T03:13:25+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "ai芯片",
+      "addedAt": "2026-07-27T03:13:41+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "驚悚",
+      "addedAt": "2026-07-27T03:13:41+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "推理小說",
+      "addedAt": "2026-07-27T03:13:41+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "储能电池",
+      "addedAt": "2026-07-27T03:13:57+00:00",
+      "evidence": [
+        "baidu-suggest",
+        "news-confirmed"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "FAQ",
+      "addedAt": "2026-07-27T03:13:57+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "镍铁电池",
+      "addedAt": "2026-07-27T03:13:57+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "ETF",
+      "addedAt": "2026-07-27T03:14:13+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "最新份额",
+      "addedAt": "2026-07-27T03:14:13+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "亿份",
+      "addedAt": "2026-07-27T03:14:13+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "量子閘",
+      "addedAt": "2026-07-27T03:14:28+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "彭宁离子阱",
+      "addedAt": "2026-07-27T03:14:28+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "可分辨边带冷却",
+      "addedAt": "2026-07-27T03:14:28+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "Sohu",
+      "addedAt": "2026-07-27T03:14:43+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "形式发票",
+      "addedAt": "2026-07-27T03:14:43+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "押匯",
+      "addedAt": "2026-07-27T03:14:43+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "Bitcoin Foundation",
+      "addedAt": "2026-07-27T03:14:59+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "办公自动化",
+      "addedAt": "2026-07-27T03:14:59+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "区块链",
+      "addedAt": "2026-07-27T03:14:59+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "碳纖維",
+      "addedAt": "2026-07-27T03:15:14+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "碳纖維強化聚合物",
+      "addedAt": "2026-07-27T03:15:14+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "materials",
+      "kind": "keywords",
+      "value": "纳米复合物",
+      "addedAt": "2026-07-27T03:15:14+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "升级",
+      "addedAt": "2026-07-27T03:15:29+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "自然系统第十版",
+      "addedAt": "2026-07-27T03:15:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "manufacturing",
+      "kind": "keywords",
+      "value": "卡尔·林奈",
+      "addedAt": "2026-07-27T03:15:29+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "稀土钡铜氧化物",
+      "addedAt": "2026-07-27T03:15:46+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "電傳導",
+      "addedAt": "2026-07-27T03:15:46+00:00",
+      "evidence": [
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "双极性扩散",
+      "addedAt": "2026-07-27T03:15:46+00:00",
       "evidence": [
         "wikipedia-morelike"
       ]
