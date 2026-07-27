@@ -8,6 +8,8 @@ export type DailyHeadline = {
   platform: string;
   label: string;
   date: string;
+  time: string;
+  publishedAt: string;
   importance: number;
 };
 
@@ -46,6 +48,18 @@ function headlineDay(publishedAt: string): string {
   return publishedAt.slice(0, 10);
 }
 
+function headlineTime(publishedAt: string): string {
+  if (!/[T ]\d{2}:\d{2}/u.test(publishedAt)) return "";
+  const parsed = new Date(publishedAt);
+  if (Number.isNaN(parsed.getTime())) return "";
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Taipei",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(parsed);
+}
+
 export function selectDailyHeadlines(
   articles: ArticleRecord[],
   limit: number = DAILY_HEADLINES_LIMIT,
@@ -64,19 +78,24 @@ export function selectDailyHeadlines(
           !EXCLUDED_PLATFORMS.has(platform),
       );
     })
-    .map((article, index) => ({
-      id: String(article.id ?? `headline-${index}`),
-      title: String(article.title),
-      href: String(article.source?.url),
-      source: String(article.source?.name || article.source?.platform || ""),
-      platform: String(article.source?.platform || article.source?.name || ""),
-      label: String(article.type ?? "动态"),
-      date: headlineDay(String(article.publishedAt)),
-      importance: Number(article.importance ?? 0) || 0,
-    }))
+    .map((article, index) => {
+      const publishedAt = String(article.publishedAt ?? "");
+      return {
+        id: String(article.id ?? `headline-${index}`),
+        title: String(article.title),
+        href: String(article.source?.url),
+        source: String(article.source?.name || article.source?.platform || ""),
+        platform: String(article.source?.platform || article.source?.name || ""),
+        label: String(article.type ?? "动态"),
+        date: headlineDay(publishedAt),
+        time: headlineTime(publishedAt),
+        publishedAt,
+        importance: Number(article.importance ?? 0) || 0,
+      };
+    })
     .sort(
       (left, right) =>
-        right.date.localeCompare(left.date) ||
+        right.publishedAt.localeCompare(left.publishedAt) ||
         right.importance - left.importance ||
         left.title.localeCompare(right.title, "zh-CN"),
     );
