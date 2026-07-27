@@ -7,14 +7,20 @@ import { useFavorites } from "@/components/use-favorites";
 import { removeFavorite, type FavoriteItem } from "@/lib/favorites";
 
 function isIntelligenceCard(item: FavoriteItem): boolean {
-  return Boolean(item.publishedAt || item.eventType || item.importance !== undefined);
+  return Boolean(
+    item.id.startsWith("homepage:article:") ||
+      item.publishedAt ||
+      item.eventType ||
+      item.importance !== undefined,
+  );
 }
 
 function IntelligenceFavoriteCard({ item }: { item: FavoriteItem }) {
   const date = item.publishedAt || item.savedAt.slice(0, 10);
   const source = item.sources[0];
+  const eventType = item.eventType || item.keywords[0];
   const tags = [...new Set([
-    item.eventType,
+    eventType,
     item.region,
     ...item.sectors,
   ].filter(Boolean))] as string[];
