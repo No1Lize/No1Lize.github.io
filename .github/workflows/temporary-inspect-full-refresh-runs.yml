@@ -1,6 +1,6 @@
 name: Temporary inspect full refresh runs
 
-# Download the failed test output from the post-Google-registry production run.
+# Run the complete Python suite against the direct-source regression fix branch.
 on:
   pull_request:
     paths:
@@ -8,27 +8,31 @@ on:
 
 permissions:
   contents: read
-  actions: read
 
 jobs:
-  inspect-failed-test:
+  validate-regressions:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
     steps:
-      - name: Collect failed test diagnostics
-        run: |
-          set -euo pipefail
-          mkdir -p diagnostics
-          gh run view 30281512666 \
-            --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,jobs \
-            > diagnostics/run.json
-          gh run view 30281512666 --log-failed \
-            > diagnostics/failed.log 2>&1
-      - uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v4
         with:
-          name: post-registry-failed-test
-          path: diagnostics
+          ref: fix/update-direct-source-regressions-20260728
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run complete Python test suite
+        id: tests
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -p "test_*.py" 2>&1 | tee full-python-tests.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: direct-source-full-python-tests
+          path: full-python-tests.log
           if-no-files-found: error
+      - name: Enforce test result
+        if: always()
+        run: test "${{ steps.tests.outcome }}" = "success"
