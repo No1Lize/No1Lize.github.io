@@ -38,6 +38,8 @@ function cleanText(value: string | null | undefined): string {
 
 function hrefFrom(anchor: HTMLAnchorElement | null): string {
   if (!anchor) return "";
+  const preserved = cleanText(anchor.dataset.readerOriginalHref);
+  if (preserved) return preserved;
   const raw = cleanText(anchor.getAttribute("href"));
   if (raw.startsWith("/") && !raw.startsWith("//")) return raw;
   return cleanText(anchor.href || raw);
@@ -51,6 +53,22 @@ function stableId(scope: string, title: string, href: string): string {
     hash = Math.imul(hash, 16777619);
   }
   return `homepage:${scope}:${(hash >>> 0).toString(36)}`;
+}
+
+function readerHref(item: FavoriteInput): string {
+  const query = new URLSearchParams({
+    url: item.href,
+    title: item.title,
+    fid: item.id,
+  });
+  return `/read/?${query.toString()}`;
+}
+
+function readerItem(item: FavoriteInput): FavoriteInput {
+  return {
+    ...item,
+    href: readerHref(item),
+  };
 }
 
 function inferChannel(label: string, context = ""): ChannelMeta {
@@ -87,7 +105,7 @@ function makeEventFavorite(row: HTMLElement): FavoriteInput | null {
   const summary = cleanText(row.querySelector(".event-main > p")?.textContent);
   const sourceLink = row.querySelector<HTMLAnchorElement>("a.source-link");
   const titleLink = row.querySelector<HTMLAnchorElement>("h3 a[href]");
-  const href = hrefFrom(titleLink) || hrefFrom(sourceLink);
+  const href = hrefFrom(sourceLink) || hrefFrom(titleLink);
   if (!title || !href) return null;
 
   const tags = [...row.querySelectorAll<HTMLElement>(".event-tags span")]
@@ -100,7 +118,7 @@ function makeEventFavorite(row: HTMLElement): FavoriteInput | null {
   const region = regionFrom(tags);
 
   return {
-    id: stableId("event", title, href),
+    id: stableId("article", title, href),
     href,
     title,
     summary,
@@ -114,7 +132,7 @@ function makeEventFavorite(row: HTMLElement): FavoriteInput | null {
   };
 }
 
-function makeFeedFavorite(row: HTMLAnchorElement, scope: "headline" | "channel"): FavoriteInput | null {
+function makeFeedFavorite(row: HTMLAnchorElement): FavoriteInput | null {
   const title = cleanText(row.querySelector<HTMLElement>("[class*='feedTitle']")?.textContent);
   const context = cleanText(row.querySelector<HTMLElement>("[class*='feedContext']")?.textContent);
   const tag = cleanText(row.querySelector<HTMLElement>("[class*='feedTag']")?.textContent);
@@ -129,7 +147,7 @@ function makeFeedFavorite(row: HTMLAnchorElement, scope: "headline" | "channel")
   const region = regionFrom([context, tag, ...aside]);
 
   return {
-    id: stableId(scope, title, href),
+    id: stableId("article", title, href),
     href,
     title,
     summary: context || "从首页收藏的公开情报条目。",
@@ -208,6 +226,16 @@ export function HomepageFavoriteControls() {
       return { element, item };
     };
 
+    const installReaderLink = (anchor: HTMLAnchorElement, item: FavoriteInput) => {
+      if (!item.href.startsWith("http")) return item;
+      anchor.dataset.readerOriginalHref = item.href;
+      const wrapped = readerItem(item);
+      anchor.setAttribute("href", wrapped.href);
+      anchor.setAttribute("target", "_blank");
+      anchor.setAttribute("rel", "noreferrer");
+      return wrapped;
+    };
+
     const scan = () => {
       clearMounts();
       const next: FavoriteMount[] = [];
@@ -215,23 +243,30 @@ export function HomepageFavoriteControls() {
       document.querySelectorAll<HTMLElement>(".event-row").forEach((row) => {
         const item = makeEventFavorite(row);
         const target = row.querySelector<HTMLElement>(".event-main");
-        if (item && target) next.push(addMount(target, item, "event"));
+        const titleLink = row.querySelector<HTMLAnchorElement>("h3 a[href]");
+        if (!item || !target) return;
+        const mountedItem = titleLink ? installReaderLink(titleLink, item) : readerItem(item);
+        next.push(addMount(target, mountedItem, "event"));
       });
 
       document
         .querySelectorAll<HTMLAnchorElement>(".headlines-column a[class*='feedRow']")
         .forEach((row) => {
-          const item = makeFeedFavorite(row, "headline");
+          const item = makeFeedFavorite(row);
           const target = row.querySelector<HTMLElement>("[class*='feedContext']");
-          if (item && target) next.push(addMount(target, item, "feed"));
+          if (!item || !target) return;
+          const mountedItem = installReaderLink(row, item);
+          next.push(addMount(target, mountedItem, "feed"));
         });
 
       document
         .querySelectorAll<HTMLAnchorElement>(".side-column a[class*='feedRow']")
         .forEach((row) => {
-          const item = makeFeedFavorite(row, "channel");
+          const item = makeFeedFavorite(row);
           const target = row.querySelector<HTMLElement>("[class*='feedContext']");
-          if (item && target) next.push(addMount(target, item, "feed"));
+          if (!item || !target) return;
+          const mountedItem = installReaderLink(row, item);
+          next.push(addMount(target, mountedItem, "feed"));
         });
 
       setMounts(next);
