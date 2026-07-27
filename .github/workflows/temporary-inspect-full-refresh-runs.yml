@@ -1,0 +1,59 @@
+name: Temporary inspect full refresh runs
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-inspect-full-refresh-runs.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Collect recent full refresh runs
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostics
+          gh run list \
+            --workflow scheduled-sync.yml \
+            --limit 20 \
+            --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,displayTitle \
+            > diagnostics/runs.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          runs = json.loads(Path('diagnostics/runs.json').read_text(encoding='utf-8'))
+          lines = []
+          for row in runs:
+              lines.append(
+                  f"{row['databaseId']}\t{row['status']}\t{row.get('conclusion') or ''}\t"
+                  f"{row['event']}\t{row['headSha']}\t{row['createdAt']}\t{row['updatedAt']}\t"
+                  f"{row.get('displayTitle') or ''}"
+              )
+          Path('diagnostics/runs.tsv').write_text('\n'.join(lines) + '\n', encoding='utf-8')
+          Path('diagnostics/run-ids.txt').write_text(
+              '\n'.join(str(row['databaseId']) for row in runs[:10]) + '\n',
+              encoding='utf-8',
+          )
+          PY
+          while read -r run_id; do
+            [ -n "$run_id" ] || continue
+            gh run view "$run_id" --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,jobs \
+              > "diagnostics/run-${run_id}.json" || true
+            gh run view "$run_id" --log-failed \
+              > "diagnostics/run-${run_id}-failed.log" 2>&1 || true
+          done < diagnostics/run-ids.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-refresh-run-diagnostics
+          path: diagnostics
+          if-no-files-found: error
