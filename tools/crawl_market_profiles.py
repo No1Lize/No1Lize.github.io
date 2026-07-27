@@ -27,7 +27,7 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 OUTPUT_PATH = ROOT / "public" / "data" / "market_profiles.json"
-USER_AGENT = "No1LizeResearchBot/1.0 (+https://no1lize.github.io/)"
+USER_AGENT = "VCIQResearchBot/1.0 (+https://vciq.github.io/)"
 MARKETS = {"A股", "港股", "美股"}
 MAX_COMPANIES = 80
 MAX_PRICE_POINTS = 120

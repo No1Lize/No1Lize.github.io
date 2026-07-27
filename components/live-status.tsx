@@ -8,7 +8,7 @@ export function LiveStatus() {
     <a
       className="updated"
       title={error instanceof Error ? error.message : undefined}
-      href="https://github.com/No1Lize/No1Lize.github.io/actions/workflows/scheduled-sync.yml"
+      href="https://github.com/VCIQ/VCIQ.github.io/actions/workflows/scheduled-sync.yml"
       target="_blank"
       rel="noreferrer"
     >

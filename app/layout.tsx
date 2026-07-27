@@ -5,7 +5,7 @@ import "./globals.css";
 import "./ipo/[slug]/market-detail.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://no1lize.github.io"),
+  metadataBase: new URL("https://vciq.github.io"),
   title: {
     default: "丽泽路1号｜科技与创投情报",
     template: "%s｜丽泽路1号",

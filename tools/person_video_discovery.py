@@ -23,7 +23,7 @@ from typing import Any, Callable, Iterable
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36 "
-    "No1Lize-PeopleVideo/1.0"
+    "VCIQ-PeopleVideo/1.0"
 )
 REQUEST_TIMEOUT = 14
 MAX_RESULTS_PER_PLATFORM = 4

@@ -12,7 +12,7 @@ export const dynamic = "force-static";
 // generateStaticParams uses, otherwise generated pages drift out of the
 // sitemap (or the sitemap lists pages that were never exported).
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://no1lize.github.io";
+  const base = "https://vciq.github.io";
   const paths = [
     "", "/technology", "/companies", "/institutions", "/ipo", "/reports", "/people", "/search", "/tracking",
     ...trackedSectors.map((item) => `/technology/${item.slug}`),

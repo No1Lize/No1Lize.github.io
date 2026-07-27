@@ -33,7 +33,7 @@ OVERRIDES_PATH = ROOT / "config" / "person_profile_overrides.json"
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 OUTPUT_PATH = ROOT / "public" / "data" / "people.json"
 
-USER_AGENT = "No1Lize-PeopleResearch/1.0 (https://github.com/No1Lize/No1Lize.github.io)"
+USER_AGENT = "VCIQ-PeopleResearch/1.0 (https://github.com/VCIQ/VCIQ.github.io)"
 REQUEST_TIMEOUT = 12
 MAX_ARTICLE_MATERIALS = 12
 

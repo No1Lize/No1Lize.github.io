@@ -2,11 +2,11 @@
 
 ## GitHub Pages
 
-1. 使用公开仓库 `No1Lize/No1Lize.github.io`；
+1. 使用公开仓库 `VCIQ/VCIQ.github.io`；
 2. 默认分支为 `main`；
 3. **Settings → Pages → Source** 选择 **GitHub Actions**；
 4. `.github/workflows/pages.yml` 从根路径执行静态构建；
-5. 发布地址为 `https://No1Lize.github.io/`，不设置项目 `basePath`。
+5. 发布地址为 `https://vciq.github.io/`，不设置项目 `basePath`。
 
 构建失败时部署任务不会运行，因此线上保留上一版。
 
@@ -39,4 +39,4 @@
 - 确认抓取、质量门和测试全部成功；
 - 检查仓库 `public/data/articles.json` 的 `generatedAt`、`articleCount`、`sourceStatus` 与 `qualityGate`；
 - 确认 **Build and deploy GitHub Pages** 对最新数据提交成功；
-- 打开 `https://No1Lize.github.io/data/articles.json` 和首页核对更新时间。
+- 打开 `https://vciq.github.io/data/articles.json` 和首页核对更新时间。
