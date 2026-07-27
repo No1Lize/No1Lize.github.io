@@ -7,15 +7,15 @@ https://nextjs.org/telemetry
 ▲ Next.js 16.2.6 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 8.4s
+✓ Compiled successfully in 9.9s
   Running TypeScript ...
-  Finished TypeScript in 5.4s ...
+  Finished TypeScript in 7.6s ...
   Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/128) ...
-  Generating static pages using 3 workers (32/128) 
-  Generating static pages using 3 workers (64/128) 
-  Generating static pages using 3 workers (96/128) 
-✓ Generating static pages using 3 workers (128/128) in 1487ms
+  Generating static pages using 3 workers (0/174) ...
+  Generating static pages using 3 workers (43/174) 
+  Generating static pages using 3 workers (86/174) 
+  Generating static pages using 3 workers (130/174) 
+✓ Generating static pages using 3 workers (174/174) in 2.5s
   Finalizing page optimization ...
 
 Route (app)
@@ -27,6 +27,11 @@ Route (app)
 │ ├ /companies/anthropic
 │ ├ /companies/figure-ai
 │ └ [+55 more paths]
+├ ● /documents/[id]
+│ ├ /documents/doc-20260726-154653-2ohq
+│ ├ /documents/doc-20260726-145150-ihp4
+│ ├ /documents/doc-20260726-144347-rzpw
+│ └ /documents/doc-20260726-144246-7god
 ├ ○ /institutions
 ├ ● /institutions/[slug]
 │ ├ /institutions/sequoia-capital
@@ -41,16 +46,21 @@ Route (app)
 │ └ [+12 more paths]
 ├ ○ /people
 ├ ● /people/[slug]
-│ ├ /people/warren-buffett
-│ ├ /people/charlie-munger
-│ ├ /people/duan-yongping
-│ └ [+3 more paths]
+│ ├ /people/frank-wang
+│ ├ /people/li-zexiang
+│ ├ /people/wang-xingxing
+│ └ [+19 more paths]
 ├ ○ /reports
 ├ ● /reports/[slug]
 │ ├ /reports/ai-capital-2026
 │ ├ /reports/humanoid-robotics
 │ ├ /reports/ai-chips
 │ └ [+2 more paths]
+├ ● /reports/pdf/[slug]
+│ ├ /reports/pdf/public-c901c5ad7c8680a84300
+│ ├ /reports/pdf/public-99650e337832e3626abf
+│ ├ /reports/pdf/public-0e4e95508281159628b5
+│ └ [+21 more paths]
 ├ ○ /robots.txt
 ├ ○ /search
 ├ ○ /sitemap.xml
@@ -59,7 +69,7 @@ Route (app)
 │ ├ /technology/ai
 │ ├ /technology/robotics
 │ ├ /technology/semiconductor
-│ └ [+8 more paths]
+│ └ [+10 more paths]
 └ ○ /tracking
 
 

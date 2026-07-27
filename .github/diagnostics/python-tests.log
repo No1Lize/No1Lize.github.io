@@ -1,7 +1,15 @@
-......................official=two fatal=RuntimeError: blocked
-....................................................................................................................
+...........................official=two fatal=RuntimeError: blocked
+..................................................................................................................................................................................................................................................................................................................................................
 ----------------------------------------------------------------------
-Ran 138 tests in 0.131s
+Ran 365 tests in 16.488s
 
 OK
 No snapshot changes (1 articles).
+{"changed": true, "requestsUsed": 10, "requestsFailed": 0, "tracks": [{"track": "semiconductor", "mode": "expand", "added": {"keywords": ["CoWoS-L"], "people": ["梁孟松"], "sampleCompanies": ["中芯国际"], "sources": [{"id": "source-auto-media-chinastarmarket-cn", "name": "科创板日报 · 半导体信源", "url": "https://chinastarmarket.cn/", "sourceType": "listing-search", "sourceCategory": "media", "region": "中国", "sector": "半导体", "company": "", "ticker": "", "keywords": ["半导体"], "enabled": true}]}, "poolSize": 9}]}
+{"changed": true, "requestsUsed": 8, "requestsFailed": 0, "tracks": [{"track": "semiconductor", "mode": "expand", "added": {"keywords": ["GPU主题关联技术甲", "GPU主题关联技术乙", "先进封装主题关联技术甲"], "people": [], "sampleCompanies": [], "sources": []}, "relaxed": true, "poolSize": 4}]}
+{"changed": true, "requestsUsed": 13, "requestsFailed": 0, "tracks": [{"track": "robotics", "mode": "expand", "added": {"keywords": ["灵巧手"], "people": [], "sampleCompanies": ["宇树科技", "Figure AI"], "sources": [{"id": "source-auto-item-2a729fb4", "name": "宇树科技 官方网站", "url": "https://www.unitree.com/", "sourceType": "listing-search", "sourceCategory": "company", "region": "中国", "sector": "人形机器人", "company": "宇树科技", "ticker": "", "keywords": ["宇树科技"], "enabled": true}]}, "poolSize": 5}]}
+{"changed": true, "requestsUsed": 4, "requestsFailed": 0, "tracks": [{"track": "robotics", "mode": "expand", "added": {"keywords": ["灵巧手", "宇树科技", "Figure AI"], "people": [], "sampleCompanies": [], "sources": []}, "relaxed": true, "poolSize": 5}]}
+{"changed": false, "offline": true, "requestsUsed": 3, "requestsFailed": 3, "tracks": []}
+{"changed": true, "requestsUsed": 4, "requestsFailed": 0, "tracks": [{"track": "robotics", "mode": "expand", "added": {"keywords": ["宇树科技", "Figure AI"], "people": [], "sampleCompanies": [], "sources": []}, "relaxed": true, "poolSize": 5}]}
+{"changed": false, "requestsUsed": 0, "requestsFailed": 0, "tracks": []}
+{"changed": true, "requestsUsed": 4, "requestsFailed": 0, "tracks": [{"track": "embodied", "mode": "seed", "added": {"keywords": ["灵巧手", "宇树科技", "Figure AI"], "people": [], "sampleCompanies": [], "sources": []}, "poolSize": 5}]}

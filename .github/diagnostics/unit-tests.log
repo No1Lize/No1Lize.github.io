@@ -6,183 +6,585 @@ TAP version 13
 # Subtest: production catalog meets the initial coverage floor
 ok 1 - production catalog meets the initial coverage floor
   ---
-  duration_ms: 1.37589
+  duration_ms: 1.171363
   type: 'test'
   ...
 # Subtest: every production entity has a real source URL
 ok 2 - every production entity has a real source URL
   ---
-  duration_ms: 0.511817
+  duration_ms: 0.638892
   type: 'test'
   ...
 # Subtest: person pages expose at least five traceable materials
 ok 3 - person pages expose at least five traceable materials
   ---
-  duration_ms: 0.333564
+  duration_ms: 0.81864
   type: 'test'
   ...
 # Subtest: slugs are unique within each route collection
 ok 4 - slugs are unique within each route collection
   ---
-  duration_ms: 0.246852
+  duration_ms: 0.226987
   type: 'test'
   ...
 # Subtest: every linked event company has a generated company route
 ok 5 - every linked event company has a generated company route
   ---
-  duration_ms: 0.475027
+  duration_ms: 0.429418
+  type: 'test'
+  ...
+# Subtest: normalizeChannelDocuments keeps valid records and rejects unsafe ones
+ok 6 - normalizeChannelDocuments keeps valid records and rejects unsafe ones
+  ---
+  duration_ms: 2.431022
+  type: 'test'
+  ...
+# Subtest: normalizeChannelDocuments tolerates malformed payloads
+ok 7 - normalizeChannelDocuments tolerates malformed payloads
+  ---
+  duration_ms: 0.281629
+  type: 'test'
+  ...
+# Subtest: channelDocumentToUpdateItem renders the summary above the file link
+ok 8 - channelDocumentToUpdateItem renders the summary above the file link
+  ---
+  duration_ms: 0.766963
+  type: 'test'
+  ...
+# Subtest: channelDocumentToUpdateItem falls back when the summary is empty
+ok 9 - channelDocumentToUpdateItem falls back when the summary is empty
+  ---
+  duration_ms: 0.333007
+  type: 'test'
+  ...
+# Subtest: detectChannelDocumentFileType maps extensions and mime types
+ok 10 - detectChannelDocumentFileType maps extensions and mime types
+  ---
+  duration_ms: 0.311516
+  type: 'test'
+  ...
+# Subtest: safeChannelDocumentFileName keeps CJK and strips unsafe characters
+ok 11 - safeChannelDocumentFileName keeps CJK and strips unsafe characters
+  ---
+  duration_ms: 0.590331
+  type: 'test'
+  ...
+# Subtest: document ids and upload paths are deterministic
+ok 12 - document ids and upload paths are deterministic
+  ---
+  duration_ms: 0.347955
+  type: 'test'
+  ...
+# Subtest: generateDocumentSummary extracts informative sentences in order
+ok 13 - generateDocumentSummary extracts informative sentences in order
+  ---
+  duration_ms: 5.355362
+  type: 'test'
+  ...
+# Subtest: generateDocumentSummary caps length and handles empty input
+ok 14 - generateDocumentSummary caps length and handles empty input
+  ---
+  duration_ms: 2.48821
+  type: 'test'
+  ...
+# Subtest: isMostlyLegibleText rejects mojibake from unmapped CJK fonts
+ok 15 - isMostlyLegibleText rejects mojibake from unmapped CJK fonts
+  ---
+  duration_ms: 0.755211
+  type: 'test'
+  ...
+# Subtest: generateDocumentSummary prefers conclusion and quantified sentences
+ok 16 - generateDocumentSummary prefers conclusion and quantified sentences
+  ---
+  duration_ms: 0.256422
+  type: 'test'
+  ...
+# Subtest: cleanExtractedText collapses layout whitespace
+ok 17 - cleanExtractedText collapses layout whitespace
+  ---
+  duration_ms: 0.168237
+  type: 'test'
+  ...
+# Subtest: decodeXmlEntities handles named and numeric entities
+ok 18 - decodeXmlEntities handles named and numeric entities
+  ---
+  duration_ms: 0.316946
+  type: 'test'
+  ...
+# Subtest: extractDocxXmlText follows runs, tabs, breaks and paragraphs
+ok 19 - extractDocxXmlText follows runs, tabs, breaks and paragraphs
+  ---
+  duration_ms: 0.597864
+  type: 'test'
+  ...
+# Subtest: extractPptxXmlText joins text runs per paragraph
+ok 20 - extractPptxXmlText joins text runs per paragraph
+  ---
+  duration_ms: 0.274115
+  type: 'test'
+  ...
+# Subtest: extractDocxDocument reads deflated word/document.xml from the zip
+ok 21 - extractDocxDocument reads deflated word/document.xml from the zip
+  ---
+  duration_ms: 70.953384
+  type: 'test'
+  ...
+# Subtest: extractPptxDocument orders slides numerically and counts them
+ok 22 - extractPptxDocument orders slides numerically and counts them
+  ---
+  duration_ms: 1.48878
+  type: 'test'
+  ...
+# Subtest: listZipEntries rejects non-zip payloads
+ok 23 - listZipEntries rejects non-zip payloads
+  ---
+  duration_ms: 0.793953
+  type: 'test'
+  ...
+# Subtest: homepage channel update directory matches the 80-item column layout
+ok 24 - homepage channel update directory matches the 80-item column layout
+  ---
+  duration_ms: 1.636087
+  type: 'test'
+  ...
+# Subtest: normalizes exact, relative and undated source labels
+ok 25 - normalizes exact, relative and undated source labels
+  ---
+  duration_ms: 1.321586
+  type: 'test'
+  ...
+# Subtest: mixed person time labels sort by their normalized calendar dates
+ok 26 - mixed person time labels sort by their normalized calendar dates
+  ---
+  duration_ms: 1.337275
+  type: 'test'
+  ...
+# Subtest: all requested channels expose a non-empty update directory
+ok 27 - all requested channels expose a non-empty update directory
+  ---
+  duration_ms: 186.599936
+  type: 'test'
+  ...
+# Subtest: channel updates are newest-first and link to original public sources
+ok 28 - channel updates are newest-first and link to original public sources
+  ---
+  duration_ms: 105.007638
+  type: 'test'
+  ...
+# Subtest: person dates use one visible calendar format without treating ongoing pages as new
+ok 29 - person dates use one visible calendar format without treating ongoing pages as new
+  ---
+  duration_ms: 5.219357
+  type: 'test'
+  ...
+# Subtest: channel directories deduplicate repeated original links
+ok 30 - channel directories deduplicate repeated original links
+  ---
+  duration_ms: 91.758273
+  type: 'test'
+  ...
+# Subtest: filter options are exactly the visible green event labels
+ok 31 - filter options are exactly the visible green event labels
+  ---
+  duration_ms: 96.136464
+  type: 'test'
+  ...
+# Subtest: event label options classify every channel and report accurate counts
+ok 32 - event label options classify every channel and report accurate counts
+  ---
+  duration_ms: 105.147343
+  type: 'test'
+  ...
+# Subtest: event-filtered updates remain time ordered
+ok 33 - event-filtered updates remain time ordered
+  ---
+  duration_ms: 160.085031
+  type: 'test'
+  ...
+# Subtest: each source contributes at most five headlines per day
+ok 34 - each source contributes at most five headlines per day
+  ---
+  duration_ms: 8.856488
+  type: 'test'
+  ...
+# Subtest: search proxies and regulators are excluded from headlines
+ok 35 - search proxies and regulators are excluded from headlines
+  ---
+  duration_ms: 0.778744
+  type: 'test'
+  ...
+# Subtest: headlines cap at the rolling limit sorted by freshest day first
+ok 36 - headlines cap at the rolling limit sorted by freshest day first
+  ---
+  duration_ms: 8.173202
+  type: 'test'
+  ...
+# Subtest: undated or unlinked records never become headlines
+ok 37 - undated or unlinked records never become headlines
+  ---
+  duration_ms: 0.261963
+  type: 'test'
+  ...
+# Subtest: live payload selection stays within contract
+ok 38 - live payload selection stays within contract
+  ---
+  duration_ms: 41.677314
+  type: 'test'
+  ...
+# Subtest: homepage intelligence titles always open the original source
+ok 39 - homepage intelligence titles always open the original source
+  ---
+  duration_ms: 1.284195
+  type: 'test'
+  ...
+# Subtest: chinese companies get qcc and jingdata entry links
+ok 40 - chinese companies get qcc and jingdata entry links
+  ---
+  duration_ms: 1.424369
+  type: 'test'
+  ...
+# Subtest: overseas companies and empty names produce no registry links
+ok 41 - overseas companies and empty names produce no registry links
+  ---
+  duration_ms: 0.225355
+  type: 'test'
+  ...
+# Subtest: company names are whitespace-normalized before building urls
+ok 42 - company names are whitespace-normalized before building urls
+  ---
+  duration_ms: 0.261883
+  type: 'test'
+  ...
+# Subtest: person links require a chinese name
+ok 43 - person links require a chinese name
+  ---
+  duration_ms: 0.301027
+  type: 'test'
+  ...
+# Subtest: hanghangcha research link is a bing public-index search
+ok 44 - hanghangcha research link is a bing public-index search
+  ---
+  duration_ms: 0.32965
+  type: 'test'
+  ...
+# Subtest: hanghangcha entry link points at the platform itself
+ok 45 - hanghangcha entry link points at the platform itself
+  ---
+  duration_ms: 0.184958
   type: 'test'
   ...
 # Subtest: normalizes A-share ticker variants
-ok 6 - normalizes A-share ticker variants
+ok 46 - normalizes A-share ticker variants
   ---
-  duration_ms: 2.091146
+  duration_ms: 2.533394
   type: 'test'
   ...
 # Subtest: normalizes Hong Kong ticker variants to five digits
-ok 7 - normalizes Hong Kong ticker variants to five digits
+ok 47 - normalizes Hong Kong ticker variants to five digits
   ---
-  duration_ms: 0.36383
+  duration_ms: 0.404752
   type: 'test'
   ...
 # Subtest: normalizes US tickers and preserves catalog routes
-ok 8 - normalizes US tickers and preserves catalog routes
+ok 48 - normalizes US tickers and preserves catalog routes
   ---
-  duration_ms: 0.417489
+  duration_ms: 0.460366
+  type: 'test'
+  ...
+# Subtest: cambricon renders numeric market cap and normalized region
+ok 49 - cambricon renders numeric market cap and normalized region
+  ---
+  duration_ms: 0.955818
+  type: 'test'
+  ...
+# Subtest: navigation labels cannot replace CATL industry or company introduction
+ok 50 - navigation labels cannot replace CATL industry or company introduction
+  ---
+  duration_ms: 0.189396
+  type: 'test'
+  ...
+# Subtest: all enabled snapshot profiles have a display region and readable market cap when available
+ok 51 - all enabled snapshot profiles have a display region and readable market cap when available
+  ---
+  duration_ms: 0.30324
+  type: 'test'
+  ...
+# Subtest: quote and news normalization keeps optional double-source fields safe
+ok 52 - quote and news normalization keeps optional double-source fields safe
+  ---
+  duration_ms: 0.510069
+  type: 'test'
+  ...
+# Subtest: all real tracked people appear in the people research catalog
+ok 53 - all real tracked people appear in the people research catalog
+  ---
+  duration_ms: 1.262535
+  type: 'test'
+  ...
+# Subtest: organization accounts are excluded from person pages
+ok 54 - organization accounts are excluded from person pages
+  ---
+  duration_ms: 0.240172
+  type: 'test'
+  ...
+# Subtest: generated people expose the unified research schema
+ok 55 - generated people expose the unified research schema
+  ---
+  duration_ms: 0.200166
+  type: 'test'
+  ...
+# Subtest: sourced papers and talks populate works and speeches
+ok 56 - sourced papers and talks populate works and speeches
+  ---
+  duration_ms: 0.231195
+  type: 'test'
+  ...
+# Subtest: curated investment people remain available
+ok 57 - curated investment people remain available
+  ---
+  duration_ms: 0.321525
+  type: 'test'
+  ...
+# Subtest: professional venture getter is safe before and after the first source refresh
+ok 58 - professional venture getter is safe before and after the first source refresh
+  ---
+  duration_ms: 9.571532
+  type: 'test'
+  ...
+# Subtest: research report snapshot exposes valid PDF reader records
+ok 59 - research report snapshot exposes valid PDF reader records
+  ---
+  duration_ms: 1.374645
+  type: 'test'
+  ...
+# Subtest: company reports outrank sector-only matches
+ok 60 - company reports outrank sector-only matches
+  ---
+  duration_ms: 0.433886
   type: 'test'
   ...
 # Subtest: arbitrary empty tracks receive a complete generated profile
-ok 9 - arbitrary empty tracks receive a complete generated profile
+ok 61 - arbitrary empty tracks receive a complete generated profile
   ---
-  duration_ms: 2.846928
+  duration_ms: 3.071417
   type: 'test'
   ...
 # Subtest: generated profiles incorporate configured terms and observed evidence
-ok 10 - generated profiles incorporate configured terms and observed evidence
+ok 62 - generated profiles incorporate configured terms and observed evidence
   ---
-  duration_ms: 1.137895
+  duration_ms: 1.155613
   type: 'test'
   ...
 # Subtest: curated definitions enhance rather than gate arbitrary track generation
-ok 11 - curated definitions enhance rather than gate arbitrary track generation
+ok 63 - curated definitions enhance rather than gate arbitrary track generation
   ---
-  duration_ms: 0.747075
+  duration_ms: 0.6964
+  type: 'test'
+  ...
+# Subtest: normalizes source hosts
+ok 64 - normalizes source hosts
+  ---
+  duration_ms: 1.416825
+  type: 'test'
+  ...
+# Subtest: collapses Yahoo regional and editorial sites into one brand
+ok 65 - collapses Yahoo regional and editorial sites into one brand
+  ---
+  duration_ms: 1.022754
+  type: 'test'
+  ...
+# Subtest: collapses ordinary subdomains to the registrable brand domain
+ok 66 - collapses ordinary subdomains to the registrable brand domain
+  ---
+  duration_ms: 0.378011
+  type: 'test'
+  ...
+# Subtest: known AI companies cannot be recommended to commercial space even when an article is misclassified
+ok 67 - known AI companies cannot be recommended to commercial space even when an article is misclassified
+  ---
+  duration_ms: 4.469636
+  type: 'test'
+  ...
+# Subtest: known commercial-space companies remain eligible in commercial space
+ok 68 - known commercial-space companies remain eligible in commercial space
+  ---
+  duration_ms: 1.56821
   type: 'test'
   ...
 # Subtest: listed recommendations prioritize active companies in the selected sector
-ok 12 - listed recommendations prioritize active companies in the selected sector
+ok 69 - listed recommendations prioritize active companies in the selected sector
   ---
-  duration_ms: 2.308452
+  duration_ms: 2.262987
   type: 'test'
   ...
 # Subtest: already followed market and ticker pairs are removed
-ok 13 - already followed market and ticker pairs are removed
+ok 70 - already followed market and ticker pairs are removed
   ---
-  duration_ms: 0.597035
+  duration_ms: 0.613063
   type: 'test'
   ...
 # Subtest: ordinary technical concepts are never displayed as named entities
-ok 14 - ordinary technical concepts are never displayed as named entities
+ok 71 - ordinary technical concepts are never displayed as named entities
   ---
-  duration_ms: 1.259052
+  duration_ms: 1.544084
   type: 'test'
   ...
 # Subtest: unseen named technical entities remain eligible
-ok 15 - unseen named technical entities remain eligible
+ok 72 - unseen named technical entities remain eligible
   ---
-  duration_ms: 0.71158
+  duration_ms: 0.762674
   type: 'test'
   ...
 # Subtest: configured compound seed terms remain eligible
-ok 16 - configured compound seed terms remain eligible
+ok 73 - configured compound seed terms remain eligible
   ---
-  duration_ms: 0.700088
+  duration_ms: 0.715326
   type: 'test'
   ...
 # Subtest: tracking recommendations derive useful additions from sector intelligence
-ok 17 - tracking recommendations derive useful additions from sector intelligence
+ok 74 - tracking recommendations derive useful additions from sector intelligence
   ---
-  duration_ms: 23.889259
+  duration_ms: 14.861511
   type: 'test'
   ...
 # Subtest: unseen technical entities emerge from independent multi-source evidence
-ok 18 - unseen technical entities emerge from independent multi-source evidence
+ok 75 - unseen technical entities emerge from independent multi-source evidence
   ---
-  duration_ms: 5.885796
+  duration_ms: 2.295077
   type: 'test'
   ...
 # Subtest: country codes, roles and isolated acronyms are never recommended as entities
-ok 19 - country codes, roles and isolated acronyms are never recommended as entities
+ok 76 - country codes, roles and isolated acronyms are never recommended as entities
   ---
-  duration_ms: 4.020782
+  duration_ms: 1.881309
   type: 'test'
   ...
 # Subtest: common technical nouns are hidden while named entities remain visible
-ok 20 - common technical nouns are hidden while named entities remain visible
+ok 77 - common technical nouns are hidden while named entities remain visible
   ---
-  duration_ms: 0.794114
+  duration_ms: 0.656013
   type: 'test'
   ...
 # Subtest: existing source hosts are removed from recommendations
-ok 21 - existing source hosts are removed from recommendations
+ok 78 - existing source hosts are removed from recommendations
   ---
-  duration_ms: 3.337476
+  duration_ms: 2.161509
+  type: 'test'
+  ...
+# Subtest: known AI entities do not leak into renewable-energy recommendations
+ok 79 - known AI entities do not leak into renewable-energy recommendations
+  ---
+  duration_ms: 19.439022
+  type: 'test'
+  ...
+# Subtest: sector-owned AI entities remain available in the AI track
+ok 80 - sector-owned AI entities remain available in the AI track
+  ---
+  duration_ms: 2.260942
   type: 'test'
   ...
 # Subtest: track aliases are derived for bilingual and punctuation-rich names
-ok 22 - track aliases are derived for bilingual and punctuation-rich names
+ok 81 - track aliases are derived for bilingual and punctuation-rich names
   ---
-  duration_ms: 3.509343
+  duration_ms: 2.973283
   type: 'test'
   ...
 # Subtest: identity terms include arbitrary track names and configured keywords
-ok 23 - identity terms include arbitrary track names and configured keywords
+ok 82 - identity terms include arbitrary track names and configured keywords
   ---
-  duration_ms: 0.568823
+  duration_ms: 0.547369
   type: 'test'
   ...
 # Subtest: equivalent track names are blocking taxonomy collisions
-ok 24 - equivalent track names are blocking taxonomy collisions
+ok 83 - equivalent track names are blocking taxonomy collisions
   ---
-  duration_ms: 9.395553
+  duration_ms: 15.799085
   type: 'test'
   ...
 # Subtest: shared companies and keywords are warnings rather than hard failures
-ok 25 - shared companies and keywords are warnings rather than hard failures
+ok 84 - shared companies and keywords are warnings rather than hard failures
   ---
-  duration_ms: 0.741175
+  duration_ms: 0.702752
   type: 'test'
   ...
 # Subtest: shared keywords do not own event matching for multiple sectors
-ok 26 - shared keywords do not own event matching for multiple sectors
+ok 85 - shared keywords do not own event matching for multiple sectors
   ---
-  duration_ms: 0.692403
+  duration_ms: 1.215486
   type: 'test'
   ...
 # Subtest: only sector-unique actors expand standalone crawler discovery
-ok 27 - only sector-unique actors expand standalone crawler discovery
+ok 86 - only sector-unique actors expand standalone crawler discovery
   ---
-  duration_ms: 0.390941
+  duration_ms: 0.557187
   type: 'test'
   ...
 # Subtest: normalizes and deduplicates listed companies before GitHub persistence
-ok 28 - normalizes and deduplicates listed companies before GitHub persistence
+ok 87 - normalizes and deduplicates listed companies before GitHub persistence
   ---
-  duration_ms: 1.433137
+  duration_ms: 1.469532
   type: 'test'
   ...
 # Subtest: retains enabled flags and catalog slugs while normalizing tickers
-ok 29 - retains enabled flags and catalog slugs while normalizing tickers
+ok 88 - retains enabled flags and catalog slugs while normalizing tickers
   ---
-  duration_ms: 0.199984
+  duration_ms: 0.216727
   type: 'test'
   ...
-1..29
-# tests 29
+# Subtest: venture profile snapshot only contains catalog entities
+ok 89 - venture profile snapshot only contains catalog entities
+  ---
+  duration_ms: 1.073527
+  type: 'test'
+  ...
+# Subtest: venture profile getters are safe before and after the first crawl
+ok 90 - venture profile getters are safe before and after the first crawl
+  ---
+  duration_ms: 0.398318
+  type: 'test'
+  ...
+# Subtest: venture profile sources are traceable public URLs
+ok 91 - venture profile sources are traceable public URLs
+  ---
+  duration_ms: 0.686099
+  type: 'test'
+  ...
+# Subtest: runtime sanitation removes navigation and editorial labels
+ok 92 - runtime sanitation removes navigation and editorial labels
+  ---
+  duration_ms: 0.986473
+  type: 'test'
+  ...
+# Subtest: current snapshot is clean at the frontend boundary
+ok 93 - current snapshot is clean at the frontend boundary
+  ---
+  duration_ms: 0.499148
+  type: 'test'
+  ...
+# Subtest: research model v2 exposes the same structured fields for every entity
+ok 94 - research model v2 exposes the same structured fields for every entity
+  ---
+  duration_ms: 0.563368
+  type: 'test'
+  ...
+# Subtest: venture profile runtime statuses use unique entity keys
+ok 95 - venture profile runtime statuses use unique entity keys
+  ---
+  duration_ms: 0.285427
+  type: 'test'
+  ...
+# Subtest: venture profile quality gate has internally consistent checks
+ok 96 - venture profile quality gate has internally consistent checks
+  ---
+  duration_ms: 0.145302
+  type: 'test'
+  ...
+1..96
+# tests 96
 # suites 0
-# pass 29
+# pass 96
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 891.502927
+# duration_ms 3094.835977
