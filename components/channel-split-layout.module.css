@@ -1,4 +1,5 @@
 .splitLayout {
+  --channel-split-panel-height: 960px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 22px;
@@ -8,6 +9,8 @@
 .updatesPanel {
   display: flex;
   min-width: 0;
+  height: var(--channel-split-panel-height);
+  overflow: hidden;
 }
 
 .updatesPanel :global([data-layout="split"]) {
@@ -15,6 +18,7 @@
   flex: 1;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   height: 100%;
   margin: 0;
   overflow: hidden;
@@ -50,7 +54,8 @@
 .updatesPanel :global([data-layout="split"] > div:has(> a[data-intelligence-item="true"])) {
   flex: 1;
   min-height: 0;
-  max-height: 760px;
+  max-height: none;
+  overflow: auto;
 }
 
 .updatesPanel :global([data-layout="split"] a[data-intelligence-item="true"]) {
@@ -66,11 +71,14 @@
 .directoryPanel,
 .panelBody {
   min-width: 0;
+  min-height: 0;
 }
 
 .directoryPanel {
   display: flex;
   flex-direction: column;
+  height: var(--channel-split-panel-height);
+  overflow: hidden;
   border: 1px solid var(--border);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--green) 8%, transparent), transparent 34%),
@@ -80,6 +88,7 @@
 
 .panelHeader {
   display: grid;
+  flex: 0 0 auto;
   grid-template-columns: minmax(0, 1fr) 120px;
   gap: 20px;
   align-items: end;
@@ -140,7 +149,8 @@
 
 .panelBody {
   flex: 1;
-  min-height: 0;
+  overflow: auto;
+  scrollbar-color: var(--border) transparent;
 }
 
 @media (max-width: 1120px) {
@@ -148,8 +158,24 @@
     grid-template-columns: 1fr;
   }
 
+  .updatesPanel,
+  .directoryPanel {
+    height: auto;
+    overflow: visible;
+  }
+
+  .updatesPanel :global([data-layout="split"]) {
+    height: auto;
+    overflow: visible;
+  }
+
   .updatesPanel :global([data-layout="split"] > div:has(> a[data-intelligence-item="true"])) {
+    flex: none;
     max-height: 620px;
+  }
+
+  .panelBody {
+    overflow: visible;
   }
 }
 
