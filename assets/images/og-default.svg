@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- 背景渐变 -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bg)" rx="0"/>
+
+  <!-- 装饰线条 -->
+  <line x1="80" y1="120" x2="1120" y2="120" stroke="url(#accent)" stroke-width="3" opacity="0.6"/>
+  <line x1="80" y1="510" x2="1120" y2="510" stroke="url(#accent)" stroke-width="3" opacity="0.6"/>
+
+  <!-- 主标题 -->
+  <text x="600" y="280" font-family="JetBrains Mono, monospace" font-size="56" font-weight="700" fill="#ffffff" text-anchor="middle">
+    丽泽路1号
+  </text>
+
+  <!-- 副标题 -->
+  <text x="600" y="350" font-family="Noto Sans SC, sans-serif" font-size="28" fill="#94a3b8" text-anchor="middle">
+    DAILY INTELLIGENCE DESK · 中美双轨
+  </text>
+
+  <!-- 标语 -->
+  <text x="600" y="410" font-family="Noto Sans SC, sans-serif" font-size="20" fill="#64748b" text-anchor="middle">
+    科技与创投情报 · 持续追踪产品 · 融资 · 经营 · 资本市场
+  </text>
+
+  <!-- 底部装饰 -->
+  <circle cx="100" cy="560" r="4" fill="#2563eb" opacity="0.8"/>
+  <circle cx="130" cy="560" r="3" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="160" cy="560" r="2" fill="#93c5fd" opacity="0.4"/>
+  <circle cx="1100" cy="560" r="4" fill="#2563eb" opacity="0.8"/>
+  <circle cx="1070" cy="560" r="3" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="1040" cy="560" r="2" fill="#93c5fd" opacity="0.4"/>
+</svg>

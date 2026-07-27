@@ -1,0 +1,15 @@
+source "https://rubygems.org"
+
+gem "jekyll", "~> 4.3"
+gem "jekyll-feed", "~> 0.17"
+gem "jekyll-sitemap", "~> 1.4"
+gem "jekyll-seo-tag", "~> 2.8"
+gem "kramdown", "~> 2.4"
+gem "kramdown-parser-gfm", "~> 1.1"
+gem "rouge", "~> 4.1"
+gem "webrick", "~> 1.8"
+
+# 开发环境
+group :development do
+  gem "jekyll-live-reload", "~> 0.9"
+end

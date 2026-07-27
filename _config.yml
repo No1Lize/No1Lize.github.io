@@ -1,0 +1,88 @@
+# 站点基础信息
+title: "丽泽路1号"
+description: "DAILY INTELLIGENCE DESK · 中美双轨科技与创投情报站"
+url: "https://no1lize.github.io"
+baseurl: ""
+
+# 语言与时区
+language: "zh-CN"
+timezone: "Asia/Shanghai"
+
+# Markdown 配置
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+
+# 永久链接格式
+permalink: /:year/:month/:day/:title/
+
+# 分页（如需要）
+paginate: 20
+paginate_path: "/page:num/"
+
+# 插件
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# 排除文件
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - CLAUDE-PROMPT.md
+  - pagefind.yml
+  - .github/
+  - node_modules/
+
+# 文章默认设置
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+# 分类与标签
+categories: true
+tags: true
+
+# RSS Feed 配置
+feed:
+  path: "feed.xml"
+  posts_limit: 50
+  excerpt_only: false
+  categories:
+    - "商业航天"
+    - "半导体"
+    - "大模型"
+  tags: true
+
+# SEO 配置
+seo:
+  name: "丽泽路1号"
+  description: "DAILY INTELLIGENCE DESK · 中美双轨科技与创投情报站"
+  author:
+    name: "丽泽路1号"
+    url: "https://no1lize.github.io"
+
+# 社交链接
+social:
+  github: "https://github.com/no1lize"
+  rss: "/feed.xml"
+
+# 导航菜单
+navigation:
+  - title: "首页"
+    url: "/"
+  - title: "归档"
+    url: "/archive/"
+  - title: "标签"
+    url: "/tags/"
+  - title: "关于"
+    url: "/about/"
+  - title: "RSS"
+    url: "/feed.xml"
