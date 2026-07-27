@@ -2,14 +2,14 @@
   "jsonStatus": 0,
   "pycompileStatus": 0,
   "wechatTestStatus": 0,
-  "pythonTestStatus": 1,
+  "pythonTestStatus": 0,
   "installStatus": 0,
   "typeStatus": 0,
   "runtimeStatus": 0,
-  "passed": false,
+  "passed": true,
   "runtime": {
-    "configuredAccounts": 11,
-    "generatedSources": 23,
+    "configuredAccounts": 14,
+    "generatedSources": 34,
     "runtimeProbes": [
       {
         "accountConfigId": "qbitai",
@@ -60,55 +60,247 @@
         "samples": []
       }
     ],
-    "snapshotArticleCount": 0,
-    "snapshotStatusCount": 1,
-    "snapshotSamples": [],
+    "snapshotArticleCount": 40,
+    "snapshotStatusCount": 34,
+    "snapshotSamples": [
+      {
+        "title": "Claude Agent突然大更新！狂塞500个技能，网友直呼疯狂",
+        "sector": "AI / AGI",
+        "company": "Anthropic",
+        "wechatAccount": "新智元",
+        "mentionedCompanies": [
+          "OpenAI",
+          "Anthropic",
+          "Google"
+        ],
+        "mentionedPeople": []
+      },
+      {
+        "title": "WAIC现场，这家公司让一群不同的机器人共用一个大脑",
+        "sector": "机器人",
+        "company": "科技产业",
+        "wechatAccount": "机器之心",
+        "mentionedCompanies": [],
+        "mentionedPeople": []
+      },
+      {
+        "title": "现场直击：高昂真机成本锁死具身进化，Google 科学家用视频世界模型破局｜RSS 2026",
+        "sector": "AI / AGI",
+        "company": "Google",
+        "wechatAccount": "AI科技评论",
+        "mentionedCompanies": [
+          "Google",
+          "OpenAI"
+        ],
+        "mentionedPeople": [
+          "李飞飞",
+          "Sherry Yang",
+          "World Gym",
+          "的助理"
+        ]
+      },
+      {
+        "title": "5.83倍加速！PolicyTrim：让VLA机器人少走弯路、更快完成任务",
+        "sector": "机器人",
+        "company": "科技产业",
+        "wechatAccount": "新智元",
+        "mentionedCompanies": [],
+        "mentionedPeople": [
+          "大学雷印杰"
+        ]
+      },
+      {
+        "title": "视觉推理「囫囵吞枣」靠不住！ProLaViT教会多模态大模型在隐空间里「步步为营」",
+        "sector": "AI / AGI",
+        "company": "科技产业",
+        "wechatAccount": "机器之心",
+        "mentionedCompanies": [],
+        "mentionedPeople": [
+          "Latent Collapse",
+          "Distance-Weighted Diversity Loss"
+        ]
+      }
+    ],
     "snapshotStatuses": [
       {
-        "id": "wechat-public-index",
-        "name": "微信公众号公开索引",
-        "status": "empty",
+        "id": "user-track-wechat-ai",
+        "name": "微信公众号 · AI / AGI",
+        "status": "error",
         "scanned": 0,
         "accepted": 0,
+        "failed": 1,
+        "platform": "微信",
+        "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+        "retainedPrevious": true,
+        "discoveryProvider": "sogou-weixin+fallback",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-aitechuang-ai",
+        "name": "AI科技评论",
+        "status": "ok",
+        "scanned": 17,
+        "accepted": 5,
         "failed": 0,
-        "platform": "微信"
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-aitechuang-robotics",
+        "name": "AI科技评论",
+        "status": "ok",
+        "scanned": 19,
+        "accepted": 2,
+        "failed": 0,
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-aitopics-ai",
+        "name": "新智元",
+        "status": "partial",
+        "scanned": 37,
+        "accepted": 6,
+        "failed": 11,
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-aitopics-robotics",
+        "name": "新智元",
+        "status": "partial",
+        "scanned": 38,
+        "accepted": 1,
+        "failed": 10,
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-biotech",
+        "name": "微信公众号 · 生物科技",
+        "status": "error",
+        "scanned": 0,
+        "accepted": 0,
+        "failed": 1,
+        "platform": "微信",
+        "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+        "retainedPrevious": true,
+        "discoveryProvider": "sogou-weixin+fallback",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-cbea-battery-energy",
+        "name": "电池中国",
+        "status": "error",
+        "scanned": 0,
+        "accepted": 0,
+        "failed": 1,
+        "platform": "微信",
+        "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+        "retainedPrevious": true,
+        "discoveryProvider": "sogou-weixin+fallback",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-chiptrend-ic-semiconductor",
+        "name": "芯潮IC",
+        "status": "error",
+        "scanned": 0,
+        "accepted": 0,
+        "failed": 1,
+        "platform": "微信",
+        "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+        "retainedPrevious": true,
+        "discoveryProvider": "sogou-weixin+fallback",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-deeptechchina-ai",
+        "name": "DeepTech深科技",
+        "status": "ok",
+        "scanned": 16,
+        "accepted": 3,
+        "failed": 0,
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-deeptechchina-biotech",
+        "name": "DeepTech深科技",
+        "status": "ok",
+        "scanned": 15,
+        "accepted": 1,
+        "failed": 0,
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-deeptechchina-materials",
+        "name": "DeepTech深科技",
+        "status": "ok",
+        "scanned": 15,
+        "accepted": 3,
+        "failed": 0,
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0
+      },
+      {
+        "id": "user-track-wechat-deeptechchina-quantum",
+        "name": "DeepTech深科技",
+        "status": "error",
+        "scanned": 15,
+        "accepted": 0,
+        "failed": 1,
+        "platform": "微信",
+        "discoveryProvider": "bing-or-public-index",
+        "sogouScanned": 0,
+        "sogouResolved": 0,
+        "retainedPrevious": true,
+        "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
       }
     ]
   },
   "logTail": [
-    ".......",
+    "..........",
     "----------------------------------------------------------------------",
-    "Ran 7 tests in 0.009s",
+    "Ran 10 tests in 0.018s",
     "",
     "OK",
-    "......................official=two fatal=RuntimeError: blocked",
-    "...................................................................................................................................................F...........",
-    "======================================================================",
-    "FAIL: test_products_prioritize_catalog_and_reject_document_navigation (test_venture_profile_noise_filters.VentureProfileNoiseFilterTests.test_products_prioritize_catalog_and_reject_document_navigation)",
+    "...........................official=two fatal=RuntimeError: blocked",
+    "..................................................................................................................................................................................................................................................................................................................................................",
     "----------------------------------------------------------------------",
-    "Traceback (most recent call last):",
-    "  File \"/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_noise_filters.py\", line 52, in test_products_prioritize_catalog_and_reject_document_navigation",
-    "    self.assertEqual(products[:3], [\"远征A2\", \"灵犀X2\", \"Genie Studio具身智能开发平台\"])",
-    "AssertionError: Lists differ: ['灵犀X2', '远征A2', 'Genie Studio具身智能开发平台'] != ['远征A2', '灵犀X2', 'Genie Studio具身智能开发平台']",
+    "Ran 365 tests in 16.390s",
     "",
-    "First differing element 0:",
-    "'灵犀X2'",
-    "'远征A2'",
-    "",
-    "- ['灵犀X2', '远征A2', 'Genie Studio具身智能开发平台']",
-    "?          --------",
-    "",
-    "+ ['远征A2', '灵犀X2', 'Genie Studio具身智能开发平台']",
-    "?  ++++++++",
-    "",
-    "",
-    "----------------------------------------------------------------------",
-    "Ran 181 tests in 0.310s",
-    "",
-    "FAILED (failures=1)",
+    "OK",
     "No snapshot changes (1 articles).",
+    "{\"changed\": true, \"requestsUsed\": 10, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"semiconductor\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"CoWoS-L\"], \"people\": [\"梁孟松\"], \"sampleCompanies\": [\"中芯国际\"], \"sources\": [{\"id\": \"source-auto-media-chinastarmarket-cn\", \"name\": \"科创板日报 · 半导体信源\", \"url\": \"https://chinastarmarket.cn/\", \"sourceType\": \"listing-search\", \"sourceCategory\": \"media\", \"region\": \"中国\", \"sector\": \"半导体\", \"company\": \"\", \"ticker\": \"\", \"keywords\": [\"半导体\"], \"enabled\": true}]}, \"poolSize\": 9}]}",
+    "{\"changed\": true, \"requestsUsed\": 8, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"semiconductor\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"GPU主题关联技术甲\", \"GPU主题关联技术乙\", \"先进封装主题关联技术甲\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 4}]}",
+    "{\"changed\": true, \"requestsUsed\": 13, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"灵巧手\"], \"people\": [], \"sampleCompanies\": [\"宇树科技\", \"Figure AI\"], \"sources\": [{\"id\": \"source-auto-item-2a729fb4\", \"name\": \"宇树科技 官方网站\", \"url\": \"https://www.unitree.com/\", \"sourceType\": \"listing-search\", \"sourceCategory\": \"company\", \"region\": \"中国\", \"sector\": \"人形机器人\", \"company\": \"宇树科技\", \"ticker\": \"\", \"keywords\": [\"宇树科技\"], \"enabled\": true}]}, \"poolSize\": 5}]}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"灵巧手\", \"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 5}]}",
+    "{\"changed\": false, \"offline\": true, \"requestsUsed\": 3, \"requestsFailed\": 3, \"tracks\": []}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 5}]}",
+    "{\"changed\": false, \"requestsUsed\": 0, \"requestsFailed\": 0, \"tracks\": []}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"embodied\", \"mode\": \"seed\", \"added\": {\"keywords\": [\"灵巧手\", \"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"poolSize\": 5}]}",
     "npm warn deprecated tsconfck@3.1.6: unmaintained",
     "",
-    "added 506 packages in 35s"
+    "added 509 packages in 33s"
   ]
 }
