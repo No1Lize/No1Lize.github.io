@@ -5,7 +5,18 @@
 }
 
 .eventMount {
-  margin: 9px 0 0 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 9px;
+}
+
+.eventMount .button {
+  min-height: 27px;
+  padding: 4px 7px;
+  border-color: color-mix(in srgb, var(--green) 72%, var(--border));
+  background: color-mix(in srgb, var(--green) 10%, var(--surface));
+  color: var(--green-bright);
+  white-space: nowrap;
 }
 
 .feedMount {
@@ -53,8 +64,10 @@
     display: none;
   }
 
-  .button {
-    width: 25px;
+  .button,
+  .eventMount .button {
+    width: 27px;
+    min-width: 27px;
     padding: 3px;
   }
 }
