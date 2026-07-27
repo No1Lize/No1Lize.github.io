@@ -1,0 +1,303 @@
+===== py_compile =====
+exit=0
+
+===== enrich =====
+{"companies": 58, "institutions": 20, "researchModelVersion": 3, "qualityPassed": true}
+exit=0
+
+===== normalize =====
+{"stats": {"companyTeams": 0, "companyProducts": 0, "companyFinancing": 2, "companyCapitalMarkets": 0, "institutionTeams": 0}, "passed": true, "changed": true}
+exit=0
+
+===== finalize =====
+{"changedCompanies": 43, "changedInstitutions": 9, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
+Updated public/data/venture_profiles.json.
+exit=0
+
+===== finalizer_check =====
+{"changedCompanies": 0, "changedInstitutions": 0, "removedCapitalEvents": 0, "removedClassicCases": 0, "removedProducts": 0, "removedRecentInvestments": 0}
+Venture profile snapshot passed final semantic consistency checks.
+exit=0
+
+===== crawler_validate =====
+{"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20}
+exit=0
+
+===== enrich_validate =====
+{"passed": true, "checks": {"companyCoverage": {"actual": 58, "required": 58, "passed": true}, "institutionCoverage": {"actual": 20, "required": 20, "passed": true}, "runtimeStatusCoverage": {"actual": 78, "required": 78, "passed": true}, "invalidSourceUrls": {"actual": 0, "required": 0, "passed": true}, "semanticNoise": {"actual": 0, "required": 0, "passed": true}, "companyResearchEnrichment": {"actual": 58, "required": 58, "passed": true}, "institutionResearchEnrichment": {"actual": 20, "required": 20, "passed": true}, "profileConsistency": {"actual": 0, "required": 0, "passed": true}, "finalSemanticConsistency": {"actual": 0, "required": 0, "passed": true}, "ventureEvidenceAlignment": {"actual": 0, "required": 0, "passed": true}, "entitySemanticConsistency": {"actual": 0, "required": 0, "passed": true}}, "invalidSourceUrls": [], "semanticErrors": [], "productiveCompanies": 58, "productiveInstitutions": 20, "consistencyErrors": []}
+exit=0
+
+===== python_tests =====
+.....................................
+----------------------------------------------------------------------
+Ran 37 tests in 0.048s
+
+OK
+exit=0
+
+===== npm_install =====
+npm warn deprecated tsconfck@3.1.6: unmaintained
+
+added 509 packages in 34s
+exit=0
+
+===== node_tests =====
+TAP version 13
+# Subtest: production catalog meets the initial coverage floor
+ok 1 - production catalog meets the initial coverage floor
+  ---
+  duration_ms: 0.996024
+  type: 'test'
+  ...
+# Subtest: every production entity has a real source URL
+ok 2 - every production entity has a real source URL
+  ---
+  duration_ms: 0.563003
+  type: 'test'
+  ...
+# Subtest: person pages expose at least five traceable materials
+ok 3 - person pages expose at least five traceable materials
+  ---
+  duration_ms: 0.257632
+  type: 'test'
+  ...
+# Subtest: slugs are unique within each route collection
+ok 4 - slugs are unique within each route collection
+  ---
+  duration_ms: 0.18146
+  type: 'test'
+  ...
+# Subtest: every linked event company has a generated company route
+ok 5 - every linked event company has a generated company route
+  ---
+  duration_ms: 0.324117
+  type: 'test'
+  ...
+# Subtest: venture profile snapshot only contains catalog entities
+ok 6 - venture profile snapshot only contains catalog entities
+  ---
+  duration_ms: 1.516639
+  type: 'test'
+  ...
+# Subtest: venture profile getters are safe before and after the first crawl
+ok 7 - venture profile getters are safe before and after the first crawl
+  ---
+  duration_ms: 0.504224
+  type: 'test'
+  ...
+# Subtest: venture profile sources are traceable public URLs
+ok 8 - venture profile sources are traceable public URLs
+  ---
+  duration_ms: 0.862664
+  type: 'test'
+  ...
+# Subtest: runtime sanitation removes navigation and editorial labels
+ok 9 - runtime sanitation removes navigation and editorial labels
+  ---
+  duration_ms: 1.388939
+  type: 'test'
+  ...
+# Subtest: current snapshot is clean at the frontend boundary
+ok 10 - current snapshot is clean at the frontend boundary
+  ---
+  duration_ms: 0.726039
+  type: 'test'
+  ...
+# Subtest: research model v2 exposes the same structured fields for every entity
+ok 11 - research model v2 exposes the same structured fields for every entity
+  ---
+  duration_ms: 0.687938
+  type: 'test'
+  ...
+# Subtest: venture profile runtime statuses use unique entity keys
+ok 12 - venture profile runtime statuses use unique entity keys
+  ---
+  duration_ms: 0.353441
+  type: 'test'
+  ...
+# Subtest: venture profile quality gate has internally consistent checks
+ok 13 - venture profile quality gate has internally consistent checks
+  ---
+  duration_ms: 0.17653
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 490.422345
+exit=0
+
+===== next_build =====
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+▲ Next.js 16.2.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 10.3s
+  Running TypeScript ...
+  Finished TypeScript in 7.7s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/174) ...
+  Generating static pages using 3 workers (43/174) 
+  Generating static pages using 3 workers (86/174) 
+  Generating static pages using 3 workers (130/174) 
+✓ Generating static pages using 3 workers (174/174) in 2.5s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /companies
+├ ● /companies/[slug]
+│ ├ /companies/openai
+│ ├ /companies/anthropic
+│ ├ /companies/figure-ai
+│ └ [+55 more paths]
+├ ● /documents/[id]
+│ ├ /documents/doc-20260726-154653-2ohq
+│ ├ /documents/doc-20260726-145150-ihp4
+│ ├ /documents/doc-20260726-144347-rzpw
+│ └ /documents/doc-20260726-144246-7god
+├ ○ /institutions
+├ ● /institutions/[slug]
+│ ├ /institutions/sequoia-capital
+│ ├ /institutions/a16z
+│ ├ /institutions/benchmark
+│ └ [+17 more paths]
+├ ○ /ipo
+├ ● /ipo/[slug]
+│ ├ /ipo/cambricon
+│ ├ /ipo/catl
+│ ├ /ipo/bgi-genomics
+│ └ [+12 more paths]
+├ ○ /people
+├ ● /people/[slug]
+│ ├ /people/frank-wang
+│ ├ /people/li-zexiang
+│ ├ /people/wang-xingxing
+│ └ [+19 more paths]
+├ ○ /reports
+├ ● /reports/[slug]
+│ ├ /reports/ai-capital-2026
+│ ├ /reports/humanoid-robotics
+│ ├ /reports/ai-chips
+│ └ [+2 more paths]
+├ ● /reports/pdf/[slug]
+│ ├ /reports/pdf/public-c901c5ad7c8680a84300
+│ ├ /reports/pdf/public-99650e337832e3626abf
+│ ├ /reports/pdf/public-0e4e95508281159628b5
+│ └ [+21 more paths]
+├ ○ /robots.txt
+├ ○ /search
+├ ○ /sitemap.xml
+├ ○ /technology
+├ ● /technology/[slug]
+│ ├ /technology/ai
+│ ├ /technology/robotics
+│ ├ /technology/semiconductor
+│ └ [+10 more paths]
+└ ○ /tracking
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+
+exit=0
+
+===== final_snapshot =====
+{
+  "schemaVersion": 3,
+  "researchModelVersion": 3,
+  "companies": 58,
+  "institutions": 20,
+  "qualityPassed": true,
+  "qualityChecks": {
+    "companyCoverage": {
+      "actual": 58,
+      "required": 58,
+      "passed": true
+    },
+    "institutionCoverage": {
+      "actual": 20,
+      "required": 20,
+      "passed": true
+    },
+    "runtimeStatusCoverage": {
+      "actual": 78,
+      "required": 78,
+      "passed": true
+    },
+    "invalidSourceUrls": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    },
+    "semanticNoise": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    },
+    "companyResearchEnrichment": {
+      "actual": 58,
+      "required": 58,
+      "passed": true
+    },
+    "institutionResearchEnrichment": {
+      "actual": 20,
+      "required": 20,
+      "passed": true
+    },
+    "profileConsistency": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    },
+    "finalSemanticConsistency": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    },
+    "ventureEvidenceAlignment": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    },
+    "entitySemanticConsistency": {
+      "actual": 0,
+      "required": 0,
+      "passed": true
+    }
+  },
+  "agibotProducts": [
+    "远征",
+    "灵犀",
+    "智元AIMA开放平台",
+    "灵心平台LinkSoul",
+    "灵创平台LinkCraft",
+    "Genie Studio具身智能开发平台",
+    "A2 旗舰版",
+    "A2 青春版",
+    "D1 Max",
+    "G1 Max"
+  ],
+  "agibotHasProjectBackground": true,
+  "sequoiaRecentYearSummary": {
+    "periodStart": "2025-07-25",
+    "periodEnd": "2026-07-25",
+    "investmentCount": 0,
+    "companies": [],
+    "sectors": [],
+    "rounds": [],
+    "summary": "统计窗口为2025-07-25至2026-07-25，共识别0条带日期的公开投资记录，涉及0个项目。"
+  },
+  "sequoiaClassicCases": 1
+}
