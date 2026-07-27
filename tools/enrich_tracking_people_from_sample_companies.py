@@ -70,7 +70,7 @@ SOCIAL_HOST_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("X", re.compile(r"https?://(?:www\.)?(?:x|twitter)\.com/([A-Za-z0-9_]{1,15})(?:/|$)", re.I)),
     ("GitHub", re.compile(r"https?://(?:www\.)?github\.com/([A-Za-z0-9-]{1,39})(?:/|$)", re.I)),
     ("YouTube", re.compile(r"https?://(?:www\.)?youtube\.com/(?:channel/|@)([A-Za-z0-9_.-]+)(?:/|$)", re.I)),
-    ("LinkedIn", re.compile(r"https?://(?:[a-z]{2}\.)?linkedin\.com/in/([^/?#]+)", re.I)),
+    ("LinkedIn", re.compile(r"https?://(?:(?:www|[a-z]{2})\.)?linkedin\.com/in/([^/?#]+)", re.I)),
     ("微博", re.compile(r"https?://(?:www\.)?weibo\.com/(?:u/)?([^/?#]+)", re.I)),
     ("Bilibili", re.compile(r"https?://space\.bilibili\.com/(\d+)(?:/|$)", re.I)),
 )
