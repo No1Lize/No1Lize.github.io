@@ -23,6 +23,7 @@ const official = (name: string, url: string): Source => ({
 });
 
 export const companies: Company[] = [
+  { slug:"google", name:"Google", region:"美国", sector:"AI / AGI", stage:"已上市", status:"已上市", founded:"1998", headquarters:"Mountain View", summary:"开发搜索、云计算、人工智能与面向消费者和企业的软件服务。", product:"Google Search、Google Cloud、Gemini 与相关 AI 产品。", source:official("Google","https://about.google/"), confidence:0.99 },
   { slug:"openai", name:"OpenAI", region:"美国", sector:"AI / AGI", stage:"成长期", status:"运营中", founded:"2015", headquarters:"San Francisco", summary:"开发通用人工智能模型、开发者平台与面向个人和企业的 AI 产品。", product:"基础模型、ChatGPT、API 与智能体开发工具。", source:official("OpenAI","https://openai.com/about/"), confidence:0.98 },
   { slug:"anthropic", name:"Anthropic", region:"美国", sector:"AI / AGI", stage:"Series F", status:"运营中", founded:"2021", headquarters:"San Francisco", summary:"以可靠性、可解释性与安全研究为重点的前沿 AI 公司。", product:"Claude 模型、企业 API 与安全研究。", source:official("Anthropic","https://www.anthropic.com/company"), confidence:0.98 },
   { slug:"figure-ai", name:"Figure AI", region:"美国", sector:"机器人", stage:"Series C", status:"运营中", founded:"2022", headquarters:"California", summary:"研发面向真实工作和生活环境的通用人形机器人。", product:"Figure 人形机器人与 Helix 视觉—语言—行动模型。", source:official("Figure AI","https://www.figure.ai/"), confidence:0.97 },
