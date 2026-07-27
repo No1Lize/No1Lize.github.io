@@ -1,0 +1,58 @@
+{
+  "generatedAt": "2026-07-26T05:33:06+00:00",
+  "passed": true,
+  "exitCodes": {
+    "compile_exit": 0,
+    "test_exit": 0,
+    "base_check_exit": 0,
+    "structured_check_exit": 0
+  },
+  "snapshot": {
+    "companyCount": 5,
+    "eventCount": 110,
+    "cninfoStructured": {
+      "schemaVersion": 1,
+      "provider": "cninfo-structured-api",
+      "attemptedListingCount": 3,
+      "acceptedEventCount": 54
+    },
+    "aShareStatuses": [
+      {
+        "id": "exchange-disclosure-cambricon-a-688256",
+        "companySlug": "cambricon",
+        "ticker": "688256",
+        "status": "ok",
+        "structuredScanned": 120,
+        "structuredAccepted": 18,
+        "structuredErrors": []
+      },
+      {
+        "id": "exchange-disclosure-catl-a-300750",
+        "companySlug": "catl",
+        "ticker": "300750",
+        "status": "ok",
+        "structuredScanned": 120,
+        "structuredAccepted": 18,
+        "structuredErrors": []
+      },
+      {
+        "id": "exchange-disclosure-bgi-genomics-a-300676",
+        "companySlug": "bgi-genomics",
+        "ticker": "300676",
+        "status": "ok",
+        "structuredScanned": 120,
+        "structuredAccepted": 18,
+        "structuredErrors": []
+      }
+    ]
+  },
+  "log": [
+    "..........",
+    "----------------------------------------------------------------------",
+    "Ran 10 tests in 0.003s",
+    "",
+    "OK",
+    "{\"passed\": true, \"eventCount\": 110}",
+    "{\"passed\": true, \"acceptedEventCount\": 54}"
+  ]
+}

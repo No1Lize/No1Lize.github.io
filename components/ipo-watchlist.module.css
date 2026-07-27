@@ -1,0 +1,266 @@
+.workspace {
+  margin-top: 25px;
+}
+
+.marketTabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+
+.marketTabs div {
+  padding: 18px;
+  background: var(--surface);
+}
+
+.marketTabs span,
+.marketTabs small {
+  display: block;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.marketTabs strong {
+  font-size: 28px;
+  font-weight: 500;
+}
+
+.manager {
+  margin-bottom: 18px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.managerHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.managerHeader h2 {
+  margin: 3px 0 7px;
+  font: 500 25px/1.25 "Noto Serif SC", serif;
+}
+
+.managerHeader p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.managerHeader > strong {
+  color: var(--green-bright);
+  font-size: 28px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.catalogPicker {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.75fr) minmax(0, 2fr);
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.catalogPicker label,
+.customForm label {
+  display: grid;
+  gap: 6px;
+}
+
+.catalogPicker label > span,
+.customForm label > span {
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.catalogPicker input,
+.customForm input,
+.customForm select {
+  min-height: 42px;
+  width: 100%;
+  border: 1px solid var(--border);
+  outline: none;
+  background: var(--surface-2);
+  color: var(--text);
+  padding: 0 12px;
+  font: inherit;
+  font-size: 12px;
+}
+
+.catalogPicker input:focus,
+.customForm input:focus,
+.customForm select:focus {
+  border-color: var(--green);
+}
+
+.candidates {
+  display: flex;
+  max-height: 112px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 7px;
+  overflow-y: auto;
+}
+
+.candidates button {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--muted);
+  padding: 5px 9px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+}
+
+.candidates button:hover,
+.candidates .activeCandidate {
+  border-color: var(--green);
+  color: var(--text);
+}
+
+.candidates button > span {
+  color: var(--green-bright);
+}
+
+.candidates button small {
+  color: var(--faint);
+}
+
+.customForm {
+  display: grid;
+  grid-template-columns: 120px minmax(160px, 1fr) minmax(130px, 0.7fr) auto;
+  gap: 10px;
+  align-items: end;
+  padding-top: 18px;
+}
+
+.customForm button,
+.empty button {
+  min-height: 42px;
+  border: 1px solid var(--green);
+  background: var(--green);
+  color: var(--bg);
+  padding: 0 17px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+}
+
+.storageNote,
+.notice {
+  margin: 10px 0 0;
+  color: var(--faint);
+  font-size: 10px;
+}
+
+.notice {
+  min-height: 14px;
+  color: var(--green-bright);
+}
+
+.removeButton {
+  border: 0;
+  background: transparent;
+  color: var(--faint);
+  padding: 4px 0;
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.removeButton:hover {
+  color: #d7877a;
+}
+
+.pendingLabel {
+  color: #d6a45c;
+}
+
+.quoteCell {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 1px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.quoteCell small {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.quoteCell[data-direction="up"],
+.quoteCell[data-direction="up"] small {
+  color: var(--red);
+}
+
+.quoteCell[data-direction="down"],
+.quoteCell[data-direction="down"] small {
+  color: var(--green-bright);
+}
+
+.empty {
+  display: grid;
+  min-height: 230px;
+  place-items: center;
+  align-content: center;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-align: center;
+}
+
+.empty strong {
+  font: 500 22px/1.3 "Noto Serif SC", serif;
+}
+
+.empty p {
+  margin: 7px 0 16px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .catalogPicker {
+    grid-template-columns: 1fr;
+  }
+
+  .customForm {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .customForm button {
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 600px) {
+  .marketTabs {
+    grid-template-columns: 1fr;
+  }
+
+  .manager {
+    padding: 16px;
+  }
+
+  .managerHeader {
+    align-items: flex-start;
+  }
+
+  .customForm {
+    grid-template-columns: 1fr;
+  }
+}

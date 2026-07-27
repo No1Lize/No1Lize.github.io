@@ -1,0 +1,136 @@
+.qualityBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.qualityBadge[data-status="高可信"] {
+  color: var(--green-bright);
+  border-color: color-mix(in srgb, var(--green) 62%, var(--border));
+  background: color-mix(in srgb, var(--green) 10%, transparent);
+}
+
+.qualityBadge[data-status="可用"] {
+  color: var(--blue);
+  border-color: color-mix(in srgb, var(--blue) 55%, var(--border));
+  background: color-mix(in srgb, var(--blue) 8%, transparent);
+}
+
+.qualityBadge[data-status="低可信"] {
+  color: var(--orange);
+  border-color: color-mix(in srgb, var(--orange) 55%, var(--border));
+  background: color-mix(in srgb, var(--orange) 8%, transparent);
+}
+
+.sourceRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.evidence {
+  position: relative;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.evidence summary {
+  color: var(--green-bright);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.evidence summary::-webkit-details-marker {
+  display: none;
+}
+
+.evidence summary::before {
+  content: "+";
+  display: inline-block;
+  width: 13px;
+  color: var(--green);
+}
+
+.evidence[open] summary::before {
+  content: "−";
+}
+
+.evidenceList {
+  display: grid;
+  gap: 7px;
+  margin-top: 9px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+}
+
+.evidenceList a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.evidenceList a:hover strong {
+  color: var(--green-bright);
+}
+
+.evidenceList strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-weight: 550;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.evidenceList span {
+  color: var(--faint);
+  white-space: nowrap;
+}
+
+.qualityScore {
+  display: block;
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid var(--border-soft);
+  color: var(--faint);
+  font-size: 9px;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.qualityScore b {
+  display: block;
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 550;
+}
+
+.trackingSummary {
+  margin-top: 10px;
+  color: var(--faint);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (max-width: 700px) {
+  .qualityBadge {
+    white-space: normal;
+  }
+
+  .evidenceList a {
+    grid-template-columns: 1fr;
+    gap: 1px;
+  }
+}

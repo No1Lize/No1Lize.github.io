@@ -1,0 +1,73 @@
+⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+▲ Next.js 16.2.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.4s
+  Running TypeScript ...
+  Finished TypeScript in 4.5s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/168) ...
+  Generating static pages using 3 workers (42/168) 
+  Generating static pages using 3 workers (84/168) 
+  Generating static pages using 3 workers (126/168) 
+✓ Generating static pages using 3 workers (168/168) in 1399ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /companies
+├ ● /companies/[slug]
+│ ├ /companies/openai
+│ ├ /companies/anthropic
+│ ├ /companies/figure-ai
+│ └ [+55 more paths]
+├ ○ /institutions
+├ ● /institutions/[slug]
+│ ├ /institutions/sequoia-capital
+│ ├ /institutions/a16z
+│ ├ /institutions/benchmark
+│ └ [+17 more paths]
+├ ○ /ipo
+├ ● /ipo/[slug]
+│ ├ /ipo/cambricon
+│ ├ /ipo/catl
+│ ├ /ipo/bgi-genomics
+│ └ [+12 more paths]
+├ ○ /people
+├ ● /people/[slug]
+│ ├ /people/frank-wang
+│ ├ /people/li-zexiang
+│ ├ /people/wang-xingxing
+│ └ [+19 more paths]
+├ ○ /reports
+├ ● /reports/[slug]
+│ ├ /reports/ai-capital-2026
+│ ├ /reports/humanoid-robotics
+│ ├ /reports/ai-chips
+│ └ [+2 more paths]
+├ ● /reports/pdf/[slug]
+│ ├ /reports/pdf/eastmoney-ap202607261827357010
+│ ├ /reports/pdf/eastmoney-ap202607261827354335
+│ ├ /reports/pdf/public-99650e337832e3626abf
+│ └ [+20 more paths]
+├ ○ /robots.txt
+├ ○ /search
+├ ○ /sitemap.xml
+├ ○ /technology
+├ ● /technology/[slug]
+│ ├ /technology/ai
+│ ├ /technology/robotics
+│ ├ /technology/semiconductor
+│ └ [+9 more paths]
+└ ○ /tracking
+
+
+○  (Static)  prerendered as static content
+●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+

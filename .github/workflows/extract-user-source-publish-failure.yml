@@ -1,0 +1,33 @@
+name: Extract user source publish failure
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/extract-user-source-publish-failure.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Extract failed Pages log
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p diagnostics
+          gh run view 30160485924 --log-failed \
+            > diagnostics/user-source-publish-failure.txt 2>&1 || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/user-source-publish-failure.txt
+          git commit -m "ci: record Pages build failure"
+          git pull --rebase origin main
+          git push origin HEAD:main

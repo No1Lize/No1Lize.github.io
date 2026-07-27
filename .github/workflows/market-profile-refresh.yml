@@ -1,0 +1,122 @@
+name: Enriched three-market profile refresh v6
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/market-profile-refresh.yml
+  schedule:
+    # 上市跟踪频道每天早上 7 点（Asia/Taipei，与北京时间一致）刷新一次。
+    - cron: "0 7 * * *"
+      timezone: "Asia/Taipei"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: enriched-market-profile-refresh
+  cancel-in-progress: true
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run observable enriched market refresh
+        id: refresh
+        shell: bash
+        run: |
+          set +e
+          mkdir -p .github/diagnostics
+          python tools/refresh_market_profiles_enriched.py > .github/diagnostics/market-refresh-full.log 2>&1
+          CRAWL=$?
+          tail -n 220 .github/diagnostics/market-refresh-full.log > .github/diagnostics/market-refresh.log
+          rm .github/diagnostics/market-refresh-full.log
+          python -m unittest tests.test_market_profiles tests.test_market_profile_transport tests.test_market_profile_enrichment tests.test_market_quote_news > .github/diagnostics/market-refresh-tests.log 2>&1
+          TESTS=$?
+          python tools/validate_market_profiles.py > .github/diagnostics/market-refresh-validator.log 2>&1
+          VALIDATOR=$?
+          npm install > .github/diagnostics/market-refresh-npm.log 2>&1
+          NPM=$?
+          if [ "$NPM" -eq 0 ]; then
+            npm run test:unit > .github/diagnostics/market-refresh-unit.log 2>&1
+            UNIT=$?
+            GITHUB_PAGES=true npx next build > .github/diagnostics/market-refresh-build-full.log 2>&1
+            BUILD=$?
+            tail -n 180 .github/diagnostics/market-refresh-build-full.log > .github/diagnostics/market-refresh-build.log
+            rm .github/diagnostics/market-refresh-build-full.log
+          else
+            UNIT=125
+            BUILD=125
+            printf 'npm install failed\n' > .github/diagnostics/market-refresh-unit.log
+            printf 'npm install failed\n' > .github/diagnostics/market-refresh-build.log
+          fi
+          cat > .github/diagnostics/market-refresh-validation.json <<EOF
+          {
+            "crawl": $CRAWL,
+            "marketTests": $TESTS,
+            "marketValidator": $VALIDATOR,
+            "npmInstall": $NPM,
+            "fullUnitTestsDiagnostic": $UNIT,
+            "pagesBuild": $BUILD,
+            "commit": "$GITHUB_SHA",
+            "runId": "$GITHUB_RUN_ID"
+          }
+          EOF
+          echo "crawl=$CRAWL" >> "$GITHUB_OUTPUT"
+          echo "tests=$TESTS" >> "$GITHUB_OUTPUT"
+          echo "validator=$VALIDATOR" >> "$GITHUB_OUTPUT"
+          echo "npm=$NPM" >> "$GITHUB_OUTPUT"
+          echo "unit=$UNIT" >> "$GITHUB_OUTPUT"
+          echo "build=$BUILD" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Commit diagnostics and valid market snapshot
+        id: snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/diagnostics/market-refresh-validation.json \
+            .github/diagnostics/market-refresh.log \
+            .github/diagnostics/market-refresh-tests.log \
+            .github/diagnostics/market-refresh-validator.log \
+            .github/diagnostics/market-refresh-npm.log \
+            .github/diagnostics/market-refresh-unit.log \
+            .github/diagnostics/market-refresh-build.log
+          if [ "${{ steps.refresh.outputs.crawl }}" = "0" ] && \
+             [ "${{ steps.refresh.outputs.tests }}" = "0" ] && \
+             [ "${{ steps.refresh.outputs.validator }}" = "0" ] && \
+             [ "${{ steps.refresh.outputs.npm }}" = "0" ] && \
+             [ "${{ steps.refresh.outputs.build }}" = "0" ]; then
+            git add public/data/market_profiles.json
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            git checkout -- public/data/market_profiles.json
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+          fi
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "data: refresh enriched three-market company profiles"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Trigger Pages
+        if: steps.snapshot.outputs.changed == 'true' && steps.snapshot.outputs.valid == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
+      - name: Fail when market product validation failed
+        if: steps.refresh.outputs.crawl != '0' || steps.refresh.outputs.tests != '0' || steps.refresh.outputs.validator != '0' || steps.refresh.outputs.npm != '0' || steps.refresh.outputs.build != '0'
+        run: exit 1

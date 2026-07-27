@@ -1,0 +1,988 @@
+#!/usr/bin/env python3
+"""Crawl official news for every company in the public company catalog.
+
+The main crawler intentionally keeps source-specific adapters small. This module
+adds a registry-driven layer for the complete 58-company catalog without
+hard-coding each company in ``crawl_articles.py``. It prefers direct official
+news, newsroom, blog and investor-relations pages, discovers RSS/Atom feeds and
+article links on those pages, and uses a domain-restricted public search index
+only to discover official URLs when a site exposes no usable index.
+
+All accepted records are bound to the registry's exact ``companySlug``. This
+prevents a company mentioned incidentally in an article summary from becoming
+the article's primary company.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import re
+import sys
+import time
+import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass
+from datetime import UTC, date, datetime, timedelta
+from html.parser import HTMLParser
+from pathlib import Path
+from typing import Any, Iterable, Sequence
+from urllib.parse import quote_plus, urljoin, urlsplit
+
+try:  # Imported by tests as tools.crawl_official_companies.
+    from .crawl_articles import (
+        DEFAULT_USER_AGENT,
+        OUTPUT_PATH,
+        ROOT,
+        ArticleHTMLParser,
+        _published_value,
+        _source,
+        article_id,
+        clean_text,
+        clean_title,
+        evaluate_quality,
+        fetch_text,
+        infer_event_type,
+        load_config,
+        load_existing_payload,
+        merge_articles,
+        merge_source_status,
+        normalize_date,
+        normalize_url,
+        strip_html,
+        write_if_changed,
+    )
+except ImportError:  # Executed directly with ``python tools/...``.
+    from crawl_articles import (
+        DEFAULT_USER_AGENT,
+        OUTPUT_PATH,
+        ROOT,
+        ArticleHTMLParser,
+        _published_value,
+        _source,
+        article_id,
+        clean_text,
+        clean_title,
+        evaluate_quality,
+        fetch_text,
+        infer_event_type,
+        load_config,
+        load_existing_payload,
+        merge_articles,
+        merge_source_status,
+        normalize_date,
+        normalize_url,
+        strip_html,
+        write_if_changed,
+    )
+
+
+REGISTRY_PATH = ROOT / "config" / "official_company_sources.json"
+CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
+NEWS_PATH_HINTS = (
+    "/news",
+    "/newsroom",
+    "/press",
+    "/media",
+    "/blog",
+    "/updates",
+    "/articles",
+    "/insights",
+    "/stories",
+    "/resources",
+    "/announcements",
+    "/news-releases",
+    "/press-releases",
+)
+NEWS_TEXT_HINTS = (
+    "news",
+    "newsroom",
+    "press",
+    "media",
+    "blog",
+    "update",
+    "announcement",
+    "release",
+    "insight",
+    "article",
+    "新闻",
+    "动态",
+    "资讯",
+    "公告",
+    "媒体",
+    "博客",
+)
+SKIP_PATH_HINTS = (
+    "/about",
+    "/company",
+    "/careers",
+    "/jobs",
+    "/contact",
+    "/privacy",
+    "/terms",
+    "/legal",
+    "/products",
+    "/solutions",
+    "/events",
+    "/tag/",
+    "/category/",
+    "/author/",
+)
+GENERIC_TITLES = {
+    "news",
+    "news center",
+    "newsroom",
+    "latest news and events.",
+    "press",
+    "press releases",
+    "press updates",
+    "blog",
+    "updates",
+    "articles",
+    "insights",
+    "media",
+    "media center",
+    "新闻",
+    "新闻中心",
+    "企业新闻",
+    "公司动态",
+    "资讯中心",
+}
+GENERIC_INDEX_SEGMENTS = {
+    "articles",
+    "blog",
+    "insights",
+    "media",
+    "news",
+    "newsroom",
+    "press",
+    "press-archives",
+    "press-releases",
+    "updates",
+}
+
+
+@dataclass(frozen=True)
+class CompanySpec:
+    slug: str
+    name: str
+    region: str
+    sector: str
+    homepage: str
+    news_urls: tuple[str, ...]
+    sitemap_urls: tuple[str, ...]
+    aliases: tuple[str, ...]
+    entity_aliases: tuple[str, ...]
+    article_url_patterns: tuple[str, ...]
+    require_entity_match: bool
+    max_items: int
+    max_candidate_links: int
+    max_age_days: int
+    request_timeout: int
+
+    @property
+    def source_id(self) -> str:
+        return f"official-{self.slug}"
+
+    @property
+    def allowed_hosts(self) -> tuple[str, ...]:
+        hosts: list[str] = []
+        for raw_url in (self.homepage, *self.news_urls, *self.sitemap_urls):
+            host = (urlsplit(raw_url).hostname or "").lower()
+            if host.startswith("www."):
+                host = host[4:]
+            if host and host not in hosts:
+                hosts.append(host)
+        return tuple(hosts)
+
+
+class OfficialIndexParser(HTMLParser):
+    """Collect anchors and feed links without retaining page text."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.anchors: list[tuple[str, str]] = []
+        self.feeds: list[str] = []
+        self._href: str | None = None
+        self._anchor_text: list[str] = []
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        values = {key.lower(): value or "" for key, value in attrs}
+        lowered = tag.lower()
+        if lowered == "a" and values.get("href"):
+            self._href = values["href"]
+            self._anchor_text = []
+        elif lowered == "link" and values.get("href"):
+            relation = values.get("rel", "").lower()
+            media_type = values.get("type", "").lower()
+            if "alternate" in relation and media_type in {
+                "application/rss+xml",
+                "application/atom+xml",
+                "application/feed+json",
+            }:
+                self.feeds.append(values["href"])
+
+    def handle_data(self, data: str) -> None:
+        if self._href is not None:
+            self._anchor_text.append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() == "a" and self._href is not None:
+            self.anchors.append((self._href, clean_text(" ".join(self._anchor_text))))
+            self._href = None
+            self._anchor_text = []
+
+
+class FeedLinkParser:
+    """Extract destination URLs from RSS/Atom search output."""
+
+    @staticmethod
+    def links(body: str) -> list[str]:
+        root = ET.fromstring(body)
+        links: list[str] = []
+        for node in root.iter():
+            local = node.tag.rsplit("}", 1)[-1].lower()
+            if local not in {"item", "entry"}:
+                continue
+            candidate = ""
+            for child in node.iter():
+                if child.tag.rsplit("}", 1)[-1].lower() != "link":
+                    continue
+                candidate = clean_text(child.attrib.get("href", "")) or clean_text(
+                    child.text or ""
+                )
+                if candidate:
+                    break
+            if candidate and candidate not in links:
+                links.append(candidate)
+        return links
+
+
+def _load_catalog_companies(path: Path = CATALOG_PATH) -> dict[str, dict[str, str]]:
+    """Read the canonical company catalog without maintaining a second slug list."""
+
+    body = path.read_text(encoding="utf-8")
+    section = re.search(
+        r"export\s+const\s+companies\s*:\s*Company\[\]\s*=\s*\[(.*?)\n\];",
+        body,
+        flags=re.DOTALL,
+    )
+    if not section:
+        raise ValueError("could not locate the companies array in catalog-data.ts")
+    pattern = re.compile(
+        r'\{\s*slug:"([^"]+)",\s*name:"([^"]+)",'
+        r'(?:\s*englishName:"[^"]+",)?\s*region:"([^"]+)",\s*sector:"([^"]+)"'
+    )
+    companies = {
+        match.group(1): {
+            "name": match.group(2),
+            "region": match.group(3),
+            "sector": match.group(4),
+        }
+        for match in pattern.finditer(section.group(1))
+    }
+    if not companies:
+        raise ValueError("company catalog parser returned no companies")
+    return companies
+
+
+def load_registry(
+    path: Path = REGISTRY_PATH, catalog_path: Path = CATALOG_PATH
+) -> list[CompanySpec]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    defaults = payload.get("defaults", {})
+    expected_count = int(payload.get("expectedCompanyCount", 58))
+    raw_companies = payload.get("companies", [])
+    if not isinstance(raw_companies, list):
+        raise ValueError("official company registry must contain a companies array")
+    specs: list[CompanySpec] = []
+    for raw in raw_companies:
+        spec = CompanySpec(
+            slug=clean_text(str(raw.get("slug", ""))),
+            name=clean_text(str(raw.get("name", ""))),
+            region=clean_text(str(raw.get("region", ""))),
+            sector=clean_text(str(raw.get("sector", ""))),
+            homepage=normalize_url(str(raw.get("homepage", ""))),
+            news_urls=tuple(
+                normalize_url(str(url)) for url in raw.get("newsUrls", []) if url
+            ),
+            sitemap_urls=tuple(
+                normalize_url(str(url)) for url in raw.get("sitemapUrls", []) if url
+            ),
+            aliases=tuple(
+                clean_text(str(alias)) for alias in raw.get("aliases", []) if alias
+            ),
+            entity_aliases=tuple(
+                clean_text(str(alias))
+                for alias in raw.get(
+                    "entityAliases",
+                    [raw.get("name", ""), *raw.get("aliases", [])],
+                )
+                if alias
+            ),
+            article_url_patterns=tuple(
+                clean_text(str(pattern))
+                for pattern in raw.get("articleUrlPatterns", [])
+                if pattern
+            ),
+            require_entity_match=bool(raw.get("requireEntityMatch", False)),
+            max_items=int(raw.get("maxItems", defaults.get("maxItems", 4))),
+            max_candidate_links=int(
+                raw.get(
+                    "maxCandidateLinks", defaults.get("maxCandidateLinks", 10)
+                )
+            ),
+            max_age_days=int(raw.get("maxAgeDays", defaults.get("maxAgeDays", 730))),
+            request_timeout=int(
+                raw.get("requestTimeout", defaults.get("requestTimeout", 10))
+            ),
+        )
+        missing = [
+            field
+            for field, value in (
+                ("slug", spec.slug),
+                ("name", spec.name),
+                ("region", spec.region),
+                ("sector", spec.sector),
+                ("homepage", spec.homepage),
+            )
+            if not value
+        ]
+        if missing:
+            raise ValueError(f"registry entry missing {','.join(missing)}: {raw}")
+        if not spec.allowed_hosts:
+            raise ValueError(f"registry entry has no valid official host: {spec.slug}")
+        for pattern in spec.article_url_patterns:
+            try:
+                re.compile(pattern)
+            except re.error as exc:
+                raise ValueError(
+                    f"invalid articleUrlPatterns value for {spec.slug}: {pattern}"
+                ) from exc
+        specs.append(spec)
+    slugs = [spec.slug for spec in specs]
+    if len(slugs) != len(set(slugs)):
+        raise ValueError("official company registry contains duplicate slugs")
+    if len(specs) != expected_count:
+        raise ValueError(
+            f"official company registry has {len(specs)} companies; "
+            f"expected exactly {expected_count}"
+        )
+    catalog = _load_catalog_companies(catalog_path)
+    if len(catalog) != expected_count:
+        raise ValueError(
+            f"company catalog has {len(catalog)} companies; expected {expected_count}"
+        )
+    registry_by_slug = {spec.slug: spec for spec in specs}
+    missing = sorted(set(catalog) - set(registry_by_slug))
+    extra = sorted(set(registry_by_slug) - set(catalog))
+    if missing or extra:
+        raise ValueError(
+            "official company registry does not match company catalog: "
+            f"missing={missing}, extra={extra}"
+        )
+    mismatches = [
+        spec.slug
+        for spec in specs
+        if any(
+            (
+                spec.name != catalog[spec.slug]["name"],
+                spec.region != catalog[spec.slug]["region"],
+                spec.sector != catalog[spec.slug]["sector"],
+            )
+        )
+    ]
+    if mismatches:
+        raise ValueError(
+            "official company registry metadata differs from company catalog: "
+            + ", ".join(sorted(mismatches))
+        )
+    return specs
+
+
+def _host_allowed(url: str, allowed_hosts: Sequence[str]) -> bool:
+    host = (urlsplit(url).hostname or "").lower()
+    if host.startswith("www."):
+        host = host[4:]
+    return any(host == allowed or host.endswith(f".{allowed}") for allowed in allowed_hosts)
+
+
+def _path_date(url: str) -> str | None:
+    path = urlsplit(url).path
+    for pattern in (
+        r"/(20\d{2})/(\d{1,2})/(\d{1,2})(?:/|$)",
+        r"/(20\d{2})-(\d{1,2})-(\d{1,2})(?:/|$)",
+    ):
+        match = re.search(pattern, path)
+        if not match:
+            continue
+        try:
+            return date(*map(int, match.groups())).isoformat()
+        except ValueError:
+            pass
+    return None
+
+
+def _candidate_score(
+    url: str, anchor_text: str, article_url_patterns: Sequence[str] = ()
+) -> int:
+    parts = urlsplit(url)
+    path = parts.path.casefold()
+    text = anchor_text.casefold()
+    if not path or path == "/":
+        return -100
+    if any(hint in path for hint in SKIP_PATH_HINTS):
+        return -100
+    score = 0
+    if any(
+        re.search(pattern, url, flags=re.IGNORECASE)
+        for pattern in article_url_patterns
+    ):
+        score += 10
+    if any(hint in path for hint in NEWS_PATH_HINTS):
+        score += 5
+    if any(hint in text for hint in NEWS_TEXT_HINTS):
+        score += 3
+    if re.search(r"/20\d{2}(?:/|-)", path):
+        score += 3
+    if len([part for part in path.split("/") if part]) >= 2:
+        score += 1
+    if parts.query:
+        score -= 1
+    return score
+
+
+def discover_candidate_urls(
+    index_url: str,
+    body: str,
+    allowed_hosts: Sequence[str],
+    limit: int,
+    article_url_patterns: Sequence[str] = (),
+) -> tuple[list[str], list[str]]:
+    parser = OfficialIndexParser()
+    parser.feed(body)
+    scored: dict[str, int] = {}
+    for href, text in parser.anchors:
+        absolute = normalize_url(urljoin(index_url, href))
+        if absolute == normalize_url(index_url) or not _host_allowed(
+            absolute, allowed_hosts
+        ):
+            continue
+        score = _candidate_score(absolute, text, article_url_patterns)
+        if score >= 4:
+            scored[absolute] = max(score, scored.get(absolute, -100))
+    # Python's sort is stable, so equal-score links retain the newsroom's own
+    # order. Most official indexes place their newest articles first; sorting
+    # equal scores by URL previously selected arbitrary slugs instead.
+    candidates = sorted(
+        scored,
+        key=lambda candidate: scored[candidate],
+        reverse=True,
+    )[:limit]
+    feeds = []
+    for href in parser.feeds:
+        absolute = normalize_url(urljoin(index_url, href))
+        if _host_allowed(absolute, allowed_hosts) and absolute not in feeds:
+            feeds.append(absolute)
+    return candidates, feeds
+
+
+def _contains_entity_alias(text: str, alias: str) -> bool:
+    folded_text = text.casefold()
+    folded_alias = clean_text(alias).casefold()
+    if not folded_alias:
+        return False
+    if re.fullmatch(r"[a-z0-9][a-z0-9 .&+_-]*", folded_alias):
+        return bool(
+            re.search(
+                rf"(?<![a-z0-9]){re.escape(folded_alias)}(?![a-z0-9])",
+                folded_text,
+            )
+        )
+    return folded_alias in folded_text
+
+
+def _is_index_page(spec: CompanySpec, url: str, title: str) -> bool:
+    normalized = normalize_url(url)
+    configured_indexes = {
+        normalize_url(index_url)
+        for index_url in (spec.homepage, *spec.news_urls)
+    }
+    if normalized in configured_indexes:
+        return True
+    segments = [
+        segment.casefold()
+        for segment in urlsplit(normalized).path.split("/")
+        if segment
+    ]
+    if segments and segments[-1] in GENERIC_INDEX_SEGMENTS:
+        return True
+    if len(segments) <= 2 and segments[-2:] == ["blog", "product"]:
+        return True
+    folded_title = clean_text(title).casefold()
+    if folded_title in GENERIC_TITLES:
+        return True
+    entity_names = (spec.name, *spec.aliases)
+    return any(
+        folded_title == clean_text(entity_name).casefold()
+        for entity_name in entity_names
+        if entity_name
+    )
+
+
+def _article_from_page(
+    spec: CompanySpec, url: str, body: str
+) -> dict[str, Any] | None:
+    parser = ArticleHTMLParser()
+    parser.feed(body)
+    requested_url = normalize_url(url)
+    canonical_url = normalize_url(parser.meta.get("og:url", "") or requested_url)
+    configured_indexes = {
+        normalize_url(index_url)
+        for index_url in (spec.homepage, *spec.news_urls)
+    }
+    # Some corporate CMS templates put the homepage in og:url on every page.
+    # Keep the requested article URL when that metadata collapses to an index.
+    if canonical_url in configured_indexes and requested_url not in configured_indexes:
+        canonical_url = requested_url
+    if not _host_allowed(canonical_url, spec.allowed_hosts):
+        return None
+    title = ""
+    for raw_title in (
+        parser.meta.get("og:title", ""),
+        parser.text("title"),
+        *parser.texts("h1"),
+    ):
+        candidate_title = clean_title(raw_title)
+        for suffix in (spec.name, *spec.aliases):
+            candidate_title = re.sub(
+                rf"\s*(?:\||—|–|-)\s*{re.escape(suffix)}\s*$",
+                "",
+                candidate_title,
+                flags=re.IGNORECASE,
+            )
+        candidate_title = clean_text(candidate_title)
+        if (
+            len(candidate_title) >= 8
+            and not _is_index_page(spec, canonical_url, candidate_title)
+        ):
+            title = candidate_title
+            break
+    if not title:
+        return None
+    summary = strip_html(
+        parser.meta.get("description", "")
+        or parser.meta.get("og:description", "")
+        or parser.meta.get("twitter:description", "")
+    )
+    if spec.require_entity_match and not any(
+        _contains_entity_alias(f"{title} {summary}", alias)
+        for alias in spec.entity_aliases
+    ):
+        return None
+    published_at = normalize_date(_published_value(parser, body)) or _path_date(
+        canonical_url
+    )
+    if not published_at:
+        return None
+    published_date = date.fromisoformat(published_at)
+    if published_date < datetime.now(UTC).date() - timedelta(days=spec.max_age_days):
+        return None
+    if not summary:
+        summary = f"{spec.name} 发布“{title}”；完整事实、数据与附件见官方原文。"
+    event_type, importance = infer_event_type(title, summary)
+    return {
+        "id": article_id(spec.source_id, canonical_url),
+        "sourceId": spec.source_id,
+        "title": title[:220],
+        "summary": summary[:500].rstrip(),
+        "type": event_type,
+        "region": spec.region,
+        "sector": spec.sector,
+        "company": spec.name,
+        "companySlug": spec.slug,
+        "publishedAt": published_at,
+        "importance": max(importance, 80),
+        "source": _source(spec.name, canonical_url, "官方披露", "官方网站"),
+    }
+
+
+def _candidate_urls_from_feed(
+    feed_url: str,
+    body: str,
+    allowed_hosts: Sequence[str],
+    limit: int,
+) -> list[str]:
+    candidates: list[str] = []
+    try:
+        for url in FeedLinkParser.links(body):
+            absolute = normalize_url(urljoin(feed_url, url))
+            if _host_allowed(absolute, allowed_hosts) and absolute not in candidates:
+                candidates.append(absolute)
+            if len(candidates) >= limit:
+                break
+    except ET.ParseError:
+        return []
+    return candidates
+
+
+def _default_sitemap_urls(spec: CompanySpec) -> list[str]:
+    if spec.sitemap_urls:
+        return list(spec.sitemap_urls)
+    parts = urlsplit(spec.homepage)
+    return [f"{parts.scheme}://{parts.netloc}/sitemap.xml"]
+
+
+def _sitemap_locations(body: str) -> list[str]:
+    root = ET.fromstring(body)
+    return [
+        clean_text(node.text or "")
+        for node in root.iter()
+        if node.tag.rsplit("}", 1)[-1].lower() == "loc"
+        and clean_text(node.text or "")
+    ]
+
+
+def _discover_sitemap_urls(
+    spec: CompanySpec, user_agent: str
+) -> tuple[list[str], int, int]:
+    queue = _default_sitemap_urls(spec)
+    visited: set[str] = set()
+    scored: dict[str, int] = {}
+    scanned = 0
+    failures = 0
+    while queue and scanned < 4:
+        sitemap_url = normalize_url(queue.pop(0))
+        if sitemap_url in visited or not _host_allowed(
+            sitemap_url, spec.allowed_hosts
+        ):
+            continue
+        visited.add(sitemap_url)
+        try:
+            body = fetch_text(
+                sitemap_url,
+                user_agent,
+                timeout=min(spec.request_timeout, 8),
+                attempts=1,
+            )
+            scanned += 1
+            for location in _sitemap_locations(body):
+                normalized = normalize_url(location)
+                if not _host_allowed(normalized, spec.allowed_hosts):
+                    continue
+                if urlsplit(normalized).path.casefold().endswith(".xml"):
+                    if normalized not in visited and normalized not in queue:
+                        queue.append(normalized)
+                    continue
+                score = _candidate_score(
+                    normalized, "", spec.article_url_patterns
+                )
+                if score >= 4:
+                    scored[normalized] = max(score, scored.get(normalized, -100))
+        except (ET.ParseError, OSError, TimeoutError, ValueError):
+            failures += 1
+        except Exception:
+            failures += 1
+    discovered = sorted(
+        scored,
+        key=lambda candidate: scored[candidate],
+        reverse=True,
+    )[: spec.max_candidate_links]
+    return discovered, scanned, failures
+
+
+def _search_official_urls(
+    spec: CompanySpec, user_agent: str
+) -> list[str]:
+    discovered: list[str] = []
+    for host in spec.allowed_hosts[:2]:
+        query = (
+            f'site:{host} "{spec.name}" '
+            "(news OR newsroom OR blog OR update OR press OR 新闻 OR 动态 OR 公告)"
+        )
+        search_url = f"https://www.bing.com/search?format=rss&q={quote_plus(query)}"
+        try:
+            body = fetch_text(
+                search_url,
+                user_agent,
+                timeout=min(spec.request_timeout, 8),
+                attempts=1,
+            )
+            for url in FeedLinkParser.links(body):
+                normalized = normalize_url(url)
+                if (
+                    _host_allowed(normalized, spec.allowed_hosts)
+                    and normalized not in discovered
+                    and _candidate_score(
+                        normalized, "news", spec.article_url_patterns
+                    )
+                    >= 4
+                ):
+                    discovered.append(normalized)
+                if len(discovered) >= spec.max_candidate_links:
+                    return discovered
+        except Exception:
+            continue
+    return discovered
+
+
+def crawl_company(
+    spec: CompanySpec, user_agent: str
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    started = time.monotonic()
+    index_urls = list(spec.news_urls) or [spec.homepage]
+    if spec.homepage not in index_urls:
+        index_urls.append(spec.homepage)
+    candidate_urls: list[str] = []
+    feed_urls: list[str] = []
+    failures = 0
+    scanned_indexes = 0
+    scanned_sitemaps = 0
+    for index_url in index_urls:
+        try:
+            body = fetch_text(
+                index_url,
+                user_agent,
+                timeout=spec.request_timeout,
+                attempts=2,
+            )
+            scanned_indexes += 1
+            candidates, feeds = discover_candidate_urls(
+                index_url,
+                body,
+                spec.allowed_hosts,
+                spec.max_candidate_links,
+                spec.article_url_patterns,
+            )
+            for candidate in candidates:
+                if candidate not in candidate_urls:
+                    candidate_urls.append(candidate)
+            for feed in feeds:
+                if feed not in feed_urls:
+                    feed_urls.append(feed)
+        except Exception:
+            failures += 1
+
+    for feed_url in feed_urls[:3]:
+        try:
+            body = fetch_text(
+                feed_url,
+                user_agent,
+                timeout=spec.request_timeout,
+                attempts=2,
+            )
+            for candidate in _candidate_urls_from_feed(
+                feed_url,
+                body,
+                spec.allowed_hosts,
+                spec.max_candidate_links,
+            ):
+                if candidate not in candidate_urls:
+                    candidate_urls.append(candidate)
+        except Exception:
+            failures += 1
+
+    articles: list[dict[str, Any]] = []
+    seen_urls: set[str] = set()
+    attempted_urls: set[str] = set()
+
+    def parse_candidates(candidates: Sequence[str], budget: int) -> None:
+        nonlocal failures
+        for candidate in candidates:
+            if (
+                candidate in attempted_urls
+                or len(attempted_urls) >= budget
+                or len(articles) >= spec.max_items
+            ):
+                continue
+            attempted_urls.add(candidate)
+            try:
+                body = fetch_text(
+                    candidate,
+                    user_agent,
+                    timeout=spec.request_timeout,
+                    attempts=2,
+                )
+                article = _article_from_page(spec, candidate, body)
+                if article and article["source"]["url"] not in seen_urls:
+                    articles.append(article)
+                    seen_urls.add(article["source"]["url"])
+            except Exception:
+                failures += 1
+
+    parse_candidates(candidate_urls, spec.max_candidate_links)
+
+    if len(articles) < spec.max_items:
+        sitemap_candidates, scanned_sitemaps, sitemap_failures = (
+            _discover_sitemap_urls(spec, user_agent)
+        )
+        failures += sitemap_failures
+        for candidate in sitemap_candidates:
+            if candidate not in candidate_urls:
+                candidate_urls.append(candidate)
+        search_candidates = _search_official_urls(spec, user_agent)
+        for candidate in search_candidates:
+            if candidate not in candidate_urls:
+                candidate_urls.append(candidate)
+        fallback_budget = spec.max_candidate_links + max(
+            4, spec.max_candidate_links // 2
+        )
+        parse_candidates(candidate_urls, fallback_budget)
+
+    articles.sort(
+        key=lambda item: (
+            item.get("publishedAt", ""),
+            int(item.get("importance", 0)),
+            item.get("id", ""),
+        ),
+        reverse=True,
+    )
+    articles = articles[: spec.max_items]
+    status = "ok" if articles and failures == 0 else "partial" if articles else "empty"
+    elapsed = time.monotonic() - started
+    print(
+        f"official={spec.slug} status={status} accepted={len(articles)} "
+        f"candidates={len(candidate_urls)} indexes={scanned_indexes} "
+        f"sitemaps={scanned_sitemaps} "
+        f"failures={failures} seconds={elapsed:.2f}",
+        file=sys.stderr,
+    )
+    result: dict[str, Any] = {
+        "id": spec.source_id,
+        "name": f"{spec.name} 官方动态",
+        "company": spec.name,
+        "companySlug": spec.slug,
+        "coverage": "attempted",
+        "status": status,
+        "configuredIndexes": len(index_urls),
+        "discovered": len(candidate_urls),
+        "scanned": len(attempted_urls) + scanned_indexes + scanned_sitemaps,
+        "accepted": len(articles),
+        "failed": failures,
+        "platform": "官方网站",
+    }
+    if not articles and failures:
+        result["error"] = "official indexes returned no dated article pages"
+    return articles, result
+
+
+def crawl_all_companies(
+    specs: Sequence[CompanySpec], user_agent: str
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    articles: list[dict[str, Any]] = []
+    statuses: list[dict[str, Any]] = []
+    if not specs:
+        raise ValueError("official company registry is empty")
+    with ThreadPoolExecutor(max_workers=min(8, len(specs))) as executor:
+        future_map = {
+            executor.submit(crawl_company, spec, user_agent): spec for spec in specs
+        }
+        for future in as_completed(future_map):
+            spec = future_map[future]
+            try:
+                incoming, status = future.result()
+                articles.extend(incoming)
+                statuses.append(status)
+            except Exception as exc:
+                statuses.append(
+                    {
+                        "id": spec.source_id,
+                        "name": f"{spec.name} 官方动态",
+                        "company": spec.name,
+                        "companySlug": spec.slug,
+                        "coverage": "attempted",
+                        "status": "error",
+                        "scanned": 0,
+                        "accepted": 0,
+                        "failed": 1,
+                        "platform": "官方网站",
+                        "error": f"{type(exc).__name__}: {exc}"[:240],
+                    }
+                )
+                print(
+                    f"official={spec.slug} fatal={type(exc).__name__}: {exc}",
+                    file=sys.stderr,
+                )
+    if len(statuses) != len(specs):
+        raise RuntimeError(
+            f"attempted {len(statuses)} of {len(specs)} official companies"
+        )
+    return articles, sorted(statuses, key=lambda item: item["id"])
+
+
+def replace_official_source_batches(
+    existing: list[dict[str, Any]],
+    incoming: list[dict[str, Any]],
+    statuses: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Replace every completed official batch, including a verified empty one.
+
+    Retaining an old batch after a clean empty scan kept previously accepted
+    index pages alive indefinitely. Only a fatal per-company error preserves
+    the prior batch; completed ok/partial/empty scans are authoritative.
+    """
+
+    replace_ids = {
+        str(status.get("id", ""))
+        for status in statuses
+        if status.get("status") in {"ok", "partial"}
+        or (
+            status.get("status") == "empty"
+            and int(status.get("failed", 0)) == 0
+        )
+    }
+    preserved = [
+        article
+        for article in existing
+        if article.get("curated")
+        or str(article.get("sourceId", "")) not in replace_ids
+    ]
+    return merge_articles(preserved, incoming)
+
+
+def main() -> int:
+    specs = load_registry()
+    user_agent = os.environ.get("SEC_USER_AGENT", "").strip() or DEFAULT_USER_AGENT
+    payload = load_existing_payload()
+    incoming, statuses = crawl_all_companies(specs, user_agent)
+    merged = replace_official_source_batches(
+        payload.get("articles", []), incoming, statuses
+    )
+    source_status = merge_source_status(payload.get("sourceStatus", []), statuses)
+    quality = evaluate_quality(merged, source_status, load_config().get("qualityGate", {}))
+    result = {
+        "registeredCompanies": len(specs),
+        "attemptedCompanies": len(statuses),
+        "companiesWithArticles": sum(status.get("accepted", 0) > 0 for status in statuses),
+        "companiesWithoutArticles": sum(
+            status.get("accepted", 0) == 0 for status in statuses
+        ),
+        "incoming": len(incoming),
+        "total": len(merged),
+        "qualityPassed": quality["passed"],
+    }
+    if not quality["passed"]:
+        print("Official-company quality gate failed; previous snapshot retained.", file=sys.stderr)
+        print(json.dumps({"result": result, "qualityGate": quality}, ensure_ascii=False))
+        return 1
+    write_if_changed(
+        merged,
+        payload,
+        company_facts=payload.get("companyFacts", {}),
+        source_status=source_status,
+        quality_gate=quality,
+    )
+    print(json.dumps(result, ensure_ascii=False))
+    existing_official = any(
+        str(item.get("sourceId", "")).startswith("official-")
+        for item in payload.get("articles", [])
+    )
+    if not incoming and not existing_official:
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

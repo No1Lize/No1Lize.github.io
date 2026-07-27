@@ -1,0 +1,129 @@
+name: Stabilize current venture snapshot
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .venture-stabilize-now
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stabilize-current-venture-snapshot
+  cancel-in-progress: false
+
+jobs:
+  stabilize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Stabilize and validate current snapshot
+        env:
+          HEAD_BRANCH: main
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          {
+            python -m py_compile \
+              tools/venture_profile_extraction.py \
+              tools/sanitize_venture_profiles.py \
+              tools/sanitize_venture_narratives.py \
+              tools/finalize_venture_profiles.py \
+              tools/enforce_venture_entity_semantics.py \
+              tools/stabilize_venture_profiles.py
+            COMPILE_STATUS=$?
+            echo "compile_status=$COMPILE_STATUS"
+
+            if [ "$COMPILE_STATUS" -eq 0 ]; then
+              python -m unittest -v \
+                tests.test_finalize_venture_profiles \
+                tests.test_venture_entity_semantics \
+                tests.test_stabilize_venture_profiles
+              TEST_STATUS=$?
+            else
+              TEST_STATUS=1
+            fi
+            echo "test_status=$TEST_STATUS"
+
+            if [ "$TEST_STATUS" -eq 0 ]; then
+              python tools/stabilize_venture_profiles.py
+              STABILIZE_STATUS=$?
+              python tools/stabilize_venture_profiles.py --check
+              STABILIZE_CHECK_STATUS=$?
+              python tools/finalize_venture_profiles.py --check
+              FINALIZE_CHECK_STATUS=$?
+              python tools/enforce_venture_entity_semantics.py --check
+              ENTITY_CHECK_STATUS=$?
+              python - <<'PY'
+import json
+from pathlib import Path
+payload = json.loads(Path('public/data/venture_profiles.json').read_text(encoding='utf-8'))
+companies = payload.get('companies', {})
+institutions = payload.get('institutions', {})
+assert len(companies) == 58, len(companies)
+assert len(institutions) == 20, len(institutions)
+assert payload.get('researchModelVersion') == 3
+assert companies['anduril'].get('background')
+text = json.dumps(companies['anthropic'], ensure_ascii=False)
+for bad in ('Infinity raises', 'LoopWM', 'Ninety-Nine Prolog Problems'):
+    assert bad not in text, bad
+print(json.dumps({
+    'companies': len(companies),
+    'institutions': len(institutions),
+    'andurilBackground': companies['anduril']['background'],
+    'anthropicResearchTechnology': companies['anthropic'].get('researchTechnology', ''),
+}, ensure_ascii=False))
+PY
+              SAMPLE_STATUS=$?
+            else
+              STABILIZE_STATUS=1
+              STABILIZE_CHECK_STATUS=1
+              FINALIZE_CHECK_STATUS=1
+              ENTITY_CHECK_STATUS=1
+              SAMPLE_STATUS=1
+            fi
+            echo "stabilize_status=$STABILIZE_STATUS"
+            echo "stabilize_check_status=$STABILIZE_CHECK_STATUS"
+            echo "finalize_check_status=$FINALIZE_CHECK_STATUS"
+            echo "entity_check_status=$ENTITY_CHECK_STATUS"
+            echo "sample_status=$SAMPLE_STATUS"
+          } > diagnostics/venture-stabilize-now.txt 2>&1
+
+          STATUS=$((COMPILE_STATUS || TEST_STATUS || STABILIZE_STATUS || STABILIZE_CHECK_STATUS || FINALIZE_CHECK_STATUS || ENTITY_CHECK_STATUS || SAMPLE_STATUS))
+          cat diagnostics/venture-stabilize-now.txt
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .venture-stabilize-now
+          if [ "$STATUS" -eq 0 ]; then
+            rm -f diagnostics/venture-stabilize-now.txt
+            rm -f .github/workflows/stabilize-current-venture-snapshot.yml
+            MESSAGE="data: stabilize current venture profile snapshot"
+          else
+            MESSAGE="ci: record venture snapshot stabilization failure"
+          fi
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "$MESSAGE"
+            for attempt in 1 2 3; do
+              git pull --rebase origin main
+              if git push origin HEAD:main; then
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                exit 1
+              fi
+              sleep 2
+            done
+          fi
+          exit "$STATUS"

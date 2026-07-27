@@ -1,0 +1,136 @@
+name: One-time verify current WeChat registry pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-current-wechat-registry.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify and probe
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          : > /tmp/wechat-current.log
+
+          python -m py_compile \
+            tools/wechat_public_sources.py \
+            tools/wechat_source_registry.py \
+            tools/wechat_registry_bridge.py \
+            tools/crawl_with_wechat_registry.py \
+            >> /tmp/wechat-current.log 2>&1
+          COMPILE=$?
+
+          python -m unittest \
+            tests.test_wechat_public_sources \
+            tests.test_wechat_source_registry \
+            tests.test_wechat_registry_bridge \
+            >> /tmp/wechat-current.log 2>&1
+          TARGETED=$?
+
+          python -m unittest discover -s tests -p "test_*.py" \
+            >> /tmp/wechat-current.log 2>&1
+          ALL_TESTS=$?
+
+          python - <<'PY' >> /tmp/wechat-current.log 2>&1
+          import json
+          from tools import crawl_articles
+          from tools import crawl_with_tracking
+          from tools import wechat_public_sources
+          from tools import wechat_registry_bridge
+
+          wechat_registry_bridge.install(wechat_public_sources)
+          tracking = crawl_with_tracking.load_tracking()
+          tracks = crawl_with_tracking._enabled_tracks(tracking)
+          specs = wechat_public_sources.generated_wechat_sources(tracks, crawl_with_tracking)
+          configured = [spec for spec in specs if spec.get("expectedAccounts")]
+          probe = {
+              "generatedSources": len(specs),
+              "whitelistedSources": len(configured),
+              "sectors": sorted({str(spec.get("sector", "")) for spec in specs}),
+              "probe": None,
+          }
+          if configured:
+              spec = configured[0]
+              try:
+                  articles, status = wechat_public_sources.crawl_wechat_source(
+                      spec,
+                      crawl_articles.DEFAULT_USER_AGENT,
+                      crawl_articles,
+                  )
+                  probe["probe"] = {
+                      "id": spec.get("id"),
+                      "name": spec.get("name"),
+                      "sector": spec.get("sector"),
+                      "status": status.get("status"),
+                      "scanned": status.get("scanned"),
+                      "accepted": status.get("accepted"),
+                      "failed": status.get("failed"),
+                      "error": status.get("error"),
+                      "sample": [
+                          {
+                              "title": item.get("title"),
+                              "wechatAccount": item.get("wechatAccount"),
+                              "companies": item.get("mentionedCompanies", []),
+                              "people": item.get("mentionedPeople", []),
+                          }
+                          for item in articles[:2]
+                      ],
+                  }
+              except Exception as exc:
+                  probe["probe"] = {
+                      "id": spec.get("id"),
+                      "name": spec.get("name"),
+                      "sector": spec.get("sector"),
+                      "status": "exception",
+                      "error": f"{type(exc).__name__}: {exc}",
+                  }
+          with open("/tmp/wechat-probe.json", "w", encoding="utf-8") as handle:
+              json.dump(probe, handle, ensure_ascii=False)
+          PY
+          PROBE=$?
+
+          python - <<PY
+          import json
+          from pathlib import Path
+          try:
+              probe = json.loads(Path('/tmp/wechat-probe.json').read_text(encoding='utf-8'))
+          except Exception as exc:
+              probe = {'error': f'{type(exc).__name__}: {exc}'}
+          result = {
+              'compileStatus': int('$COMPILE'),
+              'targetedTestStatus': int('$TARGETED'),
+              'allPythonTestStatus': int('$ALL_TESTS'),
+              'probeStatus': int('$PROBE'),
+              'passed': all(int(value) == 0 for value in ('$COMPILE', '$TARGETED', '$ALL_TESTS', '$PROBE')),
+              'probe': probe,
+              'logTail': Path('/tmp/wechat-current.log').read_text(encoding='utf-8', errors='replace').splitlines()[-180:],
+          }
+          Path('diagnostics/current-wechat-registry.json').write_text(
+              json.dumps(result, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+      - name: Commit diagnostic
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/current-wechat-registry.json
+          git commit -m "ci: record current WeChat registry verification"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -1,0 +1,85 @@
+name: One-time validate WeChat public-index fallback
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-wechat-public-index-fallback.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply serialization-safe fallback patch
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('tools/wechat_registry_bridge.py')
+          text = path.read_text(encoding='utf-8')
+
+          old = '_INDEX_CACHE: dict[str, str] = {}\n'
+          new = '_INDEX_CACHE: dict[str, str] = {}\n_WECHAT: Any | None = None\n'
+          if '_WECHAT: Any | None = None' not in text:
+              if old not in text:
+                  raise SystemExit('global module anchor missing')
+              text = text.replace(old, new, 1)
+
+          old = '''        companies, people, keywords = spec["_wechat"]._relevance_entities(\n            title,\n            context,\n            "",\n            spec,\n            crawler,\n        )'''
+          new = '''        if _WECHAT is None:\n            continue\n        companies, people, keywords = _WECHAT._relevance_entities(\n            title,\n            context,\n            "",\n            spec,\n            crawler,\n        )'''
+          if old not in text:
+              raise SystemExit('runtime module usage anchor missing')
+          text = text.replace(old, new, 1)
+
+          old = '''def install(wechat: Any) -> None:\n    """Apply whitelist-first discovery, account verification, and fallbacks."""\n\n    index_map = _load_public_indexes()'''
+          new = '''def install(wechat: Any) -> None:\n    """Apply whitelist-first discovery, account verification, and fallbacks."""\n\n    global _WECHAT\n    _WECHAT = wechat\n    index_map = _load_public_indexes()'''
+          if old not in text:
+              raise SystemExit('install global anchor missing')
+          text = text.replace(old, new, 1)
+          text = text.replace('            spec["_wechat"] = wechat\n', '', 1)
+          path.write_text(text, encoding='utf-8')
+
+          path = Path('.github/workflows/scheduled-sync.yml')
+          text = path.read_text(encoding='utf-8')
+          line = '      - config/wechat_public_indexes.json\n'
+          if line not in text:
+              anchor = '      - config/wechat_sources.json\n'
+              if anchor not in text:
+                  raise SystemExit('scheduled config anchor missing')
+              text = text.replace(anchor, anchor + line, 1)
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Verify fallback
+        run: |
+          python -m json.tool config/wechat_public_indexes.json >/dev/null
+          python -m py_compile \
+            tools/wechat_public_sources.py \
+            tools/wechat_source_registry.py \
+            tools/wechat_registry_bridge.py \
+            tools/crawl_with_wechat_registry.py
+          python -m unittest \
+            tests.test_wechat_public_sources \
+            tests.test_wechat_source_registry \
+            tests.test_wechat_registry_bridge \
+            tests.test_wechat_public_index_fallback
+      - name: Commit verified fallback
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/wechat_registry_bridge.py config/wechat_public_indexes.json \
+            tests/test_wechat_public_index_fallback.py .github/workflows/scheduled-sync.yml
+          git commit -m "feat: recover WeChat discovery from public link indexes"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -1,0 +1,86 @@
+{
+  "enabledTrackCount": 12,
+  "generatedSourceCount": 30,
+  "genericSourceCount": 12,
+  "missingGenericTracks": [],
+  "syntheticEmptyCustomTrack": {
+    "passed": true,
+    "sourceId": "user-track-wechat-validation-empty-custom-track",
+    "bingQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"验证新增赛道\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+    "sogouQuery": "验证新增赛道 验证新增赛道"
+  },
+  "tracks": [
+    {
+      "sector": "AI / AGI",
+      "genericSourceId": "user-track-wechat-ai",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"AI / AGI\" OR \"AI\" OR \"AGI\" OR \"基础模型\" OR \"大模型\" OR \"AI agent\" OR \"推理模型\" OR \"多模态\" OR \"Agent\" OR \"Grok\" OR \"OpenAI\" OR \"Anthropic\" OR \"DeepSeek\" OR \"xAI\" OR \"Harvey\" OR \"MiniMax\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 5
+    },
+    {
+      "sector": "机器人",
+      "genericSourceId": "user-track-wechat-robotics",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"机器人\" OR \"具身智能\" OR \"人形机器人\" OR \"自动驾驶\" OR \"VLA\" OR \"机器人量产\" OR \"世界模型\" OR \"灵巧手\" OR \"强化学习\" OR \"RAG\" OR \"Figure AI\" OR \"宇树科技\" OR \"智元机器人\" OR \"小马智行\" OR \"文远知行\" OR \"Aurora Innovation\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 6
+    },
+    {
+      "sector": "半导体",
+      "genericSourceId": "user-track-wechat-semiconductor",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"半导体\" OR \"AI 芯片\" OR \"GPU\" OR \"推理芯片\" OR \"先进封装\" OR \"国产算力\" OR \"LPU\" OR \"AI Agent\" OR \"自动驾驶\" OR \"HBM\" OR \"寒武纪\" OR \"Cerebras\" OR \"Groq\" OR \"地平线机器人\" OR \"摩尔线程\" OR \"清微智能\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 2
+    },
+    {
+      "sector": "新能源",
+      "genericSourceId": "user-track-wechat-energy",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"新能源\" OR \"长时储能\" OR \"固态电池\" OR \"动力电池\" OR \"储能系统\" OR \"钠离子电池\" OR \"储能\" OR \"电池回收\" OR \"光伏钙钛矿\" OR \"宁德时代\" OR \"Form Energy\" OR \"Redwood Materials\" OR \"蜂巢能源\" OR \"Commonwealth Fusion Systems\" OR \"Helion Energy\" OR \"Google DeepMind\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 2
+    },
+    {
+      "sector": "生物科技",
+      "genericSourceId": "user-track-wechat-biotech",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"生物科技\" OR \"AI 制药\" OR \"基因组学\" OR \"计算生物学\" OR \"药物发现\" OR \"自动化实验\" OR \"基因编辑\" OR \"蛋白质设计\" OR \"AI制药\" OR \"细胞治疗\" OR \"晶泰科技\" OR \"英矽智能\" OR \"Tempus AI\" OR \"Recursion\" OR \"分子之心\" OR \"Recursion Pharmaceuticals\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 1
+    },
+    {
+      "sector": "量子计算",
+      "genericSourceId": "user-track-wechat-quantum",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"量子计算\" OR \"量子纠错\" OR \"逻辑量子比特\" OR \"离子阱\" OR \"超导量子\" OR \"光子量子\" OR \"容错量子计算\" OR \"量子芯片\" OR \"量子网络\" OR \"IonQ\" OR \"Rigetti\" OR \"PsiQuantum\" OR \"本源量子\" OR \"图灵量子\" OR \"Rigetti Computing\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 1
+    },
+    {
+      "sector": "商业航天",
+      "genericSourceId": "user-track-wechat-space",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"商业航天\" OR \"可复用火箭\" OR \"卫星互联网\" OR \"商业发射\" OR \"在轨服务\" OR \"商业空间站\" OR \"可回收火箭\" OR \"低轨卫星\" OR \"SpaceX\" OR \"Rocket Lab\" OR \"蓝箭航天\" OR \"天兵科技\" OR \"Joby Aviation\" OR \"Axiom Space\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 0
+    },
+    {
+      "sector": "Web3",
+      "genericSourceId": "user-track-wechat-web3",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"Web3\" OR \"稳定币\" OR \"区块链基础设施\" OR \"数字资产\" OR \"链上支付\" OR \"RWA\" OR \"比特大陆\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 0
+    },
+    {
+      "sector": "新材料",
+      "genericSourceId": "user-track-wechat-materials",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"新材料\" OR \"半导体材料\" OR \"复合材料\" OR \"电池材料\" OR \"高性能材料\" OR \"材料量产\" OR \"散热\" OR \"钙钛矿\" OR \"碳纤维\" OR \"超材料\" OR \"中际旭创\" OR \"宁德时代\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 1
+    },
+    {
+      "sector": "智能制造",
+      "genericSourceId": "user-track-wechat-manufacturing",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"智能制造\" OR \"工业软件\" OR \"数字工厂\" OR \"工业自动化\" OR \"自主系统\" OR \"智能装备\" OR \"工业机器人\" OR \"数字孪生\" OR \"机器视觉\" OR \"柔性制造\" OR \"Anduril\" OR \"大疆创新\" OR \"傅利叶智能\" OR \"Anduril Industries\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 0
+    },
+    {
+      "sector": "可控核聚变",
+      "genericSourceId": "user-track-wechat-fusion",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"可控核聚变\" OR \"聚变能源\" OR \"托卡马克\" OR \"高温超导磁体\" OR \"等离子体约束\" OR \"聚变净能量增益\" OR \"氚燃料循环\" OR \"能量奇点\" OR \"Commonwealth Fusion Systems\" OR \"Helion Energy\" OR \"TAE Technologies\" OR \"Zap Energy\" OR \"General Fusion\" OR \"杨钊\" OR \"Bob Mumgaard\" OR \"David Kirtley\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 0
+    },
+    {
+      "sector": "风险投资",
+      "genericSourceId": "user-track-wechat-track-1ccjq49",
+      "genericQuery": "https://www.bing.com/search?format=rss&q=site:mp.weixin.qq.com/s (\"风险投资\" OR \"PE\" OR \"TS\" OR \"对赌\" OR \"基金备案\" OR \"专项基金\" OR \"天使轮\" OR \"A轮\" OR \"Pre-IPO\" OR \"退出\" OR \"红杉\" OR \"Sequoia Capital\" OR \"Y Combinator\" OR \"IDG 资本\" OR \"Benchmark\" OR \"Kleiner Perkins\") (\"发布\" OR \"推出\" OR \"融资\" OR \"投资\" OR \"上市\" OR \"IPO\" OR \"研究\" OR \"突破\" OR \"合作\" OR \"签署\" OR \"报告\" OR \"论文\")",
+      "accountSourceCount": 0
+    }
+  ]
+}
