@@ -109,8 +109,11 @@ function normalizeSources(value: unknown): FavoriteSource[] {
 
 function normalizeHref(value: unknown): string {
   const href = cleanText(value, 500);
-  if (!href || !href.startsWith("/") || href.startsWith("//")) return "";
-  return href.endsWith("/") ? href : `${href}/`;
+  if (!href) return "";
+  if (href.startsWith("/") && !href.startsWith("//")) {
+    return href.endsWith("/") ? href : `${href}/`;
+  }
+  return validHttpUrl(href);
 }
 
 const CHANNELS = new Set<FavoriteChannel>([
