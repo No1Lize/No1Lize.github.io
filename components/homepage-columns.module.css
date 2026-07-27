@@ -94,10 +94,6 @@
   color: var(--green-bright);
 }
 
-.channelNav {
-  min-height: 45px;
-}
-
 :global(.content-grid):has(.column) {
   align-items: start;
 }
