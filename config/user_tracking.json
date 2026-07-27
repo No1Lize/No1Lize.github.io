@@ -146,13 +146,22 @@
         "机器人学习",
         "機器人動畫",
         "生物機器人",
-        "Waymo"
+        "Waymo",
+        "X (2010年公司)",
+        "自動化載具",
+        "特斯拉自动驾驶"
       ],
       "people": [
         "汪滔",
         "李泽湘",
         "王兴兴",
-        "关注前沿科技"
+        "关注前沿科技",
+        "Company Development",
+        "彭志辉",
+        "邓泰华",
+        "彭军",
+        "楼天城",
+        "作为自动驾"
       ],
       "sampleCompanies": [
         "Figure AI",
@@ -212,9 +221,19 @@
         "AI Inference Solution",
         "黑色电影",
         "安东尼·伯克莱·考克斯",
-        "雷蒙·錢德勒"
+        "雷蒙·錢德勒",
+        "艾勒里·昆恩",
+        "莫爾格街兇殺案",
+        "弗雷德·金尼曼"
       ],
-      "people": [],
+      "people": [
+        "主题演讲全",
+        "张建中参加",
+        "Business Development",
+        "Autonomous Vehicles Senior Vice",
+        "Rodrigo Liang",
+        "Kunle Olukotun"
+      ],
       "sampleCompanies": [
         "寒武纪",
         "Cerebras",
@@ -287,10 +306,18 @@
         "钠硫电池",
         "電池尺寸列表",
         "電量損失",
-        "鈉離子電池"
+        "鈉離子電池",
+        "輝能科技",
+        "特斯拉公司",
+        "理想汽车"
       ],
       "people": [
-        "Google DeepMind @GoogleDeepMind"
+        "Google DeepMind @GoogleDeepMind",
+        "Tesla Co",
+        "Deepak Ahuja CFO Cal",
+        "杨红新",
+        "杨永旺共同",
+        "Bill Ford"
       ],
       "sampleCompanies": [
         "宁德时代",
@@ -345,7 +372,10 @@
         "金融信息服务商",
         "万份",
         "个人基因组学",
-        "神经信息学"
+        "神经信息学",
+        "系统生物学",
+        "计算机科学",
+        "爱丁堡大学信息学院"
       ],
       "people": [],
       "sampleCompanies": [
@@ -399,9 +429,16 @@
         "腔量子电动力学",
         "傅里叶变换离子回旋共振质谱法",
         "量子光学",
-        "四极离子阱"
+        "四极离子阱",
+        "超导磁铁",
+        "磁路",
+        "电感元件"
       ],
-      "people": [],
+      "people": [
+        "Marco Pistoia",
+        "Global AI Sales",
+        "Pete Shadbolt"
+      ],
       "sampleCompanies": [
         "IonQ",
         "Rigetti",
@@ -451,9 +488,17 @@
         "转口贸易",
         "中信证券",
         "福费廷",
-        "保稅倉庫"
+        "保稅倉庫",
+        "增值税 (中华人民共和国)",
+        "发票",
+        "中华人民共和国海关法"
       ],
-      "people": [],
+      "people": [
+        "Neutron Alek Derejian Vice",
+        "Space Systems Lachlan Matchett",
+        "Global Supply Chain Matt",
+        "Horizon Manufacturing Technologies Quan"
+      ],
       "sampleCompanies": [
         "SpaceX",
         "Rocket Lab",
@@ -505,7 +550,10 @@
         "企业资源计划",
         "数据传输",
         "信号处理",
-        "光学字符识别"
+        "光学字符识别",
+        "ARA",
+        "Ra (disambiguation)",
+        "ROA"
       ],
       "people": [],
       "sampleCompanies": [
@@ -602,7 +650,10 @@
         "卡尔·林奈",
         "目 (生物)",
         "十字花目",
-        "玲花蕉亞科"
+        "玲花蕉亞科",
+        "植物种志",
+        "模式種",
+        "植物分类学"
       ],
       "people": [],
       "sampleCompanies": [
@@ -655,13 +706,17 @@
         "双极性扩散",
         "中国科技网",
         "萨哈电离方程",
-        "磁层"
+        "磁层",
+        "極風",
+        "日冕",
+        "等离子体活化"
       ],
       "people": [
         "杨钊",
         "Bob Mumgaard",
         "David Kirtley",
-        "Michl Binderbauer"
+        "Michl Binderbauer",
+        "Bill Ford"
       ],
       "sampleCompanies": [
         "能量奇点",
@@ -710,7 +765,10 @@
         "Claude Opus",
         "Call",
         "Deployment",
-        "Results"
+        "Results",
+        "Ionizing radiation",
+        "Potassium-40",
+        "Army Police (Portugal)"
       ],
       "people": [],
       "sampleCompanies": [
@@ -741,14 +799,16 @@
         "Wish (company)",
         "Fast fashion",
         "Taobao",
-        "Amazon China"
+        "Amazon China",
+        "E-commerce in China"
       ],
       "people": [],
       "sampleCompanies": [
         "希音",
         "shein",
         "AliExpress",
-        "Shopify"
+        "Shopify",
+        "Alibaba Group"
       ]
     }
   ],
@@ -3171,6 +3231,21 @@
       "ticker": "",
       "keywords": [
         "Shopify"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-alibaba-group",
+      "name": "Alibaba Group 官方网站",
+      "url": "https://www.alibaba.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "新消费",
+      "company": "Alibaba Group",
+      "ticker": "",
+      "keywords": [
+        "Alibaba Group"
       ],
       "enabled": true
     }
