@@ -1,0 +1,66 @@
+.body {
+  min-width: 0;
+  max-height: 980px;
+  padding: 16px 20px 20px;
+  overflow: auto;
+  scrollbar-color: var(--border) transparent;
+}
+
+.body :global(.people-grid) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+}
+
+.body :global(.people-grid > a) {
+  min-height: 330px;
+  padding: 18px;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+}
+
+.body :global(.person-monogram) {
+  width: 58px;
+  height: 58px;
+  font-size: 23px;
+}
+
+.body :global(.people-grid p) {
+  margin-top: 18px;
+}
+
+.body :global(.people-grid h2) {
+  font-size: 20px;
+}
+
+.body :global(.people-grid strong) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+@media (max-width: 1120px) {
+  .body {
+    max-height: none;
+  }
+
+  .body :global(.people-grid) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .body {
+    padding: 14px;
+  }
+
+  .body :global(.people-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .body :global(.people-grid) {
+    grid-template-columns: 1fr;
+  }
+}
