@@ -50,8 +50,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
 USER_AGENT = (
-    "LizeRoadOne/5.0 contact=No1Lize@users.noreply.github.com "
-    "(+https://github.com/No1Lize/No1Lize.github.io)"
+    "LizeRoadOne/5.0 contact=VCIQ@users.noreply.github.com "
+    "(+https://github.com/VCIQ/VCIQ.github.io)"
 )
 REQUEST_TIMEOUT = 15
 MAX_RESPONSE_BYTES = 4_000_000
