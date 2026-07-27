@@ -1,21 +1,21 @@
 {
-  "snapshotGeneratedAt": "2026-07-26T23:53:23+00:00",
-  "enabledTrackCount": 12,
-  "generatedSourceCount": 33,
-  "executedSourceCount": 33,
+  "snapshotGeneratedAt": "2026-07-27T00:22:29+00:00",
+  "enabledTrackCount": 13,
+  "generatedSourceCount": 34,
+  "executedSourceCount": 34,
   "tracksWithoutExecutedSource": [],
   "originalUrlContractPassed": true,
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T23:53:23+00:00",
-    "configuredSources": 33,
+    "generatedAt": "2026-07-27T00:22:29+00:00",
+    "configuredSources": 34,
     "successfulSources": 11,
     "acceptedArticles": 40,
     "fullTextArticles": 40,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 22,
-    "mentionedCompanyLinks": 52,
-    "mentionedPeopleLinks": 99
+    "retainedSources": 23,
+    "mentionedCompanyLinks": 51,
+    "mentionedPeopleLinks": 96
   },
   "tracks": [
     {
@@ -99,10 +99,10 @@
         {
           "id": "user-track-wechat-deeptechchina-ai",
           "name": "DeepTech深科技",
-          "status": "partial",
+          "status": "ok",
           "scanned": 16,
           "accepted": 3,
-          "failed": 2,
+          "failed": 0,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -411,10 +411,10 @@
         {
           "id": "user-track-wechat-deeptechchina-biotech",
           "name": "DeepTech深科技",
-          "status": "partial",
+          "status": "ok",
           "scanned": 15,
           "accepted": 1,
-          "failed": 1,
+          "failed": 0,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -654,6 +654,37 @@
         {
           "id": "user-track-wechat-track-1ccjq49",
           "name": "微信公众号 · 风险投资",
+          "status": "error",
+          "scanned": 0,
+          "accepted": 0,
+          "failed": 1,
+          "platform": "微信",
+          "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+          "retainedPrevious": true,
+          "discoveryProvider": "sogou-weixin+fallback",
+          "sogouScanned": 0,
+          "sogouResolved": 0
+        }
+      ]
+    },
+    {
+      "sector": "新消费",
+      "custom": false,
+      "genericSourcePresent": true,
+      "sourceCount": 1,
+      "statusCount": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
+      "indexOnlyArticles": 0,
+      "providers": {
+        "sogou-weixin+fallback": 1
+      },
+      "sources": [
+        {
+          "id": "user-track-wechat-track-1p8ob4k",
+          "name": "微信公众号 · 新消费",
           "status": "error",
           "scanned": 0,
           "accepted": 0,

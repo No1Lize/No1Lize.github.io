@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-26T23:53:23+00:00",
+  "generatedAt": "2026-07-27T00:22:29+00:00",
   "articleCount": 1021,
   "articles": [
     {
@@ -15448,6 +15448,46 @@
       "wechatContentMode": "original-page"
     },
     {
+      "id": "user-track-wechat-deeptechchina-ai-7d361b7c7fc6edd4",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
+      "title": "强化学习之父萨顿中国演讲：大模型无法成为超级智能，真正的AI还在后面",
+      "summary": "今天，2026 世界人工智能大会（WAIC）正式落下帷幕。过去三天，从 OpenAI、Google DeepMind 到图灵奖得主、强化学习奠基人 Richard Sutton，多位人工智能领域的重要学者和企业代表围绕 AGI、大模型、智能体等话题分享了他们对未来 AI 的判断。 其中，Sutton 已经是连续 第二年在 WAIC 的舞台上进 行演讲 。 这也是他宣布创办 AI 公司 Oak Lab 后的首次公开演讲 。 就在一周前，他刚刚宣布离开 John Carmack 创办的 Keen Technologies，转而押注一条不同于当前大模型的发展路线：让 AI 像人一样，在与世界持续互动中不断学习，而不是主要依赖静态数据训练。 这其实也是他近两年来反复强调的核心观点。去年，他在 WAIC 提出人工智能正从依赖静态数据迈向依靠与世界互动不断学习的“体验时代”（Era of Experience）。今年，他则回到了自己最著名的观点——《苦涩的教训》（The Bitter Lesson），并借此追问：如果人工智能的发展仍遵循过去七十年的规律，那么今天如日中天的大语言模型（LLM），是不",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777d507b0005c11f4ae762eb0cf376872ec273ea66c8391190fb9f59345fba80a2cc3104c9f&idx=1&mid=2649800990&sn=0daca30fb1e4be221bb3c43125f1363f",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "张锦怡"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Google DeepMind",
+        "Google"
+      ],
+      "mentionedPeople": [
+        "John Carmack",
+        "Keen Technologies"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "机器学习",
+        "基础模型",
+        "DeepMind",
+        "强化学习"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "user-track-wechat-aitechuang-robotics-c07012b46b90e158",
       "sourceId": "user-track-wechat-aitechuang-robotics",
       "title": "WAIC 观察：通用具身智能要在有生之年实现，急需「物理 AI 基建狂魔」",
@@ -20324,8 +20364,8 @@
       ]
     },
     {
-      "id": "user-track-wechat-deeptechchina-biotech-6e3732a3d35e5abd",
-      "sourceId": "user-track-wechat-deeptechchina-biotech",
+      "id": "user-track-wechat-deeptechchina-ai-6e3732a3d35e5abd",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
       "title": "诺奖得主和Claude联手发论文，结论是：AI时代更需“笨功夫”",
       "summary": "7 月，诺贝尔物理学奖得主乔治·帕里西（Giorgio Parisi）与意大利物理学家弗朗西斯科·赞波尼（Francesco Zamponi）在《统计力学：理论与实验》（ JSTAT ）发表论文，题为《阻塞临界指数一个恒等式的证明》，篇幅仅十余页。 在摘要末尾，两位作者写下这样一句话： “证明通过与 Claude（Sonnet 4.6 与 Opus 4.7）的互动获得，并由我们完成验证。” 在与 Claude 进行 40 轮对话后，他们联手终结了一个困扰复杂系统统计物理领域十二年的猜想。 2021 年，意大利理论物理学家帕里西被授予诺贝尔物理学奖，理由是“发现了从原子到行星尺度物理系统中无序与涨落的相互作用”。他在学术生涯中一直致力于自旋玻璃（spin glass）理论研究，并发明副本对称性破缺（RSB）方法，用于揭示看似混乱无序的复杂系统背后的深层规律。 图 | 乔治·帕里西（Giorgio Parisi）（来源：https://www.parisigiorgio.it/） 这次合作发生的一年多前，2025 年初，帕里西演示过一则近乎讽刺的实验：他成功说服一个大型语言模型接受“5×4",
       "type": "技术突破",
@@ -20349,10 +20389,13 @@
         "Anthropic"
       ],
       "mentionedPeople": [],
-      "matchedTrackingTerms": [],
+      "matchedTrackingTerms": [
+        "机器学习",
+        "Claude",
+        "大型语言模型"
+      ],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "生物科技"
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-anduril-8d72dce938f5c050",
@@ -20733,8 +20776,8 @@
       ]
     },
     {
-      "id": "user-track-wechat-deeptechchina-ai-7ca93f5df9d6d53f",
-      "sourceId": "user-track-wechat-deeptechchina-ai",
+      "id": "user-track-wechat-deeptechchina-biotech-7ca93f5df9d6d53f",
+      "sourceId": "user-track-wechat-deeptechchina-biotech",
       "title": "AI产业正在围着OpenAI和Anthropic两家公司打转",
       "summary": "过去半个月，AI 行业似乎迎来了一个短暂的平静期。预期中的 GPT-5.6 和 Gemini 3.5 Pro 并未到来，除了 Sonnet 5 的发布和 Fable 5 的回归，并没有什么重磅模型面世。但穿透平静的表象，我们可能正在目睹 AI 产业结构迎来的一场前所未有的密集重组。 6 月 24 日， OpenAI 发布了它的第一颗自研芯片 Jalapeño ，一颗专为推理设计的加速器，与 Broadcom 联合开发，从设计到流片只用了九个月。同一天，OpenAI 宣布与 Broadcom 签下 10 GW 的算力部署合作协议。一家模型公司开始造芯片，这在两年前几乎不可想象。 一周后的新闻密度更高。7 月 1 日， 彭博社报道 Meta 正在组建名为 Meta Compute 的云业务部门，计划对外出售 AI 算力 ，Meta 股价当天上涨 9%，CoreWeave 下跌 14%，Nebius 下跌 17%。7 月 2 日，微软宣布成立 Frontier Company，投入 25 亿美元、配备 6000 名工程师，专门帮企业客户部署 AI。 7 月 3 日，韩国媒体披露 Meta 正",
       "type": "公司动态",
@@ -20756,25 +20799,16 @@
       "mentionedCompanies": [
         "OpenAI",
         "Anthropic",
-        "xAI",
-        "Google",
         "字节跳动"
       ],
       "mentionedPeople": [
         "Frontier Company",
         "SB Neo"
       ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "Grok",
-        "Claude",
-        "gpt-5",
-        "Amazon",
-        "Meta",
-        "Gemini"
-      ],
+      "matchedTrackingTerms": [],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page"
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "生物科技"
     },
     {
       "id": "user-source-source-track-fosl0s-c4936c6564289934",
@@ -20830,49 +20864,6 @@
       "trackSlugs": [
         "manufacturing"
       ]
-    },
-    {
-      "id": "user-track-wechat-deeptechchina-quantum-b2185c32a1575652",
-      "sourceId": "user-track-wechat-deeptechchina-ai",
-      "title": "Anthropic也要造芯片了，还挖了OpenAI的芯片工程师",
-      "summary": "继 OpenAI 发布首款自研 AI 芯片之后 ，Anthropic 也在加快向芯片领域延伸。 据 The Information 报道， Anthropic 正在与三星接洽，讨论由后者参与制造一款定制 AI 芯片。 双方目前仍处于探索阶段，Anthropic 尚未确定芯片的具体用途、性能指标，也没有明确它将如何集成到服务器和数据中心。 部分媒体称，双方的讨论涉及三星的 2 纳米制程和先进封装能力。不过，Anthropic 和三星均未确认这些细节。面对媒体询问，Anthropic 也没有进一步表态， 只强调包含谷歌、亚马逊和英伟达芯片在内的多元化硬件架构仍将是其算力战略的重要组成部分。 Anthropic一直在扩大芯片供应链 Anthropic 过去给外界的印象，主要是一家专注于模型研究和 AI 安全的公司。但实际上，它与芯片底层的联系早已不止于采购算力。 2024 年，Anthropic 宣布深化与亚马逊的合作。亚马逊云科技（AWS）成为其主要云服务和训练合作伙伴，亚马逊对 Anthropic 的总投资则增加至 80 亿美元。 双方的合作并不是简单地把 Claude 部署到 AWS",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-04",
-      "importance": 76,
-      "source": {
-        "name": "DeepTech深科技",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777a9cab00020dc7056cb04a65c7aaadb7181a179a4ba5682421e00707f6c39babea0489a83&idx=1&mid=2649800147&sn=b9b2844a91662aaafa75ce7779d6c6bd",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "胡莉花"
-      ],
-      "wechatAccount": "DeepTech深科技",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Anthropic"
-      ],
-      "mentionedPeople": [
-        "Sam Altman",
-        "胡莉花",
-        "Clive Chan",
-        "Hock Tan",
-        "Greg Brockman"
-      ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "Claude",
-        "ChatGPT",
-        "长上下文",
-        "Amazon"
-      ],
-      "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "量子计算"
     },
     {
       "id": "professional-media-it-news-africa-23fbd2513989bfec",
@@ -37203,10 +37194,10 @@
     {
       "id": "user-track-wechat-deeptechchina-ai",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "ok",
       "scanned": 16,
       "accepted": 3,
-      "failed": 2,
+      "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -37215,10 +37206,10 @@
     {
       "id": "user-track-wechat-deeptechchina-biotech",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "ok",
       "scanned": 15,
       "accepted": 1,
-      "failed": 1,
+      "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -37511,6 +37502,20 @@
     {
       "id": "user-track-wechat-track-1ccjq49",
       "name": "微信公众号 · 风险投资",
+      "status": "error",
+      "scanned": 0,
+      "accepted": 0,
+      "failed": 1,
+      "platform": "微信",
+      "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
+      "retainedPrevious": true,
+      "discoveryProvider": "sogou-weixin+fallback",
+      "sogouScanned": 0,
+      "sogouResolved": 0
+    },
+    {
+      "id": "user-track-wechat-track-1p8ob4k",
+      "name": "微信公众号 · 新消费",
       "status": "error",
       "scanned": 0,
       "accepted": 0,
@@ -38086,15 +38091,15 @@
     "retainedPreviousSourceCount": 37
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-26T23:53:23+00:00",
-    "configuredSources": 33,
+    "generatedAt": "2026-07-27T00:22:29+00:00",
+    "configuredSources": 34,
     "successfulSources": 11,
     "acceptedArticles": 40,
     "fullTextArticles": 40,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 22,
-    "mentionedCompanyLinks": 52,
-    "mentionedPeopleLinks": 99
+    "retainedSources": 23,
+    "mentionedCompanyLinks": 51,
+    "mentionedPeopleLinks": 96
   }
 }
