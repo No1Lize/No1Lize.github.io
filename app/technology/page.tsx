@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Cpu } from "lucide-react";
 import Link from "next/link";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
-import { SectorChart } from "@/components/sector-chart";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import styles from "./page.module.css";
 
@@ -36,17 +35,6 @@ export default function TechnologyPage() {
         icon={<Cpu size={19} aria-hidden="true" />}
         bodyClassName={styles.body}
       >
-        <section className={styles.trend}>
-          <div className={styles.subHeader}>
-            <div>
-              <p className="section-index">SIX-MONTH ACTIVITY</p>
-              <h3>中美事件趋势</h3>
-            </div>
-            <span>仅统计当前启用赛道 · 自动更新</span>
-          </div>
-          <SectorChart />
-        </section>
-
         <section className="sector-card-grid">
           {trackedSectors.map((sector, index) => (
             <Link
