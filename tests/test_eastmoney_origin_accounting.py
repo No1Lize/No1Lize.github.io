@@ -9,6 +9,7 @@ from tools.eastmoney_transport import (
     merge_eastmoney_history,
 )
 from tools.refine_eastmoney_snapshot import refine_snapshot
+from tools.validate_eastmoney_snapshot import validate_snapshot
 
 
 SOURCE_ID = "official-user-东方财富"
@@ -21,10 +22,11 @@ def article(
     sequence: int,
     summary: str = "人工智能与半导体产业取得新进展。",
     origin: str = "",
+    source_id: str = SOURCE_ID,
 ) -> dict:
     item = {
         "id": article_id,
-        "sourceId": SOURCE_ID,
+        "sourceId": source_id,
         "title": title,
         "summary": summary,
         "type": "公司动态",
@@ -259,6 +261,68 @@ class EastmoneyOriginAccountingTests(unittest.TestCase):
         self.assertNotIn("retainedPrevious", status)
         self.assertNotIn("retainedPreviousCount", status)
         self.assertEqual(status["status"], "empty")
+
+    def test_refinement_counts_each_eastmoney_source_separately(self) -> None:
+        semiconductor_source_id = f"{SOURCE_ID}-半导体信源"
+        snapshot = {
+            "articleCount": 3,
+            "articles": [
+                article(
+                    "general-new",
+                    "SK海力士推进新一代AI芯片合作",
+                    sequence=10,
+                    origin=EASTMONEY_ORIGIN_NEW,
+                ),
+                article(
+                    "general-retained",
+                    "三星电子与博通合作开发先进内存芯片",
+                    sequence=11,
+                    origin=EASTMONEY_ORIGIN_RETAINED,
+                ),
+                article(
+                    "semiconductor-new",
+                    "先进封装设备企业扩大半导体产能",
+                    sequence=12,
+                    origin=EASTMONEY_ORIGIN_NEW,
+                    source_id=semiconductor_source_id,
+                ),
+            ],
+            "sourceStatus": [
+                source_status(
+                    accepted=3,
+                    newAccepted=2,
+                    retainedPrevious=True,
+                    retainedPreviousCount=1,
+                ),
+                source_status(
+                    id=semiconductor_source_id,
+                    accepted=3,
+                    newAccepted=2,
+                    retainedPrevious=True,
+                    retainedPreviousCount=1,
+                ),
+            ],
+        }
+
+        refined, report = refine_snapshot(snapshot, self.tracking)
+        statuses = {
+            status["id"]: status
+            for status in refined["sourceStatus"]
+        }
+
+        self.assertEqual(statuses[SOURCE_ID]["accepted"], 2)
+        self.assertEqual(statuses[SOURCE_ID]["newAccepted"], 1)
+        self.assertEqual(statuses[SOURCE_ID]["retainedPreviousCount"], 1)
+        self.assertEqual(statuses[semiconductor_source_id]["accepted"], 1)
+        self.assertEqual(statuses[semiconductor_source_id]["newAccepted"], 1)
+        self.assertEqual(
+            statuses[semiconductor_source_id]["retainedPreviousCount"],
+            0,
+        )
+        self.assertEqual(report["eastmoneyKept"], 3)
+        validation = validate_snapshot(refined, self.tracking)
+        self.assertEqual(validation["acceptedByCrawler"], 3)
+        self.assertEqual(validation["detailArticles"], 3)
 
 
 if __name__ == "__main__":
