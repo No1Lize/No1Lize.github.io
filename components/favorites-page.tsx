@@ -1,8 +1,8 @@
 "use client";
 
-import { Bookmark, Search, Trash2 } from "lucide-react";
+import { Bookmark, Search, Share2, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useFavorites } from "@/components/use-favorites";
 import { removeFavorite, type FavoriteItem } from "@/lib/favorites";
 
@@ -12,6 +12,125 @@ function isIntelligenceCard(item: FavoriteItem): boolean {
       item.publishedAt ||
       item.eventType ||
       item.importance !== undefined,
+  );
+}
+
+function absoluteShareUrl(href: string): string {
+  if (typeof window === "undefined") return href;
+  try {
+    return new URL(href, window.location.origin).href;
+  } catch {
+    return href;
+  }
+}
+
+async function copyShareText(value: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(value);
+    return true;
+  } catch {
+    const textarea = document.createElement("textarea");
+    textarea.value = value;
+    textarea.setAttribute("readonly", "true");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    return copied;
+  }
+}
+
+function ShareFavoriteButton({ item }: { item: FavoriteItem }) {
+  const [notice, setNotice] = useState("");
+  const timerRef = useRef<number | null>(null);
+
+  useEffect(
+    () => () => {
+      if (timerRef.current) window.clearTimeout(timerRef.current);
+    },
+    [],
+  );
+
+  const showNotice = (message: string) => {
+    setNotice(message);
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => setNotice(""), 4800);
+  };
+
+  const share = async () => {
+    const url = absoluteShareUrl(item.href);
+    const summary = item.summary.trim().slice(0, 140);
+    const text = summary ? `${item.title}\n${summary}` : item.title;
+    const shareData: ShareData = { title: item.title, text, url };
+    const shareText = `${text}\n${url}`;
+    const inWechat = /MicroMessenger/i.test(navigator.userAgent);
+
+    // Ordinary web pages cannot directly open WeChat Moments' composer.
+    // Inside WeChat, copy the direct source link and guide the user to the
+    // browser menu; outside WeChat, prefer the operating system share sheet.
+    if (inWechat) {
+      const copied = await copyShareText(shareText);
+      showNotice(
+        copied
+          ? "原链接已复制，请点微信右上角“…”并选择“分享到朋友圈”"
+          : "请点微信右上角“…”并选择“分享到朋友圈”",
+      );
+      return;
+    }
+
+    if (typeof navigator.share === "function") {
+      try {
+        if (typeof navigator.canShare !== "function" || navigator.canShare(shareData)) {
+          await navigator.share(shareData);
+          showNotice("已打开系统分享面板");
+          return;
+        }
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") return;
+      }
+    }
+
+    const copied = await copyShareText(shareText);
+    showNotice(copied ? "标题和原链接已复制" : "浏览器暂不支持分享，请手动复制原链接");
+  };
+
+  return (
+    <div className="favorite-share-control">
+      <button
+        type="button"
+        className="favorite-share"
+        onClick={share}
+        aria-label={`分享：${item.title}`}
+        title="分享原始情报链接"
+      >
+        <Share2 size={14} />
+        <span>分享</span>
+      </button>
+      {notice ? (
+        <span className="favorite-share-notice" role="status">
+          {notice}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
+function FavoriteCardActions({ item }: { item: FavoriteItem }) {
+  return (
+    <div className="favorite-card-actions">
+      <ShareFavoriteButton item={item} />
+      <button
+        type="button"
+        className="favorite-remove"
+        onClick={() => removeFavorite(item.id)}
+        aria-label={`移除收藏：${item.title}`}
+        title="移除收藏"
+      >
+        <Trash2 size={15} />
+      </button>
+    </div>
   );
 }
 
@@ -69,15 +188,7 @@ function IntelligenceFavoriteCard({ item }: { item: FavoriteItem }) {
         </div>
       </a>
 
-      <button
-        type="button"
-        className="favorite-remove favorite-intelligence-remove"
-        onClick={() => removeFavorite(item.id)}
-        aria-label={`移除收藏：${item.title}`}
-        title="移除收藏"
-      >
-        <Trash2 size={15} />
-      </button>
+      <FavoriteCardActions item={item} />
     </article>
   );
 }
@@ -179,15 +290,7 @@ export function FavoritesPage() {
                       ) : null}
                     </div>
                   </Link>
-                  <button
-                    type="button"
-                    className="favorite-remove"
-                    onClick={() => removeFavorite(item.id)}
-                    aria-label={`移除收藏：${item.title}`}
-                    title="移除收藏"
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                  <FavoriteCardActions item={item} />
                 </article>
               ),
             )}
@@ -223,7 +326,7 @@ export function FavoritesPage() {
 
         .favorite-intelligence-link {
           display: grid;
-          grid-template-columns: 74px minmax(0, 1fr) 64px;
+          grid-template-columns: 74px minmax(0, 1fr) 76px;
           gap: 19px;
           padding: 20px 4px;
         }
@@ -252,22 +355,87 @@ export function FavoritesPage() {
         }
 
         .favorite-intelligence-card .importance {
+          padding-top: 38px;
           padding-right: 4px;
         }
 
-        .favorite-intelligence-remove {
+        .favorite-card {
+          position: relative;
+          grid-template-columns: 42px minmax(0, 1fr) 108px;
+        }
+
+        .favorite-card-actions {
+          position: relative;
+          z-index: 3;
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-end;
+          gap: 6px;
+          align-self: start;
+        }
+
+        .favorite-intelligence-card > .favorite-card-actions {
           position: absolute;
+          top: 14px;
           right: 7px;
-          bottom: 16px;
-          z-index: 2;
-          width: 29px;
-          height: 29px;
-          background: color-mix(in srgb, var(--bg) 88%, transparent);
+        }
+
+        .favorite-share-control {
+          position: relative;
+        }
+
+        .favorite-share {
+          min-height: 30px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 5px;
+          padding: 5px 9px;
+          border: 1px solid color-mix(in srgb, var(--blue) 58%, var(--border));
+          background: color-mix(in srgb, var(--blue) 8%, var(--surface));
+          color: var(--blue);
+          cursor: pointer;
+          font: 500 10px/1 Inter, "Noto Sans SC", sans-serif;
+          white-space: nowrap;
+        }
+
+        .favorite-share:hover {
+          border-color: var(--blue);
+          background: color-mix(in srgb, var(--blue) 14%, var(--surface));
+          color: var(--text);
+        }
+
+        .favorite-share:focus-visible {
+          outline: 1px solid var(--blue);
+          outline-offset: 2px;
+        }
+
+        .favorite-share-notice {
+          position: absolute;
+          top: 36px;
+          right: 0;
+          width: max-content;
+          max-width: min(290px, 72vw);
+          padding: 8px 10px;
+          border: 1px solid var(--border);
+          background: var(--surface-2);
+          box-shadow: var(--shadow);
+          color: var(--text);
+          font-size: 10px;
+          line-height: 1.55;
+          white-space: normal;
+          pointer-events: none;
+        }
+
+        .favorite-card-actions .favorite-remove {
+          flex: 0 0 auto;
+          width: 30px;
+          height: 30px;
         }
 
         @media (max-width: 720px) {
           .favorite-intelligence-link {
-            grid-template-columns: 54px minmax(0, 1fr) 46px;
+            grid-template-columns: 54px minmax(0, 1fr) 54px;
             gap: 12px;
           }
 
@@ -277,6 +445,20 @@ export function FavoritesPage() {
 
           .favorite-intelligence-card .event-main h3 {
             font-size: 15px;
+          }
+
+          .favorite-card {
+            grid-template-columns: 34px minmax(0, 1fr) 74px;
+          }
+
+          .favorite-share {
+            width: 30px;
+            min-width: 30px;
+            padding: 5px;
+          }
+
+          .favorite-share span {
+            display: none;
           }
         }
       `}</style>
