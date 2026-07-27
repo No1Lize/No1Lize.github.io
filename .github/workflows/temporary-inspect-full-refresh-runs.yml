@@ -1,6 +1,6 @@
 name: Temporary inspect full refresh runs
 
-# Run the complete Python suite against the direct-source regression fix branch.
+# Locate the final production refresh after direct-source regression tests were merged.
 on:
   pull_request:
     paths:
@@ -8,31 +8,27 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
-  validate-regressions:
+  inspect-final-refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: fix/update-direct-source-regressions-20260728
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Run complete Python test suite
-        id: tests
-        continue-on-error: true
-        shell: bash
+      - name: Collect refresh queue
         run: |
-          set -o pipefail
-          python -m unittest discover -s tests -p "test_*.py" 2>&1 | tee full-python-tests.log
+          set -euo pipefail
+          gh run list \
+            --workflow scheduled-sync.yml \
+            --limit 10 \
+            --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,displayTitle \
+            > refresh-queue.json
+          cat refresh-queue.json
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: direct-source-full-python-tests
-          path: full-python-tests.log
+          name: final-refresh-queue
+          path: refresh-queue.json
           if-no-files-found: error
-      - name: Enforce test result
-        if: always()
-        run: test "${{ steps.tests.outcome }}" = "success"
