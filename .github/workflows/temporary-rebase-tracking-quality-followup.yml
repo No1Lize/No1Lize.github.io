@@ -1,0 +1,144 @@
+name: Temporary rebase tracking quality follow-up
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-rebase-tracking-quality-followup.yml"
+      - ".github/temporary-rebase-tracking-quality-trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Create clean fix branch from latest main
+        run: git switch -C fix/tracking-discovery-quality-followup-clean-20260727
+      - name: Patch quality gates and clean current noise
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          people_path = Path("tools/enrich_tracking_people_from_sample_companies.py")
+          text = people_path.read_text(encoding="utf-8")
+
+          old_key = '''def person_name_key(value: Any) -> str:\n    text = re.sub(r"@\\S+", "", clean_text(value, 120)).strip()\n    return normalized_key(text)\n'''
+          new_key = '''PERSON_NAME_SUFFIX_RE = re.compile(\n    r"(?:博士后?|博士後|教授|院士|先生|女士|老师|老師)$",\n    re.IGNORECASE,\n)\n\n\ndef normalize_person_name(value: Any) -> str:\n    text = re.sub(r"@\\S+", "", clean_text(value, 120)).strip()\n    previous = None\n    while text and text != previous:\n        previous = text\n        text = PERSON_NAME_SUFFIX_RE.sub("", text).strip()\n    return text\n\n\ndef person_name_key(value: Any) -> str:\n    return normalized_key(normalize_person_name(value))\n'''
+          if text.count(old_key) != 1:
+              raise SystemExit("unexpected person_name_key block")
+          text = text.replace(old_key, new_key, 1)
+
+          old_noise = '''    r"关注|作为|参加|出席|共同|主题演讲|演讲|负责|表示|介绍|宣布|致辞|担任|"\n    r"现任|曾任|来自|团队|公司|集团|部门|供应链|业务发展)",'''
+          new_noise = '''    r"关注|作为|参加|出席|共同|同創|同创|創業者|创业者|創始|创始|董事|主席|"\n    r"主题演讲|演讲|负责|負責|表示|介绍|介紹|宣布|致辞|致辭|担任|擔任|"\n    r"现任|現任|曾任|来自|來自|团队|團隊|公司|集团|集團|部门|部門|供应链|供應鏈|业务发展|業務發展)",'''
+          if text.count(old_noise) != 1:
+              raise SystemExit("unexpected person noise block")
+          text = text.replace(old_noise, new_noise, 1)
+          text = text.replace(
+              '    name = clean_text(value, 100)\n    key = person_name_key(name)\n',
+              '    name = normalize_person_name(value)\n    key = person_name_key(name)\n',
+              1,
+          )
+          text = text.replace(
+              '        name = clean_text(row.get("name"), 100)\n        role = clean_text(row.get("role"), 100)\n',
+              '        name = normalize_person_name(row.get("name"))\n        role = clean_text(row.get("role"), 100)\n',
+              1,
+          )
+          people_path.write_text(text, encoding="utf-8")
+
+          expander_path = Path("tools/expand_tracking_entities.py")
+          text = expander_path.read_text(encoding="utf-8")
+          old_short = '''    if cjk == 0 and alnum < 2:\n        return ""\n    return raw\n'''
+          new_short = '''    if cjk == 0 and alnum < 2:\n        return ""\n    # Short title-cased fragments such as “Don” are typically clipped words\n    # from headlines. Keep established all-caps technical acronyms such as RAG.\n    if re.fullmatch(r"[A-Za-z]{1,3}", raw) and not raw.isupper():\n        return ""\n    return raw\n'''
+          if text.count(old_short) != 1:
+              raise SystemExit("unexpected keyword validation block")
+          expander_path.write_text(text.replace(old_short, new_short, 1), encoding="utf-8")
+
+          config_path = Path("config/user_tracking.json")
+          ledger_path = Path("config/tracking_auto_discovery.json")
+          config = json.loads(config_path.read_text(encoding="utf-8"))
+          ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+          removals = {
+              ("ai", "keywords", "Don"),
+              ("robotics", "people", "楼天城博士"),
+              ("semiconductor", "people", "同創業者兼"),
+          }
+          track_map = {str(track.get("slug")): track for track in config.get("tracks", [])}
+          for track_slug, kind, value in removals:
+              track = track_map.get(track_slug)
+              if track:
+                  track[kind] = [item for item in track.get(kind, []) if str(item) != value]
+
+          bad_people = {"楼天城博士", "同創業者兼"}
+          config["sources"] = [
+              source for source in config.get("sources", [])
+              if not any(
+                  bad in str(source.get("name") or "")
+                  or bad in {str(item) for item in source.get("keywords", [])}
+                  for bad in bad_people
+              )
+          ]
+
+          removal_keys = {(track, kind, value.casefold()) for track, kind, value in removals}
+          ledger["added"] = [
+              row for row in ledger.get("added", [])
+              if (
+                  str(row.get("track")),
+                  str(row.get("kind")),
+                  str(row.get("value") or "").casefold(),
+              ) not in removal_keys
+          ]
+          existing_removed = {
+              (
+                  str(row.get("track")),
+                  str(row.get("kind")),
+                  str(row.get("value") or "").casefold(),
+              )
+              for row in ledger.get("removed", [])
+          }
+          stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
+          for track_slug, kind, value in sorted(removals):
+              key = (track_slug, kind, value.casefold())
+              if key not in existing_removed:
+                  ledger.setdefault("removed", []).append({
+                      "track": track_slug,
+                      "kind": kind,
+                      "value": value,
+                      "removedAt": stamp,
+                  })
+          ledger["updatedAt"] = stamp
+          config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+          Path("tests/test_tracking_discovery_quality_followup.py").write_text('''import unittest\n\nfrom tools import expand_tracking_entities as expander\nfrom tools import enrich_tracking_people_from_sample_companies as people\n\n\nclass TrackingDiscoveryQualityFollowupTests(unittest.TestCase):\n    def test_short_mixed_case_headline_fragment_is_rejected(self):\n        self.assertEqual(expander.validate_keyword("Don"), "")\n        self.assertEqual(expander.validate_keyword("RAG"), "RAG")\n\n    def test_person_titles_are_canonicalized_for_deduplication(self):\n        self.assertEqual(people.person_name_key("楼天城博士"), people.person_name_key("楼天城"))\n\n    def test_truncated_role_fragment_is_not_a_person(self):\n        self.assertFalse(people.is_likely_person_name("同創業者兼"))\n\n    def test_core_team_normalizes_titles_and_rejects_role_fragments(self):\n        profile = {"team": [\n            {"name": "楼天城博士", "role": "联合创始人兼 CEO"},\n            {"name": "同創業者兼", "role": "联合创始人"},\n            {"name": "Chris Urmson", "role": "CEO"},\n        ]}\n        names = [item.name for item in people.choose_core_team(profile, "Example")]\n        self.assertEqual(names, ["楼天城", "Chris Urmson"])\n\n\nif __name__ == "__main__":\n    unittest.main()\n''', encoding="utf-8")
+          PY
+          git rm -f .github/workflows/temporary-prepare-tracking-quality-followup.yml
+      - name: Validate and publish clean branch
+        run: |
+          python -m unittest tests.test_tracking_discovery_quality_followup
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tools/enrich_tracking_people_from_sample_companies.py \
+            tools/expand_tracking_entities.py \
+            config/user_tracking.json \
+            config/tracking_auto_discovery.json \
+            tests/test_tracking_discovery_quality_followup.py \
+            .github/workflows/temporary-prepare-tracking-quality-followup.yml
+          git commit -m "fix: reject residual tracking discovery noise"
+          git fetch origin main
+          git rebase -X theirs origin/main
+          python -m unittest tests.test_tracking_discovery_quality_followup
+          git push --force origin HEAD:fix/tracking-discovery-quality-followup-clean-20260727
