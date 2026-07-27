@@ -21,7 +21,10 @@ function activeTrackName(): string {
 
 export function TrackingPeopleScopeEnhancer() {
   useEffect(() => {
+    let frame = 0;
+
     const applyHelpText = () => {
+      frame = 0;
       const investmentTrack = activeTrackName() === "风险投资";
       const peopleHeading = Array.from(document.querySelectorAll("h3")).find(
         (node) => node.textContent?.trim() === "关键人物 / 关键账号",
@@ -37,7 +40,12 @@ export function TrackingPeopleScopeEnhancer() {
         return text === "样本公司" || text === "样本机构";
       });
       if (!(sampleHeading instanceof HTMLElement)) return;
-      sampleHeading.textContent = investmentTrack ? "样本机构" : "样本公司";
+
+      const desiredHeading = investmentTrack ? "样本机构" : "样本公司";
+      if (sampleHeading.textContent?.trim() !== desiredHeading) {
+        sampleHeading.textContent = desiredHeading;
+      }
+
       const sampleHelp = sampleHeading.nextElementSibling;
       if (sampleHelp instanceof HTMLElement) {
         const text = investmentTrack
@@ -45,23 +53,35 @@ export function TrackingPeopleScopeEnhancer() {
           : "会进入该赛道的公司与事件搜索词。";
         if (sampleHelp.textContent?.trim() !== text) sampleHelp.textContent = text;
       }
+
       const editor = sampleHeading.parentElement;
       const input = editor?.querySelector("input");
       if (input instanceof HTMLInputElement) {
-        input.placeholder = investmentTrack
+        const placeholder = investmentTrack
           ? "来自投资机构频道自动同步，也可手动补充机构名称"
           : "例如：OpenAI、宇树科技";
+        if (input.placeholder !== placeholder) input.placeholder = placeholder;
       }
     };
 
+    const scheduleApply = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(applyHelpText);
+    };
+
     applyHelpText();
-    const observer = new MutationObserver(applyHelpText);
+    const observer = new MutationObserver(scheduleApply);
     observer.observe(document.body, {
       childList: true,
       subtree: true,
       characterData: true,
+      attributes: true,
+      attributeFilter: ["data-active"],
     });
-    return () => observer.disconnect();
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, []);
 
   return null;
