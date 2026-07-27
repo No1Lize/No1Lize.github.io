@@ -1,5 +1,6 @@
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import styles from "@/components/homepage-columns.module.css";
 import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "@/lib/homepage-channel-update-config";
 import {
   getChannelUpdateDirectory,
@@ -63,7 +64,7 @@ export function HomepageChannelUpdates() {
   const updates = getLatestChannelUpdates();
 
   return (
-    <aside className="side-column">
+    <aside className={`side-column ${styles.column}`}>
       <div className="section-heading compact">
         <div>
           <p className="section-index">03 / CHANNEL UPDATES</p>
@@ -77,45 +78,39 @@ export function HomepageChannelUpdates() {
         {HOMEPAGE_CHANNEL_UPDATE_LIMIT} 条。
       </p>
 
-      <div className="heat-list" aria-label="频道最新更新目录">
+      <div className={styles.feedList} aria-label="频道最新更新目录">
         {updates.map((item, index) => (
           <a
-            className="heat-row"
+            className={styles.feedRow}
             href={item.href}
             key={`${item.id}-${item.href}`}
             target="_blank"
             rel="noreferrer"
           >
-            <span className="heat-rank">{String(index + 1).padStart(2, "0")}</span>
-            <div>
-              <strong
-                title={item.title}
-                style={{
-                  display: "-webkit-box",
-                  WebkitBoxOrient: "vertical",
-                  WebkitLineClamp: 2,
-                  overflow: "hidden",
-                }}
-              >
+            <span className={styles.feedIndex}>{String(index + 1).padStart(2, "0")}</span>
+            <span className={styles.feedBody}>
+              <strong className={styles.feedTitle} title={item.title}>
                 {item.title}
               </strong>
-              <span title={item.context}>
-                {item.channels.map((channel) => `${channel.number} ${channel.label}`).join(" / ")}
-                {item.context ? ` · ${item.context}` : ""}
-              </span>
-            </div>
-            <div>
+              <small className={styles.feedContext} title={item.context}>
+                <b className={styles.feedTag}>
+                  {item.channels.map((channel) => `${channel.number} ${channel.label}`).join(" / ")}
+                </b>
+                {item.context || "频道内容更新"}
+              </small>
+            </span>
+            <span className={styles.feedAside}>
               <span>{item.date}</span>
               <span>{item.label}</span>
-            </div>
-            <b aria-hidden="true">
+            </span>
+            <b className={styles.feedArrow} aria-hidden="true">
               <ArrowUpRight size={14} />
             </b>
           </a>
         ))}
       </div>
 
-      <nav aria-label="聚合频道入口">
+      <nav className={styles.channelNav} aria-label="聚合频道入口">
         {homepageChannels.map((channel) => (
           <Link
             className="text-link"
