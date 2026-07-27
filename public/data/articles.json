@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-27T00:22:29+00:00",
+  "generatedAt": "2026-07-27T03:13:05+00:00",
   "articleCount": 1021,
   "articles": [
     {
@@ -38091,7 +38091,7 @@
     "retainedPreviousSourceCount": 37
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-27T00:22:29+00:00",
+    "generatedAt": "2026-07-27T03:13:05+00:00",
     "configuredSources": 34,
     "successfulSources": 11,
     "acceptedArticles": 40,
@@ -38100,6 +38100,10 @@
     "removedProxyRecords": 0,
     "retainedSources": 23,
     "mentionedCompanyLinks": 51,
-    "mentionedPeopleLinks": 96
+    "mentionedPeopleLinks": 96,
+    "qualityCleanedAt": "2026-07-27T03:13:05+00:00",
+    "qualityRemovedCrossSectorDuplicates": 0,
+    "qualityRemovedNonPeople": 0,
+    "nonWechatArticlesPreserved": 981
   }
 }
