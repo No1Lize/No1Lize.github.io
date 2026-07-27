@@ -7,6 +7,7 @@ from tools.enrich_tracking_people_from_sample_companies import (
     choose_core_team,
     empty_ledger,
     enrich_config,
+    is_likely_person_name,
     profile_index,
 )
 
@@ -65,6 +66,19 @@ class SampleCompanyPeopleDiscoveryTests(unittest.TestCase):
         candidates = choose_core_team(profile, "Example Robotics")
         self.assertEqual([item.name for item in candidates], ["Alice Chen", "Carol Wu", "Bob Li"])
         self.assertTrue(all(item.source_url == "https://example.com/team" for item in candidates))
+
+    def test_rejects_role_and_sentence_fragments_as_people(self):
+        for value in (
+            "Company Development",
+            "Business Development",
+            "Autonomous Vehicles Senior Vice",
+            "作为自动驾",
+            "主题演讲全",
+            "杨永旺共同",
+        ):
+            self.assertFalse(is_likely_person_name(value), value)
+        self.assertTrue(is_likely_person_name("Alice Chen"))
+        self.assertTrue(is_likely_person_name("彭志辉"))
 
     def test_local_social_accounts_add_x_label_and_person_sources(self):
         people = {
