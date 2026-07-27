@@ -4,6 +4,8 @@ import { useEffect } from "react";
 
 const TOKEN_SESSION_KEY = "no1lize:tracking-admin-token";
 const GITHUB_REQUEST_TIMEOUT_MS = 15_000;
+const SECURITY_COPY =
+  "Token 仅保存在当前标签页的 sessionStorage 中；关闭标签页或点击退出后清除。GitHub API 超过 15 秒无响应时会自动终止请求并恢复登录按钮。";
 
 function nativeSetInputValue(input: HTMLInputElement, value: string) {
   const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")?.set;
@@ -73,9 +75,6 @@ export function TrackingAdminSessionGuard() {
 
       const saved = window.sessionStorage.getItem(TOKEN_SESSION_KEY) ?? "";
       if (saved && !input.value) {
-        // Restore the value into React's controlled input, but do not click the
-        // login button automatically. Manual login avoids a race between the
-        // synthetic input event and the component's token state update.
         nativeSetInputValue(input, saved);
       }
 
@@ -85,10 +84,19 @@ export function TrackingAdminSessionGuard() {
         paragraph.textContent?.includes("Token 仅存在当前页面内存中") ||
         paragraph.textContent?.includes("Token 仅保存在当前标签页"),
       );
-      if (security) {
-        security.textContent =
-          "Token 仅保存在当前标签页的 sessionStorage 中；关闭标签页或点击退出后清除。GitHub API 超过 15 秒无响应时会自动终止请求并恢复登录按钮。";
+
+      // Do not assign textContent when the text is already correct. Rewriting it
+      // creates a new DOM mutation, which previously retriggered this observer
+      // indefinitely after the authenticated admin panel mounted.
+      if (security && security.textContent?.trim() !== SECURITY_COPY) {
+        security.textContent = SECURITY_COPY;
       }
+    };
+
+    let syncFrame = 0;
+    const scheduleSync = () => {
+      window.cancelAnimationFrame(syncFrame);
+      syncFrame = window.requestAnimationFrame(sync);
     };
 
     const onInput = (event: Event) => {
@@ -115,7 +123,7 @@ export function TrackingAdminSessionGuard() {
       }
     };
 
-    const observer = new MutationObserver(sync);
+    const observer = new MutationObserver(scheduleSync);
     observer.observe(document.body, { childList: true, subtree: true });
     document.addEventListener("input", onInput, true);
     document.addEventListener("click", onClick, true);
@@ -123,6 +131,7 @@ export function TrackingAdminSessionGuard() {
 
     return () => {
       if (window.fetch === guardedFetch) window.fetch = originalFetch;
+      window.cancelAnimationFrame(syncFrame);
       observer.disconnect();
       document.removeEventListener("input", onInput, true);
       document.removeEventListener("click", onClick, true);
