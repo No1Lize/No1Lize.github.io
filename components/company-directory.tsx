@@ -5,12 +5,11 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { companies } from "@/lib/catalog-data";
 
-export function CompanyDirectory() {
+export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState("全部");
   const [sector, setSector] = useState("全部");
   const [page, setPage] = useState(1);
-  const pageSize = 12;
   const sectors = ["全部", ...Array.from(new Set(companies.map((item) => item.sector)))];
   const filtered = useMemo(
     () => companies.filter((item) =>
