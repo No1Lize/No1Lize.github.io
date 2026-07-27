@@ -19,6 +19,7 @@ TRIM_PATTERN = re.compile(r"^[\s._:：\-—–]+|[\s._:：\-—–]+$")
 NORMALIZE_PATTERN = re.compile(r"[\s._:：\-—–/／|｜,，;；、&＆+＋()（）\[\]【】]+")
 TRACK_SOURCE_SUFFIXES = ("bing", "google-cn", "google-us", "toutiao")
 TOUTIAO_HOST = "toutiao.com"
+TOUTIAO_FEED_URL = "https://www.toutiao.com/api/pc/feed/"
 
 
 def clean(value: Any, limit: int = 160) -> str:
@@ -119,31 +120,39 @@ def expected_source_ids(slug: str) -> list[str]:
     return [f"user-track-{slug}-{suffix}" for suffix in TRACK_SOURCE_SUFFIXES]
 
 
+def _toutiao_categories(sector: str) -> list[str]:
+    normalized = clean(sector).casefold()
+    if any(term in normalized for term in ("生物", "医疗", "health", "biotech")):
+        return ["news_health", "news_tech", "__all__"]
+    if any(term in normalized for term in ("新能源", "材料", "web3", "区块链")):
+        return ["news_finance", "news_tech", "__all__"]
+    return ["news_tech", "__all__"]
+
+
 def toutiao_source_spec(
     slug: str,
     sector: str,
-    query_url: str,
+    feed_url: str,
     terms: list[str],
     max_items: int = 8,
 ) -> dict[str, Any]:
-    """Build the per-track 今日头条 discovery source.
+    """Build a per-track source backed by Toutiao's public PC feed.
 
-    Discovery goes through a public search index restricted to
-    ``site:toutiao.com``; only links on the Toutiao domain whitelist are
-    accepted, and the crawler keeps title, short summary, date and the
-    original link only — the same boundary as every other media source.
+    Only short feed metadata is retained, and every record points to an original
+    ``toutiao.com/group/<item_id>/`` article URL.
     """
 
     return {
         "id": f"user-track-{slug}-toutiao",
         "name": f"{sector} · 今日头条",
-        "url": query_url,
-        "adapter": "rss",
+        "url": feed_url,
+        "adapter": "toutiao_feed",
         "platform": "今日头条",
         "sourceLevel": "媒体报道",
         "region": "中国",
         "sector": sector,
         "maxItems": max_items,
+        "categories": _toutiao_categories(sector),
         "keywords": terms,
         "strictTitleKeywords": False,
         "allowedHosts": [TOUTIAO_HOST],
@@ -225,10 +234,7 @@ def generated_track_sources(
                 toutiao_source_spec(
                     slug,
                     track["name"],
-                    # Google News RSS honors site: restriction; Bing RSS was
-                    # observed returning off-site results that the toutiao.com
-                    # host whitelist then filtered down to zero items.
-                    _google_news_url(f"site:{TOUTIAO_HOST} {query}", chinese=True),
+                    TOUTIAO_FEED_URL,
                     terms,
                 ),
             ]
