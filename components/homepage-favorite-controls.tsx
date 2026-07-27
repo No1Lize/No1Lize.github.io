@@ -16,6 +16,7 @@ import {
 type FavoriteMount = {
   element: HTMLElement;
   item: FavoriteInput;
+  key: string;
 };
 
 type ChannelMeta = {
@@ -214,12 +215,13 @@ export function HomepageFavoriteControls() {
       placement: "event" | "feed",
     ) => {
       const element = document.createElement("span");
+      const key = `${placement}:${created.length}:${item.id}`;
       element.dataset.homepageFavoriteMount = "true";
       element.className = `${styles.mount} ${placement === "event" ? styles.eventMount : styles.feedMount}`;
       if (placement === "event") target.prepend(element);
       else target.appendChild(element);
       created.push(element);
-      return { element, item };
+      return { element, item, key };
     };
 
     const scan = () => {
@@ -269,8 +271,8 @@ export function HomepageFavoriteControls() {
 
   return (
     <>
-      {mounts.map(({ element, item }) =>
-        createPortal(<InlineFavoriteButton item={item} />, element, item.id),
+      {mounts.map(({ element, item, key }) =>
+        createPortal(<InlineFavoriteButton item={item} />, element, key),
       )}
     </>
   );
