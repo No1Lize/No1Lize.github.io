@@ -70,11 +70,11 @@ python3 tools/crawl_articles.py --validate-only
 
 ## GitHub Pages
 
-仓库必须命名为 `No1Lize.github.io`，并在 **Settings → Pages → Source** 中选择 **GitHub Actions**。`.github/workflows/pages.yml` 构建并发布根路径站点；构建失败不会替换上一版。
+仓库必须命名为 `VCIQ.github.io`，并在 **Settings → Pages → Source** 中选择 **GitHub Actions**。`.github/workflows/pages.yml` 构建并发布根路径站点；构建失败不会替换上一版。
 
 `.github/workflows/scheduled-sync.yml` 每两小时执行一次，也支持手动选择来源。抓取逻辑或来源配置更新推送到 `main` 时会自动执行一次完整刷新。数据变化由 `github-actions[bot]` 提交，并触发 Pages 再发布。
 
-SEC 建议在 **Settings → Secrets and variables → Actions → Variables** 中设置 `SEC_USER_AGENT`，例如 `No1Lize research contact@example.com`。它不是密钥；未设置时脚本使用仓库主页作为联系信息。
+SEC 建议在 **Settings → Secrets and variables → Actions → Variables** 中设置 `SEC_USER_AGENT`，例如 `VCIQ research contact@example.com`。它不是密钥；未设置时脚本使用仓库主页作为联系信息。
 
 ## 数据与合规边界
 
