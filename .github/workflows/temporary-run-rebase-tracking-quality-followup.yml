@@ -1,0 +1,60 @@
+name: Temporary run rebased tracking quality follow-up
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-run-rebase-tracking-quality-followup.yml"
+      - ".github/workflows/temporary-rebase-tracking-quality-followup.yml"
+      - ".github/temporary-rebase-tracking-quality-trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Extract validated patch and reset to latest main
+        run: |
+          cp .github/workflows/temporary-rebase-tracking-quality-followup.yml /tmp/source-workflow.yml
+          python - <<'PY'
+          from pathlib import Path
+
+          lines = Path('/tmp/source-workflow.yml').read_text(encoding='utf-8').splitlines()
+          start = next(i for i, line in enumerate(lines) if line.strip() == "python - <<'PY'") + 1
+          end = next(i for i in range(start, len(lines)) if lines[i].strip() == 'PY')
+          script = []
+          for line in lines[start:end]:
+              script.append(line[10:] if line.startswith('          ') else line)
+          Path('/tmp/apply_tracking_quality_patch.py').write_text('\n'.join(script) + '\n', encoding='utf-8')
+          PY
+          git fetch origin main
+          git reset --hard origin/main
+          git switch -C fix/tracking-discovery-quality-followup-clean-20260727
+      - name: Apply, validate, rebase and publish
+        run: |
+          python /tmp/apply_tracking_quality_patch.py
+          git rm -f .github/workflows/temporary-prepare-tracking-quality-followup.yml
+          python -m unittest tests.test_tracking_discovery_quality_followup
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: reject residual tracking discovery noise"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase -X theirs origin/main
+            python -m unittest tests.test_tracking_discovery_quality_followup
+            if git push --force origin HEAD:fix/tracking-discovery-quality-followup-clean-20260727; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
