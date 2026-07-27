@@ -30,8 +30,8 @@ TRACKING_PATH = ROOT / "config" / "user_tracking.json"
 CONFIG_PATH = ROOT / "config" / "listed_company_disclosure_sources.json"
 OUTPUT_PATH = ROOT / "public" / "data" / "listed_company_disclosures.json"
 USER_AGENT = (
-    "No1LizeResearchBot/1.0 contact=No1Lize@users.noreply.github.com "
-    "(+https://github.com/No1Lize/No1Lize.github.io)"
+    "VCIQResearchBot/1.0 contact=VCIQ@users.noreply.github.com "
+    "(+https://github.com/VCIQ/VCIQ.github.io)"
 )
 SUPPORTED_MARKETS = {"A股", "港股"}
 CAPITAL_TERMS_ZH = (
