@@ -8,10 +8,12 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import professional_media_progress
     from . import professional_media_sources
     from . import search_index_feed_redirects
+    from . import toutiao_public_feed
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
     from . import wechat_original_redirect_bridge
+    from . import wechat_public_aggregator
     from . import wechat_public_sources
     from . import wechat_registry_bridge
     from . import wechat_sogou_bridge
@@ -24,10 +26,12 @@ except ImportError:  # Executed directly with python tools/...
     import professional_media_progress
     import professional_media_sources
     import search_index_feed_redirects
+    import toutiao_public_feed
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
     import wechat_original_redirect_bridge
+    import wechat_public_aggregator
     import wechat_public_sources
     import wechat_registry_bridge
     import wechat_sogou_bridge
@@ -126,7 +130,9 @@ def main() -> int:
     )
     wechat_sogou_redirect_compat.install(wechat_sogou_index)
     wechat_sogou_link_compat.install(wechat_sogou_index)
+    wechat_public_aggregator.install(wechat_sogou_index)
     wechat_sogou_bridge.install(wechat_public_sources)
+    toutiao_public_feed.install(base.tracking)
     _install_professional_media()
     _install_snapshot_quality()
     return base.main()
