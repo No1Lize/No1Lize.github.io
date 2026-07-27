@@ -236,6 +236,10 @@ def validate_keyword(value: str) -> str:
         return ""
     if cjk == 0 and alnum < 2:
         return ""
+    # Short title-cased fragments such as “Don” are typically clipped words
+    # from headlines. Keep established all-caps technical acronyms such as RAG.
+    if re.fullmatch(r"[A-Za-z]{1,3}", raw) and not raw.isupper():
+        return ""
     return raw
 
 

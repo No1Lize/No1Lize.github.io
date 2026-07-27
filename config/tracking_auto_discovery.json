@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-27T08:53:50+00:00",
+  "updatedAt": "2026-07-27T09:01:37+00:00",
   "tracks": {
     "ai": {
       "lastExpandedAt": "2026-07-27T08:52:26+00:00"
@@ -929,28 +929,8 @@
     {
       "track": "robotics",
       "kind": "people",
-      "value": "楼天城博士",
-      "addedAt": "2026-07-27T08:22:56+00:00",
-      "evidence": [
-        "sample-company-core-team",
-        "verified-company-profile"
-      ]
-    },
-    {
-      "track": "robotics",
-      "kind": "people",
       "value": "Chris Urmson",
       "addedAt": "2026-07-27T08:22:56+00:00",
-      "evidence": [
-        "sample-company-core-team",
-        "verified-company-profile"
-      ]
-    },
-    {
-      "track": "semiconductor",
-      "kind": "people",
-      "value": "同創業者兼",
-      "addedAt": "2026-07-27T08:22:59+00:00",
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
@@ -974,16 +954,6 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
-    },
-    {
-      "track": "ai",
-      "kind": "keywords",
-      "value": "Don",
-      "addedAt": "2026-07-27T08:27:35+00:00",
-      "evidence": [
-        "corpus-term",
-        "news-confirmed"
       ]
     },
     {
@@ -1092,6 +1062,24 @@
       "kind": "keywords",
       "value": "DeepSeek API Docs",
       "removedAt": "2026-07-27T00:07:54+00:00"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Don",
+      "removedAt": "2026-07-27T09:01:37+00:00"
+    },
+    {
+      "track": "robotics",
+      "kind": "people",
+      "value": "楼天城博士",
+      "removedAt": "2026-07-27T09:01:37+00:00"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "people",
+      "value": "同創業者兼",
+      "removedAt": "2026-07-27T09:01:37+00:00"
     }
   ]
 }
