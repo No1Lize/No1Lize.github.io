@@ -10,6 +10,7 @@ allowlist, and then delegates article construction to the standard crawler.
 from __future__ import annotations
 
 import base64
+import html
 import json
 import re
 import threading
@@ -23,8 +24,8 @@ GOOGLE_NEWS_HOST = "news.google.com"
 GOOGLE_BATCH_ENDPOINT = (
     "https://news.google.com/_/DotsSplashUi/data/batchexecute?rpcids=Fbv4je"
 )
-MAX_RESOLUTIONS_PER_FEED = 32
-MIN_REQUEST_INTERVAL_SECONDS = 0.12
+MAX_RESOLUTIONS_PER_FEED = 16
+MIN_REQUEST_INTERVAL_SECONDS = 0.18
 _RESPONSE_LIMIT = 1_000_000
 _CACHE: dict[str, str] = {}
 _LOCK = threading.Lock()
@@ -37,9 +38,7 @@ def _host_allowed(url: str, allowed_hosts: Sequence[str]) -> bool:
     )
     return bool(hostname) and any(
         hostname == str(host).casefold().removeprefix("www.")
-        or hostname.endswith(
-            f".{str(host).casefold().removeprefix('www.')}"
-        )
+        or hostname.endswith(f".{str(host).casefold().removeprefix('www.')}")
         for host in allowed_hosts
         if str(host).strip()
     )
@@ -69,9 +68,62 @@ def _legacy_decoded_url(article_id: str) -> str:
     return match.group(0).decode("utf-8", errors="ignore")
 
 
-def _batch_request(article_id: str, user_agent: str, timeout: int = 14) -> str:
+def _rate_wait() -> None:
     global _NEXT_REQUEST_AT
-    request_payload = (
+    with _LOCK:
+        wait = _NEXT_REQUEST_AT - time.monotonic()
+        if wait > 0:
+            time.sleep(wait)
+        _NEXT_REQUEST_AT = time.monotonic() + MIN_REQUEST_INTERVAL_SECONDS
+
+
+def _request_text(
+    url: str,
+    user_agent: str,
+    *,
+    data: bytes | None = None,
+    timeout: int = 14,
+) -> str:
+    _rate_wait()
+    request = Request(
+        url,
+        data=data,
+        headers={
+            "User-Agent": user_agent,
+            "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
+            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.6",
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            "Referer": "https://news.google.com/",
+        },
+        method="POST" if data is not None else "GET",
+    )
+    with urlopen(request, timeout=timeout) as response:
+        payload = response.read(_RESPONSE_LIMIT + 1)
+        if len(payload) > _RESPONSE_LIMIT:
+            return ""
+        charset = response.headers.get_content_charset() or "utf-8"
+        return payload.decode(charset, errors="replace")
+
+
+def _decoding_parameters(
+    article_id: str,
+    user_agent: str,
+) -> tuple[str, str]:
+    """Read Google's current public signature and timestamp parameters."""
+
+    page = _request_text(
+        f"https://news.google.com/articles/{article_id}",
+        user_agent,
+    )
+    signature = re.search(r'data-n-a-sg=["\']([^"\']+)', page)
+    timestamp = re.search(r'data-n-a-ts=["\']([^"\']+)', page)
+    if not signature or not timestamp:
+        return "", ""
+    return html.unescape(signature.group(1)), html.unescape(timestamp.group(1))
+
+
+def _unsigned_request_payload(article_id: str) -> str:
+    return (
         '[[["Fbv4je","[\\"garturlreq\\",[[\\"en-US\\",\\"US\\",'
         '[\\"FINANCE_TOP_INDICES\\",\\"WEB_TEST_1_0_0\\"],null,null,1,1,'
         '\\"US:en\\",null,180,null,null,null,null,null,0,null,null,'
@@ -80,35 +132,113 @@ def _batch_request(article_id: str, user_agent: str, timeout: int = 14) -> str:
         + article_id
         + '\\"]",null,"generic"]]]'
     )
-    with _LOCK:
-        wait = _NEXT_REQUEST_AT - time.monotonic()
-        if wait > 0:
-            time.sleep(wait)
-        _NEXT_REQUEST_AT = time.monotonic() + MIN_REQUEST_INTERVAL_SECONDS
-    request = Request(
-        GOOGLE_BATCH_ENDPOINT,
-        data=urlencode({"f.req": request_payload}).encode("utf-8"),
-        headers={
-            "User-Agent": user_agent,
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            "Accept": "*/*",
-            "Referer": "https://news.google.com/",
-        },
-        method="POST",
+
+
+def _signed_request_payload(article_id: str, timestamp: str, signature: str) -> str:
+    request_body = [
+        "garturlreq",
+        [
+            [
+                "X",
+                "X",
+                ["X", "X"],
+                None,
+                None,
+                1,
+                1,
+                "US:en",
+                None,
+                1,
+                None,
+                None,
+                None,
+                None,
+                None,
+                0,
+                1,
+            ],
+            "X",
+            "X",
+            1,
+            [1, 1, 1],
+            1,
+            1,
+            None,
+            0,
+            0,
+            None,
+            0,
+        ],
+        article_id,
+        int(timestamp),
+        signature,
+    ]
+    return json.dumps(
+        [[["Fbv4je", json.dumps(request_body, separators=(",", ":")), None, "generic"]]],
+        separators=(",", ":"),
     )
-    with urlopen(request, timeout=timeout) as response:
-        body = response.read(_RESPONSE_LIMIT + 1)
-        if len(body) > _RESPONSE_LIMIT:
-            return ""
-        text = body.decode("utf-8", errors="replace")
+
+
+def _parse_batch_response(text: str) -> str:
     marker = '[\\"garturlres\\",\\"'
-    if marker not in text:
-        return ""
-    fragment = text.split(marker, 1)[1].split('\\",', 1)[0]
+    if marker in text:
+        fragment = text.split(marker, 1)[1].split('\\",', 1)[0]
+        try:
+            return str(json.loads(f'"{fragment}"'))
+        except json.JSONDecodeError:
+            return fragment.replace("\\/", "/").replace("\\u0026", "&")
+
+    # Some responses expose the inner payload as a JSON string without the same
+    # escape depth. Parse each non-preamble line conservatively.
+    for line in reversed(text.splitlines()):
+        line = line.strip()
+        if not line.startswith("["):
+            continue
+        try:
+            rows = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        for row in rows if isinstance(rows, list) else []:
+            if not isinstance(row, list) or len(row) < 3 or row[1] != "Fbv4je":
+                continue
+            try:
+                inner = json.loads(row[2])
+            except (TypeError, json.JSONDecodeError):
+                continue
+            if isinstance(inner, list) and len(inner) > 1 and inner[0] == "garturlres":
+                return str(inner[1])
+    return ""
+
+
+def _post_batch(payload: str, user_agent: str, timeout: int = 14) -> str:
+    text = _request_text(
+        GOOGLE_BATCH_ENDPOINT,
+        user_agent,
+        data=urlencode({"f.req": payload}).encode("utf-8"),
+        timeout=timeout,
+    )
+    return _parse_batch_response(text)
+
+
+def _batch_request(article_id: str, user_agent: str, timeout: int = 14) -> str:
+    """Decode with current signed parameters, then retain the legacy fallback."""
+
     try:
-        return str(json.loads(f'"{fragment}"'))
-    except json.JSONDecodeError:
-        return fragment.replace("\\/", "/").replace("\\u0026", "&")
+        signature, timestamp = _decoding_parameters(article_id, user_agent)
+    except Exception:  # noqa: BLE001 - unsigned compatibility remains available.
+        signature, timestamp = "", ""
+    if signature and timestamp.isdigit():
+        try:
+            resolved = _post_batch(
+                _signed_request_payload(article_id, timestamp, signature),
+                user_agent,
+                timeout,
+            )
+            if resolved:
+                return resolved
+        except Exception:  # noqa: BLE001 - try the older public request shape.
+            pass
+    return _post_batch(_unsigned_request_payload(article_id), user_agent, timeout)
 
 
 def resolve_google_news_url(
@@ -152,7 +282,7 @@ def _resolved_feed_body(
     resolutions = 0
     max_candidates = min(
         MAX_RESOLUTIONS_PER_FEED,
-        max(4, int(spec.get("maxItems", 8)) * 4),
+        max(4, int(spec.get("maxItems", 8)) * 2),
     )
     for node in root.iter():
         if crawler._xml_local(node.tag) not in {"item", "entry"}:
@@ -173,6 +303,17 @@ def _resolved_feed_body(
             continue
         raw_url = str(link_node.attrib.get("href") or link_node.text or "").strip()
         if _host_allowed(raw_url, allowed_hosts):
+            continue
+        title = crawler.clean_title(crawler._xml_text(node, ("title",)))
+        summary = crawler.strip_html(
+            crawler._xml_text(node, ("description", "summary", "content"))
+        )
+        if not crawler._matches_keywords(
+            title,
+            summary,
+            spec.get("keywords", []),
+            title_only=bool(spec.get("strictTitleKeywords")),
+        ):
             continue
         if resolutions >= max_candidates:
             break
