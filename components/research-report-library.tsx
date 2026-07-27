@@ -78,18 +78,40 @@ export function ResearchReportLibrary({
 
       <div className={styles.grid}>
         {filtered.map((report) => (
-          <Link href={`/reports/pdf/${report.slug}`} className={styles.card} key={report.id}>
+          <Link
+            href={`/reports/pdf/${report.slug}`}
+            className={styles.card}
+            key={report.id}
+            data-intelligence-item="true"
+            data-intelligence-href={report.originalPdfUrl || report.sourcePageUrl}
+            data-intelligence-title={report.title}
+            data-intelligence-summary={report.summary}
+            data-intelligence-type={report.reportType}
+            data-intelligence-date={report.publishedAt}
+            data-intelligence-source={report.institution || report.sourceName}
+            data-intelligence-source-level="公开研报"
+            data-intelligence-sector={report.sector}
+            data-intelligence-company={report.companyName}
+            data-intelligence-keywords={[
+              report.reportType,
+              report.ticker,
+              report.market,
+              report.rating,
+            ].filter(Boolean).join("|")}
+            data-intelligence-channel="reports"
+            data-intelligence-channel-label="研究报告"
+          >
             <div className={styles.cardTop}>
-              <span>{report.reportType}</span>
+              <span data-intelligence-type>{report.reportType}</span>
               <small>{report.publishedAt}</small>
             </div>
-            <h3>{report.title}</h3>
-            <p>{report.summary}</p>
+            <h3 data-intelligence-title>{report.title}</h3>
+            <p data-intelligence-summary>{report.summary}</p>
             <div className={styles.meta}>
-              <span>{report.institution || report.sourceName}</span>
+              <span data-intelligence-source>{report.institution || report.sourceName}</span>
               {report.companyName && <span>{report.companyName}</span>}
               {report.ticker && <span>{report.ticker}</span>}
-              <span>{report.sector}</span>
+              <span data-intelligence-tag>{report.sector}</span>
             </div>
             <div className={styles.cardBottom}>
               <span>{formatReportFileSize(report.fileSizeBytes)}</span>
