@@ -5,9 +5,13 @@ on:
     paths:
       - tools/crawl_with_wechat_registry.py
       - tools/search_index_feed_redirects.py
+      - tools/toutiao_public_feed.py
       - tools/wechat_*.py
       - tools/validate_wechat_toutiao_live.py
+      - tools/tracking_taxonomy.py
       - tests/test_search_index_feed_redirects.py
+      - tests/test_toutiao_public_feed.py
+      - tests/test_wechat_public_aggregator.py
       - tests/test_wechat_sogou_redirect_compat.py
       - config/wechat_sources.json
       - config/wechat_public_indexes.json
@@ -34,6 +38,8 @@ jobs:
         run: |
           python -m py_compile \
             tools/search_index_feed_redirects.py \
+            tools/toutiao_public_feed.py \
+            tools/wechat_public_aggregator.py \
             tools/wechat_sogou_redirect_compat.py \
             tools/crawl_with_wechat_registry.py \
             tools/validate_wechat_toutiao_live.py
@@ -45,6 +51,8 @@ jobs:
           set -o pipefail
           python -m unittest -v \
             tests.test_search_index_feed_redirects \
+            tests.test_toutiao_public_feed \
+            tests.test_wechat_public_aggregator \
             tests.test_wechat_sogou_redirect_compat \
             2>&1 | tee focused-unit-tests.log
       - name: Require original WeChat and Toutiao articles
