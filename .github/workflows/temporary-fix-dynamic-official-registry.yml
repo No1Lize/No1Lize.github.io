@@ -1,0 +1,65 @@
+name: Temporary fix dynamic official registry
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-fix-dynamic-official-registry.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch latest main and publish clean branch
+        run: |
+          git switch -C fix/dynamic-official-company-registry-clean-20260727
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          crawler = Path("tools/crawl_official_companies.py")
+          text = crawler.read_text(encoding="utf-8")
+          expected_line = '    expected_count = int(payload.get("expectedCompanyCount", 58))\n'
+          if text.count(expected_line) != 1:
+              raise SystemExit("unexpected expected_count declaration")
+          text = text.replace(expected_line, "", 1)
+
+          fixed_checks = '''    if len(specs) != expected_count:\n        raise ValueError(\n            f"official company registry has {len(specs)} companies; "\n            f"expected exactly {expected_count}"\n        )\n    catalog = _load_catalog_companies(catalog_path)\n    if len(catalog) != expected_count:\n        raise ValueError(\n            f"company catalog has {len(catalog)} companies; expected {expected_count}"\n        )\n'''
+          dynamic_check = '''    # The catalog/registry slug-set comparison below is the canonical coverage\n    # gate. A second hard-coded count becomes stale whenever a company is added.\n    catalog = _load_catalog_companies(catalog_path)\n'''
+          if text.count(fixed_checks) != 1:
+              raise SystemExit("unexpected fixed company count block")
+          crawler.write_text(text.replace(fixed_checks, dynamic_check, 1), encoding="utf-8")
+
+          config_path = Path("config/official_company_sources.json")
+          payload = json.loads(config_path.read_text(encoding="utf-8"))
+          payload.pop("expectedCompanyCount", None)
+          config_path.write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+
+          Path("tests/test_official_company_registry_dynamic.py").write_text('''import json\nimport tempfile\nimport unittest\nfrom pathlib import Path\n\nfrom tools.crawl_official_companies import load_registry\n\n\nCATALOG_TEMPLATE = ''' + '"""' + '''export type Company = unknown;\nexport const companies: Company[] = [\n{slug:\"alpha\", name:\"Alpha\", region:\"美国\", sector:\"AI / AGI\", stage:\"成长期\", status:\"运营中\", founded:\"2020\", headquarters:\"A\", summary:\"A\", product:\"A\", source:{} as never, confidence:1},\n{slug:\"beta\", name:\"Beta\", region:\"中国\", sector:\"机器人\", stage:\"成长期\", status:\"运营中\", founded:\"2021\", headquarters:\"B\", summary:\"B\", product:\"B\", source:{} as never, confidence:1},\n];\n''' + '"""' + '''\n\n\nclass DynamicOfficialCompanyRegistryTests(unittest.TestCase):\n    def setUp(self) -> None:\n        self.tmp = tempfile.TemporaryDirectory()\n        root = Path(self.tmp.name)\n        self.catalog = root / \"catalog-data.ts\"\n        self.registry = root / \"official-company-sources.json\"\n        self.catalog.write_text(CATALOG_TEMPLATE, encoding=\"utf-8\")\n        self.rows = [\n            {\"slug\": \"alpha\", \"name\": \"Alpha\", \"region\": \"美国\", \"sector\": \"AI / AGI\", \"homepage\": \"https://alpha.example.com/\"},\n            {\"slug\": \"beta\", \"name\": \"Beta\", \"region\": \"中国\", \"sector\": \"机器人\", \"homepage\": \"https://beta.example.com/\"},\n        ]\n\n    def tearDown(self) -> None:\n        self.tmp.cleanup()\n\n    def write_registry(self, rows) -> None:\n        self.registry.write_text(\n            json.dumps({\"schemaVersion\": 1, \"defaults\": {}, \"companies\": rows}),\n            encoding=\"utf-8\",\n        )\n\n    def test_catalog_growth_needs_no_separate_expected_count(self) -> None:\n        self.write_registry(self.rows)\n        specs = load_registry(self.registry, self.catalog)\n        self.assertEqual([spec.slug for spec in specs], [\"alpha\", \"beta\"])\n\n    def test_slug_set_mismatch_still_fails(self) -> None:\n        self.write_registry(self.rows[:1])\n        with self.assertRaisesRegex(ValueError, \"missing=\\['beta'\\]\"):\n            load_registry(self.registry, self.catalog)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n''', encoding="utf-8")
+          PY
+          python -m unittest tests.test_official_company_registry_dynamic
+          python -m unittest tests.test_crawler
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tools/crawl_official_companies.py \
+            config/official_company_sources.json \
+            tests/test_official_company_registry_dynamic.py
+          git commit -m "fix: derive official company coverage from catalog slugs"
+          git fetch origin main
+          git rebase -X theirs origin/main
+          python -m unittest tests.test_official_company_registry_dynamic
+          git push --force origin HEAD:fix/dynamic-official-company-registry-clean-20260727
