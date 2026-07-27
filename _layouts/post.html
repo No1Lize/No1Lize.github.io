@@ -1,0 +1,105 @@
+---
+layout: default
+---
+<article class="post">
+  <!-- 文章头部 -->
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+        📅 {{ page.date | date: "%Y年%m月%d日" }}
+      </time>
+      {% if page.category %}
+        <span class="post-category">🏷️ {{ page.category }}</span>
+      {% endif %}
+      {% if page.tags %}
+        <span class="post-tags">
+          {% for tag in page.tags %}
+            <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify: 'raw' }}" class="tag">#{{ tag }}</a>
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- 结构化信息卡片 -->
+  {% if page.company or page.category or page.round or page.amount or page.lead_investor or page.business or page.source %}
+  <div class="info-card">
+    <h3>📋 情报速览</h3>
+    <dl class="info-list">
+      {% if page.company %}
+        <dt>公司</dt><dd>{{ page.company }}</dd>
+      {% endif %}
+      {% if page.category %}
+        <dt>赛道</dt><dd>{{ page.category }}</dd>
+      {% endif %}
+      {% if page.round %}
+        <dt>轮次</dt><dd>{{ page.round }}</dd>
+      {% endif %}
+      {% if page.amount %}
+        <dt>金额</dt><dd class="amount">{{ page.amount }}</dd>
+      {% endif %}
+      {% if page.lead_investor %}
+        <dt>领投</dt><dd>{{ page.lead_investor }}</dd>
+      {% endif %}
+      {% if page.follow_investors and page.follow_investors != empty %}
+        <dt>跟投</dt><dd>{{ page.follow_investors | join: "、" }}</dd>
+      {% endif %}
+      {% if page.business %}
+        <dt>业务</dt><dd>{{ page.business }}</dd>
+      {% endif %}
+      {% if page.source %}
+        <dt>信源</dt>
+        <dd>
+          {% if page.source_url %}
+            <a href="{{ page.source_url }}" target="_blank" rel="noopener">{{ page.source }}</a>
+          {% else %}
+            {{ page.source }}
+          {% endif %}
+        </dd>
+      {% endif %}
+    </dl>
+  </div>
+  {% endif %}
+
+  <!-- "为什么重要"高亮块 -->
+  {% if page.importance %}
+  <div class="importance-block">
+    <span class="importance-icon">🔍</span>
+    <div class="importance-content">
+      <strong>为什么重要：</strong>
+      <p>{{ page.importance }}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- 文章正文 -->
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <!-- 文章底部 -->
+  <footer class="post-footer">
+    <div class="post-nav">
+      {% if page.previous %}
+        <a class="prev-post" href="{{ page.previous.url | relative_url }}">
+          ← 上一篇：{{ page.previous.title }}
+        </a>
+      {% endif %}
+      {% if page.next %}
+        <a class="next-post" href="{{ page.next.url | relative_url }}">
+          下一篇：{{ page.next.title }} →
+        </a>
+      {% endif %}
+    </div>
+    
+    {% if page.tags %}
+    <div class="post-tags-bottom">
+      <span>相关标签：</span>
+      {% for tag in page.tags %}
+        <a href="{{ '/tags/' | relative_url }}#{{ tag | slugify: 'raw' }}" class="tag">#{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </footer>
+</article>

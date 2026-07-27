@@ -1,0 +1,38 @@
+---
+layout: default
+---
+<div class="tags-page">
+  <h1>🏷️ 标签浏览</h1>
+  <p class="tags-intro">点击标签查看相关情报。</p>
+
+  {% assign sorted_tags = site.tags | sort %}
+  <nav class="tags-cloud" aria-label="情报标签">
+    {% for tag_entry in sorted_tags %}
+      {% assign tag_name = tag_entry[0] %}
+      {% assign tagged_posts = tag_entry[1] %}
+      <a href="#{{ tag_name | slugify: 'raw' }}" class="tag">
+        {{ tag_name }} <span class="tag-count">{{ tagged_posts.size }}</span>
+      </a>
+    {% endfor %}
+  </nav>
+
+  <hr class="section-divider">
+
+  {% for tag_entry in sorted_tags %}
+    {% assign tag_name = tag_entry[0] %}
+    {% assign tagged_posts = tag_entry[1] %}
+    <section id="{{ tag_name | slugify: 'raw' }}" class="tag-section">
+      <h2># {{ tag_name }}</h2>
+      <ul class="tag-posts">
+        {% for post in tagged_posts %}
+          <li>
+            <time datetime="{{ post.date | date_to_xmlschema }}">
+              {{ post.date | date: "%Y-%m-%d" }}
+            </time>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+</div>
