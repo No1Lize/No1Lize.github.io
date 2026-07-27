@@ -2,8 +2,9 @@ name: Tracking entity discovery
 
 # Expands the tracking config from public web sources and verified company
 # profiles: related keywords, founders/core team, public social accounts,
-# companies and official-site sources for every enabled track. Auto-added
-# entries the owner later deletes become tombstones and are never re-added.
+# communities, media columns, companies and official-site sources for every
+# enabled track. Auto-added entries the owner later deletes become tombstones
+# and are never re-added.
 
 on:
   push:
@@ -14,7 +15,9 @@ on:
       - public/data/people.json
       - tools/expand_tracking_entities.py
       - tools/enrich_tracking_people_from_sample_companies.py
+      - tools/enrich_tracking_person_channels.py
       - tests/test_tracking_sample_company_people.py
+      - tests/test_tracking_person_channels.py
       - .github/workflows/tracking-discovery.yml
   schedule:
     - cron: "30 13 * * *"
@@ -22,7 +25,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: "full = team/social discovery + entity rotation; seed-only = team/social discovery + new tracks"
+        description: "full = team/social/channel discovery + entity rotation; seed-only = team/social/channel discovery + new tracks"
         default: "full"
         type: choice
         options: [full, seed-only]
@@ -47,10 +50,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate sample-company people discovery
+      - name: Validate sample-company people and public-channel discovery
         run: |
           python -m py_compile tools/enrich_tracking_people_from_sample_companies.py
-          python -m unittest tests.test_tracking_sample_company_people
+          python -m py_compile tools/enrich_tracking_person_channels.py
+          python -m unittest \
+            tests.test_tracking_sample_company_people \
+            tests.test_tracking_person_channels
       - name: Discover founders, core team and public social accounts
         id: team
         run: |
@@ -60,6 +66,14 @@ jobs:
             --max-requests 120 | tee /tmp/team-discovery.json
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/team-discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+      - name: Register public communities and media columns
+        id: channels
+        run: |
+          set -euo pipefail
+          python tools/enrich_tracking_person_channels.py \
+            --max-tracks 30 | tee /tmp/channel-discovery.json
+          CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/channel-discovery.json'))['changed']).lower())")
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
       - name: Expand tracking entities from public web sources
         id: expand
         run: |
@@ -67,7 +81,7 @@ jobs:
           MODE="full"
           if [ "${{ github.event_name }}" = "push" ]; then
             # Config pushes (admin edits) only seed brand-new tracks after the
-            # sample-company team pass; tool/workflow pushes run a full pass.
+            # sample-company team/channel passes; tool/workflow pushes run full.
             if python - <<'PYEOF'
           import json, os, sys
           event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
@@ -93,7 +107,9 @@ jobs:
       - name: Consolidate discovery changes
         id: changes
         run: |
-          if [ "${{ steps.team.outputs.changed }}" = "true" ] || [ "${{ steps.expand.outputs.changed }}" = "true" ]; then
+          if [ "${{ steps.team.outputs.changed }}" = "true" ] || \
+             [ "${{ steps.channels.outputs.changed }}" = "true" ] || \
+             [ "${{ steps.expand.outputs.changed }}" = "true" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
