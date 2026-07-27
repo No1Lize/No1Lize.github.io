@@ -1,0 +1,45 @@
+name: Diagnose homepage refresh status
+
+on:
+  pull_request:
+    paths:
+      - components/dashboard.tsx
+      - lib/use-articles.ts
+      - lib/snapshot-freshness.ts
+      - tests/snapshot-freshness.test.ts
+      - .github/workflows/diagnose-homepage-refresh-status.yml
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - name: Run freshness tests
+        id: focused
+        continue-on-error: true
+        run: |
+          node --import tsx --test tests/snapshot-freshness.test.ts > freshness-test.log 2>&1
+      - name: Run complete unit suite
+        id: complete
+        continue-on-error: true
+        run: |
+          npm run test:unit > unit-test.log 2>&1
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-refresh-status-test-log
+          path: |
+            freshness-test.log
+            unit-test.log
+          if-no-files-found: error
+      - name: Enforce focused test
+        if: steps.focused.outcome != 'success'
+        run: exit 1
