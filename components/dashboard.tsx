@@ -273,7 +273,7 @@ export function Dashboard({
           </div>
           <div className="company-grid">
             {focusCompanies.slice(0, 6).map((company) => (
-              <Link className="company-card" href={`/companies/${company.slug}`} key={company.name}>
+              <Link className="company-card" href={`/companies/${company.slug}`} key={company.slug}>
                 <div className="company-monogram">{company.name.slice(0, 2).toUpperCase()}</div>
                 <div><h3>{company.name}</h3><p>{company.focus}</p></div>
                 <span>{company.region} · {company.stage}</span>
