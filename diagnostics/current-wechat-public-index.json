@@ -1,9 +1,9 @@
 {
   "compileStatus": 0,
-  "targetedTestStatus": 1,
-  "allPythonTestStatus": 1,
+  "targetedTestStatus": 0,
+  "allPythonTestStatus": 0,
   "liveProbeStatus": 0,
-  "passed": false,
+  "passed": true,
   "liveProbe": {
     "sourceId": "user-track-wechat-qbitai-ai",
     "publicIndexes": [
@@ -14,68 +14,67 @@
       "id": "user-track-wechat-qbitai-ai",
       "name": "量子位",
       "status": "partial",
-      "scanned": 45,
+      "scanned": 75,
       "accepted": 6,
-      "failed": 13,
+      "failed": 11,
       "platform": "微信"
     },
     "samples": [
       {
+        "title": "量子位编辑作者招聘",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da047ddfad8d6b3a7c51791764b12f784b54177e14119db4b4b04470b1dec41950023dd22f&idx=4&mid=2247906063&sn=a6a9377e84ae323398c3fe2155c0aeb1",
+        "wechatAccount": "量子位",
+        "companies": [],
+        "people": [
+          "QbitAI AI"
+        ],
+        "summary": "编辑部 发自 凹非寺 量子位 | 公众号 QbitAI AI热潮还在汹涌，但如果你还不知道如何参与……那为什么不来 量子位 呢？ 我们是一家以 追踪AI新进展 为核心的内容平台，经过8年积累，目前拥有顶流影响力，广泛且备受认可的产业资源，以及时代风口的最佳观测和学习生态位。 目前，我们有 三大方向 岗位招聘，希望你是 （或者能成为） 这三个方向的内容专家： AI产业方向 ：关注基建层创新，包含芯片、AI Infra、云计算； AI财经方向 ：关注AI领域创投和财报，跟踪产业链资本动向； AI产品方向 ：关注AI在应用和硬件终端方向的进展。 岗位均为全职，工作地点：北京中关村。 岗位面向： 社招：覆盖编辑、主笔、主编各个层级，按能力匹配岗位； 校招：应届毕业生，接受实习且可转正。 加入我们，你可以获得： 站在AI浪潮之巅 ：第一时间接触和了解AI领域最新技术和产品，构建完整的AI认知体系。 玩转AI新工具 ：将各种AI新技术、新工具应用于工作，提升工作效率和创造力。 打造个人影响力 ：通过撰写独家原创内容，建立个人知名度，成为AI领域的意见领袖。 拓展行业人脉 ：与AI领域大咖零距离接触"
+      },
+      {
         "title": "10万字速记一口吞，金山办公新Agent开始直接交活了",
         "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da047ddfad8d6bf574e496bf1a383bdd92a4132f22cd346507d27019aa3a9452a0fbe54378&idx=1&mid=2247906063&sn=44865928bbcd08f07b72fba27a1b0a5b",
         "wechatAccount": "量子位",
-        "companies": [],
+        "companies": [
+          "Anthropic"
+        ],
         "people": [],
-        "summary": "重做一遍WPS"
+        "summary": "听雨 发自 上海 量子位 | 公众号 QbitAI 「帮我把这10万字速记整理一下。」 这句话打出去的时候，我其实没抱太大希望。 5份具身智能coffee chat记录，十多位嘉宾，世界模型、VLA、机器人强化学习、仿真数据，各种内容混在一起。 不光人名长得像，技术路线听着也像。 要是我自己整理，八成得看串。 结果没过多久，一套知识库就被搭了出来。 原本散落在不同文档里的讨论，被重新串到了一起： 5场活动分别聊了什么，世界模型和VLA之间是什么关系，具身智能为什么一直缺数据，灵巧手和夹爪又在争什么，都能从总览里快速找到概括。 几场讨论里反复出现的共识和分歧，统统都被拎了出来，归纳成了6大主题，从总览入口还能快速跳转到该主题的单独页面。 完成这项工作的，是金山办公最新发布的独立AI办公Agent—— 灵犀专业版 。 注意，它不是WPS里新加的一个AI按钮。 两者的分工更像是，灵犀负责理解项目、调动资料和执行任务，WPS负责文件编辑与正式流转。一个把事情组织起来，一个把结果真正落到文档、表格和PPT里。 金山办公给它的定位是： 灵犀，每个人的办公助理 。 说实话，现在的办公Agent已经非"
       },
       {
         "title": "芯片卖了56万片之后，阿里平头哥把最值钱的东西开源了",
         "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da0793dfad8e85006c0626294bdef3830bfb7398e58893488e5e5bab27ad07d2ba72acffe6&idx=1&mid=2247905505&sn=fc5ae49472e06a3cb0964cc571a1dfef",
         "wechatAccount": "量子位",
         "companies": [
-          "阿里云"
+          "阿里云",
+          "阿里云 / Qwen"
         ],
-        "people": [],
-        "summary": "开源AI软件栈SAIL，260+框架即开即用"
-      },
-      {
-        "title": "中国首个十万卡集群落成！全国产算力支撑“十万卡时代”",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da11dddfad98cb1048475c0b64c826d197c9c0984bbef04676d9201f6110e711d0d387099a&idx=2&mid=2247902895&sn=96359b6914b75b56d1c51bfddbae2153",
-        "wechatAccount": "量子位",
-        "companies": [],
-        "people": [],
-        "summary": "已跑通300余项应用"
+        "people": [
+          "T-Head SAIL"
+        ],
+        "summary": "闻乐 发自 凹非寺 量子位 | 公众号 QbitAI 如果把AI芯片比作发动机，那AI软件栈就是「变速箱+传动系统+驾驶系统」。 发动机再猛，传动拉了胯，动力传不到车轮上，车照样跑不起来。 这个道理，做了8年芯片的 平头哥 比谁都清楚。 WAIC 2026现场，阿里平头哥宣布开源 自研AI软件栈T-Head SAIL 。 这是其真武系列AI芯片的底层软件，拥有独立的自主知识产权，同时全面兼容主流AI生态，覆盖从OS层、SDK层到接口层的完整链路。 源码、驱动、工具链、文档一次性摆上桌，全球开发者都可以在平头哥开发者社区下载。 而在开源之前，这套软件栈已经攒下了一份相当能打的成绩单。 截至今年4月，真武AI芯片累计 出货56万片 ，服务 20多个行业 的 400多家客户 。 还在阿里云以及大量行业企业的真实生产环境里跑了很久，扛过 双11级别的大规模流量洪峰 ，也扛过复杂场景和严苛SLA的反复拷问。 也就是说，平头哥这次拿出来的是自家业务的核心底盘。 所以问题来了，一家芯片公司，为什么要主动拆掉自己的围墙？ AI芯片的胜负手，从来不在硬件 要理解这个动作的分量，首先得理解软件栈在AI算力"
       }
     ]
   },
   "logTail": [
-    "...........F.",
-    "======================================================================",
-    "FAIL: test_index_parser_keeps_only_matching_account_and_relevant_titles (tests.test_wechat_public_index_fallback.WeChatPublicIndexFallbackTest.test_index_parser_keeps_only_matching_account_and_relevant_titles)",
+    "................",
     "----------------------------------------------------------------------",
-    "Traceback (most recent call last):",
-    "  File \"/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_wechat_public_index_fallback.py\", line 52, in test_index_parser_keeps_only_matching_account_and_relevant_titles",
-    "    self.assertEqual(len(rows), 1)",
-    "AssertionError: 2 != 1",
+    "Ran 16 tests in 0.055s",
     "",
+    "OK",
+    "...........................official=two fatal=RuntimeError: blocked",
+    "..................................................................................................................................................................................................................................................................................................................................................",
     "----------------------------------------------------------------------",
-    "Ran 13 tests in 0.033s",
+    "Ran 365 tests in 16.381s",
     "",
-    "FAILED (failures=1)",
-    "......................official=two fatal=RuntimeError: blocked",
-    "..............................................................................................................................................................F...........",
-    "======================================================================",
-    "FAIL: test_index_parser_keeps_only_matching_account_and_relevant_titles (test_wechat_public_index_fallback.WeChatPublicIndexFallbackTest.test_index_parser_keeps_only_matching_account_and_relevant_titles)",
-    "----------------------------------------------------------------------",
-    "Traceback (most recent call last):",
-    "  File \"/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_wechat_public_index_fallback.py\", line 52, in test_index_parser_keeps_only_matching_account_and_relevant_titles",
-    "    self.assertEqual(len(rows), 1)",
-    "AssertionError: 2 != 1",
-    "",
-    "----------------------------------------------------------------------",
-    "Ran 192 tests in 0.404s",
-    "",
-    "FAILED (failures=1)",
-    "No snapshot changes (1 articles)."
+    "OK",
+    "No snapshot changes (1 articles).",
+    "{\"changed\": true, \"requestsUsed\": 10, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"semiconductor\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"CoWoS-L\"], \"people\": [\"梁孟松\"], \"sampleCompanies\": [\"中芯国际\"], \"sources\": [{\"id\": \"source-auto-media-chinastarmarket-cn\", \"name\": \"科创板日报 · 半导体信源\", \"url\": \"https://chinastarmarket.cn/\", \"sourceType\": \"listing-search\", \"sourceCategory\": \"media\", \"region\": \"中国\", \"sector\": \"半导体\", \"company\": \"\", \"ticker\": \"\", \"keywords\": [\"半导体\"], \"enabled\": true}]}, \"poolSize\": 9}]}",
+    "{\"changed\": true, \"requestsUsed\": 8, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"semiconductor\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"GPU主题关联技术甲\", \"GPU主题关联技术乙\", \"先进封装主题关联技术甲\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 4}]}",
+    "{\"changed\": true, \"requestsUsed\": 13, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"灵巧手\"], \"people\": [], \"sampleCompanies\": [\"宇树科技\", \"Figure AI\"], \"sources\": [{\"id\": \"source-auto-item-2a729fb4\", \"name\": \"宇树科技 官方网站\", \"url\": \"https://www.unitree.com/\", \"sourceType\": \"listing-search\", \"sourceCategory\": \"company\", \"region\": \"中国\", \"sector\": \"人形机器人\", \"company\": \"宇树科技\", \"ticker\": \"\", \"keywords\": [\"宇树科技\"], \"enabled\": true}]}, \"poolSize\": 5}]}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"灵巧手\", \"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 5}]}",
+    "{\"changed\": false, \"offline\": true, \"requestsUsed\": 3, \"requestsFailed\": 3, \"tracks\": []}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 5}]}",
+    "{\"changed\": false, \"requestsUsed\": 0, \"requestsFailed\": 0, \"tracks\": []}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"embodied\", \"mode\": \"seed\", \"added\": {\"keywords\": [\"灵巧手\", \"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"poolSize\": 5}]}"
   ]
 }
