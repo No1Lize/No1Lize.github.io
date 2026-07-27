@@ -46,6 +46,7 @@ jobs:
           npm install
           npx tsc --noEmit > tsc-diagnostics.txt 2>&1 || true
           npm run test:unit > unit-diagnostics.txt 2>&1 || true
+          grep -R -n -E 'import .*companies.*catalog-data|catalog-data.*companies' app components lib tests > company-imports.txt || true
       - uses: actions/upload-artifact@v4
         if: github.event_name == 'pull_request'
         with:
@@ -53,6 +54,8 @@ jobs:
           path: |
             tsc-diagnostics.txt
             unit-diagnostics.txt
+            company-imports.txt
+            lib/catalog-data.ts
           if-no-files-found: error
       - name: Commit source health report
         if: github.event_name != 'pull_request'
