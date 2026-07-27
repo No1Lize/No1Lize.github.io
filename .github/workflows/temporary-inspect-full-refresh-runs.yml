@@ -1,5 +1,6 @@
 name: Temporary inspect full refresh runs
 
+# Diagnostic refresh: dynamic official registry fix merged.
 on:
   pull_request:
     paths:
