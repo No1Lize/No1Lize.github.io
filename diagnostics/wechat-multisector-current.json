@@ -1,6 +1,6 @@
 {
-  "configuredSources": 23,
-  "whitelistedSources": 18,
+  "configuredSources": 34,
+  "whitelistedSources": 21,
   "results": [
     {
       "accountConfigId": "qbitai",
@@ -14,9 +14,9 @@
         "id": "user-track-wechat-qbitai-ai",
         "name": "量子位",
         "status": "partial",
-        "scanned": 15,
+        "scanned": 18,
         "accepted": 6,
-        "failed": 5,
+        "failed": 7,
         "platform": "微信",
         "discoveryProvider": "bing-or-public-index",
         "sogouScanned": 0,
@@ -24,13 +24,29 @@
       },
       "articles": [
         {
+          "title": "Claude Code砸的坑，蚂蚁安全在尝试填上",
+          "wechatAccount": "量子位",
+          "sector": "AI / AGI",
+          "companies": [
+            "Anthropic"
+          ],
+          "people": [
+            "Claude Code"
+          ],
+          "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1001dfad99170826651e4621dab97f3698600572bca08146882fe8472dcda4814e31b0f3&idx=1&mid=2247903091&sn=6efa9d6657251390eda8017a73484478"
+        },
+        {
           "title": "GPT-5.6一小时解开50年数学猜想，700词Prompt驾驭64个子Agent",
           "wechatAccount": "量子位",
           "sector": "AI / AGI",
           "companies": [
             "OpenAI"
           ],
-          "people": [],
+          "people": [
+            "Ethan Knight",
+            "Noam Brown",
+            "Sol Ultra"
+          ],
           "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da11dddfad98cb798410ee855583c0ee19fd4be0cddfd2fdedf2295e14e941ca238f6ceeec&idx=1&mid=2247902895&sn=e1b447a17522c5595d3096ff0ec17a64"
         },
         {
@@ -40,19 +56,18 @@
           "companies": [
             "DeepSeek"
           ],
-          "people": [],
-          "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1209dfad9b1fe560d54a8062973ca62dc5648c3cffbfd33b523067447b9e4d3cbf0e8889&idx=3&mid=2247902587&sn=879066ecce663ab9daba5d73fe2dc27b"
-        },
-        {
-          "title": "刚刚，OpenAI首席未来学家离职！曾被马斯克骂蠢驴",
-          "wechatAccount": "量子位",
-          "sector": "AI / AGI",
-          "companies": [
-            "OpenAI",
-            "Anthropic"
+          "people": [
+            "QbitAI DeepSeek",
+            "Autoregressive Drafting",
+            "Speculative Decoding",
+            "EPIC Lab",
+            "Jianuo Huang",
+            "Yaojie Zhang",
+            "Linfeng Zhang",
+            "黄佳诺",
+            "论文链接"
           ],
-          "people": [],
-          "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5697869e8644d4e3dd0563bf622cb244d475413509993f2678272aca03f685&idx=2&mid=2247902258&sn=9255dfa6c73c1433b887448e2fb783bb"
+          "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1209dfad9b1fe560d54a8062973ca62dc5648c3cffbfd33b523067447b9e4d3cbf0e8889&idx=3&mid=2247902587&sn=879066ecce663ab9daba5d73fe2dc27b"
         }
       ]
     },
@@ -69,7 +84,7 @@
         "status": "error",
         "scanned": 0,
         "accepted": 0,
-        "failed": 14,
+        "failed": 8,
         "platform": "微信",
         "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
         "retainedPrevious": true,
