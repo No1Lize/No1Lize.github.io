@@ -51,7 +51,7 @@ LEDGER_PATH = ROOT / "config" / "tracking_auto_discovery.json"
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 
 USER_AGENT = (
-    "No1LizeResearch/1.0 (+https://github.com/No1Lize/No1Lize.github.io; "
+    "VCIQResearch/1.0 (+https://github.com/VCIQ/VCIQ.github.io; "
     "public tracking entity discovery)"
 )
 REQUEST_TIMEOUT = 20
