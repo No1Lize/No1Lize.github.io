@@ -111,7 +111,15 @@ function normalizeHref(value: unknown): string {
   const href = cleanText(value, 500);
   if (!href) return "";
   if (href.startsWith("/") && !href.startsWith("//")) {
-    return href.endsWith("/") ? href : `${href}/`;
+    try {
+      const url = new URL(href, "https://vciq.local");
+      const pathname = url.pathname.endsWith("/")
+        ? url.pathname
+        : `${url.pathname}/`;
+      return `${pathname}${url.search}${url.hash}`;
+    } catch {
+      return "";
+    }
   }
   return validHttpUrl(href);
 }
