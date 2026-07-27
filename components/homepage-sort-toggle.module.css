@@ -1,0 +1,40 @@
+.toggle {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  padding: 3px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.button {
+  min-height: 29px;
+  padding: 5px 9px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface-3) 72%, transparent);
+}
+
+.button.active {
+  color: var(--text);
+  background: var(--surface-3);
+}
+
+@media (max-width: 560px) {
+  .toggle {
+    width: 100%;
+  }
+
+  .button {
+    flex: 1;
+  }
+}
