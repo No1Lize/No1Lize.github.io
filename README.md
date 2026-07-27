@@ -111,7 +111,7 @@ bundle install && bundle exec jekyll serve --livereload
 
 ## 🔨 构建与部署
 
-- **自动部署**：推送到 `main` 分支后，GitHub Actions 自动构建并部署到 `gh-pages` 分支
+- **自动部署**：推送到 `main` 分支后，GitHub Actions 自动构建，并通过官方 GitHub Pages Actions 发布
 - **手动构建**：`bundle exec jekyll build`，产物在 `_site/` 目录
 - **搜索索引**：构建后运行 `npx --yes pagefind@1.5.2 --site _site` 生成搜索索引
 
@@ -124,18 +124,16 @@ npx --yes pagefind@1.5.2 --site _site
 
 ### GitHub Pages 发布来源
 
-首次推送到 `main`、工作流创建 `gh-pages` 分支后，在仓库 `Settings → Pages → Build and deployment` 中设置：
+仓库 `Settings → Pages → Build and deployment` 使用：
 
-- **Source**：`Deploy from a branch`
-- **Branch**：`gh-pages`
-- **Folder**：`/(root)`
+- **Source**：`GitHub Actions`
 
 工作流只在 `main` 分支 push 时发布；Pull Request 仅执行 Jekyll 构建，不改动线上站点。
 
 ## 📋 验收清单
 
 - [ ] GitHub Actions 中 `bundle exec jekyll build` 零错误零警告
-- [ ] GitHub Pages Source 已设置为 `gh-pages / (root)`
+- [ ] GitHub Pages Source 已设置为 `GitHub Actions`
 - [x] 移动端（375px）无横向滚动
 - [x] 暗色模式切换正常且刷新后保持
 - [x] RSS `feed.xml` 可访问且包含全文
