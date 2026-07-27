@@ -8,6 +8,22 @@
   },
   "companies": [
     {
+      "slug": "google",
+      "name": "Google",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "homepage": "https://about.google/",
+      "newsUrls": [
+        "https://blog.google/",
+        "https://deepmind.google/discover/blog/"
+      ],
+      "aliases": [
+        "Google AI",
+        "Gemini",
+        "Google DeepMind"
+      ]
+    },
+    {
       "slug": "openai",
       "name": "OpenAI",
       "region": "美国",
