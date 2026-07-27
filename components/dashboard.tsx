@@ -12,6 +12,7 @@ import {
   type IntelligenceEvent,
 } from "@/lib/intelligence-data";
 import { getInstitutionProfile } from "@/lib/research-content";
+import { getSnapshotFreshness } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import { useArticles } from "@/lib/use-articles";
 
@@ -44,7 +45,14 @@ export function Dashboard({
   middle?: ReactNode;
   children: ReactNode;
 }) {
-  const { articles, generatedAt, isLive, sourceStatus, qualityGate } = useArticles();
+  const {
+    articles,
+    generatedAt,
+    isLive,
+    sourceStatus,
+    qualityGate,
+    refreshAudit,
+  } = useArticles();
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
   const [query, setQuery] = useState("");
@@ -61,12 +69,15 @@ export function Dashboard({
       ),
     [activeArticles],
   );
-  const processedAt = formatTaipeiDate(generatedAt);
-  const freshnessLabel = !isLive
-    ? "内置快照"
-    : latestPublishedAt === processedAt
-      ? "当日情报已更新"
-      : "内容待刷新";
+  const freshness = getSnapshotFreshness({
+    isLive,
+    generatedAt,
+    latestPublishedAt,
+    qualityPassed: qualityGate?.passed,
+    refreshAudit,
+  });
+  const processedAt = freshness.processedAt;
+  const freshnessLabel = freshness.label;
   const normalizedQuery = query.trim().toLowerCase();
   const visibleEvents = useMemo(
     () =>
@@ -239,13 +250,7 @@ export function Dashboard({
               <span className="status-pill"><i /> {freshnessLabel}</span>
             </div>
             <strong>{String(activeArticles.length).padStart(2, "0")}</strong>
-            <p>
-              {qualityGate?.passed === false
-                ? "数据质量门未通过"
-                : isLive && latestPublishedAt !== processedAt
-                  ? "数据已处理，但最新情报仍待刷新"
-                  : "当前启用赛道的可追溯公开情报"}
-            </p>
+            <p>{freshness.description}</p>
             <div className="snapshot-meta">
               <span>{healthySourceCount || sourceCount} 个有效来源</span>
               <span>{platformCount} 类平台 · {sectorCount} 个启用赛道</span>
@@ -268,7 +273,7 @@ export function Dashboard({
           </div>
           <div className="company-grid">
             {focusCompanies.slice(0, 6).map((company) => (
-              <Link className="company-card" href={`/companies/${company.slug}`} key={company.slug}>
+              <Link className="company-card" href={`/companies/${company.slug}`} key={company.name}>
                 <div className="company-monogram">{company.name.slice(0, 2).toUpperCase()}</div>
                 <div><h3>{company.name}</h3><p>{company.focus}</p></div>
                 <span>{company.region} · {company.stage}</span>
@@ -293,19 +298,6 @@ export function Dashboard({
       </section>
     </>
   );
-}
-
-function formatTaipeiDate(value: string) {
-  const timestamp = new Date(value);
-  if (Number.isNaN(timestamp.getTime())) return value.slice(0, 10);
-  const parts = new Intl.DateTimeFormat("en-CA", {
-    timeZone: "Asia/Taipei",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).formatToParts(timestamp);
-  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  return `${values.year}-${values.month}-${values.day}`;
 }
 
 function EventTitle({ item }: { item: IntelligenceEvent }) {
