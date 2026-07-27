@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { TrackingAdminConflictGuard } from "@/components/tracking-admin-conflict-guard";
 import { TrackingAdminModuleRecommendations } from "@/components/tracking-admin-module-recommendations";
 import { TrackingAdminSessionGuard } from "@/components/tracking-admin-session-guard";
+import { TrackingPeopleScopeEnhancer } from "@/components/tracking-people-scope-enhancer";
 import { TrackingRecommendationsBridge } from "@/components/tracking-recommendations-bridge";
 import { UserTrackingPanel } from "@/components/user-tracking-panel";
 import {
@@ -60,6 +61,7 @@ export function UserTrackingLoader({ initial }: { initial: UserTrackingConfig })
     <>
       <TrackingAdminConflictGuard />
       <UserTrackingPanel key={sourceKey} initial={config} />
+      <TrackingPeopleScopeEnhancer />
       <TrackingRecommendationsBridge />
       <TrackingAdminModuleRecommendations />
       <TrackingAdminSessionGuard />
