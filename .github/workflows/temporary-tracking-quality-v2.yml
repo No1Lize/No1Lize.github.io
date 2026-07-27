@@ -1,0 +1,120 @@
+name: Temporary tracking quality v2
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/temporary-tracking-quality-v2.yml"
+      - ".github/temporary-rebase-tracking-quality-trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch latest main and publish clean branch
+        run: |
+          git switch -C fix/tracking-discovery-quality-v2-20260727
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          people_path = Path("tools/enrich_tracking_people_from_sample_companies.py")
+          text = people_path.read_text(encoding="utf-8")
+          old = '''def normalize_person_name(value: Any) -> str:\n    text = re.sub(r"@\\S+", "", clean_text(value, 120)).strip()\n    previous = None\n    while text and text != previous:\n        previous = text\n        text = PERSON_NAME_SUFFIX_RE.sub("", text).strip()\n    return text\n'''
+          new = '''def normalize_person_name(value: Any) -> str:\n    text = re.sub(r"@\\S+", "", clean_text(value, 120)).strip()\n    previous = None\n    while text and text != previous:\n        previous = text\n        text = PERSON_NAME_SUFFIX_RE.sub("", text).strip()\n    words = text.split()\n    if len(words) >= 2 and len(words) % 2 == 0:\n        half = len(words) // 2\n        left = [word.casefold() for word in words[:half]]\n        right = [word.casefold() for word in words[half:]]\n        if left == right:\n            text = " ".join(words[:half])\n    return text\n'''
+          if text.count(old) != 1:
+              raise SystemExit("unexpected normalize_person_name block")
+          people_path.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          expander_path = Path("tools/expand_tracking_entities.py")
+          text = expander_path.read_text(encoding="utf-8")
+          old = '''    "quarter",\n    "earnings",\n'''
+          new = '''    "quarter",\n    "build",\n    "release",\n    "earnings",\n'''
+          if text.count(old) != 1:
+              raise SystemExit("unexpected generic keyword block")
+          expander_path.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          config_path = Path("config/user_tracking.json")
+          ledger_path = Path("config/tracking_auto_discovery.json")
+          config = json.loads(config_path.read_text(encoding="utf-8"))
+          ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+          removals = {
+              ("ai", "keywords", "Build"),
+              ("ai", "keywords", "Release"),
+              ("robotics", "people", "Brandon Tseng Brandon Tseng"),
+          }
+          track_map = {str(track.get("slug")): track for track in config.get("tracks", [])}
+          for track_slug, kind, value in removals:
+              track = track_map.get(track_slug)
+              if track:
+                  track[kind] = [item for item in track.get(kind, []) if str(item) != value]
+
+          duplicate = "Brandon Tseng Brandon Tseng"
+          config["sources"] = [
+              source for source in config.get("sources", [])
+              if duplicate not in str(source.get("name") or "")
+              and duplicate not in {str(item) for item in source.get("keywords", [])}
+          ]
+
+          keys = {(track, kind, value.casefold()) for track, kind, value in removals}
+          ledger["added"] = [
+              row for row in ledger.get("added", [])
+              if (
+                  str(row.get("track")),
+                  str(row.get("kind")),
+                  str(row.get("value") or "").casefold(),
+              ) not in keys
+          ]
+          removed_keys = {
+              (
+                  str(row.get("track")),
+                  str(row.get("kind")),
+                  str(row.get("value") or "").casefold(),
+              )
+              for row in ledger.get("removed", [])
+          }
+          stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
+          for track_slug, kind, value in sorted(removals):
+              key = (track_slug, kind, value.casefold())
+              if key not in removed_keys:
+                  ledger.setdefault("removed", []).append({
+                      "track": track_slug,
+                      "kind": kind,
+                      "value": value,
+                      "removedAt": stamp,
+                  })
+          ledger["updatedAt"] = stamp
+          config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+          Path("tests/test_tracking_discovery_quality_v2.py").write_text('''import unittest\n\nfrom tools import expand_tracking_entities as expander\nfrom tools import enrich_tracking_people_from_sample_companies as people\n\n\nclass TrackingDiscoveryQualityV2Tests(unittest.TestCase):\n    def test_repeated_person_name_is_collapsed(self):\n        self.assertEqual(\n            people.normalize_person_name("Brandon Tseng Brandon Tseng"),\n            "Brandon Tseng",\n        )\n        self.assertEqual(\n            people.person_name_key("Brandon Tseng Brandon Tseng"),\n            people.person_name_key("Brandon Tseng"),\n        )\n\n    def test_core_team_uses_collapsed_person_name(self):\n        profile = {"team": [\n            {"name": "Brandon Tseng Brandon Tseng", "role": "联合创始人"},\n            {"name": "Brandon Tseng", "role": "CEO"},\n        ]}\n        names = [item.name for item in people.choose_core_team(profile, "Example")]\n        self.assertEqual(names, ["Brandon Tseng"])\n\n    def test_generic_action_words_are_rejected(self):\n        self.assertEqual(expander.validate_keyword("Build"), "")\n        self.assertEqual(expander.validate_keyword("Release"), "")\n        self.assertEqual(expander.validate_keyword("Microsoft"), "Microsoft")\n\n\nif __name__ == "__main__":\n    unittest.main()\n''', encoding="utf-8")
+          PY
+          python -m unittest tests.test_tracking_discovery_quality_v2
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "fix: collapse repeated people and generic action terms"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase -X theirs origin/main
+            python -m unittest tests.test_tracking_discovery_quality_v2
+            if git push --force origin HEAD:fix/tracking-discovery-quality-v2-20260727; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
