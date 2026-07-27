@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Cpu } from "lucide-react";
 import Link from "next/link";
-import { ChannelUpdateDirectory } from "@/components/channel-update-directory";
+import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { SectorChart } from "@/components/sector-chart";
 import { trackedSectors } from "@/lib/tracked-sectors";
+import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "新兴科技",
@@ -24,60 +26,69 @@ export default function TechnologyPage() {
         </Link>
       </header>
 
-      <ChannelUpdateDirectory channel="technology" />
-
-      <section className="data-panel">
-        <div className="section-heading">
-          <div>
-            <p className="section-index">SIX-MONTH ACTIVITY</p>
-            <h2>中美事件趋势</h2>
-          </div>
-          <span>仅统计当前启用赛道 · 自动更新</span>
-        </div>
-        <SectorChart />
-      </section>
-
-      <section className="sector-card-grid">
-        {trackedSectors.map((sector, index) => (
-          <Link
-            href={`/technology/${sector.slug}`}
-            className="sector-card"
-            key={sector.slug}
-          >
+      <ChannelSplitLayout
+        channel="technology"
+        eyebrow="LATEST TECHNOLOGY TRACKS"
+        title="真实赛道目录"
+        description="按技术方向浏览产业结构、公司样本、关键变量、主要风险和最新公开事件。"
+        count={trackedSectors.length}
+        countLabel="公开赛道快照"
+        icon={<Cpu size={19} aria-hidden="true" />}
+        bodyClassName={styles.body}
+      >
+        <section className={styles.trend}>
+          <div className={styles.subHeader}>
             <div>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <strong>{sector.heat}</strong>
+              <p className="section-index">SIX-MONTH ACTIVITY</p>
+              <h3>中美事件趋势</h3>
             </div>
-            <h2>{sector.name}</h2>
-            <p>
-              {sector.events} 项公开事件 · {sector.institutions} 家活跃机构
-            </p>
-            <dl>
-              <div>
-                <dt>披露融资</dt>
-                <dd>{sector.fundingLabel}</dd>
-              </div>
-              <div>
-                <dt>完整度</dt>
-                <dd>{sector.completeness}%</dd>
-              </div>
-            </dl>
-            <i>
-              <b style={{ width: `${sector.heat}%` }} />
-            </i>
-          </Link>
-        ))}
-      </section>
-
-      {!trackedSectors.length && (
-        <section className="empty-state">
-          <strong>当前没有启用赛道</strong>
-          <p>进入追踪配置页面，添加或重新启用至少一个赛道。</p>
-          <Link className="text-link" href="/tracking">
-            打开追踪配置 →
-          </Link>
+            <span>仅统计当前启用赛道 · 自动更新</span>
+          </div>
+          <SectorChart />
         </section>
-      )}
+
+        <section className="sector-card-grid">
+          {trackedSectors.map((sector, index) => (
+            <Link
+              href={`/technology/${sector.slug}`}
+              className="sector-card"
+              key={sector.slug}
+            >
+              <div>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{sector.heat}</strong>
+              </div>
+              <h2>{sector.name}</h2>
+              <p>
+                {sector.events} 项公开事件 · {sector.institutions} 家活跃机构
+              </p>
+              <dl>
+                <div>
+                  <dt>披露融资</dt>
+                  <dd>{sector.fundingLabel}</dd>
+                </div>
+                <div>
+                  <dt>完整度</dt>
+                  <dd>{sector.completeness}%</dd>
+                </div>
+              </dl>
+              <i>
+                <b style={{ width: `${sector.heat}%` }} />
+              </i>
+            </Link>
+          ))}
+        </section>
+
+        {!trackedSectors.length && (
+          <section className={`empty-state ${styles.empty}`}>
+            <strong>当前没有启用赛道</strong>
+            <p>进入追踪配置页面，添加或重新启用至少一个赛道。</p>
+            <Link className="text-link" href="/tracking">
+              打开追踪配置 →
+            </Link>
+          </section>
+        )}
+      </ChannelSplitLayout>
     </main>
   );
 }
