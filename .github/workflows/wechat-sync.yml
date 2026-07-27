@@ -1,0 +1,116 @@
+name: Refresh WeChat intelligence
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/refresh_wechat_snapshot.py
+      - tools/crawl_with_wechat_registry.py
+      - tools/wechat_public_sources.py
+      - tools/wechat_source_registry.py
+      - tools/wechat_registry_bridge.py
+      - tools/wechat_index_context_guard.py
+      - tools/wechat_index_record_fallback.py
+      - tools/wechat_sogou_index.py
+      - tools/wechat_sogou_bridge.py
+      - tools/wechat_snapshot_quality.py
+      - tests/test_wechat_*.py
+      - tests/test_refresh_wechat_snapshot.py
+      - config/wechat_sources.json
+      - config/wechat_public_indexes.json
+      - config/user_tracking.json
+      - .github/workflows/wechat-sync.yml
+  schedule:
+    - cron: "47 */4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: public-article-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh verified WeChat sources
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: python tools/refresh_wechat_snapshot.py
+      - name: Test WeChat pipeline
+        run: |
+          python -m py_compile \
+            tools/refresh_wechat_snapshot.py \
+            tools/wechat_public_sources.py \
+            tools/wechat_source_registry.py \
+            tools/wechat_registry_bridge.py \
+            tools/wechat_index_context_guard.py \
+            tools/wechat_index_record_fallback.py \
+            tools/wechat_sogou_index.py \
+            tools/wechat_sogou_bridge.py \
+            tools/wechat_snapshot_quality.py
+          python -m unittest \
+            tests.test_wechat_public_sources \
+            tests.test_wechat_source_registry \
+            tests.test_wechat_registry_bridge \
+            tests.test_wechat_public_index_fallback \
+            tests.test_wechat_index_record_fallback \
+            tests.test_wechat_sogou_index \
+            tests.test_wechat_snapshot_quality \
+            tests.test_refresh_wechat_snapshot
+      - name: Validate merged snapshot
+        run: python tools/crawl_articles.py --validate-only
+      - name: Commit changed WeChat snapshot
+        id: data-update
+        shell: bash
+        run: |
+          if git diff --quiet -- public/data/articles.json; then
+            echo "No WeChat snapshot changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/articles.json
+          git commit -m "data: refresh verified WeChat intelligence"
+
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            python tools/refresh_wechat_snapshot.py
+            python -m unittest \
+              tests.test_wechat_public_sources \
+              tests.test_wechat_source_registry \
+              tests.test_wechat_registry_bridge \
+              tests.test_wechat_public_index_fallback \
+              tests.test_wechat_index_record_fallback \
+              tests.test_wechat_sogou_index \
+              tests.test_wechat_snapshot_quality \
+              tests.test_refresh_wechat_snapshot
+            python tools/crawl_articles.py --validate-only
+            git add public/data/articles.json
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Publish updated snapshot
+        if: steps.data-update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

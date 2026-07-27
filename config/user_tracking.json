@@ -1,0 +1,3043 @@
+{
+  "schemaVersion": 1,
+  "tracks": [
+    {
+      "slug": "ai",
+      "name": "AI / AGI",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "基础模型",
+        "大模型",
+        "AI agent",
+        "推理模型",
+        "多模态",
+        "Agent",
+        "Grok",
+        "Claude",
+        "DeepMind",
+        "Introducing",
+        "Agents",
+        "ChatGPT",
+        "long-horizon",
+        "Multi-Agent",
+        "强化学习",
+        "MCP",
+        "长上下文",
+        "代码智能体",
+        "API",
+        "Flash-Lite",
+        "RAG",
+        "AI-powered",
+        "gpt-5",
+        "Claude Agent",
+        "SOTA",
+        "AMD",
+        "Wafer-Scale",
+        "MiMo",
+        "GPT (语言模型)",
+        "大型语言模型列表",
+        "GPT-3",
+        "大型语言模型",
+        "Transformer架构",
+        "Mamba (深度学习架构)",
+        "路徑語言模型",
+        "OpenAI Codex",
+        "Reward hacking",
+        "Reinforcement learning",
+        "AI safety",
+        "Amazon",
+        "Meta",
+        "Gemini",
+        "LLaMA",
+        "微调 (深度学习)",
+        "Here",
+        "agentic ai"
+      ],
+      "people": [
+        "Sam Altman",
+        "Demis Hassabis",
+        "何恺明",
+        "姚顺雨",
+        "埃隆·马斯克 @elonmusk",
+        "Anthropic @AnthropicAI",
+        "OpenAI @OpenAI",
+        "Google DeepMind @GoogleDeepMind",
+        "李飞飞 @drfeifei",
+        "The Washington Post @washingtonpost",
+        "梁文峰",
+        "唐杰",
+        "关注前沿科技",
+        "加洋",
+        "胡莉花"
+      ],
+      "sampleCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "DeepSeek",
+        "xAI",
+        "Harvey",
+        "MiniMax",
+        "Scale AI",
+        "Google DeepMind",
+        "Databricks",
+        "智谱AI",
+        "月之暗面",
+        "腾讯 / 元宝",
+        "阿里云 / Qwen",
+        "Google"
+      ],
+      "ignoredRecommendations": {
+        "companies": [
+          "埃隆·马斯克",
+          "李飞飞"
+        ]
+      }
+    },
+    {
+      "slug": "robotics",
+      "name": "机器人",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "具身智能",
+        "人形机器人",
+        "自动驾驶",
+        "VLA",
+        "机器人量产",
+        "世界模型",
+        "灵巧手",
+        "强化学习",
+        "RAG",
+        "WAIC",
+        "RSS",
+        "AMD",
+        "机器人学",
+        "人工智慧叛變",
+        "机器人学术语表",
+        "机器人伦理学",
+        "人形機器人",
+        "協作式機器人",
+        "上海",
+        "PONY AI Inc",
+        "科技股份有限公司",
+        "智元创新",
+        "IEEE",
+        "WeRide",
+        "Aurora",
+        "人工智能哲學",
+        "新浪财经",
+        "聊天機器人",
+        "技术奇点",
+        "具身智能机器人",
+        "蔡自兴",
+        "化石",
+        "LonWorks",
+        "心灵哲学",
+        "陈姓"
+      ],
+      "people": [
+        "汪滔",
+        "李泽湘",
+        "王兴兴",
+        "关注前沿科技"
+      ],
+      "sampleCompanies": [
+        "Figure AI",
+        "宇树科技",
+        "智元机器人",
+        "小马智行",
+        "文远知行",
+        "Aurora Innovation",
+        "Shield AI",
+        "大疆"
+      ]
+    },
+    {
+      "slug": "semiconductor",
+      "name": "半导体",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "AI 芯片",
+        "GPU",
+        "推理芯片",
+        "先进封装",
+        "国产算力",
+        "LPU",
+        "AI Agent",
+        "自动驾驶",
+        "HBM",
+        "Chiplet",
+        "硅光",
+        "端侧模型",
+        "WAIC",
+        "AMD",
+        "CoWoS",
+        "EDA",
+        "CPU",
+        "杂质半导体",
+        "简并半导体",
+        "絕緣體",
+        "Nvidia",
+        "ATI Technologies",
+        "Graphics card",
+        "RDNA 3",
+        "RDNA (microarchitecture)",
+        "Radeon RX 7000 series",
+        "Radeon",
+        "光模块",
+        "集成电路",
+        "AMD APU",
+        "Ray tracing hardware",
+        "Graphics Core Next"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "寒武纪",
+        "Cerebras",
+        "Groq",
+        "地平线机器人",
+        "摩尔线程",
+        "清微智能",
+        "Mobileye",
+        "Cerebras Systems",
+        "壁仞科技",
+        "SambaNova Systems",
+        "Anthropic",
+        "IonQ"
+      ],
+      "ignoredRecommendations": {
+        "companies": [
+          "宁德时代"
+        ]
+      }
+    },
+    {
+      "slug": "energy",
+      "name": "新能源",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "长时储能",
+        "固态电池",
+        "动力电池",
+        "储能系统",
+        "钠离子电池",
+        "储能",
+        "电池回收",
+        "光伏钙钛矿",
+        "锂离子电池",
+        "電動車電池",
+        "全釩氧化還原液流電池",
+        "固態電解質",
+        "鋰空氣電池",
+        "钾离子电池",
+        "鋰離子聚合物電池",
+        "電網儲能",
+        "卡諾電池",
+        "液流電池",
+        "發電",
+        "低溫儲能",
+        "V2G",
+        "氫能載具",
+        "抽水蓄能电站",
+        "电池",
+        "太阳能",
+        "蜂巢能源全球合作",
+        "半固態電池",
+        "固态离子学",
+        "太陽能發電",
+        "隔膜 (电学)",
+        "固態氧化物燃料電池",
+        "磷酸锗铝锂",
+        "铝空气电池",
+        "蓄電池",
+        "电动汽车"
+      ],
+      "people": [
+        "Google DeepMind @GoogleDeepMind"
+      ],
+      "sampleCompanies": [
+        "宁德时代",
+        "Form Energy",
+        "Redwood Materials",
+        "蜂巢能源",
+        "Commonwealth Fusion Systems",
+        "Helion Energy",
+        "新能源科技"
+      ]
+    },
+    {
+      "slug": "biotech",
+      "name": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "AI 制药",
+        "基因组学",
+        "计算生物学",
+        "药物发现",
+        "自动化实验",
+        "基因编辑",
+        "蛋白质设计",
+        "AI制药",
+        "细胞治疗",
+        "合成生物学",
+        "基因工程",
+        "生物信息学",
+        "化学信息学",
+        "比较基因组学",
+        "基因組學",
+        "生物製藥",
+        "发酵",
+        "DNA測序",
+        "组学",
+        "宏基因组学",
+        "人类基因组计划",
+        "基因組",
+        "遗传学",
+        "GICS",
+        "位居",
+        "ESG",
+        "家公司第",
+        "三级生物科技行业",
+        "基因预测"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "晶泰科技",
+        "英矽智能",
+        "Tempus AI",
+        "Recursion",
+        "分子之心",
+        "Recursion Pharmaceuticals",
+        "华大基因",
+        "OpenAI",
+        "东方财富"
+      ]
+    },
+    {
+      "slug": "quantum",
+      "name": "量子计算",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "量子纠错",
+        "逻辑量子比特",
+        "离子阱",
+        "超导量子",
+        "光子量子",
+        "容错量子计算",
+        "量子芯片",
+        "量子网络",
+        "中性原子量子计算机",
+        "量子计算机",
+        "秀爾演算法",
+        "D-Wave 系统公司",
+        "绝热量子计算机",
+        "LLC",
+        "超导量子计算",
+        "超导量子计算机",
+        "九章四号",
+        "CSS纠错码",
+        "表面码",
+        "阈值定理",
+        "安德鲁·斯蒂恩",
+        "正算子值测度",
+        "编码理论",
+        "相互作用繪景",
+        "颜色码 (量子计算)"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "IonQ",
+        "Rigetti",
+        "PsiQuantum",
+        "本源量子",
+        "图灵量子",
+        "Rigetti Computing",
+        "DeepSeek"
+      ]
+    },
+    {
+      "slug": "space",
+      "name": "商业航天",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "可复用火箭",
+        "卫星互联网",
+        "商业发射",
+        "在轨服务",
+        "商业空间站",
+        "可回收火箭",
+        "低轨卫星",
+        "通訊衛星",
+        "SpaceX Starship",
+        "新西兰航天局",
+        "火箭派",
+        "阿丽亚娜空间",
+        "海南商业航天发射",
+        "场二期发射区土建",
+        "Mission Success",
+        "墓地轨道",
+        "星链",
+        "國際海事衛星組織",
+        "人造衛星",
+        "工作完成",
+        "卫星电话",
+        "北斗卫星导航系统",
+        "小型卫星",
+        "地球同步轨道",
+        "反卫星导弹"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "SpaceX",
+        "Rocket Lab",
+        "蓝箭航天",
+        "天兵科技",
+        "Joby Aviation",
+        "Axiom Space",
+        "Relativity Space",
+        "星河动力"
+      ],
+      "ignoredRecommendations": {
+        "companies": [
+          "Anthropic"
+        ]
+      }
+    },
+    {
+      "slug": "web3",
+      "name": "Web3",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "稳定币",
+        "区块链基础设施",
+        "数字资产",
+        "链上支付",
+        "RWA",
+        "Polygon (blockchain)",
+        "Blockchain game",
+        "Decentralized autonomous organization",
+        "穩定幣條例",
+        "泰达币",
+        "DAI",
+        "资产类别",
+        "金融市场",
+        "加密貨幣",
+        "欧易",
+        "香港穩定幣",
+        "法定貨幣",
+        "Insurance",
+        "通证经济学",
+        "应用程序",
+        "数字继承"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "比特大陆"
+      ]
+    },
+    {
+      "slug": "materials",
+      "name": "新材料",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "半导体材料",
+        "复合材料",
+        "电池材料",
+        "高性能材料",
+        "材料量产",
+        "散热",
+        "钙钛矿",
+        "碳纤维",
+        "超材料",
+        "高温超导",
+        "氧化镓",
+        "电子皮肤",
+        "聚酰亚胺",
+        "散热器",
+        "鳳鼻頭",
+        "大林蒲",
+        "洲際液化天然氣接收站",
+        "材料",
+        "固态电池材料",
+        "量子点",
+        "碲化鋅鎘",
+        "氧化鋅",
+        "自旋電子學",
+        "奥尔特温·赫斯",
+        "高熵氧化物",
+        "窄带隙半导体",
+        "原子层沉积",
+        "金属-半导体结",
+        "锗烯",
+        "玻璃钢"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "中际旭创",
+        "宁德时代"
+      ]
+    },
+    {
+      "slug": "manufacturing",
+      "name": "智能制造",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "工业软件",
+        "数字工厂",
+        "工业自动化",
+        "自主系统",
+        "智能装备",
+        "工业机器人",
+        "数字孪生",
+        "机器视觉",
+        "柔性制造",
+        "可编程逻辑控制器",
+        "智慧家庭",
+        "智慧電網",
+        "物联网",
+        "移动设备",
+        "智能手机",
+        "控制工程",
+        "机械电子学",
+        "分散式控制系統",
+        "过程控制",
+        "工業控制系統",
+        "電機工程學",
+        "控制系統",
+        "現場總線",
+        "倍福",
+        "智能制造赋能产业",
+        "探访温州乐清",
+        "未来工厂"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "Anduril",
+        "大疆创新",
+        "傅利叶智能",
+        "Anduril Industries"
+      ]
+    },
+    {
+      "slug": "fusion",
+      "name": "可控核聚变",
+      "enabled": true,
+      "custom": false,
+      "keywords": [
+        "可控核聚变",
+        "聚变能源",
+        "托卡马克",
+        "高温超导磁体",
+        "等离子体约束",
+        "聚变净能量增益",
+        "氚燃料循环",
+        "核聚变",
+        "国际热核聚变实验反应堆",
+        "磁化内衬惯性核聚变",
+        "慣性局限融合",
+        "核融合-裂變混合核能",
+        "歐洲聯合環狀反應爐",
+        "可控核聚變",
+        "KSTAR",
+        "全超导托卡马克核聚变实验装置",
+        "磁局限融合",
+        "普林斯顿等离子体物理实验室",
+        "偏滤器",
+        "人造太阳",
+        "等离子体形状控制",
+        "JT-60",
+        "中国环流器二号",
+        "超导现象",
+        "钇钡铜氧",
+        "铋锶钙铜氧",
+        "超導體",
+        "鐵基超導體",
+        "二硼化鎂",
+        "共振价键理论",
+        "BCS理论",
+        "室溫超導體"
+      ],
+      "people": [
+        "杨钊",
+        "Bob Mumgaard",
+        "David Kirtley",
+        "Michl Binderbauer"
+      ],
+      "sampleCompanies": [
+        "能量奇点",
+        "Commonwealth Fusion Systems",
+        "Helion Energy",
+        "TAE Technologies",
+        "Zap Energy",
+        "General Fusion"
+      ]
+    },
+    {
+      "slug": "track-1ccjq49",
+      "name": "风险投资",
+      "enabled": true,
+      "custom": true,
+      "keywords": [
+        "PE",
+        "TS",
+        "对赌",
+        "基金备案",
+        "专项基金",
+        "天使轮",
+        "A轮",
+        "Pre-IPO",
+        "退出",
+        "科创板",
+        "私人股权投资",
+        "老虎全球管理",
+        "博裕资本",
+        "紅杉資本",
+        "手机新浪网",
+        "Z.ai",
+        "Comment",
+        "亚洲日报",
+        "China",
+        "Crunchbase",
+        "Army Police (Brazil)",
+        "Phenylephrine",
+        "Gamma ray",
+        "Military Police (Brazil)",
+        "DeepSeek API Docs",
+        "Beta particle",
+        "Counts per minute"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "红杉",
+        "Sequoia Capital",
+        "Y Combinator",
+        "IDG 资本",
+        "Benchmark",
+        "Kleiner Perkins",
+        "启明创投",
+        "经纬创投",
+        "高榕创投",
+        "高瓴",
+        "深创投",
+        "拓锋投资",
+        "CMC资本"
+      ]
+    },
+    {
+      "slug": "track-1p8ob4k",
+      "name": "新消费",
+      "enabled": true,
+      "custom": true,
+      "keywords": [
+        "即时零售"
+      ],
+      "people": [],
+      "sampleCompanies": [
+        "希音",
+        "shein"
+      ]
+    }
+  ],
+  "listedCompanies": [
+    {
+      "id": "catalog-cambricon",
+      "name": "寒武纪",
+      "ticker": "688256",
+      "market": "A股",
+      "sector": "半导体",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "cambricon"
+    },
+    {
+      "id": "catalog-catl",
+      "name": "宁德时代",
+      "ticker": "300750",
+      "market": "A股",
+      "sector": "新能源",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "catl"
+    },
+    {
+      "id": "catalog-bgi-genomics",
+      "name": "华大基因",
+      "ticker": "300676",
+      "market": "A股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "bgi-genomics"
+    },
+    {
+      "id": "catalog-horizon-robotics",
+      "name": "地平线机器人",
+      "ticker": "09660",
+      "market": "港股",
+      "sector": "半导体",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "horizon-robotics"
+    },
+    {
+      "id": "catalog-xtalpi",
+      "name": "晶泰科技",
+      "ticker": "02228",
+      "market": "港股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "xtalpi"
+    },
+    {
+      "id": "catalog-pony-ai",
+      "name": "小马智行",
+      "ticker": "PONY",
+      "market": "美股",
+      "sector": "机器人",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "pony-ai"
+    },
+    {
+      "id": "catalog-weride",
+      "name": "文远知行",
+      "ticker": "WRD",
+      "market": "美股",
+      "sector": "机器人",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "weride"
+    },
+    {
+      "id": "catalog-rigetti",
+      "name": "Rigetti Computing",
+      "ticker": "RGTI",
+      "market": "美股",
+      "sector": "量子计算",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "rigetti"
+    },
+    {
+      "id": "catalog-ionq",
+      "name": "IonQ",
+      "ticker": "IONQ",
+      "market": "美股",
+      "sector": "量子计算",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "ionq"
+    },
+    {
+      "id": "catalog-rocket-lab",
+      "name": "Rocket Lab",
+      "ticker": "RKLB",
+      "market": "美股",
+      "sector": "商业航天",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "rocket-lab"
+    },
+    {
+      "id": "catalog-tempus-ai",
+      "name": "Tempus AI",
+      "ticker": "TEM",
+      "market": "美股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "tempus-ai"
+    },
+    {
+      "id": "catalog-recursion",
+      "name": "Recursion Pharmaceuticals",
+      "ticker": "RXRX",
+      "market": "美股",
+      "sector": "生物科技",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "recursion"
+    },
+    {
+      "id": "catalog-mobileye",
+      "name": "Mobileye",
+      "ticker": "MBLY",
+      "market": "美股",
+      "sector": "半导体",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "mobileye"
+    },
+    {
+      "id": "catalog-aurora",
+      "name": "Aurora Innovation",
+      "ticker": "AUR",
+      "market": "美股",
+      "sector": "机器人",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "aurora"
+    },
+    {
+      "id": "catalog-joby",
+      "name": "Joby Aviation",
+      "ticker": "JOBY",
+      "market": "美股",
+      "sector": "商业航天",
+      "enabled": true,
+      "custom": false,
+      "catalogSlug": "joby"
+    }
+  ],
+  "sources": [
+    {
+      "id": "source-yahoo-tw",
+      "name": "Yahoo奇摩",
+      "url": "https://tw.yahoo.com/?p=us",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1sp7gkg",
+      "name": "东方财富",
+      "url": "https://www.eastmoney.com/default.html",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1r4ht2r",
+      "name": "谷歌新闻",
+      "url": "https://news.google.com/home?hl=en-US&gl=US&ceid=US:en",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-track-rcvvao",
+      "name": "投资界",
+      "url": "https://www.pedaily.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-b",
+      "name": "b站",
+      "url": "https://www.bilibili.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-track-jycfcg",
+      "name": "谷歌快讯",
+      "url": "https://www.google.com/alerts",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-youtube",
+      "name": "YOUTUBE",
+      "url": "https://www.youtube.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-the-washington-post",
+      "name": "The Washington Post",
+      "url": "https://x.com/washingtonpost",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-openai",
+      "name": "OpenAI 官方来源",
+      "url": "https://openai.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "OpenAI",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-ai",
+      "name": "智谱AI 官方来源",
+      "url": "https://www.zhipuai.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "智谱AI",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-xai",
+      "name": "xAI 官方来源",
+      "url": "https://x.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "xAI",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-yahoo",
+      "name": "Yahoo奇摩",
+      "url": "https://tw.news.yahoo.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-anthropic",
+      "name": "Anthropic 官方来源",
+      "url": "https://anthropic.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Anthropic",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-google-ai",
+      "name": "Google AI",
+      "url": "https://blog.google/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-google-deepmind",
+      "name": "Google DeepMind",
+      "url": "https://deepmind.google/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-techcrunch-venture",
+      "name": "TechCrunch Venture",
+      "url": "https://techcrunch.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-rcvvao-2",
+      "name": "投资界",
+      "url": "https://news.pedaily.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-harvey",
+      "name": "Harvey 官方来源",
+      "url": "https://harvey.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Harvey",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-scale-ai",
+      "name": "Scale AI 官方来源",
+      "url": "https://scale.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Scale AI",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-pr-newswire-consumer-technology",
+      "name": "PR Newswire Consumer Technology",
+      "url": "https://prnewswire.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-databricks",
+      "name": "Databricks 官方来源",
+      "url": "https://databricks.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Databricks",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-minimax",
+      "name": "MiniMax 官方来源",
+      "url": "https://minimaxi.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "MiniMax",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-sierra",
+      "name": "Sierra 官方来源",
+      "url": "https://sierra.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Sierra",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-zlbbw1",
+      "name": "钛媒体",
+      "url": "https://tmtpost.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-yahoo-2",
+      "name": "Yahoo奇摩",
+      "url": "https://tw.stock.yahoo.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-deepseek",
+      "name": "DeepSeek 官方来源",
+      "url": "https://www.deepseek.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "DeepSeek",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-108mw2h",
+      "name": "雷峰网",
+      "url": "https://leiphone.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-bfbxp1",
+      "name": "月之暗面 官方来源",
+      "url": "https://www.moonshot.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "月之暗面",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1vb1u8p",
+      "name": "百川智能 官方来源",
+      "url": "https://www.baichuan-ai.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "百川智能",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-glean",
+      "name": "Glean 官方来源",
+      "url": "https://www.glean.com/about",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Glean",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-perplexity",
+      "name": "Perplexity 官方来源",
+      "url": "https://www.perplexity.ai/about",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Perplexity",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1rth4zh",
+      "name": "阶跃星辰 官方来源",
+      "url": "https://www.stepfun.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "阶跃星辰",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-deepseek-2",
+      "name": "DeepSeek 官方来源",
+      "url": "https://api-docs.deepseek.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "DeepSeek",
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-c6s6ma",
+      "name": "投中网",
+      "url": "https://www.chinaventure.com.cn/rank/210/list.html",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-track-ujwxf1",
+      "name": "机器之心",
+      "url": "https://mp.weixin.qq.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-semiconductor-technology-sohu",
+      "name": "半导体技术",
+      "url": "https://m.sohu.com/media/120498874",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体",
+        "芯片",
+        "集成电路",
+        "晶圆",
+        "封装测试",
+        "可靠性测试",
+        "失效分析",
+        "半导体设备"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-chiptrend-ic-sohu",
+      "name": "芯潮IC",
+      "url": "https://mp.sohu.com/profile?xpt=MzlkZjljNGItNzVjMS00MGRiLWJlYjctMGVlMTYzZjkyOTcy",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体",
+        "芯片",
+        "集成电路",
+        "晶圆厂",
+        "封装",
+        "半导体设备",
+        "半导体材料",
+        "融资",
+        "IPO"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-eefocus-semiconductor",
+      "name": "与非网 EEFocus",
+      "url": "https://www.eefocus.com/tag/%E5%8D%8A%E5%AF%BC%E4%BD%93%E4%BA%A7%E4%B8%9A/article/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体",
+        "芯片",
+        "集成电路",
+        "AI芯片",
+        "EDA",
+        "晶圆",
+        "先进封装",
+        "功率半导体",
+        "产业研究"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-12jn6rw",
+      "name": "猫目",
+      "url": "https://maomu.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1od7irr",
+      "name": "文远知行 官方来源",
+      "url": "https://ir.weride.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "文远知行",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-13f64em",
+      "name": "小马智行 官方来源",
+      "url": "https://ir.pony.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "小马智行",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-figure-ai",
+      "name": "Figure AI 官方来源",
+      "url": "https://figure.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Figure AI",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1izlsao",
+      "name": "智元机器人 官方来源",
+      "url": "https://agibot.com.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "智元机器人",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-shield-ai",
+      "name": "Shield AI 官方来源",
+      "url": "https://shield.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Shield AI",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-aurora-innovation",
+      "name": "Aurora Innovation 官方来源",
+      "url": "https://aurora.tech/company",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Aurora Innovation",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-qqrfne",
+      "name": "宇树科技 官方来源",
+      "url": "https://www.unitree.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "宇树科技",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-14lobu0",
+      "name": "傅利叶智能 官方来源",
+      "url": "https://www.fftai.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "傅利叶智能",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1izlsao-2",
+      "name": "智元机器人 官方来源",
+      "url": "https://www.zhiyuan-robot.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "智元机器人",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-pvo2gy",
+      "name": "银河通用 官方来源",
+      "url": "https://www.galbot.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "银河通用",
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-cerebras-systems",
+      "name": "Cerebras Systems 官方来源",
+      "url": "https://cerebras.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Cerebras Systems",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-mobileye",
+      "name": "Mobileye 官方来源",
+      "url": "https://mobileye.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Mobileye",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-sambanova-systems",
+      "name": "SambaNova Systems 官方来源",
+      "url": "https://sambanova.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "SambaNova Systems",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-8g1xhr",
+      "name": "壁仞科技 官方来源",
+      "url": "https://birentech.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "壁仞科技",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-11pst6b",
+      "name": "地平线机器人 官方来源",
+      "url": "https://horizon.auto/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "地平线机器人",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-tj06m5",
+      "name": "寒武纪 官方来源",
+      "url": "https://cambricon.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "寒武纪",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-fosl0s",
+      "name": "摩尔线程 官方来源",
+      "url": "https://mthreads.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "摩尔线程",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-groq",
+      "name": "Groq 官方来源",
+      "url": "https://groq.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Groq",
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-anduril-industries",
+      "name": "Anduril Industries 官方来源",
+      "url": "https://anduril.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "智能制造",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Anduril Industries",
+        "智能制造"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1ihs8gk",
+      "name": "晶泰科技 官方来源",
+      "url": "https://xtalpi.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "生物科技",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "晶泰科技",
+        "生物科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-recursion-pharmaceuticals",
+      "name": "Recursion Pharmaceuticals 官方来源",
+      "url": "https://recursion.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "生物科技",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Recursion Pharmaceuticals",
+        "生物科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1thijny",
+      "name": "华大基因 官方来源",
+      "url": "https://www.bgi.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "生物科技",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "华大基因",
+        "生物科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-tempus-ai",
+      "name": "Tempus AI 官方来源",
+      "url": "https://www.tempus.com/about-us/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "生物科技",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Tempus AI",
+        "生物科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-ge3t2k",
+      "name": "英矽智能 官方来源",
+      "url": "https://insilico.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "生物科技",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "英矽智能",
+        "生物科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1qyvgto",
+      "name": "宁德时代 官方来源",
+      "url": "https://catl.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "宁德时代",
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-obfl4u",
+      "name": "蜂巢能源 官方来源",
+      "url": "https://svolt.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "蜂巢能源",
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-commonwealth-fusion-systems",
+      "name": "Commonwealth Fusion Systems 官方来源",
+      "url": "https://cfs.energy/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Commonwealth Fusion Systems",
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-helion-energy",
+      "name": "Helion Energy 官方来源",
+      "url": "https://helionenergy.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Helion Energy",
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-redwood-materials",
+      "name": "Redwood Materials 官方来源",
+      "url": "https://redwoodmaterials.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Redwood Materials",
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1t2r5p9",
+      "name": "远景能源 官方来源",
+      "url": "https://www.envision-group.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "远景能源",
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-form-energy",
+      "name": "Form Energy 官方来源",
+      "url": "https://formenergy.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Form Energy",
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-cmswire",
+      "name": "CMSWire",
+      "url": "https://cmswire.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-itpro",
+      "name": "ITPro",
+      "url": "https://itpro.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-bleepingcomputer",
+      "name": "BleepingComputer",
+      "url": "https://bleepingcomputer.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-engadget",
+      "name": "Engadget",
+      "url": "https://engadget.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-ghacks",
+      "name": "gHacks",
+      "url": "https://ghacks.net/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-itweb",
+      "name": "ITWeb",
+      "url": "https://itweb.co.za/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-petapixel",
+      "name": "PetaPixel",
+      "url": "https://petapixel.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-wired",
+      "name": "WIRED",
+      "url": "https://wired.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-zdnet",
+      "name": "ZDNET",
+      "url": "https://zdnet.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-cnet",
+      "name": "CNET",
+      "url": "https://cnet.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-mit-technology-review",
+      "name": "MIT Technology Review",
+      "url": "https://technologyreview.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-techpp",
+      "name": "TechPP",
+      "url": "https://techpp.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-techspective",
+      "name": "TechSpective",
+      "url": "https://techspective.net/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-technode",
+      "name": "TechNode",
+      "url": "https://technode.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-the-verge",
+      "name": "The Verge",
+      "url": "https://theverge.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-gigaom",
+      "name": "GigaOm",
+      "url": "https://gigaom.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-app-developer-magazine",
+      "name": "App Developer Magazine",
+      "url": "https://appdevelopermagazine.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-it-news-africa",
+      "name": "IT News Africa",
+      "url": "https://itnewsafrica.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-ubergizmo",
+      "name": "Ubergizmo",
+      "url": "https://ubergizmo.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-android-authority",
+      "name": "Android Authority",
+      "url": "https://androidauthority.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-ars-technica",
+      "name": "Ars Technica",
+      "url": "https://arstechnica.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-computerworld",
+      "name": "Computerworld",
+      "url": "https://computerworld.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-digital-trends",
+      "name": "Digital Trends",
+      "url": "https://digitaltrends.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-mashable",
+      "name": "Mashable",
+      "url": "https://mashable.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-siliconangle",
+      "name": "SiliconANGLE",
+      "url": "https://siliconangle.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-bgr",
+      "name": "BGR",
+      "url": "https://bgr.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-dev-community",
+      "name": "DEV Community",
+      "url": "https://dev.to/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-infoworld",
+      "name": "InfoWorld",
+      "url": "https://infoworld.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-makeuseof",
+      "name": "MakeUseOf",
+      "url": "https://makeuseof.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-mobilesyrup",
+      "name": "MobileSyrup",
+      "url": "https://mobilesyrup.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-techdirt",
+      "name": "Techdirt",
+      "url": "https://techdirt.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-tom-s-hardware",
+      "name": "Tom's Hardware",
+      "url": "https://tomshardware.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-pocketnow",
+      "name": "Pocketnow",
+      "url": "https://pocketnow.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-ieee-spectrum",
+      "name": "IEEE Spectrum",
+      "url": "https://spectrum.ieee.org/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-techhive",
+      "name": "TechHive",
+      "url": "https://techhive.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-notebookcheck",
+      "name": "Notebookcheck",
+      "url": "https://notebookcheck.net/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-electronics-weekly",
+      "name": "Electronics Weekly",
+      "url": "https://electronicsweekly.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-techspot",
+      "name": "TechSpot",
+      "url": "https://techspot.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-venturebeat-ai",
+      "name": "VentureBeat AI",
+      "url": "https://venturebeat.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-hardware-canucks",
+      "name": "Hardware Canucks",
+      "url": "https://hardwarecanucks.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-cleantechnica",
+      "name": "CleanTechnica",
+      "url": "https://cleantechnica.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-electrek",
+      "name": "Electrek",
+      "url": "https://electrek.co/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "新能源"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-ionq",
+      "name": "IonQ 官方来源",
+      "url": "https://ionq.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "IonQ",
+        "量子计算"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-psiquantum",
+      "name": "PsiQuantum 官方来源",
+      "url": "https://psiquantum.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "PsiQuantum",
+        "量子计算"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-rigetti-computing",
+      "name": "Rigetti Computing 官方来源",
+      "url": "https://investors.rigetti.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Rigetti Computing",
+        "量子计算"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-rocket-lab",
+      "name": "Rocket Lab 官方来源",
+      "url": "https://investors.rocketlabcorp.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Rocket Lab",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-joby-aviation",
+      "name": "Joby Aviation 官方来源",
+      "url": "https://jobyaviation.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Joby Aviation",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-1t2crq4",
+      "name": "蓝箭航天 官方来源",
+      "url": "https://landspace.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "蓝箭航天",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-axiom-space",
+      "name": "Axiom Space 官方来源",
+      "url": "https://axiomspace.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Axiom Space",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-relativity-space",
+      "name": "Relativity Space 官方来源",
+      "url": "https://relativityspace.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Relativity Space",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-rvrhvg",
+      "name": "星河动力 官方来源",
+      "url": "https://galactic-energy.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "星河动力",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-rocket-lab-2",
+      "name": "Rocket Lab 官方来源",
+      "url": "https://www.rocketlabusa.com/about/about-us/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Rocket Lab",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-spacex",
+      "name": "SpaceX 官方来源",
+      "url": "https://www.spacex.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "SpaceX",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-appq4v",
+      "name": "小鹏汇天 官方来源",
+      "url": "https://www.aeroht.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "小鹏汇天",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-varda-space-industries",
+      "name": "Varda Space Industries 官方来源",
+      "url": "https://www.varda.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "Varda Space Industries",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-lv4j34",
+      "name": "起源太空 官方来源",
+      "url": "https://www.origin.space/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "商业航天",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "起源太空",
+        "商业航天"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-y-combinator-blog",
+      "name": "Y Combinator Blog",
+      "url": "https://ycombinator.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-item-aacc27ff",
+      "name": "新能源科技 官方网站",
+      "url": "http://www.atlbattery.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "新能源科技",
+      "ticker": "",
+      "keywords": [
+        "新能源科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-extremetech",
+      "name": "ExtremeTech",
+      "url": "https://extremetech.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-cloudtech",
+      "name": "CloudTech",
+      "url": "https://cloudcomputing-news.net/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-android-headlines",
+      "name": "Android Headlines",
+      "url": "https://androidheadlines.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-e58ig",
+      "name": "新浪财经",
+      "url": "https://finance.sina.com.cn/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-technews180",
+      "name": "TechNews180",
+      "url": "https://technews180.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-techeblog",
+      "name": "TechEBlog",
+      "url": "https://techeblog.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-google",
+      "name": "Google 官方网站",
+      "url": "https://about.google/",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Google",
+      "ticker": "",
+      "keywords": [
+        "Google"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-investors-cerebras-ai",
+      "name": "Cerebras Systems 官方来源 · AI / AGI信源",
+      "url": "https://investors.cerebras.ai/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-ir-aurora-tech",
+      "name": "Aurora Innovation · 机器人信源",
+      "url": "https://ir.aurora.tech/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-finance-eastmoney-com",
+      "name": "东方财富 · 半导体信源",
+      "url": "https://finance.eastmoney.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-console-groq-com",
+      "name": "Groq 官方来源 · 半导体信源",
+      "url": "https://console.groq.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "半导体"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-item-ddee68df",
+      "name": "东方财富 官方网站",
+      "url": "http://www.eastmoney.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "生物科技",
+      "company": "东方财富",
+      "ticker": "",
+      "keywords": [
+        "东方财富"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-ir-recursion-com",
+      "name": "Recursion Pharmaceuticals 官方来源 · 生物科技信源",
+      "url": "https://ir.recursion.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "生物科技",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "生物科技"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-item-ca1e1423",
+      "name": "搜狐网 官方网站",
+      "url": "https://www.sohu.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "商业航天",
+      "company": "搜狐网",
+      "ticker": "",
+      "keywords": [
+        "搜狐网"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-news-slashdot-org",
+      "name": "Slashdot · 风险投资信源",
+      "url": "https://news.slashdot.org/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-hardware-slashdot-org",
+      "name": "Slashdot · 风险投资信源",
+      "url": "https://hardware.slashdot.org/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-portal-gigaom-com",
+      "name": "GigaOm · AI / AGI信源",
+      "url": "https://portal.gigaom.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "AI / AGI"
+      ],
+      "enabled": true
+    }
+  ]
+}

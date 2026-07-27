@@ -1,0 +1,59 @@
+name: One-time fix Sogou WeChat signed URLs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-sogou-wechat-url.yml
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply safe URL entity decoding
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('tools/wechat_sogou_index.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''def _normalized_url(value: str) -> str:\n    parts = urlsplit(html.unescape(value or ""))\n    query = urlencode(parse_qsl(parts.query, keep_blank_values=True))\n    return urlunsplit((parts.scheme, parts.netloc, parts.path, query, ""))'''
+          new = '''def _url_entity_unescape(value: str) -> str:\n    return (\n        str(value or "")\n        .replace("&amp;", "&")\n        .replace("&#38;", "&")\n        .replace("&#x26;", "&")\n        .replace("&#X26;", "&")\n    )\n\n\ndef _normalized_url(value: str) -> str:\n    parts = urlsplit(_url_entity_unescape(value))\n    query = urlencode(parse_qsl(parts.query, keep_blank_values=True))\n    return urlunsplit((parts.scheme, parts.netloc, parts.path, query, ""))'''
+          if old not in text:
+              raise SystemExit('normalized URL anchor not found')
+          text = text.replace(old, new, 1)
+          text = text.replace(
+              'result_url = _normalized_url(urljoin(search_url, html.unescape(href)))',
+              'result_url = _normalized_url(urljoin(search_url, _url_entity_unescape(href)))',
+              1,
+          )
+          text = text.replace(
+              'value = html.unescape(value).replace("\\\\/", "/").replace("\\\\x26", "&").replace("@", "")',
+              'value = _url_entity_unescape(value).replace("\\\\/", "/").replace("\\\\x26", "&").replace("@", "")',
+              1,
+          )
+          path.write_text(text, encoding='utf-8')
+          PY
+      - name: Verify parser
+        run: |
+          python -m py_compile tools/wechat_sogou_index.py tools/wechat_sogou_bridge.py
+          python -m unittest tests.test_wechat_sogou_index tests.test_wechat_public_sources tests.test_wechat_source_registry
+      - name: Commit verified fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/wechat_sogou_index.py
+          git commit -m "fix: preserve WeChat timestamp parameters in Sogou links"
+          git pull --rebase origin main
+          git push origin HEAD:main

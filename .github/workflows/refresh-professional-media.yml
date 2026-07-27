@@ -1,0 +1,69 @@
+name: Refresh professional technology media
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - config/professional_technology_media_sources.json
+      - tools/professional_media_sources.py
+      - tools/validate_professional_media_snapshot.py
+      - tools/crawl_with_wechat_registry.py
+      - tests/test_professional_media_sources.py
+      - .github/workflows/refresh-professional-media.yml
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: professional-media-catalog-refresh
+  cancel-in-progress: true
+
+jobs:
+  validate-and-refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate complete media catalog
+        run: |
+          python -m py_compile \
+            tools/professional_media_sources.py \
+            tools/validate_professional_media_snapshot.py \
+            tools/crawl_with_wechat_registry.py
+          python -m unittest tests.test_professional_media_sources
+          python - <<'PY'
+          from collections import Counter
+          from tools import crawl_with_tracking as tracking
+          from tools import professional_media_sources as media
+
+          sources = media.enabled_sources()
+          tracks = tracking._enabled_tracks(tracking.load_tracking())
+          specs = media.grouped_specs(tracks, tracking)
+          covered = [
+              row["id"]
+              for spec in specs
+              for row in spec.get("professionalMedia", [])
+          ]
+          if len(sources) != 100:
+              raise SystemExit(f"expected 100 enabled media sources, got {len(sources)}")
+          if len(covered) != 100 or set(covered) != {row["id"] for row in sources}:
+              raise SystemExit("professional media grouping does not cover the complete catalog")
+          if not specs:
+              raise SystemExit("professional media catalog generated no executable source groups")
+          print(
+              {
+                  "enabledSources": len(sources),
+                  "discoveryGroups": len(specs),
+                  "sourcesBySector": dict(Counter(row["primarySector"] for row in sources)),
+              }
+          )
+          PY
+      - name: Start full public-data refresh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run scheduled-sync.yml --ref main

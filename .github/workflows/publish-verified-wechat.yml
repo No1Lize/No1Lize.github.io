@@ -1,0 +1,118 @@
+name: One-time publish verified WeChat articles
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-verified-wechat.yml
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify and refresh
+        id: refresh
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          : > /tmp/wechat-publish.log
+          python -m py_compile tools/refresh_wechat_snapshot.py tools/wechat_public_sources.py tools/wechat_sogou_index.py tools/wechat_sogou_bridge.py >>/tmp/wechat-publish.log 2>&1
+          COMPILE=$?
+          python -m unittest tests.test_wechat_public_sources tests.test_wechat_source_registry tests.test_wechat_sogou_index tests.test_refresh_wechat_snapshot >>/tmp/wechat-publish.log 2>&1
+          TESTS=$?
+          python tools/refresh_wechat_snapshot.py --account qbitai >>/tmp/wechat-publish.log 2>&1
+          CRAWL=$?
+          if [ "$CRAWL" -eq 0 ]; then
+            python tools/migrate_article_entities.py >>/tmp/wechat-publish.log 2>&1
+            MIGRATE=$?
+            python tools/enrich_tracking_snapshot.py >>/tmp/wechat-publish.log 2>&1
+            ENRICH=$?
+            python tools/crawl_articles.py --validate-only >>/tmp/wechat-publish.log 2>&1
+            VALIDATE=$?
+          else
+            MIGRATE=99
+            ENRICH=99
+            VALIDATE=99
+          fi
+          CHANGED=false
+          if ! git diff --quiet -- public/data/articles.json; then
+            CHANGED=true
+          fi
+          python - "$COMPILE" "$TESTS" "$CRAWL" "$MIGRATE" "$ENRICH" "$VALIDATE" "$CHANGED" <<'PY'
+          import json, sys
+          from pathlib import Path
+          names = ['compileStatus','testStatus','crawlStatus','migrateStatus','enrichStatus','validateStatus']
+          values = [int(value) for value in sys.argv[1:7]]
+          changed = sys.argv[7] == 'true'
+          payload = {}
+          try:
+              payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
+          except Exception as exc:
+              payload = {'readError': f'{type(exc).__name__}: {exc}'}
+          result = dict(zip(names, values))
+          result.update({
+              'passed': all(value == 0 for value in values),
+              'changed': changed,
+              'generatedAt': payload.get('generatedAt'),
+              'articleCount': payload.get('articleCount'),
+              'wechatIngestion': payload.get('wechatIngestion'),
+              'wechatSamples': [
+                  {
+                      'title': article.get('title'),
+                      'publishedAt': article.get('publishedAt'),
+                      'wechatAccount': article.get('wechatAccount'),
+                      'sector': article.get('sector'),
+                      'company': article.get('company'),
+                      'mentionedCompanies': article.get('mentionedCompanies', []),
+                      'mentionedPeople': article.get('mentionedPeople', []),
+                      'url': article.get('source', {}).get('url'),
+                  }
+                  for article in payload.get('articles', [])
+                  if article.get('source', {}).get('platform') == '微信'
+              ][:8],
+              'logTail': Path('/tmp/wechat-publish.log').read_text(errors='replace').splitlines()[-180:],
+          })
+          Path('diagnostics/wechat-publish.json').write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+          PY
+          echo "passed=$([ "$COMPILE" -eq 0 ] && [ "$TESTS" -eq 0 ] && [ "$CRAWL" -eq 0 ] && [ "$MIGRATE" -eq 0 ] && [ "$ENRICH" -eq 0 ] && [ "$VALIDATE" -eq 0 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+      - name: Commit diagnostic or refreshed snapshot
+        id: publish
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ "${{ steps.refresh.outputs.passed }}" = "true" ] && [ "${{ steps.refresh.outputs.changed }}" = "true" ]; then
+            git add public/data/articles.json diagnostics/wechat-publish.json
+            git commit -m "data: publish verified WeChat intelligence"
+          else
+            git add diagnostics/wechat-publish.json
+            git commit -m "ci: record verified WeChat publication status"
+          fi
+          for attempt in 1 2 3; do
+            git pull --rebase origin main
+            if git push origin HEAD:main; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+      - name: Publish website
+        if: steps.refresh.outputs.passed == 'true' && steps.refresh.outputs.changed == 'true' && steps.publish.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

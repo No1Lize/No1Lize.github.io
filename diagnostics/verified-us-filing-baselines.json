@@ -1,0 +1,114 @@
+{
+  "generatedAt": "2026-07-26T06:54:50+00:00",
+  "passed": true,
+  "snapshotGeneratedAt": "2026-07-26T06:54:49+00:00",
+  "companyCount": 15,
+  "eventCount": 120,
+  "marketListingCounts": {
+    "A股": 3,
+    "港股": 3,
+    "美股": 10
+  },
+  "verifiedBaselineCount": 10,
+  "usIrStructured": {
+    "schemaVersion": 1,
+    "provider": "official-company-ir-sec-filings",
+    "attemptedListingCount": 10,
+    "acceptedEventCount": 10,
+    "verifiedBaselineCount": 10,
+    "directSecAccess": "blocked-by-sec-for-shared-ci-ip",
+    "retentionPolicy": "live-official-discovery-plus-verified-baseline"
+  },
+  "companies": [
+    {
+      "slug": "aurora",
+      "name": "Aurora Innovation",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "bgi-genomics",
+      "name": "华大基因",
+      "eventCount": 18,
+      "baselineCount": 0
+    },
+    {
+      "slug": "cambricon",
+      "name": "寒武纪",
+      "eventCount": 19,
+      "baselineCount": 0
+    },
+    {
+      "slug": "catl",
+      "name": "宁德时代",
+      "eventCount": 36,
+      "baselineCount": 0
+    },
+    {
+      "slug": "horizon-robotics",
+      "name": "地平线机器人",
+      "eventCount": 19,
+      "baselineCount": 0
+    },
+    {
+      "slug": "ionq",
+      "name": "IonQ",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "joby",
+      "name": "Joby Aviation",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "mobileye",
+      "name": "Mobileye",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "pony-ai",
+      "name": "小马智行",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "recursion",
+      "name": "Recursion Pharmaceuticals",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "rigetti",
+      "name": "Rigetti Computing",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "rocket-lab",
+      "name": "Rocket Lab",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "tempus-ai",
+      "name": "Tempus AI",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "weride",
+      "name": "文远知行",
+      "eventCount": 1,
+      "baselineCount": 1
+    },
+    {
+      "slug": "xtalpi",
+      "name": "晶泰科技",
+      "eventCount": 18,
+      "baselineCount": 0
+    }
+  ]
+}

@@ -1,152 +1,99 @@
-# 丽泽路1号｜科技与创投情报站
+# 丽泽路1号
 
-[![Build and Deploy Jekyll](https://github.com/no1lize/no1lize.github.io/actions/workflows/pages.yml/badge.svg)](https://github.com/no1lize/no1lize.github.io/actions/workflows/pages.yml)
+公开访问、以原始信源为优先的中美新兴科技与创投情报网站。
 
-> DAILY INTELLIGENCE DESK · 中美双轨
+## 当前范围
 
-持续读取公司与监管披露、金融创投媒体、新浪、X、微信公开索引及开放论文数据库，连接中美科技公司的产品、融资、经营、研究与资本市场进展。
+- 一个情报首页、六个核心频道和全局搜索；
+- 58 家真实中美科技公司、20 家投资机构、15 家上市跟踪公司；
+- 巴菲特、芒格、段永平、李录、何恺明和姚顺雨人物档案，每人至少五条材料索引；
+- 10 个赛道、5 篇结构化研究报告和可追溯的公开情报；
+- 公司/机构官网、SEC EDGAR、金融创投媒体、新浪、X 公开资料、OpenAlex、arXiv，以及严格域名白名单内的微信、今日头条和金融媒体公开索引；
+- GitHub Actions 定时生成 `public/data/articles.json`；
+- GitHub Pages 零服务器静态部署。
 
-## 🛠 技术栈
+项目没有 API 服务、数据库、Render 或 Neon 依赖。数据更新由 GitHub Actions 完成，仓库 JSON 是公开站点的唯一运行时数据源。
 
-- **静态站点生成器**：Jekyll 4.x
-- **托管**：GitHub Pages
-- **搜索**：Pagefind（客户端全文搜索，支持中文）
-- **主题**：自定义（CSS 变量驱动亮色/暗色双主题）
-- **RSS**：jekyll-feed 插件（全文输出）
-
-## 📁 目录结构
-
-```
-.
-├── .github/
-│   └── workflows/
-│       └── pages.yml          # GitHub Actions 自动构建部署
-├── _config.yml                 # Jekyll 全局配置
-├── _layouts/
-│   ├── default.html            # 全站基础布局（导航+Footer）
-│   ├── home.html               # 首页布局
-│   ├── post.html               # 文章页布局（含信息卡片）
-│   ├── category_page.html      # 分类归档布局
-│   └── tag_page.html           # 标签归档布局
-├── _includes/
-│   └── head-seo.html           # SEO 与社交分享标签
-├── _posts/                     # 情报文章（Markdown）
-│   ├── 2026-07-26-xxx.md
-│   ├── 2026-07-25-xxx.md
-│   └── ...
-├── categories/                 # 赛道分类页
-├── assets/
-│   ├── css/
-│   │   └── main.css           # 主样式表（双主题）
-│   ├── js/
-│   │   ├── dark-mode.js       # 暗色模式切换
-│   │   └── search.js          # Pagefind 与备用搜索逻辑
-│   └── images/
-│       └── og-default.svg     # 默认 OG 分享图
-├── archive.md                  # 归档页
-├── tags.md                     # 标签页
-├── about.md                    # 关于页
-├── index.md                    # 首页
-├── pagefind.yml                # Pagefind 索引配置
-├── Gemfile                     # Ruby 依赖
-└── README.md
-```
-
-## ✍️ 文章写作规范
-
-每篇情报文章使用以下 Front Matter 模板：
-
-```yaml
----
-title: "文章标题"
-date: 2026-07-25
-category: "赛道名称"           # AI芯片/大模型/半导体/商业航天/人形机器人
-tags: [标签1, 标签2]
-company: "公司名"
-round: "轮次"                   # 天使轮/Pre-A/A轮/B轮/...
-amount: "金额"
-lead_investor: "领投方"
-follow_investors: ["跟投1", "跟投2"]
-business: "业务一句话描述"
-source: "信源"
-source_url: "https://..."
-importance: "为什么这条值得关注（编辑判断）"
-description: "SEO描述，≤160字"
----
-```
-
-### 字段说明
-
-| 字段 | 必填 | 说明 |
-|------|------|------|
-| title | ✅ | 文章标题 |
-| date | ✅ | ISO 格式日期 |
-| category | ✅ | 赛道分类，用于归档 |
-| tags | ✅ | 多标签，用于筛选 |
-| company | ⭕ | 涉及公司名 |
-| round | ⭕ | 融资轮次 |
-| amount | ⭕ | 融资金额 |
-| lead_investor | ⭕ | 领投方 |
-| importance | ✅ | 编辑判断，差异化核心 |
-| source | ✅ | 信源（可溯源） |
-| description | ✅ | SEO 摘要 |
-
-> ⭕ = 非融资类文章可省略
-
-## 🚀 本地开发
-
-需要预先安装 Ruby 3.2、Bundler 和 Node.js 22。
+## 本地运行
 
 ```bash
-# 1. 克隆仓库
-git clone https://github.com/no1lize/no1lize.github.io.git
-cd no1lize.github.io
-
-# 2. 安装依赖并启动本地服务（带热更新）
-bundle install && bundle exec jekyll serve --livereload
-
-# 3. 浏览器访问
-# http://127.0.0.1:4000
+npm ci
+npm run dev
 ```
 
-## 🔨 构建与部署
-
-- **自动部署**：推送到 `main` 分支后，GitHub Actions 自动构建，并通过官方 GitHub Pages Actions 发布
-- **手动构建**：`bundle exec jekyll build`，产物在 `_site/` 目录
-- **搜索索引**：构建后运行 `npx --yes pagefind@1.5.2 --site _site` 生成搜索索引
-
-本地执行完整生产构建：
+生成 GitHub Pages 静态站：
 
 ```bash
-JEKYLL_ENV=production bundle exec jekyll build
-npx --yes pagefind@1.5.2 --site _site
+npm run build:pages
 ```
 
-### GitHub Pages 发布来源
+## 情报抓取
 
-仓库 `Settings → Pages → Build and deployment` 使用：
+```bash
+npm run crawl
+python3 tools/crawl_articles.py --source company
+python3 tools/crawl_articles.py --source feeds
+python3 tools/crawl_articles.py --source x
+python3 tools/crawl_articles.py --source papers
+python3 tools/crawl_articles.py --source discovery
+python3 tools/crawl_articles.py --source sec
+python3 tools/crawl_articles.py --validate-only
+```
 
-- **Source**：`GitHub Actions`
+来源、筛选关键词、域名白名单和质量门配置位于 `config/intelligence_sources.json`。抓取结果写入 `public/data/articles.json`，并按规范化 URL 与事件指纹去重。
 
-工作流只在 `main` 分支 push 时发布；Pull Request 仅执行 Jekyll 构建，不改动线上站点。
+## 手动文档信源导入
 
-## 📋 验收清单
+新兴科技、创业案例、投资机构、研究报告、人物研究五个频道的"更新目录"支持管理员导入本地文档作为信源：
 
-- [ ] GitHub Actions 中 `bundle exec jekyll build` 零错误零警告
-- [ ] GitHub Pages Source 已设置为 `GitHub Actions`
-- [x] 移动端（375px）无横向滚动
-- [x] 暗色模式切换正常且刷新后保持
-- [x] RSS `feed.xml` 可访问且包含全文
-- [x] 搜索框可用（输入关键词能出结果）
-- [x] 文章信息卡片正确渲染
-- [x] OG meta 标签在页面源码中可见
+- 直接把 PDF / docx / doc / pptx / ppt / txt / md / 图片拖到更新目录，或点击"导入文档信源"后 Ctrl+V 粘贴文件、截图与剪贴板文本；
+- PDF（pdfjs-dist，worker 固定在 `public/vendor/pdf.worker.min.mjs`，需与 package.json 中 pdfjs-dist 版本一致）、docx 与 pptx 在浏览器内解析正文，自动生成可编辑的抽取式摘要，摘要展示在文件链接上方；
+- 提交使用与 `/tracking` 管理页共用的仓库所有者 Fine-grained Token（Contents: Read and write，保存在当前标签页 sessionStorage）；
+- 原文件写入 `public/data/uploads/<频道>/`，索引写入 `public/data/channel_documents.json`（单文件上限 25MB），提交即触发 Pages 重建；重建完成前列表内的新条目临时指向仓库原文件。
 
-## ⚠️ 免责声明
+## 追踪实体自动发现
 
-本站内容来源于公开信息渠道，仅供研究参考，**不构成任何投资建议**。融资数据以官方公告和工商变更为准，如有出入欢迎指正。
+`.github/workflows/tracking-discovery.yml` 基于现有关键词、人物、公司与信息源，从公开无鉴权接口（维基百科相关条目、Wikidata 实体分类与官网、OpenAlex 相关概念、百度/谷歌搜索联想）发现紧密相关实体，直接写入 `config/user_tracking.json` 对应追踪区域，随后触发一次完整抓取刷新：
 
-## 📬 联系
+- 管理页新增赛道（关键词为空）推送配置后，工作流立即用赛道名在网络上取词，直接种入关键词区域；
+- 每日 13:30（台北时间）对最久未扩展的赛道轮转执行完整扩展（关键词/人物/样本公司/公司官网源），候选需通过与 `/tracking` 管理页一致的校验规则；
+- 自动添加记录保存在 `config/tracking_auto_discovery.json`，管理页会标注"自动"；管理员删除或忽略过的条目成为 tombstone，永不重复添加；
+- 网络不可用时不做任何修改，绝不虚构实体；提交前会先跑 `validate:tracking` 与 `validate:taxonomy`。
 
-- GitHub：[@no1lize](https://github.com/no1lize)
-- RSS：[/feed.xml](/feed.xml)
-- 邮件订阅：即将上线
+更新策略：
+
+1. 成功刷新某来源时，用本次批次替换该来源的旧生成数据；
+2. 单一来源失败或返回空结果时，保留它的上一版成功数据；
+3. 人工编辑种子不被自动批次删除；
+4. 日期、链接、分类、地区、信源层级、来源集中度和最低覆盖量均通过质量门检查；
+5. 质量门失败时不覆盖上一版快照。
+
+## GitHub Pages
+
+仓库必须命名为 `No1Lize.github.io`，并在 **Settings → Pages → Source** 中选择 **GitHub Actions**。`.github/workflows/pages.yml` 构建并发布根路径站点；构建失败不会替换上一版。
+
+`.github/workflows/scheduled-sync.yml` 每两小时执行一次，也支持手动选择来源。抓取逻辑或来源配置更新推送到 `main` 时会自动执行一次完整刷新。数据变化由 `github-actions[bot]` 提交，并触发 Pages 再发布。
+
+SEC 建议在 **Settings → Secrets and variables → Actions → Variables** 中设置 `SEC_USER_AGENT`，例如 `No1Lize research contact@example.com`。它不是密钥；未设置时脚本使用仓库主页作为联系信息。
+
+## 数据与合规边界
+
+- 只请求公开、无需登录的页面、RSS、公开 API 或公开索引；
+- 不绕过登录、付费墙、验证码、robots 或访问控制；
+- 媒体、微信和 X 只保存标题、必要短摘要、时间、分类与原始链接，不复制全文；
+- 公开索引的目标链接必须命中配置中的域名白名单；
+- 微信索引无合格结果时记录 `empty`，不使用替代内容伪装成功；
+- 商业数据库未授权时不伪造接口响应。
+
+## 测试
+
+```bash
+npm run lint
+npm run test:unit
+npm run test:crawler
+npm run build:pages
+```
+
+## 免责声明
+
+本站用于研究和信息整理，不构成投资建议。热度只表示公开事件和资本活动，不表示投资价值。

@@ -1,0 +1,131 @@
+name: One-time verify live WeChat public-index fallback
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-wechat-public-index-current.yml
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test and probe current code
+        shell: bash
+        run: |
+          set +e
+          mkdir -p diagnostics
+          : > /tmp/wechat-index.log
+
+          python -m py_compile \
+            tools/wechat_public_sources.py \
+            tools/wechat_source_registry.py \
+            tools/wechat_registry_bridge.py \
+            tools/crawl_with_wechat_registry.py \
+            >> /tmp/wechat-index.log 2>&1
+          COMPILE=$?
+
+          python -m unittest \
+            tests.test_wechat_public_sources \
+            tests.test_wechat_source_registry \
+            tests.test_wechat_registry_bridge \
+            tests.test_wechat_public_index_fallback \
+            >> /tmp/wechat-index.log 2>&1
+          TARGETED=$?
+
+          python -m unittest discover -s tests -p "test_*.py" \
+            >> /tmp/wechat-index.log 2>&1
+          ALL_TESTS=$?
+
+          python - <<'PY' >> /tmp/wechat-index.log 2>&1
+          import json
+          from tools import crawl_articles
+          from tools import crawl_with_tracking
+          from tools import wechat_public_sources
+          from tools import wechat_registry_bridge
+
+          wechat_registry_bridge._INDEX_CACHE.clear()
+          wechat_registry_bridge.install(wechat_public_sources)
+          tracking = crawl_with_tracking.load_tracking()
+          tracks = crawl_with_tracking._enabled_tracks(tracking)
+          specs = wechat_public_sources.generated_wechat_sources(tracks, crawl_with_tracking)
+          spec = next(
+              item
+              for item in specs
+              if item.get("accountConfigId") == "qbitai"
+              and item.get("sector") == "AI / AGI"
+          )
+          articles, status = wechat_public_sources.crawl_wechat_source(
+              spec,
+              crawl_articles.DEFAULT_USER_AGENT,
+              crawl_articles,
+          )
+          result = {
+              "sourceId": spec.get("id"),
+              "publicIndexes": spec.get("publicIndexUrls", []),
+              "status": status,
+              "samples": [
+                  {
+                      "title": item.get("title"),
+                      "url": item.get("source", {}).get("url"),
+                      "wechatAccount": item.get("wechatAccount"),
+                      "companies": item.get("mentionedCompanies", []),
+                      "people": item.get("mentionedPeople", []),
+                      "summary": item.get("summary"),
+                  }
+                  for item in articles[:3]
+              ],
+          }
+          with open('/tmp/wechat-live-index.json', 'w', encoding='utf-8') as handle:
+              json.dump(result, handle, ensure_ascii=False)
+          PY
+          PROBE=$?
+
+          COMPILE="$COMPILE" TARGETED="$TARGETED" ALL_TESTS="$ALL_TESTS" PROBE="$PROBE" \
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          try:
+              live = json.loads(Path('/tmp/wechat-live-index.json').read_text(encoding='utf-8'))
+          except Exception as exc:
+              live = {"error": f"{type(exc).__name__}: {exc}"}
+          statuses = {
+              "compileStatus": int(os.environ['COMPILE']),
+              "targetedTestStatus": int(os.environ['TARGETED']),
+              "allPythonTestStatus": int(os.environ['ALL_TESTS']),
+              "liveProbeStatus": int(os.environ['PROBE']),
+          }
+          output = {
+              **statuses,
+              "passed": all(value == 0 for value in statuses.values()),
+              "liveProbe": live,
+              "logTail": Path('/tmp/wechat-index.log').read_text(
+                  encoding='utf-8', errors='replace'
+              ).splitlines()[-180:],
+          }
+          Path('diagnostics/current-wechat-public-index.json').write_text(
+              json.dumps(output, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+      - name: Commit diagnostic
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/current-wechat-public-index.json
+          git commit -m "ci: record live WeChat public-index fallback"
+          git pull --rebase origin main
+          git push origin HEAD:main

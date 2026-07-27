@@ -1,0 +1,91 @@
+name: One-time fix venture evidence alignment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/one-time-fix-venture-team-shape.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-time-fix-venture-evidence
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Patch, test and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git pull --rebase origin main
+          python - <<'PY'
+          from pathlib import Path
+
+          refiner = Path("tools/refine_venture_research_evidence.py")
+          text = refiner.read_text(encoding="utf-8")
+          old = '''INVESTMENT_ACTION_RE = re.compile(
+              r"(?:\\binvest(?:ed|s|ing)?\\s+(?:in|into)\\b|\\bbacks?\\b|\\bleads?\\b|"
+              r"投资|领投|跟投|参投|加码)",
+              re.IGNORECASE,
+          )'''
+          new = '''INVESTMENT_ACTION_RE = re.compile(
+              r"(?:\\binvest(?:ed|s|ing)?\\s+(?:in|into)\\b|\\bbacks?\\b|\\bleads?\\b|"
+              r"投资|融资|领投|跟投|参投|参与.{0,24}融资|加码)",
+              re.IGNORECASE,
+          )'''
+          if old not in text:
+              raise SystemExit("investment action pattern not found")
+          refiner.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          tests = Path("tests/test_refine_venture_research_evidence.py")
+          text = tests.read_text(encoding="utf-8")
+          text = text.replace(
+              'export const companies = [',
+              'export type Company = {};\nexport const companies: Company[] = [',
+              1,
+          )
+          text = text.replace(
+              'export const institutionCatalog = [',
+              'export const institutionCatalog: Institution[] = [',
+              1,
+          )
+          tests.write_text(text, encoding="utf-8")
+          PY
+          python -m py_compile \
+            tools/venture_profile_extraction.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py \
+            tools/refine_venture_research_evidence.py \
+            tools/normalize_venture_profiles.py \
+            tools/sanitize_venture_profiles.py \
+            tools/sanitize_venture_narratives.py \
+            tools/finalize_venture_profiles.py \
+            tools/enforce_venture_entity_semantics.py
+          python -m unittest \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_noise_filters \
+            tests.test_venture_profile_enrichment \
+            tests.test_refine_venture_research_evidence \
+            tests.test_normalize_venture_profiles \
+            tests.test_venture_profile_postprocess \
+            tests.test_venture_narrative_sanitizer \
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/refine_venture_research_evidence.py \
+            tests/test_refine_venture_research_evidence.py
+          git commit -m "fix: cover explicit participation in venture investments"
+          git pull --rebase origin main
+          git push origin HEAD:main

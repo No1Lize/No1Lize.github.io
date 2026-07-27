@@ -1,0 +1,32 @@
+name: Check final venture refresh
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/check-venture-final.yml
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record final workflow status atomically
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # retained-history status v3
+          gh run list \
+            --workflow refresh-venture-profiles.yml \
+            --limit 12 \
+            --json databaseId,status,conclusion,createdAt,updatedAt,headSha,url \
+            > /tmp/venture-final-status.json
+          ENDPOINT="repos/${GITHUB_REPOSITORY}/contents/diagnostics/venture-final-status.json"
+          CURRENT_SHA="$(gh api "$ENDPOINT?ref=main" --jq .sha 2>/dev/null || true)"
+          python -c 'import base64,json,sys; path,sha,out=sys.argv[1:]; payload={"message":"ci: record final venture refresh status","content":base64.b64encode(open(path,"rb").read()).decode(),"branch":"main"}; payload.update({"sha":sha} if sha else {}); json.dump(payload,open(out,"w",encoding="utf-8"))' /tmp/venture-final-status.json "$CURRENT_SHA" /tmp/request.json
+          gh api --method PUT "$ENDPOINT" --input /tmp/request.json >/dev/null
