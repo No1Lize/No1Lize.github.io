@@ -5,13 +5,72 @@
   align-items: stretch;
 }
 
-.updatesPanel,
+.updatesPanel {
+  display: flex;
+  min-width: 0;
+}
+
+.updatesPanel :global([data-layout="split"]) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"])) {
+  grid-template-columns: minmax(0, 1fr) 120px;
+  gap: 20px;
+  min-height: 154px;
+  padding: 20px 22px;
+}
+
+.updatesPanel :global([data-layout="split"] h2[id$="-updates-title"]) {
+  font-size: 22px;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> label)) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 16px 20px;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> label) > div:first-child),
+.updatesPanel :global([data-layout="split"] > div:has(> label) > div:last-child) {
+  grid-column: 1 / -1;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> label) > div:last-child) {
+  justify-content: flex-start;
+  min-height: auto;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> a[data-intelligence-item="true"])) {
+  flex: 1;
+  min-height: 0;
+  max-height: 760px;
+}
+
+.updatesPanel :global([data-layout="split"] a[data-intelligence-item="true"]) {
+  grid-template-columns: 42px minmax(0, 1fr) 18px;
+  gap: 12px;
+  padding: 16px 18px;
+}
+
+.updatesPanel :global([data-layout="split"] a[data-intelligence-item="true"] h3) {
+  font-size: 14px;
+}
+
 .directoryPanel,
 .panelBody {
   min-width: 0;
 }
 
 .directoryPanel {
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--border);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--green) 8%, transparent), transparent 34%),
@@ -76,15 +135,26 @@
   margin-top: 7px;
   color: var(--muted);
   font-size: 10px;
+  text-align: right;
+}
+
+.panelBody {
+  flex: 1;
+  min-height: 0;
 }
 
 @media (max-width: 1120px) {
   .splitLayout {
     grid-template-columns: 1fr;
   }
+
+  .updatesPanel :global([data-layout="split"] > div:has(> a[data-intelligence-item="true"])) {
+    max-height: 620px;
+  }
 }
 
 @media (max-width: 760px) {
+  .updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"])),
   .panelHeader {
     grid-template-columns: 1fr;
     min-height: 0;
@@ -103,5 +173,11 @@
   .snapshot small {
     justify-self: end;
     margin: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .updatesPanel :global([data-layout="split"] > div:has(> label)) {
+    grid-template-columns: 1fr;
   }
 }
