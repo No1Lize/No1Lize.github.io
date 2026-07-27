@@ -84,15 +84,15 @@
         "Google"
       ],
       "ignoredRecommendations": {
-        "companies": [
-          "埃隆·马斯克",
-          "李飞飞",
-          "Google"
-        ],
         "keywords": [
           "全球",
           "融资",
           "产品发布"
+        ],
+        "companies": [
+          "埃隆·马斯克",
+          "李飞飞",
+          "Google"
         ]
       }
     },
@@ -197,11 +197,11 @@
         "IonQ"
       ],
       "ignoredRecommendations": {
-        "companies": [
-          "宁德时代"
-        ],
         "keywords": [
           "OpenAI"
+        ],
+        "companies": [
+          "宁德时代"
         ]
       }
     },
@@ -2956,6 +2956,19 @@
       "keywords": [
         "Alibaba Group"
       ],
+      "enabled": true
+    },
+    {
+      "id": "source-track-ro168q",
+      "name": "雪球",
+      "url": "https://xueqiu.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [],
       "enabled": true
     }
   ]
