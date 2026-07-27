@@ -6,7 +6,55 @@
 }
 
 .updatesPanel {
+  display: flex;
   min-width: 0;
+}
+
+.updatesPanel :global([data-layout="split"]) {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"])) {
+  grid-template-columns: minmax(0, 1fr) 120px;
+  gap: 20px;
+  min-height: 154px;
+  padding: 20px 22px;
+}
+
+.updatesPanel :global([data-layout="split"] h2[id$="-updates-title"]) {
+  font-size: 22px;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> label)) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 16px 20px;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> label) > div:first-child),
+.updatesPanel :global([data-layout="split"] > div:has(> label) > div:last-child) {
+  grid-column: 1 / -1;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> label) > div:last-child) {
+  justify-content: flex-start;
+  min-height: auto;
+}
+
+.updatesPanel :global([data-layout="split"] > div:has(> a[data-intelligence-item="true"])) {
+  max-height: 620px;
+}
+
+.updatesPanel :global([data-layout="split"] a[data-intelligence-item="true"]) {
+  grid-template-columns: 42px minmax(0, 1fr) 18px;
+  gap: 12px;
+  padding: 16px 18px;
+}
+
+.updatesPanel :global([data-layout="split"] a[data-intelligence-item="true"] h3) {
+  font-size: 14px;
 }
 
 .companyPanel {
@@ -142,6 +190,7 @@
 }
 
 @media (max-width: 760px) {
+  .updatesPanel :global([data-layout="split"] > div:has(h2[id$="-updates-title"])),
   .panelHeader {
     grid-template-columns: 1fr;
     min-height: 0;
@@ -169,6 +218,7 @@
 }
 
 @media (max-width: 560px) {
+  .updatesPanel :global([data-layout="split"] > div:has(> label)),
   .companyPanel :global(.catalog-grid) {
     grid-template-columns: 1fr;
   }
