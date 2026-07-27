@@ -7,6 +7,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import crawl_with_source_categories as base
     from . import professional_media_progress
     from . import professional_media_sources
+    from . import search_index_feed_redirects
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
     from . import wechat_index_record_fallback
@@ -16,11 +17,13 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_sogou_bridge
     from . import wechat_sogou_index
     from . import wechat_sogou_link_compat
+    from . import wechat_sogou_redirect_compat
     from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_with_source_categories as base
     import professional_media_progress
     import professional_media_sources
+    import search_index_feed_redirects
     import wechat_fetch_compat
     import wechat_index_context_guard
     import wechat_index_record_fallback
@@ -30,6 +33,7 @@ except ImportError:  # Executed directly with python tools/...
     import wechat_sogou_bridge
     import wechat_sogou_index
     import wechat_sogou_link_compat
+    import wechat_sogou_redirect_compat
     import wechat_snapshot_quality
 
 
@@ -108,13 +112,19 @@ def _install_professional_media() -> None:
 
 
 def main() -> int:
+    search_index_feed_redirects.install(base.tracking.crawler)
     wechat_fetch_compat.install(wechat_public_sources)
     wechat_registry_bridge.install(wechat_public_sources)
+    wechat_original_redirect_bridge.install(
+        wechat_public_sources,
+        wechat_registry_bridge,
+    )
     wechat_index_context_guard.install(wechat_registry_bridge)
     wechat_index_record_fallback.install(
         wechat_public_sources,
         wechat_registry_bridge,
     )
+    wechat_sogou_redirect_compat.install(wechat_sogou_index)
     wechat_sogou_link_compat.install(wechat_sogou_index)
     wechat_sogou_bridge.install(wechat_public_sources)
     _install_professional_media()
