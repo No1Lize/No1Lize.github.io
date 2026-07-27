@@ -1,6 +1,6 @@
 name: Temporary inspect full refresh runs
 
-# Diagnostic refresh: dynamic official registry fix merged.
+# Diagnostic refresh: verify WeChat and Toutiao production refresh after PR 94.
 on:
   pull_request:
     paths:
