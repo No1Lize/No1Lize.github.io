@@ -2,9 +2,17 @@
 
 import { Bookmark, Search, Share2, Trash2 } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { useFavorites } from "@/components/use-favorites";
 import { removeFavorite, type FavoriteItem } from "@/lib/favorites";
+
+export const FAVORITE_SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
+
+export type FavoriteShareRequest = {
+  title: string;
+  summary: string;
+  url: string;
+};
 
 function isIntelligenceCard(item: FavoriteItem): boolean {
   return Boolean(
@@ -24,76 +32,22 @@ function absoluteShareUrl(href: string): string {
   }
 }
 
-async function copyShareText(value: string): Promise<boolean> {
-  try {
-    await navigator.clipboard.writeText(value);
-    return true;
-  } catch {
-    const textarea = document.createElement("textarea");
-    textarea.value = value;
-    textarea.setAttribute("readonly", "true");
-    textarea.style.position = "fixed";
-    textarea.style.opacity = "0";
-    document.body.appendChild(textarea);
-    textarea.select();
-    const copied = document.execCommand("copy");
-    textarea.remove();
-    return copied;
-  }
-}
-
 function ShareFavoriteButton({ item }: { item: FavoriteItem }) {
-  const [notice, setNotice] = useState("");
-  const timerRef = useRef<number | null>(null);
+  const openQrShare = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-  useEffect(
-    () => () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-    },
-    [],
-  );
+    const detail: FavoriteShareRequest = {
+      title: item.title,
+      summary: item.summary,
+      url: absoluteShareUrl(item.href),
+    };
 
-  const showNotice = (message: string) => {
-    setNotice(message);
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = window.setTimeout(() => setNotice(""), 4800);
-  };
-
-  const share = async () => {
-    const url = absoluteShareUrl(item.href);
-    const summary = item.summary.trim().slice(0, 140);
-    const text = summary ? `${item.title}\n${summary}` : item.title;
-    const shareData: ShareData = { title: item.title, text, url };
-    const shareText = `${text}\n${url}`;
-    const inWechat = /MicroMessenger/i.test(navigator.userAgent);
-
-    // Ordinary web pages cannot directly open WeChat Moments' composer.
-    // Inside WeChat, copy the direct source link and guide the user to the
-    // browser menu; outside WeChat, prefer the operating system share sheet.
-    if (inWechat) {
-      const copied = await copyShareText(shareText);
-      showNotice(
-        copied
-          ? "原链接已复制，请点微信右上角“…”并选择“分享到朋友圈”"
-          : "请点微信右上角“…”并选择“分享到朋友圈”",
-      );
-      return;
-    }
-
-    if (typeof navigator.share === "function") {
-      try {
-        if (typeof navigator.canShare !== "function" || navigator.canShare(shareData)) {
-          await navigator.share(shareData);
-          showNotice("已打开系统分享面板");
-          return;
-        }
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") return;
-      }
-    }
-
-    const copied = await copyShareText(shareText);
-    showNotice(copied ? "标题和原链接已复制" : "浏览器暂不支持分享，请手动复制原链接");
+    // The favorite card itself never calls navigator.share(). Windows and
+    // macOS therefore cannot open their native share sheets from this button.
+    window.dispatchEvent(
+      new CustomEvent<FavoriteShareRequest>(FAVORITE_SHARE_REQUEST_EVENT, { detail }),
+    );
   };
 
   return (
@@ -101,18 +55,13 @@ function ShareFavoriteButton({ item }: { item: FavoriteItem }) {
       <button
         type="button"
         className="favorite-share"
-        onClick={share}
+        onClick={openQrShare}
         aria-label={`分享：${item.title}`}
-        title="分享原始情报链接"
+        title="打开微信二维码分享"
       >
         <Share2 size={14} />
         <span>分享</span>
       </button>
-      {notice ? (
-        <span className="favorite-share-notice" role="status">
-          {notice}
-        </span>
-      ) : null}
     </div>
   );
 }
@@ -408,23 +357,6 @@ export function FavoritesPage() {
         .favorite-share:focus-visible {
           outline: 1px solid var(--blue);
           outline-offset: 2px;
-        }
-
-        .favorite-share-notice {
-          position: absolute;
-          top: 36px;
-          right: 0;
-          width: max-content;
-          max-width: min(290px, 72vw);
-          padding: 8px 10px;
-          border: 1px solid var(--border);
-          background: var(--surface-2);
-          box-shadow: var(--shadow);
-          color: var(--text);
-          font-size: 10px;
-          line-height: 1.55;
-          white-space: normal;
-          pointer-events: none;
         }
 
         .favorite-card-actions .favorite-remove {
