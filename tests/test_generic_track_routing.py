@@ -7,7 +7,7 @@ from tools import tracking_taxonomy as taxonomy
 
 
 class GenericTrackRoutingTests(unittest.TestCase):
-    def test_arbitrary_named_tracks_generate_four_search_sources_each(self) -> None:
+    def test_arbitrary_named_tracks_generate_four_public_sources_each(self) -> None:
         payload = {
             "schemaVersion": 1,
             "tracks": [
@@ -64,21 +64,24 @@ class GenericTrackRoutingTests(unittest.TestCase):
                 self.assertTrue(
                     any("bing.com/search" in source["url"] for source in actual)
                 )
-                # google-cn, google-us, plus the toutiao route that now rides
-                # Google News because Bing RSS ignored site: restrictions.
                 self.assertEqual(
                     sum(
                         "news.google.com/rss/search" in source["url"]
                         for source in actual
                     ),
-                    3,
+                    2,
                 )
+                toutiao = [
+                    source
+                    for source in actual
+                    if source["id"] == f'user-track-{track["slug"]}-toutiao'
+                ]
+                self.assertEqual(len(toutiao), 1)
                 self.assertEqual(
-                    sum(
-                        "site%3Atoutiao.com" in source["url"] for source in actual
-                    ),
-                    1,
+                    toutiao[0]["url"],
+                    "https://www.toutiao.com/api/pc/feed/",
                 )
+                self.assertEqual(toutiao[0]["allowedHosts"], ["toutiao.com"])
                 for source in actual:
                     self.assertIn(source["sector"], source["keywords"])
         finally:

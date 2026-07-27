@@ -104,12 +104,12 @@ class SpecializedMediaStatusMigrationTests(unittest.TestCase):
         self.assertEqual(by_id["anthropic-detail"]["companySlug"], "anthropic")
         self.assertEqual(report["removedUnknownCompanySlugs"], 1)
 
-    def test_production_company_routes_exclude_google(self) -> None:
+    def test_production_company_routes_include_google(self) -> None:
         routes = load_company_route_slugs()
 
         self.assertIn("openai", routes)
         self.assertIn("anthropic", routes)
-        self.assertNotIn("google", routes)
+        self.assertIn("google", routes)
 
     def test_status_is_preserved_when_surviving_article_uses_source_id(self) -> None:
         payload = {
