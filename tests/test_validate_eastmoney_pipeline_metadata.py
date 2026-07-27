@@ -209,6 +209,37 @@ class EastmoneyPipelineMetadataValidationTests(unittest.TestCase):
         self.assertEqual(report["acceptedByCrawler"], 1)
         self.assertEqual(report["missingDetailStatusIds"], [])
 
+    def test_multiple_detail_sources_sum_their_own_counts(self) -> None:
+        semiconductor_source_id = f"{SOURCE_ID}-半导体信源"
+        second_article = article(source_id=semiconductor_source_id)
+        second_article["id"] = "eastmoney-semiconductor-detail"
+        second_article["source"]["url"] = (
+            "https://finance.eastmoney.com/a/202607253821110828.html"
+        )
+        payload = snapshot(
+            articles=[article(), second_article],
+            statuses=[
+                status(
+                    accepted=1,
+                    newAccepted=1,
+                    retainedPreviousCount=0,
+                ),
+                status(
+                    id=semiconductor_source_id,
+                    accepted=1,
+                    newAccepted=1,
+                    retainedPreviousCount=0,
+                ),
+            ],
+        )
+
+        report = validate_snapshot(payload, tracking(), require_attempt=True)
+
+        self.assertEqual(report["detailStatusCount"], 2)
+        self.assertEqual(report["acceptedByCrawler"], 2)
+        self.assertEqual(report["detailArticles"], 2)
+        self.assertEqual(report["missingDetailStatusIds"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
