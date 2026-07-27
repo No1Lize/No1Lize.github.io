@@ -9,6 +9,14 @@
   margin: 0;
 }
 
+.empty {
+  margin: 0;
+  padding: 24px 18px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
 @media (max-width: 1320px) {
   .methodPanel {
     grid-template-columns: 1fr;
