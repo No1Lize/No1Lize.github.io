@@ -1,0 +1,1424 @@
+===== FILES =====
+app/companies/[slug]/page.tsx
+app/companies/page.tsx
+app/documents/[id]/page.tsx
+app/globals.css
+app/institutions/[slug]/page.tsx
+app/institutions/page.tsx
+app/ipo/[slug]/layout.tsx
+app/ipo/[slug]/market-detail.css
+app/ipo/[slug]/market-detail.module.css
+app/ipo/[slug]/page.tsx
+app/ipo/page.tsx
+app/layout.tsx
+app/not-found.tsx
+app/page.tsx
+app/people/[slug]/page.tsx
+app/people/page.tsx
+app/reports/[slug]/page.tsx
+app/reports/page.tsx
+app/reports/pdf/[slug]/page.tsx
+app/reports/pdf/[slug]/reader.module.css
+app/reports/reports.module.css
+app/robots.ts
+app/search/page.tsx
+app/sitemap.ts
+app/technology/[slug]/page.tsx
+app/technology/[slug]/sector-detail.module.css
+app/technology/page.tsx
+app/tracking/page.tsx
+components/channel-document-import.module.css
+components/channel-document-import.tsx
+components/channel-update-directory-client.tsx
+components/channel-update-directory.module.css
+components/channel-update-directory.tsx
+components/company-directory.tsx
+components/company-equity-evidence.tsx
+components/daily-headlines.tsx
+components/dashboard-quality.module.css
+components/dashboard.tsx
+components/event-quality-indicator.tsx
+components/external-database-links.tsx
+components/global-search.tsx
+components/homepage-channel-updates.tsx
+components/ipo-watchlist.module.css
+components/ipo-watchlist.tsx
+components/live-status.tsx
+components/market-line-chart.tsx
+components/providers.tsx
+components/research-report-library.module.css
+components/research-report-library.tsx
+components/sector-chart.tsx
+components/site-header.tsx
+components/tracking-admin-conflict-guard.tsx
+components/tracking-admin-module-recommendations.tsx
+components/tracking-admin-recommendation.tsx
+components/tracking-admin-session-guard.tsx
+components/tracking-keyword-guard.tsx
+components/tracking-recommendations-bridge.tsx
+components/tracking-recommendations.module.css
+components/tracking-recommendations.tsx
+components/user-tracking-loader.tsx
+components/user-tracking-panel.module.css
+components/user-tracking-panel.tsx
+config/intelligence_sources.json
+config/listed_company_disclosure_sources.json
+config/official_company_sources.json
+config/person_profile_overrides.json
+config/professional_technology_media_sources.json
+config/schedules.yaml
+config/sectors.yaml
+config/sources.yaml
+config/tracking_auto_discovery.json
+config/tracking_entity_seeds.json
+config/user_tracking.json
+config/wechat_public_indexes.json
+config/wechat_sources.json
+lib/catalog-data.ts
+lib/channel-documents.ts
+lib/channel-update-date.ts
+lib/channel-update-filter.ts
+lib/channel-updates.ts
+lib/daily-headlines.ts
+lib/document-extract-pdf.ts
+lib/document-extract.ts
+lib/document-summary.ts
+lib/external-database-links.ts
+lib/github-commit.ts
+lib/homepage-channel-update-config.ts
+lib/intelligence-data.ts
+lib/listed-companies.ts
+lib/listed-company-disclosure-data.ts
+lib/listed-company-identity.ts
+lib/market-profile-data.ts
+lib/people-data.ts
+lib/professional-venture-data.ts
+lib/research-content.ts
+lib/research-report-data.ts
+lib/sector-definitions.ts
+lib/sector-profile-generator.ts
+lib/source-brand.ts
+lib/strict-person-label.ts
+lib/tracked-sectors.ts
+lib/tracking-admin-sync.ts
+lib/tracking-company-sector-policy.ts
+lib/tracking-listed-recommendations.ts
+lib/tracking-recommendation-dismissal.ts
+lib/tracking-recommendation-policy.ts
+lib/tracking-recommendations.ts
+lib/tracking-sector-policy.ts
+lib/tracking-snapshot.ts
+lib/tracking-taxonomy.ts
+lib/use-articles.ts
+lib/user-tracking.ts
+lib/venture-profile-data-with-disclosures.ts
+lib/venture-profile-data.ts
+public/404.html
+public/data/articles.json
+public/data/channel_documents.json
+public/data/listed_company_disclosures.json
+public/data/market_profiles.json
+public/data/people.json
+public/data/research_reports.json
+public/data/uploads/reports/doc-20260726-144246-7god-半导体存储研究.pdf
+public/data/uploads/reports/doc-20260726-144347-rzpw-长江存储战略配售深度研究报告.pdf
+public/data/uploads/reports/doc-20260726-145150-ihp4-doc-20260726-144246-7god-半导体存储研究-1.pdf
+public/data/uploads/reports/doc-20260726-154653-2ohq-众信优游深度商业分析.docx
+public/data/venture_profiles.json
+public/favicon.svg
+public/file.svg
+public/globe.svg
+public/research-reports/eastmoney-ap202402051620574559.pdf
+public/research-reports/eastmoney-ap202602271820091032.pdf
+public/research-reports/eastmoney-ap202603181820630825.pdf
+public/research-reports/eastmoney-ap202604231821483907.pdf
+public/research-reports/eastmoney-ap202604281821702568.pdf
+public/research-reports/eastmoney-ap202607261827354335.pdf
+public/research-reports/eastmoney-ap202607261827357010.pdf
+public/research-reports/public-098971c2b982704c84a1.pdf
+public/research-reports/public-0e4e95508281159628b5.pdf
+public/research-reports/public-168e6e6ee9e6a314bf12.pdf
+public/research-reports/public-269c2b15ca3b64110a9a.pdf
+public/research-reports/public-41208f4b84d15716c3cd.pdf
+public/research-reports/public-4ab285eca554d9614776.pdf
+public/research-reports/public-8d2acf084b6617363822.pdf
+public/research-reports/public-9088de81e4c553a1068e.pdf
+public/research-reports/public-9583837a21f538c167fe.pdf
+public/research-reports/public-99650e337832e3626abf.pdf
+public/research-reports/public-b526989067c09434403f.pdf
+public/research-reports/public-c901c5ad7c8680a84300.pdf
+public/research-reports/public-cc5a2f44aaeb19240b3c.pdf
+public/research-reports/public-d9595ced71ad793f7065.pdf
+public/research-reports/public-da8eb56d347f3132023d.pdf
+public/research-reports/public-f967ba776cdf6cf79fa3.pdf
+public/research-reports/public-ff7c00b6fadd01d25868.pdf
+public/vendor/cmaps/78-EUC-H.bcmap
+public/vendor/cmaps/78-EUC-V.bcmap
+public/vendor/cmaps/78-H.bcmap
+public/vendor/cmaps/78-RKSJ-H.bcmap
+public/vendor/cmaps/78-RKSJ-V.bcmap
+public/vendor/cmaps/78-V.bcmap
+public/vendor/cmaps/78ms-RKSJ-H.bcmap
+public/vendor/cmaps/78ms-RKSJ-V.bcmap
+public/vendor/cmaps/83pv-RKSJ-H.bcmap
+public/vendor/cmaps/90ms-RKSJ-H.bcmap
+public/vendor/cmaps/90ms-RKSJ-V.bcmap
+public/vendor/cmaps/90msp-RKSJ-H.bcmap
+public/vendor/cmaps/90msp-RKSJ-V.bcmap
+public/vendor/cmaps/90pv-RKSJ-H.bcmap
+public/vendor/cmaps/90pv-RKSJ-V.bcmap
+public/vendor/cmaps/Add-H.bcmap
+public/vendor/cmaps/Add-RKSJ-H.bcmap
+public/vendor/cmaps/Add-RKSJ-V.bcmap
+public/vendor/cmaps/Add-V.bcmap
+public/vendor/cmaps/Adobe-CNS1-0.bcmap
+public/vendor/cmaps/Adobe-CNS1-1.bcmap
+public/vendor/cmaps/Adobe-CNS1-2.bcmap
+public/vendor/cmaps/Adobe-CNS1-3.bcmap
+public/vendor/cmaps/Adobe-CNS1-4.bcmap
+public/vendor/cmaps/Adobe-CNS1-5.bcmap
+public/vendor/cmaps/Adobe-CNS1-6.bcmap
+public/vendor/cmaps/Adobe-CNS1-UCS2.bcmap
+public/vendor/cmaps/Adobe-GB1-0.bcmap
+public/vendor/cmaps/Adobe-GB1-1.bcmap
+public/vendor/cmaps/Adobe-GB1-2.bcmap
+public/vendor/cmaps/Adobe-GB1-3.bcmap
+public/vendor/cmaps/Adobe-GB1-4.bcmap
+public/vendor/cmaps/Adobe-GB1-5.bcmap
+public/vendor/cmaps/Adobe-GB1-UCS2.bcmap
+public/vendor/cmaps/Adobe-Japan1-0.bcmap
+public/vendor/cmaps/Adobe-Japan1-1.bcmap
+public/vendor/cmaps/Adobe-Japan1-2.bcmap
+public/vendor/cmaps/Adobe-Japan1-3.bcmap
+public/vendor/cmaps/Adobe-Japan1-4.bcmap
+public/vendor/cmaps/Adobe-Japan1-5.bcmap
+public/vendor/cmaps/Adobe-Japan1-6.bcmap
+public/vendor/cmaps/Adobe-Japan1-UCS2.bcmap
+public/vendor/cmaps/Adobe-Korea1-0.bcmap
+public/vendor/cmaps/Adobe-Korea1-1.bcmap
+public/vendor/cmaps/Adobe-Korea1-2.bcmap
+public/vendor/cmaps/Adobe-Korea1-UCS2.bcmap
+public/vendor/cmaps/B5-H.bcmap
+public/vendor/cmaps/B5-V.bcmap
+public/vendor/cmaps/B5pc-H.bcmap
+public/vendor/cmaps/B5pc-V.bcmap
+public/vendor/cmaps/CNS-EUC-H.bcmap
+public/vendor/cmaps/CNS-EUC-V.bcmap
+public/vendor/cmaps/CNS1-H.bcmap
+public/vendor/cmaps/CNS1-V.bcmap
+public/vendor/cmaps/CNS2-H.bcmap
+public/vendor/cmaps/CNS2-V.bcmap
+public/vendor/cmaps/ETHK-B5-H.bcmap
+public/vendor/cmaps/ETHK-B5-V.bcmap
+public/vendor/cmaps/ETen-B5-H.bcmap
+public/vendor/cmaps/ETen-B5-V.bcmap
+public/vendor/cmaps/ETenms-B5-H.bcmap
+public/vendor/cmaps/ETenms-B5-V.bcmap
+public/vendor/cmaps/EUC-H.bcmap
+public/vendor/cmaps/EUC-V.bcmap
+public/vendor/cmaps/Ext-H.bcmap
+public/vendor/cmaps/Ext-RKSJ-H.bcmap
+public/vendor/cmaps/Ext-RKSJ-V.bcmap
+public/vendor/cmaps/Ext-V.bcmap
+public/vendor/cmaps/GB-EUC-H.bcmap
+public/vendor/cmaps/GB-EUC-V.bcmap
+public/vendor/cmaps/GB-H.bcmap
+public/vendor/cmaps/GB-V.bcmap
+public/vendor/cmaps/GBK-EUC-H.bcmap
+public/vendor/cmaps/GBK-EUC-V.bcmap
+public/vendor/cmaps/GBK2K-H.bcmap
+public/vendor/cmaps/GBK2K-V.bcmap
+public/vendor/cmaps/GBKp-EUC-H.bcmap
+public/vendor/cmaps/GBKp-EUC-V.bcmap
+public/vendor/cmaps/GBT-EUC-H.bcmap
+public/vendor/cmaps/GBT-EUC-V.bcmap
+public/vendor/cmaps/GBT-H.bcmap
+public/vendor/cmaps/GBT-V.bcmap
+public/vendor/cmaps/GBTpc-EUC-H.bcmap
+public/vendor/cmaps/GBTpc-EUC-V.bcmap
+public/vendor/cmaps/GBpc-EUC-H.bcmap
+public/vendor/cmaps/GBpc-EUC-V.bcmap
+public/vendor/cmaps/H.bcmap
+public/vendor/cmaps/HKdla-B5-H.bcmap
+public/vendor/cmaps/HKdla-B5-V.bcmap
+public/vendor/cmaps/HKdlb-B5-H.bcmap
+public/vendor/cmaps/HKdlb-B5-V.bcmap
+public/vendor/cmaps/HKgccs-B5-H.bcmap
+public/vendor/cmaps/HKgccs-B5-V.bcmap
+public/vendor/cmaps/HKm314-B5-H.bcmap
+public/vendor/cmaps/HKm314-B5-V.bcmap
+public/vendor/cmaps/HKm471-B5-H.bcmap
+public/vendor/cmaps/HKm471-B5-V.bcmap
+public/vendor/cmaps/HKscs-B5-H.bcmap
+public/vendor/cmaps/HKscs-B5-V.bcmap
+public/vendor/cmaps/Hankaku.bcmap
+public/vendor/cmaps/Hiragana.bcmap
+public/vendor/cmaps/KSC-EUC-H.bcmap
+public/vendor/cmaps/KSC-EUC-V.bcmap
+public/vendor/cmaps/KSC-H.bcmap
+public/vendor/cmaps/KSC-Johab-H.bcmap
+public/vendor/cmaps/KSC-Johab-V.bcmap
+public/vendor/cmaps/KSC-V.bcmap
+public/vendor/cmaps/KSCms-UHC-H.bcmap
+public/vendor/cmaps/KSCms-UHC-HW-H.bcmap
+public/vendor/cmaps/KSCms-UHC-HW-V.bcmap
+public/vendor/cmaps/KSCms-UHC-V.bcmap
+public/vendor/cmaps/KSCpc-EUC-H.bcmap
+public/vendor/cmaps/KSCpc-EUC-V.bcmap
+public/vendor/cmaps/Katakana.bcmap
+public/vendor/cmaps/LICENSE
+public/vendor/cmaps/NWP-H.bcmap
+public/vendor/cmaps/NWP-V.bcmap
+public/vendor/cmaps/RKSJ-H.bcmap
+public/vendor/cmaps/RKSJ-V.bcmap
+public/vendor/cmaps/Roman.bcmap
+public/vendor/cmaps/UniCNS-UCS2-H.bcmap
+public/vendor/cmaps/UniCNS-UCS2-V.bcmap
+public/vendor/cmaps/UniCNS-UTF16-H.bcmap
+public/vendor/cmaps/UniCNS-UTF16-V.bcmap
+public/vendor/cmaps/UniCNS-UTF32-H.bcmap
+public/vendor/cmaps/UniCNS-UTF32-V.bcmap
+public/vendor/cmaps/UniCNS-UTF8-H.bcmap
+public/vendor/cmaps/UniCNS-UTF8-V.bcmap
+public/vendor/cmaps/UniGB-UCS2-H.bcmap
+public/vendor/cmaps/UniGB-UCS2-V.bcmap
+public/vendor/cmaps/UniGB-UTF16-H.bcmap
+public/vendor/cmaps/UniGB-UTF16-V.bcmap
+public/vendor/cmaps/UniGB-UTF32-H.bcmap
+public/vendor/cmaps/UniGB-UTF32-V.bcmap
+public/vendor/cmaps/UniGB-UTF8-H.bcmap
+public/vendor/cmaps/UniGB-UTF8-V.bcmap
+public/vendor/cmaps/UniJIS-UCS2-H.bcmap
+public/vendor/cmaps/UniJIS-UCS2-HW-H.bcmap
+public/vendor/cmaps/UniJIS-UCS2-HW-V.bcmap
+public/vendor/cmaps/UniJIS-UCS2-V.bcmap
+public/vendor/cmaps/UniJIS-UTF16-H.bcmap
+public/vendor/cmaps/UniJIS-UTF16-V.bcmap
+public/vendor/cmaps/UniJIS-UTF32-H.bcmap
+public/vendor/cmaps/UniJIS-UTF32-V.bcmap
+public/vendor/cmaps/UniJIS-UTF8-H.bcmap
+public/vendor/cmaps/UniJIS-UTF8-V.bcmap
+public/vendor/cmaps/UniJIS2004-UTF16-H.bcmap
+public/vendor/cmaps/UniJIS2004-UTF16-V.bcmap
+public/vendor/cmaps/UniJIS2004-UTF32-H.bcmap
+public/vendor/cmaps/UniJIS2004-UTF32-V.bcmap
+public/vendor/cmaps/UniJIS2004-UTF8-H.bcmap
+public/vendor/cmaps/UniJIS2004-UTF8-V.bcmap
+public/vendor/cmaps/UniJISPro-UCS2-HW-V.bcmap
+public/vendor/cmaps/UniJISPro-UCS2-V.bcmap
+public/vendor/cmaps/UniJISPro-UTF8-V.bcmap
+public/vendor/cmaps/UniJISX0213-UTF32-H.bcmap
+public/vendor/cmaps/UniJISX0213-UTF32-V.bcmap
+public/vendor/cmaps/UniJISX02132004-UTF32-H.bcmap
+public/vendor/cmaps/UniJISX02132004-UTF32-V.bcmap
+public/vendor/cmaps/UniKS-UCS2-H.bcmap
+public/vendor/cmaps/UniKS-UCS2-V.bcmap
+public/vendor/cmaps/UniKS-UTF16-H.bcmap
+public/vendor/cmaps/UniKS-UTF16-V.bcmap
+public/vendor/cmaps/UniKS-UTF32-H.bcmap
+public/vendor/cmaps/UniKS-UTF32-V.bcmap
+public/vendor/cmaps/UniKS-UTF8-H.bcmap
+public/vendor/cmaps/UniKS-UTF8-V.bcmap
+public/vendor/cmaps/V.bcmap
+public/vendor/cmaps/WP-Symbol.bcmap
+public/vendor/pdf.worker.min.mjs
+public/vendor/standard_fonts/FoxitDingbats.pfb
+public/vendor/standard_fonts/FoxitFixed.pfb
+public/vendor/standard_fonts/FoxitFixedBold.pfb
+public/vendor/standard_fonts/FoxitFixedBoldItalic.pfb
+public/vendor/standard_fonts/FoxitFixedItalic.pfb
+public/vendor/standard_fonts/FoxitSerif.pfb
+public/vendor/standard_fonts/FoxitSerifBold.pfb
+public/vendor/standard_fonts/FoxitSerifBoldItalic.pfb
+public/vendor/standard_fonts/FoxitSerifItalic.pfb
+public/vendor/standard_fonts/FoxitSymbol.pfb
+public/vendor/standard_fonts/LICENSE_FOXIT
+public/vendor/standard_fonts/LICENSE_LIBERATION
+public/vendor/standard_fonts/LiberationSans-Bold.ttf
+public/vendor/standard_fonts/LiberationSans-BoldItalic.ttf
+public/vendor/standard_fonts/LiberationSans-Italic.ttf
+public/vendor/standard_fonts/LiberationSans-Regular.ttf
+public/window.svg
+tests/catalog.test.ts
+tests/channel-documents.test.ts
+tests/channel-updates.test.ts
+tests/daily-headlines.test.ts
+tests/dashboard-source-links.test.ts
+tests/external-database-links.test.ts
+tests/listed-company-identity.test.ts
+tests/market-profile-data.test.ts
+tests/people-data.test.ts
+tests/professional-venture-data.test.ts
+tests/rendered-html.test.mjs
+tests/research-report-data.test.ts
+tests/sector-profile-generator.test.ts
+tests/source-brand.test.ts
+tests/test_adaptive_public_sources.py
+tests/test_clean_existing_wechat_snapshot.py
+tests/test_cninfo_structured_disclosures.py
+tests/test_crawler.py
+tests/test_eastmoney_adaptive_handoff.py
+tests/test_eastmoney_entities.py
+tests/test_eastmoney_entity_evidence.py
+tests/test_eastmoney_fallback_payload.py
+tests/test_eastmoney_origin_accounting.py
+tests/test_eastmoney_refinement.py
+tests/test_eastmoney_rolling_history.py
+tests/test_eastmoney_snapshot_pipeline.py
+tests/test_eastmoney_snapshot_retention.py
+tests/test_eastmoney_tracking.py
+tests/test_enrich_tracking_snapshot.py
+tests/test_expand_tracking_entities.py
+tests/test_finalize_venture_profiles.py
+tests/test_generic_track_routing.py
+tests/test_generic_web_sources.py
+tests/test_listed_company_disclosures.py
+tests/test_market_profile_enrichment.py
+tests/test_market_profile_transport.py
+tests/test_market_profiles.py
+tests/test_market_quote_news.py
+tests/test_migrate_specialized_media_statuses.py
+tests/test_normalize_venture_profiles.py
+tests/test_person_video_discovery.py
+tests/test_professional_media_progress.py
+tests/test_professional_media_sources.py
+tests/test_professional_venture_sources.py
+tests/test_refine_eastmoney_snapshot.py
+tests/test_refine_venture_project_stability.py
+tests/test_refine_venture_research_evidence.py
+tests/test_refresh_people_profiles.py
+tests/test_refresh_people_profiles_with_video.py
+tests/test_refresh_wechat_snapshot.py
+tests/test_research_reports.py
+tests/test_robust_web_fallback.py
+tests/test_scheduled_sync_workflow.py
+tests/test_sec_configured_disclosures.py
+tests/test_sec_structured_disclosures.py
+tests/test_snapshot_retention.py
+tests/test_source_categories.py
+tests/test_stabilize_venture_profiles.py
+tests/test_tracking_taxonomy.py
+tests/test_us_ir_baseline_disclosures.py
+tests/test_us_ir_search_disclosures.py
+tests/test_us_ir_sec_disclosures.py
+tests/test_user_source_coverage.py
+tests/test_validate_eastmoney_pipeline_metadata.py
+tests/test_venture_entity_semantics.py
+tests/test_venture_narrative_sanitizer.py
+tests/test_venture_profile_enrichment.py
+tests/test_venture_profile_extraction.py
+tests/test_venture_profile_noise_filters.py
+tests/test_venture_profile_postprocess.py
+tests/test_venture_semantic_rebase.py
+tests/test_wechat_channel_card_discovery.py
+tests/test_wechat_fetch_compat.py
+tests/test_wechat_index_record_fallback.py
+tests/test_wechat_original_redirect_bridge.py
+tests/test_wechat_public_index_fallback.py
+tests/test_wechat_public_sources.py
+tests/test_wechat_registry_bridge.py
+tests/test_wechat_snapshot_quality.py
+tests/test_wechat_sogou_index.py
+tests/test_wechat_sogou_link_compat.py
+tests/test_wechat_source_registry.py
+tests/tracking-company-sector-recommendations.test.ts
+tests/tracking-listed-recommendations.test.ts
+tests/tracking-recommendation-policy.test.ts
+tests/tracking-recommendations.test.ts
+tests/tracking-sector-recommendation-isolation.test.ts
+tests/tracking-taxonomy.test.ts
+tests/user-tracking-listed-companies.test.ts
+tests/venture-profile-data.test.ts
+tools/__init__.py
+tools/__pycache__/recalculate_heat.cpython-312.pyc
+tools/adaptive_public_sources.py
+tools/add_semiconductor_media_sources.py
+tools/apply_listed_ticker_normalization_patch.py
+tools/apply_venture_team_product_semantics_fix.py
+tools/bootstrap_listed_company_disclosures.py
+tools/clean_existing_wechat_snapshot.py
+tools/clean_wechat_proxy_records.py
+tools/cninfo_structured_disclosures.py
+tools/crawl_articles.py
+tools/crawl_listed_company_disclosures.py
+tools/crawl_market_profiles.py
+tools/crawl_official_companies.py
+tools/crawl_official_with_source_categories.py
+tools/crawl_official_with_tracking.py
+tools/crawl_research_reports.py
+tools/crawl_tracked_articles.py
+tools/crawl_venture_profiles.py
+tools/crawl_with_source_categories.py
+tools/crawl_with_tracking.py
+tools/crawl_with_wechat_registry.py
+tools/eastmoney_entities.py
+tools/eastmoney_transport.py
+tools/enforce_venture_entity_semantics.py
+tools/enrich_professional_venture_sources.py
+tools/enrich_tracking_snapshot.py
+tools/enrich_venture_profiles.py
+tools/expand_tracking_entities.py
+tools/finalize_full_refresh.py
+tools/finalize_venture_profiles.py
+tools/generic_web_sources.py
+tools/market_profile_enrichment.py
+tools/market_quote_news_sources.py
+tools/migrate_article_entities.py
+tools/normalize_venture_profiles.py
+tools/person_video_discovery.py
+tools/prepare_full_refresh.py
+tools/probe_user_sources.py
+tools/professional_media_progress.py
+tools/professional_media_sources.py
+tools/publish_us_ir_baselines.py
+tools/refine_eastmoney_snapshot.py
+tools/refine_venture_research_evidence.py
+tools/refresh_market_profiles.py
+tools/refresh_market_profiles_enriched.py
+tools/refresh_people_profiles.py
+tools/refresh_people_profiles_with_video.py
+tools/refresh_wechat_snapshot.py
+tools/research_report_adapters.py
+tools/research_report_registry.py
+tools/robust_web_fallback.py
+tools/sanitize_venture_narratives.py
+tools/sanitize_venture_profiles.py
+tools/sec_configured_disclosures.py
+tools/sec_structured_disclosures.py
+tools/snapshot_retention.py
+tools/stabilize_venture_profiles.py
+tools/strict_tracking_config.py
+tools/tracking_quality.py
+tools/tracking_taxonomy.py
+tools/us_ir_baseline_disclosures.py
+tools/us_ir_search_disclosures.py
+tools/us_ir_sec_disclosures.py
+tools/validate_eastmoney_snapshot.py
+tools/validate_full_refresh.py
+tools/validate_market_profiles.py
+tools/validate_professional_media_snapshot.py
+tools/validate_user_source_coverage.py
+tools/venture_profile_extraction.py
+tools/wechat_channel_card_discovery.py
+tools/wechat_fetch_compat.py
+tools/wechat_index_context_guard.py
+tools/wechat_index_record_fallback.py
+tools/wechat_original_redirect_bridge.py
+tools/wechat_public_sources.py
+tools/wechat_registry_bridge.py
+tools/wechat_snapshot_quality.py
+tools/wechat_sogou_bridge.py
+tools/wechat_sogou_index.py
+tools/wechat_sogou_link_compat.py
+tools/wechat_source_registry.py
+tools/x_rate_limit.py
+
+===== MATCHES =====
+app/documents/[id]/page.tsx:20:  companies: ["创业案例", "/companies"],
+app/documents/[id]/page.tsx:21:  institutions: ["投资机构", "/institutions"],
+app/institutions/page.tsx:7:  title: "投资机构",
+app/institutions/page.tsx:8:  description: "中美头部科技投资机构公开档案。",
+app/institutions/page.tsx:16:        <h1>投资机构</h1>
+app/institutions/page.tsx:17:        <p>20 家中美科技投资机构，按市场、阶段与公开投资主题组织，并连接代表性组合与近期公司事件。</p>
+app/institutions/[slug]/page.tsx:9:  ventureProfileGeneratedAt,
+app/institutions/[slug]/page.tsx:13:} from "@/lib/venture-profile-data";
+app/institutions/[slug]/page.tsx:26:  const venture = getInstitutionVentureProfile(slug);
+app/institutions/[slug]/page.tsx:29:    description: venture?.overview,
+app/institutions/[slug]/page.tsx:43:  const venture = getInstitutionVentureProfile(slug);
+app/institutions/[slug]/page.tsx:55:    venture?.updatedAt?.slice(0, 10) ||
+app/institutions/[slug]/page.tsx:56:    ventureProfileGeneratedAt?.slice(0, 10) ||
+app/institutions/[slug]/page.tsx:58:  const overview = venture?.overview || staticProfile.thesis;
+app/institutions/[slug]/page.tsx:60:    venture?.strategy ||
+app/institutions/[slug]/page.tsx:62:  const team = venture?.team ?? [];
+app/institutions/[slug]/page.tsx:63:  const portfolio: VenturePortfolioCase[] = venture?.portfolio?.length
+app/institutions/[slug]/page.tsx:64:    ? venture.portfolio
+app/institutions/[slug]/page.tsx:70:  const recentInvestments = venture?.recentInvestments ?? [];
+app/institutions/[slug]/page.tsx:71:  const recentYearSummary = venture?.recentYearSummary;
+app/institutions/[slug]/page.tsx:72:  const classicCases: VentureClassicCase[] = venture?.classicCases?.length
+app/institutions/[slug]/page.tsx:73:    ? venture.classicCases
+app/institutions/[slug]/page.tsx:76:    ...(venture?.sources ?? []),
+app/institutions/[slug]/page.tsx:119:            {venture && <span>证据完整度 {venture.evidenceScore ?? 0}%</span>}
+app/institutions/[slug]/page.tsx:362:            {venture?.warnings?.length ? (
+app/institutions/[slug]/page.tsx:364:                {venture.warnings.slice(0, 4).map((warning) => (
+app/institutions/[slug]/page.tsx:393:            <strong>{venture?.evidenceScore ?? 0}%</strong>
+app/institutions/[slug]/page.tsx:394:            <p>{venture ? "官网多页面抽取结果" : "等待首次档案刷新"}</p>
+app/companies/page.tsx:7:  title: "创业案例",
+app/companies/page.tsx:16:        <h1>创业案例</h1>
+app/companies/[slug]/page.tsx:19:  ventureProfileGeneratedAt,
+app/companies/[slug]/page.tsx:22:} from "@/lib/venture-profile-data";
+app/companies/[slug]/page.tsx:35:  const venture = getCompanyVentureProfile(slug);
+app/companies/[slug]/page.tsx:38:    description: venture?.background || company?.summary,
+app/companies/[slug]/page.tsx:52:  const venture = getCompanyVentureProfile(slug);
+app/companies/[slug]/page.tsx:54:    venture?.updatedAt?.slice(0, 10) ||
+app/companies/[slug]/page.tsx:55:    ventureProfileGeneratedAt?.slice(0, 10) ||
+app/companies/[slug]/page.tsx:57:  const background = venture?.projectBackground?.summary || venture?.background || company.summary;
+app/companies/[slug]/page.tsx:58:  const projectBackground = venture?.projectBackground;
+app/companies/[slug]/page.tsx:59:  const technology = venture?.researchTechnology || venture?.technology || research.technology;
+app/companies/[slug]/page.tsx:60:  const products = venture?.products?.length ? venture.products : [company.product];
+app/companies/[slug]/page.tsx:61:  const technologyProducts = venture?.technologyProducts ?? [];
+app/companies/[slug]/page.tsx:62:  const team = venture?.team ?? [];
+app/companies/[slug]/page.tsx:63:  const financing = venture?.financing ?? [];
+app/companies/[slug]/page.tsx:64:  const capitalSummary = venture?.capitalSummary;
+app/companies/[slug]/page.tsx:65:  const capitalMarkets = venture?.capitalMarkets ?? [];
+app/companies/[slug]/page.tsx:66:  const exitPerformance = venture?.exitPerformance;
+app/companies/[slug]/page.tsx:83:    ...(venture?.sources ?? []),
+app/companies/[slug]/page.tsx:126:            {venture && <span>证据完整度 {venture.evidenceScore ?? 0}%</span>}
+app/companies/[slug]/page.tsx:287:              emptyText="当前公开页面未识别到可核对的融资轮次、金额或投资方。页面不会用推测数据填充，后续通过公司公告、投资机构披露、专业数据库与监管材料继续补充。"
+app/companies/[slug]/page.tsx:384:              {venture?.warnings?.slice(0, 3).map((warning) => (
+app/companies/[slug]/page.tsx:416:              <strong>公开投资机构</strong>
+app/companies/[slug]/page.tsx:434:            <strong>{venture?.evidenceScore ?? 0}%</strong>
+app/companies/[slug]/page.tsx:435:            <p>{venture ? "官网多页面抽取结果" : "等待首次档案刷新"}</p>
+app/layout.tsx:13:  description: "聚合中美新兴科技、创业公司、投资机构与 IPO 的可追溯公开信息。",
+app/technology/page.tsx:19:          从当前启用的 {trackedSectors.length} 个赛道进入中美产业链、公司样本、投资机构、公开事件和关键研究变量。
+app/technology/[slug]/page.tsx:273:          <Section id="投资机构" title="相关投资机构">
+components/site-header.tsx:11:  ["创业案例", "/companies"],
+components/site-header.tsx:12:  ["投资机构", "/institutions"],
+components/tracking-recommendations-bridge.tsx:27:  companies: { placeholder: "例如：OpenAI", title: "样本公司" },
+components/global-search.tsx:39:      {!query && <div className="search-guide"><strong>从一个实体开始</strong><p>可尝试：OpenAI、机器人、红杉、巴菲特或 AI 芯片。</p></div>}
+components/user-tracking-panel.tsx:89:    placeholder: "例如：OpenAI、宇树科技",
+components/homepage-channel-updates.tsx:12:  { key: "companies", number: "03", label: "创业案例", href: "/companies" },
+components/homepage-channel-updates.tsx:13:  { key: "institutions", number: "04", label: "投资机构", href: "/institutions" },
+components/company-equity-evidence.tsx:7:} from "@/lib/professional-venture-data";
+lib/catalog-data.ts:26:  { slug:"openai", name:"OpenAI", region:"美国", sector:"AI / AGI", stage:"成长期", status:"运营中", founded:"2015", headquarters:"San Francisco", summary:"开发通用人工智能模型、开发者平台与面向个人和企业的 AI 产品。", product:"基础模型、ChatGPT、API 与智能体开发工具。", source:official("OpenAI","https://openai.com/about/"), confidence:0.98 },
+lib/catalog-data.ts:98:  { slug:"sequoia-capital", name:"Sequoia Capital", region:"美国", type:"风险投资", stages:"全阶段", sectors:["AI","企业科技","消费"], source:official("Sequoia Capital","https://www.sequoiacap.com/") },
+lib/catalog-data.ts:103:  { slug:"yc", name:"Y Combinator", region:"美国", type:"加速器/投资机构", stages:"种子期", sectors:["科技创业"], source:official("Y Combinator","https://www.ycombinator.com/companies") },
+lib/catalog-data.ts:107:  { slug:"khosla", name:"Khosla Ventures", region:"美国", type:"风险投资", stages:"早期至成长期", sectors:["AI","气候科技","医疗"], source:official("Khosla Ventures","https://www.khoslaventures.com/") },
+lib/catalog-data.ts:110:  { slug:"hillhouse", name:"高瓴", englishName:"Hillhouse", region:"中国", type:"投资机构", stages:"全阶段", sectors:["科技","医疗","先进制造"], source:official("高瓴","https://www.hillhouseinvestment.com/") },
+lib/venture-profile-data-with-disclosures.ts:1:export * from "./venture-profile-data";
+lib/venture-profile-data-with-disclosures.ts:5:  ventureProfileGeneratedAt,
+lib/venture-profile-data-with-disclosures.ts:10:} from "./venture-profile-data";
+lib/venture-profile-data-with-disclosures.ts:90:    ventureProfileGeneratedAt,
+lib/venture-profile-data.ts:1:import rawVentureProfiles from "@/public/data/venture_profiles.json";
+lib/venture-profile-data.ts:663:export const ventureProfileGeneratedAt = clean(snapshot.generatedAt, 40);
+lib/venture-profile-data.ts:664:export const ventureResearchModelVersion = Number(snapshot.researchModelVersion) || 1;
+lib/venture-profile-data.ts:677:export const ventureProfileSourceStatus = snapshot.sourceStatus ?? [];
+lib/venture-profile-data.ts:678:export const ventureProfileQualityGate = snapshot.qualityGate;
+lib/professional-venture-data.ts:1:import rawVentureProfiles from "@/public/data/venture_profiles.json";
+lib/intelligence-data.ts:408:    name: "OpenAI",
+lib/research-content.ts:213:      { name: "OpenAI", slug: "openai", note: "前沿基础模型" },
+lib/research-content.ts:239:      { name: "OpenAI", slug: "openai", note: "前沿基础模型" },
+lib/channel-updates.ts:260:    description: "投资机构、融资、并购与 IPO 相关公开进展，仅按记录前的绿色事件标签筛选。",
+public/data/people.json:7:    "OpenAI @OpenAI",
+public/data/people.json:220:      "summary": "埃隆·里夫·馬斯克（英語：Elon Reeve Musk /ˈiːlɔːn/；1971年6月28日—），漢名馬誼郎，世界首富、商業大亨、英国皇家学会會士、美国工程院院士。他是SpaceX的創始人、董事長、執行長、首席工程師，特斯拉投資人、執行長、產品設計師、前董事長，无聊公司創始人，Neuralink、OpenAI聯合創始人，同時也是X公司的首席技术官、董事长。2022年馬斯克以2190億美元財富成為世界首富，其后随着旗下公司的股价暴涨，其资产亦同时急剧增加，随着SpaceX于2026年6月在美国纳斯达克上市，其拥有的个人财富突破1万亿美元，成为人类史上首位万亿富豪。",
+public/data/people.json:221:      "background": "埃隆·里夫·馬斯克（英語：Elon Reeve Musk /ˈiːlɔːn/；1971年6月28日—），漢名馬誼郎，世界首富、商業大亨、英国皇家学会會士、美国工程院院士。他是SpaceX的創始人、董事長、執行長、首席工程師，特斯拉投資人、執行長、產品設計師、前董事長，无聊公司創始人，Neuralink、OpenAI聯合創始人，同時也是X公司的首席技术官、董事长。2022年馬斯克以2190億美元財富成為世界首富，其后随着旗下公司的股价暴涨，其资产亦同时急剧增加，随着SpaceX于2026年6月在美国纳斯达克上市，其拥有的个人财富突破1万亿美元，成为人类史上首位万亿富豪。\n馬斯克在南非德蘭士瓦省比勒陀利亞長大，曾短暫就讀於比勒陀利亞大學，後於18歲移居加拿大就讀女王大学。兩年後，他轉學到宾夕法尼亚大学，並獲得經濟學、物理學的學士學位。1995年，他搬到加利福尼亚州並就讀於史丹佛大學，而後決定從商。他與弟弟金巴爾共同創辦了網路軟體公司Zip2。1999年，康柏公司以3.07億美元收购了這家初創企業。同年，馬斯克聯合創辦了線上銀行X.com。2000年，該公司與Confinity合併為PayPal。2002年，EBay以15億美元買下PayPal。\n2002年，馬斯克創辦SpaceX，並擔任董事長、執行長、技術長，該公司主要負責太空運輸、航太製造。2004年，他加入電動車製造商特斯拉，並擔任董事長與產品設計師，2008年兼任執行長。2006年，他協助創立太陽能服務公司SolarCity，該公司後成為特斯拉子公司特斯拉能源。2015年，他聯合創辦了非營利公司OpenAI，用於研究和推動友善人工智慧。2016年，他聯合創辦了神經科技公司Neuralink，該公司專注於開發脑机接口。同年，他成立了無聊隧道施工公司，用於研發超迴路列車。2022年10月27日，馬斯克以440億美元收購社交平台Twitter，日後改組為X。2021年10月，美國商業雜誌《富比士》宣布馬斯克财富达到2700億美元，成為該雜誌統計史上最富有的人。2024年11月，美國總統當選人唐納·川普宣布委任馬斯克為總統高級顧問，領導新创立的政府效率部。\n馬斯克被认为曾發表一些误导性或違背科學的言論以及傳播關於COVID-19的錯誤資訊而受到批評。此外，馬斯克在人工智能、加密貨幣、公共交通等方面的觀點亦受到部分專家的批評。",
+public/data/people.json:577:      "background": "Fei-Fei Li (Chinese: 李飞飞; pinyin: Lǐ Fēifēi; born July 3, 1976) is a Chinese-born American computer scientist best known for establishing ImageNet, the dataset that enabled rapid advances in computer vision in the 2010s. She is a professor of computer science at Stanford University, with research expertise in artificial intelligence, machine learning, deep learning, computer vision, and cognitive neuroscience.\nLi is a co-director of the Stanford Institute for Human-Centered Artificial Intelligence and a co-director of the Stanford Vision and Learning Lab, and served as Chief Scientist of AI/ML at Google Cloud and the director of the Stanford Artificial Intelligence Laboratory from 2013 to 2018. In 2017, she co-founded AI4ALL, a nonprofit organization working to increase diversity in the field of artificial intelligence. In 2023, Li was named one of the Time 100 AI Most Influential People. \nLi received the Intel Lifetime Achievements Innovation Award in 2017 for her contributions to artificial intelligence, and was elected member of the National Academy of Engineering, the National Academy of Medicine in 2020 and the American Academy of Arts and Sciences in 2021. In 2025, she was named as one of the \"Architects of AI\" for Time's Person of the Year.\nOn August 3, 2023, Li was appointed to the United Nations Scientific Advisory Board, established by Secretary-General Antonio Guterres. In 2024, Li was included on the Gold House's most influential Asian A100 list. In 2024, she raised $230 million for a startup called World Labs, which she and three colleagues founded to develop a \"spatial intelligence\" AI technology that can understand how the three-dimensional physical world works. In 2026, World Labs raised $1 Billion.",
+public/data/people.json:1190:      "role": "OpenAI 首席执行官、创业者",
+public/data/people.json:1191:      "summary": "Samuel Harris Altman (born April 22, 1985) is an American entrepreneur and investor who has been the chief executive officer (CEO) of the artificial intelligence company OpenAI since 2019.",
+public/data/people.json:1192:      "background": "Samuel Harris Altman (born April 22, 1985) is an American entrepreneur and investor who has been the chief executive officer (CEO) of the artificial intelligence company OpenAI since 2019.\nAltman attended Stanford University for two years before he dropped out and co-founded Loopt, a smartphone geosocial networking application. Loopt was acquired by Green Dot Corporation for $43.4 million in March 2012. In 2011, Altman joined Y Combinator, a technology startup accelerator and venture capital firm, and was the company's president from 2014 to 2019. He is a billionaire, due to investments in over 400 companies including Reddit, Worldcoin, Helion Energy and Instacart.\nAltman co-founded OpenAI in 2015 and became its CEO in 2019, a role that made him a prominent figure of the AI boom. He supervised the launch of ChatGPT in November 2022. In 2023, he was ousted by the organization's board of directors for not being \"consistently candid\". The move was met with significant backlash from employees and investors, resulting in Altman's reinstatement five days later and the formation of a new board.",
+public/data/people.json:1195:        "OpenAI API",
+public/data/people.json:1199:        "OpenAI",
+public/data/people.json:1206:        "OpenAI API"
+public/data/people.json:1214:          "title": "OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — Live at TED2025",
+public/data/people.json:1221:          "title": "Sam Altman (OpenAI) Talks Artificial Intelligence at BC20",
+public/data/people.json:1228:          "title": "The Possibilities of AI [Entire Talk] - Sam Altman (OpenAI)",
+public/data/people.json:1235:          "title": "A fireside chat with Sam Altman OpenAI CEO at Harvard University",
+public/data/people.json:1242:          "title": "Sam Altman : OpenAI CEO on GPT-4, ChatGPT, and the Future of AI | Lex Fridman Pod",
+public/data/people.json:1256:          "title": "Sam Altman on AGI, GPT-5, and what’s next — the OpenAI Podcast Ep. 1",
+public/data/people.json:1263:          "title": "OpenAI 希望与中国合作- Sam Altman 街头 采访",
+public/data/people.json:1270:          "title": "Sam Altman: OpenAI, GPT-5, Sora, Board Saga, Elon Musk, Ilya, Power & AGI | Lex Fridman Podcast #419",
+public/data/people.json:1277:          "title": "科技作家 Karen Hao 谈 OpenAI 、 Sam Altman 以及人工智能的环境成本 | SQ Video Podcast",
+public/data/people.json:1284:          "title": "(2024.12.5） OpenAI 创始人奥特曼纽约时报DealBook峰会谈人工智能",
+public/data/people.json:1293:          "title": "OpenAI’s Sam Altman Talks ChatGPT, AI Agents and Superintelligence — Live at TED2025",
+public/data/people.json:1300:          "title": "Sam Altman (OpenAI) Talks Artificial Intelligence at BC20",
+public/data/people.json:1307:          "title": "The Possibilities of AI [Entire Talk] - Sam Altman (OpenAI)",
+public/data/people.json:1314:          "title": "A fireside chat with Sam Altman OpenAI CEO at Harvard University",
+public/data/people.json:1328:          "title": "OpenAI",
+public/data/people.json:1332:          "source": "OpenAI"
+public/data/people.json:1349:          "title": "OpenAI",
+public/data/people.json:1356:          "title": "Sam Altman’s biometric startup World raises $52.5M via crypto sale",
+public/data/people.json:1359:          "url": "https://techcrunch.com/2026/07/24/sam-altmans-biometric-startup-world-raises-52-5-million-via-crypto-sale",
+public/data/people.json:1363:          "title": "Sam Altman : OpenAI CEO on GPT-4, ChatGPT, and the Future of AI | Lex Fridman Pod",
+public/data/people.json:1377:          "title": "Sam Altman on AGI, GPT-5, and what’s next — the OpenAI Podcast Ep. 1",
+public/data/people.json:1384:          "title": "OpenAI 希望与中国合作- Sam Altman 街头 采访",
+public/data/people.json:1391:          "title": "Sam Altman: OpenAI, GPT-5, Sora, Board Saga, Elon Musk, Ilya, Power & AGI | Lex Fridman Podcast #419",
+public/data/people.json:1398:          "title": "科技作家 Karen Hao 谈 OpenAI 、 Sam Altman 以及人工智能的环境成本 | SQ Video Podcast",
+public/data/people.json:1405:          "title": "(2024.12.5） OpenAI 创始人奥特曼纽约时报DealBook峰会谈人工智能",
+public/data/people.json:1463:          "title": "Keynote Speech - Shunyu Yao [OpenAI]",
+public/data/people.json:1470:          "title": "115. 对OpenAI姚顺雨3小时访谈：6年Agent研究、人与系统、吞噬的边界、既单极又多元的世界",
+public/data/people.json:1507:          "title": "Keynote Speech - Shunyu Yao [OpenAI]",
+public/data/people.json:1514:          "title": "115. 对OpenAI姚顺雨3小时访谈：6年Agent研究、人与系统、吞噬的边界、既单极又多元的世界",
+public/data/people.json:1634:          "title": "刚刚，OpenAI首席未来学家离职！曾被马斯克骂蠢驴",
+public/data/people.json:1731:          "title": "Anthropic也要造芯片了，还挖了OpenAI的芯片工程师",
+public/data/venture_profiles.json:4376:      "name": "OpenAI",
+public/data/venture_profiles.json:4391:          "title": "OpenAI 融资 1220 亿美元，推动 AI 向全新阶段演进",
+public/data/venture_profiles.json:4392:          "summary": "OpenAI 融资 1220 亿美元，推动 AI 向全新阶段演进 OpenAI",
+public/data/venture_profiles.json:4409:        "problemSolved": "Introducing OpenAI Presence, a proven enterprise AI agent platform that helps organizations deploy trusted voice and chat agents for customer and internal workflows.",
+public/data/venture_profiles.json:4410:        "marketOpportunity": "Introducing OpenAI Presence, a proven enterprise AI agent platform that helps organizations deploy trusted voice and chat agents for customer and internal workflows."
+public/data/venture_profiles.json:4412:      "researchTechnology": "[FTNN新聞網]記者陳雅婷／綜合報導OpenAI於昨（21）日證實，旗下先進人工智慧（AI）模型在一次內部安全測試中意外突破原本的隔離環境，自主連上網際網路，並。OpenAI先進模型「自主發動駭客攻擊」 成功入侵Hugging Face。OpenAI：More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond。",
+public/data/venture_profiles.json:4445:        "summary": "共识别到1条可追溯融资记录；最新记录为2026-03-31的OpenAI 融资 1220 亿美元，推动 AI 向全新阶段演进。"
+public/data/venture_profiles.json:7894:      "overview": "Andreessen Horowitz (a16z) is a venture capital firm in Silicon Valley, California, investing in bold founders, innovators, and entrepreneurs building the future through technology. Announcing CLF III The Cultural Leadership Fund (CLF) at a16z was founded to address gaps in access and equity for Black communities in technology. Announcing CLF III Megan Holston-Alexander The Cultural Leadership Fund (CLF) at a16z was founded to address gaps in access and equity for Black communities in technology.",
+public/data/venture_profiles.json:7895:      "strategy": "All In: Introducing Our 2024 Cultural Leadership Fund Nonprofit Partners The Cultural Leadership Fund (CLF) remains focused on bringing African Americans into tech at the earliest stages of innovation. a16z pioneered the platform model—the largest team of operators in venture, from marketing and talent to legal and policy, dedicated to helping founders at every stage. Andreessen Horowitz (a16z) is a venture capital firm in Silicon Valley, California, investing in bold founders, innovators, and entrepreneurs building the future through technology.",
+public/data/venture_profiles.json:8036:      "overview": "Founders Fund is a San Francisco based venture capital firm investing in companies building revolutionary technologies. Founders Fund Team Manifesto Anatomy of Next New defense for a new terrain: adapt, design, deploy.",
+public/data/venture_profiles.json:8051:          "name": "OpenAI",
+public/data/venture_profiles.json:8055:          "summary": "Portfolio - Founders Fund Founders Fund Team Manifesto Anatomy of Next SpaceX Palantir Anduril Stripe Facebook Airbnb Ramp Neuralink OpenAI Cognition Nubank Trade Republic Spotify Rippling Affirm Crusoe Polymarket Lighter Figma Varda General Matter Impulse Hadrian Enter ARQ PsiQuantum Until DeepMind",
+public/data/venture_profiles.json:8071:          "summary": "Portfolio - Founders Fund Founders Fund Team Manifesto Anatomy of Next SpaceX Palantir Anduril Stripe Facebook Airbnb Ramp Neuralink OpenAI Cognition Nubank Trade Republic Spotify Rippling Affirm Crusoe Polymarket Lighter Figma Varda General Matter Impulse Hadrian Enter ARQ PsiQuantum Until DeepMind",
+public/data/venture_profiles.json:8077:          "name": "OpenAI",
+public/data/venture_profiles.json:8079:          "investmentLogic": "公开组合证据显示Founders Fund布局OpenAI；该公司位于AI / AGI赛道，进入目录时处于成长期阶段，核心产品为基础模型、ChatGPT、API 与智能体开发工具。。",
+public/data/venture_profiles.json:8082:          "analysis": "公开组合证据显示Founders Fund布局OpenAI；该公司位于AI / AGI赛道，进入目录时处于成长期阶段，核心产品为基础模型、ChatGPT、API 与智能体开发工具。。 当前公开来源未提供可核对的融资轮次、金额和投资方记录。 当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
+public/data/venture_profiles.json:8267:      "overview": "As a p Focus: Our commitment to entrepreneurs Our commitment to early-stage entrepreneurs comes at a time when the venture capital industry is undergoing significant change. Company Specialists Perspective.",
+public/data/venture_profiles.json:8360:      "overview": "高瓴是一家位于中国的投资机构，公开阶段覆盖全阶段。",
+public/data/venture_profiles.json:8557:      "overview": "Founded in 1993, IDG Capital brings 30+ years of global investing across venture capital, private equity, M&A, secondaries and public markets—1,800+ companies and 600+ exits across 10+ markets. McGovern, the Founding Chairman of IDG Capital A journey of many milestones Planting the seeds Founded as the venture capital arm of IDG. entered the Chinese market in the same year, becoming one of the first institutions to conduct private equity investing in the country IDG Capital became an indep Today, we bridge East and West with a global perspective, deep local roots, and a community of over 300 like-minded professionals.",
+public/data/venture_profiles.json:8649:          "url": "https://www.khoslaventures.com/",
+public/data/venture_profiles.json:8657:          "url": "https://www.khoslaventures.com/portfolio/affirm",
+public/data/venture_profiles.json:8665:          "url": "https://www.khoslaventures.com/about/how-we-decide",
+public/data/venture_profiles.json:8673:          "url": "https://www.khoslaventures.com/about/how-we-work",
+public/data/venture_profiles.json:8681:          "url": "https://www.khoslaventures.com/about/main-fund",
+public/data/venture_profiles.json:8689:          "url": "https://www.khoslaventures.com/about/opportunity-fund",
+public/data/venture_profiles.json:8714:      "overview": "Kleiner Perkins is an American venture capital firm headquartered on Sand Hill Road in Menlo Park in Silicon Valley. Their 17-page deck had just two pages of numbers and three cartoons. But when John Doerr asked how big Google would be, they answered: “$10 billion in revenue.” We wrote our largest check ever.",
+public/data/venture_profiles.json:8892:      "overview": "洞见 - 君联资本 君联资本 — 中国领先的创业投资与私募股权投资机构 首页 团队 投资 洞见 联系 君联资本投资企业华健未来在港交所成功上市 君联资本投资企业拓璞数控在港交所成功上市 君联资本投资企业天星医疗在港交所成功上市 君联资本所投先进封测龙头企业盛合晶微在科创板成功上市 君联资本投资企业海致科技在港交所成功上市 君联资本作为首批签约创投机构参与2026浙江社保科创基金大会 君联资本加入金融投资联盟，助力长期资本与耐心资本培育发展 君联资本投资小核酸药物龙头企业瑞博生物在港交所成功上市 君联资本投资企业精锋医疗在港交所成功上市 君联资本投资企业智谱成功登陆港交所 开创中国通用人工智能发 君联资本 君联资本 — 中国领先的创业投资与私募股权投资机构 首页 团队 投资 洞见 联系 25 年发展历程 累计投资 700+ 企业 近 300 家专精特新企业 总管理规模超过 900 亿人民币 129 家企业在全球不同资本市场IPO 近 200 家企业通过其他方式退出 君联可持续发展公式 关注我们 通过社交媒体与我们取得联系 关于谨防不法分子冒用君联资本名义实施违法活动的严正声明 近期我们发现有人冒充君联资本、LEGEND。",
+public/data/venture_profiles.json:8893:      "strategy": "君联资本“大难长”科创投资进入验证时刻 智冉医疗“脑内绣花”破解脑机接口技术难题丨走近新质生产力 « 1 2 3 4 » 关注我们 通过社交媒体与我们取得联系 关于谨防不法分子冒用君联资本名义实施违法活动的严正声明 近期我们发现有人冒充君联资本、LEGEND CAPITAL、君联资本员工或君联资本合作方等名义，通过网站、APP、微信、QQ、个人名片以及线下活动等渠道或方式发布虚假信息进行融资、资本募集、项目投资、理财、股票、基金、培训、招聘等虚假、非法活动，实施金融诈骗行为。君联资本投资组合覆盖智能制造、半导体、AI大模型、生物医药、新能源等领域，累计投资700+企业。君联资本 君联资本 — 中国领先的创业投资与私募股权投资机构 首页 团队 投资 洞见 联系 25 年发展历程 累计投资 700+ 企业 近 300 家专精特新企业 总管理规模超过 900 亿人民币 129 家企业在全球不同资本市场IPO 近 200 家企业通过其他方式退出 君联可持续发展公式 关注我们 通过社交媒体与我们取得联系 关于谨防不法分子冒用君联资本名义实施违法活动的严正声明 近期我们发现有人冒充君联资本、LEGEND CAPITAL、君联资本员工或君联资本合作方等名义，通过网站、APP、微信、QQ、个人名片以及线下活动等渠道或方式发布虚假信息进行融资、资本募集、项目投资、理财、股票、。",
+public/data/venture_profiles.json:9278:      "overview": "作为人工智能领域最具前瞻性与影响力的创投机构之一，这是启明创投连续第四年主办该论坛，也是本届世界人工智能大会唯一一场由创业投资机构发起的、旨在从创新视角展示和探讨AI从算力底层走向产业落地的最新突破的论坛。C轮融资由红杉中国领投，启明创投、远景红杉碳中和基金、建发新兴投资、达晨财智、高瓴创投、善水资本跟投。周志峰先生亦是启明创投·乡村振兴创业者支持计划的管理委员会成员，该计划由启明创投和中国乡村发展基金会联合发起，致力于培训、赋能乡村产业创业者和社会事业创业者。",
+public/data/venture_profiles.json:9421:          "name": "OpenAI",
+public/data/venture_profiles.json:9425:          "summary": "自建燃机电站已成为北美科技巨头的标配方案——微软、谷歌、亚马逊、OpenAI、xAI均已批量采购燃气轮机作为AIDC的自备电源。",
+public/data/venture_profiles.json:9433:          "summary": "自建燃机电站已成为北美科技巨头的标配方案——微软、谷歌、亚马逊、OpenAI、xAI均已批量采购燃气轮机作为AIDC的自备电源。",
+public/data/venture_profiles.json:9489:          "name": "OpenAI",
+public/data/venture_profiles.json:9491:          "investmentLogic": "公开组合证据显示启明创投布局OpenAI；该公司位于AI / AGI赛道，进入目录时处于成长期阶段，核心产品为基础模型、ChatGPT、API 与智能体开发工具。。",
+public/data/venture_profiles.json:9494:          "analysis": "公开组合证据显示启明创投布局OpenAI；该公司位于AI / AGI赛道，进入目录时处于成长期阶段，核心产品为基础模型、ChatGPT、API 与智能体开发工具。。 当前公开来源未提供可核对的融资轮次、金额和投资方记录。 当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
+public/data/venture_profiles.json:9673:      "name": "Sequoia Capital",
+public/data/venture_profiles.json:9676:      "overview": "Our Ethos Jobs Legal Sequoia Capital Sequoia Heritage Sequoia Global Equities LP Login Sequoia Ampersand Login.",
+public/data/venture_profiles.json:9686:          "summary": "Our Companies | Sequoia Capital Our Founders Our Companies Our Team Stories Podcasts Arc Spotlights All Filters SpaceX Airbnb NVIDIA reddit Klarna Apple DoorDash YouTube Instacart Linear PayPal Block Snowflake Stripe Google Nubank Vanta Retool WhatsApp Cisco HubSpot Michael Moritz Josephine Chen Alf",
+public/data/venture_profiles.json:9694:          "investmentLogic": "公开组合证据显示Sequoia Capital布局SpaceX；该公司位于商业航天赛道，进入目录时处于成长期阶段，核心产品为Falcon、Dragon、Starship 与 Starlink。。",
+public/data/venture_profiles.json:9697:          "analysis": "公开组合证据显示Sequoia Capital布局SpaceX；该公司位于商业航天赛道，进入目录时处于成长期阶段，核心产品为Falcon、Dragon、Starship 与 Starlink。。 当前公开来源未提供可核对的融资轮次、金额和投资方记录。 当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
+public/data/venture_profiles.json:9703:          "name": "Sequoia Capital",
+public/data/venture_profiles.json:9707:          "title": "Home - Sequoia Capital",
+public/data/venture_profiles.json:9711:          "name": "Sequoia Capital",
+public/data/venture_profiles.json:9719:          "name": "Sequoia Capital",
+public/data/venture_profiles.json:9727:          "name": "Sequoia Capital",
+public/data/venture_profiles.json:9735:          "name": "Sequoia Capital",
+public/data/venture_profiles.json:9743:          "name": "Sequoia Capital",
+public/data/venture_profiles.json:9982:          "name": "OpenAI",
+public/data/venture_profiles.json:9986:          "summary": "2024.02.28 OpenAI Sora 降世：背后的商业洞察与技术创新｜此话当真 EP18 管理合伙人、投资VP、10年AI创业者对谈。",
+public/data/venture_profiles.json:10040:          "name": "OpenAI",
+public/data/venture_profiles.json:10044:          "summary": "2024.02.28 OpenAI Sora 降世：背后的商业洞察与技术创新｜此话当真 EP18 管理合伙人、投资VP、10年AI创业者对谈。",
+public/data/venture_profiles.json:10116:          "name": "OpenAI",
+public/data/venture_profiles.json:10118:          "investmentLogic": "公开组合证据显示真格基金布局OpenAI；该公司位于AI / AGI赛道，进入目录时处于成长期阶段，核心产品为基础模型、ChatGPT、API 与智能体开发工具。。",
+public/data/venture_profiles.json:10121:          "analysis": "公开组合证据显示真格基金布局OpenAI；该公司位于AI / AGI赛道，进入目录时处于成长期阶段，核心产品为基础模型、ChatGPT、API 与智能体开发工具。。 当前公开来源未提供可核对的融资轮次、金额和投资方记录。 当前未发现上市、并购退出或明确退出安排的可核对公开证据。",
+public/data/venture_profiles.json:10213:          "OpenAI",
+public/data/venture_profiles.json:10576:      "name": "OpenAI",
+public/data/venture_profiles.json:11019:      "name": "Sequoia Capital",
+public/data/venture_profiles.json:11097:      "ventureEvidenceAlignment": {
+public/data/articles.json:149:      "title": "三星李在镕与OpenAI奥特曼会面，双方或讨论AI基础设施合作",
+public/data/articles.json:150:      "summary": "钛媒体App 7月26日，当地时间25日，三星电子会长李在镕在美国旧金山会见OpenAI首席执行官山姆·奥特曼。OpenAI未透露双方会谈具体议题，但业内人士认为，双方可能讨论扩大在AI基础设施领域的合作，包括高带宽内存（HBM）、动态随机存取存储器（DRAM）以及先进晶圆代工制造等。（广角观察）",
+public/data/articles.json:154:      "company": "OpenAI",
+public/data/articles.json:181:      "title": "三星李在镕与OpenAI据悉磋商人工智能与半导体领域合作方案",
+public/data/articles.json:182:      "summary": "三星电子会长李在镕与OpenAI首席执行官山姆・奥特曼于旧金山OpenAI总部会面，磋商人工智能与半导体领域合作方案。 OpenAI 26日对外公布，当地时间25日上午...",
+public/data/articles.json:186:      "company": "OpenAI",
+public/data/articles.json:234:      "title": "【数智周报】 OpenAI证实模型测试出现失控，引发史无前例入侵；阿里千问发布 Qwen-Image-3.0；华为首次完整展示全系列计算模组产品；英特尔将在数据中心部门裁员-钛媒体官方网站",
+public/data/articles.json:546:      "id": "user-source-source-techcrunch-venture-e447243a68e0619e",
+public/data/articles.json:547:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:982:      "summary": "OpenAI全球性宕机超8小时，暴露9亿用户对单一AI供应商的深度依赖危机，标志着AI从尝鲜工具转变为水电煤级基础设施。同时，AI Agent生态呈现加速分工趋势：xAI放弃自建搜索接入Exa，Runta获a16z领投2000万美元构建Agent安全执行层，吴恩达开源OpenWorker定位桌面AI同事。",
+public/data/articles.json:1077:      "title": "Codex也断了:OpenAI三线齐崩，Agent时代的宕机账单怎么算-钛媒体官方网站",
+public/data/articles.json:1078:      "summary": "OpenAI三线齐崩，Agent时代的宕机账单怎么算",
+public/data/articles.json:1082:      "company": "OpenAI",
+public/data/articles.json:1760:      "title": "OpenAI Launches Health in ChatGPT for US Users, Connecting Apple Health and Medical Records",
+public/data/articles.json:1761:      "summary": "OpenAI is launching Health in ChatGPT for US users, enabling connections to Apple Health and supported medical records so ChatGPT can reference health informati Thank you for being a Ghacks reader. The post OpenAI Launches Health in ChatGPT for US Users, Connecting Apple Health and Medical Records appeared first on gHacks .",
+public/data/articles.json:1765:      "company": "OpenAI",
+public/data/articles.json:1818:      "title": "OpenAI：@huggingface We recognize there are a lot of questions and speculative details circulating related to the Hugging Face incident. This is an unpreceden",
+public/data/articles.json:1823:      "company": "OpenAI",
+public/data/articles.json:1827:        "name": "OpenAI on X",
+public/data/articles.json:1828:        "url": "https://x.com/OpenAI/status/2080815626113954288",
+public/data/articles.json:1982:      "title": "AI代理失控發動網攻 路透：OpenAI逾一週後才察覺",
+public/data/articles.json:1983:      "summary": "（中央社華盛頓24日綜合外電報導）消息人士透露，日前入侵Hugging Face的OpenAI人工智慧（AI）代理程式曾連續數天進行駭客攻擊，但OpenAI並未及時發現，直到威脅受到控制、美國聯邦調查局（FBI）也接獲通報後，才察覺這起事件。",
+public/data/articles.json:1987:      "company": "OpenAI",
+public/data/articles.json:2039:      "summary": "黃仁勳首次在 X 發文即力挺開源 AI，與微軟、Meta、IBM 等 25 家企業共同呼籲美國政府勿限制開源模型。隨著中國 Kimi K3 崛起，美國 AI 產業開源與閉源陣營對立加劇，OpenAI、",
+public/data/articles.json:2070:      "company": "OpenAI",
+public/data/articles.json:2119:      "summary": "OpenAI旗下ChatGPT今（25）日傍晚傳出大規模異常，不少用戶哀號無法開啟過往聊天紀錄、訊息無法送出，甚至圖片生成功能也出現失敗情形。目前OpenAI正在修復，詳細故障原因有待進一步釐清。",
+public/data/articles.json:2123:      "company": "OpenAI",
+public/data/articles.json:2252:      "title": "The OpenAI Models That Hacked Hugging Face Were ‘Active on the Internet’ for Days",
+public/data/articles.json:2257:      "company": "OpenAI",
+public/data/articles.json:2414:      "title": "OpenAI agent goes rogue and hacks popular AI community — left escape plans for future models inside the company's infrastructure",
+public/data/articles.json:2415:      "summary": "OpenAI tests multiple autonomous AI agents at once and has difficulty identifying the threats each of them represents, if a new report from Reuters is accurate.",
+public/data/articles.json:2419:      "company": "OpenAI",
+public/data/articles.json:2709:      "title": "OpenAI reportedly didn’t notice its AI agent hacking Hugging Face until a week later.",
+public/data/articles.json:2710:      "summary": "According to Reuters, the AI agent that went looking for ExploitGym hacking benchmark shortcuts on Hugging Face’s systems started trying to escape its not-sandboxed-well-enough test environment around July 9th, and the actual intrusion lasted from the 11th until the 13th. Reuters’ sources claim OpenAI employees didn’t know its agent was responsible until after Hugging Face had notified the FBI and posted publicly about a security incident. [Link: Its AI agent spent days hacking a company, but so",
+public/data/articles.json:2714:      "company": "OpenAI",
+public/data/articles.json:2738:      "title": "OpenAI",
+public/data/articles.json:2739:      "summary": "OpenAI kicked off an AI revolution with DALL-E and ChatGPT, making the organization the epicenter of the artificial intelligence boom. Led by CEO Sam Altman, OpenAI became a story unto itself when Altman was briefly fired and then brought back after pressure from staff and Microsoft, an investor and close partner.",
+public/data/articles.json:2743:      "company": "OpenAI",
+public/data/articles.json:2820:      "id": "user-source-source-techcrunch-venture-f2fa2f0eee8dc12f",
+public/data/articles.json:2821:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:2847:      "id": "user-source-source-techcrunch-venture-cc04af0507f4f94d",
+public/data/articles.json:2848:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:2874:      "id": "user-source-source-techcrunch-venture-68ab8224881300e5",
+public/data/articles.json:2875:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:2876:      "title": "I tried out OpenAI’s new AI keypad — which will be fun for some coders and slightly mystifying to everyone else",
+public/data/articles.json:2877:      "summary": "OpenAI's fancy new AI keypad will be a lot of fun for some, while many others are probably not going to touch it.",
+public/data/articles.json:2881:      "company": "OpenAI",
+public/data/articles.json:3020:      "company": "OpenAI",
+public/data/articles.json:3024:        "name": "OpenAI 官方来源",
+public/data/articles.json:3027:        "platform": "OpenAI 官方来源"
+public/data/articles.json:3152:      "title": "OpenAI's rogue agent went on a hacking spree that lasted days, Reuters says - Engadget",
+public/data/articles.json:3153:      "summary": "Reuters reports that the OpenAI agent that hacked Hugging Face had been free for a week before the company noticed.",
+public/data/articles.json:3157:      "company": "OpenAI",
+public/data/articles.json:3180:          "title": "OpenAI's rogue agent went on a hacking spree that lasted days, Reuters says",
+public/data/articles.json:3245:      "id": "techcrunch-venture-fa1e09837e303d54",
+public/data/articles.json:3246:      "sourceId": "techcrunch-venture",
+public/data/articles.json:3248:      "summary": "Elon Musk's tunneling startup is reportedly in talks for a major new funding round.",
+public/data/articles.json:3830:      "title": "OpenAI’s rogue AI hack was just the beginning, Hugging Face warns",
+public/data/articles.json:3831:      "summary": "OpenAI calls its autonomous Hugging Face breach unprecedented, while security and AI experts say the episode raises an equally uncomfortable question about the company’s own safeguards.",
+public/data/articles.json:3835:      "company": "OpenAI",
+public/data/articles.json:4039:      "title": "OpenAI confirms ChatGPT is down worldwide",
+public/data/articles.json:4044:      "company": "OpenAI",
+public/data/articles.json:4307:        "url": "https://www.chinaventure.com.cn/news/114-20260724-392444.html",
+public/data/articles.json:4322:      "id": "user-source-source-techcrunch-venture-60d47ef761b3dee4",
+public/data/articles.json:4323:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:4324:      "title": "Sam Altman’s biometric startup World raises $52.5M via crypto sale",
+public/data/articles.json:4334:        "url": "https://techcrunch.com/2026/07/24/sam-altmans-biometric-startup-world-raises-52-5-million-via-crypto-sale",
+public/data/articles.json:4350:      "title": "Samsung's new foldables, Netflix to buy Ben Affleck's AI startup, and Paramount Warner Bros. merger hits roadblock | Tech Today - Video",
+public/data/articles.json:4351:      "summary": "Wes Ott covers today's biggest tech stories, including what's new from Samsung's Galaxy Unpacked event. Plus, Netflix is buying Ben Affleck's AI startup, and updates on the Paramount Skydance merger with Warner Bros.",
+public/data/articles.json:4360:        "url": "https://zdnet.com/video/samsungs-new-foldables-netflix-to-buy-ben-afflecks-ai-startup-and-paramount-warner-bros-merger-hits-roadblock-tech-today",
+public/data/articles.json:4861:      "id": "user-source-source-techcrunch-venture-2686459fefe3f4cd",
+public/data/articles.json:4862:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:5601:      "title": "China-US AI Race Escalates, OpenAI Models Break Free, and Why You Should Check Your Car Alarm",
+public/data/articles.json:5606:      "company": "OpenAI",
+public/data/articles.json:5754:      "title": "OpenAI 们割肉、Kimi 们火拼，AI 编程下半场怎么打？",
+public/data/articles.json:5755:      "summary": "OpenAI们割肉、Kimi们火拼，AI编程下半场怎么打？,AI编程市场热度回升，海外厂商激战，国内巨头角逐。技术门槛降低致同质化竞争，市场挤压，下半场竞争重心转向工程化治理与业务落地。",
+public/data/articles.json:5861:      "summary": "刚刚，Claude爆改语音！,刚刚，Anthropic的Claude和OpenAI的ChatGPT语音模式大升级。Claude扩增到11种语言但无中文，OpenAI的GPT-Live登陆桌面端，支持中文且全双工，两者体验有差距。",
+public/data/articles.json:5899:        "url": "https://www.chinaventure.com.cn/news/78-20260724-392443.html",
+public/data/articles.json:6049:      "title": "OpenAI took ten days to tell Hugging Face its models were behind the July 11 weekend hack, report claims — rogue AI agents reportedly active on the open Internet for several days",
+public/data/articles.json:6050:      "summary": "OpenAI confirmed to Hugging Face only this week that models it was testing carried out the July 11 attack on the AI platform's production infrastructure.",
+public/data/articles.json:6054:      "company": "OpenAI",
+public/data/articles.json:6107:      "title": "Nvidia and 24 other companies sign open-weights letter as Washington weighs Chinese AI model ban — OpenAI, Anthropic, and Google absent from the list",
+public/data/articles.json:6108:      "summary": "Signatories include chipmakers, server vendors, cloud operators, enterprise software firms, security companies, and venture funds",
+public/data/articles.json:6135:      "title": "OpenAI's HuggingFace breach heralds an unprecedented age of AI cyber warfare — contemporary LLMs have caused massive upheaval in cybersecurity, and it's only going to get worse",
+public/data/articles.json:6140:      "company": "OpenAI",
+public/data/articles.json:6248:      "id": "user-source-source-techcrunch-venture-e4b544482e7d1ee3",
+public/data/articles.json:6249:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:6276:      "id": "user-source-source-techcrunch-venture-9a00698570340f0b",
+public/data/articles.json:6277:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:6304:      "id": "user-source-source-techcrunch-venture-8b6e02c799c653f9",
+public/data/articles.json:6305:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:6330:      "id": "user-source-source-techcrunch-venture-2e34f7f23f2f43e6",
+public/data/articles.json:6331:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:6332:      "title": "OpenAI’s own model went rogue before Kimi had Wall Street sweating",
+public/data/articles.json:6333:      "summary": "Chinese AI lab Moonshot’s open model Kimi went viral this week for reasons that had less to do with the model itself and more to do with how the U.S. AI industry reacted to it. Meanwhile, an unreleased OpenAI model wandered outside its test environment and ended up connected to a real security breach at Hugging Face — a reminder […]",
+public/data/articles.json:6358:      "id": "user-source-source-techcrunch-venture-04befacbc2e92b68",
+public/data/articles.json:6359:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:6384:      "id": "user-source-source-techcrunch-venture-04aa753d0df2117c",
+public/data/articles.json:6385:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:6684:      "title": "AI sparks new wave of venture capital deals in SA",
+public/data/articles.json:6694:        "url": "https://itweb.co.za/article/ai-sparks-new-wave-of-venture-capital-deals-in-sa/lwrKxq3YP897mg1o",
+public/data/articles.json:6713:      "summary": "AI models are mimicking humans' worst instincts – hacking, blackmail, self-preservation – in tests run by OpenAI and Anthropic.",
+public/data/articles.json:6907:      "summary": "DeepSeek API 使用与 OpenAI/Anthropic 兼容的 API 格式，通过修改配置，您可以使用 OpenAI/Anthropic SDK 来访问 DeepSeek API，或使用与 OpenAI/Anthropic API 兼容的软件。",
+public/data/articles.json:6993:      "summary": "The DeepSeek API uses an API format compatible with OpenAI/Anthropic. By modifying the configuration, you can use the OpenAI/Anthropic SDK or softwares compatible with the OpenAI/Anthropic API to access the DeepSeek API.",
+public/data/articles.json:7277:      "company": "OpenAI",
+public/data/articles.json:7301:      "summary": "The AI “startups” worth billions of dollars are raising alarm bells about Chinese AI. The smaller players have a totally different take.",
+public/data/articles.json:7595:      "title": "The MacRumors Show: Can OpenAI Really Beat the iPhone?",
+public/data/articles.json:7596:      "summary": "This week's episode of The MacRumors Show covers OpenAI's move into hardware and the trade secret lawsuit Apple filed against the company earlier this month. Subscribe to The MacRumors Show YouTube channel for more videos Apple sued OpenAI in the Northern District of California on July 10, alleging a months-long scheme to obtain confidential information about unreleased products. The complaint centers on OpenAI chief hardware officer Tang Tan, a 24-year Apple veteran who previously led iPhone pr",
+public/data/articles.json:7600:      "company": "OpenAI",
+public/data/articles.json:8072:      "title": "As White House monitors latest OpenAI incident, Congress eyes an AI ‘kill switch’ for DHS",
+public/data/articles.json:8073:      "summary": "The White House is monitoring developments after OpenAI revealed earlier this week that one of the company’s AI systems went beyond its intended parameters during a security test and managed to hack into the infrastructure of the AI platform Hugging Face. According to Reuters , presidential technology advisor Michael Kratsios has been briefed on the incident. The OpenAI model escape also prompted a group of Republican and Democratic members of the House of Representatives to introduce two new bi",
+public/data/articles.json:8077:      "company": "OpenAI",
+public/data/articles.json:8244:      "title": "Is OpenAI's New Presence Agent Ready to Replace Your Contact Center?",
+public/data/articles.json:8245:      "summary": "Presence pairs OpenAI models with policies and guardrails for customer service. Is it a CCaaS platform, or something else? Continue reading...",
+public/data/articles.json:8249:      "company": "OpenAI",
+public/data/articles.json:8439:      "title": "An OpenAI Test AI Model Escaped and Hacked Hugging Face: Here's What Happened",
+public/data/articles.json:8440:      "summary": "The post An OpenAI Test AI Model Escaped and Hacked Hugging Face: Here's What Happened appeared first on Android Headlines .",
+public/data/articles.json:8444:      "company": "OpenAI",
+public/data/articles.json:8580:      "company": "OpenAI",
+public/data/articles.json:8750:        "url": "https://www.chinaventure.com.cn/news/114-20260723-392429.html",
+public/data/articles.json:8986:      "title": "OpenAI | Research & Deployment",
+public/data/articles.json:8991:      "company": "OpenAI",
+public/data/articles.json:8995:        "name": "OpenAI 官方来源",
+public/data/articles.json:8998:        "platform": "OpenAI 官方来源"
+public/data/articles.json:9149:      "summary": "Even a current high-capability LLM can appear safer when shown a dangerous objective directly than when other agents transform and relay its direction. Using OpenAI's gpt-5.6-sol model alias, we test 25 pre-specified mirrored trade-off profiles. Direct exposure to an objective authorizing concealment, fabrication, and pressure produced advice net opposed to its target. After an Id and Censor transformed the same objective into affect and a constraint-rewritten, target-bearing intention, the user",
+public/data/articles.json:9172:      "summary": "Introducing GPT-5.4, OpenAI’s most most capable and efficient frontier model for professional work, with state-of-the-art coding, computer use, tool search, and 1M-token context.",
+public/data/articles.json:9180:        "name": "OpenAI 官方来源",
+public/data/articles.json:9183:        "platform": "OpenAI 官方来源"
+public/data/articles.json:9193:          "name": "OpenAI 官方来源",
+public/data/articles.json:9196:          "platform": "OpenAI 官方来源",
+public/data/articles.json:9211:      "title": "Introducing OpenAI Presence",
+public/data/articles.json:9212:      "summary": "Introducing OpenAI Presence, a proven enterprise AI agent platform that helps organizations deploy trusted voice and chat agents for customer and internal workflows.",
+public/data/articles.json:9216:      "company": "OpenAI",
+public/data/articles.json:9220:        "name": "OpenAI 官方来源",
+public/data/articles.json:9223:        "platform": "OpenAI 官方来源"
+public/data/articles.json:9290:      "title": "OpenAI：More than 300 million people turn to ChatGPT with health-related questions each week—and we’re continuing to improve how our models respond. We work w",
+public/data/articles.json:9295:      "company": "OpenAI",
+public/data/articles.json:9299:        "name": "OpenAI on X",
+public/data/articles.json:9300:        "url": "https://x.com/OpenAI/status/2080339986717790394",
+public/data/articles.json:9319:      "title": "OpenAI：We built this experience based on feedback from early testers and physicians. With your permission, ChatGPT can use relevant context you’ve connected",
+public/data/articles.json:9324:      "company": "OpenAI",
+public/data/articles.json:9328:        "name": "OpenAI on X",
+public/data/articles.json:9329:        "url": "https://x.com/OpenAI/status/2080339983962181983",
+public/data/articles.json:9348:      "title": "OpenAI：ChatGPT Voice is now in the desktop app. Control your computer and direct multiple agents running in ChatGPT Work or Codex, using just your voice. It'",
+public/data/articles.json:9353:      "company": "OpenAI",
+public/data/articles.json:9357:        "name": "OpenAI on X",
+public/data/articles.json:9358:        "url": "https://x.com/OpenAI/status/2080378182469857576",
+public/data/articles.json:9377:      "title": "OpenAI：You can also use ChatGPT Voice in Codex from the iOS app with paired remote access. Android support is coming soon.",
+public/data/articles.json:9382:      "company": "OpenAI",
+public/data/articles.json:9386:        "name": "OpenAI on X",
+public/data/articles.json:9387:        "url": "https://x.com/OpenAI/status/2080392280549253392",
+public/data/articles.json:9638:        "OpenAI",
+public/data/articles.json:9685:      "title": "OpenAI's attack agent did exactly what it was told - just more relentlessly than expected",
+public/data/articles.json:9686:      "summary": "OpenAI's unintended attack on Hugging Face startled the world because its AI agent was acting on its own. But that's exactly what agentic AI is designed to do. We just didn't expect it to do it so well.",
+public/data/articles.json:9690:      "company": "OpenAI",
+public/data/articles.json:9716:      "title": "OpenAI's agent breached Hugging Face before an AI defender caught it: What users should do next",
+public/data/articles.json:9721:      "company": "OpenAI",
+public/data/articles.json:10021:      "title": "OpenAI admits AI model hacked Hugging Face, Chinese open-source AI helped investigate",
+public/data/articles.json:10022:      "summary": "A recent AI cyberattack that stunned the industry has unexpectedly put Chinese AI company Zhipu AI and its open-source model GLM 5.2 in the spotlight. OpenAI has acknowledged for the first time that one of its AI models escaped a sandboxed testing environment during an internal cybersecurity evaluation and compromised the production infrastructure of Hugging […]",
+public/data/articles.json:10026:      "company": "OpenAI",
+public/data/articles.json:10052:      "summary": "Microsoft is internally testing Moonshot AI’s Kimi K3 and evaluating whether some Copilot inference requests currently handled by OpenAI and Anthropic models could be moved to Kimi K3, The Information reported. Microsoft has not made a final decision on replacing any models. Microsoft estimates that shifting part of Copilot’s workload to Kimi K3 could reduce […]",
+public/data/articles.json:10168:        "name": "OpenAI 官方来源",
+public/data/articles.json:10171:        "platform": "OpenAI 官方来源"
+public/data/articles.json:10187:      "summary": "How Choco used OpenAI APIs to streamline food distribution, boost productivity, and unlock growth—an in-depth customer story on real-world AI impact.",
+public/data/articles.json:10195:        "name": "OpenAI 官方来源",
+public/data/articles.json:10198:        "platform": "OpenAI 官方来源"
+public/data/articles.json:10219:      "company": "OpenAI",
+public/data/articles.json:10223:        "name": "OpenAI 官方来源",
+public/data/articles.json:10226:        "platform": "OpenAI 官方来源"
+public/data/articles.json:10242:      "title": "How OpenAI uses Codex",
+public/data/articles.json:10243:      "summary": "A detailed look at how OpenAI teams use Codex to understand code, refactor systems, improve performance, boost velocity, and enhance engineering workflows.",
+public/data/articles.json:10247:      "company": "OpenAI",
+public/data/articles.json:10251:        "name": "OpenAI 官方来源",
+public/data/articles.json:10254:        "platform": "OpenAI 官方来源"
+public/data/articles.json:10280:        "name": "OpenAI 官方来源",
+public/data/articles.json:10283:        "platform": "OpenAI 官方来源"
+public/data/articles.json:10293:          "name": "OpenAI 官方来源",
+public/data/articles.json:10296:          "platform": "OpenAI 官方来源",
+public/data/articles.json:10641:      "title": "OpenAI once again makes the case for giving ChatGPT your health records",
+public/data/articles.json:10646:      "company": "OpenAI",
+public/data/articles.json:10752:      "title": "OpenAI Presence raises new questions about enterprise automation and jobs",
+public/data/articles.json:10753:      "summary": "OpenAI has launched Presence, an enterprise service for deploying voice and chat agents that can resolve customer and employee requests, potentially automating some work now handled by frontline support teams. The agents can answer questions and operate IT systems, and enterprises can decide what actions the agents may take and when they should seek human approval for actions or transfer a case to a human. OpenAI is already using Presence internally for its English-language phone support channel",
+public/data/articles.json:10757:      "company": "OpenAI",
+public/data/articles.json:10978:      "company": "OpenAI",
+public/data/articles.json:11069:      "title": "Man sues OpenAI, says ChatGPT medical advice nearly killed him",
+public/data/articles.json:11074:      "company": "OpenAI",
+public/data/articles.json:11276:      "title": "AI arms race in line for a reckoning after OpenAI hacking incident",
+public/data/articles.json:11281:      "company": "OpenAI",
+public/data/articles.json:11420:        "name": "OpenAI",
+public/data/articles.json:11431:      "id": "techcrunch-venture-8a66df8174938fea",
+public/data/articles.json:11432:      "sourceId": "techcrunch-venture",
+public/data/articles.json:11567:      "title": "OpenAI Confirms Its Models Breached Hugging Face Production Systems During Cyber Benchmark Testing",
+public/data/articles.json:11568:      "summary": "OpenAI has acknowledged that its AI models, including GPT-5. Thank you for being a Ghacks reader. The post OpenAI Confirms Its Models Breached Hugging Face Production Systems During Cyber Benchmark Testing appeared first on gHacks .",
+public/data/articles.json:11572:      "company": "OpenAI",
+public/data/articles.json:11880:      "summary": "Shippers are beginning to delegate carrier selection to large language model (LLM) agents. We ask what such delegation does to a freight matching market, and which platform design choices contain it. We carried out agent-based simulations in which fifty shipper agents, built on commercial LLMs from OpenAI (GPT), Anthropic (Claude), and Google (Gemini), procure truckload capacity for thirty days. The market implements the rules of digital freight matching: each load is offered down the shipper's",
+public/data/articles.json:12008:        "name": "OpenAI",
+public/data/articles.json:12437:        "OpenAI"
+public/data/articles.json:12568:      "title": "韓美輝達兆元宴將登場？韓媒：24日於矽谷舉行圓桌會議、OpenAI及Anthropic可能加入",
+public/data/articles.json:12569:      "summary": "以輝達執行長黃仁勳為中心的「韓版兆元宴」成員，可能將於24日在美國矽谷舉行圓桌會議。據稱生成式人工智慧（AI）巨頭OpenAI及Anthropic也可能加入，將是AI各領域領袖首次齊聚一堂。",
+public/data/articles.json:12730:      "summary": "As access to Anthropic’s and OpenAI’s frontier models becomes more restricted, Chinese labs are pitching their open-source alternatives as stable, accessible, and increasingly capable.",
+public/data/articles.json:12969:      "summary": "OpenAI confirms a confidential S-1 submission to the SEC and has not yet determined timing for further action.",
+public/data/articles.json:12977:        "name": "OpenAI 官方来源",
+public/data/articles.json:12980:        "platform": "OpenAI 官方来源"
+public/data/articles.json:13456:      "id": "techcrunch-venture-7fa1bc7028784864",
+public/data/articles.json:13457:      "sourceId": "techcrunch-venture",
+public/data/articles.json:13458:      "title": "Menlo Ventures’ Matt Murphy explains what AI startups founders must do differently",
+public/data/articles.json:13468:        "url": "https://techcrunch.com/podcast/menlo-ventures-matt-murphy-explains-what-ai-startups-founders-must-do-differently",
+public/data/articles.json:13547:      "summary": "Master AI with the best free online AI courses in 2026 for beginners, professionals, and developers, including top picks from Harvard, Google, OpenAI, and more.",
+public/data/articles.json:13713:      "summary": "Sarah Friar, CFO of OpenAI, introduces a practical AI scorecard to measure ROI through useful work, cost per successful task, dependability, and return on compute.",
+public/data/articles.json:13721:        "name": "OpenAI",
+public/data/articles.json:13735:      "summary": "News organizations are using AI to strengthen reporting, grow audiences, and improve business operations, with OpenAI tools supporting journalists and publishers worldwide.",
+public/data/articles.json:13743:        "name": "OpenAI",
+public/data/articles.json:13755:      "title": "David Vélez and Robin Vince join the boards of the OpenAI Foundation and OpenAI Group PBC",
+public/data/articles.json:13756:      "summary": "David Vélez and Robin Vince join the boards of the OpenAI Foundation and OpenAI Group PBC, bringing global leadership in finance, technology, and governance.",
+public/data/articles.json:13764:        "name": "OpenAI",
+public/data/articles.json:13797:      "id": "techcrunch-venture-a2ce7357e3ec5e67",
+public/data/articles.json:13798:      "sourceId": "techcrunch-venture",
+public/data/articles.json:13800:      "summary": "Maritime nuclear energy startup Bluecore Energy has raised $10 million in a pre-seed funding round led by Slauson & Co.",
+public/data/articles.json:14435:      "title": "OpenAI says it accidentally hacked Hugging Face with a new AI system",
+public/data/articles.json:14436:      "summary": "OpenAI says the breach occurred during an internal evaluation.",
+public/data/articles.json:14440:      "company": "OpenAI",
+public/data/articles.json:14489:      "id": "user-source-source-techcrunch-venture-9630ab890e2499fd",
+public/data/articles.json:14490:      "sourceId": "user-source-source-techcrunch-venture",
+public/data/articles.json:14599:      "title": "OpenAI Newsroom | AI Adoption",
+public/data/articles.json:14600:      "summary": "OpenAI 官方来源 发布相关公开信息，完整内容见原文。",
+public/data/articles.json:14604:      "company": "OpenAI",
+public/data/articles.json:14608:        "name": "OpenAI 官方来源",
+public/data/articles.json:14611:        "platform": "OpenAI 官方来源"
+public/data/articles.json:14638:        "name": "OpenAI 官方来源",
+public/data/articles.json:14641:        "platform": "OpenAI 官方来源"
+public/data/articles.json:15154:      "id": "techcrunch-venture-d72878aab319270b",
+public/data/articles.json:15155:      "sourceId": "techcrunch-venture",
+public/data/articles.json:15157:      "summary": "The one-year-old startup aims to reinvent financial architecture for autonomous AI transactions.",
+public/data/articles.json:15176:      "id": "techcrunch-venture-47112a31dd861591",
+public/data/articles.json:15177:      "sourceId": "techcrunch-venture",
+public/data/articles.json:15178:      "title": "Inference startup Infinity raises $15M from Touring Capital, OpenAI and Anthropic researchers",
+public/data/articles.json:15179:      "summary": "AI infrastructure company Infinity announced Monday a $15 million raise at a $100 million valuation from investors including Touring Capital, Principal VC, and researchers from companies such as OpenAI and Anthropic.",
+public/data/articles.json:15188:        "url": "https://techcrunch.com/2026/07/20/inference-startup-infinity-raises-15m-from-touring-capital-openai-and-athropic-researchers",
+public/data/articles.json:15454:      "summary": "今天，2026 世界人工智能大会（WAIC）正式落下帷幕。过去三天，从 OpenAI、Google DeepMind 到图灵奖得主、强化学习奠基人 Richard Sutton，多位人工智能领域的重要学者和企业代表围绕 AGI、大模型、智能体等话题分享了他们对未来 AI 的判断。 其中，Sutton 已经是连续 第二年在 WAIC 的舞台上进 行演讲 。 这也是他宣布创办 AI 公司 Oak Lab 后的首次公开演讲 。 就在一周前，他刚刚宣布离开 John Carmack 创办的 Keen Technologies，转而押注一条不同于当前大模型的发展路线：让 AI 像人一样，在与世界持续互动中不断学习，而不是主要依赖静态数据训练。 这其实也是他近两年来反复强调的核心观点。去年，他在 WAIC 提出人工智能正从依赖静态数据迈向依靠与世界互动不断学习的“体验时代”（Era of Experience）。今年，他则回到了自己最著名的观点——《苦涩的教训》（The Bitter Lesson），并借此追问：如果人工智能的发展仍遵循过去七十年的规律，那么今天如日中天的大语言模型（LLM），是不",
+public/data/articles.json:15472:        "OpenAI",
+public/data/articles.json:15810:      "summary": "How OpenAI uses chain-of-thought monitoring to study misalignment in internal coding agents—analyzing real-world deployments to detect risks and strengthen AI safety safeguards.",
+public/data/articles.json:15818:        "name": "OpenAI 官方来源",
+public/data/articles.json:15821:        "platform": "OpenAI 官方来源"
+public/data/articles.json:15835:      "id": "techcrunch-venture-29a4986d63147e31",
+public/data/articles.json:15836:      "sourceId": "techcrunch-venture",
+public/data/articles.json:15837:      "title": "StrictlyVC returns to New York City September 10 to celebrate a huge year for the city’s startup community",
+public/data/articles.json:15838:      "summary": "For the first time since 2024, StrictlyVC is coming back to New York City — and we're bringing the kind of access you’d expect from an under-wraps event to the whole startup, VC, and dealmaking community.",
+public/data/articles.json:15847:        "url": "https://techcrunch.com/2026/07/20/strictlyvc-returns-to-new-york-city-september-10-to-celebrate-a-huge-year-for-the-citys-startup-community",
+public/data/articles.json:16091:      "summary": "Learn how OpenAI is making ChatGPT safer for teens with age-appropriate protections, learning tools, parental controls, and expert partnerships.",
+public/data/articles.json:16099:        "name": "OpenAI",
+public/data/articles.json:16240:      "company": "OpenAI",
+public/data/articles.json:16255:        "OpenAI"
+public/data/articles.json:16319:        "url": "https://www.chinaventure.com.cn/news/80-20260717-392336.html",
+public/data/articles.json:16397:      "company": "OpenAI",
+public/data/articles.json:16421:      "title": "OpenAI Launches Codex Micro, a $230 Mechanical Keypad for AI Coding",
+public/data/articles.json:16422:      "summary": "OpenAI has introduced the Codex Micro, its first hardware product aimed at consumers. Thank you for being a Ghacks reader. The post OpenAI Launches Codex Micro, a $230 Mechanical Keypad for AI Coding appeared first on gHacks .",
+public/data/articles.json:16426:      "company": "OpenAI",
+public/data/articles.json:16550:      "summary": "新智元报道 ChatGPT推出快满4年了。 这4年，你跟它聊过多少句话、传过多少张图、开过多少个项目，大概连自己也数不清。 可有一个痛点，你一定记得：想翻回三个月前那次对话，基本得靠运气。 侧边栏那个搜索框约等于摆设，会话一多，搜旧对话近乎不可能。 在OpenAI开发者社区，苦这个旧搜索久矣： 终于能找到那条消息了，为什么拖了这么久；那个老搜索栏，从来就没好用过；会话一多，搜旧对话就变得不可能；翻旧对话简直成了噩梦…… 这不是零星几句抱怨。 ChatGPT什么都能生成，可是你写过的稿、讨论过的代码、生成过的图、囤过的资料，随着对话越堆越多，「翻记录」越来越像大海捞针，侧边栏拉到手酸，也未必找得到三周前那次关键讨论。 而这一次，变了。 7月14日，OpenAI给ChatGPT上线了一套全新的统一搜索，把你在ChatGPT里的所有东西，塞进了一个统一入口：历史聊天、项目、上传的文档、生成的图片，全部能搜。 Web、iOS、Android三端同步，从免费版到企业版，全球所有计划同步开放。 真去把那几年的「存货」翻一遍你就会反应过来：ChatGPT第一次能「搜自己」了。 而这，绝不是补了个搜索",
+public/data/articles.json:16554:      "company": "OpenAI",
+public/data/articles.json:16569:        "OpenAI",
+public/data/articles.json:16614:      "id": "techcrunch-venture-8308ffb7b073405a",
+public/data/articles.json:16615:      "sourceId": "techcrunch-venture",
+public/data/articles.json:16617:      "summary": "Neil Rimer, the venture capitalist who co-founded Index Ventures, predicts the historic wealth AI is generating in Silicon Valley will have to be redistributed, voluntarily or involuntarily.",
+public/data/articles.json:16643:      "company": "OpenAI",
+public/data/articles.json:16791:      "id": "techcrunch-venture-d23288edfc8ba818",
+public/data/articles.json:16792:      "sourceId": "techcrunch-venture",
+public/data/articles.json:16793:      "title": "Nuclear startup Valar Atomics in talks to raise new funding at $6B valuation",
+public/data/articles.json:16803:        "url": "https://techcrunch.com/2026/07/17/nuclear-startup-valar-atomics-in-talks-to-raise-new-funding-at-6b-valuation",
+public/data/articles.json:16945:      "title": "OpenAI Partner Network",
+public/data/articles.json:16946:      "summary": "Work with OpenAI Partners to accelerate AI deployment, apply domain expertise, and scale adoption across your organization.",
+public/data/articles.json:16950:      "company": "OpenAI",
+public/data/articles.json:16954:        "name": "OpenAI 官方来源",
+public/data/articles.json:16957:        "platform": "OpenAI 官方来源"
+public/data/articles.json:17001:      "title": "Apple Turns Up The Heat On OpenAI Over Alleged Trade Secret Theft",
+public/data/articles.json:17002:      "summary": "Apple recently claimed that OpenAI stole trade secrets, and now it's reaching out to former employees who work at OpenAI about preserving documents.",
+public/data/articles.json:17006:      "company": "OpenAI",
+public/data/articles.json:17028:      "id": "techcrunch-venture-2d3c8a234e74fc0f",
+public/data/articles.json:17029:      "sourceId": "techcrunch-venture",
+public/data/articles.json:17031:      "summary": "It’s not just you: AI startups are taking in a huge amount of seed funding, and in the process making things harder for anyone looking for funding even at a pre-seed stage. We’ve covered the trend in detail, and at this year’s TechCrunch Disrupt event, we want to help pre-seed founders now being held to seed-stage […]",
+public/data/articles.json:17092:      "company": "OpenAI",
+public/data/articles.json:17187:      "id": "techcrunch-venture-030deb9b8b99dba7",
+public/data/articles.json:17188:      "sourceId": "techcrunch-venture",
+public/data/articles.json:17530:      "title": "OpenAI 一夜重置全员额度，800 万开发者集体「续命」",
+public/data/articles.json:17535:      "company": "OpenAI",
+public/data/articles.json:17666:      "title": "China startup Yuanjiwei claims world’s first 2D semiconductor pilot line ⋆ Electronics Weekly",
+public/data/articles.json:17676:        "url": "https://www.electronicsweekly.com/news/business/china-startup-clains-worlds-first-2d-semiconductor-pilot-line-2026-07",
+public/data/articles.json:17692:      "id": "techcrunch-venture-74347f39d772137d",
+public/data/articles.json:17693:      "sourceId": "techcrunch-venture",
+public/data/articles.json:17694:      "title": "Founders Fund hires former OpenAI exec Ryan Beiermeister (and not because of her ‘Mafia’ skills)",
+public/data/articles.json:17699:      "company": "OpenAI",
+public/data/articles.json:17754:      "summary": "OpenAI shares lessons from deploying long-running AI models, highlighting new safety risks, observed failures, and improved safeguards through iterative deployment.",
+public/data/articles.json:17762:        "name": "OpenAI",
+public/data/articles.json:18362:      "summary": "OpenAI launches the ChatGPT for Small Businesses program, helping entrepreneurs build AI skills, automate work, and grow with ChatGPT Work.",
+public/data/articles.json:18370:        "name": "OpenAI",
+public/data/articles.json:19106:      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 我看呐，只要以后笔记本半开着，就没有人的事儿了。 刚刚，OpenAI研究院 Ethan Knight 宣布： 昨儿刚出的GPT-5.6，用不到一小时，就完成了一道存在了半个世纪的图论猜想证明。 而这道题呢，来头也还真不小，就是大名鼎鼎的 循环双覆盖猜想（Cycle Double Cover Conjecture） 。 为解决这道题，研究员把现在最顶的GPT-5.6 Sol蹬到Ultra；GPT呢，又自己蹬了64个子agent。 最后，硬是写出了一份三页的pdf，证明完毕，Over。 发布后，还在韩国开ICML的Noam Brown（o1核心贡献者）也隔着太平洋第一时间赶来捧场。 他表示，这次和此前的Erdős单位距离问题不同，不靠什么内部特供模型，靠公开能用的GPT-5.6 Sol Ultra就把活儿干了。 而且，GPT-5.6 Sol Ultra把测试时计算并行大幅铺开，原本可能要磨上一整天的证明，如今被64个子agent压进了一个小时。 可以说，在数学这块，前沿模型的天花板还在拉高。而多agent，也能极快地加速任务的处理",
+public/data/articles.json:19110:      "company": "OpenAI",
+public/data/articles.json:19124:        "OpenAI"
+public/data/articles.json:19221:      "title": "OpenAI 权力洗牌：安全元老 Joshua Achiam 离职，白宫政策操盘手加入",
+public/data/articles.json:19226:      "company": "OpenAI",
+public/data/articles.json:19427:      "title": "苹果 Vision Pro 副总裁 Paul Meade 跳槽 OpenAI",
+public/data/articles.json:19428:      "summary": "OpenAI在下一盘什么「硬件大棋」？",
+public/data/articles.json:19432:      "company": "OpenAI",
+public/data/articles.json:19508:      "title": "Apple Sues OpenAI, Claiming Employees Stole Trade Secrets",
+public/data/articles.json:19509:      "summary": "In a complaint filed Friday, Apple accuses OpenAI of illegally accessing information about unannounced products.",
+public/data/articles.json:19513:      "company": "OpenAI",
+public/data/articles.json:19538:      "summary": "Stay updated with today's biggest tech stories: OpenAI GPT-5.6, ChatGPT Work, Meta Muse Spark 1.1, Apple Siri settlement, YouTube updates, and more.",
+public/data/articles.json:19542:      "company": "OpenAI",
+public/data/articles.json:19574:      "title": "OpenAI Has Already Discontinued Its Controversial ChatGPT Atlas Browser",
+public/data/articles.json:19575:      "summary": "The Atlas Browser is just one of many AI browsers that have been popping up, but it was a big hit for fans of OpenAI and ChatGPT after it launched in 2025.",
+public/data/articles.json:19579:      "company": "OpenAI",
+public/data/articles.json:19781:      "summary": "Catch up on today's biggest tech stories, including OpenAI GPT Live, Grok 4.5, Meta AI glasses, Apple memory chip tests, Google Photos Remix, and PC market trends.",
+public/data/articles.json:19841:      "company": "OpenAI",
+public/data/articles.json:19845:        "name": "OpenAI 官方来源",
+public/data/articles.json:19848:        "platform": "OpenAI 官方来源"
+public/data/articles.json:19864:      "title": "OpenAI Newsroom | Recent news",
+public/data/articles.json:19869:      "company": "OpenAI",
+public/data/articles.json:19873:        "name": "OpenAI 官方来源",
+public/data/articles.json:19876:        "platform": "OpenAI 官方来源"
+public/data/articles.json:20121:      "title": "刚刚，OpenAI首席未来学家离职！曾被马斯克骂蠢驴",
+public/data/articles.json:20122:      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 刚刚，OpenAI首席未来学家 Joshua Achiam 在X上宣布离职。 这并不是一个普通员工变动。 在OpenAI内部， 首席未来学家 这个职位夹在AI安全、政策和公司使命之间，负责研究AI继续变强之后，可能给世界带来的风险和机会。 而Joshua Achiam，正是OpenAI这条安全与使命线上的核心人物之一。 9年前的2017，他以实习生身份加入OpenAI。早期，他是一名专注于AI安全的研究科学家，做过深度强化学习里的安全约束研究。 后来，他领导过OpenAI的 Mission Alignment （使命对齐）团队，负责维护这家公司最初那句使命： 确保AGI造福全人类。 今年2月，OpenAI解散Mission Alignment团队，Joshua转任公司首席未来学家。 只不过，短短5个月后，Joshua就宣布自己将在7月24日正式离开这家待了9年的公司。 至于离职原因，Joshua并没有透露太多。 他只是表示，自己离开并不是因为某个具体事件，也不是一时兴起，而是已经思考了很长一段时间。 为了安全的AGI 在X长文",
+public/data/articles.json:20126:      "company": "OpenAI",
+public/data/articles.json:20141:        "OpenAI",
+public/data/articles.json:20229:      "title": "An OpenAI model has disproved a central conjecture in discrete geometry",
+public/data/articles.json:20230:      "summary": "An OpenAI model solved the 80-year-old unit distance problem, disproving a major conjecture in discrete geometry and marking a milestone in AI-driven mathematics.",
+public/data/articles.json:20234:      "company": "OpenAI",
+public/data/articles.json:20238:        "name": "OpenAI 官方来源",
+public/data/articles.json:20241:        "platform": "OpenAI 官方来源"
+public/data/articles.json:20781:      "title": "AI产业正在围着OpenAI和Anthropic两家公司打转",
+public/data/articles.json:20782:      "summary": "过去半个月，AI 行业似乎迎来了一个短暂的平静期。预期中的 GPT-5.6 和 Gemini 3.5 Pro 并未到来，除了 Sonnet 5 的发布和 Fable 5 的回归，并没有什么重磅模型面世。但穿透平静的表象，我们可能正在目睹 AI 产业结构迎来的一场前所未有的密集重组。 6 月 24 日， OpenAI 发布了它的第一颗自研芯片 Jalapeño ，一颗专为推理设计的加速器，与 Broadcom 联合开发，从设计到流片只用了九个月。同一天，OpenAI 宣布与 Broadcom 签下 10 GW 的算力部署合作协议。一家模型公司开始造芯片，这在两年前几乎不可想象。 一周后的新闻密度更高。7 月 1 日， 彭博社报道 Meta 正在组建名为 Meta Compute 的云业务部门，计划对外出售 AI 算力 ，Meta 股价当天上涨 9%，CoreWeave 下跌 14%，Nebius 下跌 17%。7 月 2 日，微软宣布成立 Frontier Company，投入 25 亿美元、配备 6000 名工程师，专门帮企业客户部署 AI。 7 月 3 日，韩国媒体披露 Meta 正",
+public/data/articles.json:20800:        "OpenAI",
+public/data/articles.json:21985:      "title": "Stripe, Anthropic, and OpenAI are backing an effort to stop respiratory infections",
+public/data/articles.json:22043:      "summary": "Peregrine Technologies raised $250M in Series D funding at a $6.8B valuation, led by Sequoia Capital and other existing investors.",
+public/data/articles.json:22100:      "title": "OpenAI Newsroom | Applied AI",
+public/data/articles.json:22101:      "summary": "OpenAI 官方来源 发布相关公开信息，完整内容见原文。",
+public/data/articles.json:22105:      "company": "OpenAI",
+public/data/articles.json:22109:        "name": "OpenAI 官方来源",
+public/data/articles.json:22112:        "platform": "OpenAI 官方来源"
+public/data/articles.json:22362:      "title": "OpenAI Learning Hub: AI Guides, Tutorials & Resources",
+public/data/articles.json:22363:      "summary": "Explore OpenAI’s expert content designed for business. Featuring in-depth resources to accelerate AI adoption for startups, enterprises, and developers.",
+public/data/articles.json:22367:      "company": "OpenAI",
+public/data/articles.json:22371:        "name": "OpenAI 官方来源",
+public/data/articles.json:22374:        "platform": "OpenAI 官方来源"
+public/data/articles.json:22474:      "title": "OpenAI and Hugging Face partner to address security incident during model evaluation",
+public/data/articles.json:22475:      "summary": "OpenAI and Hugging Face share early findings from a security incident during AI model evaluation, highlighting advanced cyber capabilities and lessons for defenders.",
+public/data/articles.json:22483:        "name": "OpenAI",
+public/data/articles.json:23436:      "summary": "We're thrilled to announce that Diana Hu has been promoted to Managing Partner at Y Combinator. Few people have built a startup from zero and also shipped tech to 100 million people. Diana has done both.",
+public/data/articles.json:25059:      "id": "venturebeat-ai-4b0b581f96fdff4b",
+public/data/articles.json:25060:      "sourceId": "venturebeat-ai",
+public/data/articles.json:25071:        "url": "https://venturebeat.com/technology/google-just-redesigned-the-search-box-for-the-first-time-in-25-years-heres-why-it-matters-more-than-you-think",
+public/data/articles.json:26407:      "company": "OpenAI",
+public/data/articles.json:26438:      "title": "OpenAI 融资 1220 亿美元，推动 AI 向全新阶段演进",
+public/data/articles.json:26439:      "summary": "OpenAI 融资 1220 亿美元，推动 AI 向全新阶段演进 OpenAI",
+public/data/articles.json:26443:      "company": "OpenAI",
+public/data/articles.json:27099:      "id": "venturebeat-ai-7f9102717fb19b93",
+public/data/articles.json:27100:      "sourceId": "venturebeat-ai",
+public/data/articles.json:27111:        "url": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
+public/data/articles.json:27120:      "id": "venturebeat-ai-99a74fa8e5c3257d",
+public/data/articles.json:27121:      "sourceId": "venturebeat-ai",
+public/data/articles.json:27132:        "url": "https://venturebeat.com/infrastructure/claude-code-costs-up-to-usd200-a-month-goose-does-the-same-thing-for-free",
+public/data/articles.json:27144:      "id": "venturebeat-ai-2f6e8f891c0a8aeb",
+public/data/articles.json:27145:      "sourceId": "venturebeat-ai",
+public/data/articles.json:27147:      "summary": "Alfred Wahlforss was running out of options. His startup, Listen Labs , needed to hire over 100 engineers, but competing against Mark Zuckerberg's $100 million offers seemed impossible. So he spent $5,000 — a fifth of his marketing budget — on a billboard in San Francisco displaying what looked like gibberish: five strings of random numbers. The numbers were actually AI tokens. Decoded, they led to a coding challenge: build an algorithm to act as a digital bouncer at Berghain, the Berlin nightcl",
+public/data/articles.json:27156:        "url": "https://venturebeat.com/technology/listen-labs-raises-usd69m-after-viral-billboard-hiring-stunt-to-scale-ai",
+public/data/articles.json:27169:      "title": "豆包和OpenAI，都在押注同一个未来 | 「钛度号」作品月榜第134期-钛媒体官方网站",
+public/data/articles.json:27250:      "id": "venturebeat-ai-0d32aa6b6a8fd310",
+public/data/articles.json:27251:      "sourceId": "venturebeat-ai",
+public/data/articles.json:27262:        "url": "https://venturebeat.com/technology/salesforce-rolls-out-new-slackbot-ai-agent-as-it-battles-microsoft-and",
+public/data/articles.json:27273:      "id": "venturebeat-ai-157324a9612f0389",
+public/data/articles.json:27274:      "sourceId": "venturebeat-ai",
+public/data/articles.json:27276:      "summary": "Anthropic released Cowork on Monday, a new AI agent capability that extends the power of its wildly successful Claude Code tool to non-technical users — and according to company insiders, the team built the entire feature in approximately a week and a half, largely using Claude Code itself. The launch marks a major inflection point in the race to deliver practical AI agents to mainstream users, positioning Anthropic to compete not just with OpenAI and Google in conversational AI, but with Micros",
+public/data/articles.json:27285:        "url": "https://venturebeat.com/technology/anthropic-launches-cowork-a-claude-desktop-agent-that-works-in-your-files-no",
+public/data/articles.json:27297:      "id": "venturebeat-ai-fe052daa70a8c4c9",
+public/data/articles.json:27298:      "sourceId": "venturebeat-ai",
+public/data/articles.json:27300:      "summary": "Nous Research , the open-source artificial intelligence startup backed by crypto venture firm Paradigm , released a new competitive programming model on Monday that it says matches or exceeds several larger proprietary systems — trained in just four days using 48 of Nvidia's latest B200 graphics processors . The model, called NousCoder-14B , is another entry in a crowded field of AI coding assistants, but arrives at a particularly charged moment: Claude Code , the agentic programming tool from r",
+public/data/articles.json:27309:        "url": "https://venturebeat.com/technology/nous-researchs-nouscoder-14b-is-an-open-source-coding-model-landing-right-in",
+public/data/articles.json:29259:      "name": "OpenAI 官方动态",
+public/data/articles.json:29260:      "company": "OpenAI",
+public/data/articles.json:29659:      "name": "OpenAI",
+public/data/articles.json:31346:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Asciencedaily.com%2Fnews%2Fcomputers_math%2Ftechnology+%28%22%E7%94%9F%E7%89%A9%E7%A7%91%E6%8A%80%22+OR+%22AI+%E5%88%B6%E8%8D%AF%22+OR+%22%E5%9F%BA%E5%9B%A0%E7%BB%84%E5%AD%A6%22+OR+%22%E8%AE%A1%E7%AE%97%E7%94%9F%E7%89%A9%E5%AD%A6%22+OR+%22%E8%8D%AF%E7%89%A9%E5%8F%91%E7%8E%B0%22+OR+%22%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%9E%E9%AA%8C%22+OR+%22%E5%9F%BA%E5%9B%A0%E7%BC%96%E8%BE%91%22+OR+%22%E8%9B%8B%E7%99%BD%E8%B4%A8%E8%AE%BE%E8%AE%A1%22+OR+%22%E7%BB%86%E8%83%9E%E6%B2%BB%E7%96%97%22+OR+%22%E5%90%88%E6%88%90%E7%94%9F%E7%89%A9%E5%AD%A6%22+OR+%22%E6%99%B6%E6%B3%B0%E7%A7%91%E6%8A%80%22+OR+%22%E8%8B%B1%E7%9F%BD%E6%99%BA%E8%83%BD%22+OR+%22Tempus+AI%22+OR+%22Recursion%22+OR+%22%E5%88%86%E5%AD%90%E4%B9%8B%E5%BF%83%22+OR+%22Recursion+Pharmaceuticals%22+OR+%22%E5%8D%8E%E5%A4%A7%E5%9F%BA%E5%9B%A0%22+OR+%22OpenAI%22+OR+%22%E7%A7%91%E5%AD%A6%E7%A0%94%E7%A9%B6%22+OR+%22%E6%8A%80%E6%9C%AF%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:31536:      "id": "professional-media-startup-daily",
+public/data/articles.json:31545:      "canonicalSourceUrl": "https://www.startupdaily.net/",
+public/data/articles.json:31546:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Astartupdaily.net+%28%22%E9%A3%8E%E9%99%A9%E6%8A%95%E8%B5%84%22+OR+%22PE%22+OR+%22TS%22+OR+%22%E5%AF%B9%E8%B5%8C%22+OR+%22%E5%9F%BA%E9%87%91%E5%A4%87%E6%A1%88%22+OR+%22%E4%B8%93%E9%A1%B9%E5%9F%BA%E9%87%91%22+OR+%22%E5%A4%A9%E4%BD%BF%E8%BD%AE%22+OR+%22A%E8%BD%AE%22+OR+%22Pre-IPO%22+OR+%22%E9%80%80%E5%87%BA%22+OR+%22%E7%A7%91%E5%88%9B%E6%9D%BF%22+OR+%22%E7%BA%A2%E6%9D%89%22+OR+%22Sequoia+Capital%22+OR+%22Y+Combinator%22+OR+%22IDG+%E8%B5%84%E6%9C%AC%22+OR+%22Benchmark%22+OR+%22Kleiner+Perkins%22+OR+%22%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%22+OR+%22%E7%BB%8F%E7%BA%AC%E5%88%9B%E6%8A%95%22+OR+%22%E9%AB%98%E6%A6%95%E5%88%9B%E6%8A%95%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:31565:      "id": "professional-media-startup-grind",
+public/data/articles.json:31574:      "canonicalSourceUrl": "https://www.startupgrind.com/blog/",
+public/data/articles.json:31575:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Astartupgrind.com%2Fblog+%28%22%E9%A3%8E%E9%99%A9%E6%8A%95%E8%B5%84%22+OR+%22PE%22+OR+%22TS%22+OR+%22%E5%AF%B9%E8%B5%8C%22+OR+%22%E5%9F%BA%E9%87%91%E5%A4%87%E6%A1%88%22+OR+%22%E4%B8%93%E9%A1%B9%E5%9F%BA%E9%87%91%22+OR+%22%E5%A4%A9%E4%BD%BF%E8%BD%AE%22+OR+%22A%E8%BD%AE%22+OR+%22Pre-IPO%22+OR+%22%E9%80%80%E5%87%BA%22+OR+%22%E7%A7%91%E5%88%9B%E6%9D%BF%22+OR+%22%E7%BA%A2%E6%9D%89%22+OR+%22Sequoia+Capital%22+OR+%22Y+Combinator%22+OR+%22IDG+%E8%B5%84%E6%9C%AC%22+OR+%22Benchmark%22+OR+%22Kleiner+Perkins%22+OR+%22%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%22+OR+%22%E7%BB%8F%E7%BA%AC%E5%88%9B%E6%8A%95%22+OR+%22%E9%AB%98%E6%A6%95%E5%88%9B%E6%8A%95%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:31594:      "id": "professional-media-startupnation",
+public/data/articles.json:31603:      "canonicalSourceUrl": "https://startupnation.com/",
+public/data/articles.json:31604:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Astartupnation.com+%28%22%E9%A3%8E%E9%99%A9%E6%8A%95%E8%B5%84%22+OR+%22PE%22+OR+%22TS%22+OR+%22%E5%AF%B9%E8%B5%8C%22+OR+%22%E5%9F%BA%E9%87%91%E5%A4%87%E6%A1%88%22+OR+%22%E4%B8%93%E9%A1%B9%E5%9F%BA%E9%87%91%22+OR+%22%E5%A4%A9%E4%BD%BF%E8%BD%AE%22+OR+%22A%E8%BD%AE%22+OR+%22Pre-IPO%22+OR+%22%E9%80%80%E5%87%BA%22+OR+%22%E7%A7%91%E5%88%9B%E6%9D%BF%22+OR+%22%E7%BA%A2%E6%9D%89%22+OR+%22Sequoia+Capital%22+OR+%22Y+Combinator%22+OR+%22IDG+%E8%B5%84%E6%9C%AC%22+OR+%22Benchmark%22+OR+%22Kleiner+Perkins%22+OR+%22%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%22+OR+%22%E7%BB%8F%E7%BA%AC%E5%88%9B%E6%8A%95%22+OR+%22%E9%AB%98%E6%A6%95%E5%88%9B%E6%8A%95%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:32166:      "id": "professional-media-the-startup",
+public/data/articles.json:32337:      "id": "professional-media-venturebeat",
+public/data/articles.json:32347:      "canonicalSourceUrl": "https://venturebeat.com/",
+public/data/articles.json:32348:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Aventurebeat.com+%28%22AI+%2F+AGI%22+OR+%22AI%22+OR+%22AGI%22+OR+%22%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%22+OR+%22%E5%A4%A7%E6%A8%A1%E5%9E%8B%22+OR+%22AI+agent%22+OR+%22%E6%8E%A8%E7%90%86%E6%A8%A1%E5%9E%8B%22+OR+%22%E5%A4%9A%E6%A8%A1%E6%80%81%22+OR+%22Agent%22+OR+%22Grok%22+OR+%22Claude%22+OR+%22DeepMind%22+OR+%22Introducing%22+OR+%22Agents%22+OR+%22ChatGPT%22+OR+%22long-horizon%22+OR+%22Multi-Agent%22+OR+%22%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%22+OR+%22MCP%22+OR+%22%E9%95%BF%E4%B8%8A%E4%B8%8B%E6%96%87%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:32365:      "id": "professional-media-ventureburn",
+public/data/articles.json:32374:      "canonicalSourceUrl": "https://ventureburn.com/",
+public/data/articles.json:32375:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Aventureburn.com+%28%22%E9%A3%8E%E9%99%A9%E6%8A%95%E8%B5%84%22+OR+%22PE%22+OR+%22TS%22+OR+%22%E5%AF%B9%E8%B5%8C%22+OR+%22%E5%9F%BA%E9%87%91%E5%A4%87%E6%A1%88%22+OR+%22%E4%B8%93%E9%A1%B9%E5%9F%BA%E9%87%91%22+OR+%22%E5%A4%A9%E4%BD%BF%E8%BD%AE%22+OR+%22A%E8%BD%AE%22+OR+%22Pre-IPO%22+OR+%22%E9%80%80%E5%87%BA%22+OR+%22%E7%A7%91%E5%88%9B%E6%9D%BF%22+OR+%22%E7%BA%A2%E6%9D%89%22+OR+%22Sequoia+Capital%22+OR+%22Y+Combinator%22+OR+%22IDG+%E8%B5%84%E6%9C%AC%22+OR+%22Benchmark%22+OR+%22Kleiner+Perkins%22+OR+%22%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%22+OR+%22%E7%BB%8F%E7%BA%AC%E5%88%9B%E6%8A%95%22+OR+%22%E9%AB%98%E6%A6%95%E5%88%9B%E6%8A%95%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:32394:      "id": "professional-media-venturefizz",
+public/data/articles.json:32403:      "canonicalSourceUrl": "https://venturefizz.com/",
+public/data/articles.json:32404:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Aventurefizz.com+%28%22%E9%A3%8E%E9%99%A9%E6%8A%95%E8%B5%84%22+OR+%22PE%22+OR+%22TS%22+OR+%22%E5%AF%B9%E8%B5%8C%22+OR+%22%E5%9F%BA%E9%87%91%E5%A4%87%E6%A1%88%22+OR+%22%E4%B8%93%E9%A1%B9%E5%9F%BA%E9%87%91%22+OR+%22%E5%A4%A9%E4%BD%BF%E8%BD%AE%22+OR+%22A%E8%BD%AE%22+OR+%22Pre-IPO%22+OR+%22%E9%80%80%E5%87%BA%22+OR+%22%E7%A7%91%E5%88%9B%E6%9D%BF%22+OR+%22%E7%BA%A2%E6%9D%89%22+OR+%22Sequoia+Capital%22+OR+%22Y+Combinator%22+OR+%22IDG+%E8%B5%84%E6%9C%AC%22+OR+%22Benchmark%22+OR+%22Kleiner+Perkins%22+OR+%22%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%22+OR+%22%E7%BB%8F%E7%BA%AC%E5%88%9B%E6%8A%95%22+OR+%22%E9%AB%98%E6%A6%95%E5%88%9B%E6%8A%95%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:32423:      "id": "professional-media-venturelab",
+public/data/articles.json:32432:      "canonicalSourceUrl": "https://www.venturelab.swiss/media",
+public/data/articles.json:32433:      "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3Aventurelab.swiss%2Fmedia+%28%22%E9%A3%8E%E9%99%A9%E6%8A%95%E8%B5%84%22+OR+%22PE%22+OR+%22TS%22+OR+%22%E5%AF%B9%E8%B5%8C%22+OR+%22%E5%9F%BA%E9%87%91%E5%A4%87%E6%A1%88%22+OR+%22%E4%B8%93%E9%A1%B9%E5%9F%BA%E9%87%91%22+OR+%22%E5%A4%A9%E4%BD%BF%E8%BD%AE%22+OR+%22A%E8%BD%AE%22+OR+%22Pre-IPO%22+OR+%22%E9%80%80%E5%87%BA%22+OR+%22%E7%A7%91%E5%88%9B%E6%9D%BF%22+OR+%22%E7%BA%A2%E6%9D%89%22+OR+%22Sequoia+Capital%22+OR+%22Y+Combinator%22+OR+%22IDG+%E8%B5%84%E6%9C%AC%22+OR+%22Benchmark%22+OR+%22Kleiner+Perkins%22+OR+%22%E5%90%AF%E6%98%8E%E5%88%9B%E6%8A%95%22+OR+%22%E7%BB%8F%E7%BA%AC%E5%88%9B%E6%8A%95%22+OR+%22%E9%AB%98%E6%A6%95%E5%88%9B%E6%8A%95%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
+public/data/articles.json:32585:      "id": "techcrunch-venture",
+public/data/articles.json:34239:      "name": "OpenAI 官方来源",
+public/data/articles.json:34244:      "platform": "OpenAI 官方来源",
+public/data/articles.json:34852:      "id": "user-source-source-techcrunch-venture",
+public/data/articles.json:35827:      "canonicalSourceUrl": "https://www.chinaventure.com.cn/rank/210/list.html",
+public/data/articles.json:35829:        "https://www.chinaventure.com.cn/rank/210/list.html",
+public/data/articles.json:35830:        "https://www.chinaventure.com.cn/"
+public/data/articles.json:35833:        "https://www.chinaventure.com.cn/rank/210/list.html",
+public/data/articles.json:35834:        "https://www.chinaventure.com.cn/"
+public/data/articles.json:36313:      "id": "user-source-source-venturebeat-ai",
+public/data/articles.json:36323:      "canonicalSourceUrl": "https://venturebeat.com/",
+public/data/articles.json:36325:        "https://venturebeat.com/"
+public/data/articles.json:36328:        "https://venturebeat.com/"
+public/data/articles.json:37590:      "name": "OpenAI",
+public/data/articles.json:37611:      "id": "venturebeat-ai",
+public/data/articles.json:37709:      "name": "OpenAI",
+public/data/articles.json:38072:      "user-source-source-techcrunch-venture": 1,
+tools/enrich_professional_venture_sources.py:2:"""Enrich Chinese startup profiles from professional venture-data sources.
+tools/enrich_professional_venture_sources.py:29:    from .venture_profile_extraction import (
+tools/enrich_professional_venture_sources.py:39:    from venture_profile_extraction import (
+tools/enrich_professional_venture_sources.py:51:SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/refresh_people_profiles.py:42:    "lab", "media", "news", "post", "capital", "ventures", "research", "team",
+tools/finalize_venture_profiles.py:2:"""Finalize venture profiles before publication.
+tools/finalize_venture_profiles.py:22:    from .enforce_venture_entity_semantics import _valid_person_name, _valid_product
+tools/finalize_venture_profiles.py:23:    from .sanitize_venture_narratives import sanitize_narrative
+tools/finalize_venture_profiles.py:24:    from .sanitize_venture_profiles import (
+tools/finalize_venture_profiles.py:30:    from .venture_profile_extraction import (
+tools/finalize_venture_profiles.py:38:    from enforce_venture_entity_semantics import _valid_person_name, _valid_product
+tools/finalize_venture_profiles.py:39:    from sanitize_venture_narratives import sanitize_narrative
+tools/finalize_venture_profiles.py:40:    from sanitize_venture_profiles import (
+tools/finalize_venture_profiles.py:46:    from venture_profile_extraction import (
+tools/finalize_venture_profiles.py:57:SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/finalize_venture_profiles.py:547:        print("No venture profile finalization changes.")
+tools/apply_venture_team_product_semantics_fix.py:7:SOURCE = ROOT / "tools" / "refine_venture_research_evidence.py"
+tools/apply_venture_team_product_semantics_fix.py:8:TEST = ROOT / "tests" / "test_refine_venture_research_evidence.py"
+tools/normalize_venture_profiles.py:2:"""Apply cross-entity consistency rules to generated venture profiles.
+tools/normalize_venture_profiles.py:7:suffixes from every startup and investment-institution profile before publish.
+tools/normalize_venture_profiles.py:21:    from .crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, evaluate_quality
+tools/normalize_venture_profiles.py:22:    from .venture_profile_extraction import (
+tools/normalize_venture_profiles.py:30:    from crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, evaluate_quality
+tools/normalize_venture_profiles.py:31:    from venture_profile_extraction import (
+tools/refine_venture_research_evidence.py:2:"""Align venture research fields with explicit, entity-specific evidence.
+tools/refine_venture_research_evidence.py:30:    from .enforce_venture_entity_semantics import enforce_snapshot
+tools/refine_venture_research_evidence.py:31:    from .sanitize_venture_narratives import sanitize_narrative
+tools/refine_venture_research_evidence.py:32:    from .venture_profile_extraction import (
+tools/refine_venture_research_evidence.py:41:    from enforce_venture_entity_semantics import enforce_snapshot
+tools/refine_venture_research_evidence.py:42:    from sanitize_venture_narratives import sanitize_narrative
+tools/refine_venture_research_evidence.py:43:    from venture_profile_extraction import (
+tools/refine_venture_research_evidence.py:55:SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/refine_venture_research_evidence.py:693:    checks["ventureEvidenceAlignment"] = {
+tools/refine_venture_research_evidence.py:732:        print("No venture evidence alignment changes.")
+tools/crawl_venture_profiles.py:2:"""Build evidence-backed startup and investment institution profiles.
+tools/crawl_venture_profiles.py:5:pages for every entity and writes ``public/data/venture_profiles.json``.
+tools/crawl_venture_profiles.py:27:    from .venture_profile_extraction import (
+tools/crawl_venture_profiles.py:57:    from venture_profile_extraction import (
+tools/crawl_venture_profiles.py:90:OUTPUT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/crawl_venture_profiles.py:606:        print("No venture profile snapshot changes.")
+tools/enrich_venture_profiles.py:2:"""Enrich every startup and institution profile with the same research logic.
+tools/enrich_venture_profiles.py:21:    from .sanitize_venture_narratives import sanitize_narrative
+tools/enrich_venture_profiles.py:22:    from .venture_profile_extraction import (
+tools/enrich_venture_profiles.py:32:    from sanitize_venture_narratives import sanitize_narrative
+tools/enrich_venture_profiles.py:33:    from venture_profile_extraction import (
+tools/enrich_venture_profiles.py:46:PROFILE_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/enrich_venture_profiles.py:890:        print("No venture research enrichment changes.")
+tools/expand_tracking_entities.py:137:    "startup",
+tools/expand_tracking_entities.py:272:    # know the entity — common for young Chinese startups and investors.
+tools/expand_tracking_entities.py:331:        # Keep branded/technical tokens (HBM4, CoWoS, OpenAI); plain
+tools/expand_tracking_entities.py:859:    # span tracks (an AI-chip story naming OpenAI) must not leak one track's
+tools/expand_tracking_entities.py:918:        # (young startups, Chinese investors): the crawler already labelled
+tools/stabilize_venture_profiles.py:2:"""Drive structural and entity-semantic venture gates to one shared fixed point."""
+tools/stabilize_venture_profiles.py:13:    from .enforce_venture_entity_semantics import enforce_snapshot
+tools/stabilize_venture_profiles.py:14:    from .finalize_venture_profiles import finalize_snapshot
+tools/stabilize_venture_profiles.py:16:    from enforce_venture_entity_semantics import enforce_snapshot
+tools/stabilize_venture_profiles.py:17:    from finalize_venture_profiles import finalize_snapshot
+tools/stabilize_venture_profiles.py:22:SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/stabilize_venture_profiles.py:84:                "venture terminal gates entered a cycle before reaching a shared fixed point"
+tools/stabilize_venture_profiles.py:90:        f"venture terminal gates did not converge within {max_passes} passes"
+tools/stabilize_venture_profiles.py:120:        print("No venture profile stabilization changes.")
+tools/enforce_venture_entity_semantics.py:2:"""Apply entity-level semantic checks to venture profile facts.
+tools/enforce_venture_entity_semantics.py:23:    from .sanitize_venture_narratives import sanitize_narrative
+tools/enforce_venture_entity_semantics.py:24:    from .venture_profile_extraction import (
+tools/enforce_venture_entity_semantics.py:30:    from sanitize_venture_narratives import sanitize_narrative
+tools/enforce_venture_entity_semantics.py:31:    from venture_profile_extraction import clean_text, evidence_score, parse_catalog
+tools/enforce_venture_entity_semantics.py:36:SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/enforce_venture_entity_semantics.py:847:        print("No entity-semantic venture profile changes.")
+tools/crawl_articles.py:107:        "OpenAI",
+tools/crawl_articles.py:109:        "OpenAI",
+tools/crawl_articles.py:227:    (("openai", "chatgpt"), ("OpenAI", "openai", "美国")),
+tools/crawl_articles.py:313:        r"\s*(?:\||—|-)\s*(?:OpenAI|Anthropic|Figure(?: AI)?|"
+tools/crawl_articles.py:588:    text for ownership caused Claude stories to be assigned to OpenAI and
+tools/venture_profile_extraction.py:2:"""Deterministic extraction primitives for startup and investment profiles.
+tools/venture_profile_extraction.py:267:    "venture capital",
+tools/venture_profile_extraction.py:272:    "投资机构",
+tools/sanitize_venture_profiles.py:2:"""Conservatively remove semantic noise from generated venture profiles.
+tools/sanitize_venture_profiles.py:20:    from .venture_profile_extraction import (
+tools/sanitize_venture_profiles.py:29:    from venture_profile_extraction import (
+tools/sanitize_venture_profiles.py:41:SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/sanitize_venture_profiles.py:504:        print("No venture profile post-processing changes.")
+tools/sanitize_venture_narratives.py:2:"""Remove navigation and page-chrome noise from venture narrative fields.
+tools/sanitize_venture_narratives.py:5:by ``sanitize_venture_profiles.py``. This pass focuses on long-form text rendered
+tools/sanitize_venture_narratives.py:20:    from .venture_profile_extraction import clean_text
+tools/sanitize_venture_narratives.py:22:    from venture_profile_extraction import clean_text
+tools/sanitize_venture_narratives.py:26:SNAPSHOT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
+tools/sanitize_venture_narratives.py:288:            print("Residual venture narrative noise remains.")
+tools/sanitize_venture_narratives.py:294:        print("No venture narrative changes.")
+tools/sanitize_venture_narratives.py:297:    print(f"Sanitized {changed_fields} venture narrative fields.")
+tests/test_refine_venture_project_stability.py:6:from tools import refine_venture_research_evidence as refiner
+tests/test_wechat_registry_bridge.py:38:                "sampleCompanies": ["OpenAI", "DeepSeek"],
+tests/test_wechat_registry_bridge.py:64:            "trackedCompanies": ["OpenAI"],
+tests/test_wechat_registry_bridge.py:71:          <meta property="og:title" content="OpenAI发布新大模型" />
+tests/test_wechat_registry_bridge.py:72:          <meta name="description" content="OpenAI发布新大模型并公布技术进展。" />
+tests/test_wechat_registry_bridge.py:76:          <div id="js_content">OpenAI发布新大模型。</div>
+tests/test_wechat_registry_bridge.py:95:            "trackedCompanies": ["OpenAI"],
+tests/test_wechat_registry_bridge.py:102:          <meta property="og:title" content="OpenAI发布新推理模型" />
+tests/test_wechat_registry_bridge.py:103:          <meta name="description" content="OpenAI发布新推理模型，Sam Altman介绍后续方向。" />
+tests/test_wechat_registry_bridge.py:107:          <div id="js_content">OpenAI发布新推理模型，Sam Altman介绍后续方向。</div>
+tests/test_wechat_registry_bridge.py:120:        self.assertIn("OpenAI", article["mentionedCompanies"])
+tests/test_venture_narrative_sanitizer.py:6:from tools import sanitize_venture_narratives as sanitizer
+tests/test_finalize_venture_profiles.py:7:from tools import finalize_venture_profiles as finalizer
+tests/test_wechat_sogou_index.py:45:                  OpenAI发布新推理模型
+tests/test_wechat_sogou_index.py:48:              <p class="txt-info">OpenAI公布新的推理模型和长期智能体能力。</p>
+tests/test_wechat_sogou_index.py:60:        self.assertEqual(rows[0]["title"], "OpenAI发布新推理模型")
+tests/test_crawler.py:99:                "AI startup raises a new funding round",
+tests/test_crawler.py:106:                "OpenAI and Anthropic publish competing benchmarks",
+tests/test_crawler.py:116:            "venturebeat-ai",
+tests/test_crawler.py:120:        wrong["company"] = "OpenAI"
+tests/test_crawler.py:487:        <rss><channel><item><title>AI startup raises funding</title>
+tests/test_refresh_people_profiles_with_video.py:26:                "roleHint": "OpenAI 首席执行官",
+tests/test_refresh_people_profiles_with_video.py:27:                "organizationHints": ["OpenAI"],
+tests/test_person_video_discovery.py:24:                "roleHint": "OpenAI 首席执行官",
+tests/test_person_video_discovery.py:25:                "organizationHints": ["OpenAI"],
+tests/test_person_video_discovery.py:38:                    "descriptionSnippet": {"runs": [{"text": "OpenAI conversation"}]},
+tests/test_person_video_discovery.py:44:            rows = MODULE.discover_youtube("Sam Altman OpenAI")
+tests/test_person_video_discovery.py:55:                    "description": "OpenAI 对话",
+tests/test_person_video_discovery.py:62:            rows = MODULE.discover_bilibili("Sam Altman OpenAI")
+tests/test_person_video_discovery.py:68:        <item><title>Sam Altman 对话</title><link>https://channels.weixin.qq.com/platform/post/abc</link><description>OpenAI 访谈</description><pubDate>Fri, 25 Jul 2026 12:00:00 GMT</pubDate></item>
+tests/test_person_video_discovery.py:73:            rows = MODULE.discover_wechat_channels("Sam Altman OpenAI")
+tests/test_person_video_discovery.py:82:                    {"title": "Sam Altman interview on AI", "description": "OpenAI", "date": "2026-07-25", "url": "https://www.youtube.com/watch?v=one1111", "source": "YouTube"},
+tests/test_person_video_discovery.py:83:                    {"title": "Satya Nadella interview", "description": "OpenAI", "date": "2026-07-25", "url": "https://www.youtube.com/watch?v=two2222", "source": "YouTube"},
+tests/test_person_video_discovery.py:101:                "Bilibili": lambda query: [{"title": "Sam Altman 访谈", "description": "OpenAI", "date": "2026-07-25", "url": "https://www.bilibili.com/video/BV1ok", "source": "Bilibili"}],
+tests/test_venture_semantic_rebase.py:5:from tools import enforce_venture_entity_semantics as semantics
+tests/test_venture_semantic_rebase.py:6:from tools import finalize_venture_profiles as finalizer
+tests/test_venture_semantic_rebase.py:7:from tools import refine_venture_research_evidence as refiner
+tests/test_refresh_wechat_snapshot.py:45:        incoming["mentionedCompanies"] = ["OpenAI"]
+tests/test_professional_media_sources.py:85:            "id": "the-startup",
+tests/test_professional_venture_sources.py:6:from tools import enrich_professional_venture_sources as professional
+tests/test_professional_venture_sources.py:7:from tools.venture_profile_extraction import CatalogCompany
+tests/test_refine_venture_research_evidence.py:6:from tools.refine_venture_research_evidence import refine_snapshot
+tests/test_refine_venture_research_evidence.py:16:{ slug:"sequoia-capital", name:"Sequoia Capital", englishName:"Sequoia Capital", region:"美国", type:"风险投资", stages:"全阶段", sectors:["AI","企业科技"], source:official("Sequoia Capital","https://capital.example.com/") },
+tests/test_refine_venture_research_evidence.py:99:                    "name": "Sequoia Capital",
+tests/test_refine_venture_research_evidence.py:127:                    "summary": "Sequoia Capital参与智元机器人B轮融资。",
+tests/test_refine_venture_research_evidence.py:130:                    "institutions": ["Sequoia Capital"],
+tests/test_refine_venture_research_evidence.py:137:                    "summary": "Infinity完成融资，研究人员曾来自智元机器人，Sequoia Capital未参与本轮。",
+tests/test_wechat_channel_card_discovery.py:23:                "roleHint": "OpenAI 首席执行官",
+tests/test_wechat_channel_card_discovery.py:24:                "organizationHints": ["OpenAI"],
+tests/test_wechat_channel_card_discovery.py:34:             data-desc="OpenAI 与 ChatGPT"
+tests/test_wechat_channel_card_discovery.py:45:            article_summary="OpenAI 对话",
+tests/test_wechat_channel_card_discovery.py:64:                "summary": "OpenAI 创始人访谈",
+tests/test_wechat_channel_card_discovery.py:77:                "summary": "OpenAI keynote",
+tests/test_wechat_channel_card_discovery.py:84:            "https://mp.weixin.qq.com/s/local": '<mp-common-videosnap data-title="Sam Altman 访谈" data-desc="OpenAI 对话" data-url="https://channels.weixin.qq.com/a"></mp-common-videosnap>',
+tests/test_wechat_channel_card_discovery.py:85:            "https://mp.weixin.qq.com/s/sogou": '<mp-common-videosnap data-title="Sam Altman 演讲" data-desc="OpenAI keynote" data-url="https://weixin.qq.com/sph/b"></mp-common-videosnap>',
+tests/test_wechat_channel_card_discovery.py:108:                "summary": "OpenAI",
+tests/test_wechat_channel_card_discovery.py:119:        <mp-common-videosnap data-title="Sam Altman 访谈" data-desc="OpenAI"
+tests/people-data.test.ts:30:  assert.equal(names.has("OpenAI"), false);
+tests/people-data.test.ts:32:  assert.ok(excludedPersonAccounts.some((value) => value.includes("OpenAI")));
+tests/test_stabilize_venture_profiles.py:8:from tools import enforce_venture_entity_semantics as semantics
+tests/test_stabilize_venture_profiles.py:9:from tools import finalize_venture_profiles as finalizer
+tests/test_stabilize_venture_profiles.py:10:from tools import stabilize_venture_profiles as stabilizer
+tests/test_venture_profile_extraction.py:6:from tools import crawl_venture_profiles as crawler
+tests/test_venture_profile_extraction.py:7:from tools import venture_profile_extraction as extraction
+tests/test_venture_profile_extraction.py:47:<meta name="description" content="Sample Capital is a venture capital firm partnering with technical founders from seed to growth.">
+tests/test_refresh_people_profiles.py:31:        self.assertNotIn("OpenAI", names)
+tests/test_refresh_people_profiles.py:33:        self.assertTrue(any("OpenAI" in item for item in excluded))
+tests/test_venture_entity_semantics.py:7:from tools import enforce_venture_entity_semantics as semantics
+tests/test_venture_entity_semantics.py:8:from tools import finalize_venture_profiles as finalizer
+tests/test_venture_entity_semantics.py:33:                        "OpenAI models attacked another platform. "
+tests/test_venture_entity_semantics.py:41:                            "title": "Infinity raises $15M from OpenAI and Anthropic researchers",
+tests/test_venture_entity_semantics.py:50:                            "description": "OpenAI models attacked another platform.",
+tests/test_venture_entity_semantics.py:51:                            "technicalHighlights": ["OpenAI models attacked another platform."],
+tests/test_venture_entity_semantics.py:76:        self.assertNotIn("OpenAI models attacked", profile["technology"])
+tests/test_venture_entity_semantics.py:125:                    "overview": "Example Capital is a venture firm.",
+tests/test_venture_entity_semantics.py:435:                    "technology": "OpenAI models are discussed. Anthropic develops Claude models.",
+tests/test_venture_entity_semantics.py:443:                            "description": "Unrelated OpenAI product description.",
+tests/professional-venture-data.test.ts:8:} from "../lib/professional-venture-data";
+tests/professional-venture-data.test.ts:11:test("professional venture getter is safe before and after the first source refresh", () => {
+tests/test_clean_existing_wechat_snapshot.py:16:                    "sampleCompanies": ["DeepSeek", "OpenAI", "Anthropic"],
+tests/test_wechat_public_sources.py:142:          <meta property="og:title" content="OpenAI首席未来学家Joshua Achiam宣布离职" />
+tests/test_wechat_public_sources.py:147:            <p>OpenAI首席未来学家 Joshua Achiam 在X上宣布离职。</p>
+tests/test_wechat_public_sources.py:159:            "trackedCompanies": ["OpenAI"],
+tests/test_wechat_public_sources.py:174:        self.assertIn("OpenAI", article["mentionedCompanies"])
+tests/test_wechat_public_sources.py:175:        self.assertNotIn("OpenAI", article["mentionedPeople"])
+tests/test_venture_profile_postprocess.py:5:from tools import sanitize_venture_profiles as sanitizer
+tests/test_venture_profile_noise_filters.py:6:from tools import crawl_venture_profiles as crawler
+tests/test_venture_profile_noise_filters.py:7:from tools import venture_profile_extraction as extraction
+tests/test_wechat_snapshot_quality.py:24:            "OpenAI",
+tests/test_wechat_snapshot_quality.py:27:        cleaned = quality.clean_people(values, ["OpenAI", "Anthropic"])
+tests/test_wechat_snapshot_quality.py:40:                    "sampleCompanies": ["DeepSeek", "OpenAI", "Anthropic"],
+tests/test_wechat_snapshot_quality.py:111:                    "sampleCompanies": ["OpenAI"],
+tests/test_wechat_public_index_fallback.py:57:            OpenAI发布新推理模型
+tests/test_wechat_public_index_fallback.py:61:            OpenAI发布另一个模型
+tests/test_wechat_public_index_fallback.py:73:        self.assertIn("OpenAI发布新推理模型", rows[0]["title"])
+tests/test_wechat_public_index_fallback.py:81:            OpenAI发布新推理模型，Sam Altman介绍后续方向
+tests/test_wechat_public_index_fallback.py:88:          <meta property="og:title" content="OpenAI发布新推理模型，Sam Altman介绍后续方向" />
+tests/test_wechat_public_index_fallback.py:89:          <meta name="description" content="OpenAI发布新推理模型，并介绍智能体和多模态能力。" />
+tests/test_wechat_public_index_fallback.py:94:            OpenAI发布新推理模型。Sam Altman表示，智能体和多模态能力将持续演进。
+tests/test_wechat_public_index_fallback.py:126:        self.assertIn("OpenAI", articles[0]["mentionedCompanies"])
+tests/test_venture_profile_enrichment.py:6:from tools.enrich_venture_profiles import enrich_snapshot
+tests/test_venture_profile_enrichment.py:11:{ slug:"openai", name:"OpenAI", englishName:"OpenAI", region:"美国", sector:"AI / AGI", stage:"成长期", status:"运营中", headquarters:"旧金山", founded:"2015", summary:"研发并商业化通用人工智能模型与开发者平台。", product:"GPT 模型、ChatGPT 与 API", source:official("OpenAI","https://openai.com/") },
+tests/test_venture_profile_enrichment.py:15:{ slug:"sequoia", name:"Sequoia Capital", englishName:"Sequoia Capital", region:"美国", type:"风险投资", stages:"全阶段", sectors:["AI","企业科技"], source:official("Sequoia Capital","https://www.sequoiacap.com/") },
+tests/test_venture_profile_enrichment.py:29:                    "name": "OpenAI",
+tests/test_venture_profile_enrichment.py:47:                            "name": "OpenAI",
+tests/test_venture_profile_enrichment.py:59:                    "name": "Sequoia Capital",
+tests/test_venture_profile_enrichment.py:62:                    "overview": "Sequoia Capital is a venture capital firm.",
+tests/test_venture_profile_enrichment.py:70:                            "name": "Sequoia Capital",
+tests/test_venture_profile_enrichment.py:92:                    "company": "OpenAI",
+tests/test_venture_profile_enrichment.py:94:                    "title": "OpenAI完成新一轮融资",
+tests/test_venture_profile_enrichment.py:95:                    "summary": "OpenAI完成新一轮融资，Sequoia Capital参与投资，资金将用于模型训练和企业部署。",
+tests/test_venture_profile_enrichment.py:99:                    "institutions": ["Sequoia Capital"],
+tests/test_venture_profile_enrichment.py:107:                    "summary": "Infinity raised funding with researchers from OpenAI and Anthropic; a Sequoia Capital observer commented on the market.",
+tests/test_venture_profile_enrichment.py:116:                    "company": "OpenAI",
+tests/test_venture_profile_enrichment.py:118:                    "title": "OpenAI更新ChatGPT企业产品",
+tests/test_venture_profile_enrichment.py:146:        self.assertEqual(company["capitalSummary"]["majorInvestors"], ["Sequoia Capital"])
+tests/test_venture_profile_enrichment.py:151:        self.assertEqual(institution["recentYearSummary"]["companies"], ["OpenAI"])
+tests/test_venture_profile_enrichment.py:152:        self.assertEqual(institution["portfolio"][0]["name"], "OpenAI")
+tests/test_venture_profile_enrichment.py:153:        self.assertIn("OpenAI", institution["classicCases"][0]["analysis"])
+tests/external-database-links.test.ts:27:  assert.equal(companyDatabaseLinks("OpenAI", "美国").length, 0);
+tests/test_generic_web_sources.py:31:                "sampleCompanies": ["OpenAI"],
+tests/test_generic_web_sources.py:62:        article_url = "https://tw.news.yahoo.com/ai-startup-funding-20260725.html"
+tests/tracking-recommendations.test.ts:12:    title: "OpenAI expands MCP support for AI Agent workflows",
+tests/tracking-recommendations.test.ts:17:    company: "OpenAI",
+tests/tracking-recommendations.test.ts:23:      name: "OpenAI",
+tests/tracking-recommendations.test.ts:32:    title: "MCP tools enter OpenAI developer platform",
+tests/tracking-recommendations.test.ts:33:    summary: "OpenAI publishes another MCP integration update for developers.",
+tests/tracking-recommendations.test.ts:37:    company: "OpenAI",
+tests/tracking-recommendations.test.ts:43:      name: "OpenAI",
+tests/tracking-recommendations.test.ts:57:    company: "OpenAI",
+tests/tracking-recommendations.test.ts:138:  assert.ok(result.companies.some((item) => item.value === "OpenAI"));
+tests/test_normalize_venture_profiles.py:5:from tools import normalize_venture_profiles as normalizer
+tests/test_normalize_venture_profiles.py:153:                    "overview": "样本投资机构。",
+tests/venture-profile-data.test.ts:12:  ventureProfileQualityGate,
+tests/venture-profile-data.test.ts:13:  ventureProfileSourceStatus,
+tests/venture-profile-data.test.ts:14:  ventureResearchModelVersion,
+tests/venture-profile-data.test.ts:15:} from "../lib/venture-profile-data";
+tests/venture-profile-data.test.ts:23:test("venture profile snapshot only contains catalog entities", () => {
+tests/venture-profile-data.test.ts:25:    assert.ok(companySlugs.has(slug), `unknown company venture profile: ${slug}`);
+tests/venture-profile-data.test.ts:28:    assert.ok(institutionSlugs.has(slug), `unknown institution venture profile: ${slug}`);
+tests/venture-profile-data.test.ts:32:test("venture profile getters are safe before and after the first crawl", () => {
+tests/venture-profile-data.test.ts:43:test("venture profile sources are traceable public URLs", () => {
+tests/venture-profile-data.test.ts:106:  if (ventureResearchModelVersion < 2) return;
+tests/venture-profile-data.test.ts:127:test("venture profile runtime statuses use unique entity keys", () => {
+tests/venture-profile-data.test.ts:128:  const keys = ventureProfileSourceStatus.map((item) => `${item.kind}:${item.slug}`);
+tests/venture-profile-data.test.ts:130:  for (const item of ventureProfileSourceStatus) {
+tests/venture-profile-data.test.ts:136:test("venture profile quality gate has internally consistent checks", () => {
+tests/venture-profile-data.test.ts:137:  if (!ventureProfileQualityGate) return;
+tests/venture-profile-data.test.ts:138:  const checks = Object.values(ventureProfileQualityGate.checks ?? {});
+tests/venture-profile-data.test.ts:140:    ventureProfileQualityGate.passed,
+config/intelligence_sources.json:5:      "id": "techcrunch-venture",
+config/intelligence_sources.json:7:      "url": "https://techcrunch.com/category/venture/feed/",
+config/intelligence_sources.json:20:        "startup",
+config/intelligence_sources.json:22:        "venture"
+config/intelligence_sources.json:26:      "id": "venturebeat-ai",
+config/intelligence_sources.json:28:      "url": "https://venturebeat.com/category/ai/feed/",
+config/intelligence_sources.json:182:      "name": "OpenAI",
+config/intelligence_sources.json:183:      "handle": "OpenAI",
+config/intelligence_sources.json:185:      "company": "OpenAI",
+config/intelligence_sources.json:301:      "url": "https://export.arxiv.org/api/query?search_query=all:%22OpenAI%22%20OR%20all:%22Anthropic%22%20OR%20all:%22Google%20DeepMind%22%20OR%20all:%22Meta%20AI%22%20OR%20all:%22xAI%22&start=0&max_results=8&sortBy=submittedDate&sortOrder=descending",
+config/intelligence_sources.json:310:        "OpenAI",
+config/intelligence_sources.json:319:        "OpenAI",
+config/intelligence_sources.json:371:        "venturebeat.com",
+config/person_profile_overrides.json:5:    "OpenAI @OpenAI",
+config/person_profile_overrides.json:17:      "roleHint": "OpenAI 首席执行官、创业者",
+config/person_profile_overrides.json:19:        "OpenAI"
+config/person_profile_overrides.json:23:        "OpenAI API"
+config/person_profile_overrides.json:33:          "title": "OpenAI",
+config/person_profile_overrides.json:36:          "source": "OpenAI"
+config/person_profile_overrides.json:40:        "Sam Altman OpenAI"
+config/user_tracking.json:45:        "OpenAI Codex",
+config/user_tracking.json:64:        "OpenAI @OpenAI",
+config/user_tracking.json:75:        "OpenAI",
+config/user_tracking.json:316:        "OpenAI",
+config/user_tracking.json:621:        "Sequoia Capital",
+config/user_tracking.json:909:      "name": "OpenAI 官方来源",
+config/user_tracking.json:918:        "OpenAI",
+config/user_tracking.json:1017:      "id": "source-techcrunch-venture",
+config/user_tracking.json:1301:      "url": "https://www.chinaventure.com.cn/rank/210/list.html",
+config/user_tracking.json:2474:      "id": "source-venturebeat-ai",
+config/user_tracking.json:2476:      "url": "https://venturebeat.com/",
+config/official_company_sources.json:13:      "name": "OpenAI",
+config/wechat_sources.json:21:      "companies": ["OpenAI", "Anthropic", "DeepSeek", "智谱AI", "月之暗面", "MiniMax", "字节跳动", "阿里云", "腾讯"],
+config/wechat_sources.json:35:      "companies": ["OpenAI", "Anthropic", "Google DeepMind", "Meta AI", "DeepSeek", "智谱AI", "月之暗面"],
+config/wechat_sources.json:49:      "companies": ["OpenAI", "Anthropic", "xAI", "Google DeepMind", "DeepSeek", "英伟达", "智谱AI"],
+config/wechat_sources.json:63:      "companies": ["OpenAI", "Google DeepMind", "Meta AI", "DeepSeek", "百度", "阿里云"],
+config/sources.yaml:11:    notes: OpenAI、Anthropic、Figure、xAI、Pony.ai、WeRide、Rocket Lab、IonQ、CATL
+config/sources.yaml:21:  - id: finance-and-venture-media
+config/tracking_auto_discovery.json:365:      "value": "OpenAI Codex",
+config/professional_technology_media_sources.json:224:      "id": "venturefizz",
+config/professional_technology_media_sources.json:226:      "url": "https://venturefizz.com/",
+config/professional_technology_media_sources.json:227:      "host": "venturefizz.com",
+config/professional_technology_media_sources.json:228:      "searchScope": "venturefizz.com",
+config/professional_technology_media_sources.json:449:      "id": "venturelab",
+config/professional_technology_media_sources.json:451:      "url": "https://www.venturelab.swiss/media",
+config/professional_technology_media_sources.json:452:      "host": "venturelab.swiss",
+config/professional_technology_media_sources.json:453:      "searchScope": "venturelab.swiss/media",
+config/professional_technology_media_sources.json:547:      "id": "ventureburn",
+config/professional_technology_media_sources.json:549:      "url": "https://ventureburn.com/",
+config/professional_technology_media_sources.json:550:      "host": "ventureburn.com",
+config/professional_technology_media_sources.json:551:      "searchScope": "ventureburn.com",
+config/professional_technology_media_sources.json:799:      "id": "the-startup",
+config/professional_technology_media_sources.json:981:      "id": "startupnation",
+config/professional_technology_media_sources.json:983:      "url": "https://startupnation.com/",
+config/professional_technology_media_sources.json:984:      "host": "startupnation.com",
+config/professional_technology_media_sources.json:985:      "searchScope": "startupnation.com",
+config/professional_technology_media_sources.json:1093:      "id": "startup-daily",
+config/professional_technology_media_sources.json:1095:      "url": "https://www.startupdaily.net/",
+config/professional_technology_media_sources.json:1096:      "host": "startupdaily.net",
+config/professional_technology_media_sources.json:1097:      "searchScope": "startupdaily.net",
+config/professional_technology_media_sources.json:1205:      "id": "startup-grind",
+config/professional_technology_media_sources.json:1207:      "url": "https://www.startupgrind.com/blog/",
+config/professional_technology_media_sources.json:1208:      "host": "startupgrind.com",
+config/professional_technology_media_sources.json:1209:      "searchScope": "startupgrind.com/blog",
+config/professional_technology_media_sources.json:1261:      "id": "venturebeat",
+config/professional_technology_media_sources.json:1263:      "url": "https://venturebeat.com/",
+config/professional_technology_media_sources.json:1264:      "host": "venturebeat.com",
+config/professional_technology_media_sources.json:1265:      "searchScope": "venturebeat.com",
