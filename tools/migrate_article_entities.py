@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Clean legacy entity attribution created before source categories existed.
+"""Clean legacy article data before validation and static-site generation.
 
-The migration is intentionally narrow: it only touches articles that can be
-matched to a configured non-company user source by source id, source name or
-source host. Real company attribution inferred from article content is kept.
+The migration removes invalid publication dates and broken company-route links,
+then repairs articles that can be matched to a configured non-company user
+source. Real company attribution inferred from article content is kept.
 """
 
 from __future__ import annotations
@@ -16,9 +16,15 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlsplit
 
+try:
+    from .crawl_articles import normalize_date
+except ImportError:
+    from crawl_articles import normalize_date
+
 ROOT = Path(__file__).resolve().parents[1]
 TRACKING_PATH = ROOT / "config" / "user_tracking.json"
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
+COMPANY_ROUTES_PATH = ROOT / "config" / "official_company_sources.json"
 VALID_CATEGORIES = {"company", "media", "person"}
 GENERIC_COMPANY = "科技产业"
 
@@ -49,6 +55,30 @@ def source_category(raw: dict[str, Any]) -> str:
     ):
         return "company"
     return "media"
+
+
+def load_company_route_slugs(path: Path = COMPANY_ROUTES_PATH) -> set[str]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    return {
+        clean(company.get("slug"), 100)
+        for company in payload.get("companies", [])
+        if isinstance(company, dict) and clean(company.get("slug"), 100)
+    }
+
+
+def unlink_unknown_company_route(
+    article: dict[str, Any],
+    company_route_slugs: set[str] | None,
+) -> bool:
+    company_slug = clean(article.get("companySlug"), 100)
+    if (
+        company_route_slugs is None
+        or not company_slug
+        or company_slug in company_route_slugs
+    ):
+        return False
+    article.pop("companySlug", None)
+    return True
 
 
 def is_non_article(title: str, url: str) -> bool:
@@ -159,9 +189,16 @@ def _recovered_status(
     }
 
 
-def migrate(payload: dict[str, Any], tracking: dict[str, Any]) -> tuple[dict[str, Any], dict[str, int]]:
+def migrate(
+    payload: dict[str, Any],
+    tracking: dict[str, Any],
+    company_route_slugs: set[str] | None = None,
+    remove_invalid_dates: bool = False,
+) -> tuple[dict[str, Any], dict[str, int]]:
     index = build_non_company_index(tracking)
     report = {
+        "removedInvalidDates": 0,
+        "removedUnknownCompanySlugs": 0,
         "removedNonArticles": 0,
         "clearedFakeCompanies": 0,
         "removedFakeCompanySlugs": 0,
@@ -175,12 +212,23 @@ def migrate(payload: dict[str, Any], tracking: dict[str, Any]) -> tuple[dict[str
         if not isinstance(raw, dict):
             continue
         article = dict(raw)
+        published_at = clean(article.get("publishedAt"), 30)
+        if remove_invalid_dates and normalize_date(published_at) != published_at:
+            report["removedInvalidDates"] += 1
+            continue
+
         category = article_category(article, index)
         if category not in {"media", "person"}:
+            if unlink_unknown_company_route(article, company_route_slugs):
+                report["removedUnknownCompanySlugs"] += 1
             migrated.append(article)
             continue
 
-        source = dict(article.get("source")) if isinstance(article.get("source"), dict) else {}
+        source = (
+            dict(article.get("source"))
+            if isinstance(article.get("source"), dict)
+            else {}
+        )
         source_url = clean(source.get("url"), 500)
         if is_non_article(clean(article.get("title"), 300), source_url):
             report["removedNonArticles"] += 1
@@ -205,10 +253,15 @@ def migrate(payload: dict[str, Any], tracking: dict[str, Any]) -> tuple[dict[str
             report["removedFakeCompanySlugs"] += 1
 
         expected_level = "人物公开信息" if category == "person" else "媒体报道"
-        if source.get("level") == "官方披露" or clean(article.get("sourceId")).startswith("official-user-"):
+        if source.get("level") == "官方披露" or clean(
+            article.get("sourceId")
+        ).startswith("official-user-"):
             source["level"] = expected_level
             article["source"] = source
             report["relabelledSources"] += 1
+
+        if unlink_unknown_company_route(article, company_route_slugs):
+            report["removedUnknownCompanySlugs"] += 1
 
         migrated.append(article)
 
@@ -273,7 +326,12 @@ def main() -> int:
         raise SystemExit("tracking configuration or article snapshot is missing")
     tracking = json.loads(TRACKING_PATH.read_text(encoding="utf-8"))
     payload = json.loads(ARTICLES_PATH.read_text(encoding="utf-8"))
-    migrated, report = migrate(payload, tracking)
+    migrated, report = migrate(
+        payload,
+        tracking,
+        company_route_slugs=load_company_route_slugs(),
+        remove_invalid_dates=True,
+    )
     if migrated != payload:
         ARTICLES_PATH.write_text(
             json.dumps(migrated, ensure_ascii=False, indent=2) + "\n",
