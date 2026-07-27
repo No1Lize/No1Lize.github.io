@@ -160,9 +160,23 @@ def normalized_key(value: Any) -> str:
     return re.sub(r"[^a-z0-9\u3400-\u9fff]+", "", text)
 
 
-def person_name_key(value: Any) -> str:
+PERSON_NAME_SUFFIX_RE = re.compile(
+    r"(?:博士后?|博士後|教授|院士|先生|女士|老师|老師)$",
+    re.IGNORECASE,
+)
+
+
+def normalize_person_name(value: Any) -> str:
     text = re.sub(r"@\S+", "", clean_text(value, 120)).strip()
-    return normalized_key(text)
+    previous = None
+    while text and text != previous:
+        previous = text
+        text = PERSON_NAME_SUFFIX_RE.sub("", text).strip()
+    return text
+
+
+def person_name_key(value: Any) -> str:
+    return normalized_key(normalize_person_name(value))
 
 
 def company_keys(value: Any) -> set[str]:
@@ -193,14 +207,15 @@ PERSON_NAME_NOISE_RE = re.compile(
     r"(?:\b(?:company|business|corporate|global|development|sales|marketing|"
     r"supply\s+chain|manufacturing|technologies?|systems?|senior|vice|president|"
     r"officer|cfo|cto|ceo|team|leadership|management|press|news|post|co)\b|"
-    r"关注|作为|参加|出席|共同|主题演讲|演讲|负责|表示|介绍|宣布|致辞|担任|"
-    r"现任|曾任|来自|团队|公司|集团|部门|供应链|业务发展)",
+    r"关注|作为|参加|出席|共同|同創|同创|創業者|创业者|創始|创始|董事|主席|"
+    r"主题演讲|演讲|负责|負責|表示|介绍|介紹|宣布|致辞|致辭|担任|擔任|"
+    r"现任|現任|曾任|来自|來自|团队|團隊|公司|集团|集團|部门|部門|供应链|供應鏈|业务发展|業務發展)",
     re.IGNORECASE,
 )
 
 
 def is_likely_person_name(value: str) -> bool:
-    name = clean_text(value, 100)
+    name = normalize_person_name(value)
     key = person_name_key(name)
     if not key or key in GENERIC_PERSON_NAMES or re.search(r"https?://|@|\d", name, re.I):
         return False
@@ -428,7 +443,7 @@ def choose_core_team(profile: dict[str, Any], company: str) -> list[TeamCandidat
     for order, row in enumerate(profile.get("team") or []):
         if not isinstance(row, dict):
             continue
-        name = clean_text(row.get("name"), 100)
+        name = normalize_person_name(row.get("name"))
         role = clean_text(row.get("role"), 100)
         score = role_score(role)
         if not score or not is_likely_person_name(name):
