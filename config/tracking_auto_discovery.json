@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-27T09:01:37+00:00",
+  "updatedAt": "2026-07-27T09:07:02+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-27T08:52:26+00:00"
+      "lastExpandedAt": "2026-07-27T09:06:00+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-27T08:52:41+00:00"
+      "lastExpandedAt": "2026-07-27T09:06:15+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-27T08:52:56+00:00"
+      "lastExpandedAt": "2026-07-27T09:06:32+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-27T08:53:27+00:00"
+      "lastExpandedAt": "2026-07-27T09:07:02+00:00"
     },
     "biotech": {
       "lastExpandedAt": "2026-07-27T08:53:50+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-27T08:36:26+00:00"
+      "lastExpandedAt": "2026-07-27T09:03:23+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-27T08:50:07+00:00"
+      "lastExpandedAt": "2026-07-27T09:03:38+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-27T08:50:21+00:00"
+      "lastExpandedAt": "2026-07-27T09:03:53+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-27T08:50:40+00:00"
+      "lastExpandedAt": "2026-07-27T09:04:11+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-27T08:50:56+00:00"
+      "lastExpandedAt": "2026-07-27T09:04:27+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-27T08:51:21+00:00"
+      "lastExpandedAt": "2026-07-27T09:04:52+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-27T08:51:40+00:00"
+      "lastExpandedAt": "2026-07-27T09:05:13+00:00"
     },
     "track-1p8ob4k": {
-      "lastExpandedAt": "2026-07-27T08:51:54+00:00"
+      "lastExpandedAt": "2026-07-27T09:05:27+00:00"
     }
   },
   "added": [
@@ -1027,6 +1027,43 @@
       "kind": "keywords",
       "value": "Chinese AI",
       "addedAt": "2026-07-27T08:52:26+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "people",
+      "value": "Brandon Tseng Brandon Tseng",
+      "addedAt": "2026-07-27T09:02:58+00:00",
+      "evidence": [
+        "sample-company-core-team",
+        "verified-company-profile"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Build",
+      "addedAt": "2026-07-27T09:06:00+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Microsoft",
+      "addedAt": "2026-07-27T09:06:00+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Release",
+      "addedAt": "2026-07-27T09:06:00+00:00",
       "evidence": [
         "corpus-term"
       ]
