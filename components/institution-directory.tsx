@@ -11,7 +11,7 @@ import {
 } from "@/lib/institution-ranking-data";
 import styles from "./institution-directory.module.css";
 
-const PAGE_SIZE = 24;
+const DEFAULT_PAGE_SIZE = 24;
 const regions = ["全部", "中国", "美国"] as const;
 
 function categoryMatches(
@@ -23,11 +23,18 @@ function categoryMatches(
   return item.rankings.some((ranking) => ranking.category === category);
 }
 
-export function InstitutionDirectory() {
+export function InstitutionDirectory({
+  pageSize = DEFAULT_PAGE_SIZE,
+  compact = false,
+}: {
+  pageSize?: number;
+  compact?: boolean;
+} = {}) {
   const [query, setQuery] = useState("");
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [category, setCategory] = useState<InstitutionRankingCategory | "全部">("全部");
   const [page, setPage] = useState(1);
+  const safePageSize = Math.max(1, pageSize);
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
@@ -55,12 +62,15 @@ export function InstitutionDirectory() {
     });
   }, [category, query, region]);
 
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const pageCount = Math.max(1, Math.ceil(filtered.length / safePageSize));
   const currentPage = Math.min(page, pageCount);
-  const visible = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  const visible = filtered.slice(
+    (currentPage - 1) * safePageSize,
+    currentPage * safePageSize,
+  );
 
   return (
-    <>
+    <div className={styles.directory} data-compact={compact || undefined}>
       <div className={styles.filters}>
         <label className={styles.search}>
           <Search size={15} />
@@ -123,7 +133,7 @@ export function InstitutionDirectory() {
           </button>
         </nav>
       )}
-    </>
+    </div>
   );
 }
 
