@@ -11,6 +11,8 @@ type ShareTarget = {
   url: string;
 };
 
+type DesktopPlatform = "Windows" | "macOS";
+
 function cleanText(value: string | null | undefined): string {
   return (value ?? "").normalize("NFKC").replace(/\s+/g, " ").trim();
 }
@@ -27,8 +29,13 @@ function isWechatBrowser(): boolean {
   return /MicroMessenger/i.test(navigator.userAgent);
 }
 
-function isWindowsDesktop(): boolean {
-  return /Windows/i.test(navigator.userAgent) && !/Mobile|Android|iPhone|iPad/i.test(navigator.userAgent);
+function desktopPlatform(): DesktopPlatform | null {
+  if (typeof navigator === "undefined") return null;
+  const userAgent = navigator.userAgent;
+  if (/Mobile|Android|iPhone|iPad|iPod/i.test(userAgent)) return null;
+  if (/Windows/i.test(userAgent)) return "Windows";
+  if (/Macintosh|Mac OS X/i.test(userAgent)) return "macOS";
+  return null;
 }
 
 function targetFromButton(button: HTMLElement): ShareTarget | null {
@@ -75,14 +82,17 @@ export function WechatShareCompat() {
       setNotice("当前浏览器没有系统分享能力，请扫码或复制原始链接。");
       return false;
     }
+
     const text = item.summary ? `${item.title}\n${item.summary.slice(0, 140)}` : item.title;
     const payload: ShareData = urlOnly
       ? { url: item.url }
       : { title: item.title, text, url: item.url };
+
     if (typeof navigator.canShare === "function" && !navigator.canShare(payload)) {
       setNotice("当前系统不能接收这类分享数据，请扫码或复制原始链接。");
       return false;
     }
+
     setSharing(true);
     try {
       await navigator.share(payload);
@@ -101,6 +111,7 @@ export function WechatShareCompat() {
       const element = event.target instanceof Element ? event.target : null;
       const button = element?.closest<HTMLElement>("button.favorite-share");
       if (!button) return;
+
       const item = targetFromButton(button);
       if (!item) return;
 
@@ -122,15 +133,16 @@ export function WechatShareCompat() {
         return;
       }
 
-      if (isWindowsDesktop()) {
+      const platform = desktopPlatform();
+      if (platform) {
         setTarget(item);
-        // 微信 Windows 分享目标对 title + 多行 text + url 的组合载荷兼容不稳定。
-        // 只传递一个 URL，避免微信收到无法解析的复合 ShareData。
+        // Windows 与 macOS 桌面微信对复合 ShareData 的接收能力均不稳定。
+        // 桌面兼容模式只交给操作系统一个原始 URL，并始终保留扫码与复制路径。
         void invokeSystemShare(item, true).then((opened) => {
           setNotice(
             opened
-              ? "已按微信兼容模式只传递原始链接。若微信客户端仍提示失败，请直接扫码或复制链接。"
-              : "请直接扫码或复制原始链接。",
+              ? `${platform} 已按微信兼容模式只传递原始链接。若微信仍无法接收，请扫码或复制链接。`
+              : `${platform} 系统分享未完成，请直接扫码或复制原始链接。`,
           );
         });
         return;
@@ -146,6 +158,8 @@ export function WechatShareCompat() {
   }, []);
 
   if (!target || typeof document === "undefined") return null;
+
+  const platform = desktopPlatform();
 
   const copyOriginalLink = async () => {
     const copied = await copyText(target.url);
@@ -180,8 +194,9 @@ export function WechatShareCompat() {
             <span>WECHAT SHARE</span>
             <h3 id="wechat-share-title">{target.title}</h3>
             <p>
-              Windows 系统分享与微信桌面端之间的接收结果无法由网页确认。本站现在只传递原始 URL，
-              并保留手机微信扫码、复制链接和再次重试三种路径。
+              {platform
+                ? `${platform} 系统分享与微信桌面端之间的最终接收结果无法由网页确认。本站只传递原始 URL，并始终保留微信扫码、复制链接和再次重试。`
+                : "本站提供系统分享、微信扫码和复制链接三种路径，分享链接均直接指向原始情报。"}
             </p>
           </div>
 
@@ -200,14 +215,14 @@ export function WechatShareCompat() {
           </div>
 
           <div className="wechat-share-actions">
-            {isWindowsDesktop() ? (
+            {platform ? (
               <button
                 type="button"
                 disabled={sharing}
                 onClick={() => void invokeSystemShare(target, true)}
               >
                 <Share2 size={15} />
-                {sharing ? "正在打开…" : "再次打开微信兼容分享"}
+                {sharing ? "正在打开…" : `再次打开 ${platform} 微信兼容分享`}
               </button>
             ) : null}
             <button type="button" onClick={() => void copyOriginalLink()}>
