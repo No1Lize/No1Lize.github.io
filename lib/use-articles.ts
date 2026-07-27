@@ -7,6 +7,7 @@ import {
   snapshotDate,
   type IntelligenceEvent,
 } from "@/lib/intelligence-data";
+import type { RefreshAudit } from "@/lib/snapshot-freshness";
 
 export type RelatedArticleSource = {
   name: string;
@@ -96,6 +97,16 @@ const articleSchema = z.object({
   matchedTrackingTerms: z.array(z.string()).optional(),
 });
 
+const refreshAuditSchema = z.object({
+  mode: z.string().optional(),
+  pipelineCompleted: z.boolean().optional(),
+  completedAt: z.string().optional(),
+  localDate: z.string().optional(),
+  latestPublishedAt: z.string().optional(),
+  todayArticleCount: z.number().int().nonnegative().optional(),
+  todaySourceCount: z.number().int().nonnegative().optional(),
+});
+
 const payloadSchema = z.object({
   schemaVersion: z.number(),
   generatedAt: z.string(),
@@ -131,6 +142,7 @@ const payloadSchema = z.object({
       minimumScore: z.number().min(0).max(100),
     }).optional(),
   }).optional(),
+  refreshAudit: refreshAuditSchema.optional(),
 });
 
 type ArticlePayload = z.infer<typeof payloadSchema>;
@@ -143,6 +155,7 @@ const fallbackPayload: ArticlePayload = {
   companyFacts: {},
   sourceStatus: [],
   qualityGate: undefined,
+  refreshAudit: undefined,
 };
 
 async function fetchArticles(): Promise<ArticlePayload> {
@@ -166,6 +179,7 @@ export function useArticles() {
     generatedAt: payload.generatedAt,
     sourceStatus: payload.sourceStatus ?? [],
     qualityGate: payload.qualityGate,
+    refreshAudit: payload.refreshAudit as RefreshAudit | undefined,
     isLive: query.isSuccess && !query.isPlaceholderData,
   };
 }
