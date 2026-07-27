@@ -1,0 +1,17 @@
+.methodPanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+}
+
+.methodPanel p {
+  margin: 0;
+}
+
+@media (max-width: 1320px) {
+  .methodPanel {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
