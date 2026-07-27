@@ -293,7 +293,6 @@ def load_registry(
 ) -> list[CompanySpec]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     defaults = payload.get("defaults", {})
-    expected_count = int(payload.get("expectedCompanyCount", 58))
     raw_companies = payload.get("companies", [])
     if not isinstance(raw_companies, list):
         raise ValueError("official company registry must contain a companies array")
@@ -365,16 +364,9 @@ def load_registry(
     slugs = [spec.slug for spec in specs]
     if len(slugs) != len(set(slugs)):
         raise ValueError("official company registry contains duplicate slugs")
-    if len(specs) != expected_count:
-        raise ValueError(
-            f"official company registry has {len(specs)} companies; "
-            f"expected exactly {expected_count}"
-        )
+    # The catalog/registry slug-set comparison below is the canonical coverage
+    # gate. A second hard-coded count becomes stale whenever a company is added.
     catalog = _load_catalog_companies(catalog_path)
-    if len(catalog) != expected_count:
-        raise ValueError(
-            f"company catalog has {len(catalog)} companies; expected {expected_count}"
-        )
     registry_by_slug = {spec.slug: spec for spec in specs}
     missing = sorted(set(catalog) - set(registry_by_slug))
     extra = sorted(set(registry_by_slug) - set(catalog))
