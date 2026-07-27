@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
+import { institutionDirectoryStats } from "@/lib/institution-ranking-data";
 
 const COMPANY_PEOPLE_HELP =
   "系统会优先从“样本公司”中识别创始人和核心团队，并收集可核验的公开入口，包括 X、微信、知乎、微博、Bilibili、GitHub、LinkedIn、YouTube、个人博客和媒体专栏。有 X handle 时抓取公开时间线，其他入口作为人物来源参与公开索引搜索。";
 
 const INSTITUTION_PEOPLE_HELP =
-  "该赛道直接复用“投资机构”频道中已核验的机构核心团队资料，优先同步创始合伙人、管理合伙人和投资合伙人，并登记准确的机构团队页及可核验公开账号。手动删除的自动条目不会再次加入。";
+  "该赛道直接复用“投资机构”频道中已核验的机构核心团队资料，优先同步创始合伙人、管理合伙人和投资合伙人，并登记准确的机构团队页及可核验公开账号。未被机构档案核验的自动人物不会保留，手动删除的自动条目不会再次加入。";
 
 const INSTITUTION_SAMPLE_HELP =
-  "直接引用“投资机构”频道已收集的机构档案和团队资料，并作为该赛道的机构与事件搜索词；仍可手动补充其他机构。";
+  `直接引用“投资机构”频道完整目录中的全部 ${institutionDirectoryStats.total} 家机构，而不是只引用已建立详细研究档案的少数机构；目录增删会自动同步，仍可手动补充目录外机构。`;
 
 function activeTrackName(): string {
   const detailIndex = Array.from(document.querySelectorAll("p")).find(
@@ -58,7 +59,7 @@ export function TrackingPeopleScopeEnhancer() {
       const input = editor?.querySelector("input");
       if (input instanceof HTMLInputElement) {
         const placeholder = investmentTrack
-          ? "来自投资机构频道自动同步，也可手动补充机构名称"
+          ? "完整机构目录自动同步；此处仅补充目录外机构"
           : "例如：OpenAI、宇树科技";
         if (input.placeholder !== placeholder) input.placeholder = placeholder;
       }
