@@ -205,13 +205,30 @@ function MaterialList({ materials, empty }: { materials: PersonMaterial[]; empty
   if (!materials.length) return <p>{empty}</p>;
   return (
     <div className="material-list">
-      {materials.map((material) => (
-        <a href={material.url} target="_blank" rel="noreferrer" key={`${material.title}-${material.date}-${material.url}`}>
-          <span>{materialLabels[material.type] ?? material.type}</span>
-          <div><strong>{material.title}</strong><p>{material.source}</p></div>
-          <time>{material.date}</time>
-        </a>
-      ))}
+      {materials.map((material) => {
+        const label = materialLabels[material.type] ?? material.type;
+        return (
+          <a
+            href={material.url}
+            target="_blank"
+            rel="noreferrer"
+            key={`${material.title}-${material.date}-${material.url}`}
+            data-intelligence-item="true"
+            data-intelligence-title={material.title}
+            data-intelligence-summary={material.source}
+            data-intelligence-type={label}
+            data-intelligence-date={material.date}
+            data-intelligence-source={material.source}
+            data-intelligence-source-level="原始材料"
+            data-intelligence-channel="people"
+            data-intelligence-channel-label="人物研究"
+          >
+            <span data-intelligence-type>{label}</span>
+            <div><strong data-intelligence-title>{material.title}</strong><p data-intelligence-source>{material.source}</p></div>
+            <time>{material.date}</time>
+          </a>
+        );
+      })}
     </div>
   );
 }
