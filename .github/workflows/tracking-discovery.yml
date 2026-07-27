@@ -47,6 +47,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -97,6 +99,7 @@ jobs:
             MODE="${{ inputs.mode }}"
           fi
           echo "mode=$MODE"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
           if [ "$MODE" = "seed-only" ]; then
             python tools/expand_tracking_entities.py --seed-new-only | tee /tmp/discovery.json
           else
@@ -128,23 +131,60 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
+          DISCOVERY_MODE: ${{ steps.expand.outputs.mode }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add config/user_tracking.json config/tracking_auto_discovery.json
-          if git diff --cached --quiet; then
+
+          commit_current_config() {
+            git add config/user_tracking.json config/tracking_auto_discovery.json
+            if git diff --cached --quiet; then
+              return 1
+            fi
+            git commit -m "config: expand tracking entities from public web sources [auto-discovery]"
+          }
+
+          regenerate_from_latest_main() {
+            git fetch origin main
+            git reset --hard origin/main
+
+            python tools/enrich_tracking_people_from_sample_companies.py \
+              --max-tracks 30 \
+              --max-requests 120 | tee /tmp/team-discovery-replay.json
+            python tools/enrich_tracking_person_channels.py \
+              --max-tracks 30 | tee /tmp/channel-discovery-replay.json
+            if [ "$DISCOVERY_MODE" = "seed-only" ]; then
+              python tools/expand_tracking_entities.py --seed-new-only | tee /tmp/discovery-replay.json
+            else
+              python tools/expand_tracking_entities.py \
+                --max-tracks 12 \
+                --max-requests 420 | tee /tmp/discovery-replay.json
+            fi
+
+            npm run validate:tracking
+            npm run validate:taxonomy
+          }
+
+          if ! commit_current_config; then
             echo "nothing to commit"
             exit 0
           fi
-          git commit -m "config: expand tracking entities from public web sources [auto-discovery]"
+
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then
-              break
+              gh workflow run scheduled-sync.yml --ref main
+              exit 0
             fi
-            git pull --rebase origin main
-            if [ "$attempt" = "3" ]; then
+
+            if [ "$attempt" -eq 3 ]; then
               exit 1
             fi
+
+            echo "main advanced; replaying discovery from latest main (attempt $((attempt + 1))/3)"
+            regenerate_from_latest_main
+            if ! commit_current_config; then
+              echo "latest main already contains all discovery changes"
+              exit 0
+            fi
           done
-          gh workflow run scheduled-sync.yml --ref main
