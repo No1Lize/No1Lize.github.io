@@ -172,6 +172,13 @@ def normalize_person_name(value: Any) -> str:
     while text and text != previous:
         previous = text
         text = PERSON_NAME_SUFFIX_RE.sub("", text).strip()
+    words = text.split()
+    if len(words) >= 2 and len(words) % 2 == 0:
+        half = len(words) // 2
+        left = [word.casefold() for word in words[:half]]
+        right = [word.casefold() for word in words[half:]]
+        if left == right:
+            text = " ".join(words[:half])
     return text
 
 
