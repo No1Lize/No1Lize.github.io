@@ -89,8 +89,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
 OUTPUT_PATH = ROOT / "public" / "data" / "venture_profiles.json"
 DEFAULT_USER_AGENT = (
-    "LizeRoadOne/4.0 contact=No1Lize@users.noreply.github.com "
-    "(+https://github.com/No1Lize/No1Lize.github.io)"
+    "LizeRoadOne/4.0 contact=VCIQ@users.noreply.github.com "
+    "(+https://github.com/VCIQ/VCIQ.github.io)"
 )
 REQUEST_TIMEOUT = 12
 REQUEST_ATTEMPTS = 2
