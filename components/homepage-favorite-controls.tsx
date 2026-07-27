@@ -257,7 +257,9 @@ export function HomepageFavoriteControls() {
     const observer = eventList
       ? new MutationObserver(() => window.requestAnimationFrame(scan))
       : null;
-    observer?.observe(eventList, { childList: true });
+    if (eventList && observer) {
+      observer.observe(eventList, { childList: true });
+    }
 
     return () => {
       observer?.disconnect();
