@@ -1,0 +1,473 @@
+name: Temporary fix tracking discovery quality
+
+on:
+  push:
+    branches:
+      - fix/tracking-auto-discovery-quality-20260727
+    paths:
+      - ".github/workflows/temporary-fix-tracking-discovery-quality.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/tracking-auto-discovery-quality-20260727
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Harden discovery quality gates
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: Path, old: str, new: str) -> None:
+              text = path.read_text(encoding="utf-8")
+              if new in text:
+                  return
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f"{path}: expected one patch marker, found {count}")
+              path.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          expand = Path("tools/expand_tracking_entities.py")
+          replace_once(
+              expand,
+              '''def validate_person(display_name: str, handle: str = "") -> str:
+              name = clean_candidate(display_name)[:100]
+              if not name or not re.search(r"[A-Za-z0-9㐀-鿿]", name):
+                  return ""
+              if re.search(r"https?://|@", name):
+                  return ""
+              if handle and re.fullmatch(r"[A-Za-z0-9_]{1,15}", handle):
+                  return f"{name} @{handle}"
+              return name
+          ''',
+              '''PERSON_NAME_NOISE_RE = re.compile(
+              r"(?:\\b(?:company|business|corporate|global|development|sales|marketing|"
+              r"supply\\s+chain|manufacturing|technologies?|systems?|senior|vice|president|"
+              r"officer|cfo|cto|ceo|team|leadership|management|press|news|post|co)\\b|"
+              r"关注|作为|参加|出席|共同|主题演讲|演讲|负责|表示|介绍|宣布|致辞|担任|"
+              r"现任|曾任|来自|团队|公司|集团|部门|供应链|业务发展)",
+              re.IGNORECASE,
+          )
+
+
+          def likely_person_name(value: str) -> bool:
+              raw = clean_candidate(value)[:100]
+              name = re.sub(r"\\s+@(?:[A-Za-z0-9_]{1,15})$", "", raw).strip()
+              if not name or re.search(r"https?://|@", name):
+                  return False
+              if PERSON_NAME_NOISE_RE.search(name):
+                  return False
+              if re.fullmatch(r"[㐀-鿿·•]{2,8}", name):
+                  return 2 <= len(name.replace("·", "").replace("•", "")) <= 5
+              if re.search(r"[㐀-鿿]", name):
+                  return len(name) <= 40
+              words = name.split()
+              return 2 <= len(words) <= 5 and all(
+                  re.fullmatch(r"[A-Za-z][A-Za-z'.-]*", word) for word in words
+              )
+
+
+          def validate_person(display_name: str, handle: str = "") -> str:
+              name = clean_candidate(display_name)[:100]
+              if not likely_person_name(name):
+                  return ""
+              if handle and re.fullmatch(r"[A-Za-z0-9_]{1,15}", handle):
+                  return f"{name} @{handle}"
+              return name
+          ''',
+          )
+
+          replace_once(
+              expand,
+              '''@dataclass
+          class Candidate:
+              value: str
+              score: float = 0.0
+              evidence: set[str] = field(default_factory=set)
+              entity_id: str = ""
+              website: str = ""
+              region: str = "全球"
+              handle: str = ""
+              # Kind hint from the corpus (company/person); used when Wikidata does not
+              # know the entity — common for young Chinese startups and investors.
+              hint: str = ""
+          ''',
+              '''@dataclass
+          class Candidate:
+              value: str
+              score: float = 0.0
+              evidence: set[str] = field(default_factory=set)
+              entity_id: str = ""
+              website: str = ""
+              region: str = "全球"
+              handle: str = ""
+              # Kind hint from the corpus (company/person); used when Wikidata does not
+              # know the entity — common for young Chinese startups and investors.
+              hint: str = ""
+
+
+          def evidence_is_professional(evidence: set[str] | list[str]) -> bool:
+              values = set(evidence)
+              return "news-confirmed" in values or any(
+                  value.startswith("corpus-") for value in values
+              )
+
+
+          def candidate_has_professional_evidence(candidate: Candidate) -> bool:
+              return evidence_is_professional(candidate.evidence)
+          ''',
+          )
+
+          replace_once(
+              expand,
+              '''def sync_tombstones(ledger: dict[str, Any], config: dict[str, Any]) -> None:
+          ''',
+              '''def prune_low_quality_auto_entries(
+              ledger: dict[str, Any], config: dict[str, Any]
+          ) -> list[dict[str, str]]:
+              """Remove prior automatic noise while preserving owner-entered values.
+
+              Existing non-custom tracks only retain automatically discovered keywords
+              confirmed by the accepted article corpus or current industry news. New
+              custom tracks keep reference-web seed terms until they have a corpus.
+              """
+
+              tracks = {
+                  str(track.get("slug")): track
+                  for track in config.get("tracks", [])
+                  if isinstance(track, dict)
+              }
+              kept: list[dict[str, Any]] = []
+              pruned: list[dict[str, str]] = []
+              for row in ledger.get("added", []):
+                  if not isinstance(row, dict):
+                      continue
+                  track = tracks.get(str(row.get("track") or ""))
+                  kind = str(row.get("kind") or "")
+                  value = str(row.get("value") or "")
+                  evidence = {
+                      str(item) for item in row.get("evidence", []) if str(item)
+                  }
+                  invalid = False
+                  if track and kind == "people":
+                      invalid = not likely_person_name(value)
+                  elif track and kind == "keywords" and not track.get("custom"):
+                      invalid = bool(evidence) and not evidence_is_professional(evidence)
+                  if not invalid or not track or kind not in {
+                      "keywords", "people", "sampleCompanies"
+                  }:
+                      kept.append(row)
+                      continue
+                  values = track.get(kind)
+                  if isinstance(values, list):
+                      target = normalize_term(value)
+                      track[kind] = [
+                          item for item in values if normalize_term(str(item)) != target
+                      ]
+                  pruned.append(
+                      {"track": str(row.get("track") or ""), "kind": kind, "value": value}
+                  )
+              ledger["added"] = kept
+              return pruned
+
+
+          def sync_tombstones(ledger: dict[str, Any], config: dict[str, Any]) -> None:
+          ''',
+          )
+
+          replace_once(
+              expand,
+              '''        if caps["keywords"] > len(added["keywords"]):
+                      keyword = validate_keyword(candidate.value)
+          ''',
+              '''        if caps["keywords"] > len(added["keywords"]):
+                      if not seeding and not candidate_has_professional_evidence(candidate):
+                          continue
+                      keyword = validate_keyword(candidate.value)
+          ''',
+          )
+
+          replace_once(
+              expand,
+              '''                if RELAXED_ACCEPT_THRESHOLD <= candidate.score < threshold
+          ''',
+              '''                if RELAXED_ACCEPT_THRESHOLD <= candidate.score < threshold
+                          and candidate_has_professional_evidence(candidate)
+          ''',
+          )
+
+          replace_once(
+              expand,
+              '''    sync_tombstones(ledger, config)
+
+              tracks = pick_tracks(
+          ''',
+              '''    sync_tombstones(ledger, config)
+              pruned = prune_low_quality_auto_entries(ledger, config)
+
+              tracks = pick_tracks(
+          ''',
+          )
+
+          replace_once(
+              expand,
+              '''    if client.used_requests > 0 and client.failed_requests == client.used_requests:
+                  # Fully offline: honor the no-fabrication contract — even corpus-only
+                  # additions wait for a run that can cross-check the public web.
+                  print(
+                      json.dumps(
+                          {
+                              "changed": False,
+                              "offline": True,
+                              "requestsUsed": client.used_requests,
+                              "requestsFailed": client.failed_requests,
+                              "tracks": [],
+                          },
+                          ensure_ascii=False,
+                      )
+                  )
+                  return 0
+
+              changed = any(
+                  any(summary["added"][kind] for kind in summary["added"])
+                  for summary in summaries
+              )
+          ''',
+              '''    if (
+                  client.used_requests > 0
+                  and client.failed_requests == client.used_requests
+                  and not pruned
+              ):
+                  # Fully offline: honor the no-fabrication contract — even corpus-only
+                  # additions wait for a run that can cross-check the public web.
+                  print(
+                      json.dumps(
+                          {
+                              "changed": False,
+                              "offline": True,
+                              "requestsUsed": client.used_requests,
+                              "requestsFailed": client.failed_requests,
+                              "tracks": [],
+                              "pruned": [],
+                          },
+                          ensure_ascii=False,
+                      )
+                  )
+                  return 0
+
+              changed = bool(pruned) or any(
+                  any(summary["added"][kind] for kind in summary["added"])
+                  for summary in summaries
+              )
+          ''',
+          )
+
+          replace_once(
+              expand,
+              '''                "tracks": summaries,
+                      },
+          ''',
+              '''                "tracks": summaries,
+                          "pruned": pruned,
+                      },
+          ''',
+          )
+
+          people_tool = Path("tools/enrich_tracking_people_from_sample_companies.py")
+          replace_once(
+              people_tool,
+              '''def is_likely_person_name(value: str) -> bool:
+              name = clean_text(value, 100)
+              key = person_name_key(name)
+              if not key or key in GENERIC_PERSON_NAMES or re.search(r"https?://|@|\\d", name, re.I):
+                  return False
+              if re.search(r"公司|集团|实验室|研究院|大学|基金|资本|科技|团队|委员会", name):
+                  return False
+              if re.fullmatch(r"[\\u3400-\\u9fff·•]{2,8}", name):
+                  return True
+              words = name.split()
+              return 2 <= len(words) <= 5 and all(re.fullmatch(r"[A-Za-z][A-Za-z'.-]*", word) for word in words)
+          ''',
+              '''PERSON_NAME_NOISE_RE = re.compile(
+              r"(?:\\b(?:company|business|corporate|global|development|sales|marketing|"
+              r"supply\\s+chain|manufacturing|technologies?|systems?|senior|vice|president|"
+              r"officer|cfo|cto|ceo|team|leadership|management|press|news|post|co)\\b|"
+              r"关注|作为|参加|出席|共同|主题演讲|演讲|负责|表示|介绍|宣布|致辞|担任|"
+              r"现任|曾任|来自|团队|公司|集团|部门|供应链|业务发展)",
+              re.IGNORECASE,
+          )
+
+
+          def is_likely_person_name(value: str) -> bool:
+              name = clean_text(value, 100)
+              key = person_name_key(name)
+              if not key or key in GENERIC_PERSON_NAMES or re.search(r"https?://|@|\\d", name, re.I):
+                  return False
+              if PERSON_NAME_NOISE_RE.search(name):
+                  return False
+              if re.search(r"公司|集团|实验室|研究院|大学|基金|资本|科技|团队|委员会", name):
+                  return False
+              if re.fullmatch(r"[\\u3400-\\u9fff·•]{2,8}", name):
+                  return 2 <= len(name.replace("·", "").replace("•", "")) <= 5
+              words = name.split()
+              return 2 <= len(words) <= 5 and all(re.fullmatch(r"[A-Za-z][A-Za-z'.-]*", word) for word in words)
+          ''',
+          )
+
+          tests = Path("tests/test_expand_tracking_entities.py")
+          replace_once(
+              tests,
+              '''    if host == "suggestion.baidu.com":
+          ''',
+              '''    if host == "news.google.com":
+                  return "<rss><channel><title>feed</title><item><title>灵巧手</title></item></channel></rss>"
+              if host == "suggestion.baidu.com":
+          ''',
+          )
+          replace_once(
+              tests,
+              '''    def test_diverse_seed_tracks_fall_back_to_relaxed_keywords(self) -> None:
+                  """Regression: tracks whose seeds share no related pages (GPU vs 先进
+                  封装 vs LPU) produced zero additions because no candidate was
+                  confirmed by two seeds; the relaxed pass must still surface a few
+                  keyword candidates instead of freezing the track."""
+
+                  self._write_config(
+                      self._base_config(
+                          slug="semiconductor",
+                          name="半导体",
+                          keywords=["GPU", "先进封装"],
+                      )
+                  )
+                  rc = expander.run(
+                      ["--only-track", "semiconductor"], fetch_text=_diverse_fetch
+                  )
+                  self.assertEqual(rc, 0)
+                  track = self._read_config()["tracks"][0]
+                  added = [
+                      keyword for keyword in track["keywords"] if "关联技术" in keyword
+                  ]
+                  self.assertTrue(added, "relaxed pass must add single-source keywords")
+                  self.assertLessEqual(len(added), 3)
+          ''',
+              '''    def test_reference_only_relations_do_not_pollute_existing_tracks(self) -> None:
+                  """Existing tracks must not import encyclopedia-only relations when
+                  no accepted article or current news confirms them."""
+
+                  self._write_config(
+                      self._base_config(
+                          slug="semiconductor",
+                          name="半导体",
+                          keywords=["GPU", "先进封装"],
+                      )
+                  )
+                  rc = expander.run(
+                      ["--only-track", "semiconductor"], fetch_text=_diverse_fetch
+                  )
+                  self.assertEqual(rc, 0)
+                  track = self._read_config()["tracks"][0]
+                  added = [
+                      keyword for keyword in track["keywords"] if "关联技术" in keyword
+                  ]
+                  self.assertEqual(added, [])
+          ''',
+          )
+          replace_once(
+              tests,
+              '''    def test_ignored_recommendations_block_candidates(self) -> None:
+          ''',
+              '''    def test_prunes_reference_only_keywords_and_role_fragments(self) -> None:
+                  config = self._base_config(
+                      keywords=["人形机器人整机", "植物分类学"],
+                      people=["Alice Chen", "Company Development", "作为自动驾"],
+                  )
+                  ledger = expander.empty_ledger()
+                  ledger["added"] = [
+                      {"track": "robotics", "kind": "keywords", "value": "植物分类学", "evidence": ["wikipedia-morelike"]},
+                      {"track": "robotics", "kind": "people", "value": "Company Development", "evidence": ["sample-company-core-team"]},
+                      {"track": "robotics", "kind": "people", "value": "作为自动驾", "evidence": ["sample-company-core-team"]},
+                  ]
+                  pruned = expander.prune_low_quality_auto_entries(ledger, config)
+                  self.assertEqual(len(pruned), 3)
+                  track = config["tracks"][0]
+                  self.assertEqual(track["keywords"], ["人形机器人整机"])
+                  self.assertEqual(track["people"], ["Alice Chen"])
+                  self.assertEqual(ledger["added"], [])
+
+              def test_ignored_recommendations_block_candidates(self) -> None:
+          ''',
+          )
+
+          sample_tests = Path("tests/test_tracking_sample_company_people.py")
+          replace_once(
+              sample_tests,
+              '''    enrich_config,
+              profile_index,
+          ''',
+              '''    enrich_config,
+              is_likely_person_name,
+              profile_index,
+          ''',
+          )
+          replace_once(
+              sample_tests,
+              '''    def test_local_social_accounts_add_x_label_and_person_sources(self):
+          ''',
+              '''    def test_rejects_role_and_sentence_fragments_as_people(self):
+                  for value in (
+                      "Company Development",
+                      "Business Development",
+                      "Autonomous Vehicles Senior Vice",
+                      "作为自动驾",
+                      "主题演讲全",
+                      "杨永旺共同",
+                  ):
+                      self.assertFalse(is_likely_person_name(value), value)
+                  self.assertTrue(is_likely_person_name("Alice Chen"))
+                  self.assertTrue(is_likely_person_name("彭志辉"))
+
+              def test_local_social_accounts_add_x_label_and_person_sources(self):
+          ''',
+          )
+          PY
+
+      - name: Clean existing automatic noise
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from tools import expand_tracking_entities as expander
+
+          config_path = Path("config/user_tracking.json")
+          ledger_path = Path("config/tracking_auto_discovery.json")
+          config = json.loads(config_path.read_text(encoding="utf-8"))
+          ledger = json.loads(ledger_path.read_text(encoding="utf-8"))
+          pruned = expander.prune_low_quality_auto_entries(ledger, config)
+          if not pruned:
+              raise SystemExit("expected existing automatic noise to prune")
+          ledger["updatedAt"] = expander.now_iso()
+          config_path.write_text(json.dumps(config, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          ledger_path.write_text(json.dumps(ledger, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          print(json.dumps({"prunedCount": len(pruned), "sample": pruned[:20]}, ensure_ascii=False))
+          PY
+
+      - name: Run targeted regressions
+        run: |
+          python -m unittest tests.test_expand_tracking_entities tests.test_tracking_sample_company_people
+          python -m py_compile tools/expand_tracking_entities.py tools/enrich_tracking_people_from_sample_companies.py
+
+      - name: Commit quality fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/expand_tracking_entities.py tools/enrich_tracking_people_from_sample_companies.py tests/test_expand_tracking_entities.py tests/test_tracking_sample_company_people.py config/user_tracking.json config/tracking_auto_discovery.json
+          git diff --cached --quiet || git commit -m "fix: block low-quality tracking auto-discovery"
+          git push origin HEAD:fix/tracking-auto-discovery-quality-20260727
