@@ -38,18 +38,36 @@ jobs:
             tools/crawl_with_wechat_registry.py \
             tools/validate_wechat_toutiao_live.py
       - name: Run focused unit tests
+        id: unit
+        continue-on-error: true
+        shell: bash
         run: |
-          python -m unittest \
+          set -o pipefail
+          python -m unittest -v \
             tests.test_search_index_feed_redirects \
-            tests.test_wechat_sogou_redirect_compat
+            tests.test_wechat_sogou_redirect_compat \
+            2>&1 | tee focused-unit-tests.log
       - name: Require original WeChat and Toutiao articles
+        id: live
+        continue-on-error: true
+        shell: bash
         run: |
+          set -o pipefail
           python tools/validate_wechat_toutiao_live.py \
-            --output wechat-toutiao-live-report.json
-      - name: Upload live validation report
+            --output wechat-toutiao-live-report.json \
+            2>&1 | tee focused-live-validation.log
+      - name: Upload focused validation diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: wechat-toutiao-live-report
-          path: wechat-toutiao-live-report.json
+          path: |
+            focused-unit-tests.log
+            focused-live-validation.log
+            wechat-toutiao-live-report.json
           if-no-files-found: warn
+      - name: Enforce focused validation result
+        if: always()
+        run: |
+          test "${{ steps.unit.outcome }}" = "success"
+          test "${{ steps.live.outcome }}" = "success"
