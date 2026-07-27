@@ -14,7 +14,7 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
-from urllib.parse import quote_plus, urlsplit
+from urllib.parse import urlsplit
 
 try:
     from . import crawl_with_wechat_registry as entry
@@ -44,6 +44,7 @@ def _install_adapters() -> Any:
     )
     entry.wechat_sogou_redirect_compat.install(entry.wechat_sogou_index)
     entry.wechat_sogou_link_compat.install(entry.wechat_sogou_index)
+    entry.wechat_public_aggregator.install(entry.wechat_sogou_index)
     entry.wechat_sogou_bridge.install(entry.wechat_public_sources)
     return crawler
 
@@ -64,34 +65,39 @@ def _article_summary(article: dict[str, Any]) -> dict[str, Any]:
         "url": source.get("url"),
         "company": article.get("company"),
         "wechatAccount": article.get("wechatAccount"),
+        "wechatDiscoveryProvider": article.get("wechatDiscoveryProvider"),
     }
 
 
+def _contains_byte_term(article: dict[str, Any]) -> bool:
+    text = f"{article.get('title', '')} {article.get('summary', '')}".casefold()
+    return any(term.casefold() in text for term in BYTE_TERMS)
+
+
 def _toutiao_probe(crawler: Any) -> dict[str, Any]:
-    query = 'site:toutiao.com ("字节跳动" OR "豆包" OR "ByteDance" OR "Doubao" OR "火山引擎")'
     spec = {
         "id": "live-byte-toutiao",
-        "name": "今日头条 · 字节跳动",
-        "url": (
-            "https://news.google.com/rss/search?q="
-            f"{quote_plus(query)}&hl=zh-CN&gl=CN&ceid=CN:zh-Hans"
-        ),
-        "adapter": "rss",
+        "name": "今日头条 · 科技",
+        "url": entry.toutiao_public_feed.FEED_ENDPOINT,
+        "adapter": "toutiao_feed",
         "platform": "今日头条",
         "sourceLevel": "媒体报道",
         "region": "中国",
         "sector": "AI / AGI",
-        "maxItems": 4,
-        "keywords": BYTE_TERMS,
-        "requiredKeywords": BYTE_TERMS,
-        "strictTitleKeywords": False,
-        "strictRequiredTitleKeywords": False,
+        "maxItems": 6,
+        "categories": ["news_tech", "__all__"],
+        # Route validation must not depend on whether a ByteDance-specific story
+        # happens to be in the current hot-feed window.
+        "keywords": [],
         "allowedHosts": ["toutiao.com"],
         "enabled": True,
     }
     try:
-        body = crawler.fetch_text(spec["url"], crawler.DEFAULT_USER_AGENT)
-        articles = crawler.parse_feed_items(body, spec)
+        articles, status = entry.toutiao_public_feed.crawl_toutiao_source(
+            spec,
+            crawler.DEFAULT_USER_AGENT,
+            crawler,
+        )
         verified = [
             article
             for article in articles
@@ -101,17 +107,21 @@ def _toutiao_probe(crawler: Any) -> dict[str, Any]:
         return {
             "ok": bool(verified),
             "accepted": len(verified),
-            "scannedAccepted": len(articles),
-            "query": query,
-            "articles": [_article_summary(article) for article in verified[:4]],
-            "error": None if verified else "No original toutiao.com article was accepted",
+            "scanned": status.get("scanned", 0),
+            "status": status.get("status"),
+            "byteDanceMatches": sum(_contains_byte_term(article) for article in verified),
+            "articles": [_article_summary(article) for article in verified[:6]],
+            "error": status.get("error")
+            if not verified
+            else None,
         }
     except Exception as exc:  # noqa: BLE001 - serialized for CI diagnostics.
         return {
             "ok": False,
             "accepted": 0,
-            "scannedAccepted": 0,
-            "query": query,
+            "scanned": 0,
+            "status": "error",
+            "byteDanceMatches": 0,
             "articles": [],
             "error": f"{type(exc).__name__}: {exc}",
         }
