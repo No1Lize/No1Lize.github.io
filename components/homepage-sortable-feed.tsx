@@ -45,12 +45,14 @@ export function HomepageSortableFeed({
   ariaLabel,
   limit = 80,
   initialSort = "latest",
+  emptyMessage = "当前暂无可展示的情报记录。",
 }: {
   items: HomepageFeedItem[];
   description: string;
   ariaLabel: string;
   limit?: number;
   initialSort?: HomepageSortMode;
+  emptyMessage?: string;
 }) {
   const [sortMode, setSortMode] = useState<HomepageSortMode>(initialSort);
   const visibleItems = useMemo(
@@ -60,7 +62,7 @@ export function HomepageSortableFeed({
 
   return (
     <>
-      <div className={`method-note ${styles.methodPanel}`}>
+      <div className={`method-note homepage-sort-panel ${styles.methodPanel}`}>
         <p>{description}</p>
         <HomepageSortToggle
           value={sortMode}
@@ -100,6 +102,7 @@ export function HomepageSortableFeed({
             </b>
           </a>
         ))}
+        {!visibleItems.length ? <p className={styles.empty}>{emptyMessage}</p> : null}
       </div>
     </>
   );
