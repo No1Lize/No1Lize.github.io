@@ -35,8 +35,8 @@ SUBMISSIONS_ROOT = "https://data.sec.gov/submissions/"
 ARCHIVES_ROOT = "https://www.sec.gov/Archives/edgar/data"
 PROVIDER = "sec-edgar-submissions"
 DEFAULT_USER_AGENT = (
-    "No1LizeResearchBot/1.0 No1Lize@users.noreply.github.com "
-    "https://github.com/No1Lize/No1Lize.github.io"
+    "VCIQResearchBot/1.0 VCIQ@users.noreply.github.com "
+    "https://github.com/VCIQ/VCIQ.github.io"
 )
 FORM_TYPES = {
     "10-K": "定期报告与业绩",
