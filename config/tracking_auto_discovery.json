@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-27T08:29:37+00:00",
+  "updatedAt": "2026-07-27T08:36:26+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-27T08:27:35+00:00"
+      "lastExpandedAt": "2026-07-27T08:34:44+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-27T08:27:51+00:00"
+      "lastExpandedAt": "2026-07-27T08:34:58+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-27T08:28:06+00:00"
+      "lastExpandedAt": "2026-07-27T08:35:13+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-27T08:28:39+00:00"
+      "lastExpandedAt": "2026-07-27T08:35:45+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-27T08:29:03+00:00"
+      "lastExpandedAt": "2026-07-27T08:36:09+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-27T08:29:22+00:00"
+      "lastExpandedAt": "2026-07-27T08:36:26+00:00"
     },
     "space": {
       "lastExpandedAt": "2026-07-27T08:29:37+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-27T08:07:17+00:00"
+      "lastExpandedAt": "2026-07-27T08:32:35+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-27T08:23:21+00:00"
+      "lastExpandedAt": "2026-07-27T08:32:54+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-27T08:23:37+00:00"
+      "lastExpandedAt": "2026-07-27T08:33:10+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-27T08:24:05+00:00"
+      "lastExpandedAt": "2026-07-27T08:33:35+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-27T08:26:02+00:00"
+      "lastExpandedAt": "2026-07-27T08:33:58+00:00"
     },
     "track-1p8ob4k": {
-      "lastExpandedAt": "2026-07-27T08:26:54+00:00"
+      "lastExpandedAt": "2026-07-27T08:34:12+00:00"
     }
   },
   "added": [
@@ -994,6 +994,43 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "web3",
+      "kind": "keywords",
+      "value": "DAI",
+      "addedAt": "2026-07-27T08:32:35+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Apple",
+      "addedAt": "2026-07-27T08:34:44+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Kimi K3",
+      "addedAt": "2026-07-27T08:34:44+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "能力",
+      "addedAt": "2026-07-27T08:34:44+00:00",
+      "evidence": [
+        "corpus-term"
       ]
     }
   ],
