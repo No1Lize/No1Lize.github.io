@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, ExternalLink, Share2, X } from "lucide-react";
+import { Copy, ExternalLink, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { QRCodeSVG } from "qrcode.react";
@@ -75,34 +75,29 @@ async function copyText(value: string): Promise<boolean> {
 export function WechatShareCompat() {
   const [target, setTarget] = useState<ShareTarget | null>(null);
   const [notice, setNotice] = useState("");
-  const [sharing, setSharing] = useState(false);
 
-  const invokeSystemShare = async (item: ShareTarget, urlOnly: boolean) => {
+  const invokeSystemShare = async (item: ShareTarget) => {
     if (typeof navigator.share !== "function") {
+      setTarget(item);
       setNotice("当前浏览器没有系统分享能力，请扫码或复制原始链接。");
-      return false;
+      return;
     }
 
     const text = item.summary ? `${item.title}\n${item.summary.slice(0, 140)}` : item.title;
-    const payload: ShareData = urlOnly
-      ? { url: item.url }
-      : { title: item.title, text, url: item.url };
+    const payload: ShareData = { title: item.title, text, url: item.url };
 
     if (typeof navigator.canShare === "function" && !navigator.canShare(payload)) {
+      setTarget(item);
       setNotice("当前系统不能接收这类分享数据，请扫码或复制原始链接。");
-      return false;
+      return;
     }
 
-    setSharing(true);
     try {
       await navigator.share(payload);
-      return true;
     } catch (error) {
-      if (error instanceof DOMException && error.name === "AbortError") return false;
+      if (error instanceof DOMException && error.name === "AbortError") return;
+      setTarget(item);
       setNotice("系统分享没有完成，请改用微信扫码或复制原始链接。");
-      return false;
-    } finally {
-      setSharing(false);
     }
   };
 
@@ -135,22 +130,14 @@ export function WechatShareCompat() {
 
       const platform = desktopPlatform();
       if (platform) {
+        // Windows 与 macOS 桌面端不再调用操作系统分享面板，
+        // 直接打开站内二维码分享界面，避免系统弹窗和桌面微信接收失败。
         setTarget(item);
-        // Windows 与 macOS 桌面微信对复合 ShareData 的接收能力均不稳定。
-        // 桌面兼容模式只交给操作系统一个原始 URL，并始终保留扫码与复制路径。
-        void invokeSystemShare(item, true).then((opened) => {
-          setNotice(
-            opened
-              ? `${platform} 已按微信兼容模式只传递原始链接。若微信仍无法接收，请扫码或复制链接。`
-              : `${platform} 系统分享未完成，请直接扫码或复制原始链接。`,
-          );
-        });
+        setNotice(`${platform} 桌面端已直接进入二维码分享模式。`);
         return;
       }
 
-      void invokeSystemShare(item, false).then((opened) => {
-        if (!opened) setTarget(item);
-      });
+      void invokeSystemShare(item);
     };
 
     document.addEventListener("click", onClick, true);
@@ -195,8 +182,8 @@ export function WechatShareCompat() {
             <h3 id="wechat-share-title">{target.title}</h3>
             <p>
               {platform
-                ? `${platform} 系统分享与微信桌面端之间的最终接收结果无法由网页确认。本站只传递原始 URL，并始终保留微信扫码、复制链接和再次重试。`
-                : "本站提供系统分享、微信扫码和复制链接三种路径，分享链接均直接指向原始情报。"}
+                ? `${platform} 桌面端已跳过操作系统分享弹窗。请直接使用手机微信扫码，或复制原始链接发送给微信好友。`
+                : "请使用微信扫码或复制链接。分享链接均直接指向原始情报。"}
             </p>
           </div>
 
@@ -215,16 +202,6 @@ export function WechatShareCompat() {
           </div>
 
           <div className="wechat-share-actions">
-            {platform ? (
-              <button
-                type="button"
-                disabled={sharing}
-                onClick={() => void invokeSystemShare(target, true)}
-              >
-                <Share2 size={15} />
-                {sharing ? "正在打开…" : `再次打开 ${platform} 微信兼容分享`}
-              </button>
-            ) : null}
             <button type="button" onClick={() => void copyOriginalLink()}>
               <Copy size={15} />
               复制原始链接
@@ -357,11 +334,6 @@ export function WechatShareCompat() {
         .wechat-share-actions a:hover {
           border-color: var(--green);
           color: var(--green-bright);
-        }
-
-        .wechat-share-actions button:disabled {
-          cursor: wait;
-          opacity: 0.65;
         }
 
         .wechat-share-notice {
