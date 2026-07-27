@@ -119,6 +119,18 @@ function explicitChannel(row: HTMLElement): ChannelMeta | null {
   return label ? { channel: key, channelLabel: label } : channelByKey[key];
 }
 
+function channelFromPath(): ChannelMeta | null {
+  if (typeof window === "undefined") return null;
+  const path = window.location.pathname;
+  if (path.startsWith("/technology")) return channelByKey.technology;
+  if (path.startsWith("/companies")) return channelByKey.companies;
+  if (path.startsWith("/institutions")) return channelByKey.institutions;
+  if (path.startsWith("/ipo")) return channelByKey.ipo;
+  if (path.startsWith("/reports")) return channelByKey.reports;
+  if (path.startsWith("/people")) return channelByKey.people;
+  return null;
+}
+
 function regionFrom(values: string[]): "中国" | "美国" | "全球" | undefined {
   if (values.some((value) => value.includes("中国"))) return "中国";
   if (values.some((value) => value.includes("美国") || value.includes("美股"))) return "美国";
@@ -232,7 +244,7 @@ function makeGenericFavorite(row: HTMLElement): FavoriteInput | null {
     "Context",
     "[data-intelligence-context], [class*='context'], [class*='meta']",
   );
-  const channel = explicitChannel(row) || inferChannel(eventType, `${context} ${title}`);
+  const channel = explicitChannel(row) || channelFromPath() || inferChannel(eventType, `${context} ${title}`);
   const sourceName = markedText(
     row,
     "Source",
@@ -333,6 +345,12 @@ function collectCandidateRows(): HTMLElement[] {
   add("[data-intelligence-item]");
   add(".material-list > a");
   add("a.source-card[href]");
+  add("a[class*='eventCard'][href]");
+  add(".market-news-item[href]");
+  add("[class*='eventList'] > a[href]");
+  add("[class*='newsList'] > a[href]");
+  add(".entity-list > a[target='_blank'][href]");
+  add(".analysis-grid > a[target='_blank'][href]");
 
   document.querySelectorAll<HTMLElement>(".timeline > div").forEach((row) => {
     if (hrefFromRow(row)) rows.add(row);
@@ -475,5 +493,4 @@ export function IntelligenceFavoriteControls() {
   );
 }
 
-// Kept as a compatibility alias for older imports during rolling deployments.
 export const HomepageFavoriteControls = IntelligenceFavoriteControls;
