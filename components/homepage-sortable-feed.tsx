@@ -1,0 +1,106 @@
+"use client";
+
+import { ArrowUpRight } from "lucide-react";
+import { useMemo, useState } from "react";
+import {
+  HomepageSortToggle,
+  type HomepageSortMode,
+} from "@/components/homepage-sort-toggle";
+import columnStyles from "@/components/homepage-columns.module.css";
+import styles from "@/components/homepage-sortable-feed.module.css";
+
+export type HomepageFeedItem = {
+  id: string;
+  title: string;
+  href: string;
+  tag: string;
+  context: string;
+  date: string;
+  time?: string;
+  asideLabel: string;
+  sortAt: string;
+  importance: number;
+};
+
+function sortItems(items: HomepageFeedItem[], mode: HomepageSortMode) {
+  return [...items].sort((left, right) => {
+    if (mode === "importance") {
+      return (
+        right.importance - left.importance ||
+        right.sortAt.localeCompare(left.sortAt) ||
+        left.title.localeCompare(right.title, "zh-CN")
+      );
+    }
+    return (
+      right.sortAt.localeCompare(left.sortAt) ||
+      right.importance - left.importance ||
+      left.title.localeCompare(right.title, "zh-CN")
+    );
+  });
+}
+
+export function HomepageSortableFeed({
+  items,
+  description,
+  ariaLabel,
+  limit = 80,
+  initialSort = "latest",
+}: {
+  items: HomepageFeedItem[];
+  description: string;
+  ariaLabel: string;
+  limit?: number;
+  initialSort?: HomepageSortMode;
+}) {
+  const [sortMode, setSortMode] = useState<HomepageSortMode>(initialSort);
+  const visibleItems = useMemo(
+    () => sortItems(items, sortMode).slice(0, limit),
+    [items, limit, sortMode],
+  );
+
+  return (
+    <>
+      <div className={`method-note ${styles.methodPanel}`}>
+        <p>{description}</p>
+        <HomepageSortToggle
+          value={sortMode}
+          onChange={setSortMode}
+          ariaLabel={`${ariaLabel}排序方式`}
+        />
+      </div>
+
+      <div className={columnStyles.feedList} aria-label={ariaLabel}>
+        {visibleItems.map((item, index) => (
+          <a
+            className={columnStyles.feedRow}
+            href={item.href}
+            key={`${item.id}-${item.href}`}
+            rel="noreferrer"
+            target="_blank"
+          >
+            <span className={columnStyles.feedIndex}>
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className={columnStyles.feedBody}>
+              <strong className={columnStyles.feedTitle} title={item.title}>
+                {item.title}
+              </strong>
+              <small className={columnStyles.feedContext} title={item.context}>
+                <b className={columnStyles.feedTag}>{item.tag}</b>
+                {item.context}
+              </small>
+            </span>
+            <span className={columnStyles.feedAside}>
+              <span>{item.date}</span>
+              {item.time ? <span>{item.time}</span> : null}
+              <span>{item.asideLabel}</span>
+            </span>
+            <b className={columnStyles.feedArrow} aria-hidden="true">
+              <ArrowUpRight size={14} />
+            </b>
+          </a>
+        ))}
+      </div>
+    </>
+  );
+}
