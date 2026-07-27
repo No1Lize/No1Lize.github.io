@@ -120,9 +120,14 @@ class PublicIndexParser(HTMLParser):
         self._anchor_parts = []
 
 
-def _context(parser: PublicIndexParser, position: int) -> str:
-    start = max(0, position - 4)
-    end = min(len(parser.text_parts), position + 10)
+def _context(
+    parser: PublicIndexParser,
+    position: int,
+    next_position: int | None = None,
+) -> str:
+    start = max(0, position)
+    natural_end = min(len(parser.text_parts), position + 10)
+    end = min(natural_end, next_position) if next_position is not None else natural_end
     return _clean(" ".join(parser.text_parts[start:end]), 1200)
 
 
@@ -172,17 +177,23 @@ def _extract_index_rows(
     parser.feed(body or "")
     rows: list[dict[str, str]] = []
     seen: set[str] = set()
-    for link in parser.links:
+    for index, link in enumerate(parser.links):
         url = crawler.normalize_url(str(link.get("url", "")))
         if not (_is_wechat_article_url(url) or _is_resolvable_detail_url(url)):
             continue
-        context = _context(parser, int(link.get("position", 0)))
+        position = int(link.get("position", 0))
+        next_position = (
+            int(parser.links[index + 1].get("position", 0))
+            if index + 1 < len(parser.links)
+            else None
+        )
+        context = _context(parser, position, next_position)
         if require_account_context and not wechat_source_registry.account_matches(
             spec, context
         ):
             continue
         title = _fallback_title(
-            parser, int(link.get("position", 0)), str(link.get("title", ""))
+            parser, position, str(link.get("title", ""))
         )
         if not title or url in seen or _WECHAT is None:
             continue
