@@ -205,7 +205,7 @@ export function FavoritesPage() {
         <div className="favorites-empty">
           <Bookmark size={30} />
           <strong>还没有收藏情报</strong>
-          <p>在首页任一“关键事件”情报卡片右上角点击“收藏”，即可把整张卡片保存到这里。</p>
+          <p>在任一条目式情报卡片右上角点击“收藏”，即可把整张卡片保存到这里。</p>
           <Link href="/">返回首页浏览情报 →</Link>
         </div>
       )}
