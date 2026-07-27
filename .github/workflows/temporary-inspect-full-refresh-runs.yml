@@ -1,99 +1,47 @@
 name: Temporary inspect full refresh runs
 
-# Prepare the missing Google official-source registry entry on current main.
+# Cancel obsolete refreshes that predate the Google registry repair.
 on:
   pull_request:
     paths:
       - ".github/workflows/temporary-inspect-full-refresh-runs.yml"
 
 permissions:
-  contents: write
-  actions: read
+  contents: read
+  actions: write
 
 jobs:
-  prepare-google-source:
+  prune-obsolete-refreshes:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - name: Add Google registry entry and production regression
+      - name: Cancel obsolete pre-fix runs
         run: |
           set -euo pipefail
-          branch="fix/google-official-source-20260727"
-          git checkout -B "$branch" origin/main
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          path = Path("config/official_company_sources.json")
-          payload = json.loads(path.read_text(encoding="utf-8"))
-          companies = payload["companies"]
-          rows = [row for row in companies if row.get("slug") == "google"]
-          google = {
-              "slug": "google",
-              "name": "Google",
-              "region": "美国",
-              "sector": "AI / AGI",
-              "homepage": "https://about.google/",
-              "newsUrls": [
-                  "https://blog.google/",
-                  "https://deepmind.google/discover/blog/"
-              ],
-              "aliases": [
-                  "Google AI",
-                  "Gemini",
-                  "Google DeepMind"
-              ]
-          }
-          if rows:
-              if rows != [google]:
-                  raise SystemExit(f"unexpected existing google registry entry: {rows}")
-          else:
-              companies.insert(0, google)
-          path.write_text(
-              json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-              encoding="utf-8",
-          )
-          PY
-          cat > tests/test_official_company_registry_production.py <<'PYTEST'
-          from __future__ import annotations
-
-          import unittest
-
-          from tools.crawl_official_companies import load_registry
-
-
-          class ProductionOfficialCompanyRegistryTests(unittest.TestCase):
-              def test_registry_matches_catalog_and_contains_google(self) -> None:
-                  specs = load_registry()
-                  by_slug = {spec.slug: spec for spec in specs}
-                  self.assertIn("google", by_slug)
-                  self.assertEqual(by_slug["google"].name, "Google")
-                  self.assertEqual(by_slug["google"].region, "美国")
-                  self.assertEqual(by_slug["google"].sector, "AI / AGI")
-                  self.assertIn("blog.google", by_slug["google"].allowed_hosts)
-
-
-          if __name__ == "__main__":
-              unittest.main()
-          PYTEST
-          python -m unittest \
-            tests.test_official_company_registry_dynamic \
-            tests.test_official_company_registry_production
-          python -m py_compile tools/crawl_official_companies.py
-          git diff --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add config/official_company_sources.json tests/test_official_company_registry_production.py
-          if git diff --cached --quiet; then
-            echo "Google registry repair already present."
-            exit 0
-          fi
-          git commit -m "fix: register Google official sources"
-          git push --force-with-lease origin "$branch"
+          for run_id in 30278141149 30280630134; do
+            status="$(gh run view "$run_id" --json status --jq .status 2>/dev/null || true)"
+            case "$status" in
+              queued|pending|in_progress|waiting|requested)
+                gh run cancel "$run_id"
+                ;;
+              *)
+                echo "Run $run_id is already $status; no cancellation needed."
+                ;;
+            esac
+          done
+      - name: Record current refresh queue
+        run: |
+          gh run list \
+            --workflow scheduled-sync.yml \
+            --limit 10 \
+            --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,displayTitle \
+            > refresh-queue.json
+          cat refresh-queue.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: refreshed-run-queue
+          path: refresh-queue.json
+          if-no-files-found: error
