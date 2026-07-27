@@ -39,9 +39,11 @@ function hasDraggedFiles(event: DragEvent<HTMLElement>): boolean {
 export function ChannelUpdateDirectoryClient({
   channel,
   directory,
+  layout = "default",
 }: {
   channel: ChannelUpdateKey;
   directory: ChannelUpdateDirectory;
+  layout?: "default" | "split";
 }) {
   const eventTypeSelectId = useId();
   const sortSelectId = useId();
@@ -124,6 +126,7 @@ export function ChannelUpdateDirectoryClient({
       className={styles.directory}
       aria-labelledby={`${channel}-updates-title`}
       data-drag-active={dragActive || undefined}
+      data-layout={layout === "split" ? "split" : undefined}
       onDragEnter={onDragEnter}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
