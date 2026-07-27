@@ -1,0 +1,55 @@
+name: Validate WeChat and Toutiao
+
+on:
+  pull_request:
+    paths:
+      - tools/crawl_with_wechat_registry.py
+      - tools/search_index_feed_redirects.py
+      - tools/wechat_*.py
+      - tools/validate_wechat_toutiao_live.py
+      - tests/test_search_index_feed_redirects.py
+      - tests/test_wechat_sogou_redirect_compat.py
+      - config/wechat_sources.json
+      - config/wechat_public_indexes.json
+      - .github/workflows/validate-wechat-toutiao.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-wechat-toutiao-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  live-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile focused adapters
+        run: |
+          python -m py_compile \
+            tools/search_index_feed_redirects.py \
+            tools/wechat_sogou_redirect_compat.py \
+            tools/crawl_with_wechat_registry.py \
+            tools/validate_wechat_toutiao_live.py
+      - name: Run focused unit tests
+        run: |
+          python -m unittest \
+            tests.test_search_index_feed_redirects \
+            tests.test_wechat_sogou_redirect_compat
+      - name: Require original WeChat and Toutiao articles
+        run: |
+          python tools/validate_wechat_toutiao_live.py \
+            --output wechat-toutiao-live-report.json
+      - name: Upload live validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wechat-toutiao-live-report
+          path: wechat-toutiao-live-report.json
+          if-no-files-found: warn
