@@ -197,7 +197,9 @@ jobs:
             public/data/people.json
           git commit -m "data: refresh all public intelligence sources"
           for attempt in 1 2 3; do
-            git pull --rebase origin main
+            # Rebase swaps ours/theirs: "theirs" keeps this run's freshly
+            # generated snapshot when main changed the same data file.
+            git pull --rebase -X theirs origin main
 
             # Re-run deterministic enrichment at the rebased HEAD. Network source
             # statuses remain the fresh ledger produced by this workflow run.
