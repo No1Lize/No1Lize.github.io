@@ -67,7 +67,7 @@ jobs:
         id: institutions
         run: |
           set -euo pipefail
-          python tools/enrich_tracking_institutions.py \
+          python -m tools.enrich_tracking_institutions \
             --max-requests 80 | tee /tmp/institution-discovery.json
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/institution-discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
@@ -162,7 +162,7 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
 
-            python tools/enrich_tracking_institutions.py \
+            python -m tools.enrich_tracking_institutions \
               --max-requests 80 | tee /tmp/institution-discovery-replay.json
             python tools/enrich_tracking_people_from_sample_companies.py \
               --max-tracks 30 \
