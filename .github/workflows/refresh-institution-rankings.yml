@@ -36,6 +36,24 @@ jobs:
         run: python -m unittest tests.test_institution_ranking_crawler
       - name: Validate Qingke and CVSource pages
         run: python tools/crawl_institution_rankings.py --report public/data/institution_ranking_status.json
+      - uses: actions/setup-node@v4
+        if: github.event_name == 'pull_request'
+        with:
+          node-version: "22"
+      - name: Collect pull-request diagnostics
+        if: github.event_name == 'pull_request'
+        run: |
+          npm install
+          npx tsc --noEmit > tsc-diagnostics.txt 2>&1 || true
+          npm run test:unit > unit-diagnostics.txt 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'pull_request'
+        with:
+          name: institution-pr-diagnostics
+          path: |
+            tsc-diagnostics.txt
+            unit-diagnostics.txt
+          if-no-files-found: error
       - name: Commit source health report
         if: github.event_name != 'pull_request'
         run: |
