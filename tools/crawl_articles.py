@@ -62,8 +62,8 @@ TRACKING_PARAMETERS = {
     "spm",
 }
 DEFAULT_USER_AGENT = (
-    "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com "
-    "(+https://github.com/No1Lize/No1Lize.github.io)"
+    "LizeRoadOne/3.0 contact=VCIQ@users.noreply.github.com "
+    "(+https://github.com/VCIQ/VCIQ.github.io)"
 )
 VALID_EVENT_TYPES = {
     "融资",
