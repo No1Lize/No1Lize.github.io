@@ -5,6 +5,6 @@ export const dynamic = "force-static";
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: "*", allow: "/" },
-    sitemap: "https://no1lize.github.io/sitemap.xml",
+    sitemap: "https://vciq.github.io/sitemap.xml",
   };
 }
