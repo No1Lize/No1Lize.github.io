@@ -8,8 +8,3 @@ gem "kramdown", "~> 2.4"
 gem "kramdown-parser-gfm", "~> 1.1"
 gem "rouge", "~> 4.1"
 gem "webrick", "~> 1.8"
-
-# 开发环境
-group :development do
-  gem "jekyll-live-reload", "~> 0.9"
-end
