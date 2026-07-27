@@ -38,37 +38,19 @@ function cleanText(value: string | null | undefined): string {
 
 function hrefFrom(anchor: HTMLAnchorElement | null): string {
   if (!anchor) return "";
-  const preserved = cleanText(anchor.dataset.readerOriginalHref);
-  if (preserved) return preserved;
   const raw = cleanText(anchor.getAttribute("href"));
   if (raw.startsWith("/") && !raw.startsWith("//")) return raw;
   return cleanText(anchor.href || raw);
 }
 
-function stableId(scope: string, title: string, href: string): string {
-  const input = `${scope}|${title}|${href}`;
+function stableId(title: string, href: string): string {
+  const input = `article|${title}|${href}`;
   let hash = 2166136261;
   for (let index = 0; index < input.length; index += 1) {
     hash ^= input.charCodeAt(index);
     hash = Math.imul(hash, 16777619);
   }
-  return `homepage:${scope}:${(hash >>> 0).toString(36)}`;
-}
-
-function readerHref(item: FavoriteInput): string {
-  const query = new URLSearchParams({
-    url: item.href,
-    title: item.title,
-    fid: item.id,
-  });
-  return `/read/?${query.toString()}`;
-}
-
-function readerItem(item: FavoriteInput): FavoriteInput {
-  return {
-    ...item,
-    href: readerHref(item),
-  };
+  return `homepage:article:${(hash >>> 0).toString(36)}`;
 }
 
 function inferChannel(label: string, context = ""): ChannelMeta {
@@ -78,10 +60,10 @@ function inferChannel(label: string, context = ""): ChannelMeta {
   if (/人物|采访|演讲|公开对话|观点|著作|股东信/.test(combined)) {
     return { channel: "people", channelLabel: "人物研究" };
   }
-  if (/研报|报告|财报|监管文件|公告/.test(combined)) {
+  if (/研报|报告|政策|公告/.test(combined)) {
     return { channel: "reports", channelLabel: "研究报告" };
   }
-  if (/IPO|上市|招股/.test(combined)) {
+  if (/IPO|上市|招股|财报|监管文件/.test(combined)) {
     return { channel: "ipo", channelLabel: "上市跟踪" };
   }
   if (/融资|投资|并购|基金|资本/.test(combined)) {
@@ -100,6 +82,13 @@ function regionFrom(values: string[]): "中国" | "美国" | "全球" | undefine
   return undefined;
 }
 
+function publishedAtFrom(row: HTMLElement): string | undefined {
+  const monthDay = cleanText(row.querySelector<HTMLElement>(".event-date strong")?.textContent);
+  const year = cleanText(row.querySelector<HTMLElement>(".event-date span")?.textContent);
+  const date = `${year}-${monthDay}`;
+  return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : undefined;
+}
+
 function makeEventFavorite(row: HTMLElement): FavoriteInput | null {
   const title = cleanText(row.querySelector("h3")?.textContent);
   const summary = cleanText(row.querySelector(".event-main > p")?.textContent);
@@ -111,24 +100,27 @@ function makeEventFavorite(row: HTMLElement): FavoriteInput | null {
   const tags = [...row.querySelectorAll<HTMLElement>(".event-tags span")]
     .map((element) => cleanText(element.textContent))
     .filter(Boolean);
-  const label = tags[0] ?? "公司动态";
-  const channel = inferChannel(label, tags.join(" "));
-  const sourceHref = hrefFrom(sourceLink);
+  const eventType = tags[0] ?? "公司动态";
+  const channel = inferChannel(eventType, tags.join(" "));
   const sourceName = cleanText(sourceLink?.textContent) || "公开信源";
   const region = regionFrom(tags);
+  const importanceRaw = cleanText(row.querySelector<HTMLElement>(".importance strong")?.textContent);
+  const importance = Number(importanceRaw);
+  const publishedAt = publishedAtFrom(row);
 
   return {
-    id: stableId("article", title, href),
+    id: stableId(title, href),
     href,
     title,
     summary,
     ...channel,
     keywords: tags,
     sectors: tags.slice(2),
-    sources: sourceHref
-      ? [{ name: sourceName, url: sourceHref, level: tags[0] }]
-      : [],
+    sources: [{ name: sourceName, url: href, level: eventType }],
     ...(region ? { region } : {}),
+    ...(publishedAt ? { publishedAt } : {}),
+    ...(Number.isFinite(importance) ? { importance } : {}),
+    eventType,
   };
 }
 
@@ -145,9 +137,10 @@ function makeFeedFavorite(row: HTMLAnchorElement): FavoriteInput | null {
   const channel = inferChannel(tag || aside[1] || "", context);
   const sourceName = cleanText(context.replace(tag, "").replace(/^·|·$/g, "")) || "公开信源";
   const region = regionFrom([context, tag, ...aside]);
+  const publishedAt = aside.find((value) => /^\d{4}-\d{2}-\d{2}$/.test(value));
 
   return {
-    id: stableId("article", title, href),
+    id: stableId(title, href),
     href,
     title,
     summary: context || "从首页收藏的公开情报条目。",
@@ -156,6 +149,8 @@ function makeFeedFavorite(row: HTMLAnchorElement): FavoriteInput | null {
     sectors: [],
     sources: href.startsWith("http") ? [{ name: sourceName, url: href }] : [],
     ...(region ? { region } : {}),
+    ...(publishedAt ? { publishedAt } : {}),
+    ...(tag ? { eventType: tag } : {}),
   };
 }
 
@@ -183,7 +178,7 @@ function InlineFavoriteButton({ item }: { item: FavoriteInput }) {
       data-saved={saved ? "true" : "false"}
       aria-pressed={saved}
       aria-label={saved ? `取消收藏：${item.title}` : `收藏：${item.title}`}
-      title={saved ? "取消收藏" : "收藏进 08 收藏频道"}
+      title={saved ? "取消收藏" : "收藏这条情报到 08 收藏频道"}
       onMouseDown={(event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -221,19 +216,10 @@ export function HomepageFavoriteControls() {
       const element = document.createElement("span");
       element.dataset.homepageFavoriteMount = "true";
       element.className = `${styles.mount} ${placement === "event" ? styles.eventMount : styles.feedMount}`;
-      target.appendChild(element);
+      if (placement === "event") target.prepend(element);
+      else target.appendChild(element);
       created.push(element);
       return { element, item };
-    };
-
-    const installReaderLink = (anchor: HTMLAnchorElement, item: FavoriteInput) => {
-      if (!item.href.startsWith("http")) return item;
-      anchor.dataset.readerOriginalHref = item.href;
-      const wrapped = readerItem(item);
-      anchor.setAttribute("href", wrapped.href);
-      anchor.setAttribute("target", "_blank");
-      anchor.setAttribute("rel", "noreferrer");
-      return wrapped;
     };
 
     const scan = () => {
@@ -242,11 +228,8 @@ export function HomepageFavoriteControls() {
 
       document.querySelectorAll<HTMLElement>(".event-row").forEach((row) => {
         const item = makeEventFavorite(row);
-        const target = row.querySelector<HTMLElement>(".event-main");
-        const titleLink = row.querySelector<HTMLAnchorElement>("h3 a[href]");
-        if (!item || !target) return;
-        const mountedItem = titleLink ? installReaderLink(titleLink, item) : readerItem(item);
-        next.push(addMount(target, mountedItem, "event"));
+        const target = row.querySelector<HTMLElement>(".importance");
+        if (item && target) next.push(addMount(target, item, "event"));
       });
 
       document
@@ -254,9 +237,7 @@ export function HomepageFavoriteControls() {
         .forEach((row) => {
           const item = makeFeedFavorite(row);
           const target = row.querySelector<HTMLElement>("[class*='feedContext']");
-          if (!item || !target) return;
-          const mountedItem = installReaderLink(row, item);
-          next.push(addMount(target, mountedItem, "feed"));
+          if (item && target) next.push(addMount(target, item, "feed"));
         });
 
       document
@@ -264,9 +245,7 @@ export function HomepageFavoriteControls() {
         .forEach((row) => {
           const item = makeFeedFavorite(row);
           const target = row.querySelector<HTMLElement>("[class*='feedContext']");
-          if (!item || !target) return;
-          const mountedItem = installReaderLink(row, item);
-          next.push(addMount(target, mountedItem, "feed"));
+          if (item && target) next.push(addMount(target, item, "feed"));
         });
 
       setMounts(next);
