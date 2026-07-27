@@ -6,9 +6,17 @@ import {
 
 export function ChannelUpdateDirectory({
   channel,
+  layout = "default",
 }: {
   channel: ChannelUpdateKey;
+  layout?: "default" | "split";
 }) {
   const directory = getChannelUpdateDirectory(channel);
-  return <ChannelUpdateDirectoryClient channel={channel} directory={directory} />;
+  return (
+    <ChannelUpdateDirectoryClient
+      channel={channel}
+      directory={directory}
+      layout={layout}
+    />
+  );
 }
