@@ -180,16 +180,8 @@ def _signed_request_payload(article_id: str, timestamp: str, signature: str) -> 
 
 
 def _parse_batch_response(text: str) -> str:
-    marker = '[\\"garturlres\\",\\"'
-    if marker in text:
-        fragment = text.split(marker, 1)[1].split('\\",', 1)[0]
-        try:
-            return str(json.loads(f'"{fragment}"'))
-        except json.JSONDecodeError:
-            return fragment.replace("\\/", "/").replace("\\u0026", "&")
-
-    # Some responses expose the inner payload as a JSON string without the same
-    # escape depth. Parse each non-preamble line conservatively.
+    # Prefer structured JSON lines. A raw marker search can overrun the URL when
+    # the entire nested response itself is JSON-escaped.
     for line in reversed(text.splitlines()):
         line = line.strip()
         if not line.startswith("["):
@@ -207,6 +199,16 @@ def _parse_batch_response(text: str) -> str:
                 continue
             if isinstance(inner, list) and len(inner) > 1 and inner[0] == "garturlres":
                 return str(inner[1])
+
+    # Older batch responses expose a deeper escape layer rather than a directly
+    # parseable outer JSON array.
+    marker = '[\\"garturlres\\",\\"'
+    if marker in text:
+        fragment = text.split(marker, 1)[1].split('\\",', 1)[0]
+        try:
+            return str(json.loads(f'"{fragment}"'))
+        except json.JSONDecodeError:
+            return fragment.replace("\\/", "/").replace("\\u0026", "&")
     return ""
 
 
