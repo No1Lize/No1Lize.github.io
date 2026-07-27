@@ -208,36 +208,50 @@ export function TrackingAdminModuleRecommendations() {
   useEffect(() => {
     let frame = 0;
     let previous = "";
-    const refresh = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const listedSection = sectionByTitle(LISTED_TITLE);
-        const sourceSection = sectionByTitle(SOURCE_TITLE);
-        sourceSection
-          ?.querySelectorAll<HTMLElement>('[aria-label="智能推荐添加"]')
-          .forEach((panel) => {
-            panel.hidden = true;
-          });
-        const next = {
-          sector: currentSector(),
-          listedKeys: listedKeys(listedSection),
-          sourceUrls: sourceUrls(sourceSection),
-        };
-        const serialized = JSON.stringify(next);
-        if (serialized !== previous) {
-          previous = serialized;
-          setSnapshot(next);
-        }
-      });
+
+    const scan = () => {
+      frame = 0;
+      const listedSection = sectionByTitle(LISTED_TITLE);
+      const sourceSection = sectionByTitle(SOURCE_TITLE);
+
+      sourceSection
+        ?.querySelectorAll<HTMLElement>('[aria-label="智能推荐添加"]')
+        .forEach((panel) => {
+          // Reassigning hidden=true on every scan creates an attribute mutation,
+          // which previously retriggered this observer indefinitely.
+          if (!panel.hidden) panel.hidden = true;
+        });
+
+      const next = {
+        sector: currentSector(),
+        listedKeys: listedKeys(listedSection),
+        sourceUrls: sourceUrls(sourceSection),
+      };
+      const serialized = JSON.stringify(next);
+      if (serialized !== previous) {
+        previous = serialized;
+        setSnapshot(next);
+      }
     };
+
+    const scheduleScan = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(scan);
+    };
+
     const refreshDismissals = () => setDismissalVersion((value) => value + 1);
-    const observer = new MutationObserver(refresh);
-    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    const observer = new MutationObserver(scheduleScan);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["data-active", "disabled"],
+    });
     window.addEventListener(DISMISSAL_EVENT, refreshDismissals);
     void hydrateTrackingRecommendationDismissals();
-    refresh();
+    scan();
     return () => {
-      cancelAnimationFrame(frame);
+      if (frame) cancelAnimationFrame(frame);
       observer.disconnect();
       window.removeEventListener(DISMISSAL_EVENT, refreshDismissals);
     };
