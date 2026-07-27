@@ -3,6 +3,10 @@
 import { Bookmark, Search, Share2, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import {
+  HomepageSortToggle,
+  type HomepageSortMode,
+} from "@/components/homepage-sort-toggle";
 import { useFavorites } from "@/components/use-favorites";
 import { removeFavorite, type FavoriteItem } from "@/lib/favorites";
 
@@ -21,6 +25,36 @@ function isIntelligenceCard(item: FavoriteItem): boolean {
       item.eventType ||
       item.importance !== undefined,
   );
+}
+
+function favoriteSortAt(item: FavoriteItem): string {
+  return item.publishedAt ?? item.savedAt;
+}
+
+function sortFavorites(
+  items: FavoriteItem[],
+  mode: HomepageSortMode,
+): FavoriteItem[] {
+  return [...items].sort((left, right) => {
+    const leftTime = favoriteSortAt(left);
+    const rightTime = favoriteSortAt(right);
+    const leftImportance = left.importance ?? -1;
+    const rightImportance = right.importance ?? -1;
+
+    if (mode === "importance") {
+      return (
+        rightImportance - leftImportance ||
+        rightTime.localeCompare(leftTime) ||
+        left.title.localeCompare(right.title, "zh-CN")
+      );
+    }
+
+    return (
+      rightTime.localeCompare(leftTime) ||
+      rightImportance - leftImportance ||
+      left.title.localeCompare(right.title, "zh-CN")
+    );
+  });
 }
 
 function absoluteShareUrl(href: string): string {
@@ -146,6 +180,7 @@ export function FavoritesPage() {
   const favorites = useFavorites();
   const [channel, setChannel] = useState("全部频道");
   const [query, setQuery] = useState("");
+  const [sortMode, setSortMode] = useState<HomepageSortMode>("latest");
   const channels = useMemo(
     () => [
       "全部频道",
@@ -155,7 +190,7 @@ export function FavoritesPage() {
   );
   const visible = useMemo(() => {
     const needle = query.normalize("NFKC").trim().toLocaleLowerCase("zh-CN");
-    return favorites.filter((item) => {
+    const filtered = favorites.filter((item) => {
       if (channel !== "全部频道" && item.channelLabel !== channel) return false;
       if (!needle) return true;
       return [
@@ -167,7 +202,8 @@ export function FavoritesPage() {
         ...item.sectors,
       ].some((value) => value.toLocaleLowerCase("zh-CN").includes(needle));
     });
-  }, [channel, favorites, query]);
+    return sortFavorites(filtered, sortMode);
+  }, [channel, favorites, query, sortMode]);
 
   return (
     <>
@@ -201,15 +237,22 @@ export function FavoritesPage() {
                 </button>
               ))}
             </div>
-            <label className="favorites-search">
-              <Search size={15} />
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="搜索收藏标题、摘要或关键词"
-                aria-label="搜索收藏"
+            <div className="favorites-toolbar-actions">
+              <HomepageSortToggle
+                value={sortMode}
+                onChange={setSortMode}
+                ariaLabel="收藏排序方式"
               />
-            </label>
+              <label className="favorites-search">
+                <Search size={15} />
+                <input
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="搜索收藏标题、摘要或关键词"
+                  aria-label="搜索收藏"
+                />
+              </label>
+            </div>
           </div>
 
           <div className="favorites-list">
@@ -263,6 +306,18 @@ export function FavoritesPage() {
       )}
 
       <style jsx global>{`
+        .favorites-toolbar-actions {
+          margin-left: auto;
+          display: flex;
+          flex: 0 0 auto;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .favorites-toolbar-actions .favorites-search {
+          margin-left: 0;
+        }
+
         .favorite-intelligence-card {
           position: relative;
           border-bottom: 1px solid var(--border);
@@ -365,6 +420,18 @@ export function FavoritesPage() {
           height: 30px;
         }
 
+        @media (max-width: 900px) {
+          .favorites-toolbar-actions {
+            width: 100%;
+            margin-left: 0;
+          }
+
+          .favorites-toolbar-actions .favorites-search {
+            flex: 1 1 260px;
+            width: auto;
+          }
+        }
+
         @media (max-width: 720px) {
           .favorite-intelligence-link {
             grid-template-columns: 54px minmax(0, 1fr) 54px;
@@ -391,6 +458,17 @@ export function FavoritesPage() {
 
           .favorite-share span {
             display: none;
+          }
+        }
+
+        @media (max-width: 560px) {
+          .favorites-toolbar-actions {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .favorites-toolbar-actions .favorites-search {
+            width: 100%;
           }
         }
       `}</style>
