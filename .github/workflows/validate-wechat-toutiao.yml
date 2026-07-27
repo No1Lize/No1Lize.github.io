@@ -9,6 +9,7 @@ on:
       - tools/wechat_*.py
       - tools/validate_wechat_toutiao_live.py
       - tools/tracking_taxonomy.py
+      - tests/test_crawl_with_wechat_registry.py
       - tests/test_search_index_feed_redirects.py
       - tests/test_toutiao_public_feed.py
       - tests/test_wechat_public_aggregator.py
@@ -50,6 +51,7 @@ jobs:
         run: |
           set -o pipefail
           python -m unittest -v \
+            tests.test_crawl_with_wechat_registry \
             tests.test_search_index_feed_redirects \
             tests.test_toutiao_public_feed \
             tests.test_wechat_public_aggregator \
