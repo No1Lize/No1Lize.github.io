@@ -1,12 +1,12 @@
 {
   "compileStatus": 0,
   "targetedTestStatus": 0,
-  "allPythonTestStatus": 1,
+  "allPythonTestStatus": 0,
   "probeStatus": 0,
-  "passed": false,
+  "passed": true,
   "probe": {
-    "generatedSources": 23,
-    "whitelistedSources": 18,
+    "generatedSources": 34,
+    "whitelistedSources": 21,
     "sectors": [
       "AI / AGI",
       "Web3",
@@ -14,6 +14,7 @@
       "可控核聚变",
       "商业航天",
       "新材料",
+      "新消费",
       "新能源",
       "智能制造",
       "机器人",
@@ -25,45 +26,51 @@
       "id": "user-track-wechat-qbitai-ai",
       "name": "量子位",
       "sector": "AI / AGI",
-      "status": "error",
-      "scanned": 0,
-      "accepted": 0,
-      "failed": 1,
-      "error": "No verified public WeChat articles discovered; previous snapshot retained",
-      "sample": []
+      "status": "partial",
+      "scanned": 75,
+      "accepted": 6,
+      "failed": 12,
+      "error": null,
+      "sample": [
+        {
+          "title": "量子位编辑作者招聘",
+          "wechatAccount": "量子位",
+          "companies": [],
+          "people": [
+            "QbitAI AI"
+          ]
+        },
+        {
+          "title": "10万字速记一口吞，金山办公新Agent开始直接交活了",
+          "wechatAccount": "量子位",
+          "companies": [
+            "Anthropic"
+          ],
+          "people": []
+        }
+      ]
     }
   },
   "logTail": [
-    "..........",
+    ".............",
     "----------------------------------------------------------------------",
-    "Ran 10 tests in 0.007s",
+    "Ran 13 tests in 0.021s",
     "",
     "OK",
-    "......................official=two fatal=RuntimeError: blocked",
-    "...................................................................................................................................................F...........",
-    "======================================================================",
-    "FAIL: test_products_prioritize_catalog_and_reject_document_navigation (test_venture_profile_noise_filters.VentureProfileNoiseFilterTests.test_products_prioritize_catalog_and_reject_document_navigation)",
+    "...........................official=two fatal=RuntimeError: blocked",
+    "..................................................................................................................................................................................................................................................................................................................................................",
     "----------------------------------------------------------------------",
-    "Traceback (most recent call last):",
-    "  File \"/home/runner/work/No1Lize.github.io/No1Lize.github.io/tests/test_venture_profile_noise_filters.py\", line 52, in test_products_prioritize_catalog_and_reject_document_navigation",
-    "    self.assertEqual(products[:3], [\"远征A2\", \"灵犀X2\", \"Genie Studio具身智能开发平台\"])",
-    "AssertionError: Lists differ: ['灵犀X2', '远征A2', 'Genie Studio具身智能开发平台'] != ['远征A2', '灵犀X2', 'Genie Studio具身智能开发平台']",
+    "Ran 365 tests in 16.621s",
     "",
-    "First differing element 0:",
-    "'灵犀X2'",
-    "'远征A2'",
-    "",
-    "- ['灵犀X2', '远征A2', 'Genie Studio具身智能开发平台']",
-    "?          --------",
-    "",
-    "+ ['远征A2', '灵犀X2', 'Genie Studio具身智能开发平台']",
-    "?  ++++++++",
-    "",
-    "",
-    "----------------------------------------------------------------------",
-    "Ran 181 tests in 0.208s",
-    "",
-    "FAILED (failures=1)",
-    "No snapshot changes (1 articles)."
+    "OK",
+    "No snapshot changes (1 articles).",
+    "{\"changed\": true, \"requestsUsed\": 10, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"semiconductor\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"CoWoS-L\"], \"people\": [\"梁孟松\"], \"sampleCompanies\": [\"中芯国际\"], \"sources\": [{\"id\": \"source-auto-media-chinastarmarket-cn\", \"name\": \"科创板日报 · 半导体信源\", \"url\": \"https://chinastarmarket.cn/\", \"sourceType\": \"listing-search\", \"sourceCategory\": \"media\", \"region\": \"中国\", \"sector\": \"半导体\", \"company\": \"\", \"ticker\": \"\", \"keywords\": [\"半导体\"], \"enabled\": true}]}, \"poolSize\": 9}]}",
+    "{\"changed\": true, \"requestsUsed\": 8, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"semiconductor\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"GPU主题关联技术甲\", \"GPU主题关联技术乙\", \"先进封装主题关联技术甲\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 4}]}",
+    "{\"changed\": true, \"requestsUsed\": 13, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"灵巧手\"], \"people\": [], \"sampleCompanies\": [\"宇树科技\", \"Figure AI\"], \"sources\": [{\"id\": \"source-auto-item-2a729fb4\", \"name\": \"宇树科技 官方网站\", \"url\": \"https://www.unitree.com/\", \"sourceType\": \"listing-search\", \"sourceCategory\": \"company\", \"region\": \"中国\", \"sector\": \"人形机器人\", \"company\": \"宇树科技\", \"ticker\": \"\", \"keywords\": [\"宇树科技\"], \"enabled\": true}]}, \"poolSize\": 5}]}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"灵巧手\", \"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 5}]}",
+    "{\"changed\": false, \"offline\": true, \"requestsUsed\": 3, \"requestsFailed\": 3, \"tracks\": []}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"robotics\", \"mode\": \"expand\", \"added\": {\"keywords\": [\"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"relaxed\": true, \"poolSize\": 5}]}",
+    "{\"changed\": false, \"requestsUsed\": 0, \"requestsFailed\": 0, \"tracks\": []}",
+    "{\"changed\": true, \"requestsUsed\": 4, \"requestsFailed\": 0, \"tracks\": [{\"track\": \"embodied\", \"mode\": \"seed\", \"added\": {\"keywords\": [\"灵巧手\", \"宇树科技\", \"Figure AI\"], \"people\": [], \"sampleCompanies\": [], \"sources\": []}, \"poolSize\": 5}]}"
   ]
 }
