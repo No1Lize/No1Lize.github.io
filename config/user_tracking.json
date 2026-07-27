@@ -137,7 +137,10 @@
         "陈姓",
         "计算机辅助设计",
         "女性人形機器人",
-        "人型机器人学"
+        "人型机器人学",
+        "WeRide Inc",
+        "2026年北京亦庄半程马拉松",
+        "机器人学习"
       ],
       "people": [
         "汪滔",
@@ -196,7 +199,10 @@
         "Graphics Core Next",
         "ai芯片",
         "驚悚",
-        "推理小說"
+        "推理小說",
+        "Mobileye News",
+        "半导体设备",
+        "AI Inference Solution"
       ],
       "people": [],
       "sampleCompanies": [
@@ -262,7 +268,10 @@
         "电动汽车",
         "储能电池",
         "FAQ",
-        "镍铁电池"
+        "镍铁电池",
+        "鋰離子電池等效電路模型",
+        "约翰·B·古迪纳夫",
+        "钠硫电池"
       ],
       "people": [
         "Google DeepMind @GoogleDeepMind"
@@ -314,7 +323,10 @@
         "基因预测",
         "ETF",
         "最新份额",
-        "亿份"
+        "亿份",
+        "最新规模",
+        "亿元",
+        "金融信息服务商"
       ],
       "people": [],
       "sampleCompanies": [
@@ -362,7 +374,10 @@
         "颜色码 (量子计算)",
         "量子閘",
         "彭宁离子阱",
-        "可分辨边带冷却"
+        "可分辨边带冷却",
+        "质谱法",
+        "戴维·瓦恩兰",
+        "腔量子电动力学"
       ],
       "people": [],
       "sampleCompanies": [
@@ -408,7 +423,10 @@
         "反卫星导弹",
         "Sohu",
         "形式发票",
-        "押匯"
+        "押匯",
+        "新葛倫火箭",
+        "信用证",
+        "转口贸易"
       ],
       "people": [],
       "sampleCompanies": [
@@ -456,7 +474,10 @@
         "数字继承",
         "Bitcoin Foundation",
         "办公自动化",
-        "区块链"
+        "区块链",
+        "新媒體",
+        "数字媒体",
+        "企业资源计划"
       ],
       "people": [],
       "sampleCompanies": [
@@ -501,7 +522,10 @@
         "玻璃钢",
         "碳纖維",
         "碳纖維強化聚合物",
-        "纳米复合物"
+        "纳米复合物",
+        "陶瓷工程",
+        "固体",
+        "三明治夹芯结构"
       ],
       "people": [],
       "sampleCompanies": [
@@ -544,7 +568,10 @@
         "未来工厂",
         "升级",
         "自然系统第十版",
-        "卡尔·林奈"
+        "卡尔·林奈",
+        "目 (生物)",
+        "十字花目",
+        "玲花蕉亞科"
       ],
       "people": [],
       "sampleCompanies": [
@@ -643,7 +670,10 @@
         "Military Police (Brazil)",
         "DeepSeek API Docs",
         "Beta particle",
-        "Counts per minute"
+        "Counts per minute",
+        "轮融资",
+        "Inc",
+        "Claude Opus"
       ],
       "people": [],
       "sampleCompanies": [
@@ -669,12 +699,16 @@
       "custom": true,
       "keywords": [
         "即时零售",
-        "Temu"
+        "Temu",
+        "Pinduoduo",
+        "Wish (company)",
+        "Fast fashion"
       ],
       "people": [],
       "sampleCompanies": [
         "希音",
-        "shein"
+        "shein",
+        "AliExpress"
       ]
     }
   ],
@@ -3067,6 +3101,21 @@
       "ticker": "",
       "keywords": [
         "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-aliexpress",
+      "name": "AliExpress 官方网站",
+      "url": "http://aliexpress.com/index.html",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "中国",
+      "sector": "新消费",
+      "company": "AliExpress",
+      "ticker": "",
+      "keywords": [
+        "AliExpress"
       ],
       "enabled": true
     }
