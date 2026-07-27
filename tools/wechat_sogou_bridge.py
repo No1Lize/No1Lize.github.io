@@ -32,6 +32,7 @@ def _status(
     failed: int,
     *,
     error: str | None = None,
+    provider: str = "sogou-weixin",
 ) -> dict[str, Any]:
     result: dict[str, Any] = {
         "id": spec["id"],
@@ -41,7 +42,7 @@ def _status(
         "accepted": accepted,
         "failed": failed,
         "platform": "微信",
-        "discoveryProvider": "sogou-weixin",
+        "discoveryProvider": provider,
     }
     if error:
         result["error"] = error
@@ -68,6 +69,7 @@ def install(wechat: Any) -> None:
         try:
             rows, meta = wechat_sogou_index.discover(spec)
             failures += int(meta.get("failed", 0) or 0)
+            provider = str(meta.get("provider") or "sogou-weixin")
             for row in rows:
                 direct_url = str(row.get("directUrl") or "")
                 if not direct_url or direct_url in seen:
@@ -107,7 +109,7 @@ def install(wechat: Any) -> None:
                     article.get("publishedAt"), max_age_days, crawler
                 ):
                     continue
-                article["wechatDiscoveryProvider"] = "sogou-weixin"
+                article["wechatDiscoveryProvider"] = provider
                 accepted.append(article)
                 seen.add(direct_url)
                 if len(accepted) >= max_items:
@@ -124,6 +126,7 @@ def install(wechat: Any) -> None:
                 len(accepted),
                 failures,
                 error=sogou_error or None,
+                provider=str(meta.get("provider") or "sogou-weixin"),
             )
 
         # Existing Bing/public-index logic remains the conservative fallback.
@@ -140,6 +143,7 @@ def install(wechat: Any) -> None:
                 0,
                 max(1, failures),
                 error=f"Sogou: {sogou_error or 'no verified result'}; fallback: {type(exc).__name__}: {exc}",
+                provider=str(meta.get("provider") or "sogou-weixin"),
             )
 
         if fallback_articles:
@@ -155,7 +159,9 @@ def install(wechat: Any) -> None:
         result["status"] = "error"
         result["failed"] = max(1, int(result.get("failed", 0) or 0), failures)
         result["retainedPrevious"] = True
-        result["discoveryProvider"] = "sogou-weixin+fallback"
+        result["discoveryProvider"] = (
+            f"{meta.get('provider', 'sogou-weixin')}+fallback"
+        )
         result["sogouScanned"] = int(meta.get("scanned", 0) or 0)
         result["sogouResolved"] = int(meta.get("resolved", 0) or 0)
         result["error"] = (
