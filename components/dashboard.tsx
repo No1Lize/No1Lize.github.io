@@ -141,6 +141,8 @@ export function Dashboard({
   ).length;
   const trackingQuality = qualityGate?.trackingQuality;
   const sectorCount = trackedSectors.length;
+  const todayArticleCount = refreshAudit?.todayArticleCount ?? 0;
+  const newArticleCount = refreshAudit?.newArticleCount ?? 0;
   const chinaCount = activeArticles.filter((item) => item.region === "中国").length;
   const usCount = activeArticles.filter((item) => item.region === "美国").length;
   const marketSourceCount = (market: "中国" | "美国") =>
@@ -328,7 +330,15 @@ export function Dashboard({
                 <dd>{sectorCount}</dd>
               </div>
               <div>
-                <dt>数据处理</dt>
+                <dt>今日情报</dt>
+                <dd>{todayArticleCount}</dd>
+              </div>
+              <div>
+                <dt>本轮新增</dt>
+                <dd>{newArticleCount}</dd>
+              </div>
+              <div>
+                <dt>最后成功发布</dt>
                 <dd>{processedAt}</dd>
               </div>
             </dl>

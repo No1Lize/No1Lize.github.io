@@ -102,6 +102,9 @@ const refreshAuditSchema = z.object({
   pipelineCompleted: z.boolean().optional(),
   completedAt: z.string().optional(),
   localDate: z.string().optional(),
+  articleCount: z.number().int().nonnegative().optional(),
+  previousArticleCount: z.number().int().nonnegative().optional(),
+  newArticleCount: z.number().int().nonnegative().optional(),
   latestPublishedAt: z.string().optional(),
   todayArticleCount: z.number().int().nonnegative().optional(),
   todaySourceCount: z.number().int().nonnegative().optional(),
@@ -171,6 +174,9 @@ export function useArticles() {
     queryKey: ["public-articles"],
     queryFn: fetchArticles,
     placeholderData: fallbackPayload,
+    refetchInterval: 5 * 60_000,
+    refetchIntervalInBackground: true,
+    refetchOnWindowFocus: true,
   });
   const payload = query.data ?? fallbackPayload;
   return {

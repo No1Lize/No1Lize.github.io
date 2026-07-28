@@ -3,6 +3,9 @@ export type RefreshAudit = {
   pipelineCompleted?: boolean;
   completedAt?: string;
   localDate?: string;
+  articleCount?: number;
+  previousArticleCount?: number;
+  newArticleCount?: number;
   latestPublishedAt?: string;
   todayArticleCount?: number;
   todaySourceCount?: number;
@@ -15,19 +18,35 @@ export type SnapshotFreshness = {
   stale: boolean;
 };
 
-export function formatTaipeiDate(value: string | Date): string {
+function taipeiParts(value: string | Date) {
   const timestamp = value instanceof Date ? value : new Date(value);
-  if (Number.isNaN(timestamp.getTime())) {
-    return typeof value === "string" ? value.slice(0, 10) : "";
-  }
+  if (Number.isNaN(timestamp.getTime())) return null;
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Taipei",
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
   }).formatToParts(timestamp);
-  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return Object.fromEntries(parts.map((part) => [part.type, part.value]));
+}
+
+export function formatTaipeiDate(value: string | Date): string {
+  const values = taipeiParts(value);
+  if (!values) {
+    return typeof value === "string" ? value.slice(0, 10) : "";
+  }
   return `${values.year}-${values.month}-${values.day}`;
+}
+
+export function formatTaipeiDateTime(value: string | Date): string {
+  const values = taipeiParts(value);
+  if (!values) {
+    return typeof value === "string" ? value.replace("T", " ").slice(0, 16) : "";
+  }
+  return `${values.year}-${values.month}-${values.day} ${values.hour}:${values.minute}`;
 }
 
 export function getSnapshotFreshness({
@@ -45,7 +64,8 @@ export function getSnapshotFreshness({
   refreshAudit?: RefreshAudit;
   now?: Date;
 }): SnapshotFreshness {
-  const processedAt = formatTaipeiDate(generatedAt);
+  const processedDate = formatTaipeiDate(generatedAt);
+  const processedAt = formatTaipeiDateTime(refreshAudit?.completedAt || generatedAt);
   const today = formatTaipeiDate(now);
 
   if (!isLive) {
@@ -71,9 +91,9 @@ export function getSnapshotFreshness({
   const completedCurrentSnapshot =
     refreshAudit?.pipelineCompleted === true &&
     Boolean(auditDate) &&
-    auditDate === processedAt;
-  const processedToday = processedAt === today;
-  const latestIsProcessedDay = latestPublishedAt === processedAt;
+    auditDate === processedDate;
+  const processedToday = processedDate === today;
+  const latestIsProcessedDay = latestPublishedAt === processedDate;
 
   if (completedCurrentSnapshot || processedToday) {
     if (latestIsProcessedDay) {

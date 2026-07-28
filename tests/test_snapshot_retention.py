@@ -47,6 +47,25 @@ class SnapshotRetentionTest(unittest.TestCase):
         retained = snapshot_retention.retain_latest_articles(rows, capacity=2)
         self.assertEqual([row["id"] for row in retained], ["c", "b"])
 
+    def test_duplicate_canonical_urls_keep_the_newest_record(self) -> None:
+        older = article("older", "2026-07-02", 95)
+        newer = article("newer", "2026-07-03", 70)
+        older["source"]["url"] = (
+            "https://Example.com/news/item/?utm_source=feed&spm=tracking#section"
+        )
+        newer["source"]["url"] = "https://example.com/news/item"
+
+        retained = snapshot_retention.retain_latest_articles(
+            [older, newer],
+            capacity=10,
+        )
+
+        self.assertEqual([row["id"] for row in retained], ["newer"])
+        self.assertEqual(
+            snapshot_retention.canonical_article_url(older),
+            "https://example.com/news/item",
+        )
+
     def test_payload_records_the_formal_retention_policy(self) -> None:
         payload = {
             "schemaVersion": 3,
@@ -67,6 +86,10 @@ class SnapshotRetentionTest(unittest.TestCase):
         self.assertEqual(
             next_payload["snapshotRetention"]["overflowAction"],
             "discard-oldest",
+        )
+        self.assertEqual(
+            next_payload["snapshotRetention"]["deduplicateBy"],
+            "canonical-source-url",
         )
         self.assertEqual(snapshot_retention.validate_retention(next_payload, 2), [])
 

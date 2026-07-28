@@ -5,6 +5,10 @@ When the snapshot reaches its capacity, articles are ordered newest-first by
 ``publishedAt``. Newer records remain in the snapshot and the oldest records
 fall off the tail. Importance and article id provide deterministic tie-breaks
 for records published on the same date.
+
+The retention pass also removes duplicate source URLs. This is intentionally
+run again after a workflow rebase so a concurrent data commit cannot introduce
+one duplicate URL and block publication of an otherwise valid refresh.
 """
 
 from __future__ import annotations
@@ -14,6 +18,7 @@ import json
 from datetime import date
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 try:
     from . import crawl_articles as crawler
@@ -22,9 +27,23 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
-RETENTION_SCHEMA_VERSION = 1
+RETENTION_SCHEMA_VERSION = 2
 RETENTION_STRATEGY = "newest-published-first"
 OVERFLOW_ACTION = "discard-oldest"
+TRACKING_QUERY_KEYS = {
+    "fbclid",
+    "gclid",
+    "igshid",
+    "mc_cid",
+    "mc_eid",
+    "ref",
+    "ref_src",
+    "ref_url",
+    "share_from",
+    "share_source",
+    "share_token",
+    "spm",
+}
 
 
 def _published_ordinal(article: dict[str, Any]) -> int:
@@ -43,14 +62,66 @@ def article_sort_key(article: dict[str, Any]) -> tuple[int, int, str]:
     )
 
 
+def canonical_article_url(article: dict[str, Any]) -> str:
+    """Return a stable URL key without fragments or known tracking parameters."""
+
+    source = article.get("source") if isinstance(article.get("source"), dict) else {}
+    raw_url = str(source.get("url") or "").strip()
+    if not raw_url:
+        return f"id:{str(article.get('id') or '').strip()}"
+
+    try:
+        parts = urlsplit(raw_url)
+    except ValueError:
+        return raw_url.rstrip("/")
+
+    if not parts.scheme or not parts.netloc:
+        return raw_url.rstrip("/")
+
+    filtered_query = sorted(
+        (key, value)
+        for key, value in parse_qsl(parts.query, keep_blank_values=True)
+        if not key.lower().startswith("utm_")
+        and key.lower() not in TRACKING_QUERY_KEYS
+    )
+    path = parts.path or "/"
+    if path != "/":
+        path = path.rstrip("/")
+
+    return urlunsplit(
+        (
+            parts.scheme.lower(),
+            parts.netloc.lower(),
+            path,
+            urlencode(filtered_query, doseq=True),
+            "",
+        )
+    )
+
+
 def retain_latest_articles(
     articles: Iterable[dict[str, Any]],
     capacity: int,
 ) -> list[dict[str, Any]]:
     if capacity <= 0:
         raise ValueError("snapshot capacity must be positive")
-    rows = [article for article in articles if isinstance(article, dict)]
-    return sorted(rows, key=article_sort_key, reverse=True)[:capacity]
+
+    rows = sorted(
+        (article for article in articles if isinstance(article, dict)),
+        key=article_sort_key,
+        reverse=True,
+    )
+    retained: list[dict[str, Any]] = []
+    seen_urls: set[str] = set()
+    for article in rows:
+        canonical_url = canonical_article_url(article)
+        if canonical_url in seen_urls:
+            continue
+        seen_urls.add(canonical_url)
+        retained.append(article)
+        if len(retained) >= capacity:
+            break
+    return retained
 
 
 def retention_metadata(capacity: int) -> dict[str, Any]:
@@ -59,6 +130,7 @@ def retention_metadata(capacity: int) -> dict[str, Any]:
         "strategy": RETENTION_STRATEGY,
         "capacity": capacity,
         "overflowAction": OVERFLOW_ACTION,
+        "deduplicateBy": "canonical-source-url",
         "sortFields": ["publishedAt:desc", "importance:desc", "id:desc"],
     }
 
@@ -88,8 +160,11 @@ def validate_retention(
         article for article in payload.get("articles", []) if isinstance(article, dict)
     ]
     expected = retain_latest_articles(articles, capacity)
+    canonical_urls = [canonical_article_url(article) for article in articles]
     if len(articles) > capacity:
         errors.append(f"articleCount exceeds capacity: {len(articles)} > {capacity}")
+    if len(canonical_urls) != len(set(canonical_urls)):
+        errors.append("articles contain duplicate canonical source URLs")
     if articles != expected:
         errors.append("articles are not ordered by the rolling newest-first policy")
     if int(payload.get("articleCount", -1)) != len(articles):
@@ -136,7 +211,7 @@ def main() -> int:
             {
                 "capacity": args.capacity,
                 "retained": len(next_payload.get("articles", [])),
-                "removedOldest": removed,
+                "removedOldestOrDuplicate": removed,
                 "strategy": RETENTION_STRATEGY,
             },
             ensure_ascii=False,

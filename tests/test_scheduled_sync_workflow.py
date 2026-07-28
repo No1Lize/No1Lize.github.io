@@ -15,6 +15,16 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("cancel-in-progress: false", text)
         self.assertNotIn("cancel-in-progress: true", text)
 
+    def test_schedule_avoids_the_top_of_the_hour(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn('cron: "17 4-22/2 * * *"', text)
+        self.assertIn('timezone: "Asia/Taipei"', text)
+        self.assertNotIn('cron: "0 4-22/2 * * *"', text)
+
+    def test_tracking_admin_writes_do_not_start_a_full_refresh(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertNotIn("      - config/user_tracking.json", text)
+
     def test_full_refresh_covers_required_source_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         required_commands = (
