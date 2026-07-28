@@ -1,0 +1,44 @@
+name: Diagnose published refresh audit
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/diagnose-refresh-audit.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Print published audit summary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from tools.snapshot_retention import canonical_article_url
+
+          payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
+          articles = [row for row in payload.get('articles', []) if isinstance(row, dict)]
+          urls = [canonical_article_url(row) for row in articles]
+          print(json.dumps({
+              'generatedAt': payload.get('generatedAt'),
+              'articleCount': payload.get('articleCount'),
+              'refreshAudit': payload.get('refreshAudit'),
+              'snapshotRetention': payload.get('snapshotRetention'),
+              'canonicalUrlCount': len(set(urls)),
+              'duplicateCanonicalUrls': len(urls) - len(set(urls)),
+          }, ensure_ascii=False, indent=2))
+          PY
+          echo '=== PAGES RUNS ==='
+          gh run list --workflow pages.yml --limit 8 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle
