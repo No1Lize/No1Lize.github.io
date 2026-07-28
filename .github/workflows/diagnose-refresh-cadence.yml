@@ -24,7 +24,7 @@ jobs:
           gh run list \
             --workflow scheduled-sync.yml \
             --limit 40 \
-            --json databaseId,runNumber,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
             > diagnostics/runs.json
           python - <<'PY'
           import json
@@ -40,7 +40,7 @@ jobs:
           PY
           if [ -s diagnostics/latest-run-id.txt ]; then
             run_id=$(cat diagnostics/latest-run-id.txt)
-            gh run view "$run_id" --json databaseId,runNumber,status,conclusion,event,createdAt,startedAt,updatedAt,url,jobs > diagnostics/latest-run.json
+            gh run view "$run_id" --json databaseId,number,status,conclusion,event,createdAt,startedAt,updatedAt,url,jobs > diagnostics/latest-run.json
           fi
       - uses: actions/upload-artifact@v4
         with:
