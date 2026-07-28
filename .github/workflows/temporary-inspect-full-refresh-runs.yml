@@ -1,38 +1,32 @@
 name: Temporary inspect full refresh runs
 
-# Fix one test fixture on the dedicated branch. Never merge this workflow.
+# Capture the latest one-time wiring failure. Never merge this workflow.
 on:
   pull_request:
     paths:
       - ".github/workflows/temporary-inspect-full-refresh-runs.yml"
 
 permissions:
-  contents: write
+  contents: read
+  actions: read
 
 jobs:
-  fix-installer-fixture:
+  inspect-wiring-failure:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: fix/bytedance-doubao-volcengine-official-sources-20260728
-      - name: Mark the mock original as not installed
+      - name: Download latest failed log tail
         run: |
           set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          path=Path('tests/test_bytedance_official_sources.py')
-          text=path.read_text(encoding='utf-8')
-          old='        original = Mock(return_value=([{"id": "generic"}], {"status": "ok"}))\n        module = SimpleNamespace(crawl_company=original)\n'
-          new='        original = Mock(return_value=([{"id": "generic"}], {"status": "ok"}))\n        original._bytedance_structured_sources = False\n        module = SimpleNamespace(crawl_company=original)\n'
-          if old not in text:
-              raise SystemExit('fixture marker missing')
-          path.write_text(text.replace(old,new,1),encoding='utf-8')
-          PY
-          python -m unittest -v tests.test_bytedance_official_sources
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add tests/test_bytedance_official_sources.py
-          git commit -m 'test: fix structured source installer fixture'
-          git push origin HEAD:fix/bytedance-doubao-volcengine-official-sources-20260728
+          gh run view 30318349345 --log-failed > failed.log
+          tail -n 300 failed.log | tee failed-tail.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bytedance-wiring-failure-3
+          path: |
+            failed.log
+            failed-tail.log
+          if-no-files-found: error
