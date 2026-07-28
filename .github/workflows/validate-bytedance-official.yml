@@ -1,0 +1,50 @@
+name: Validate ByteDance official sources
+
+on:
+  pull_request:
+    paths:
+      - "tools/bytedance_official_sources.py"
+      - "tools/validate_bytedance_official_live.py"
+      - "tools/eastmoney_transport.py"
+      - "config/official_company_sources.json"
+      - "lib/catalog-data.ts"
+      - "tests/test_bytedance_official_sources.py"
+      - ".github/workflows/validate-bytedance-official.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile directed source adapters
+        run: |
+          python -m py_compile \
+            tools/bytedance_official_sources.py \
+            tools/validate_bytedance_official_live.py
+      - name: Run directed source unit tests
+        run: python -m unittest -v tests.test_bytedance_official_sources
+      - name: Require original official articles
+        id: live
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          mkdir -p diagnostics
+          python tools/validate_bytedance_official_live.py \
+            --output diagnostics/bytedance-official-live-report.json \
+            2>&1 | tee diagnostics/live-validation.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bytedance-official-live-report
+          path: diagnostics
+          if-no-files-found: error
+      - name: Enforce live validation result
+        if: steps.live.outcome != 'success'
+        run: exit 1
