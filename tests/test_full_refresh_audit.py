@@ -35,6 +35,7 @@ class FullRefreshAuditTest(unittest.TestCase):
     def test_prepare_and_finalize_publish_new_article_count(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "articles.json"
+            baseline_path = Path(tmp) / "refresh-baseline.json"
             path.write_text(
                 json.dumps(
                     {
@@ -49,23 +50,42 @@ class FullRefreshAuditTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            with patch.object(prepare_full_refresh, "ARTICLES_PATH", path):
+            with (
+                patch.object(prepare_full_refresh, "ARTICLES_PATH", path),
+                patch.object(prepare_full_refresh, "BASELINE_PATH", baseline_path),
+            ):
                 self.assertEqual(prepare_full_refresh.main(), 0)
 
             prepared = json.loads(path.read_text(encoding="utf-8"))
-            self.assertEqual(prepared["_refreshBaseline"]["articleCount"], 2)
+            baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+            self.assertEqual(baseline["articleCount"], 2)
+            self.assertNotIn("_refreshBaseline", prepared)
             self.assertEqual(prepared["sourceStatus"], [])
 
-            prepared["articles"].append(article("new-c"))
-            prepared["articleCount"] = 3
+            # Simulate a crawler rebuilding the public payload from its known
+            # schema fields. The external baseline must remain available.
+            prepared = {
+                "schemaVersion": prepared["schemaVersion"],
+                "generatedAt": "2026-07-28T01:00:00Z",
+                "articleCount": 3,
+                "articles": [
+                    *prepared["articles"],
+                    article("new-c"),
+                ],
+                "sourceStatus": [],
+                "qualityGate": {"passed": True},
+            }
             path.write_text(json.dumps(prepared), encoding="utf-8")
 
-            with patch.object(finalize_full_refresh, "ARTICLES_PATH", path):
+            with (
+                patch.object(finalize_full_refresh, "ARTICLES_PATH", path),
+                patch.object(finalize_full_refresh, "BASELINE_PATH", baseline_path),
+            ):
                 self.assertEqual(finalize_full_refresh.main(), 0)
+                self.assertFalse(baseline_path.exists())
                 self.assertEqual(finalize_full_refresh.main(), 0)
 
             finalized = json.loads(path.read_text(encoding="utf-8"))
-            self.assertNotIn("_refreshBaseline", finalized)
             self.assertEqual(finalized["refreshAudit"]["previousArticleCount"], 2)
             self.assertEqual(finalized["refreshAudit"]["newArticleCount"], 1)
             self.assertEqual(finalized["refreshAudit"]["articleCount"], 3)
