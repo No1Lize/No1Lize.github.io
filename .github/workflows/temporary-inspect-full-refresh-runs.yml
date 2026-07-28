@@ -1,32 +1,84 @@
 name: Temporary inspect full refresh runs
 
-# Capture the focused ByteDance production publish failure.
+# One-time focused production publish for the three merged official sources.
 on:
   pull_request:
     paths:
       - ".github/workflows/temporary-inspect-full-refresh-runs.yml"
 
 permissions:
-  contents: read
-  actions: read
+  contents: write
+  actions: write
 
 jobs:
-  inspect-focused-publish-failure:
+  publish-bytedance-official-sources:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20
     env:
       GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
     steps:
-      - name: Download failed log
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Publish only ByteDance, Doubao and Volcengine batches
         run: |
           set -euo pipefail
-          gh run view 30319618795 --log-failed > failed.log
-          tail -n 260 failed.log | tee failed-tail.log
-      - uses: actions/upload-artifact@v4
-        with:
-          name: bytedance-focused-publish-failure
-          path: |
-            failed.log
-            failed-tail.log
-          if-no-files-found: error
+          export PYTHONPATH="$PWD"
+          cat > /tmp/publish_bytedance_sources.py <<'PY'
+          from tools import bytedance_official_sources as structured
+          from tools import crawl_official_companies as official
+
+          selected = [
+              spec
+              for spec in official.load_registry()
+              if spec.slug in structured.SUPPORTED_SLUGS
+          ]
+          missing = structured.SUPPORTED_SLUGS - {spec.slug for spec in selected}
+          if missing:
+              raise SystemExit(f"missing directed official specs: {sorted(missing)}")
+          official.load_registry = lambda *args, **kwargs: selected
+          structured.install(official)
+          raise SystemExit(official.main())
+          PY
+
+          publish_and_validate() {
+            python /tmp/publish_bytedance_sources.py
+            python tools/validate_bytedance_official_live.py \
+              --output /tmp/bytedance-live-report.json
+            python tools/crawl_articles.py --validate-only
+            python -m unittest -v \
+              tests.test_bytedance_official_sources \
+              tests.test_official_company_registry_production
+          }
+
+          publish_and_validate
+          if git diff --quiet -- public/data/articles.json; then
+            echo 'Directed official source data already current.'
+            gh workflow run pages.yml --ref main
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/data/articles.json
+          git commit -m 'data: publish ByteDance directed official sources'
+
+          for attempt in 1 2 3; do
+            git pull --rebase -X theirs origin main
+            publish_and_validate
+            git add public/data/articles.json
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+          gh workflow run pages.yml --ref main
