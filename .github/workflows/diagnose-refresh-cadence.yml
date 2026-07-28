@@ -17,23 +17,8 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Extract publication failure and current state
+      - name: Print final publication failure tail
         run: |
           set -euo pipefail
-          mkdir -p diagnostics
-          gh run view 30319309292 --log-failed > diagnostics/full-failed.log
-          python - <<'PY' | tee diagnostics/error-lines.txt
-          from pathlib import Path
-          text=Path('diagnostics/full-failed.log').read_text(encoding='utf-8',errors='replace').splitlines()
-          needles=('fatal:', 'error:', 'conflict', 'rejected', 'failed', 'exit code', 'cannot ', 'could not', 'would be overwritten', 'non-fast-forward')
-          matches=[line for line in text if any(n in line.casefold() for n in needles)]
-          for line in matches[-100:]:
-              print(line)
-          PY
-          gh run view 30341476399 --json databaseId,number,status,conclusion,event,createdAt,startedAt,updatedAt,url,jobs \
-            | tee diagnostics/current-run.json
-      - uses: actions/upload-artifact@v4
-        with:
-          name: refresh-publication-error
-          path: diagnostics
-          if-no-files-found: error
+          gh run view 30319309292 --log-failed > failed.log
+          tail -n 75 failed.log
