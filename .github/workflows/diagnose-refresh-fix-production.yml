@@ -1,0 +1,36 @@
+name: Diagnose refresh fix production
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/diagnose-refresh-fix-production.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Collect production runs
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostics
+          gh run list --workflow scheduled-sync.yml --limit 12 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
+            > diagnostics/refresh-runs.json
+          gh run list --workflow pages.yml --limit 12 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
+            > diagnostics/pages-runs.json
+          cat diagnostics/refresh-runs.json
+          cat diagnostics/pages-runs.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: refresh-fix-production-runs
+          path: diagnostics
+          if-no-files-found: error
