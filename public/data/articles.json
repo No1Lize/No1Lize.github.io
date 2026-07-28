@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-28T11:12:50+00:00",
-  "articleCount": 1171,
+  "generatedAt": "2026-07-28T14:30:53+00:00",
+  "articleCount": 1166,
   "articles": [
     {
       "id": "user-source-source-track-rcvvao-8946d624570cc389",
@@ -20427,46 +20427,6 @@
       ]
     },
     {
-      "id": "user-track-wechat-aitopics-ai-686c95754f414c83",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "Claude Agent突然大更新！狂塞500个技能，网友直呼疯狂",
-      "summary": "新智元报道 过去45天，Anthropic几乎没停过手。 Fable 5和Mythos 5同时落地，Sonnet 5降价抢市场，Claude Code几乎日更。 昨天Cowork刚迭代完，今天Anthropic又在托管智能体平台（CMA）上一口气推出了六项更新： 技能上限从20拉到500： 一个会话装下整座企业知识库 思考力度五档调速 ：简单路由省token，深度推理拉满 种子会话一步创建： 直接带50条初始事件，冷启动归零 子agent实时流下探到线程级： 每个子agent跑到哪、想到哪，实时可见 7种新webhook覆盖环境与记忆存储全生命周期： 轮询可以退环境了 agent更新版本字段变可选： 单流程省掉版本管理开销 一个会话能挂500个技能、跑一整座企业知识库，Anthropic这是要给agent装操作系统啊！ 技能上限暴涨到500 一个会话装下整个业务部门 CMA的技能（Skills）是给agent注入专业指令的知识包，之前上限只有20个。 然而，一个金融客服agent，光覆盖开户、KYC、反洗钱、投诉处理、合规免责、多语言切换就七八个了。再加上监管差异和AB测试版本，直接撞",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e42e3c659cbf500bbb23161900f12285eb6207346ced57652e7be6617d3d1eb040ca2fe8d&idx=2&mid=2652714514&sn=821d99b44f0440868bc13b3e16dbd9da",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "anthropic",
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Anthropic",
-        "Google"
-      ],
-      "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "Agent",
-        "AI agent",
-        "Claude",
-        "ChatGPT",
-        "API",
-        "Claude Agent",
-        "能力"
-      ],
-      "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-track-track-1ccjq49-google-us-13f30e464e13726e",
       "sourceId": "user-track-track-1ccjq49-google-us",
       "title": "Have Your Say: Public Comment Open for Updated Nevada County RV Housing Ordinance - Nevada County (.gov)",
@@ -24726,43 +24686,6 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-aitopics-ai-162df1f8e6738c19",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "GPT-5.6-Sol在网络攻防能力上，超越了Mythos！开源模型也排好了",
-      "summary": "新智元报道 GPT-5.6-Sol 的攻防能力超越了 Claude Mythos 5！ 英国 AI 安全研究所（AISI）7 月 17 日发布了一份评估报告，第一次公开量化了开源 AI 模型与闭源前沿模型在网络攻击能力上的差距：4 到 7 个月。 https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber 去年同类内部测试中，这个差距是 6 到 10 个月。 防御窗口在收缩，而攻击前沿在加速。 今年 4 月，Mythos Preview 和 GPT-5.5 在 AISI 的评估中制造了自 2023 年开始测试以来最大的一次网络攻击能力飞跃，多国政府随即发出警告。 开源模型还没有复现这次跳跃，但它们追赶的脚步比去年更快了。 4 到 7 个月：怎么测的，差在哪 AISI 用两套体系评估模型的网络攻击能力。 第一套是 70 项窄任务，覆盖漏洞研究、逆向工程、Web 渗透、密码学四个方向，按难度分四级，从「有技术背景的非专业人士」到「十年以上经验的专家」。 第二",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-21",
-      "importance": 76,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e4067c659c97106ef7b456b39dbe0f79ad324c4c5a61472ef6f51127fa83a01e17cd3efd1&idx=2&mid=2652714134&sn=7192df80da4021f067f45495a8a71098",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [
-        "Anthropic",
-        "DeepSeek",
-        "月之暗面",
-        "智谱AI"
-      ],
-      "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "Claude",
-        "gpt-5",
-        "Kimi K3",
-        "能力"
-      ],
-      "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-track-wechat-aitechuang-robotics-666b55df22840843",
       "sourceId": "user-track-wechat-aitechuang-robotics",
       "title": "李飞飞高徒黄文龙：具身智能需要一次「脑内搜索」革命 | RSS 2026",
@@ -27172,51 +27095,6 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-aitopics-ai-5ec382030539814e",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "WAIC华山论剑，罕见AI新共识：机器人ChatGPT时刻，最快两年！",
-      "summary": "新智元报道 上海，WAIC 2026。 核心官方分论坛之一、具身智能的「华山论剑」智启具身论坛，今日终于开场。 Physical Intelligence、Genesis AI、Dyna Robotics、Sunday Robotics等海外明星机构，与智元、清华大学、腾讯Robotics X等学术与产业力量同台，一众具身智能核心人物悉数到场。 他们把各自的模型、数据和训练体系摆上桌面。表面看，大家都在追逐「通用机器人」；真正把几份技术路线叠在一起，却是刀光剑影。 谁都承认，具身智能正在逼近临界点。但对「最后一公里究竟该怎么走」，各有绝招。 具身智能的「最后一公里」，各有奇招 先亮战绩，再亮主张。五家最硬的成果和一句话立场摆出来，你会发现连「墙在哪」都没谈拢。 智元机器人 手握GO-2（LIBERO基准98.7%刷新SOTA）、世界模型GE-Sim 2.0（WorldArena全球第一）、龙旗南昌产线稳定运行3个月、成功率99.99%。智元机器人的姚卯青直言，模型决定起点，数据定义终局——靠全栈飞轮硬冲数据、表征、闭环三道墙。 清华大学计算机副研究员苏航，聚焦可恢复性——真正的智能不是",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-19",
-      "importance": 76,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e4743c659ce55acf5d02477e7b25f60710c73da9d02a086da045b79e524e7c7b4f1c68da8&idx=2&mid=2652713906&sn=4b4f0ab130e460a944473f4d1fcb16e0",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "openai",
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [
-        "OpenAI"
-      ],
-      "mentionedPeople": [
-        "Physical Intelligence",
-        "Sunday Robotics",
-        "Dyna Robotics",
-        "学计算机副",
-        "研究",
-        "始人兼首席"
-      ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "基础模型",
-        "ChatGPT",
-        "强化学习",
-        "API",
-        "SOTA",
-        "能力"
-      ],
-      "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-source-source-track-c6s6ma-d63d5e3cc453f29a",
       "sourceId": "user-source-source-track-c6s6ma",
       "title": "红杉高瓴启明一起投了个AI新能源供应商丨投融周报",
@@ -27515,46 +27393,6 @@
         "材料"
       ],
       "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page"
-    },
-    {
-      "id": "user-track-wechat-aitopics-ai-ebee7c609ed7028c",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "ChatGPT终于能「搜自己」！攒了近4年的对话，一键翻出",
-      "summary": "新智元报道 ChatGPT推出快满4年了。 这4年，你跟它聊过多少句话、传过多少张图、开过多少个项目，大概连自己也数不清。 可有一个痛点，你一定记得：想翻回三个月前那次对话，基本得靠运气。 侧边栏那个搜索框约等于摆设，会话一多，搜旧对话近乎不可能。 在OpenAI开发者社区，苦这个旧搜索久矣： 终于能找到那条消息了，为什么拖了这么久；那个老搜索栏，从来就没好用过；会话一多，搜旧对话就变得不可能；翻旧对话简直成了噩梦…… 这不是零星几句抱怨。 ChatGPT什么都能生成，可是你写过的稿、讨论过的代码、生成过的图、囤过的资料，随着对话越堆越多，「翻记录」越来越像大海捞针，侧边栏拉到手酸，也未必找得到三周前那次关键讨论。 而这一次，变了。 7月14日，OpenAI给ChatGPT上线了一套全新的统一搜索，把你在ChatGPT里的所有东西，塞进了一个统一入口：历史聊天、项目、上传的文档、生成的图片，全部能搜。 Web、iOS、Android三端同步，从免费版到企业版，全球所有计划同步开放。 真去把那几年的「存货」翻一遍你就会反应过来：ChatGPT第一次能「搜自己」了。 而这，绝不是补了个搜索",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-18",
-      "importance": 76,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e47c0c659ced69247032f90f9a3afede1865b86c0b47a74b996ce83ad164f5a9e10e1acad&idx=2&mid=2652713777&sn=2ff907965d3c8535cb3dff432c8b17b9",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "openai",
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Anthropic",
-        "Google"
-      ],
-      "mentionedPeople": [
-        "Sam Altman"
-      ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "Claude",
-        "ChatGPT",
-        "gpt-5",
-        "Gemini"
-      ],
-      "wechatAccountConfigId": "aitopics",
       "wechatContentMode": "original-page"
     },
     {
@@ -27885,41 +27723,6 @@
       "trackSlugs": [
         "robotics"
       ]
-    },
-    {
-      "id": "user-track-wechat-aitopics-ai-444d5895e17ae348",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "同一个链接，你和同事打开的不一样：Claude让AI页面活了",
-      "summary": "新智元报道 站会还没开始，故障已经快排查完了。 一位Anthropic工程师在开会前发起一次排查，Claude Code扒完日志，直接甩出一份Artifact：时间线、可疑提交、错误率曲线，全在上面。 她顺手把链接丢进群里。 到站会真正开始时，Claude已经跟着调查进展，把这个页面重新发布了两次。 所有人打开的是同一个视图、同一份上下文，谁也不用再追着问「你给我讲讲智能体到底查到了啥」。 注意，这位工程师分享的，并不是一张静态页面，而是一个能够自动更新、可交互的页面。 站会那一幕，靠的是Claude Code今年6月发布的Artifacts。7月16日，Anthropic又给它加了关键一手： Artifacts可以调用MCP连接器了。 按照官方的说法：你搭出来的仪表盘和应用，能给每个打开它的人，按需去取数据、执行操作。 同一个页面，面对不同的查看者，各自拉各自的数据，干各自权限内的活。 目前Pro、Max、Team、Enterprise四档都能用，唯一的限制是：公开分享出去的Artifact，享受不到这套能力。 看上去只是多了个数据接口，但真正的变化是过去AI生成的页面是死的，现在它",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-07-17",
-      "importance": 76,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e4660c659cf76eefc6bee872a0d9d5553d52c1a6e9791ccfc25b858ac0ebebb7925b35272&idx=2&mid=2652713617&sn=430f87167c36bbff17c30333e0b77383",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "anthropic",
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [
-        "Anthropic"
-      ],
-      "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "Claude",
-        "MCP",
-        "API",
-        "能力"
-      ],
-      "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page"
     },
     {
       "id": "user-source-source-ubergizmo-3948b548a832e3e2",
@@ -29155,47 +28958,6 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-aitopics-ai-46b964a6ef3866c4",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "全网骂Claude变笨，Anthropic下场揭秘：坑你的不是模型",
-      "summary": "新智元报道 【新智元导读】 换更大的模型就等于更聪明？这可能是Claude Code用户最深的误会。很多人为此一路换到最贵的Fable，近日，Anthropic，亲手澄清了这个误区。 你有没有过这种时刻：Claude Code写代码写砸了，第一反应，就是赶紧换个更强的模型。 但这一招，很多时候并不管用，甚至是在白花钱。 近日，Anthropic官方发了一篇长文专门来讲这件事。 起因是太多人把Claude Code里的两个选项搞混了： 一个是模型选择（Model），一个是努力度（Effort）。 过去，大家对这两个选项的理解都很简单：换更大的模型，AI就更聪明；把Effort调高，无非是让AI多想一会儿。 而就在今年3月，这个误会还惹出了一场不小的混乱。 当时，不少开发者发现，手里的Claude Code突然「变笨」了。该读的文件不读，该跑的测试不跑，任务干到一半就撂挑子，反过来问你要更多信息。 于是，GitHub上骂声一片。 最狠的一刀来自AMD的AI负责人Stella Laurenzo。 她在GitHub上翻出6852个会话的日志，实测Claude的思考量比2月之前掉了67%，撂下一",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-07-12",
-      "importance": 76,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e5901c659d01793446b2aa6ea3f0db1c29151c5dcc698eb18d88bc01ff9d882322e12c55a&idx=2&mid=2652712432&sn=b54298542d95ea1f2c6b5ab8d0a17c04",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "anthropic",
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [
-        "Anthropic"
-      ],
-      "mentionedPeople": [
-        "Stella Laurenzo"
-      ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "Agent",
-        "Claude",
-        "Agents",
-        "Multi-Agent",
-        "API",
-        "AMD",
-        "能力"
-      ],
-      "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-track-wechat-aitechuang-ai-48c88454c14b17b8",
       "sourceId": "user-track-wechat-aitechuang-ai",
       "title": "独家｜哈工大98年教授杨朔创业，要让机器人长出\"触觉大脑\"",
@@ -29861,42 +29623,6 @@
       "wechatSectorReassignedFrom": "生物科技"
     },
     {
-      "id": "user-track-wechat-deeptechchina-biotech-b2185c32a1575652",
-      "sourceId": "user-track-wechat-deeptechchina-biotech",
-      "title": "Anthropic也要造芯片了，还挖了OpenAI的芯片工程师",
-      "summary": "继 OpenAI 发布首款自研 AI 芯片之后 ，Anthropic 也在加快向芯片领域延伸。 据 The Information 报道， Anthropic 正在与三星接洽，讨论由后者参与制造一款定制 AI 芯片。 双方目前仍处于探索阶段，Anthropic 尚未确定芯片的具体用途、性能指标，也没有明确它将如何集成到服务器和数据中心。 部分媒体称，双方的讨论涉及三星的 2 纳米制程和先进封装能力。不过，Anthropic 和三星均未确认这些细节。面对媒体询问，Anthropic 也没有进一步表态， 只强调包含谷歌、亚马逊和英伟达芯片在内的多元化硬件架构仍将是其算力战略的重要组成部分。 Anthropic一直在扩大芯片供应链 Anthropic 过去给外界的印象，主要是一家专注于模型研究和 AI 安全的公司。但实际上，它与芯片底层的联系早已不止于采购算力。 2024 年，Anthropic 宣布深化与亚马逊的合作。亚马逊云科技（AWS）成为其主要云服务和训练合作伙伴，亚马逊对 Anthropic 的总投资则增加至 80 亿美元。 双方的合作并不是简单地把 Claude 部署到 AWS",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-04",
-      "importance": 76,
-      "source": {
-        "name": "DeepTech深科技",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777a9cab00020dc7056cb04a65c7aaadb7181a179a4ba5682421e00707f6c39babea0489a83&idx=1&mid=2649800147&sn=b9b2844a91662aaafa75ce7779d6c6bd",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "胡莉花"
-      ],
-      "wechatAccount": "DeepTech深科技",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Anthropic"
-      ],
-      "mentionedPeople": [
-        "Clive Chan",
-        "Hock Tan",
-        "Sam Altman",
-        "Greg Brockman"
-      ],
-      "matchedTrackingTerms": [],
-      "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "生物科技"
-    },
-    {
       "id": "official-landspace-2f4bc926d2e24d39",
       "sourceId": "official-landspace",
       "title": "蓝箭航天党委获评“全国先进基层党组织”称号",
@@ -29917,6 +29643,86 @@
       "trackSlugs": [
         "space"
       ]
+    },
+    {
+      "id": "user-track-wechat-aitopics-ai-87902e6d44d3b266",
+      "sourceId": "user-track-wechat-aitopics-ai",
+      "title": "卷不赢模型，Meta改行「算力包租公」！一夜炸崩美股AI链",
+      "summary": "新智元报道 【新智元导读】 模型卷不过，Meta 反手开门卖自家算力，直接抢 AWS 的饭碗——昔日金主 CoreWeave、Nebius 一夜被炸崩 17%。 就在刚刚，Meta 正式被曝出一个足以搅动整个云计算格局的大动作—— 它要亲自下场卖算力了。 据彭博社报道，Meta 正在筹建一项名为「Meta Compute」的云基础设施业务，对外出售 AI 算力和模型访问权限。 翻译成人话就是： 这家社交巨头，要端着自己的数据中心，直接冲进 AWS、微软 Azure 和谷歌云的地盘，跟三大云霸主正面开战。 消息一出，资本市场当场用真金白银投了票。 Meta 股价一度跳涨 10 多点，冲到 627 美元，创下 4 月以来最大盘中涨幅，市值一口气暴增近 980 亿美元。 而另一边，专门靠卖算力吃饭的 CoreWeave 暴跌 14%，在纽约上市的荷兰数据中心公司 Nebius 崩了 17%。 芯片股也没能幸免——英伟达、博通、AMD 全线飘绿。 一个巨头要进场，一群卖铲子的先慌了。 最讽刺的是：CoreWeave 手里握着 Meta 的 210 亿美元合同——合作伙伴秒变最大竞争对手。 市场",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-02",
+      "importance": 76,
+      "source": {
+        "name": "新智元",
+        "url": "https://mp.weixin.qq.com/s/HjTUkRf_ZXdMfBOGkIUeyw",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "ASI启示录"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "xAI",
+        "英伟达"
+      ],
+      "mentionedPeople": [
+        "Santosh Janardhan",
+        "Daniel Gross",
+        "Dina Powell McCormick"
+      ],
+      "matchedTrackingTerms": [
+        "Grok",
+        "API",
+        "AMD",
+        "Meta"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-78857392e1eaf0bc",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "Loop世界模型论文登顶Hugging Face，来自中国一家初创，周鸿祎陆奇都投了",
+      "summary": "允中 发自 凹非寺 量子位 | 公众号 QbitAI Prompt还没退场，Loop已经开始接管AI叙事。 这两周，硅谷开发者圈最热的词之一，是 Loop Engineering 。 它讲的是一件很“Agent时代”的事：别再手动一轮轮prompt模型了，去设计一个循环系统，让AI自己执行、检查、修正、继续跑，直到任务完成。 传统模式以prompt为核心，现在开始转向以 工作流 为核心，这也是它突然爆红的原因。 而就在大家热议“怎么让AI自己跑起来”时，另一条更硬的线也在快速升温： Looped World Models（循环世界模型） ，简称 LoopWM 。 如果说Loop Engineering解决的是“AI怎么持续干活”，那LoopWM更像是在回答一个上限更高的问题： AI在持续干活时，能不能做到持续理解、修正、推演它所面对的世界。 这也是为什么，它虽然名字里也有“Loop”，但其展现出的技术含金量和想象空间，明显不是一个量级。 它登上了 Hugging Face Papers当日 Top1 ，现已进入了AI社区更广泛的公共讨论。 Loop Engineering为什么突然火了",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-01",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6804dfade112048d76394540f337d27817c96252271a35f45a7a2b9a8d82f96cbe0be301&idx=2&mid=2247901046&sn=da7bf1ec203f115bc3c7ead358b109aa",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "Anthropic",
+        "Google"
+      ],
+      "mentionedPeople": [
+        "李飞飞",
+        "Addy Osmani",
+        "陆弘远"
+      ],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "机器人",
+        "世界模型"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-track-wechat-qbitai-robotics-0c52f993002fa373",
@@ -43107,9 +42913,9 @@
       "id": "user-track-wechat-aitopics-ai",
       "name": "新智元",
       "status": "partial",
-      "scanned": 38,
-      "accepted": 6,
-      "failed": 10,
+      "scanned": 9,
+      "accepted": 1,
+      "failed": 7,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -43118,14 +42924,16 @@
     {
       "id": "user-track-wechat-aitopics-robotics",
       "name": "新智元",
-      "status": "partial",
-      "scanned": 38,
-      "accepted": 1,
-      "failed": 9,
+      "status": "error",
+      "scanned": 9,
+      "accepted": 0,
+      "failed": 7,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-biotech",
@@ -43184,10 +42992,10 @@
     {
       "id": "user-track-wechat-deeptechchina-biotech",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "ok",
       "scanned": 15,
-      "accepted": 2,
-      "failed": 1,
+      "accepted": 1,
+      "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -43375,7 +43183,7 @@
       "status": "partial",
       "scanned": 19,
       "accepted": 6,
-      "failed": 5,
+      "failed": 6,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -43386,8 +43194,8 @@
       "name": "量子位",
       "status": "partial",
       "scanned": 21,
-      "accepted": 3,
-      "failed": 5,
+      "accepted": 4,
+      "failed": 7,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -44122,15 +43930,15 @@
     "retainedPreviousSourceCount": 91
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-28T11:12:50+00:00",
+    "generatedAt": "2026-07-28T14:30:53+00:00",
     "configuredSources": 34,
-    "successfulSources": 11,
-    "acceptedArticles": 41,
-    "fullTextArticles": 41,
+    "successfulSources": 10,
+    "acceptedArticles": 35,
+    "fullTextArticles": 35,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 23,
-    "mentionedCompanyLinks": 58,
-    "mentionedPeopleLinks": 94
+    "retainedSources": 24,
+    "mentionedCompanyLinks": 49,
+    "mentionedPeopleLinks": 87
   }
 }
