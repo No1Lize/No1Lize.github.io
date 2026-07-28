@@ -1,140 +1,29 @@
 name: Temporary inspect full refresh runs
 
-# One-time structured edit on the ByteDance source branch. Never merge this workflow.
+# Validate PR 98 branch with live official sources and the complete Python suite.
 on:
   pull_request:
     paths:
       - ".github/workflows/temporary-inspect-full-refresh-runs.yml"
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  wire-bytedance-official-sources:
+  validate-bytedance-official-sources:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
           ref: fix/bytedance-doubao-volcengine-official-sources-20260728
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Update catalog, registry, tracking and production wiring
+      - name: Compile and run focused tests
         run: |
-          set -euo pipefail
-          python - <<'PY'
-          from pathlib import Path
-          import json
-
-          catalog_path = Path('lib/catalog-data.ts')
-          catalog = catalog_path.read_text(encoding='utf-8')
-          marker = 'export const companies: Company[] = [\n'
-          entries = (
-              '  { slug:"bytedance", name:"字节跳动", englishName:"ByteDance", region:"中国", sector:"AI / AGI", stage:"成长期", status:"运营中", founded:"2012", headquarters:"北京", summary:"运营全球内容平台、企业协作工具、人工智能产品与技术服务。", product:"抖音、今日头条、飞书、豆包、火山引擎及相关技术平台。", source:official("字节跳动","https://www.bytedance.com/zh/"), confidence:0.99 },\n'
-              '  { slug:"doubao", name:"豆包", englishName:"Doubao", region:"中国", sector:"AI / AGI", stage:"成长期", status:"运营中", summary:"字节跳动旗下人工智能品牌，面向个人与开发者提供多模态模型和智能应用。", product:"豆包智能助手、Doubao Seed 基础模型及相关多模态能力。", source:official("豆包","https://www.doubao.com/about"), confidence:0.98 },\n'
-              '  { slug:"volcengine", name:"火山引擎", englishName:"Volcengine", region:"中国", sector:"AI / AGI", stage:"成长期", status:"运营中", summary:"字节跳动旗下企业级云与人工智能服务平台。", product:"火山方舟、云基础设施、数据智能与多媒体技术服务。", source:official("火山引擎","https://www.volcengine.com/"), confidence:0.98 },\n'
-          )
-          if 'slug:"bytedance"' not in catalog:
-              if marker not in catalog:
-                  raise SystemExit('catalog insertion marker missing')
-              catalog = catalog.replace(marker, marker + entries, 1)
-              catalog_path.write_text(catalog, encoding='utf-8')
-
-          registry_path = Path('config/official_company_sources.json')
-          registry = json.loads(registry_path.read_text(encoding='utf-8'))
-          rows = registry['companies']
-          additions = [
-              {
-                  'slug': 'bytedance',
-                  'name': '字节跳动',
-                  'region': '中国',
-                  'sector': 'AI / AGI',
-                  'homepage': 'https://www.bytedance.com/zh/',
-                  'newsUrls': [
-                      'https://www.bytedance.com/zh/news',
-                      'https://www.bytedance.com/api/articles?language=1&limit=18&offset=0',
-                  ],
-                  'aliases': ['ByteDance', '抖音集团'],
-                  'articleUrlPatterns': [r'^https://www\\.bytedance\\.com/zh/news/[^/]+$'],
-                  'maxItems': 6,
-                  'maxAgeDays': 3650,
-              },
-              {
-                  'slug': 'doubao',
-                  'name': '豆包',
-                  'region': '中国',
-                  'sector': 'AI / AGI',
-                  'homepage': 'https://www.doubao.com/about',
-                  'newsUrls': ['https://seed.bytedance.com/zh/blog'],
-                  'aliases': ['Doubao', 'Doubao Seed', '字节跳动 Seed'],
-                  'articleUrlPatterns': [r'^https://seed\\.bytedance\\.com/zh/blog/[^/]+$'],
-                  'maxItems': 8,
-                  'maxAgeDays': 1095,
-              },
-              {
-                  'slug': 'volcengine',
-                  'name': '火山引擎',
-                  'region': '中国',
-                  'sector': 'AI / AGI',
-                  'homepage': 'https://www.volcengine.com/',
-                  'newsUrls': ['https://www.volcengine.com/news'],
-                  'aliases': ['Volcengine', '火山方舟'],
-                  'articleUrlPatterns': [r'^https://www\\.volcengine\\.com/news/detail/\\d+$'],
-                  'maxItems': 8,
-                  'maxAgeDays': 1095,
-              },
-          ]
-          existing = {row.get('slug') for row in rows}
-          registry['companies'] = [
-              *[row for row in additions if row['slug'] not in existing],
-              *rows,
-          ]
-          registry_path.write_text(
-              json.dumps(registry, ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
-
-          tracking_path = Path('config/user_tracking.json')
-          tracking = json.loads(tracking_path.read_text(encoding='utf-8'))
-          ai = next(row for row in tracking['tracks'] if row.get('slug') == 'ai')
-          for keyword in ('豆包大模型', 'Doubao Seed', '火山引擎', 'Volcengine', '字节跳动'):
-              if keyword not in ai['keywords']:
-                  ai['keywords'].append(keyword)
-          for company in ('字节跳动', '豆包', '火山引擎'):
-              if company not in ai['sampleCompanies']:
-                  ai['sampleCompanies'].append(company)
-          tracking_path.write_text(
-              json.dumps(tracking, ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
-
-          transport_path = Path('tools/eastmoney_transport.py')
-          transport = transport_path.read_text(encoding='utf-8')
-          if 'bytedance_official_sources' not in transport:
-              transport = transport.replace(
-                  '    from . import adaptive_public_sources as adaptive\n',
-                  '    from . import adaptive_public_sources as adaptive\n'
-                  '    from . import bytedance_official_sources\n',
-                  1,
-              )
-              transport = transport.replace(
-                  '    import adaptive_public_sources as adaptive\n',
-                  '    import adaptive_public_sources as adaptive\n'
-                  '    import bytedance_official_sources\n',
-                  1,
-              )
-              transport = transport.replace(
-                  'def main() -> int:\n    install_transport()\n',
-                  'def main() -> int:\n    install_transport()\n'
-                  '    bytedance_official_sources.install(tracking_crawler.official)\n',
-                  1,
-              )
-              if 'bytedance_official_sources.install' not in transport:
-                  raise SystemExit('production adapter install insertion failed')
-              transport_path.write_text(transport, encoding='utf-8')
-          PY
+          set -o pipefail
+          mkdir -p diagnostics
           python -m py_compile \
             tools/bytedance_official_sources.py \
             tools/validate_bytedance_official_live.py \
@@ -142,16 +31,28 @@ jobs:
           python -m unittest -v \
             tests.test_bytedance_official_sources \
             tests.test_official_company_registry_dynamic \
-            tests.test_official_company_registry_production
-          git diff --check
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add \
-            lib/catalog-data.ts \
-            config/official_company_sources.json \
-            config/user_tracking.json \
-            tools/eastmoney_transport.py
-          if ! git diff --cached --quiet; then
-            git commit -m 'feat: wire ByteDance directed official sources'
-            git push origin HEAD:fix/bytedance-doubao-volcengine-official-sources-20260728
-          fi
+            tests.test_official_company_registry_production \
+            2>&1 | tee diagnostics/focused-tests.log
+      - name: Require original official articles
+        id: live
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python tools/validate_bytedance_official_live.py \
+            --output diagnostics/bytedance-official-live-report.json \
+            2>&1 | tee diagnostics/live-validation.log
+      - name: Run complete Python test suite
+        id: full-tests
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          python -m unittest discover -s tests -p 'test_*.py' \
+            2>&1 | tee diagnostics/full-tests.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bytedance-official-branch-validation
+          path: diagnostics
+          if-no-files-found: error
+      - name: Enforce validation results
+        if: steps.live.outcome != 'success' || steps.full-tests.outcome != 'success'
+        run: exit 1
