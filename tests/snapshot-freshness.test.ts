@@ -1,8 +1,18 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { getSnapshotFreshness } from "../lib/snapshot-freshness";
+import {
+  formatTaipeiDateTime,
+  getSnapshotFreshness,
+} from "../lib/snapshot-freshness";
 
 const now = new Date("2026-07-27T12:00:00+08:00");
+
+test("formats the last successful publication to Taipei minutes", () => {
+  assert.equal(
+    formatTaipeiDateTime("2026-07-28T01:15:17Z"),
+    "2026-07-28 09:15",
+  );
+});
 
 test("a completed current-day refresh is not marked stale when latest news is older", () => {
   const result = getSnapshotFreshness({
@@ -13,12 +23,14 @@ test("a completed current-day refresh is not marked stale when latest news is ol
     refreshAudit: {
       pipelineCompleted: true,
       localDate: "2026-07-27",
+      completedAt: "2026-07-27T03:42:00Z",
     },
     now,
   });
 
   assert.equal(result.label, "本轮抓取已完成");
   assert.equal(result.stale, false);
+  assert.equal(result.processedAt, "2026-07-27 11:42");
   assert.match(result.description, /2026-07-26/);
 });
 
