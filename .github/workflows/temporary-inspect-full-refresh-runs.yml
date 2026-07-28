@@ -1,6 +1,6 @@
 name: Temporary inspect full refresh runs
 
-# Locate the production refresh triggered by merged PR 98.
+# Inspect active and pending scheduled refresh runs after PR 98 merge.
 on:
   pull_request:
     paths:
@@ -11,24 +11,30 @@ permissions:
   actions: read
 
 jobs:
-  inspect-bytedance-production-refresh:
+  inspect-refresh-lock:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Collect scheduled sync runs
+      - name: Collect active and pending runs
         run: |
           set -euo pipefail
-          gh run list \
-            --workflow scheduled-sync.yml \
-            --limit 12 \
+          gh run list --workflow scheduled-sync.yml --status in_progress --limit 30 \
             --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,displayTitle \
-            > refresh-runs.json
-          cat refresh-runs.json
+            > in-progress.json
+          gh run list --workflow scheduled-sync.yml --status pending --limit 30 \
+            --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,displayTitle \
+            > pending.json
+          printf '%s\n' '--- in progress ---'
+          cat in-progress.json
+          printf '%s\n' '--- pending ---'
+          cat pending.json
       - uses: actions/upload-artifact@v4
         with:
-          name: bytedance-production-refresh-queue
-          path: refresh-runs.json
+          name: bytedance-refresh-lock-state
+          path: |
+            in-progress.json
+            pending.json
           if-no-files-found: error
