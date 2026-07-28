@@ -1,6 +1,6 @@
 name: Temporary inspect full refresh runs
 
-# Capture the prior one-time wiring failure. Never merge this workflow.
+# Capture the second one-time wiring failure. Never merge this workflow.
 on:
   pull_request:
     paths:
@@ -18,14 +18,14 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Download failed log tail
+      - name: Download latest failed log tail
         run: |
           set -euo pipefail
           gh run view 30318349345 --log-failed > failed.log
-          tail -n 240 failed.log | tee failed-tail.log
+          tail -n 260 failed.log | tee failed-tail.log
       - uses: actions/upload-artifact@v4
         with:
-          name: bytedance-wiring-failure
+          name: bytedance-wiring-failure-2
           path: |
             failed.log
             failed-tail.log
