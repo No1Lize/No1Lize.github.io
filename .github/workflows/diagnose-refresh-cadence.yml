@@ -17,8 +17,8 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Print final publication failure tail
+      - name: Print final push error
         run: |
           set -euo pipefail
           gh run view 30319309292 --log-failed > failed.log
-          tail -n 75 failed.log
+          tail -n 28 failed.log
