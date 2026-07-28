@@ -1,84 +1,95 @@
 name: Temporary inspect full refresh runs
 
-# One-time focused production publish for the three merged official sources.
+# Verify main data, deployed Pages data and the latest Pages workflow.
 on:
   pull_request:
     paths:
       - ".github/workflows/temporary-inspect-full-refresh-runs.yml"
 
 permissions:
-  contents: write
-  actions: write
+  contents: read
+  actions: read
 
 jobs:
-  publish-bytedance-official-sources:
+  verify-bytedance-publication:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     env:
       GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Publish only ByteDance, Doubao and Volcengine batches
+      - name: Compare repository and deployed data
         run: |
           set -euo pipefail
-          export PYTHONPATH="$PWD"
-          cat > /tmp/publish_bytedance_sources.py <<'PY'
-          from tools import bytedance_official_sources as structured
-          from tools import crawl_official_companies as official
+          mkdir -p diagnostics
+          curl -L --fail --retry 3 \
+            -H 'Cache-Control: no-cache' \
+            "https://vciq.github.io/data/articles.json?verify=$(date +%s)" \
+            -o diagnostics/deployed-articles.json
+          gh run list --workflow pages.yml --limit 8 \
+            --json databaseId,status,conclusion,event,headSha,createdAt,updatedAt,url,displayTitle \
+            > diagnostics/pages-runs.json
+          python - <<'PY'
+          from collections import Counter
+          from pathlib import Path
+          import json
 
-          selected = [
-              spec
-              for spec in official.load_registry()
-              if spec.slug in structured.SUPPORTED_SLUGS
-          ]
-          missing = structured.SUPPORTED_SLUGS - {spec.slug for spec in selected}
-          if missing:
-              raise SystemExit(f"missing directed official specs: {sorted(missing)}")
-          official.load_registry = lambda *args, **kwargs: selected
-          structured.install(official)
-          raise SystemExit(official.main())
-          PY
+          slugs = ('official-bytedance', 'official-doubao', 'official-volcengine')
+          def summarize(path):
+              payload = json.loads(Path(path).read_text(encoding='utf-8'))
+              rows = payload.get('articles', [])
+              counts = Counter(str(row.get('sourceId', '')) for row in rows)
+              return {
+                  'generatedAt': payload.get('generatedAt'),
+                  'articleCount': payload.get('articleCount', len(rows)),
+                  'sources': {
+                      slug: {
+                          'count': counts[slug],
+                          'samples': [
+                              {
+                                  'title': row.get('title'),
+                                  'publishedAt': row.get('publishedAt'),
+                                  'url': row.get('source', {}).get('url'),
+                              }
+                              for row in rows
+                              if row.get('sourceId') == slug
+                          ][:3],
+                      }
+                      for slug in slugs
+                  },
+              }
 
-          publish_and_validate() {
-            python /tmp/publish_bytedance_sources.py
-            python tools/validate_bytedance_official_live.py \
-              --output /tmp/bytedance-live-report.json
-            python tools/crawl_articles.py --validate-only
-            python -m unittest -v \
-              tests.test_bytedance_official_sources \
-              tests.test_official_company_registry_production
+          report = {
+              'repository': summarize('public/data/articles.json'),
+              'deployed': summarize('diagnostics/deployed-articles.json'),
+              'pagesRuns': json.loads(Path('diagnostics/pages-runs.json').read_text()),
           }
-
-          publish_and_validate
-          if git diff --quiet -- public/data/articles.json; then
-            echo 'Directed official source data already current.'
-            gh workflow run pages.yml --ref main
-            exit 0
-          fi
-
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add public/data/articles.json
-          git commit -m 'data: publish ByteDance directed official sources'
-
-          for attempt in 1 2 3; do
-            git pull --rebase -X theirs origin main
-            publish_and_validate
-            git add public/data/articles.json
-            if ! git diff --cached --quiet; then
-              git commit --amend --no-edit
-            fi
-            if git push origin HEAD:main; then
-              break
-            fi
-            if [ "$attempt" -eq 3 ]; then
-              exit 1
-            fi
-          done
-          gh workflow run pages.yml --ref main
+          report['ok'] = all(
+              report['repository']['sources'][slug]['count'] > 0
+              and report['deployed']['sources'][slug]['count'] > 0
+              and report['repository']['sources'][slug]['count']
+                  == report['deployed']['sources'][slug]['count']
+              for slug in slugs
+          ) and any(
+              run.get('conclusion') == 'success'
+              for run in report['pagesRuns']
+          )
+          Path('diagnostics/verification.json').write_text(
+              json.dumps(report, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          if not report['ok']:
+              raise SystemExit(1)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bytedance-publication-verification
+          path: diagnostics/verification.json
+          if-no-files-found: error
