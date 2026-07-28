@@ -17,33 +17,35 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Collect recent refresh runs
+      - name: Show scheduled runs and current backend state
         run: |
           set -euo pipefail
           mkdir -p diagnostics
           gh run list \
             --workflow scheduled-sync.yml \
-            --limit 40 \
+            --limit 60 \
             --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
             > diagnostics/runs.json
-          python - <<'PY'
+          python - <<'PY' | tee diagnostics/summary.txt
           import json
           from pathlib import Path
           runs=json.loads(Path('diagnostics/runs.json').read_text())
+          print('=== SCHEDULED RUNS ===')
           for run in runs:
-              print(run)
-          scheduled=[r for r in runs if r.get('event')=='schedule']
-          Path('diagnostics/scheduled.json').write_text(json.dumps(scheduled,ensure_ascii=False,indent=2)+'\n')
-          latest=next((r for r in runs if r.get('status') in {'queued','in_progress','pending'}), runs[0] if runs else None)
-          if latest:
-              Path('diagnostics/latest-run-id.txt').write_text(str(latest['databaseId']))
+              if run.get('event') == 'schedule':
+                  print(json.dumps(run, ensure_ascii=False, sort_keys=True))
+          print('=== ACTIVE OR PENDING RUNS ===')
+          for run in runs:
+              if run.get('status') in {'queued','in_progress','pending'}:
+                  print(json.dumps(run, ensure_ascii=False, sort_keys=True))
           PY
-          if [ -s diagnostics/latest-run-id.txt ]; then
-            run_id=$(cat diagnostics/latest-run-id.txt)
-            gh run view "$run_id" --json databaseId,number,status,conclusion,event,createdAt,startedAt,updatedAt,url,jobs > diagnostics/latest-run.json
-          fi
+          echo '=== FAILED PUBLISH TAIL (RUN 682) ===' | tee diagnostics/failure-tail.txt
+          gh run view 30319309292 --log-failed | tail -n 180 | tee -a diagnostics/failure-tail.txt
+          echo '=== CURRENT RUN 683 ===' | tee diagnostics/current-run.txt
+          gh run view 30341476399 --json databaseId,number,status,conclusion,event,createdAt,startedAt,updatedAt,url,jobs \
+            | tee -a diagnostics/current-run.txt
       - uses: actions/upload-artifact@v4
         with:
-          name: refresh-cadence-diagnostics
+          name: refresh-cadence-diagnostics-focused
           path: diagnostics
           if-no-files-found: error
