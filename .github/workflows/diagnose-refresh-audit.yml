@@ -20,8 +20,9 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Print published audit summary
+      - name: Collect published audit summary
         run: |
+          mkdir -p diagnostics
           python - <<'PY'
           import json
           from pathlib import Path
@@ -30,15 +31,24 @@ jobs:
           payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
           articles = [row for row in payload.get('articles', []) if isinstance(row, dict)]
           urls = [canonical_article_url(row) for row in articles]
-          print(json.dumps({
+          summary = {
               'generatedAt': payload.get('generatedAt'),
               'articleCount': payload.get('articleCount'),
               'refreshAudit': payload.get('refreshAudit'),
               'snapshotRetention': payload.get('snapshotRetention'),
               'canonicalUrlCount': len(set(urls)),
               'duplicateCanonicalUrls': len(urls) - len(set(urls)),
-          }, ensure_ascii=False, indent=2))
+          }
+          Path('diagnostics/audit.json').write_text(
+              json.dumps(summary, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
           PY
-          echo '=== PAGES RUNS ==='
           gh run list --workflow pages.yml --limit 8 \
-            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
+            > diagnostics/pages-runs.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: published-refresh-audit
+          path: diagnostics
+          if-no-files-found: error
