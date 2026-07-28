@@ -1,6 +1,6 @@
 name: Temporary inspect full refresh runs
 
-# Locate the public ByteDance article API constant in Next.js bundles.
+# Inspect the public ByteDance company article API payload.
 on:
   pull_request:
     paths:
@@ -10,60 +10,43 @@ permissions:
   contents: read
 
 jobs:
-  inspect-bytedance-api-module:
+  inspect-bytedance-article-api:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Download public bundles and locate article endpoint
+      - name: Fetch and summarize article API
         run: |
           set -euo pipefail
-          mkdir -p diagnostics/bundles
+          mkdir -p diagnostics
           ua='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150 Safari/537.36'
-          curl -L --fail --retry 2 -A "$ua" 'https://www.bytedance.com/zh/news' -o diagnostics/news.html
-          python - <<'PY' > diagnostics/scripts.txt
-          from html.parser import HTMLParser
-          from pathlib import Path
-          class Parser(HTMLParser):
-              def handle_starttag(self, tag, attrs):
-                  if tag != 'script': return
-                  values = dict(attrs)
-                  src = values.get('src', '')
-                  if src.startswith('http') and src.endswith('.js'):
-                      print(src)
-          parser = Parser()
-          parser.feed(Path('diagnostics/news.html').read_text(encoding='utf-8', errors='replace'))
-          PY
-          i=0
-          while IFS= read -r url; do
-            i=$((i+1))
-            curl -L --fail --retry 2 -A "$ua" "$url" -o "diagnostics/bundles/${i}.js"
-            printf '%s\t%s\n' "$i" "$url" >> diagnostics/bundle-map.tsv
-          done < diagnostics/scripts.txt
+          curl -L --fail --retry 2 -A "$ua" -H 'Referer: https://www.bytedance.com/zh/news' \
+            'https://www.bytedance.com/api/articles?limit=12&offset=0' \
+            -D diagnostics/headers.txt -o diagnostics/articles.json
           python - <<'PY'
           from pathlib import Path
-          import re
-          needles = ('6ozP', 'GET_ARTICALS', 'ARTICAL', '/api/', 'article/list', 'articles')
-          lines=[]
-          for path in sorted(Path('diagnostics/bundles').glob('*.js'), key=lambda p:int(p.stem)):
-              text=path.read_text(encoding='utf-8', errors='replace')
-              hits=[]
-              for needle in needles:
-                  for match in re.finditer(re.escape(needle), text, flags=re.I):
-                      start=max(0, match.start()-700); end=min(len(text), match.end()+1200)
-                      snippet=text[start:end]
-                      if snippet not in hits: hits.append(snippet)
-              if hits:
-                  lines.append(f'## {path.name} bytes={len(text)}')
-                  lines.extend(hits[:20])
-          Path('diagnostics/matches.txt').write_text('\n\n'.join(lines), encoding='utf-8')
+          import json
+          data=json.loads(Path('diagnostics/articles.json').read_text(encoding='utf-8'))
+          def shape(v, depth=0):
+              if depth>5: return type(v).__name__
+              if isinstance(v,dict): return {k:shape(val,depth+1) for k,val in list(v.items())[:30]}
+              if isinstance(v,list): return [shape(v[0],depth+1)] if v else []
+              return type(v).__name__
+          Path('diagnostics/shape.json').write_text(json.dumps(shape(data),ensure_ascii=False,indent=2),encoding='utf-8')
+          sample=data
+          for key in ('data','result','articles','list'):
+              if isinstance(sample,dict) and key in sample:
+                  sample=sample[key]
+          if isinstance(sample,list): sample=sample[:3]
+          Path('diagnostics/sample.json').write_text(json.dumps(sample,ensure_ascii=False,indent=2)[:30000],encoding='utf-8')
           PY
-          cat diagnostics/bundle-map.tsv
-          sed -n '1,1200p' diagnostics/matches.txt
+          head -30 diagnostics/headers.txt
+          cat diagnostics/shape.json
+          cat diagnostics/sample.json
       - uses: actions/upload-artifact@v4
         with:
-          name: bytedance-api-module-diagnostics
+          name: bytedance-article-api-diagnostics
           path: diagnostics
           if-no-files-found: error
