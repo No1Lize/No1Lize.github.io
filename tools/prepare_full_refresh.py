@@ -7,19 +7,20 @@ visible. A full refresh must start with an empty status ledger; every configured
 crawler then writes a fresh status row, including explicit errors and empty
 results. The repository file is only committed after the whole workflow passes.
 
-A temporary article-id baseline is embedded in the working snapshot so the
-finalizer can report how many records were newly added by this refresh. The
-baseline is removed before publication.
+The pre-refresh article baseline is stored in the runner's temporary directory.
+Crawler stages are free to rebuild ``articles.json`` without losing the baseline,
+and the temporary metadata can never leak into the public snapshot.
 """
 
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
-REFRESH_BASELINE_KEY = "_refreshBaseline"
+BASELINE_PATH = Path(os.environ.get("RUNNER_TEMP", str(ROOT))) / "vciq-refresh-baseline.json"
 
 
 def _article_identity(article: dict) -> str:
@@ -49,10 +50,20 @@ def main() -> int:
         if identity
     )
 
-    payload[REFRESH_BASELINE_KEY] = {
-        "articleCount": len(previous_articles),
-        "articleIds": baseline_ids,
-    }
+    BASELINE_PATH.parent.mkdir(parents=True, exist_ok=True)
+    BASELINE_PATH.write_text(
+        json.dumps(
+            {
+                "articleCount": len(previous_articles),
+                "articleIds": baseline_ids,
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
     payload["sourceStatus"] = []
     payload["qualityGate"] = {}
     payload.pop("refreshAudit", None)
@@ -69,6 +80,7 @@ def main() -> int:
             {
                 "clearedSourceStatuses": previous_count,
                 "baselineArticleCount": len(previous_articles),
+                "baselinePath": str(BASELINE_PATH),
             },
             ensure_ascii=False,
         )
