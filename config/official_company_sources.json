@@ -8,6 +8,65 @@
   },
   "companies": [
     {
+      "slug": "bytedance",
+      "name": "字节跳动",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "homepage": "https://www.bytedance.com/zh/",
+      "newsUrls": [
+        "https://www.bytedance.com/zh/news",
+        "https://www.bytedance.com/api/articles?language=1&limit=18&offset=0"
+      ],
+      "aliases": [
+        "ByteDance",
+        "抖音集团"
+      ],
+      "articleUrlPatterns": [
+        "^https://www\\\\.bytedance\\\\.com/zh/news/[^/]+$"
+      ],
+      "maxItems": 6,
+      "maxAgeDays": 3650
+    },
+    {
+      "slug": "doubao",
+      "name": "豆包",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "homepage": "https://www.doubao.com/about",
+      "newsUrls": [
+        "https://seed.bytedance.com/zh/blog"
+      ],
+      "aliases": [
+        "Doubao",
+        "Doubao Seed",
+        "字节跳动 Seed"
+      ],
+      "articleUrlPatterns": [
+        "^https://seed\\\\.bytedance\\\\.com/zh/blog/[^/]+$"
+      ],
+      "maxItems": 8,
+      "maxAgeDays": 1095
+    },
+    {
+      "slug": "volcengine",
+      "name": "火山引擎",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "homepage": "https://www.volcengine.com/",
+      "newsUrls": [
+        "https://www.volcengine.com/news"
+      ],
+      "aliases": [
+        "Volcengine",
+        "火山方舟"
+      ],
+      "articleUrlPatterns": [
+        "^https://www\\\\.volcengine\\\\.com/news/detail/\\\\d+$"
+      ],
+      "maxItems": 8,
+      "maxAgeDays": 1095
+    },
+    {
       "slug": "google",
       "name": "Google",
       "region": "美国",

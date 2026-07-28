@@ -23,6 +23,9 @@ const official = (name: string, url: string): Source => ({
 });
 
 export const companies: Company[] = [
+  { slug:"bytedance", name:"字节跳动", englishName:"ByteDance", region:"中国", sector:"AI / AGI", stage:"成长期", status:"运营中", founded:"2012", headquarters:"北京", summary:"运营全球内容平台、企业协作工具、人工智能产品与技术服务。", product:"抖音、今日头条、飞书、豆包、火山引擎及相关技术平台。", source:official("字节跳动","https://www.bytedance.com/zh/"), confidence:0.99 },
+  { slug:"doubao", name:"豆包", englishName:"Doubao", region:"中国", sector:"AI / AGI", stage:"成长期", status:"运营中", summary:"字节跳动旗下人工智能品牌，面向个人与开发者提供多模态模型和智能应用。", product:"豆包智能助手、Doubao Seed 基础模型及相关多模态能力。", source:official("豆包","https://www.doubao.com/about"), confidence:0.98 },
+  { slug:"volcengine", name:"火山引擎", englishName:"Volcengine", region:"中国", sector:"AI / AGI", stage:"成长期", status:"运营中", summary:"字节跳动旗下企业级云与人工智能服务平台。", product:"火山方舟、云基础设施、数据智能与多媒体技术服务。", source:official("火山引擎","https://www.volcengine.com/"), confidence:0.98 },
   { slug:"google", name:"Google", region:"美国", sector:"AI / AGI", stage:"已上市", status:"已上市", founded:"1998", headquarters:"Mountain View", summary:"开发搜索、云计算、人工智能与面向消费者和企业的软件服务。", product:"Google Search、Google Cloud、Gemini 与相关 AI 产品。", source:official("Google","https://about.google/"), confidence:0.99 },
   { slug:"openai", name:"OpenAI", region:"美国", sector:"AI / AGI", stage:"成长期", status:"运营中", founded:"2015", headquarters:"San Francisco", summary:"开发通用人工智能模型、开发者平台与面向个人和企业的 AI 产品。", product:"基础模型、ChatGPT、API 与智能体开发工具。", source:official("OpenAI","https://openai.com/about/"), confidence:0.98 },
   { slug:"anthropic", name:"Anthropic", region:"美国", sector:"AI / AGI", stage:"Series F", status:"运营中", founded:"2021", headquarters:"San Francisco", summary:"以可靠性、可解释性与安全研究为重点的前沿 AI 公司。", product:"Claude 模型、企业 API 与安全研究。", source:official("Anthropic","https://www.anthropic.com/company"), confidence:0.98 },

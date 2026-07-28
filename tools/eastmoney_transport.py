@@ -15,10 +15,12 @@ from urllib.parse import urlsplit
 
 try:
     from . import adaptive_public_sources as adaptive
+    from . import bytedance_official_sources
     from . import crawl_official_with_source_categories as category_crawler
     from . import crawl_official_with_tracking as tracking_crawler
 except ImportError:
     import adaptive_public_sources as adaptive
+    import bytedance_official_sources
     import crawl_official_with_source_categories as category_crawler
     import crawl_official_with_tracking as tracking_crawler
 
@@ -340,6 +342,7 @@ def install_quality_preservation() -> None:
 
 def main() -> int:
     install_transport()
+    bytedance_official_sources.install(tracking_crawler.official)
     install_handoff_cleanup()
     install_snapshot_retention()
     install_quality_preservation()
