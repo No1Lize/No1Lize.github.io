@@ -10,6 +10,7 @@ compact audit summary for the UI and validators.
 from __future__ import annotations
 
 import json
+import os
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
@@ -17,8 +18,8 @@ from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
+BASELINE_PATH = Path(os.environ.get("RUNNER_TEMP", str(ROOT))) / "vciq-refresh-baseline.json"
 TAIPEI = ZoneInfo("Asia/Taipei")
-REFRESH_BASELINE_KEY = "_refreshBaseline"
 PIPELINE_STAGES = [
     "core-and-tracking-sources",
     "official-company-sources",
@@ -46,11 +47,23 @@ def _article_identity(article: dict) -> str:
     return str(source.get("url") or "").strip()
 
 
+def _load_baseline() -> dict | None:
+    if not BASELINE_PATH.exists():
+        return None
+    try:
+        baseline = json.loads(BASELINE_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    finally:
+        BASELINE_PATH.unlink(missing_ok=True)
+    return baseline if isinstance(baseline, dict) else None
+
+
 def _refresh_delta(
     payload: dict,
     articles: list[dict],
 ) -> tuple[int, int]:
-    baseline = payload.pop(REFRESH_BASELINE_KEY, None)
+    baseline = _load_baseline()
     previous_audit = payload.get("refreshAudit")
     previous_audit = previous_audit if isinstance(previous_audit, dict) else {}
 
