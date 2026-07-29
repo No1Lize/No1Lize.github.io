@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-29T16:02:41+00:00",
+  "generatedAt": "2026-07-29T22:27:41+00:00",
   "companyCount": 15,
   "eventCount": 148,
   "companies": {
     "bgi-genomics": {
       "slug": "bgi-genomics",
       "name": "华大基因",
-      "updatedAt": "2026-07-29T16:02:25+00:00",
+      "updatedAt": "2026-07-29T22:27:23+00:00",
       "status": "ok",
       "listings": [
         {
@@ -385,7 +385,7 @@
     "cambricon": {
       "slug": "cambricon",
       "name": "寒武纪",
-      "updatedAt": "2026-07-29T16:02:25+00:00",
+      "updatedAt": "2026-07-29T22:27:23+00:00",
       "status": "ok",
       "listings": [
         {
@@ -783,7 +783,7 @@
     "catl": {
       "slug": "catl",
       "name": "宁德时代",
-      "updatedAt": "2026-07-29T16:02:25+00:00",
+      "updatedAt": "2026-07-29T22:27:23+00:00",
       "status": "ok",
       "listings": [
         {
@@ -1527,7 +1527,7 @@
     "horizon-robotics": {
       "slug": "horizon-robotics",
       "name": "地平线机器人",
-      "updatedAt": "2026-07-29T16:02:21+00:00",
+      "updatedAt": "2026-07-29T22:27:20+00:00",
       "status": "ok",
       "listings": [
         {
@@ -1965,7 +1965,7 @@
     "xtalpi": {
       "slug": "xtalpi",
       "name": "晶泰科技",
-      "updatedAt": "2026-07-29T16:02:21+00:00",
+      "updatedAt": "2026-07-29T22:27:20+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2343,7 +2343,7 @@
     "pony-ai": {
       "slug": "pony-ai",
       "name": "小马智行",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2385,7 +2385,7 @@
     "weride": {
       "slug": "weride",
       "name": "文远知行",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2427,7 +2427,7 @@
     "rigetti": {
       "slug": "rigetti",
       "name": "Rigetti Computing",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2469,7 +2469,7 @@
     "ionq": {
       "slug": "ionq",
       "name": "IonQ",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2511,7 +2511,7 @@
     "rocket-lab": {
       "slug": "rocket-lab",
       "name": "Rocket Lab",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2553,7 +2553,7 @@
     "tempus-ai": {
       "slug": "tempus-ai",
       "name": "Tempus AI",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2595,7 +2595,7 @@
     "recursion": {
       "slug": "recursion",
       "name": "Recursion Pharmaceuticals",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2637,7 +2637,7 @@
     "mobileye": {
       "slug": "mobileye",
       "name": "Mobileye",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2679,7 +2679,7 @@
     "aurora": {
       "slug": "aurora",
       "name": "Aurora Innovation",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2690,6 +2690,50 @@
         }
       ],
       "events": [
+        {
+          "id": "disclosure-aurora-edb46b95b42a984d3e",
+          "companySlug": "aurora",
+          "companyName": "Aurora Innovation",
+          "market": "美股",
+          "ticker": "AUR",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-29",
+          "documentType": "定期报告与业绩",
+          "title": "Aurora Innovation SEC Form 10-Q — Quarterly report [Sections 13 or 15(d)] 32",
+          "summary": "Ticker AUR · Form 10-Q · Filed 2026-07-29 · Official filing mirror maintained by Aurora Investor Relations.",
+          "source": {
+            "name": "Aurora Investor Relations",
+            "url": "https://ir.aurora.tech/sec-filings/all-sec-filings/content/0001828108-26-000077/aur-20260630.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-company-ir-sec-filings",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "form": "10-Q"
+        },
+        {
+          "id": "disclosure-aurora-2c24cd33f35b64498a",
+          "companySlug": "aurora",
+          "companyName": "Aurora Innovation",
+          "market": "美股",
+          "ticker": "AUR",
+          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
+          "listingRole": "primary",
+          "publishedAt": "2026-07-29",
+          "documentType": "重大经营与风险",
+          "title": "Aurora Innovation SEC Form 8-K — Current report 45",
+          "summary": "Ticker AUR · Form 8-K · Filed 2026-07-29 · Official filing mirror maintained by Aurora Investor Relations.",
+          "source": {
+            "name": "Aurora Investor Relations",
+            "url": "https://ir.aurora.tech/sec-filings/all-sec-filings/content/0001828108-26-000075/aur-20260729.htm",
+            "level": "监管文件"
+          },
+          "discoveredVia": "official-company-ir-sec-filings",
+          "fallback": false,
+          "regulatoryMirror": true,
+          "form": "8-K"
+        },
         {
           "id": "disclosure-aurora-055a3be2652b36889b",
           "companySlug": "aurora",
@@ -3043,50 +3087,6 @@
           "fallback": false,
           "regulatoryMirror": true,
           "form": "SC 13G/A"
-        },
-        {
-          "id": "disclosure-aurora-01d0ecbf91d4354045",
-          "companySlug": "aurora",
-          "companyName": "Aurora Innovation",
-          "market": "美股",
-          "ticker": "AUR",
-          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
-          "listingRole": "primary",
-          "publishedAt": "2025-11-13",
-          "documentType": "股权变动",
-          "title": "Aurora Innovation SEC Form SC 13G/A — Statement of Beneficial Ownership by Certain Investors 4",
-          "summary": "Ticker AUR · Form SC 13G/A · Filed 2025-11-13 · Official filing mirror maintained by Aurora Investor Relations.",
-          "source": {
-            "name": "Aurora Investor Relations",
-            "url": "https://ir.aurora.tech/sec-filings/all-sec-filings/content/0001088875-25-000095/primary_doc.html",
-            "level": "监管文件"
-          },
-          "discoveredVia": "official-company-ir-sec-filings",
-          "fallback": false,
-          "regulatoryMirror": true,
-          "form": "SC 13G/A"
-        },
-        {
-          "id": "disclosure-aurora-bdaa1f5d800960c190",
-          "companySlug": "aurora",
-          "companyName": "Aurora Innovation",
-          "market": "美股",
-          "ticker": "AUR",
-          "exchange": "美国证券交易委员会 SEC（公司 IR 镜像）",
-          "listingRole": "primary",
-          "publishedAt": "2025-10-28",
-          "documentType": "重大经营与风险",
-          "title": "Aurora Innovation SEC Form 8-K — Current report 39",
-          "summary": "Ticker AUR · Form 8-K · Filed 2025-10-28 · Official filing mirror maintained by Aurora Investor Relations.",
-          "source": {
-            "name": "Aurora Investor Relations",
-            "url": "https://ir.aurora.tech/sec-filings/all-sec-filings/content/0001828108-25-000155/aur-20251028.htm",
-            "level": "监管文件"
-          },
-          "discoveredVia": "official-company-ir-sec-filings",
-          "fallback": false,
-          "regulatoryMirror": true,
-          "form": "8-K"
         }
       ],
       "officialEventCount": 18,
@@ -3095,7 +3095,7 @@
     "joby": {
       "slug": "joby",
       "name": "Joby Aviation",
-      "updatedAt": "2026-07-29T16:02:41+00:00",
+      "updatedAt": "2026-07-29T22:27:41+00:00",
       "status": "ok",
       "listings": [
         {
