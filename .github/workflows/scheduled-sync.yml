@@ -75,8 +75,8 @@ on:
       - config/source_health_policy.json
       - .github/workflows/scheduled-sync.yml
   schedule:
-    - cron: "17 4-22/2 * * *"
-      timezone: "Asia/Taipei"
+    # 19:17 UTC = 03:17 Asia/Taipei. The lightweight workflow handles two-hour checks.
+    - cron: "17 19 * * *"
   workflow_dispatch:
 
 permissions:
