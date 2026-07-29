@@ -16,14 +16,17 @@ export type StarMarketInvestorContact = {
 export type StarMarketInvestor = {
   id: string;
   name: string;
+  disclosedName?: string;
   normalizedName: string;
   institutional: true;
   investorType: string;
   sourcePage: number;
   sourceSection: string;
   evidence: string;
-  preIpoShares?: number;
-  preIpoOwnershipPct?: number;
+  preIpoShares: number;
+  preIpoOwnershipPct: number;
+  nameResolution: "definitions" | "basic-information";
+  definitionSourcePage?: number;
   publicContact?: StarMarketInvestorContact;
   contactStatus: "prospectus-public" | "not-disclosed-in-prospectus";
 };
@@ -72,6 +75,9 @@ type StarMarketInvestorSnapshot = {
   methodology: {
     prospectusProvider: string;
     pdfExtraction: string;
+    shareholderEvidence?: string;
+    nameResolution?: string;
+    contactEvidence?: string;
     retention: string;
   };
   companies: Record<string, StarMarketCompanyInvestorProfile>;
@@ -154,8 +160,8 @@ export const starMarketInvestorRecords: StarMarketInvestorRecord[] =
     )
     .sort(
       (left, right) =>
-        (right.investor.preIpoOwnershipPct ?? -1) -
-          (left.investor.preIpoOwnershipPct ?? -1) ||
+        right.investor.preIpoOwnershipPct -
+          left.investor.preIpoOwnershipPct ||
         left.company.sector.localeCompare(right.company.sector, "zh-CN") ||
         left.investor.name.localeCompare(right.investor.name, "zh-CN"),
     );
