@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-29T10:41:12+00:00",
+  "generatedAt": "2026-07-29T11:24:18+00:00",
   "articleCount": 1054,
   "articles": [
     {
@@ -29398,46 +29398,6 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-jiqizhixin-ai-e9364ca5ee341c18",
-      "sourceId": "user-track-wechat-jiqizhixin-ai",
-      "title": "打破模态壁垒，11B通用底座，上智院开放多模态科学基础模型「神珍」",
-      "summary": "机器之心编辑部 人工智能（AI）模型在科学发现中的角色，正经历着一场从「工程缝合者」向「智能推演者」的深刻蜕变。 过去几年，AI for Science 领域涌现出众多性能优异的专用模型，蛋白质结构预测、分子生成、材料设计等单一任务频现进展。然而，在科研场景中，实质性的突破往往诞生于跨模态的交界地带。 以疾病研究为例，面对基因序列、蛋白质构象与药理活性数据交织而成的复杂因果网络，研究者需要的不是预测精准的蛋白质模型，而是一个能同时「阅读」序列语言、「理解」空间构象、「推演」动态交互的统一框架。 最近，由上海科学智能研究院（下称「上智院」）发布并开放的科学多模态基础模型 ——「神珍」，有力回应了这一需求。 作为一款总参数量为 110 亿的统一基座模型，「神珍」并非简单地将多个专用模型打包，而是从底层模态对齐入手，在一个统一架构内同时支撑科学理解与多类结果生成，现已覆盖 DNA、RNA、蛋白质、小分子、地球系统与医学影像六类科学数据。 科学智能新思路 2020 年，AlphaFold2 成功从氨基酸序列直接预测蛋白质的三维结构，证明了 AI 模型在单一科学任务上的潜力。以之为代表的专用模型",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "阿里云 / Qwen",
-      "publishedAt": "2026-07-19",
-      "importance": 76,
-      "source": {
-        "name": "机器之心",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67a6eb391f3780e995a3a4afb84a33e942bbd9e397b15b0cda4914eb7163fcd4b3ed3acb4&idx=2&mid=2651045392&sn=3e0bb526b397cdf97d27d15e37a0608e",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "关注科学大模型的"
-      ],
-      "wechatAccount": "机器之心",
-      "mentionedCompanies": [
-        "阿里云 / Qwen"
-      ],
-      "mentionedPeople": [
-        "上智院院长",
-        "旦大学特聘",
-        "学科背景的",
-        "它把"
-      ],
-      "matchedTrackingTerms": [
-        "基础模型",
-        "大模型",
-        "推理",
-        "多模态",
-        "能力"
-      ],
-      "wechatAccountConfigId": "jiqizhixin",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-track-wechat-aitopics-ai-5ec382030539814e",
       "sourceId": "user-track-wechat-aitopics-ai",
       "title": "WAIC华山论剑，罕见AI新共识：机器人ChatGPT时刻，最快两年！",
@@ -29943,38 +29903,6 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-qbitai-robotics-2dd1b00738795f03",
-      "sourceId": "user-track-wechat-qbitai-robotics",
-      "title": "全球首个「具身原生」预训练模型发布，从物理世界出发为机器人造大脑！",
-      "summary": "金磊 发自 凹非寺 量子位 | 公众号 QbitAI 终于，那句用来教育年轻人的经典嗑，也是用到机器人身上了： 你们啊， 眼光得放长远点~~ △ 图片由AI生成 为啥？ 因为一个靠谱的机器人啊，它不能只是看到什么就做什么，现在还得学会 预判未来 —— 眼睛是看到了当下的这一帧，但脑子应该在盘算几步之后的画面了。 这个事儿在具身智能圈有个专门的名字，叫做 VA （Video-Action）模型。 咱们先来感受一下这个feel： 从视频中我们不难看出，桌上的冰球不仅速度快，轨迹还在不断变化，如果机器人只靠”看到哪打到哪”的反应式操作，大概率要被KO掉的。 正确的解法，应该是模型一边盯着球的运动轨迹，一边提前预判几步之后球会跑到哪，然后提前调整身位、伸拍。 这就是“预判式控制”和“反应式控制”的本质区别。 不过啊，就在今天，VA这件事儿本身也要变了。 因为从现在起，VA模型不仅要“眼光放长远”，还得从娘胎里就是具身的！ 这就是 蚂蚁灵波 刚刚发布的 LingBot-VA 2.0 ，全球第一个 具身原生的 预训练VA基座模型。 从架构，到数据，再到训练目标，第一天起就是为机器人量身定制的。 除",
-      "type": "产品发布",
-      "region": "中国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-10",
-      "importance": 82,
-      "source": {
-        "name": "量子位",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1144dfad98525230c66ff20710ab81547ab4e360003c171868000d1b8cb9f486d9155e4b&idx=1&mid=2247902774&sn=55d8846a7ef42993d385848631d4cc2a",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "关注前沿科技"
-      ],
-      "wechatAccount": "量子位",
-      "mentionedCompanies": [],
-      "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "具身智能",
-        "VLA",
-        "机器人",
-        "世界模型"
-      ],
-      "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-track-wechat-aitechuang-ai-dd7d7d9f16e8e452",
       "sourceId": "user-track-wechat-aitechuang-ai",
       "title": "大模型不会「反过来想」？ICML 2026这 9篇论文正在改写规则",
@@ -30244,8 +30172,8 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-deeptechchina-ai-6e3732a3d35e5abd",
-      "sourceId": "user-track-wechat-deeptechchina-ai",
+      "id": "user-track-wechat-deeptechchina-biotech-6e3732a3d35e5abd",
+      "sourceId": "user-track-wechat-deeptechchina-biotech",
       "title": "诺奖得主和Claude联手发论文，结论是：AI时代更需“笨功夫”",
       "summary": "7 月，诺贝尔物理学奖得主乔治·帕里西（Giorgio Parisi）与意大利物理学家弗朗西斯科·赞波尼（Francesco Zamponi）在《统计力学：理论与实验》（ JSTAT ）发表论文，题为《阻塞临界指数一个恒等式的证明》，篇幅仅十余页。 在摘要末尾，两位作者写下这样一句话： “证明通过与 Claude（Sonnet 4.6 与 Opus 4.7）的互动获得，并由我们完成验证。” 在与 Claude 进行 40 轮对话后，他们联手终结了一个困扰复杂系统统计物理领域十二年的猜想。 2021 年，意大利理论物理学家帕里西被授予诺贝尔物理学奖，理由是“发现了从原子到行星尺度物理系统中无序与涨落的相互作用”。他在学术生涯中一直致力于自旋玻璃（spin glass）理论研究，并发明副本对称性破缺（RSB）方法，用于揭示看似混乱无序的复杂系统背后的深层规律。 图 | 乔治·帕里西（Giorgio Parisi）（来源：https://www.parisigiorgio.it/） 这次合作发生的一年多前，2025 年初，帕里西演示过一则近乎讽刺的实验：他成功说服一个大型语言模型接受“5×4",
       "type": "技术突破",
@@ -30269,17 +30197,65 @@
         "Anthropic"
       ],
       "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "机器学习",
-        "Claude",
-        "能力"
-      ],
+      "matchedTrackingTerms": [],
       "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "生物科技"
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-ai-14f22a779cca86cd",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "Claude、GLM、GPT谁才是真正的AI软件工程师？首个持续更新Visual Spec-to-App Benchmark发布",
+      "summary": "近年来，Coding Agent 正以前所未有的速度发展。从 Claude Code、OpenAI Codex 到 Cursor、Gemini CLI，大语言模型已经能够自主完成编码、调试、运行甚至部署整个 Web 应用，「AI 软件工程师」正逐渐成为现实。然而，一个新的问题也随之出现： 如果不 给 AI 一个 GitHub Issue，而是 给它一张 Figma 设计稿，它还能开发出一个真正可以交付的产品吗？ 过去几年，SWE-bench、OpenHands 等 Benchmark 极大推动了 Coding Agent 的发展，但它们主要关注代码仓库维护和 GitHub Issue 修复。相比之下，真实的软件开发通常始于一份产品需求（PRD）和一张 Figma 设计稿，需要开发者从零构建完整的 Web 应用。这意味着，Coding Agent 面临的挑战已经从 Code Generation 逐渐演进为 Product Generation。然而，目前仍然缺少一个能够系统评测这一能力的公开 Benchmark。 为了解决这一问题，来自 University of Arizona、Zo",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-06",
+      "importance": 82,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e677c9b391fedf06a9fffe72163f3a40739cc1a48c8bca48e19cea01ce6f4acca1870d9743&idx=3&mid=2651042743&sn=f4ee3a607d462954f404a1414f41cb9c",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Google",
+        "Anthropic",
+        "智谱AI"
+      ],
+      "mentionedPeople": [
+        "Junjia Guo",
+        "Arizona Electrical",
+        "Computer Engineering",
+        "Jingdi Chen",
+        "Agentic AI",
+        "Online Leaderboard",
+        "Yuhang Yao",
+        "Jiawei Zhou"
+      ],
+      "matchedTrackingTerms": [
+        "推理",
+        "Agent",
+        "多模态",
+        "强化学习",
+        "AI agent",
+        "Claude",
+        "Agents",
+        "gpt-5",
+        "Gemini",
+        "agentic ai",
+        "能力",
+        "agentic"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-deeptechchina-biotech-7ca93f5df9d6d53f",
-      "sourceId": "user-track-wechat-deeptechchina-biotech",
+      "id": "user-track-wechat-deeptechchina-ai-7ca93f5df9d6d53f",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
       "title": "AI产业正在围着OpenAI和Anthropic两家公司打转",
       "summary": "过去半个月，AI 行业似乎迎来了一个短暂的平静期。预期中的 GPT-5.6 和 Gemini 3.5 Pro 并未到来，除了 Sonnet 5 的发布和 Fable 5 的回归，并没有什么重磅模型面世。但穿透平静的表象，我们可能正在目睹 AI 产业结构迎来的一场前所未有的密集重组。 6 月 24 日， OpenAI 发布了它的第一颗自研芯片 Jalapeño ，一颗专为推理设计的加速器，与 Broadcom 联合开发，从设计到流片只用了九个月。同一天，OpenAI 宣布与 Broadcom 签下 10 GW 的算力部署合作协议。一家模型公司开始造芯片，这在两年前几乎不可想象。 一周后的新闻密度更高。7 月 1 日， 彭博社报道 Meta 正在组建名为 Meta Compute 的云业务部门，计划对外出售 AI 算力 ，Meta 股价当天上涨 9%，CoreWeave 下跌 14%，Nebius 下跌 17%。7 月 2 日，微软宣布成立 Frontier Company，投入 25 亿美元、配备 6000 名工程师，专门帮企业客户部署 AI。 7 月 3 日，韩国媒体披露 Meta 正",
       "type": "公司动态",
@@ -30301,16 +30277,66 @@
       "mentionedCompanies": [
         "OpenAI",
         "Anthropic",
-        "字节跳动"
+        "xAI",
+        "Google",
+        "字节跳动",
+        "豆包"
       ],
       "mentionedPeople": [
         "Frontier Company",
         "SB Neo"
       ],
-      "matchedTrackingTerms": [],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Grok",
+        "Claude",
+        "gpt-5",
+        "Meta",
+        "Gemini",
+        "能力",
+        "字节跳动"
+      ],
       "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-78857392e1eaf0bc",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "Loop世界模型论文登顶Hugging Face，来自中国一家初创，周鸿祎陆奇都投了",
+      "summary": "允中 发自 凹非寺 量子位 | 公众号 QbitAI Prompt还没退场，Loop已经开始接管AI叙事。 这两周，硅谷开发者圈最热的词之一，是 Loop Engineering 。 它讲的是一件很“Agent时代”的事：别再手动一轮轮prompt模型了，去设计一个循环系统，让AI自己执行、检查、修正、继续跑，直到任务完成。 传统模式以prompt为核心，现在开始转向以 工作流 为核心，这也是它突然爆红的原因。 而就在大家热议“怎么让AI自己跑起来”时，另一条更硬的线也在快速升温： Looped World Models（循环世界模型） ，简称 LoopWM 。 如果说Loop Engineering解决的是“AI怎么持续干活”，那LoopWM更像是在回答一个上限更高的问题： AI在持续干活时，能不能做到持续理解、修正、推演它所面对的世界。 这也是为什么，它虽然名字里也有“Loop”，但其展现出的技术含金量和想象空间，明显不是一个量级。 它登上了 Hugging Face Papers当日 Top1 ，现已进入了AI社区更广泛的公共讨论。 Loop Engineering为什么突然火了",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-01",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6804dfade112048d76394540f337d27817c96252271a35f45a7a2b9a8d82f96cbe0be301&idx=2&mid=2247901046&sn=da7bf1ec203f115bc3c7ead358b109aa",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "Anthropic",
+        "Google"
+      ],
+      "mentionedPeople": [
+        "李飞飞",
+        "Addy Osmani",
+        "陆弘远"
+      ],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "机器人",
+        "世界模型"
+      ],
+      "wechatAccountConfigId": "qbitai",
       "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "生物科技"
+      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-track-wechat-qbitai-robotics-0c52f993002fa373",
@@ -40815,10 +40841,10 @@
     {
       "id": "user-track-wechat-deeptechchina-ai",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "partial",
       "scanned": 17,
       "accepted": 3,
-      "failed": 0,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -40966,7 +40992,7 @@
       "status": "partial",
       "scanned": 26,
       "accepted": 6,
-      "failed": 3,
+      "failed": 4,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -41018,7 +41044,7 @@
       "status": "partial",
       "scanned": 19,
       "accepted": 6,
-      "failed": 5,
+      "failed": 6,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -41030,7 +41056,7 @@
       "status": "partial",
       "scanned": 26,
       "accepted": 3,
-      "failed": 6,
+      "failed": 8,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -41698,7 +41724,7 @@
     }
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-29T10:41:12+00:00",
+    "generatedAt": "2026-07-29T11:24:18+00:00",
     "configuredSources": 34,
     "successfulSources": 11,
     "acceptedArticles": 40,
@@ -41706,7 +41732,7 @@
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
     "retainedSources": 23,
-    "mentionedCompanyLinks": 56,
-    "mentionedPeopleLinks": 90
+    "mentionedCompanyLinks": 64,
+    "mentionedPeopleLinks": 97
   }
 }
