@@ -145,7 +145,8 @@
         "WeRide",
         "Aurora",
         "具身智能机器人",
-        "WeRide Inc"
+        "WeRide Inc",
+        "汽车"
       ],
       "people": [
         "汪滔",
@@ -218,7 +219,8 @@
         "壁仞科技",
         "SambaNova Systems",
         "Anthropic",
-        "IonQ"
+        "IonQ",
+        "阿里云"
       ],
       "ignoredRecommendations": {
         "keywords": [
@@ -509,7 +511,10 @@
         "Results",
         "Ionizing radiation",
         "Army Police (Portugal)",
-        "产业投资"
+        "产业投资",
+        "From",
+        "Samsung",
+        "Pre-A"
       ],
       "people": [
         "Gustaf Alstr",
@@ -626,7 +631,8 @@
         "shein",
         "AliExpress",
         "Shopify",
-        "Alibaba Group"
+        "Alibaba Group",
+        "Lazada"
       ]
     }
   ],
@@ -3264,6 +3270,81 @@
       "keywords": [
         "豆包",
         "AI / AGI"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-fierceelectronics-com",
+      "name": "Fierce Electronics · 机器人信源",
+      "url": "https://fierceelectronics.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "机器人"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-item-71abfd41",
+      "name": "阿里云 官方网站",
+      "url": "https://intl.aliyun.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "阿里云",
+      "ticker": "",
+      "keywords": [
+        "阿里云"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-thenextweb-com",
+      "name": "TNW · 风险投资信源",
+      "url": "https://thenextweb.com/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-it-slashdot-org",
+      "name": "Slashdot · 风险投资信源",
+      "url": "https://it.slashdot.org/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
+      ],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-lazada",
+      "name": "Lazada 官方网站",
+      "url": "https://lazada.com",
+      "sourceType": "listing-search",
+      "sourceCategory": "company",
+      "region": "全球",
+      "sector": "新消费",
+      "company": "Lazada",
+      "ticker": "",
+      "keywords": [
+        "Lazada"
       ],
       "enabled": true
     }
