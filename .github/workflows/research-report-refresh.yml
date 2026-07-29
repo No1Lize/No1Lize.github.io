@@ -47,6 +47,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+      - name: Validate report crawler entry points before network access
+        run: |
+          python -m py_compile \
+            tools/crawl_research_reports.py \
+            tools/research_report_adapters.py \
+            tools/research_report_registry.py
+      - name: Install locked project dependencies before network access
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p .github/diagnostics
+          npm ci 2>&1 | tee .github/diagnostics/research-report-npm.log
       - name: Run observable all-market PDF refresh
         id: check
         shell: bash
@@ -57,21 +70,13 @@ jobs:
           CRAWL=$?
           python -m unittest tests.test_research_reports > .github/diagnostics/research-report-python-tests.log 2>&1
           PYTEST=$?
-          npm install > .github/diagnostics/research-report-npm.log 2>&1
-          NPM=$?
-          if [ "$NPM" -eq 0 ]; then
-            node --import tsx --test tests/research-report-data.test.ts > .github/diagnostics/research-report-ts-tests.log 2>&1
-            TSTEST=$?
-            GITHUB_PAGES=true npx next build > .github/diagnostics/research-report-build-full.log 2>&1
-            BUILD=$?
-            tail -n 220 .github/diagnostics/research-report-build-full.log > .github/diagnostics/research-report-build.log
-            rm .github/diagnostics/research-report-build-full.log
-          else
-            TSTEST=125
-            BUILD=125
-            printf 'npm install failed; TypeScript test skipped\n' > .github/diagnostics/research-report-ts-tests.log
-            printf 'npm install failed; Next build skipped\n' > .github/diagnostics/research-report-build.log
-          fi
+          NPM=0
+          node --import tsx --test tests/research-report-data.test.ts > .github/diagnostics/research-report-ts-tests.log 2>&1
+          TSTEST=$?
+          GITHUB_PAGES=true npx next build > .github/diagnostics/research-report-build-full.log 2>&1
+          BUILD=$?
+          tail -n 220 .github/diagnostics/research-report-build-full.log > .github/diagnostics/research-report-build.log
+          rm .github/diagnostics/research-report-build-full.log
           read -r REPORTS TRACKED ASTOCK HKSTOCK USSTOCK AREPORT HKREPORT USREPORT ARCHIVEBYTES <<EOF
           $(python - <<'PY'
           import json
