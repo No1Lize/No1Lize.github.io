@@ -162,6 +162,7 @@ function buildRawInstitutionActivity(
   asOf: number,
 ): Omit<RankedInstitutionActivity, "score" | "crawlerScore" | "attentionScore"> {
   const directIds = new Set(relation.directEvents.map((article) => article.id));
+  const allSources = new Set<string>();
   const clusters = new Map<
     string,
     {
@@ -172,11 +173,14 @@ function buildRawInstitutionActivity(
       opens: number;
       favorite: boolean;
       shares: number;
+      latestPublishedAt: string;
     }
   >();
 
   for (const rawArticle of relation.relatedEvents) {
     const article = rawArticle as InstitutionHotArticle;
+    const sourceKey = canonicalHotnessKey(article.source.url);
+    if (sourceKey) allSources.add(sourceKey);
     const direct = directIds.has(article.id);
     const relationWeight = direct
       ? INSTITUTION_HOT_WEIGHTS.directRelation
@@ -191,23 +195,35 @@ function buildRawInstitutionActivity(
       opens: safeCount(signal?.opens ?? 0),
       favorite: signal?.favorite === true,
       shares: safeCount(signal?.shares ?? 0),
+      latestPublishedAt: article.publishedAt,
     };
     const current = clusters.get(key);
-    if (
-      !current ||
+    if (!current) {
+      clusters.set(key, candidate);
+      continue;
+    }
+
+    const best =
       candidate.crawler > current.crawler ||
       (candidate.crawler === current.crawler && candidate.attention > current.attention)
-    ) {
-      clusters.set(key, candidate);
-    }
+        ? candidate
+        : current;
+    clusters.set(key, {
+      ...best,
+      direct: current.direct || candidate.direct,
+      attention: Math.max(current.attention, candidate.attention),
+      opens: Math.max(current.opens, candidate.opens),
+      favorite: current.favorite || candidate.favorite,
+      shares: Math.max(current.shares, candidate.shares),
+      latestPublishedAt:
+        current.latestPublishedAt.localeCompare(candidate.latestPublishedAt) >= 0
+          ? current.latestPublishedAt
+          : candidate.latestPublishedAt,
+    });
   }
 
   const clusterValues = [...clusters.values()];
-  const sourceCount = new Set(
-    clusterValues
-      .map((item) => canonicalHotnessKey(item.article.source.url))
-      .filter(Boolean),
-  ).size;
+  const sourceCount = allSources.size;
   const sourceDiversityWeight = 1 + Math.min(5, Math.max(0, sourceCount - 1)) * 0.06;
   const rawCrawlerScore =
     clusterValues.reduce((total, item) => total + item.crawler, 0) *
@@ -219,7 +235,7 @@ function buildRawInstitutionActivity(
   const directArticleCount = clusterValues.filter((item) => item.direct).length;
   const portfolioArticleCount = clusterValues.length - directArticleCount;
   const latestActivity = clusterValues
-    .map((item) => item.article.publishedAt)
+    .map((item) => item.latestPublishedAt)
     .sort((left, right) => right.localeCompare(left))[0];
 
   return {
