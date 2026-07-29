@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { IntelligenceFavoriteControls } from "@/components/homepage-favorite-controls";
+import { IntelligenceHotnessControls } from "@/components/intelligence-hotness-controls";
 import { WechatShareCompat } from "@/components/wechat-share-compat";
 
 export function SiteClientControls() {
@@ -13,6 +14,7 @@ export function SiteClientControls() {
   return (
     <>
       <IntelligenceFavoriteControls />
+      <IntelligenceHotnessControls />
       <WechatShareCompat />
     </>
   );
