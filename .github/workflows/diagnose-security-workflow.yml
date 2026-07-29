@@ -1,0 +1,18 @@
+name: Locate dependency security workflow
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/diagnose-security-workflow.yml
+
+permissions:
+  actions: read
+
+jobs:
+  locate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print workflow metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/${{ github.repository }}/actions/workflows/319335585
