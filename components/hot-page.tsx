@@ -1,11 +1,24 @@
 "use client";
 
-import { Bookmark, ExternalLink, Flame, Search, Share2 } from "lucide-react";
+import {
+  Bookmark,
+  Building2,
+  ExternalLink,
+  Flame,
+  Search,
+  Share2,
+} from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
+import styles from "@/components/hot-page.module.css";
 import { useFavorites } from "@/components/use-favorites";
 import { useHotness } from "@/components/use-hotness";
-import styles from "@/components/hot-page.module.css";
 import { toggleFavorite, type FavoriteInput } from "@/lib/favorites";
+import {
+  getArticleInstitutionRelations,
+  institutionDirectoryHref,
+  type InstitutionActivityRelation,
+} from "@/lib/institution-activity";
 import {
   HOTNESS_WEIGHTS,
   calculateHotnessScore,
@@ -21,12 +34,21 @@ import { useArticles } from "@/lib/use-articles";
 
 const SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
 const DISPLAY_LIMIT = 100;
+const INSTITUTION_LIMIT = 16;
 
 type RankedArticle = {
   article: LiveIntelligenceEvent;
   score: number;
   opens: number;
   favorite: boolean;
+  shares: number;
+};
+
+type RankedInstitution = {
+  relation: InstitutionActivityRelation;
+  score: number;
+  opens: number;
+  favoriteArticles: number;
   shares: number;
 };
 
@@ -122,6 +144,50 @@ export function HotPage() {
       );
   }, [articles, favoriteKeys, hotness]);
 
+  const articleSignals = useMemo(
+    () =>
+      new Map(
+        allRanked.map((item) => [canonicalHotnessKey(item.article.source.url), item] as const),
+      ),
+    [allRanked],
+  );
+
+  const rankedInstitutions = useMemo<RankedInstitution[]>(() => {
+    return getArticleInstitutionRelations(articles)
+      .map((relation) => {
+        let score = 0;
+        let opens = 0;
+        let favoriteArticles = 0;
+        let shares = 0;
+        for (const article of relation.relatedEvents) {
+          const signal = articleSignals.get(canonicalHotnessKey(article.source.url));
+          if (!signal) continue;
+          score += signal.score;
+          opens += signal.opens;
+          favoriteArticles += Number(signal.favorite);
+          shares += signal.shares;
+        }
+        return { relation, score, opens, favoriteArticles, shares };
+      })
+      .sort(
+        (left, right) =>
+          right.score - left.score ||
+          right.shares - left.shares ||
+          right.favoriteArticles - left.favoriteArticles ||
+          right.opens - left.opens ||
+          right.relation.directEvents.length - left.relation.directEvents.length ||
+          right.relation.publicActivityScore - left.relation.publicActivityScore ||
+          (right.relation.latestActivity ?? "").localeCompare(
+            left.relation.latestActivity ?? "",
+          ) ||
+          left.relation.institution.name.localeCompare(
+            right.relation.institution.name,
+            "zh-CN",
+          ),
+      )
+      .slice(0, INSTITUTION_LIMIT);
+  }, [articleSignals, articles]);
+
   const interactedCount = useMemo(
     () => allRanked.filter((item) => item.score > 0).length,
     [allRanked],
@@ -173,7 +239,53 @@ export function HotPage() {
         <div><ExternalLink size={15} /><span>打开</span><strong>× {HOTNESS_WEIGHTS.open}</strong></div>
         <div><Bookmark size={15} /><span>收藏</span><strong>× {HOTNESS_WEIGHTS.favorite}</strong></div>
         <div><Share2 size={15} /><span>分享</span><strong>× {HOTNESS_WEIGHTS.share}</strong></div>
-        <p>当前浏览器累计打开 {totalOpens} 次、分享 {totalShares} 次；未产生行为的文章按重要度与发布时间打破并列。</p>
+        <p>当前浏览器累计打开 {totalOpens} 次、分享 {totalShares} 次；机构榜直接聚合其关联文章的同一热点分，不另设隐藏行为权重。</p>
+      </section>
+
+      <section className={styles.institutionBoard} aria-label="09 热点活跃机构排名">
+        <header className={styles.institutionHeader}>
+          <div>
+            <p>ACTIVE INSTITUTIONS</p>
+            <h2>活跃机构</h2>
+          </div>
+          <span>{rankedInstitutions.length} 家 · 由关联文章聚合</span>
+        </header>
+        {rankedInstitutions.length ? (
+          <div className={styles.institutionRanking}>
+            {rankedInstitutions.map(
+              ({ relation, score, opens, favoriteArticles, shares }, index) => (
+                <Link
+                  className={styles.institutionRow}
+                  href={institutionDirectoryHref(relation.institution)}
+                  key={relation.institution.name}
+                >
+                  <span className={styles.institutionRank} data-top={index < 3 ? "true" : "false"}>
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <Building2 size={17} aria-hidden="true" />
+                  <div className={styles.institutionMain}>
+                    <strong>{relation.institution.name}</strong>
+                    <small>
+                      {relation.institution.region} · {relation.institution.type} · 直接关联 {relation.directEvents.length} 条 · 组合关联 {relation.portfolioEvents.length} 条
+                    </small>
+                  </div>
+                  <dl className={styles.institutionSignals}>
+                    <div><dt>热点分</dt><dd>{score}</dd></div>
+                    <div><dt>打开</dt><dd>{opens}</dd></div>
+                    <div><dt>收藏文章</dt><dd>{favoriteArticles}</dd></div>
+                    <div><dt>分享</dt><dd>{shares}</dd></div>
+                  </dl>
+                </Link>
+              ),
+            )}
+          </div>
+        ) : (
+          <div className={styles.institutionEmpty}>
+            <Building2 size={24} />
+            <strong>暂无可核对的机构—文章关联</strong>
+            <p>系统不会仅凭宽泛标签生成机构排名；需要直接事件、机构名称或公开组合关系。</p>
+          </div>
+        )}
       </section>
 
       <div className={styles.toolbar}>
