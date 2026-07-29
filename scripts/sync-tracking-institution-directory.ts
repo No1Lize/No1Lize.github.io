@@ -159,6 +159,15 @@ function removeAutoRow(
   }
 }
 
+type TrackSyncSummary = {
+  track: string;
+  addedInstitutions: string[];
+  prunedUnverifiedPeople: string[];
+  sampleInstitutionCount: number;
+  eligibleInstitutionCount: number;
+  blockedInstitutionCount: number;
+};
+
 export function syncInstitutionDirectory(
   config: TrackingConfig,
   rawLedger: DiscoveryLedger,
@@ -166,12 +175,7 @@ export function syncInstitutionDirectory(
 ): {
   changed: boolean;
   directoryCount: number;
-  tracks: Array<{
-    track: string;
-    addedInstitutions: string[];
-    prunedUnverifiedPeople: string[];
-    sampleInstitutionCount: number;
-  }>;
+  tracks: TrackSyncSummary[];
   ledger: Required<DiscoveryLedger>;
 } {
   const ledger = ensureLedger(rawLedger);
@@ -182,12 +186,7 @@ export function syncInstitutionDirectory(
     keys: new Set([entry.name, entry.fullName].filter(Boolean).map(normalize)),
   }));
   const verifiedPeople = verifiedInstitutionPeople(ventureSnapshot);
-  const summaries: Array<{
-    track: string;
-    addedInstitutions: string[];
-    prunedUnverifiedPeople: string[];
-    sampleInstitutionCount: number;
-  }> = [];
+  const summaries: TrackSyncSummary[] = [];
   let changed = false;
 
   for (const track of config.tracks ?? []) {
@@ -202,11 +201,17 @@ export function syncInstitutionDirectory(
     );
     for (const value of track.ignoredRecommendations?.companies ?? []) blocked.add(normalize(value));
 
+    // Owner-deleted automatic entries are tombstones and must never be silently
+    // restored. Completeness therefore means every non-tombstoned directory
+    // institution is referenced, not that blocked entries are reintroduced.
+    const eligibleDirectoryEntries = directoryAliasSets.filter(
+      (entry) => ![...entry.keys].some((key) => blocked.has(key)),
+    );
+
     const existingKeys = new Set(samples.map(normalize));
     const addedInstitutions: string[] = [];
-    for (const entry of directoryAliasSets) {
+    for (const entry of eligibleDirectoryEntries) {
       if ([...entry.keys].some((key) => existingKeys.has(key))) continue;
-      if ([...entry.keys].some((key) => blocked.has(key))) continue;
       samples.push(entry.name);
       for (const key of entry.keys) existingKeys.add(key);
       addedInstitutions.push(entry.name);
@@ -245,21 +250,29 @@ export function syncInstitutionDirectory(
     const referencedCount = directoryAliasSets.filter((entry) =>
       [...entry.keys].some((key) => existingKeys.has(key)),
     ).length;
-    if (referencedCount !== directoryNames.length) {
+    const eligibleReferencedCount = eligibleDirectoryEntries.filter((entry) =>
+      [...entry.keys].some((key) => existingKeys.has(key)),
+    ).length;
+    if (eligibleReferencedCount !== eligibleDirectoryEntries.length) {
       throw new Error(
-        `风险投资赛道仅引用 ${referencedCount}/${directoryNames.length} 家投资机构，拒绝写入不完整同步。`,
+        `风险投资赛道仅引用 ${eligibleReferencedCount}/${eligibleDirectoryEntries.length} 家未屏蔽投资机构，拒绝写入不完整同步。`,
       );
     }
+    const blockedInstitutionCount = directoryAliasSets.length - eligibleDirectoryEntries.length;
     ledger.tracks[slug] = {
       ...(ledger.tracks[slug] ?? {}),
       lastInstitutionDirectorySyncAt: stamp,
       institutionDirectoryCount: String(directoryNames.length),
+      eligibleInstitutionDirectoryCount: String(eligibleDirectoryEntries.length),
+      blockedInstitutionDirectoryCount: String(blockedInstitutionCount),
     };
     summaries.push({
       track: slug,
       addedInstitutions,
       prunedUnverifiedPeople,
       sampleInstitutionCount: referencedCount,
+      eligibleInstitutionCount: eligibleDirectoryEntries.length,
+      blockedInstitutionCount,
     });
   }
 
