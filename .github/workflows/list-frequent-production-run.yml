@@ -1,0 +1,21 @@
+name: List current frequent production refresh
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/list-frequent-production-run.yml
+
+permissions:
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Print latest frequent refresh runs
+        run: |
+          gh run list --workflow frequent-intelligence-refresh.yml --limit 5 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle
