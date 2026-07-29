@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - tools/crawl_star_market_investors.py
+      - tools/star_market_prospectus_parser.py
       - config/star_market_investor_sources.json
       - requirements-star-investors.txt
       - public/data/star_market_investors.json
@@ -15,6 +16,8 @@ on:
       - app/institutions/page.tsx
       - app/institutions/page.module.css
       - tests/test_star_market_investors.py
+      - tests/test_star_market_investor_privacy_scope.py
+      - tests/test_star_market_prospectus_parser.py
       - tests/star-market-investor-data.test.ts
       - .github/workflows/star-market-investor-refresh.yml
   schedule:
@@ -57,9 +60,13 @@ jobs:
         run: |
           python -m py_compile \
             tools/crawl_star_market_investors.py \
+            tools/star_market_prospectus_parser.py \
             tools/cninfo_structured_disclosures.py \
             tools/crawl_listed_company_disclosures.py
-          python -m unittest tests.test_star_market_investors
+          python -m unittest \
+            tests.test_star_market_investors \
+            tests.test_star_market_investor_privacy_scope \
+            tests.test_star_market_prospectus_parser
 
       - name: Refresh official prospectus investor directory
         env:
