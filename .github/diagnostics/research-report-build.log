@@ -4,18 +4,18 @@ This information is used to shape Next.js' roadmap and prioritize features.
 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
 https://nextjs.org/telemetry
 
-▲ Next.js 16.2.6 (Turbopack)
+▲ Next.js 16.2.12 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 5.7s
+✓ Compiled successfully in 5.6s
   Running TypeScript ...
-  Finished TypeScript in 7.8s ...
+  Finished TypeScript in 7.7s ...
   Collecting page data using 3 workers ...
   Generating static pages using 3 workers (0/195) ...
   Generating static pages using 3 workers (48/195) 
   Generating static pages using 3 workers (97/195) 
   Generating static pages using 3 workers (146/195) 
-✓ Generating static pages using 3 workers (195/195) in 3.0s
+✓ Generating static pages using 3 workers (195/195) in 2.6s
   Finalizing page optimization ...
 
 Route (app)
@@ -58,9 +58,9 @@ Route (app)
 │ ├ /reports/ai-chips
 │ └ [+2 more paths]
 ├ ● /reports/pdf/[slug]
-│ ├ /reports/pdf/eastmoney-ap202607281827423474
-│ ├ /reports/pdf/eastmoney-ap202607281827402414
+│ ├ /reports/pdf/public-c901c5ad7c8680a84300
 │ ├ /reports/pdf/public-99650e337832e3626abf
+│ ├ /reports/pdf/public-0e4e95508281159628b5
 │ └ [+21 more paths]
 ├ ○ /robots.txt
 ├ ○ /search
