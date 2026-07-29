@@ -5,6 +5,7 @@ from __future__ import annotations
 
 try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import crawl_with_source_categories as base
+    from . import http_policy_bridge
     from . import professional_media_progress
     from . import professional_media_sources
     from . import search_index_feed_redirects
@@ -23,6 +24,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
     import crawl_with_source_categories as base
+    import http_policy_bridge
     import professional_media_progress
     import professional_media_sources
     import search_index_feed_redirects
@@ -116,6 +118,7 @@ def _install_professional_media() -> None:
 
 
 def main() -> int:
+    http_policy_bridge.install(base.tracking.crawler)
     search_index_feed_redirects.install(base.tracking.crawler)
     wechat_fetch_compat.install(wechat_public_sources)
     wechat_registry_bridge.install(wechat_public_sources)
