@@ -38,11 +38,17 @@ VOLATILE_KEYS = {
 
 def canonicalize(value: Any) -> Any:
     if isinstance(value, dict):
-        return {
+        normalized = {
             str(key): canonicalize(item)
             for key, item in sorted(value.items(), key=lambda pair: str(pair[0]))
             if str(key) not in VOLATILE_KEYS
         }
+        # Once an alert is active, larger streak numbers do not change the action
+        # required from the operator. Normalize them to the threshold so a
+        # persistent outage does not create a Git commit every two hours.
+        if normalized.get("alertActive") is True and "failureThreshold" in normalized:
+            normalized["consecutiveFailures"] = normalized["failureThreshold"]
+        return normalized
     if isinstance(value, list):
         return [canonicalize(item) for item in value]
     return value
