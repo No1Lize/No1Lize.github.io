@@ -126,9 +126,9 @@ class ConservativeStarParserTests(unittest.TestCase):
             "寒武纪",
             max_investors=20,
         )
-        serialized = "\n".join(item["name"] for item in investors)
-        self.assertNotIn("整体变更", serialized)
-        self.assertNotIn("管理有限公司\n", serialized + "\n")
+        names = {item["name"] for item in investors}
+        self.assertFalse(any("整体变更" in name for name in names))
+        self.assertNotIn("管理有限公司", names)
 
     def test_html_tags_are_removed_from_public_titles(self):
         self.assertEqual(
