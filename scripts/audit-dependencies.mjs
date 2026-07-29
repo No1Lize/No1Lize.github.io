@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
 const ALLOWED_DEV_ADVISORIES = new Set([
-  "GHSA-mh99-v99m-4gvg",
+  "GHSA-MH99-V99M-4GVG",
 ]);
 const SAFE_BRACE_EXPANSION_BACKPORTS = new Set([
   "1.1.16",
