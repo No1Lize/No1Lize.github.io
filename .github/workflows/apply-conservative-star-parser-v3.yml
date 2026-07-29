@@ -1,0 +1,155 @@
+name: Apply conservative STAR shareholder parser v3
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/apply-conservative-star-parser-v3.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.head_ref == 'fix/conservative-star-shareholder-table-parser-20260729'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Wire conservative parser into production crawler
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("tools/crawl_star_market_investors.py")
+          text = path.read_text(encoding="utf-8")
+
+          if "star_market_prospectus_parser as prospectus_parser" not in text:
+              text = text.replace(
+                  "    from . import crawl_listed_company_disclosures as listed\n",
+                  "    from . import crawl_listed_company_disclosures as listed\n    from . import star_market_prospectus_parser as prospectus_parser\n",
+                  1,
+              )
+              text = text.replace(
+                  "    import crawl_listed_company_disclosures as listed\n",
+                  "    import crawl_listed_company_disclosures as listed\n    import star_market_prospectus_parser as prospectus_parser\n",
+                  1,
+              )
+
+          if 'text = re.sub(r"<[^>]+>", "", text)' not in text:
+              text = text.replace(
+                  '    text = str(value or "").replace("\\u3000", " ").replace("\\xa0", " ")\n',
+                  '    text = str(value or "")\n    text = re.sub(r"<[^>]+>", "", text)\n    text = text.replace("\\u3000", " ").replace("\\xa0", " ")\n',
+                  1,
+              )
+
+          if "return prospectus_parser.extract_institutional_investors" not in text:
+              start = text.find("def extract_institutional_investors(")
+              end = text.find("def _official_prospectus_host", start)
+              if start < 0 or end < 0:
+                  raise SystemExit("extractor function boundaries not found")
+              wrapper = '''def extract_institutional_investors(
+              pages: list[PdfPage],
+              company_name: str,
+              *,
+              max_investors: int,
+          ) -> list[dict[str, Any]]:
+              return prospectus_parser.extract_institutional_investors(
+                  pages,
+                  company_name,
+                  max_investors=max_investors,
+              )
+
+
+          '''
+              text = text[:start] + wrapper + text[end:]
+
+          text = text.replace(
+              "    issuer_contact = extract_issuer_contact(pages, listing.name)\n",
+              "    issuer_contact: dict[str, Any] = {}\n",
+              1,
+          )
+
+          if '"shareholderEvidence"' not in text:
+              text = text.replace(
+                  '            "pdfExtraction": "pypdf text extraction; OCR and access-control bypass are not used",\n',
+                  '            "pdfExtraction": "pypdf text extraction; OCR and access-control bypass are not used",\n'
+                  '            "shareholderEvidence": "Only explicit pre/post-IPO shareholder table rows with same-row shares and ownership are published",\n'
+                  '            "nameResolution": "Prospectus definitions or the exact shareholder basic-information block",\n'
+                  '            "contactEvidence": "Only fields inside the exact shareholder basic-information block",\n',
+                  1,
+              )
+
+          text = text.replace(
+              '            for key in ("name", "investorType", "sourceSection", "evidence"):',
+              '            for key in ("name", "disclosedName", "investorType", "sourceSection", "evidence", "nameResolution"):',
+              1,
+          )
+
+          if "prospectus title contains HTML markup" not in text:
+              needle = '            errors.append(f"{slug}: prospectus URL is not official")\n'
+              if needle not in text:
+                  raise SystemExit("official URL validation line not found")
+              text = text.replace(
+                  needle,
+                  needle
+                  + '        title = str(prospectus.get("title", ""))\n'
+                  + '        if re.search(r"<[^>]+>", title):\n'
+                  + '            errors.append(f"{slug}: prospectus title contains HTML markup")\n',
+                  1,
+              )
+
+          if "missing valid same-row holding facts" not in text:
+              needle = '            investor_count += 1\n\n    if int(snapshot.get("companyCount", -1))'
+              if needle not in text:
+                  raise SystemExit("investor count validation line not found")
+              checks = '''            evidence = clean_text(investor.get("evidence"), 500)
+              if not evidence:
+                  errors.append(f"{slug}: investor {name} missing table-row evidence")
+              try:
+                  shares = float(investor.get("preIpoShares", 0))
+                  ownership = float(investor.get("preIpoOwnershipPct", 0))
+              except (TypeError, ValueError):
+                  shares = 0
+                  ownership = 0
+              if shares <= 0 or not (0 < ownership <= 100):
+                  errors.append(f"{slug}: investor {name} missing valid same-row holding facts")
+              if investor.get("nameResolution") not in {"definitions", "basic-information"}:
+                  errors.append(f"{slug}: investor {name} lacks prospectus name resolution")
+              if any(fragment in name for fragment in prospectus_parser.NARRATIVE_NAME_FRAGMENTS):
+                  errors.append(f"{slug}: narrative phrase published as investor: {name}")
+              if name in prospectus_parser.GENERIC_NAMES:
+                  errors.append(f"{slug}: generic institution name published: {name}")
+              company_name = clean_text(company.get("name"), 120)
+              if company_name and prospectus_parser.normalize_name(company_name) in prospectus_parser.normalize_name(name):
+                  errors.append(f"{slug}: issuer published as its own investor: {name}")
+              investor_count += 1
+
+              if int(snapshot.get("companyCount", -1))'''
+              text = text.replace(needle, checks, 1)
+
+          path.write_text(text, encoding="utf-8")
+          PY
+
+          python -m py_compile \
+            tools/crawl_star_market_investors.py \
+            tools/star_market_prospectus_parser.py
+          python -m unittest \
+            tests.test_star_market_investors \
+            tests.test_star_market_investor_privacy_scope \
+            tests.test_star_market_prospectus_parser
+
+      - name: Commit crawler integration
+        run: |
+          if git diff --quiet -- tools/crawl_star_market_investors.py; then
+            echo "No crawler integration change required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/crawl_star_market_investors.py
+          git commit -m "fix: require structured STAR shareholder evidence"
+          git pull --rebase origin ${{ github.head_ref }}
+          git push origin HEAD:${{ github.head_ref }}
