@@ -1,0 +1,28 @@
+name: List active production refresh runs
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/list-production-refresh-runs.yml
+
+permissions:
+  actions: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Print refresh queues
+        run: |
+          echo 'FREQUENT'
+          gh run list --workflow frequent-intelligence-refresh.yml --limit 5 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url
+          echo 'FULL'
+          gh run list --workflow scheduled-sync.yml --limit 5 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url
+          echo 'PAGES'
+          gh run list --workflow pages.yml --limit 5 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url
