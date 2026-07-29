@@ -42,9 +42,29 @@ jobs:
                   raise SystemExit("load_json anchor not found")
               text = text.replace(old, privacy, 1)
 
+          evidence_anchor = '''def _candidate_name(raw: str, company_name: str) -> str:
+          '''
+          evidence_helper = '''def evidence_for_match(text: str, start: int, end: int, limit: int = 220) -> str:
+              line_start = text.rfind("\\n", 0, start) + 1
+              line_end = text.find("\\n", end)
+              if line_end < 0:
+                  line_end = len(text)
+              line = clean_text(text[line_start:line_end], limit * 2)
+              if line and len(line) <= limit * 2:
+                  return redact_private_text(line, limit)
+              return redact_private_text(text[start : min(len(text), end + limit)], limit)
+
+
+          def _candidate_name(raw: str, company_name: str) -> str:
+          '''
+          if "def evidence_for_match" not in text:
+              if evidence_anchor not in text:
+                  raise SystemExit("candidate-name anchor not found")
+              text = text.replace(evidence_anchor, evidence_helper, 1)
+
           replacements = {
               '+ r\"))\"\n)': '+ r\")(?:（有限合伙）|\\(有限合伙\\))?)\"\n)',
-              '"evidence": clean_text(context, 220),': '"evidence": redact_private_text(context, 220),',
+              '"evidence": clean_text(context, 220),': '"evidence": evidence_for_match(page.text, match.start(), match.end(), 220),',
               'current_quality = int(current is not None) + int(current and "preIpoOwnershipPct" in current)': 'current_quality = int(current is not None) + int(bool(current and "preIpoOwnershipPct" in current))',
           }
           for before, after in replacements.items():
