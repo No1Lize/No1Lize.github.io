@@ -1,12 +1,12 @@
 {
-  "snapshotGeneratedAt": "2026-07-29T11:24:18+00:00",
+  "snapshotGeneratedAt": "2026-07-29T15:22:58+00:00",
   "enabledTrackCount": 13,
   "generatedSourceCount": 34,
   "executedSourceCount": 34,
   "tracksWithoutExecutedSource": [],
   "originalUrlContractPassed": true,
   "wechatIngestion": {
-    "generatedAt": "2026-07-29T11:24:18+00:00",
+    "generatedAt": "2026-07-29T15:22:58+00:00",
     "configuredSources": 34,
     "successfulSources": 11,
     "acceptedArticles": 40,
@@ -14,8 +14,8 @@
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
     "retainedSources": 23,
-    "mentionedCompanyLinks": 64,
-    "mentionedPeopleLinks": 97
+    "mentionedCompanyLinks": 56,
+    "mentionedPeopleLinks": 96
   },
   "tracks": [
     {
@@ -66,7 +66,7 @@
           "status": "partial",
           "scanned": 26,
           "accepted": 6,
-          "failed": 4,
+          "failed": 3,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -99,10 +99,10 @@
         {
           "id": "user-track-wechat-deeptechchina-ai",
           "name": "DeepTech深科技",
-          "status": "partial",
+          "status": "ok",
           "scanned": 17,
           "accepted": 3,
-          "failed": 1,
+          "failed": 0,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -146,7 +146,7 @@
           "status": "partial",
           "scanned": 26,
           "accepted": 3,
-          "failed": 8,
+          "failed": 7,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -179,10 +179,10 @@
         {
           "id": "user-track-wechat-aitechuang-robotics",
           "name": "AI科技评论",
-          "status": "ok",
+          "status": "partial",
           "scanned": 19,
           "accepted": 2,
-          "failed": 0,
+          "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -253,7 +253,7 @@
           "status": "error",
           "scanned": 0,
           "accepted": 0,
-          "failed": 15,
+          "failed": 14,
           "platform": "微信",
           "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
           "retainedPrevious": true,
