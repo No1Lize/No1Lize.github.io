@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-29T12:37:29+00:00",
+  "updatedAt": "2026-07-29T15:34:27+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-29T12:33:49+00:00"
+      "lastExpandedAt": "2026-07-29T15:31:26+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-29T12:34:07+00:00"
+      "lastExpandedAt": "2026-07-29T15:31:42+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-29T12:34:23+00:00"
+      "lastExpandedAt": "2026-07-29T15:32:02+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-29T12:34:56+00:00"
+      "lastExpandedAt": "2026-07-29T15:32:31+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-29T12:35:17+00:00"
+      "lastExpandedAt": "2026-07-29T15:32:50+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-29T12:35:36+00:00"
+      "lastExpandedAt": "2026-07-29T15:33:05+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-29T12:35:53+00:00"
+      "lastExpandedAt": "2026-07-29T15:33:19+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-29T12:36:09+00:00"
+      "lastExpandedAt": "2026-07-29T15:33:33+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-29T12:36:26+00:00"
+      "lastExpandedAt": "2026-07-29T15:33:48+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-29T12:36:44+00:00"
+      "lastExpandedAt": "2026-07-29T15:34:04+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-29T12:37:11+00:00"
+      "lastExpandedAt": "2026-07-29T15:34:27+00:00"
     },
     "track-1ccjq49": {
       "lastExpandedAt": "2026-07-29T12:37:29+00:00"
     },
     "track-1p8ob4k": {
-      "lastExpandedAt": "2026-07-29T04:57:55+00:00"
+      "lastExpandedAt": "2026-07-29T15:31:00+00:00"
     }
   },
   "added": [
@@ -1916,6 +1916,33 @@
       "evidence": [
         "corpus-term",
         "google-suggest"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "亿元",
+      "addedAt": "2026-07-29T15:32:02+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "DRAM",
+      "addedAt": "2026-07-29T15:32:02+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "万亿",
+      "addedAt": "2026-07-29T15:32:02+00:00",
+      "evidence": [
+        "corpus-term"
       ]
     }
   ],
