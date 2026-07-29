@@ -22,9 +22,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Refresh and audit lockfile
+      - name: Refresh, inspect and audit lockfile
         run: |
           npm install --package-lock-only --ignore-scripts
+          npm install --ignore-scripts
+          npm ls brace-expansion minimatch --all || true
           npm audit --audit-level=high
           node -e "const lock=require('./package-lock.json'); if (lock.lockfileVersion !== 3 || !lock.packages) process.exit(1)"
       - name: Commit refreshed lockfile
