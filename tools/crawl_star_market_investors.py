@@ -106,7 +106,7 @@ INSTITUTION_ENDINGS = (
 INSTITUTION_PATTERN = re.compile(
     r"(?P<name>[A-Za-z0-9\u4e00-\u9fff·（）()&－—-]{2,96}?(?:"
     + "|".join(re.escape(ending) for ending in INSTITUTION_ENDINGS)
-    + r"))"
+    + r")(?:（有限合伙）|\(有限合伙\))?)"
 )
 
 EMAIL_PATTERN = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
@@ -178,6 +178,13 @@ def normalized_name(value: str) -> str:
         "",
         clean_text(value, 200).casefold(),
     )
+
+
+def redact_private_text(value: Any, limit: int = 2000) -> str:
+    text = clean_text(value, limit * 2)
+    text = MOBILE_PATTERN.sub("[已移除手机号码]", text)
+    text = IDENTITY_PATTERN.sub("[已移除身份证件信息]", text)
+    return clean_text(text, limit)
 
 
 def load_json(path: Path, fallback: Any) -> Any:
@@ -570,6 +577,17 @@ def extract_issuer_contact(pages: list[PdfPage], company_name: str) -> dict[str,
     return contact
 
 
+def evidence_for_match(text: str, start: int, end: int, limit: int = 220) -> str:
+    line_start = text.rfind("\n", 0, start) + 1
+    line_end = text.find("\n", end)
+    if line_end < 0:
+        line_end = len(text)
+    line = clean_text(text[line_start:line_end], limit * 2)
+    if line and len(line) <= limit * 2:
+        return redact_private_text(line, limit)
+    return redact_private_text(text[start : min(len(text), end + limit)], limit)
+
+
 def _candidate_name(raw: str, company_name: str) -> str:
     value = clean_text(raw, 120)
     value = re.sub(r"^\d+[、.．)）]?", "", value).strip()
@@ -695,14 +713,14 @@ def extract_institutional_investors(
                     (term for term in SHAREHOLDER_PAGE_TERMS if term in page.text),
                     "股东情况",
                 ),
-                "evidence": clean_text(context, 220),
+                "evidence": evidence_for_match(page.text, match.start(), match.end(), 220),
             }
             if shares is not None:
                 item["preIpoShares"] = round(shares, 4)
             if ownership is not None:
                 item["preIpoOwnershipPct"] = round(ownership, 6)
             current = candidates.get(key)
-            current_quality = int(current is not None) + int(current and "preIpoOwnershipPct" in current)
+            current_quality = int(current is not None) + int(bool(current and "preIpoOwnershipPct" in current))
             next_quality = 1 + int("preIpoOwnershipPct" in item)
             if current is None or next_quality > current_quality:
                 candidates[key] = item
