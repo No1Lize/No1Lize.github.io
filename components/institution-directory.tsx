@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   institutionDirectory,
   institutionRankingCategories,
@@ -35,6 +35,15 @@ export function InstitutionDirectory({
   const [category, setCategory] = useState<InstitutionRankingCategory | "全部">("全部");
   const [page, setPage] = useState(1);
   const safePageSize = Math.max(1, pageSize);
+
+  useEffect(() => {
+    const institution = new URLSearchParams(window.location.search).get("institution")?.trim();
+    if (!institution) return;
+    setQuery(institution);
+    setRegion("全部");
+    setCategory("全部");
+    setPage(1);
+  }, []);
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
