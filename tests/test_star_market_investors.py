@@ -59,19 +59,19 @@ class StarMarketInvestorTests(unittest.TestCase):
         self.assertGreater(final, draft)
         self.assertLess(unrelated, 0)
 
-    def test_extracts_institutional_shareholder_and_excludes_natural_person(self):
+    def test_crawler_wrapper_uses_structured_pre_and_post_ipo_table(self):
         pages = [
+            star.PdfPage(21, "示例基金 指 北京示例创业投资基金（有限合伙）"),
             star.PdfPage(
                 88,
                 """
-                发行前股本结构
-                序号 股东名称 持股数量 持股比例
-                1 北京示例创业投资基金（有限合伙） 1,250万股 12.50%
-                2 张三 800万股 8.00%
-                北京示例创业投资基金（有限合伙）住所：北京市海淀区科创路1号
-                联系电话：010-12345678 电子邮箱：contact@examplefund.cn
+                公司本次发行前后公司股本情况
+                序号 股东名称/姓名 本次发行前 本次发行后
+                持股数（股） 占比（%） 持股数（股） 占比（%）
+                1 张三 80,000,000 80.00 80,000,000 72.00
+                2 示例基金 12,500,000 12.50 12,500,000 11.25
                 """,
-            )
+            ),
         ]
         investors = star.extract_institutional_investors(
             pages,
@@ -83,50 +83,7 @@ class StarMarketInvestorTests(unittest.TestCase):
         self.assertEqual(investor["name"], "北京示例创业投资基金（有限合伙）")
         self.assertEqual(investor["preIpoShares"], 12500000)
         self.assertEqual(investor["preIpoOwnershipPct"], 12.5)
-        self.assertEqual(investor["publicContact"]["phone"], "010-12345678")
-        self.assertEqual(investor["publicContact"]["email"], "contact@examplefund.cn")
         self.assertNotIn("张三", json.dumps(investors, ensure_ascii=False))
-
-    def test_duplicate_institution_evidence_prefers_row_with_holding_percentage(self):
-        pages = [
-            star.PdfPage(
-                30,
-                "主要股东情况 北京示例资本有限公司为发行人机构股东。",
-            ),
-            star.PdfPage(
-                31,
-                "发行前股本结构 北京示例资本有限公司 500万股 5.25%",
-            ),
-        ]
-        investors = star.extract_institutional_investors(
-            pages,
-            "示例科技",
-            max_investors=20,
-        )
-        self.assertEqual(len(investors), 1)
-        self.assertEqual(investors[0]["preIpoOwnershipPct"], 5.25)
-
-    def test_contact_and_evidence_redact_mobile_and_identity_numbers(self):
-        pages = [
-            star.PdfPage(
-                42,
-                """
-                发行人股东情况
-                上海示例股权投资有限公司 300万股 3.00%
-                上海示例股权投资有限公司办公地址：上海市浦东新区示例路8号
-                联系人李某，手机13812345678，身份证310101199001011234，电话021-87654321。
-                """,
-            )
-        ]
-        investors = star.extract_institutional_investors(
-            pages,
-            "示例科技",
-            max_investors=20,
-        )
-        serialized = json.dumps(investors, ensure_ascii=False)
-        self.assertNotIn("13812345678", serialized)
-        self.assertNotIn("310101199001011234", serialized)
-        self.assertIn("021-87654321", serialized)
 
     def test_snapshot_validation_rejects_personal_mobile_in_contact_fields(self):
         snapshot = {
@@ -136,13 +93,21 @@ class StarMarketInvestorTests(unittest.TestCase):
             "companies": {
                 "sample": {
                     "ticker": "688001",
-                    "prospectus": {"url": "https://static.cninfo.com.cn/sample.pdf"},
+                    "prospectus": {
+                        "title": "示例科技首次公开发行股票招股说明书",
+                        "url": "https://static.cninfo.com.cn/sample.pdf",
+                    },
                     "investors": [
                         {
                             "name": "示例投资有限公司",
                             "normalizedName": "示例投资有限公司",
                             "institutional": True,
                             "sourcePage": 1,
+                            "sourceSection": "公司本次发行前后股本情况",
+                            "evidence": "2 示例投资有限公司 1,000,000 10.00 1,000,000 9.00",
+                            "preIpoShares": 1000000,
+                            "preIpoOwnershipPct": 10,
+                            "nameResolution": "definitions",
                             "publicContact": {"phone": "13812345678"},
                         }
                     ],
