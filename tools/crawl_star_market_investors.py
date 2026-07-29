@@ -36,9 +36,11 @@ from urllib.request import Request, urlopen
 try:
     from . import cninfo_structured_disclosures as cninfo
     from . import crawl_listed_company_disclosures as listed
+    from . import star_market_prospectus_parser as prospectus_parser
 except ImportError:
     import cninfo_structured_disclosures as cninfo
     import crawl_listed_company_disclosures as listed
+    import star_market_prospectus_parser as prospectus_parser
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKING_PATH = ROOT / "config" / "user_tracking.json"
@@ -165,7 +167,9 @@ class ProspectusCandidate:
 
 
 def clean_text(value: Any, limit: int = 2000) -> str:
-    text = str(value or "").replace("\u3000", " ").replace("\xa0", " ")
+    text = str(value or "")
+    text = re.sub(r"<[^>]+>", "", text)
+    text = text.replace("\u3000", " ").replace("\xa0", " ")
     text = re.sub(r"[\t\r]+", " ", text)
     text = re.sub(r" +", " ", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
@@ -681,68 +685,11 @@ def extract_institutional_investors(
     *,
     max_investors: int,
 ) -> list[dict[str, Any]]:
-    candidates: dict[str, dict[str, Any]] = {}
-    likely_pages = [
-        page
-        for page in pages
-        if any(term in page.text for term in SHAREHOLDER_PAGE_TERMS)
-    ]
-    for page in likely_pages:
-        for match in INSTITUTION_PATTERN.finditer(page.text):
-            name = _candidate_name(match.group("name"), company_name)
-            if not name:
-                continue
-            context = _context(page.text, match.start(), 260)
-            # Do not treat intermediary rosters as shareholder evidence.
-            if any(term in context for term in ("保荐机构（主承销商）", "发行人律师", "审计机构")) and not any(
-                term in context for term in SHAREHOLDER_PAGE_TERMS
-            ):
-                continue
-            key = normalized_name(name)
-            if not key:
-                continue
-            shares, ownership = extract_holding(context)
-            item = {
-                "id": "star-investor-" + hashlib.sha256(key.encode("utf-8")).hexdigest()[:18],
-                "name": name,
-                "normalizedName": key,
-                "institutional": True,
-                "investorType": classify_investor(name, context),
-                "sourcePage": page.number,
-                "sourceSection": next(
-                    (term for term in SHAREHOLDER_PAGE_TERMS if term in page.text),
-                    "股东情况",
-                ),
-                "evidence": evidence_for_match(page.text, match.start(), match.end(), 220),
-            }
-            if shares is not None:
-                item["preIpoShares"] = round(shares, 4)
-            if ownership is not None:
-                item["preIpoOwnershipPct"] = round(ownership, 6)
-            current = candidates.get(key)
-            current_quality = int(current is not None) + int(bool(current and "preIpoOwnershipPct" in current))
-            next_quality = 1 + int("preIpoOwnershipPct" in item)
-            if current is None or next_quality > current_quality:
-                candidates[key] = item
-
-    result: list[dict[str, Any]] = []
-    for item in candidates.values():
-        contact = extract_investor_contact(pages, item["name"])
-        if contact:
-            item["publicContact"] = contact
-            item["contactStatus"] = "prospectus-public"
-        else:
-            item["contactStatus"] = "not-disclosed-in-prospectus"
-        result.append(item)
-
-    result.sort(
-        key=lambda item: (
-            -float(item.get("preIpoOwnershipPct", -1)),
-            -float(item.get("preIpoShares", -1)),
-            item["name"],
-        )
+    return prospectus_parser.extract_institutional_investors(
+        pages,
+        company_name,
+        max_investors=max_investors,
     )
-    return result[: max(1, max_investors)]
 
 
 def _official_prospectus_host(url: str) -> bool:
@@ -768,7 +715,7 @@ def build_company_record(
         listing.name,
         max_investors=max(1, min(int(settings.get("maxInvestorsPerCompany", 120)), 300)),
     )
-    issuer_contact = extract_issuer_contact(pages, listing.name)
+    issuer_contact: dict[str, Any] = {}
     minimum = max(0, int(settings.get("minimumInvestorsPerCompany", 1)))
     status = "ok" if len(investors) >= minimum else "partial"
     errors = [] if status == "ok" else [f"only {len(investors)} institutional investors extracted"]
@@ -826,7 +773,7 @@ def public_human_text(snapshot: dict[str, Any]) -> str:
         for investor in investors:
             if not isinstance(investor, dict):
                 continue
-            for key in ("name", "investorType", "sourceSection", "evidence"):
+            for key in ("name", "disclosedName", "investorType", "sourceSection", "evidence", "nameResolution"):
                 value = investor.get(key)
                 if isinstance(value, str):
                     segments.append(value)
@@ -867,6 +814,9 @@ def validate_snapshot(snapshot: dict[str, Any], *, require_companies: bool = Fal
         prospectus = company.get("prospectus") if isinstance(company.get("prospectus"), dict) else {}
         if not _official_prospectus_host(str(prospectus.get("url", ""))):
             errors.append(f"{slug}: prospectus URL is not official")
+        title = str(prospectus.get("title", ""))
+        if re.search(r"<[^>]+>", title):
+            errors.append(f"{slug}: prospectus title contains HTML markup")
         investors = company.get("investors")
         if not isinstance(investors, list):
             errors.append(f"{slug}: investors must be an array")
@@ -888,7 +838,27 @@ def validate_snapshot(snapshot: dict[str, Any], *, require_companies: bool = Fal
                 errors.append(f"{slug}: non-institutional record published for {name}")
             if int(investor.get("sourcePage", 0)) <= 0:
                 errors.append(f"{slug}: investor {name} missing source page")
-            investor_count += 1
+            evidence = clean_text(investor.get("evidence"), 500)
+    if not evidence:
+        errors.append(f"{slug}: investor {name} missing table-row evidence")
+    try:
+        shares = float(investor.get("preIpoShares", 0))
+        ownership = float(investor.get("preIpoOwnershipPct", 0))
+    except (TypeError, ValueError):
+        shares = 0
+        ownership = 0
+    if shares <= 0 or not (0 < ownership <= 100):
+        errors.append(f"{slug}: investor {name} missing valid same-row holding facts")
+    if investor.get("nameResolution") not in {"definitions", "basic-information"}:
+        errors.append(f"{slug}: investor {name} lacks prospectus name resolution")
+    if any(fragment in name for fragment in prospectus_parser.NARRATIVE_NAME_FRAGMENTS):
+        errors.append(f"{slug}: narrative phrase published as investor: {name}")
+    if name in prospectus_parser.GENERIC_NAMES:
+        errors.append(f"{slug}: generic institution name published: {name}")
+    company_name = clean_text(company.get("name"), 120)
+    if company_name and prospectus_parser.normalize_name(company_name) in prospectus_parser.normalize_name(name):
+        errors.append(f"{slug}: issuer published as its own investor: {name}")
+    investor_count += 1
 
     if int(snapshot.get("companyCount", -1)) != len(companies):
         errors.append("companyCount mismatch")
@@ -987,6 +957,9 @@ def build_snapshot(
         "methodology": {
             "prospectusProvider": "CNINFO structured announcements with official PDF URLs",
             "pdfExtraction": "pypdf text extraction; OCR and access-control bypass are not used",
+            "shareholderEvidence": "Only explicit pre/post-IPO shareholder table rows with same-row shares and ownership are published",
+            "nameResolution": "Prospectus definitions or the exact shareholder basic-information block",
+            "contactEvidence": "Only fields inside the exact shareholder basic-information block",
             "retention": "previous verified company record retained on source failure",
         },
         "companies": companies,
