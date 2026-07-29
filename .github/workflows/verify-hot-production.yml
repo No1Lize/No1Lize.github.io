@@ -1,0 +1,67 @@
+name: Verify 09 hot production
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/verify-hot-production.yml
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PRODUCTION_SHA: d529b28980aa6e55487e23935ec77110b94a08f7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Wait for the production Pages deployment
+        run: |
+          set -euo pipefail
+          run_id=""
+          for _ in $(seq 1 30); do
+            run_id=$(gh run list --workflow pages.yml --limit 20 \
+              --json databaseId,headSha,status,conclusion \
+              --jq '.[] | select(.headSha == env.PRODUCTION_SHA) | .databaseId' | head -n 1)
+            if [ -n "$run_id" ]; then
+              break
+            fi
+            sleep 10
+          done
+          if [ -z "$run_id" ]; then
+            echo "No Pages run found for $PRODUCTION_SHA" >&2
+            exit 1
+          fi
+          echo "pages_run=$run_id"
+          for _ in $(seq 1 60); do
+            state=$(gh run view "$run_id" --json status,conclusion --jq '.status + ":" + (.conclusion // "")')
+            echo "pages=$state"
+            if [ "${state%%:*}" = "completed" ]; then
+              [ "${state#*:}" = "success" ]
+              break
+            fi
+            sleep 10
+          done
+      - name: Verify the public hot route and navigation
+        run: |
+          set -euo pipefail
+          cache_bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          curl --fail --location --retry 8 --retry-delay 8 \
+            -H 'Cache-Control: no-cache' \
+            "https://vciq.github.io/hot/?verify=${cache_bust}" \
+            --output /tmp/hot.html
+          grep -F '09 / HOT RANKING' /tmp/hot.html
+          grep -F '热点排名权重' /tmp/hot.html
+          curl --fail --location --retry 8 --retry-delay 8 \
+            -H 'Cache-Control: no-cache' \
+            "https://vciq.github.io/?verify=${cache_bust}" \
+            --output /tmp/home.html
+          grep -F '>09<' /tmp/home.html
+          grep -F 'href="/hot/"' /tmp/home.html
+          echo "production_hot_route_verified=true"
