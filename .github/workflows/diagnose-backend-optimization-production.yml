@@ -6,14 +6,13 @@ on:
       - .github/workflows/diagnose-backend-optimization-production.yml
 
 permissions:
-  actions: read
+  actions: write
   contents: read
-  issues: read
 
 jobs:
   inspect:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 55
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
@@ -21,48 +20,70 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Collect production rollout status
+          fetch-depth: 0
+      - name: Dispatch and verify the lightweight refresh
         run: |
           set -euo pipefail
-          echo 'production diagnostic pass 4'
-          mkdir -p diagnostics
-          for workflow in scheduled-sync.yml pages.yml security.yml market-profile-refresh.yml research-report-refresh.yml tracking-discovery.yml; do
-            gh run list --workflow "$workflow" --limit 20 \
-              --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
-              > "diagnostics/${workflow%.yml}.json"
+          before=$(gh run list --workflow frequent-intelligence-refresh.yml --limit 1 --json databaseId --jq '.[0].databaseId // 0')
+          gh workflow run frequent-intelligence-refresh.yml --ref main
+
+          run_id=""
+          for _ in $(seq 1 30); do
+            candidate=$(gh run list --workflow frequent-intelligence-refresh.yml --limit 1 --json databaseId,event --jq '.[0] | select(.event == "workflow_dispatch") | .databaseId // empty')
+            if [ -n "$candidate" ] && [ "$candidate" != "$before" ]; then
+              run_id="$candidate"
+              break
+            fi
+            sleep 5
           done
-          gh issue list --state all --search '[自动告警] 关键情报源连续异常 in:title' \
-            --json number,title,state,createdAt,updatedAt,url > diagnostics/source-health-issues.json
+          if [ -z "$run_id" ]; then
+            echo 'Could not locate dispatched lightweight refresh run.' >&2
+            exit 1
+          fi
+          echo "frequent_run_id=$run_id"
+
+          for _ in $(seq 1 100); do
+            state=$(gh run view "$run_id" --json status,conclusion --jq '.status + ":" + (.conclusion // "")')
+            echo "$state"
+            case "$state" in
+              completed:success) break ;;
+              completed:*) gh run view "$run_id" --log-failed || true; exit 1 ;;
+            esac
+            sleep 30
+          done
+          final=$(gh run view "$run_id" --json status,conclusion --jq '.status + ":" + (.conclusion // "")')
+          [ "$final" = "completed:success" ] || { echo "Timed out waiting for $run_id: $final" >&2; exit 1; }
+
+          git fetch origin main
+          git reset --hard origin/main
           python - <<'PY'
           import json
           from pathlib import Path
-
-          def summarize(path_value, keys):
-              path = Path(path_value)
-              if not path.exists():
-                  return {'exists': False}
-              payload = json.loads(path.read_text(encoding='utf-8'))
-              result = {'exists': True}
-              for key in keys:
-                  result[key] = payload.get(key)
-              return result
-
-          Path('diagnostics/source-health-summary.json').write_text(
-              json.dumps(summarize('public/data/source_health.json', [
-                  'generatedAt', 'sourceCount', 'activeAlertCount', 'activeAlerts'
-              ]), ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
-          Path('diagnostics/articles-summary.json').write_text(
-              json.dumps(summarize('public/data/articles.json', [
-                  'generatedAt', 'articleCount', 'todayArticleCount', 'todaySourceCount'
-              ]), ensure_ascii=False, indent=2) + '\n',
-              encoding='utf-8',
-          )
+          payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
+          audit = payload.get('refreshAudit') or {}
+          result = {
+              'generatedAt': payload.get('generatedAt'),
+              'articleCount': payload.get('articleCount'),
+              'refreshAudit': audit,
+          }
+          print(json.dumps(result, ensure_ascii=False, indent=2))
+          if audit.get('mode') != 'frequent':
+              raise SystemExit('latest production snapshot was not stamped by the frequent refresh')
+          if audit.get('pipelineCompleted') is not True:
+              raise SystemExit('frequent refresh did not mark pipeline completion')
+          if not audit.get('completedAt'):
+              raise SystemExit('frequent refresh did not publish completedAt')
           PY
-          cat diagnostics/*.json
-      - uses: actions/upload-artifact@v4
-        with:
-          name: backend-optimization-production-diagnostics
-          path: diagnostics
-          if-no-files-found: error
+
+          pages_id=$(gh run list --workflow pages.yml --limit 1 --json databaseId --jq '.[0].databaseId')
+          for _ in $(seq 1 30); do
+            pages_state=$(gh run view "$pages_id" --json status,conclusion --jq '.status + ":" + (.conclusion // "")')
+            echo "pages=$pages_state"
+            case "$pages_state" in
+              completed:success) exit 0 ;;
+              completed:*) gh run view "$pages_id" --log-failed || true; exit 1 ;;
+            esac
+            sleep 20
+          done
+          echo "Timed out waiting for Pages run $pages_id" >&2
+          exit 1
