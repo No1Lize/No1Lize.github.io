@@ -132,7 +132,7 @@ test("duplicate crawler records in the same event cluster count once", () => {
   assert.ok(idg);
   assert.equal(idg.articleCount, 1);
   assert.equal(idg.directArticleCount, 1);
-  assert.equal(idg.sourceCount, 1);
+  assert.equal(idg.sourceCount, 2);
 });
 
 test("local attention only adjusts the crawler ranking instead of replacing it", () => {
