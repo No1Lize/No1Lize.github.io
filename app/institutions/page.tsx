@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
-import { Landmark } from "lucide-react";
+import { FileSearch, Landmark } from "lucide-react";
+import Link from "next/link";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { InstitutionDirectory } from "@/components/institution-directory";
 import {
   institutionDirectoryStats,
   institutionRankingSources,
 } from "@/lib/institution-ranking-data";
+import { starMarketInvestorStats } from "@/lib/star-market-investor-data";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "投资机构",
-  description: "基于清科与投中专业榜单整理的中国股权投资机构目录，并连接现有中美机构研究档案。",
+  description: "基于专业榜单、机构公开资料与科创板招股说明书整理的投资机构目录。",
 };
 
 export default function InstitutionsPage() {
@@ -21,7 +23,7 @@ export default function InstitutionsPage() {
         <h1>投资机构</h1>
         <p>
           以清科 2025 年早期、VC、PE、国资、CVC 与并购主榜为机构名单基础，
-          结合投中年度榜单分类框架，并连接现有机构官网、研究档案与近期公司事件。
+          结合投中年度榜单分类框架、机构官网、近期事件及科创板上市公司招股说明书中的机构股东关系。
         </p>
       </header>
 
@@ -35,6 +37,25 @@ export default function InstitutionsPage() {
         icon={<Landmark size={19} aria-hidden="true" />}
         bodyClassName={styles.body}
       >
+        <Link className={styles.starEntry} href="/institutions/star-market">
+          <div className={styles.starIcon}>
+            <FileSearch size={20} aria-hidden="true" />
+          </div>
+          <div>
+            <span>STAR MARKET PROSPECTUS DIRECTORY</span>
+            <strong>科创板上市公司投资人</strong>
+            <p>
+              从公开招股说明书提取机构股东、发行前持股事实、证据页码和机构级公开联系方式。
+            </p>
+          </div>
+          <dl>
+            <div><dt>上市公司</dt><dd>{starMarketInvestorStats.companies}</dd></div>
+            <div><dt>机构股东</dt><dd>{starMarketInvestorStats.investors}</dd></div>
+            <div><dt>已关联机构</dt><dd>{starMarketInvestorStats.linkedInstitutions}</dd></div>
+          </dl>
+          <b>进入目录 →</b>
+        </Link>
+
         <div className={styles.summary}>
           <div>
             <span>中国榜单机构</span>
