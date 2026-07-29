@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "",
+  "companyCount": 0,
+  "investorCount": 0,
+  "scope": {
+    "market": "上海证券交易所科创板",
+    "listingRule": "enabled A-share listings with 688xxx ticker",
+    "shareholderRule": "institutional shareholders disclosed in the IPO prospectus"
+  },
+  "privacy": {
+    "naturalPersonShareholdersExcluded": true,
+    "personalPhonesExcluded": true,
+    "identityNumbersExcluded": true,
+    "contacts": "Only organization-level contact details explicitly disclosed in the prospectus are published."
+  },
+  "methodology": {
+    "prospectusProvider": "CNINFO structured announcements with official PDF URLs",
+    "pdfExtraction": "pypdf text extraction; OCR and access-control bypass are not used",
+    "retention": "previous verified company record retained on source failure"
+  },
+  "companies": {},
+  "sourceStatus": []
+}
