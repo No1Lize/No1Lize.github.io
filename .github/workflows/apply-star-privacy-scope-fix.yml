@@ -1,0 +1,114 @@
+name: Apply STAR privacy validation scope fix
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/apply-star-privacy-scope-fix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.head_ref == 'fix/star-investor-human-text-privacy-validation-20260729'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Restrict sensitive-data validation to human-readable fields
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("tools/crawl_star_market_investors.py")
+          text = path.read_text(encoding="utf-8")
+          anchor = '''def validate_snapshot(snapshot: dict[str, Any], *, require_companies: bool = False) -> list[str]:
+          '''
+          helper = '''def public_human_text(snapshot: dict[str, Any]) -> str:
+              segments: list[str] = []
+              companies = snapshot.get("companies", {})
+              if not isinstance(companies, dict):
+                  return ""
+              for company in companies.values():
+                  if not isinstance(company, dict):
+                      continue
+                  for key in ("name", "exchange", "sector"):
+                      value = company.get(key)
+                      if isinstance(value, str):
+                          segments.append(value)
+                  prospectus = company.get("prospectus")
+                  if isinstance(prospectus, dict) and isinstance(prospectus.get("title"), str):
+                      segments.append(prospectus["title"])
+                  issuer_contact = company.get("issuerInvestorRelations")
+                  if isinstance(issuer_contact, dict):
+                      segments.extend(
+                          value
+                          for key, value in issuer_contact.items()
+                          if key != "sourcePage" and isinstance(value, str)
+                      )
+                  investors = company.get("investors")
+                  if not isinstance(investors, list):
+                      continue
+                  for investor in investors:
+                      if not isinstance(investor, dict):
+                          continue
+                      for key in ("name", "investorType", "sourceSection", "evidence"):
+                          value = investor.get(key)
+                          if isinstance(value, str):
+                              segments.append(value)
+                      contact = investor.get("publicContact")
+                      if isinstance(contact, dict):
+                          segments.extend(
+                              value
+                              for key, value in contact.items()
+                              if key != "sourcePage" and isinstance(value, str)
+                          )
+              return "\\n".join(segments)
+
+
+          def validate_snapshot(snapshot: dict[str, Any], *, require_companies: bool = False) -> list[str]:
+          '''
+          if "def public_human_text" not in text:
+              if anchor not in text:
+                  raise SystemExit("validate_snapshot anchor not found")
+              text = text.replace(anchor, helper, 1)
+
+          old = '''    investor_count = 0
+              serialized = json.dumps(snapshot, ensure_ascii=False)
+              if MOBILE_PATTERN.search(serialized):
+                  errors.append("mobile number detected in public snapshot")
+              if IDENTITY_PATTERN.search(serialized):
+                  errors.append("identity number detected in public snapshot")
+          '''
+          new = '''    investor_count = 0
+              human_text = public_human_text(snapshot)
+              if MOBILE_PATTERN.search(human_text):
+                  errors.append("mobile number detected in public snapshot")
+              if IDENTITY_PATTERN.search(human_text):
+                  errors.append("identity number detected in public snapshot")
+          '''
+          if old not in text and new not in text:
+              raise SystemExit("privacy validation block not found")
+          text = text.replace(old, new, 1)
+          path.write_text(text, encoding="utf-8")
+          PY
+
+          python -m py_compile tools/crawl_star_market_investors.py
+          python -m unittest \
+            tests.test_star_market_investors \
+            tests.test_star_market_investor_privacy_scope
+
+      - name: Commit fix
+        run: |
+          if git diff --quiet; then
+            echo "No fix required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/crawl_star_market_investors.py
+          git commit -m "fix: scope STAR investor privacy scan to public text"
+          git push origin HEAD:${{ github.head_ref }}
