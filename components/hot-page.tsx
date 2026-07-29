@@ -16,10 +16,10 @@ import { useFavorites } from "@/components/use-favorites";
 import { useHotness } from "@/components/use-hotness";
 import { toggleFavorite, type FavoriteInput } from "@/lib/favorites";
 import {
-  getArticleInstitutionRelations,
-  institutionDirectoryHref,
-  type InstitutionActivityRelation,
-} from "@/lib/institution-activity";
+  INSTITUTION_HOT_WEIGHTS,
+  rankInstitutionsByActivity,
+} from "@/lib/institution-hot-ranking";
+import { institutionDirectoryHref } from "@/lib/institution-activity";
 import {
   HOTNESS_WEIGHTS,
   calculateHotnessScore,
@@ -42,14 +42,6 @@ type RankedArticle = {
   score: number;
   opens: number;
   favorite: boolean;
-  shares: number;
-};
-
-type RankedInstitution = {
-  relation: InstitutionActivityRelation;
-  score: number;
-  opens: number;
-  favoriteArticles: number;
   shares: number;
 };
 
@@ -145,49 +137,29 @@ export function HotPage() {
       );
   }, [articles, favoriteKeys, hotness]);
 
-  const articleSignals = useMemo(
+  const articleEngagement = useMemo(
     () =>
       new Map(
-        allRanked.map((item) => [canonicalHotnessKey(item.article.source.url), item] as const),
+        allRanked.map((item) => [
+          canonicalHotnessKey(item.article.source.url),
+          {
+            opens: item.opens,
+            favorite: item.favorite,
+            shares: item.shares,
+          },
+        ] as const),
       ),
     [allRanked],
   );
 
-  const rankedInstitutions = useMemo<RankedInstitution[]>(() => {
-    return getArticleInstitutionRelations(articles)
-      .map((relation) => {
-        let score = 0;
-        let opens = 0;
-        let favoriteArticles = 0;
-        let shares = 0;
-        for (const article of relation.relatedEvents) {
-          const signal = articleSignals.get(canonicalHotnessKey(article.source.url));
-          if (!signal) continue;
-          score += signal.score;
-          opens += signal.opens;
-          favoriteArticles += Number(signal.favorite);
-          shares += signal.shares;
-        }
-        return { relation, score, opens, favoriteArticles, shares };
-      })
-      .sort(
-        (left, right) =>
-          right.score - left.score ||
-          right.shares - left.shares ||
-          right.favoriteArticles - left.favoriteArticles ||
-          right.opens - left.opens ||
-          right.relation.directEvents.length - left.relation.directEvents.length ||
-          right.relation.publicActivityScore - left.relation.publicActivityScore ||
-          (right.relation.latestActivity ?? "").localeCompare(
-            left.relation.latestActivity ?? "",
-          ) ||
-          left.relation.institution.name.localeCompare(
-            right.relation.institution.name,
-            "zh-CN",
-          ),
-      )
-      .slice(0, INSTITUTION_LIMIT);
-  }, [articleSignals, articles]);
+  const rankedInstitutions = useMemo(
+    () =>
+      rankInstitutionsByActivity(articles, articleEngagement).slice(
+        0,
+        INSTITUTION_LIMIT,
+      ),
+    [articleEngagement, articles],
+  );
 
   const interactedCount = useMemo(
     () => allRanked.filter((item) => item.score > 0).length,
@@ -226,7 +198,7 @@ export function HotPage() {
           <p className="eyebrow">09 / HOT RANKING</p>
           <h1>热点</h1>
           <p className="intro-copy">
-            根据当前浏览器对原始文章的打开、收藏与分享行为实时排名。分享权重最高，收藏次之，打开用于累积阅读热度。
+            文章榜根据当前浏览器的打开、收藏与分享行为实时排名；活跃机构榜则以爬虫识别到的机构文章、事件质量、来源等级和时间衰减为主，本地关注行为仅作小幅修正。
           </p>
         </div>
         <div className={styles.summary}>
@@ -240,7 +212,9 @@ export function HotPage() {
         <div><ExternalLink size={15} /><span>打开</span><strong>× {HOTNESS_WEIGHTS.open}</strong></div>
         <div><Bookmark size={15} /><span>收藏</span><strong>× {HOTNESS_WEIGHTS.favorite}</strong></div>
         <div><Share2 size={15} /><span>分享</span><strong>× {HOTNESS_WEIGHTS.share}</strong></div>
-        <p>当前浏览器累计打开 {totalOpens} 次、分享 {totalShares} 次；机构榜直接聚合其关联文章的同一热点分，不另设隐藏行为权重。</p>
+        <p>
+          机构活跃度：公开活动 {Math.round(INSTITUTION_HOT_WEIGHTS.crawlerActivity * 100)}% + 本地关注 {Math.round(INSTITUTION_HOT_WEIGHTS.localAttention * 100)}%；同一事件簇去重，时间半衰期 {INSTITUTION_HOT_WEIGHTS.halfLifeDays} 天。
+        </p>
       </section>
 
       <section className={institutionStyles.board} aria-label="09 热点活跃机构排名">
@@ -249,42 +223,43 @@ export function HotPage() {
             <p>ACTIVE INSTITUTIONS</p>
             <h2>活跃机构</h2>
           </div>
-          <span>{rankedInstitutions.length} 家 · 由关联文章聚合</span>
+          <span>{rankedInstitutions.length} 家 · 关联投资机构目录</span>
         </header>
         {rankedInstitutions.length ? (
           <div className={institutionStyles.ranking}>
-            {rankedInstitutions.map(
-              ({ relation, score, opens, favoriteArticles, shares }, index) => (
+            {rankedInstitutions.map((item, index) => {
+              const institution = item.relation.institution;
+              return (
                 <Link
                   className={institutionStyles.row}
-                  href={institutionDirectoryHref(relation.institution)}
-                  key={relation.institution.name}
+                  href={institutionDirectoryHref(institution)}
+                  key={institution.name}
                 >
                   <span className={institutionStyles.rank} data-top={index < 3 ? "true" : "false"}>
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <Building2 size={17} aria-hidden="true" />
                   <div className={institutionStyles.main}>
-                    <strong>{relation.institution.name}</strong>
+                    <strong>{institution.name}</strong>
                     <small>
-                      {relation.institution.region} · {relation.institution.type} · 直接关联 {relation.directEvents.length} 条 · 组合关联 {relation.portfolioEvents.length} 条
+                      {institution.region} · {institution.type} · 直接文章 {item.directArticleCount} 条 · 组合关联 {item.portfolioArticleCount} 条 · 本地关注分 {item.attentionScore}
                     </small>
                   </div>
                   <dl className={institutionStyles.signals}>
-                    <div><dt>热点分</dt><dd>{score}</dd></div>
-                    <div><dt>打开</dt><dd>{opens}</dd></div>
-                    <div><dt>收藏文章</dt><dd>{favoriteArticles}</dd></div>
-                    <div><dt>分享</dt><dd>{shares}</dd></div>
+                    <div><dt>活跃度</dt><dd>{item.score}</dd></div>
+                    <div><dt>公开分</dt><dd>{item.crawlerScore}</dd></div>
+                    <div><dt>文章</dt><dd>{item.articleCount}</dd></div>
+                    <div><dt>来源</dt><dd>{item.sourceCount}</dd></div>
                   </dl>
                 </Link>
-              ),
-            )}
+              );
+            })}
           </div>
         ) : (
           <div className={institutionStyles.empty}>
             <Building2 size={24} />
             <strong>暂无可核对的机构—文章关联</strong>
-            <p>系统不会仅凭宽泛标签生成机构排名；需要直接事件、机构名称或公开组合关系。</p>
+            <p>系统不会仅凭宽泛标签生成机构排名；需要直接机构提及或公开被投组合关系。</p>
           </div>
         )}
       </section>
@@ -388,7 +363,7 @@ export function HotPage() {
       </section>
 
       <p className={styles.disclosure}>
-        统计仅保存在当前浏览器，不上传个人阅读记录。清除浏览器站点数据后，打开、收藏和分享计数会重新开始。
+        文章互动统计仅保存在当前浏览器，不上传个人阅读记录；机构公开活动分来自网站爬虫收录的公开文章与事件元数据。
       </p>
     </>
   );
