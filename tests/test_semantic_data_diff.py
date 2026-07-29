@@ -29,13 +29,46 @@ class SemanticDataDiffTest(unittest.TestCase):
     def test_source_health_change_is_detected(self) -> None:
         previous = {
             "generatedAt": "old",
-            "sources": {"wechat": {"consecutiveFailures": 2, "alertActive": False}},
+            "sources": {
+                "wechat": {
+                    "consecutiveFailures": 2,
+                    "failureThreshold": 3,
+                    "alertActive": False,
+                }
+            },
         }
         current = {
             "generatedAt": "new",
-            "sources": {"wechat": {"consecutiveFailures": 3, "alertActive": True}},
+            "sources": {
+                "wechat": {
+                    "consecutiveFailures": 3,
+                    "failureThreshold": 3,
+                    "alertActive": True,
+                }
+            },
         }
         self.assertFalse(semantic_equal(previous, current))
+
+    def test_larger_streak_after_active_alert_is_not_a_new_semantic_change(self) -> None:
+        previous = {
+            "sources": {
+                "wechat": {
+                    "consecutiveFailures": 3,
+                    "failureThreshold": 3,
+                    "alertActive": True,
+                }
+            }
+        }
+        current = {
+            "sources": {
+                "wechat": {
+                    "consecutiveFailures": 8,
+                    "failureThreshold": 3,
+                    "alertActive": True,
+                }
+            }
+        }
+        self.assertTrue(semantic_equal(previous, current))
 
 
 if __name__ == "__main__":
