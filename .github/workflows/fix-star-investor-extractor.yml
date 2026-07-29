@@ -1,0 +1,70 @@
+name: Apply STAR investor extractor fixes
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/fix-star-investor-extractor.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    if: github.head_ref == 'feature/star-market-investor-directory-20260729'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Apply deterministic extractor fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("tools/crawl_star_market_investors.py")
+          text = path.read_text(encoding="utf-8")
+
+          old = '''def load_json(path: Path, fallback: Any) -> Any:
+          '''
+          privacy = '''def redact_private_text(value: Any, limit: int = 2000) -> str:
+              text = clean_text(value, limit * 2)
+              text = MOBILE_PATTERN.sub("[已移除手机号码]", text)
+              text = IDENTITY_PATTERN.sub("[已移除身份证件信息]", text)
+              return clean_text(text, limit)
+
+
+          def load_json(path: Path, fallback: Any) -> Any:
+          '''
+          if "def redact_private_text" not in text:
+              if old not in text:
+                  raise SystemExit("load_json anchor not found")
+              text = text.replace(old, privacy, 1)
+
+          replacements = {
+              '"evidence": clean_text(context, 220),': '"evidence": redact_private_text(context, 220),',
+              'current_quality = int(current is not None) + int(current and "preIpoOwnershipPct" in current)': 'current_quality = int(current is not None) + int(bool(current and "preIpoOwnershipPct" in current))',
+          }
+          for before, after in replacements.items():
+              if before not in text and after not in text:
+                  raise SystemExit(f"replacement anchor not found: {before}")
+              text = text.replace(before, after)
+
+          path.write_text(text, encoding="utf-8")
+          PY
+
+          python -m py_compile tools/crawl_star_market_investors.py
+          python -m unittest tests.test_star_market_investors
+
+      - name: Commit fixes to feature branch
+        run: |
+          if git diff --quiet; then
+            echo "No fix required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/crawl_star_market_investors.py
+          git commit -m "fix: harden STAR investor extraction privacy"
+          git push origin HEAD:${{ github.head_ref }}
