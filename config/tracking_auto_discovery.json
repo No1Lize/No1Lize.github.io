@@ -1,42 +1,42 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-29T04:57:55+00:00",
+  "updatedAt": "2026-07-29T12:37:29+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-27T12:08:25+00:00"
+      "lastExpandedAt": "2026-07-29T12:33:49+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-29T04:54:34+00:00"
+      "lastExpandedAt": "2026-07-29T12:34:07+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-29T04:54:50+00:00"
+      "lastExpandedAt": "2026-07-29T12:34:23+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-29T04:55:24+00:00"
+      "lastExpandedAt": "2026-07-29T12:34:56+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-29T04:55:41+00:00"
+      "lastExpandedAt": "2026-07-29T12:35:17+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-29T04:55:57+00:00"
+      "lastExpandedAt": "2026-07-29T12:35:36+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-29T04:56:11+00:00"
+      "lastExpandedAt": "2026-07-29T12:35:53+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-29T04:56:25+00:00"
+      "lastExpandedAt": "2026-07-29T12:36:09+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-29T04:56:40+00:00"
+      "lastExpandedAt": "2026-07-29T12:36:26+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-29T04:56:56+00:00"
+      "lastExpandedAt": "2026-07-29T12:36:44+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-29T04:57:22+00:00"
+      "lastExpandedAt": "2026-07-29T12:37:11+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-29T04:57:38+00:00"
+      "lastExpandedAt": "2026-07-29T12:37:29+00:00"
     },
     "track-1p8ob4k": {
       "lastExpandedAt": "2026-07-29T04:57:55+00:00"
@@ -1850,6 +1850,72 @@
       "addedAt": "2026-07-29T04:57:55+00:00",
       "evidence": [
         "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "ai",
+      "kind": "sources",
+      "value": "https://techfinancials.co.za/",
+      "addedAt": "2026-07-29T12:33:49+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "GB RAM",
+      "addedAt": "2026-07-29T12:34:23+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "太阳能",
+      "addedAt": "2026-07-29T12:34:56+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "sampleCompanies",
+      "value": "比亚迪",
+      "addedAt": "2026-07-29T12:34:56+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "energy",
+      "kind": "sources",
+      "value": "https://www.bydglobal.com/",
+      "addedAt": "2026-07-29T12:34:56+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "sampleCompanies",
+      "value": "Sohu",
+      "addedAt": "2026-07-29T12:35:53+00:00",
+      "evidence": [
+        "news-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Perplexity",
+      "addedAt": "2026-07-29T12:37:29+00:00",
+      "evidence": [
+        "corpus-term",
+        "google-suggest"
       ]
     }
   ],
