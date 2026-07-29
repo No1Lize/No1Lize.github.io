@@ -1,4 +1,4 @@
-name: Clear redundant production refresh
+name: Verify frequent refresh deployment
 
 on:
   pull_request:
@@ -6,7 +6,8 @@ on:
       - .github/workflows/list-production-refresh-runs.yml
 
 permissions:
-  actions: write
+  actions: read
+  contents: read
 
 jobs:
   inspect:
@@ -15,21 +16,33 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Cancel the redundant post-merge full refresh
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Verify the published frequent snapshot
         run: |
           set -euo pipefail
-          run_id=30426379711
-          state=$(gh run view "$run_id" --json status,conclusion --jq '.status + ":" + (.conclusion // "")')
-          echo "before=$state"
-          if [ "${state%%:*}" != "completed" ]; then
-            gh run cancel "$run_id"
-          fi
-          for _ in $(seq 1 20); do
-            state=$(gh run view "$run_id" --json status,conclusion --jq '.status + ":" + (.conclusion // "")')
-            echo "full=$state"
-            [ "${state%%:*}" = "completed" ] && break
-            sleep 5
-          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
+          audit = payload.get('refreshAudit') or {}
+          result = {
+              'generatedAt': payload.get('generatedAt'),
+              'articleCount': payload.get('articleCount'),
+              'mode': audit.get('mode'),
+              'completedAt': audit.get('completedAt'),
+              'newArticleCount': audit.get('newArticleCount'),
+              'todayArticleCount': audit.get('todayArticleCount'),
+              'todaySourceCount': audit.get('todaySourceCount'),
+          }
+          print(json.dumps(result, ensure_ascii=False, indent=2))
+          if result['mode'] != 'frequent' or not result['completedAt']:
+              raise SystemExit('production snapshot is not the completed frequent refresh')
+          PY
           echo 'FREQUENT'
-          gh run list --workflow frequent-intelligence-refresh.yml --limit 5 \
+          gh run list --workflow frequent-intelligence-refresh.yml --limit 3 \
+            --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url
+          echo 'PAGES'
+          gh run list --workflow pages.yml --limit 3 \
             --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url
