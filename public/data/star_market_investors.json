@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "",
-  "companyCount": 0,
-  "investorCount": 0,
+  "generatedAt": "2026-07-29T13:37:35+00:00",
+  "companyCount": 1,
+  "investorCount": 33,
   "scope": {
     "market": "上海证券交易所科创板",
     "listingRule": "enabled A-share listings with 688xxx ticker",
@@ -19,6 +19,525 @@
     "pdfExtraction": "pypdf text extraction; OCR and access-control bypass are not used",
     "retention": "previous verified company record retained on source failure"
   },
-  "companies": {},
-  "sourceStatus": []
+  "companies": {
+    "cambricon": {
+      "slug": "cambricon",
+      "name": "寒武纪",
+      "ticker": "688256",
+      "exchange": "上海证券交易所科创板",
+      "sector": "半导体",
+      "updatedAt": "2026-07-29T13:37:35+00:00",
+      "status": "ok",
+      "prospectus": {
+        "title": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "url": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "publishedAt": "2020-07-13",
+        "announcementId": "1208028359",
+        "pageCount": 415,
+        "textPageCount": 415,
+        "sha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "provider": "cninfo-prospectus"
+      },
+      "issuerInvestorRelations": {
+        "officeAddress": "上海市浦东南路 528 号证券大厦",
+        "sourcePage": 41,
+        "scope": "上市公司公开投资者关系联系方式"
+      },
+      "institutionalInvestorCount": 33,
+      "naturalPersonContactsPublished": false,
+      "investors": [
+        {
+          "id": "star-investor-9273fc1d6216a70163",
+          "name": "中科寒武纪科技股份有限公司",
+          "normalizedName": "中科寒武纪科技股份有限公司",
+          "institutional": true,
+          "investorType": "产业投资者",
+          "sourcePage": 74,
+          "sourceSection": "持股情况",
+          "evidence": "中科寒武纪科技股份有限公司 首次公开发行股票并在科创板上市招股说明书",
+          "preIpoOwnershipPct": 33.19,
+          "publicContact": {
+            "officeAddress": "北京市海淀区知春路 7 号致真",
+            "sourcePage": 30,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-b6cedf2e80327dde6e",
+          "name": "国投基金",
+          "normalizedName": "国投基金",
+          "institutional": true,
+          "investorType": "国资投资平台",
+          "sourcePage": 74,
+          "sourceSection": "持股情况",
+          "evidence": "5 国投基金 14,124,730 3.92%",
+          "preIpoOwnershipPct": 33.19,
+          "publicContact": {
+            "officeAddress": "上海市杨浦区控江路 1142号 23幢 4064-31室",
+            "sourcePage": 91,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-0f57d50d92cd85531e",
+          "name": "整体变更为股份有限公司",
+          "normalizedName": "整体变更为股份有限公司",
+          "institutional": true,
+          "investorType": "国资投资平台",
+          "sourcePage": 74,
+          "sourceSection": "持股情况",
+          "evidence": "（十）有限公司整体变更为股份有限公司",
+          "preIpoOwnershipPct": 33.19,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-3c4df9095ae16cd473",
+          "name": "（十）有限公司",
+          "normalizedName": "十有限公司",
+          "institutional": true,
+          "investorType": "国资投资平台",
+          "sourcePage": 74,
+          "sourceSection": "持股情况",
+          "evidence": "（十）有限公司整体变更为股份有限公司",
+          "preIpoOwnershipPct": 33.19,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-daf3746b17143f1dd3",
+          "name": "珠海大横琴科技发展有限公司",
+          "normalizedName": "珠海大横琴科技发展有限公司",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 85,
+          "sourceSection": "股东基本情况",
+          "evidence": "2 珠海大横琴科技发展有限公司 150.00 30.00",
+          "preIpoOwnershipPct": 30.0,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-62fced142b3d60a0fb",
+          "name": "事务合伙人为知己行远（天津）科技有限公司",
+          "normalizedName": "事务合伙人为知己行远天津科技有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "事务合伙人为知己行远（天津）科技有限公司，宋春",
+          "preIpoOwnershipPct": 20.0,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-95092f38d169e6941a",
+          "name": "伙人暨执行事务合伙人为湖北长江招银产业基金",
+          "normalizedName": "伙人暨执行事务合伙人为湖北长江招银产业基金",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "伙人暨执行事务合伙人为湖北长江招银产业基金管理",
+          "preIpoOwnershipPct": 20.0,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-4303b47f93aab19024",
+          "name": "招银产业基金",
+          "normalizedName": "招银产业基金",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "招银产业基金管理有限公司，连素萍担任湖北长江招",
+          "preIpoOwnershipPct": 20.0,
+          "publicContact": {
+            "officeAddress": "武汉市武昌区中北路 227号愿景广场二期 1号楼第 23层华中新金融孵化中心",
+            "sourcePage": 90,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-427963c126f520c7da",
+          "name": "电信股权投资基金",
+          "normalizedName": "电信股权投资基金",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "电信股权投资基金管理有限公司，连素萍担任深圳招",
+          "preIpoOwnershipPct": 20.0,
+          "publicContact": {
+            "officeAddress": "南京市江北新区滨江大道 396号",
+            "sourcePage": 89,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-2fb39ad64c0f57c6ff",
+          "name": "知己行远投资管理中心（有限合伙",
+          "normalizedName": "知己行远投资管理中心有限合伙",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "知己行远投资管理中心（有限合伙），湖北长江知己",
+          "preIpoOwnershipPct": 20.0,
+          "publicContact": {
+            "officeAddress": "武汉市东湖新技术开发区高新大道 999号未来科技城海外人才大楼 A 座 18",
+            "sourcePage": 101,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-04ba80b3820dbab2ce",
+          "name": "管理有限公司",
+          "normalizedName": "管理有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "电信股权投资基金管理有限公司，连素萍担任深圳招",
+          "preIpoOwnershipPct": 20.0,
+          "publicContact": {
+            "officeAddress": "上海市浦东南路 528 号证券大厦",
+            "sourcePage": 41,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-3140caf5fd734f77a1",
+          "name": "行远投资管理中心（有限合伙",
+          "normalizedName": "行远投资管理中心有限合伙",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "行远投资管理中心（有限合伙）的普通合伙人暨执行",
+          "preIpoOwnershipPct": 20.0,
+          "publicContact": {
+            "officeAddress": "武汉市东湖新技术开发区高新大道 999号未来科技城海外人才大楼 A 座 18",
+            "sourcePage": 101,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-ce404b71393032c22d",
+          "name": "银产业基金管理有限公司",
+          "normalizedName": "银产业基金管理有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "银产业基金管理有限公司的董事长",
+          "preIpoOwnershipPct": 20.0,
+          "publicContact": {
+            "officeAddress": "武汉市武昌区中北路 227号愿景广场二期 1号楼第 23层华中新金融孵化中心",
+            "sourcePage": 90,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-a3f2019bef4d7014ba",
+          "name": "银电信股权投资基金",
+          "normalizedName": "银电信股权投资基金",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "银电信股权投资基金管理有限公司的董事长兼总经理",
+          "preIpoOwnershipPct": 20.0,
+          "publicContact": {
+            "officeAddress": "南京市江北新区滨江大道 396号",
+            "sourcePage": 89,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-a3f39d1e78f6048f52",
+          "name": "雨持有知己行远（天津）科技有限公司",
+          "normalizedName": "雨持有知己行远天津科技有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "雨持有知己行远（天津）科技有限公司 20%的出资额",
+          "preIpoOwnershipPct": 20.0,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-2f797222b1f1f19f70",
+          "name": "和利创业投资",
+          "normalizedName": "和利创业投资",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "和利创业投资管理（苏州）有限公司为宁波梅山保税",
+          "preIpoOwnershipPct": 5.0,
+          "publicContact": {
+            "officeAddress": "浙江省宁波市北仑区梅山七星路 88号 1幢 401室 B区 C0359",
+            "sourcePage": 99,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-1903e920725c1c56b7",
+          "name": "港区禾芯投资管理合伙企业（有限合伙）",
+          "normalizedName": "港区禾芯投资管理合伙企业有限合伙",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "港区禾芯投资管理合伙企业（有限合伙）的普通合伙",
+          "preIpoOwnershipPct": 5.0,
+          "publicContact": {
+            "officeAddress": "南京市浦口区桥林街道步月路 29号",
+            "sourcePage": 98,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-9027ba18373dafb7a9",
+          "name": "管理合伙企业（有限合伙）",
+          "normalizedName": "管理合伙企业有限合伙",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "管理合伙企业（有限合伙）；",
+          "preIpoOwnershipPct": 5.0,
+          "publicContact": {
+            "officeAddress": "上海市杨浦区控江路 1142号 23幢 4064-31室",
+            "sourcePage": 91,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-ee844c34cef27b6505",
+          "name": "管理（苏州）有限公司",
+          "normalizedName": "管理苏州有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "和利创业投资管理（苏州）有限公司为宁波梅山保税",
+          "preIpoOwnershipPct": 5.0,
+          "publicContact": {
+            "officeAddress": "浙江省宁波市北仑区梅山七星路 88号 1幢 401室 B区 C0359",
+            "sourcePage": 99,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-924b771bff9e7dfbce",
+          "name": "国新资本",
+          "normalizedName": "国新资本",
+          "institutional": true,
+          "investorType": "国资投资平台",
+          "sourcePage": 74,
+          "sourceSection": "持股情况",
+          "evidence": "19 国新资本 3,796,999 1.05%",
+          "preIpoOwnershipPct": 2.38,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-e4d9e4b0227fbe19af",
+          "name": "天津玄思企业管理有限公司",
+          "normalizedName": "天津玄思企业管理有限公司",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 117,
+          "sourceSection": "持股情况",
+          "evidence": "天津玄思企业管理有限公司 80.00%",
+          "preIpoOwnershipPct": 0.7,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-18eefa7a33e8b878e7",
+          "name": "天津玄算一号企业管理合伙企业（有限合伙）",
+          "normalizedName": "天津玄算一号企业管理合伙企业有限合伙",
+          "institutional": true,
+          "investorType": "投资合伙企业",
+          "sourcePage": 117,
+          "sourceSection": "持股情况",
+          "evidence": "天津玄算一号企业管理合伙企业（有限合伙） 43.67%",
+          "preIpoOwnershipPct": 0.7,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-32083f1a260718edc2",
+          "name": "天津玄算九号企业管理合伙企业（有限合伙）",
+          "normalizedName": "天津玄算九号企业管理合伙企业有限合伙",
+          "institutional": true,
+          "investorType": "投资合伙企业",
+          "sourcePage": 117,
+          "sourceSection": "持股情况",
+          "evidence": "天津玄算九号企业管理合伙企业（有限合伙） 2.18%",
+          "preIpoOwnershipPct": 0.7,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-35b92bdc0ec1424e56",
+          "name": "天津玄算二号企业管理合伙企业（有限合伙）",
+          "normalizedName": "天津玄算二号企业管理合伙企业有限合伙",
+          "institutional": true,
+          "investorType": "投资合伙企业",
+          "sourcePage": 117,
+          "sourceSection": "持股情况",
+          "evidence": "天津玄算二号企业管理合伙企业（有限合伙） 48.15%",
+          "preIpoOwnershipPct": 0.7,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-0662ca5059a5f4c453",
+          "name": "立群通过国投基金",
+          "normalizedName": "立群通过国投基金",
+          "institutional": true,
+          "investorType": "国资投资平台",
+          "sourcePage": 117,
+          "sourceSection": "持股情况",
+          "evidence": "立群通过国投基金和宁波瀚高间接持有公司股票。宋春雨通过湖北联想间接持有公司股票。",
+          "preIpoOwnershipPct": 0.04,
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-6b1f17a34cbbb094b9",
+          "name": "均为有限合伙",
+          "normalizedName": "均为有限合伙",
+          "institutional": true,
+          "investorType": "投资合伙企业",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "申报前一年内发行人通过增资或股权转让引入的股东共 9 名，均为有限合伙企业。",
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-c3a624905d8a4a643d",
+          "name": "投资管理（苏州）有限公司",
+          "normalizedName": "投资管理苏州有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "投资管理（苏州）有限公司，国调国信智芯的普通合",
+          "publicContact": {
+            "officeAddress": "浙江省宁波市北仑区梅山七星路 88号 1幢 401室 B区 C0359",
+            "sourcePage": 99,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-bbfbed16636186417b",
+          "name": "新疆招银新投天山基金",
+          "normalizedName": "新疆招银新投天山基金",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 116,
+          "sourceSection": "持股情况",
+          "evidence": "新疆招银新投天山基金有限公司 董事长 关联方",
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-857cf810c1c0b0df3b",
+          "name": "深圳招银电信股权投资基金",
+          "normalizedName": "深圳招银电信股权投资基金",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "深圳招银电信股权投资基金管理有限公司、湖北长江",
+          "publicContact": {
+            "officeAddress": "南京市江北新区滨江大道 396号",
+            "sourcePage": 89,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-e82940b8a75a3df877",
+          "name": "湖北长江招银产业基金",
+          "normalizedName": "湖北长江招银产业基金",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 116,
+          "sourceSection": "持股情况",
+          "evidence": "湖北长江招银产业基金管理有限公司 董事长 关联方",
+          "publicContact": {
+            "officeAddress": "武汉市武昌区中北路 227号愿景广场二期 1号楼第 23层华中新金融孵化中心",
+            "sourcePage": 90,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-6dcb0981a182b1b936",
+          "name": "资本管理（深圳）有限公司",
+          "normalizedName": "资本管理深圳有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 97,
+          "sourceSection": "股东基本情况",
+          "evidence": "资本管理（深圳）有限公司",
+          "publicContact": {
+            "officeAddress": "武汉市武昌区中北路 227号愿景广场二期 1号楼第 23层华中新金融孵化中心",
+            "sourcePage": 90,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        },
+        {
+          "id": "star-investor-73664054d70d94cdd0",
+          "name": "长城招银资产管理",
+          "normalizedName": "长城招银资产管理",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 116,
+          "sourceSection": "持股情况",
+          "evidence": "长城招银资产管理（深圳）有限公司 董事长 关联方",
+          "contactStatus": "not-disclosed-in-prospectus"
+        },
+        {
+          "id": "star-investor-aeacbcf08edf069d46",
+          "name": "（深圳）有限公司",
+          "normalizedName": "深圳有限公司",
+          "institutional": true,
+          "investorType": "股权投资机构",
+          "sourcePage": 116,
+          "sourceSection": "持股情况",
+          "evidence": "长城招银资产管理（深圳）有限公司 董事长 关联方",
+          "publicContact": {
+            "officeAddress": "武汉市武昌区中北路 227号愿景广场二期 1号楼第 23层华中新金融孵化中心",
+            "sourcePage": 90,
+            "scope": "招股说明书公开的机构级联系方式"
+          },
+          "contactStatus": "prospectus-public"
+        }
+      ],
+      "errors": []
+    }
+  },
+  "sourceStatus": [
+    {
+      "id": "star-prospectus-688256",
+      "companySlug": "cambricon",
+      "ticker": "688256",
+      "status": "ok",
+      "investorCount": 33,
+      "retainedPrevious": false,
+      "durationMs": 20723,
+      "errors": []
+    }
+  ]
 }
