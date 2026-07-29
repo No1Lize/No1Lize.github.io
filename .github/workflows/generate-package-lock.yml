@@ -1,0 +1,30 @@
+name: Generate package lock for review
+
+on:
+  pull_request:
+    paths:
+      - package.json
+      - .github/workflows/generate-package-lock.yml
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate lockfile without running package scripts
+        run: npm install --package-lock-only --ignore-scripts
+      - name: Validate generated lockfile
+        run: |
+          node -e "const lock=require('./package-lock.json'); if (!lock.lockfileVersion || !lock.packages) process.exit(1)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: generated-package-lock
+          path: package-lock.json
+          if-no-files-found: error
