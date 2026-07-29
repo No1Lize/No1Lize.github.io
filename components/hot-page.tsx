@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import institutionStyles from "@/components/hot-institution-ranking.module.css";
 import styles from "@/components/hot-page.module.css";
 import { useFavorites } from "@/components/use-favorites";
 import { useHotness } from "@/components/use-hotness";
@@ -242,8 +243,8 @@ export function HotPage() {
         <p>当前浏览器累计打开 {totalOpens} 次、分享 {totalShares} 次；机构榜直接聚合其关联文章的同一热点分，不另设隐藏行为权重。</p>
       </section>
 
-      <section className={styles.institutionBoard} aria-label="09 热点活跃机构排名">
-        <header className={styles.institutionHeader}>
+      <section className={institutionStyles.board} aria-label="09 热点活跃机构排名">
+        <header className={institutionStyles.header}>
           <div>
             <p>ACTIVE INSTITUTIONS</p>
             <h2>活跃机构</h2>
@@ -251,25 +252,25 @@ export function HotPage() {
           <span>{rankedInstitutions.length} 家 · 由关联文章聚合</span>
         </header>
         {rankedInstitutions.length ? (
-          <div className={styles.institutionRanking}>
+          <div className={institutionStyles.ranking}>
             {rankedInstitutions.map(
               ({ relation, score, opens, favoriteArticles, shares }, index) => (
                 <Link
-                  className={styles.institutionRow}
+                  className={institutionStyles.row}
                   href={institutionDirectoryHref(relation.institution)}
                   key={relation.institution.name}
                 >
-                  <span className={styles.institutionRank} data-top={index < 3 ? "true" : "false"}>
+                  <span className={institutionStyles.rank} data-top={index < 3 ? "true" : "false"}>
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <Building2 size={17} aria-hidden="true" />
-                  <div className={styles.institutionMain}>
+                  <div className={institutionStyles.main}>
                     <strong>{relation.institution.name}</strong>
                     <small>
                       {relation.institution.region} · {relation.institution.type} · 直接关联 {relation.directEvents.length} 条 · 组合关联 {relation.portfolioEvents.length} 条
                     </small>
                   </div>
-                  <dl className={styles.institutionSignals}>
+                  <dl className={institutionStyles.signals}>
                     <div><dt>热点分</dt><dd>{score}</dd></div>
                     <div><dt>打开</dt><dd>{opens}</dd></div>
                     <div><dt>收藏文章</dt><dd>{favoriteArticles}</dd></div>
@@ -280,7 +281,7 @@ export function HotPage() {
             )}
           </div>
         ) : (
-          <div className={styles.institutionEmpty}>
+          <div className={institutionStyles.empty}>
             <Building2 size={24} />
             <strong>暂无可核对的机构—文章关联</strong>
             <p>系统不会仅凭宽泛标签生成机构排名；需要直接事件、机构名称或公开组合关系。</p>
