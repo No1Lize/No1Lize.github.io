@@ -33,7 +33,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - run: npm install
+          cache: npm
+      - name: Install locked project dependencies
+        run: npm ci
       - name: Lint homepage implementation
         id: homepage-lint
         continue-on-error: true

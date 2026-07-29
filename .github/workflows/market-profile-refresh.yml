@@ -33,6 +33,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+      - name: Install locked project dependencies before network access
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p .github/diagnostics
+          npm ci 2>&1 | tee .github/diagnostics/market-refresh-npm.log
+      - name: Validate market refresh entry points before network access
+        run: |
+          python -m py_compile \
+            tools/refresh_market_profiles_enriched.py \
+            tools/validate_market_profiles.py
       - name: Run observable enriched market refresh
         id: refresh
         shell: bash
@@ -47,21 +59,13 @@ jobs:
           TESTS=$?
           python tools/validate_market_profiles.py > .github/diagnostics/market-refresh-validator.log 2>&1
           VALIDATOR=$?
-          npm install > .github/diagnostics/market-refresh-npm.log 2>&1
-          NPM=$?
-          if [ "$NPM" -eq 0 ]; then
-            npm run test:unit > .github/diagnostics/market-refresh-unit.log 2>&1
-            UNIT=$?
-            GITHUB_PAGES=true npx next build > .github/diagnostics/market-refresh-build-full.log 2>&1
-            BUILD=$?
-            tail -n 180 .github/diagnostics/market-refresh-build-full.log > .github/diagnostics/market-refresh-build.log
-            rm .github/diagnostics/market-refresh-build-full.log
-          else
-            UNIT=125
-            BUILD=125
-            printf 'npm install failed\n' > .github/diagnostics/market-refresh-unit.log
-            printf 'npm install failed\n' > .github/diagnostics/market-refresh-build.log
-          fi
+          NPM=0
+          npm run test:unit > .github/diagnostics/market-refresh-unit.log 2>&1
+          UNIT=$?
+          GITHUB_PAGES=true npx next build > .github/diagnostics/market-refresh-build-full.log 2>&1
+          BUILD=$?
+          tail -n 180 .github/diagnostics/market-refresh-build-full.log > .github/diagnostics/market-refresh-build.log
+          rm .github/diagnostics/market-refresh-build-full.log
           cat > .github/diagnostics/market-refresh-validation.json <<EOF
           {
             "crawl": $CRAWL,

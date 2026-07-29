@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "failureThreshold": 3,
+  "criticalPlatforms": ["微信"],
+  "criticalSourceIds": [],
+  "countEmptyForCriticalSources": true,
+  "alertOnRetainedPrevious": true,
+  "alertOnExplicitError": true
+}

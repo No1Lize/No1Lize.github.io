@@ -60,8 +60,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Install project dependencies
-        run: npm install
+          cache: npm
+      - name: Install locked project dependencies
+        run: npm ci
       - name: Validate institution, sample-company and public-channel discovery
         run: |
           node --import tsx scripts/sync-tracking-institution-directory.ts --dry-run

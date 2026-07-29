@@ -34,7 +34,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+          cache: npm
+      - name: Install locked project dependencies
+        run: npm ci
       - run: npm run test:unit
       - name: Build deployable Pages snapshot
         env:
