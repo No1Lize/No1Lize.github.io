@@ -1,0 +1,84 @@
+name: Verify institution hot production
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/verify-institution-hot-production.yml"
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PRODUCTION_SHA: 5398560fdd412c51322cede58a3b07dbdca2117d
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Wait for production Pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_id=""
+          for _ in $(seq 1 30); do
+            run_id=$(gh run list --workflow pages.yml --limit 50 \
+              --json databaseId,headSha,status,conclusion \
+              --jq '.[] | select(.headSha == env.PRODUCTION_SHA) | .databaseId' \
+              | head -n 1)
+            if [ -n "$run_id" ]; then
+              break
+            fi
+            sleep 10
+          done
+          if [ -z "$run_id" ]; then
+            echo "No Pages run found for $PRODUCTION_SHA" >&2
+            exit 1
+          fi
+          echo "pages_run=$run_id"
+          for _ in $(seq 1 60); do
+            state=$(gh run view "$run_id" --json status,conclusion --jq '.status + ":" + (.conclusion // "")')
+            echo "pages=$state"
+            if [ "${state%%:*}" = "completed" ]; then
+              [ "${state#*:}" = "success" ]
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Pages deployment timed out" >&2
+          exit 1
+
+      - name: Verify public institution linkage
+        shell: bash
+        run: |
+          set -euo pipefail
+          cache_bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          curl --fail --location --retry 8 --retry-delay 8 \
+            -H 'Cache-Control: no-cache' \
+            "https://vciq.github.io/technology/?verify=${cache_bust}" \
+            --output /tmp/technology.html
+          grep -F '家活跃机构' /tmp/technology.html
+          grep -F '家已关联' /tmp/technology.html
+
+          curl --fail --location --retry 8 --retry-delay 8 \
+            -H 'Cache-Control: no-cache' \
+            "https://vciq.github.io/technology/track-1ccjq49/?verify=${cache_bust}" \
+            --output /tmp/venture.html
+          grep -F '活跃与关联机构' /tmp/venture.html
+          grep -F '榜单激活' /tmp/venture.html
+          grep -F '/institutions?institution=' /tmp/venture.html
+
+          curl --fail --location --retry 8 --retry-delay 8 \
+            -H 'Cache-Control: no-cache' \
+            "https://vciq.github.io/hot/?verify=${cache_bust}" \
+            --output /tmp/hot.html
+          grep -F 'ACTIVE INSTITUTIONS' /tmp/hot.html
+          grep -F '由关联文章聚合' /tmp/hot.html
+          grep -F '收藏文章' /tmp/hot.html
+          echo 'production_institution_hot_verified=true'
