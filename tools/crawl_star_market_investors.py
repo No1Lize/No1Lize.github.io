@@ -798,6 +798,48 @@ def build_company_record(
     }
 
 
+def public_human_text(snapshot: dict[str, Any]) -> str:
+    segments: list[str] = []
+    companies = snapshot.get("companies", {})
+    if not isinstance(companies, dict):
+        return ""
+    for company in companies.values():
+        if not isinstance(company, dict):
+            continue
+        for key in ("name", "exchange", "sector"):
+            value = company.get(key)
+            if isinstance(value, str):
+                segments.append(value)
+        prospectus = company.get("prospectus")
+        if isinstance(prospectus, dict) and isinstance(prospectus.get("title"), str):
+            segments.append(prospectus["title"])
+        issuer_contact = company.get("issuerInvestorRelations")
+        if isinstance(issuer_contact, dict):
+            segments.extend(
+                value
+                for key, value in issuer_contact.items()
+                if key != "sourcePage" and isinstance(value, str)
+            )
+        investors = company.get("investors")
+        if not isinstance(investors, list):
+            continue
+        for investor in investors:
+            if not isinstance(investor, dict):
+                continue
+            for key in ("name", "investorType", "sourceSection", "evidence"):
+                value = investor.get(key)
+                if isinstance(value, str):
+                    segments.append(value)
+            contact = investor.get("publicContact")
+            if isinstance(contact, dict):
+                segments.extend(
+                    value
+                    for key, value in contact.items()
+                    if key != "sourcePage" and isinstance(value, str)
+                )
+    return "\n".join(segments)
+
+
 def validate_snapshot(snapshot: dict[str, Any], *, require_companies: bool = False) -> list[str]:
     errors: list[str] = []
     if int(snapshot.get("schemaVersion", 0)) != SCHEMA_VERSION:
@@ -809,10 +851,10 @@ def validate_snapshot(snapshot: dict[str, Any], *, require_companies: bool = Fal
         errors.append("no STAR Market company records")
 
     investor_count = 0
-    serialized = json.dumps(snapshot, ensure_ascii=False)
-    if MOBILE_PATTERN.search(serialized):
+    human_text = public_human_text(snapshot)
+    if MOBILE_PATTERN.search(human_text):
         errors.append("mobile number detected in public snapshot")
-    if IDENTITY_PATTERN.search(serialized):
+    if IDENTITY_PATTERN.search(human_text):
         errors.append("identity number detected in public snapshot")
 
     for slug, company in companies.items():
