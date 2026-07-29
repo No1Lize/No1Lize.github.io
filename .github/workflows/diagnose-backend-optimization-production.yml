@@ -24,10 +24,10 @@ jobs:
       - name: Collect production rollout status
         run: |
           set -euo pipefail
-          echo 'production diagnostic pass 2'
+          echo 'production diagnostic pass 3'
           mkdir -p diagnostics
           for workflow in scheduled-sync.yml pages.yml security.yml market-profile-refresh.yml research-report-refresh.yml tracking-discovery.yml; do
-            gh run list --workflow "$workflow" --limit 8 \
+            gh run list --workflow "$workflow" --limit 10 \
               --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
               > "diagnostics/${workflow%.yml}.json"
           done
