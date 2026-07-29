@@ -5,11 +5,7 @@ import { useMemo, useState } from "react";
 import { useFavorites } from "@/components/use-favorites";
 import { useHotness } from "@/components/use-hotness";
 import styles from "@/components/hot-page.module.css";
-import {
-  isFavorite,
-  toggleFavorite,
-  type FavoriteInput,
-} from "@/lib/favorites";
+import { toggleFavorite, type FavoriteInput } from "@/lib/favorites";
 import {
   HOTNESS_WEIGHTS,
   calculateHotnessScore,
@@ -97,10 +93,8 @@ export function HotPage() {
     [favorites],
   );
 
-  const ranked = useMemo(() => {
+  const allRanked = useMemo(() => {
     const metrics = metricsByHref(hotness);
-    const needle = query.normalize("NFKC").trim().toLocaleLowerCase("zh-CN");
-
     return articles
       .map<RankedArticle>((article) => {
         const key = canonicalHotnessKey(article.source.url);
@@ -116,6 +110,26 @@ export function HotPage() {
           score: calculateHotnessScore({ opens, favorite, shares }),
         };
       })
+      .sort(
+        (left, right) =>
+          right.score - left.score ||
+          right.shares - left.shares ||
+          Number(right.favorite) - Number(left.favorite) ||
+          right.opens - left.opens ||
+          right.article.importance - left.article.importance ||
+          right.article.publishedAt.localeCompare(left.article.publishedAt) ||
+          left.article.title.localeCompare(right.article.title, "zh-CN"),
+      );
+  }, [articles, favoriteKeys, hotness]);
+
+  const interactedCount = useMemo(
+    () => allRanked.filter((item) => item.score > 0).length,
+    [allRanked],
+  );
+
+  const ranked = useMemo(() => {
+    const needle = query.normalize("NFKC").trim().toLocaleLowerCase("zh-CN");
+    return allRanked
       .filter((item) => !onlyInteracted || item.score > 0)
       .filter((item) => {
         if (!needle) return true;
@@ -132,26 +146,9 @@ export function HotPage() {
           .filter(Boolean)
           .some((value) => String(value).toLocaleLowerCase("zh-CN").includes(needle));
       })
-      .sort(
-        (left, right) =>
-          right.score - left.score ||
-          right.shares - left.shares ||
-          Number(right.favorite) - Number(left.favorite) ||
-          right.opens - left.opens ||
-          right.article.importance - left.article.importance ||
-          right.article.publishedAt.localeCompare(left.article.publishedAt) ||
-          left.article.title.localeCompare(right.article.title, "zh-CN"),
-      )
       .slice(0, DISPLAY_LIMIT);
-  }, [articles, favoriteKeys, hotness, onlyInteracted, query]);
+  }, [allRanked, onlyInteracted, query]);
 
-  const interactedCount = useMemo(
-    () =>
-      ranked.filter(
-        (item) => item.opens > 0 || item.favorite || item.shares > 0,
-      ).length,
-    [ranked],
-  );
   const totalOpens = hotness.reduce((sum, item) => sum + item.opens, 0);
   const totalShares = hotness.reduce((sum, item) => sum + item.shares, 0);
 
