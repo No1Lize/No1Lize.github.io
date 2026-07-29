@@ -1,0 +1,60 @@
+name: Diagnose backend optimization production
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/diagnose-backend-optimization-production.yml
+
+permissions:
+  actions: read
+  contents: read
+  issues: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Collect production rollout status
+        run: |
+          set -euo pipefail
+          mkdir -p diagnostics
+          for workflow in scheduled-sync.yml pages.yml security.yml market-profile-refresh.yml research-report-refresh.yml tracking-discovery.yml; do
+            gh run list --workflow "$workflow" --limit 8 \
+              --json databaseId,number,status,conclusion,event,headSha,createdAt,startedAt,updatedAt,url,displayTitle \
+              > "diagnostics/${workflow%.yml}.json"
+          done
+          gh issue list --state all --search '[自动告警] 关键情报源连续异常 in:title' \
+            --json number,title,state,createdAt,updatedAt,url > diagnostics/source-health-issues.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          path = Path('public/data/source_health.json')
+          if path.exists():
+              payload = json.loads(path.read_text(encoding='utf-8'))
+              summary = {
+                  'exists': True,
+                  'generatedAt': payload.get('generatedAt'),
+                  'sourceCount': payload.get('sourceCount'),
+                  'activeAlertCount': payload.get('activeAlertCount'),
+                  'activeAlerts': payload.get('activeAlerts'),
+              }
+          else:
+              summary = {'exists': False}
+          Path('diagnostics/source-health-summary.json').write_text(
+              json.dumps(summary, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+          cat diagnostics/*.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backend-optimization-production-diagnostics
+          path: diagnostics
+          if-no-files-found: error
