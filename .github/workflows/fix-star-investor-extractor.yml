@@ -43,7 +43,7 @@ jobs:
               text = text.replace(old, privacy, 1)
 
           replacements = {
-              '+ r\"))\"\n)': '+ r\"))(?:（有限合伙）|\\(有限合伙\\))?\"\n)',
+              '+ r\"))\"\n)': '+ r\")(?:（有限合伙）|\\(有限合伙\\))?)\"\n)',
               '"evidence": clean_text(context, 220),': '"evidence": redact_private_text(context, 220),',
               'current_quality = int(current is not None) + int(current and "preIpoOwnershipPct" in current)': 'current_quality = int(current is not None) + int(bool(current and "preIpoOwnershipPct" in current))',
           }
