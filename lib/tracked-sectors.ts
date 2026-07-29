@@ -2,6 +2,7 @@ import {
   intelligenceEvents,
   type IntelligenceEvent,
 } from "@/lib/intelligence-data";
+import { getSectorInstitutionRelations } from "@/lib/institution-activity";
 import {
   sectorDefinitions,
   type SectorDefinition,
@@ -31,6 +32,7 @@ export type TrackedSector = SectorDefinition & {
   trend: "up" | "flat" | "down";
   events: number;
   institutions: number;
+  associatedInstitutions: number;
   financingEvents: number;
   sourceCount: number;
   fundingLabel: string;
@@ -49,6 +51,7 @@ type SectorRaw = {
   coverage: TrackCoverage;
   financing: number;
   institutions: number;
+  associatedInstitutions: number;
   weightedEvents: number;
   ipo: number;
   research: number;
@@ -127,9 +130,18 @@ function buildRaw(): SectorRaw[] {
       trackCoverage[tracking.slug] ??
       fallbackTrackCoverage(tracking.slug, tracking.name);
     const financing = events.filter((event) => event.type === "融资").length;
-    const institutions = new Set(
-      events.flatMap((event) => event.institutions ?? []),
-    ).size;
+    const institutionRelations = getSectorInstitutionRelations(
+      {
+        slug: tracking.slug,
+        name: tracking.name,
+        aliases,
+        keywords: tracking.keywords,
+        subsectors: base?.subsectors,
+      },
+      events,
+    );
+    const institutions = institutionRelations.filter((relation) => relation.active).length;
+    const associatedInstitutions = institutionRelations.length;
     const weightedEvents = Math.round(
       events.reduce((sum, event) => sum + event.importance, 0) / 100,
     );
@@ -155,6 +167,7 @@ function buildRaw(): SectorRaw[] {
       coverage,
       financing,
       institutions,
+      associatedInstitutions,
       weightedEvents,
       ipo,
       research,
@@ -198,6 +211,7 @@ function buildTrackedSectors(): TrackedSector[] {
             : "flat",
       events: events.length,
       institutions: item.institutions,
+      associatedInstitutions: item.associatedInstitutions,
       financingEvents: item.financing,
       sourceCount,
       fundingLabel: `${item.financing} 笔融资披露`,
