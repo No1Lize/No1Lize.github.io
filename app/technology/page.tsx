@@ -48,7 +48,7 @@ export default function TechnologyPage() {
               </div>
               <h2>{sector.name}</h2>
               <p>
-                {sector.events} 项公开事件 · {sector.institutions} 家活跃机构
+                {sector.events} 项公开事件 · {sector.institutions} 家活跃机构 · {sector.associatedInstitutions} 家已关联
               </p>
               <dl>
                 <div>

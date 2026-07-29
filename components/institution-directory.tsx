@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, Search } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import {
   institutionDirectory,
   institutionRankingCategories,
@@ -23,6 +23,15 @@ function categoryMatches(
   return item.rankings.some((ranking) => ranking.category === category);
 }
 
+function subscribeLocation(callback: () => void) {
+  window.addEventListener("popstate", callback);
+  return () => window.removeEventListener("popstate", callback);
+}
+
+function locationInstitutionQuery(): string {
+  return new URLSearchParams(window.location.search).get("institution")?.trim() ?? "";
+}
+
 export function InstitutionDirectory({
   pageSize = DEFAULT_PAGE_SIZE,
   compact = false,
@@ -30,11 +39,17 @@ export function InstitutionDirectory({
   pageSize?: number;
   compact?: boolean;
 } = {}) {
-  const [query, setQuery] = useState("");
+  const linkedQuery = useSyncExternalStore(
+    subscribeLocation,
+    locationInstitutionQuery,
+    () => "",
+  );
+  const [queryOverride, setQueryOverride] = useState<string | null>(null);
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [category, setCategory] = useState<InstitutionRankingCategory | "全部">("全部");
   const [page, setPage] = useState(1);
   const safePageSize = Math.max(1, pageSize);
+  const query = queryOverride ?? linkedQuery;
 
   const filtered = useMemo(() => {
     const normalizedQuery = query.trim().toLocaleLowerCase();
@@ -78,7 +93,7 @@ export function InstitutionDirectory({
             aria-label="搜索投资机构"
             value={query}
             onChange={(event) => {
-              setQuery(event.target.value);
+              setQueryOverride(event.target.value);
               setPage(1);
             }}
             placeholder="搜索机构简称、全称、类型或榜单"
