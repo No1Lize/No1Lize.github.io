@@ -2,9 +2,9 @@ name: Refresh public intelligence every two hours
 
 on:
   schedule:
-    # Primary run. Cron is UTC, so this fires at every even Taipei hour +17.
+    # Primary check. Cron is UTC, so this fires at every even Taipei hour +17.
     - cron: "17 */2 * * *"
-    # Redundant recovery slot. It exits immediately when the primary run succeeded.
+    # Recovery check. It exits immediately when the primary check already succeeded.
     - cron: "47 */2 * * *"
   workflow_dispatch:
 
