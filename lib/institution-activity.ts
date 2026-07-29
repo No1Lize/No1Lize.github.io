@@ -41,10 +41,18 @@ type ExtendedEvent = IntelligenceEvent & {
   mentionedPeople?: string[];
 };
 
+type PortfolioIdentity = {
+  slugs: Set<string>;
+  names: Set<string>;
+  sectors: string[];
+};
+
 const catalogBySlug = new Map(
   institutionCatalog.map((institution) => [institution.slug, institution]),
 );
 const companyBySlug = new Map(companies.map((company) => [company.slug, company]));
+const identityCache = new Map<string, string[]>();
+const portfolioCache = new Map<string, PortfolioIdentity>();
 
 const genericFocusTerms = new Set(
   [
@@ -102,6 +110,10 @@ export function normalizeInstitutionTerm(value: string): string {
     .trim();
 }
 
+function entryKey(entry: InstitutionDirectoryEntry): string {
+  return entry.profileSlug ?? entry.name;
+}
+
 function uniqueEvents(events: IntelligenceEvent[]): IntelligenceEvent[] {
   const result: IntelligenceEvent[] = [];
   const seen = new Set<string>();
@@ -123,8 +135,12 @@ function catalogInstitutionFor(
 }
 
 function identityTerms(entry: InstitutionDirectoryEntry): string[] {
+  const key = entryKey(entry);
+  const cached = identityCache.get(key);
+  if (cached) return cached;
+
   const catalog = catalogInstitutionFor(entry);
-  return [
+  const terms = [
     entry.name,
     entry.fullName ?? "",
     catalog?.name ?? "",
@@ -133,28 +149,37 @@ function identityTerms(entry: InstitutionDirectoryEntry): string[] {
     .map(normalizeInstitutionTerm)
     .filter(Boolean)
     .filter((value, index, values) => values.indexOf(value) === index);
+  identityCache.set(key, terms);
+  return terms;
 }
 
-function portfolioIdentities(entry: InstitutionDirectoryEntry) {
+function portfolioIdentities(entry: InstitutionDirectoryEntry): PortfolioIdentity {
+  const key = entryKey(entry);
+  const cached = portfolioCache.get(key);
+  if (cached) return cached;
+
   const catalog = catalogInstitutionFor(entry);
-  if (!catalog) return { slugs: new Set<string>(), names: new Set<string>(), sectors: [] as string[] };
-
-  const portfolio = getInstitutionProfile(catalog).portfolio;
-  const slugs = new Set<string>();
-  const names = new Set<string>();
-  const sectors: string[] = [];
-
-  for (const item of portfolio) {
-    if (item.slug) {
-      slugs.add(item.slug);
-      const company = companyBySlug.get(item.slug);
-      if (company) sectors.push(company.sector);
-    }
-    const normalizedName = normalizeInstitutionTerm(item.name);
-    if (normalizedName) names.add(normalizedName);
+  const identity: PortfolioIdentity = {
+    slugs: new Set<string>(),
+    names: new Set<string>(),
+    sectors: [],
+  };
+  if (!catalog) {
+    portfolioCache.set(key, identity);
+    return identity;
   }
 
-  return { slugs, names, sectors };
+  for (const item of getInstitutionProfile(catalog).portfolio) {
+    if (item.slug) {
+      identity.slugs.add(item.slug);
+      const company = companyBySlug.get(item.slug);
+      if (company) identity.sectors.push(company.sector);
+    }
+    const normalizedName = normalizeInstitutionTerm(item.name);
+    if (normalizedName) identity.names.add(normalizedName);
+  }
+  portfolioCache.set(key, identity);
+  return identity;
 }
 
 function aliasCanAppearInText(alias: string): boolean {
@@ -181,7 +206,9 @@ function directEventMatches(
   event: ExtendedEvent,
 ): boolean {
   const aliases = identityTerms(entry);
-  const explicit = (event.institutions ?? []).map(normalizeInstitutionTerm);
+  const explicit = (event.institutions ?? [])
+    .map(normalizeInstitutionTerm)
+    .filter(Boolean);
   if (
     aliases.some((alias) =>
       explicit.some(
@@ -257,19 +284,21 @@ function focusMatches(
   return termsOverlap(institutionTerms, sectorTerms(sector));
 }
 
-function isInvestmentTrack(sector: InstitutionSectorContext): boolean {
-  const combined = normalizeInstitutionTerm(
+function sectorIdentity(sector: InstitutionSectorContext): string {
+  return normalizeInstitutionTerm(
     [sector.slug, sector.name, ...(sector.aliases ?? []), ...(sector.keywords ?? [])].join(" "),
   );
+}
+
+function isInvestmentTrack(sector: InstitutionSectorContext): boolean {
+  const combined = sectorIdentity(sector);
   return investmentTerms.some((term) => combined.includes(term));
 }
 
 function requestedRankingCategories(
   sector: InstitutionSectorContext,
 ): InstitutionRankingCategory[] {
-  const combined = normalizeInstitutionTerm(
-    [sector.slug, sector.name, ...(sector.aliases ?? []), ...(sector.keywords ?? [])].join(" "),
-  );
+  const combined = sectorIdentity(sector);
   const selected: InstitutionRankingCategory[] = [];
   if (combined.includes(normalizeInstitutionTerm("早期投资"))) selected.push("早期投资");
   if (
@@ -300,9 +329,7 @@ function rankingMatches(
 ): boolean {
   if (!isInvestmentTrack(sector)) return false;
   const requested = requestedRankingCategories(sector);
-  if (!requested.length) {
-    return Boolean(entry.rankings.length || entry.profileSlug);
-  }
+  if (!requested.length) return Boolean(entry.rankings.length || entry.profileSlug);
   return entry.rankings.some((ranking) => requested.includes(ranking.category));
 }
 
@@ -330,10 +357,11 @@ function buildRelation(
   const directEvents = uniqueEvents(
     events.filter((event) => directEventMatches(entry, event as ExtendedEvent)),
   );
+  const directIds = new Set(directEvents.map((event) => event.id));
   const portfolioEvents = uniqueEvents(
     events
       .filter((event) => portfolioEventMatches(entry, event as ExtendedEvent))
-      .filter((event) => !directEvents.some((direct) => direct.id === event.id)),
+      .filter((event) => !directIds.has(event.id)),
   );
   const relatedEvents = uniqueEvents([...directEvents, ...portfolioEvents]);
   const focus = sector ? focusMatches(entry, sector) : false;
