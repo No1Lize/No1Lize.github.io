@@ -7,15 +7,15 @@ https://nextjs.org/telemetry
 ▲ Next.js 16.2.12 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 5.5s
+✓ Compiled successfully in 7.1s
   Running TypeScript ...
-  Finished TypeScript in 7.8s ...
+  Finished TypeScript in 8.9s ...
   Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/196) ...
-  Generating static pages using 3 workers (49/196) 
-  Generating static pages using 3 workers (98/196) 
-  Generating static pages using 3 workers (147/196) 
-✓ Generating static pages using 3 workers (196/196) in 20.9s
+  Generating static pages using 3 workers (0/197) ...
+  Generating static pages using 3 workers (49/197) 
+  Generating static pages using 3 workers (98/197) 
+  Generating static pages using 3 workers (147/197) 
+✓ Generating static pages using 3 workers (197/197) in 23.9s
   Finalizing page optimization ...
 
 Route (app)
@@ -40,6 +40,7 @@ Route (app)
 │ ├ /institutions/a16z
 │ ├ /institutions/benchmark
 │ └ [+17 more paths]
+├ ○ /institutions/star-market
 ├ ○ /ipo
 ├ ● /ipo/[slug]
 │ ├ /ipo/cambricon
