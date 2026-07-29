@@ -1,0 +1,78 @@
+.mount {
+  position: absolute;
+  top: 14px;
+  right: 105px;
+  z-index: 7;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 27px;
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--green) 58%, var(--border));
+  background: color-mix(in srgb, var(--surface-2) 94%, transparent);
+  color: var(--muted);
+  box-shadow: 0 5px 18px color-mix(in srgb, var(--bg) 78%, transparent);
+  font: 500 10px/1 Inter, "Noto Sans SC", sans-serif;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    color 0.16s ease;
+}
+
+.button:hover {
+  border-color: var(--green);
+  background: var(--surface-2);
+  color: var(--green-bright);
+}
+
+.button:focus-visible {
+  outline: 1px solid var(--green-bright);
+  outline-offset: 2px;
+}
+
+:global(.event-row) .mount {
+  position: static;
+  margin: 0 0 9px 4px;
+}
+
+:global(.headlines-column a[class*="feedRow"]) .mount,
+:global(.side-column a[class*="feedRow"]) .mount {
+  position: static;
+  margin-left: 4px;
+}
+
+:global([data-intelligence-hotness-attached="true"]:not(.event-row):not([class*="feedRow"])) {
+  padding-right: 158px !important;
+}
+
+@media (max-width: 760px) {
+  .button span {
+    display: none;
+  }
+
+  .button {
+    width: 27px;
+    min-width: 27px;
+    padding: 3px;
+  }
+
+  .mount {
+    top: 10px;
+    right: 42px;
+  }
+
+  :global([data-intelligence-hotness-attached="true"]:not(.event-row):not([class*="feedRow"])) {
+    padding-right: 82px !important;
+  }
+}

@@ -14,6 +14,7 @@ const navItems = [
   ["研究报告", "/reports"],
   ["人物研究", "/people"],
   ["收藏", "/favorites"],
+  ["热点", "/hot"],
 ];
 
 // The persisted theme lives in localStorage; expose it as an external store
