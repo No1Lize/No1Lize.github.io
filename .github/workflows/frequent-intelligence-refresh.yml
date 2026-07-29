@@ -1,0 +1,133 @@
+name: Refresh public intelligence every two hours
+
+on:
+  schedule:
+    # Primary run. Cron is UTC, so this fires at every even Taipei hour +17.
+    - cron: "17 */2 * * *"
+    # Redundant recovery slot. It exits immediately when the primary run succeeded.
+    - cron: "47 */2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: public-article-refresh
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Skip redundant recovery runs after a recent successful refresh
+        id: due
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from datetime import UTC, datetime
+          from pathlib import Path
+
+          payload = json.loads(Path("public/data/articles.json").read_text(encoding="utf-8"))
+          audit = payload.get("refreshAudit") if isinstance(payload.get("refreshAudit"), dict) else {}
+          raw = audit.get("completedAt") or payload.get("generatedAt") or ""
+          try:
+              last = datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
+              if last.tzinfo is None:
+                  last = last.replace(tzinfo=UTC)
+              age_minutes = max(0, int((datetime.now(UTC) - last.astimezone(UTC)).total_seconds() // 60))
+          except (TypeError, ValueError):
+              age_minutes = 10**9
+          due = os.environ.get("EVENT_NAME") == "workflow_dispatch" or age_minutes >= 90
+          print(json.dumps({"due": due, "ageMinutes": age_minutes}, ensure_ascii=False))
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"due={str(due).lower()}\n")
+              output.write(f"age_minutes={age_minutes}\n")
+          PY
+      - name: Validate lightweight crawler entry points
+        if: steps.due.outputs.due == 'true'
+        run: |
+          python -m py_compile \
+            tools/crawl_with_wechat_registry.py \
+            tools/prepare_frequent_refresh.py \
+            tools/finalize_frequent_refresh.py \
+            tools/migrate_article_entities.py \
+            tools/enrich_tracking_snapshot.py \
+            tools/snapshot_retention.py
+          python -m unittest \
+            tests.test_professional_media_sources \
+            tests.test_snapshot_retention \
+            tests.test_frequent_refresh_workflow \
+            tests.test_frequent_refresh_audit
+      - name: Record the pre-refresh article baseline
+        if: steps.due.outputs.due == 'true'
+        run: python tools/prepare_frequent_refresh.py
+      - name: Crawl news, tracking, professional media, X and WeChat sources
+        if: steps.due.outputs.due == 'true'
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: python tools/crawl_with_wechat_registry.py --source news
+      - name: Apply deterministic article enrichment and retention
+        if: steps.due.outputs.due == 'true'
+        run: |
+          python tools/migrate_article_entities.py
+          python tools/enrich_tracking_snapshot.py
+          python tools/snapshot_retention.py
+      - name: Validate the lightweight article snapshot
+        if: steps.due.outputs.due == 'true'
+        run: |
+          python tools/validate_professional_media_snapshot.py --require-articles
+          python tools/snapshot_retention.py --check
+          python tools/crawl_articles.py --validate-only
+          python tools/validate_user_source_coverage.py
+      - name: Stamp the successful frequent refresh
+        if: steps.due.outputs.due == 'true'
+        run: python tools/finalize_frequent_refresh.py
+      - name: Commit the checked intelligence snapshot
+        id: data-update
+        if: steps.due.outputs.due == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/articles.json
+          git commit -m "data: refresh public intelligence (two-hour check)"
+
+          for attempt in 1 2 3; do
+            git pull --rebase -X theirs origin main
+            python tools/migrate_article_entities.py
+            python tools/enrich_tracking_snapshot.py
+            python tools/snapshot_retention.py
+            python tools/validate_professional_media_snapshot.py --require-articles
+            python tools/snapshot_retention.py --check
+            python tools/crawl_articles.py --validate-only
+            python tools/validate_user_source_coverage.py
+            git add public/data/articles.json
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+            if git push origin HEAD:main; then
+              break
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Publish the refreshed snapshot
+        if: steps.data-update.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
