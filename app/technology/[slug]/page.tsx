@@ -4,24 +4,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalDatabaseLinks } from "@/components/external-database-links";
 import { FavoriteButton } from "@/components/favorite-button";
-import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
+import { companies, reports } from "@/lib/catalog-data";
 import { hanghangchaResearchLink } from "@/lib/external-database-links";
+import {
+  getSectorInstitutionRelations,
+  institutionDirectoryHref,
+  institutionEvidenceLabels,
+} from "@/lib/institution-activity";
+import { heatMethodology, snapshotDate } from "@/lib/intelligence-data";
+import { reportContent } from "@/lib/research-content";
 import {
   eventsForTrackedSector,
   getTrackedSector,
   trackedSectors,
 } from "@/lib/tracked-sectors";
-import { heatMethodology, snapshotDate } from "@/lib/intelligence-data";
-import { reportContent } from "@/lib/research-content";
 import styles from "./sector-detail.module.css";
-
-const institutionKeywords: Record<string, string[]> = {
-  "AI / AGI": ["AI", "企业科技", "企业软件", "TMT", "科技"],
-  机器人: ["先进制造", "制造", "硬科技", "科技", "工业", "国防科技"],
-  半导体: ["硬科技", "先进制造", "制造", "科技"],
-  新能源: ["气候科技", "先进制造", "制造", "科技"],
-  生物科技: ["生物科技", "医疗"],
-};
 
 const genericCompanies = new Set(["", "科技产业", "AI 研究", "未分类"]);
 
@@ -75,9 +72,10 @@ export default async function SectorDetail({
   const sector = getTrackedSector(slug);
   if (!sector) notFound();
 
-  const events = eventsForTrackedSector(sector)
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
-    .slice(0, 20);
+  const allEvents = eventsForTrackedSector(sector).sort((a, b) =>
+    b.publishedAt.localeCompare(a.publishedAt),
+  );
+  const events = allEvents.slice(0, 20);
   const relatedCompanies = companies
     .filter((item) => sector.aliases.includes(item.sector))
     .slice(0, 12);
@@ -93,28 +91,16 @@ export default async function SectorDetail({
   ]).filter(
     (name) => !catalogCompanyNames.has(name.toLocaleLowerCase("zh-CN")),
   );
-  const keywords = [
-    ...(institutionKeywords[sector.name] ?? []),
-    ...sector.tracking.keywords,
-  ];
-  const relatedInstitutions = institutionCatalog
-    .filter((institution) =>
-      institution.sectors.some((focus) =>
-        keywords.some(
-          (keyword) => focus.includes(keyword) || keyword.includes(focus),
-        ),
-      ),
-    )
-    .slice(0, 10);
-  const catalogInstitutionNames = new Set(
-    relatedInstitutions.map((item) => item.name.toLocaleLowerCase("zh-CN")),
-  );
-  const observedInstitutions = unique(
-    events.flatMap((event) => event.institutions ?? []),
-    12,
-  ).filter(
-    (name) => !catalogInstitutionNames.has(name.toLocaleLowerCase("zh-CN")),
-  );
+  const institutionRelations = getSectorInstitutionRelations(
+    {
+      slug: sector.slug,
+      name: sector.name,
+      aliases: sector.aliases,
+      keywords: sector.tracking.keywords,
+      subsectors: sector.subsectors,
+    },
+    allEvents,
+  ).slice(0, 18);
   const relatedReports = reports.filter((report) =>
     reportContent[report.slug]?.eventSectors.some((name) =>
       sector.aliases.includes(name),
@@ -189,6 +175,13 @@ export default async function SectorDetail({
                 <span>独立来源</span>
                 <strong>{sector.sourceCount}</strong>
                 <p>当前赛道事件对应的独立原始链接数量。</p>
+              </div>
+              <div className={styles.summaryCard}>
+                <span>活跃 / 关联机构</span>
+                <strong>
+                  {sector.institutions} / {sector.associatedInstitutions}
+                </strong>
+                <p>活跃要求直接公开事件或投资榜单证据；方向和组合关系单独记为关联。</p>
               </div>
               <div className={styles.summaryCard}>
                 <span>自定义对象</span>
@@ -294,35 +287,38 @@ export default async function SectorDetail({
             </Link>
           </Section>
 
-          <Section id="投资机构" title="相关投资机构">
-            {relatedInstitutions.length || observedInstitutions.length ? (
+          <Section id="投资机构" title="活跃与关联机构">
+            <p className={styles.lead}>
+              直接事件与投资类榜单用于激活机构；被投组合和明确投资方向只建立关联，不会被冒充为近期投资动作。机构关联文章的浏览、收藏和分享会同步进入 09 热点的机构榜。
+            </p>
+            {institutionRelations.length ? (
               <div className={styles.entityGrid}>
-                {relatedInstitutions.map((institution) => (
-                  <Link
-                    className={styles.institutionCard}
-                    href={`/institutions/${institution.slug}`}
-                    key={institution.slug}
-                  >
-                    <span>
-                      {institution.region} · {institution.type}
-                    </span>
-                    <strong>{institution.name}</strong>
-                    <p>
-                      {institution.stages} · {institution.sectors.join("、")}
-                    </p>
-                  </Link>
-                ))}
-                {observedInstitutions.map((institution) => (
-                  <div className={styles.institutionCard} key={institution}>
-                    <span className={styles.customBadge}>事件识别</span>
-                    <strong>{institution}</strong>
-                    <p>该机构出现在本赛道已收录的论文或公开事件元数据中。</p>
-                  </div>
-                ))}
+                {institutionRelations.map((relation) => {
+                  const institution = relation.institution;
+                  const labels = institutionEvidenceLabels(relation);
+                  return (
+                    <Link
+                      className={styles.institutionCard}
+                      href={institutionDirectoryHref(institution)}
+                      key={institution.name}
+                    >
+                      <span>
+                        {relation.active ? "活跃" : "已关联"} · {institution.region} · {institution.type}
+                      </span>
+                      <strong>{institution.name}</strong>
+                      <p>
+                        {labels.join(" · ")}
+                        {relation.latestActivity
+                          ? ` · 最近 ${relation.latestActivity}`
+                          : ""}
+                      </p>
+                    </Link>
+                  );
+                })}
               </div>
             ) : (
               <p className={styles.empty}>
-                当前事件尚未识别出投资或研究机构；爬虫完成后会自动回填。
+                当前没有达到证据门槛的机构关联；系统不会仅凭“科技”一类宽泛标签批量挂接机构。
               </p>
             )}
           </Section>
