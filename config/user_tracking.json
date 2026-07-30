@@ -509,7 +509,8 @@
         "等离子体约束",
         "聚变净能量增益",
         "氚燃料循环",
-        "核聚变"
+        "核聚变",
+        "电子"
       ],
       "people": [
         "杨钊",
@@ -573,7 +574,9 @@
         "Partnership",
         "Mark Zuckerberg",
         "Review",
-        "Video"
+        "Video",
+        "AI+",
+        "Features"
       ],
       "people": [
         "Gustaf Alstr",
@@ -3454,6 +3457,21 @@
       "company": "",
       "ticker": "",
       "keywords": [],
+      "enabled": true
+    },
+    {
+      "id": "source-auto-media-slashdot-org",
+      "name": "Slashdot · 风险投资信源 · 风险投资信源",
+      "url": "https://slashdot.org/",
+      "sourceType": "listing-search",
+      "sourceCategory": "media",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "",
+      "ticker": "",
+      "keywords": [
+        "风险投资"
+      ],
       "enabled": true
     }
   ]

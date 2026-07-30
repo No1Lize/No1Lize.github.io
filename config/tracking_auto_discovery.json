@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-29T22:51:12+00:00",
+  "updatedAt": "2026-07-30T12:14:00+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-29T22:49:00+00:00"
+      "lastExpandedAt": "2026-07-30T12:11:46+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-29T22:49:14+00:00"
+      "lastExpandedAt": "2026-07-30T12:12:02+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-29T22:49:29+00:00"
+      "lastExpandedAt": "2026-07-30T12:12:18+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-29T22:49:58+00:00"
+      "lastExpandedAt": "2026-07-30T12:12:52+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-29T22:50:16+00:00"
+      "lastExpandedAt": "2026-07-30T12:13:12+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-29T22:50:32+00:00"
+      "lastExpandedAt": "2026-07-30T12:13:28+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-29T22:50:44+00:00"
+      "lastExpandedAt": "2026-07-30T12:13:44+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-29T22:50:58+00:00"
+      "lastExpandedAt": "2026-07-30T12:14:00+00:00"
     },
     "materials": {
       "lastExpandedAt": "2026-07-29T22:51:12+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-29T22:41:03+00:00"
+      "lastExpandedAt": "2026-07-30T12:09:54+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-29T22:48:03+00:00"
+      "lastExpandedAt": "2026-07-30T12:10:24+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-29T22:48:19+00:00"
+      "lastExpandedAt": "2026-07-30T12:10:42+00:00"
     },
     "track-1p8ob4k": {
-      "lastExpandedAt": "2026-07-29T22:48:33+00:00"
+      "lastExpandedAt": "2026-07-30T12:10:59+00:00"
     }
   },
   "added": [
@@ -1991,6 +1991,43 @@
       "addedAt": "2026-07-29T22:48:19+00:00",
       "evidence": [
         "corpus-term"
+      ]
+    },
+    {
+      "track": "fusion",
+      "kind": "keywords",
+      "value": "电子",
+      "addedAt": "2026-07-30T12:10:24+00:00",
+      "evidence": [
+        "news-confirmed",
+        "wikipedia-morelike"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "AI+",
+      "addedAt": "2026-07-30T12:10:42+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Features",
+      "addedAt": "2026-07-30T12:10:42+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://slashdot.org/",
+      "addedAt": "2026-07-30T12:10:42+00:00",
+      "evidence": [
+        "wikidata-official-site"
       ]
     }
   ],
