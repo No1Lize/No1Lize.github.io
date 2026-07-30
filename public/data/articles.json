@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-30T10:23:07+00:00",
-  "articleCount": 1102,
+  "generatedAt": "2026-07-30T10:47:17+00:00",
+  "articleCount": 1103,
   "articles": [
     {
       "id": "user-track-track-1ccjq49-google-cn-7b11808c2afc1d7f",
@@ -31926,6 +31926,40 @@
       "wechatContentMode": "original-page"
     },
     {
+      "id": "user-track-wechat-jiqizhixin-robotics-bfadd5d517f112bb",
+      "sourceId": "user-track-wechat-jiqizhixin-robotics",
+      "title": "蛰伏三年，前大疆员工做了款消费级纺织机，拿下红杉、顺为、米哈游等数亿融资｜产品观察",
+      "summary": "机器之心转载 浪爪智能（CLAWLAB）创始人胡文鑫，是当下硬件赛道一个不太按常理出牌的人。 工程师背景出身，曾就职于大疆、美团等头部大厂，拿过顶级机构的钱，履历足以支撑他选择任何一个被市场验证过的热门赛道，在最短时间内做出产品、讲故事、滚动融资。 但胡文鑫扎进了一个过去三十年几乎无人问津的品类：家用纺织机。 而浪爪智能已经在过去几年，连续完成数轮超亿元融资，其中其中 Pre-A2 轮由元璟资本领投，老股东顺为资本超额加注，Pre-A3 轮由米哈游领投，老股东元璟及顺为大幅超额加注。 很少有人知道胡文鑫具体在做什么。浪爪智能成立于 2022 年 12 月，近几年里，团队刻意保持水下状态 ——BP 从不外发，没有主动路演或公司传播，有投资人对产品方向感兴趣就直接到办公室看 Demo。他认为，纺织作为一个历史悠久的方向，天然切中 “衣食住行” 的首位，是一件足够大且真的需求，而定制化 DIY 是在刚需满足后，大家向内探索、向外表达的下一步需求。这三年多里，他主要专注 3 件事情：锚定消费级纺织 DIY 天花板最高的方向沿途攻坚；积累足够多的弹药为后续品类大爆发做准备；以及建立足够开放、极致",
+      "type": "融资",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "大疆",
+      "publishedAt": "2026-07-07",
+      "importance": 91,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e670bfb391f9a9b107d150eb32557ac21ff848dc5c740db30849ce1852f59634cae3aa8445&idx=2&mid=2651043009&sn=9d10e98c30231971fc7a8c357340cd9b",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "黄楠"
+      ],
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "大疆",
+        "字节跳动"
+      ],
+      "mentionedPeople": [
+        "对产品工具"
+      ],
+      "matchedTrackingTerms": [
+        "机器人"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "user-track-wechat-deeptechchina-ai-6e3732a3d35e5abd",
       "sourceId": "user-track-wechat-deeptechchina-ai",
       "title": "诺奖得主和Claude联手发论文，结论是：AI时代更需“笨功夫”",
@@ -42705,14 +42739,16 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "error",
       "scanned": 15,
-      "accepted": 1,
+      "accepted": 0,
       "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-eefocus-semiconductor",
@@ -42829,8 +42865,8 @@
       "name": "机器之心",
       "status": "partial",
       "scanned": 26,
-      "accepted": 4,
-      "failed": 4,
+      "accepted": 5,
+      "failed": 5,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -43575,15 +43611,15 @@
     }
   },
   "wechatIngestion": {
-    "generatedAt": "2026-07-30T10:23:07+00:00",
+    "generatedAt": "2026-07-30T10:47:17+00:00",
     "configuredSources": 34,
-    "successfulSources": 12,
+    "successfulSources": 11,
     "acceptedArticles": 41,
     "fullTextArticles": 41,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 22,
+    "retainedSources": 23,
     "mentionedCompanyLinks": 58,
-    "mentionedPeopleLinks": 94
+    "mentionedPeopleLinks": 91
   }
 }
