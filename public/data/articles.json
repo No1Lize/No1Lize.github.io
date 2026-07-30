@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-30T21:02:56+00:00",
-  "articleCount": 1069,
+  "generatedAt": "2026-07-30T21:34:08+00:00",
+  "articleCount": 1057,
   "articles": [
     {
       "id": "ionq-53b35f6e7969e34f",
@@ -861,6 +861,37 @@
       ]
     },
     {
+      "id": "user-source-source-dev-community-d9cc2d64f69b5bc1",
+      "sourceId": "user-source-source-dev-community",
+      "title": "OpenAI Says AI Benchmark Scores Depend on Harnesses, Budgets, and Memory Design",
+      "summary": "OpenAI is urging researchers, evaluators, and AI buyers to treat benchmark results as measurements of a model in a particular setup , not as permanent measures of a model's standalone capability. Its new guidance on third-party evaluations says the harness, resource budget, available tools, and approach to memory and context management can materially change observed performance, especially on long-running, multi-step tasks. In OpenAI's guidance on trustworthy third-party evaluations , the compan",
+      "type": "技术突破",
+      "region": "全球",
+      "sector": "新材料",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-30",
+      "importance": 85,
+      "source": {
+        "name": "DEV Community",
+        "url": "https://dev.to/alifar/openai-says-ai-benchmark-scores-depend-on-harnesses-budgets-and-memory-design-448k",
+        "level": "媒体报道",
+        "platform": "DEV Community"
+      },
+      "companySlug": "openai",
+      "qualityScore": 41,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "web3",
+        "materials",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "professional-media-siliconangle-0a1552b68a402f75",
       "sourceId": "user-source-source-siliconangle",
       "title": "Certinia pushes Veda deeper into AI-native services: theCUBE Research analysis",
@@ -930,44 +961,6 @@
       "trackSlugs": [
         "robotics",
         "materials"
-      ]
-    },
-    {
-      "id": "professional-media-dev-community-d9cc2d64f69b5bc1",
-      "sourceId": "user-source-source-dev-community",
-      "title": "OpenAI Says AI Benchmark Scores Depend on Harnesses, Budgets, and Memory Design",
-      "summary": "OpenAI is urging researchers, evaluators, and AI buyers to treat benchmark results as measurements of a model in a particular setup , not as permanent measures of a model's standalone capability. Its new guidance on third-party evaluations says the harness, resource budget, available tools, and approach to memory and context management can materially change observed performance, especially on long-running, multi-step tasks. In OpenAI's guidance on trustworthy third-party evaluations , the compan",
-      "type": "技术突破",
-      "region": "全球",
-      "sector": "新材料",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-30",
-      "importance": 85,
-      "source": {
-        "name": "DEV Community",
-        "url": "https://dev.to/alifar/openai-says-ai-benchmark-scores-depend-on-harnesses-budgets-and-memory-design-448k",
-        "level": "媒体报道",
-        "platform": "DEV Community"
-      },
-      "companySlug": "openai",
-      "professionalMediaId": "dev-community",
-      "professionalMediaUrl": "https://dev.to/",
-      "professionalMediaFocus": [
-        "软件开发",
-        "开源",
-        "开发者"
-      ],
-      "qualityScore": 41,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "web3",
-        "materials",
-        "track-1ccjq49"
       ]
     },
     {
@@ -1224,30 +1217,6 @@
       ]
     },
     {
-      "id": "sina-finance-e1a268e3d36b66f7",
-      "sourceId": "sina-finance",
-      "title": "AI股受挫之际 城堡投资据悉大举买入前OpenAI研究员旗下基金持仓",
-      "summary": "肯·格里芬旗下城堡投资买下Situational Awareness持有的大量人工智能股票，这只对冲基金由前OpenAI研究员Leopold Aschenbrenner管理。",
-      "type": "产业投资",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-30",
-      "importance": 84,
-      "source": {
-        "name": "新浪财经",
-        "url": "https://finance.sina.com.cn/world/2026-07-31/doc-inikrfec1730527.shtml",
-        "level": "媒体报道",
-        "platform": "新浪"
-      },
-      "companySlug": "openai",
-      "trackSlugs": [
-        "ai",
-        "biotech",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "sina-finance-875ef2040560111e",
       "sourceId": "sina-finance",
       "title": "微软财报提振美光、闪迪等芯片股大幅上涨",
@@ -1294,7 +1263,7 @@
     },
     {
       "id": "professional-media-electrek-a594e2d05a73c049",
-      "sourceId": "user-source-source-electrek",
+      "sourceId": "professional-media-electrek",
       "title": "Rivian (RIVN) Q2 2026 earnings: revenue up 27%, gross margins soaring",
       "summary": "Rivian reported its second-quarter 2026 earnings today, and there are improvements across the board. It’s a car. The company started delivering the R2, its first vehicle priced under $50,000, to customers on June 9. The financials came in strong too. Revenue reached $1.658 billion, up 27% year-over-year, and Rivian posted a record $179 million gross profit while beating Wall Street on revenue, earnings, and adjusted EBITDA.",
       "type": "财报",
@@ -1316,12 +1285,6 @@
         "储能",
         "可再生能源"
       ],
-      "qualityScore": 27,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
         "energy",
@@ -1329,10 +1292,10 @@
       ]
     },
     {
-      "id": "prnewswire-tech-252eb9669042d931",
+      "id": "prnewswire-tech-3792b89d95acca3e",
       "sourceId": "prnewswire-tech",
-      "title": "Supermicro Expands DCBBS with Precision-Engineered AI Rack Series to Accelerate Deployment and Time-to-Online",
-      "summary": "Industry-leading quality, factory pre-assembly, and modular design facilitate rapid integration of systems and liquid cooling components, shortening Time-to-Online (TTO) Ten Rack models available in 44OU, 48U, 48OU, and 52U configurations for same-day data center integration to support a...",
+      "title": "Feed.fm Reports 300% Growth in New Customer ARR as Music Becomes a Core Feature for AI-Era Apps",
+      "summary": "AI platforms, connected devices, and consumer apps are turning to Feed.fm to launch licensed music experiences that increase engagement, strengthen differentiation, and create new recurring revenue opportunities. SAN FRANCISCO, July 30, 2026 /PRNewswire-PRWeb/ -- Feed.fm, the leading...",
       "type": "商业进展",
       "region": "全球",
       "sector": "AI / AGI",
@@ -1341,14 +1304,12 @@
       "importance": 84,
       "source": {
         "name": "PR Newswire Consumer Technology",
-        "url": "https://www.prnewswire.com/news-releases/supermicro-expands-dcbbs-with-precision-engineered-ai-rack-series-to-accelerate-deployment-and-time-to-online-302839359.html",
+        "url": "https://www.prnewswire.com/news-releases/feedfm-reports-300-growth-in-new-customer-arr-as-music-becomes-a-core-feature-for-ai-era-apps-302838657.html",
         "level": "媒体报道",
         "platform": "新闻稿"
       },
       "trackSlugs": [
         "ai",
-        "semiconductor",
-        "web3",
         "track-1ccjq49"
       ]
     },
@@ -1432,6 +1393,34 @@
       ]
     },
     {
+      "id": "user-track-robotics-google-cn-63a455f080f6d060",
+      "sourceId": "user-track-robotics-google-cn",
+      "title": "机器人武侠IP“绝世高手”上线，智元远征A3突破人形机器人能力边界 - 广州日报新花城",
+      "summary": "机器人武侠IP“绝世高手”上线，智元远征A3突破人形机器人能力边界 广州日报新花城",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 82,
+      "source": {
+        "name": "机器人 · Google News 中文",
+        "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPOEo2WFZ1LTRaaDhjblpHTURFR1FTbXhONWFUQ0Q5Ny1lTXVaR1RWNS1CTWF1VUo4OGg1LW9TWTVUa2ZBLXR3b0tLdVhQNWN6Q2hyNHNqNnRxeUVlenYza0JDY2h4WTBfTUszUUpWeVc2V2hlUFBIMVVzckkydXdlTHBZZ09uS0NkU3c?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "qualityScore": 32,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "robotics"
+      ]
+    },
+    {
       "id": "user-source-source-track-1thijny-c35a908f8e8b8793",
       "sourceId": "user-source-source-track-1thijny",
       "title": "全新推出！华大长短读长联合检测方案，定义复杂变异精准解析新标准",
@@ -1511,35 +1500,6 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-the-verge-ae4bd0d754f45cce",
-      "sourceId": "user-source-source-the-verge",
-      "title": "Friend re-launches its AI pendant with a speaker that talks to you, for twice the price",
-      "summary": "Do you remember Friend? The Friend that launched an AI pendant, spent $1.8 million of its $2.5 million in funding to acquire friend.com, and plastered the NYC subway with ads promoting artificial companionship? Yeah well, if you didn't remember, Friend is back. And now, it's twice the price. This morning, Friend launched a new ad […]",
-      "type": "产品发布",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 82,
-      "source": {
-        "name": "The Verge",
-        "url": "https://www.theverge.com/gadgets/973163/friend-re-launches-its-ai-pendant-with-a-speaker-that-talks-to-you-for-twice-the-price",
-        "level": "媒体报道",
-        "platform": "The Verge"
-      },
-      "qualityScore": 29,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "semiconductor",
         "track-1ccjq49"
       ]
     },
@@ -1918,6 +1878,36 @@
       ]
     },
     {
+      "id": "professional-media-the-verge-ae4bd0d754f45cce",
+      "sourceId": "professional-media-the-verge",
+      "title": "Friend re-launches its AI pendant with a speaker that talks to you, for twice the price",
+      "summary": "Do you remember Friend? The Friend that launched an AI pendant, spent $1.8 million of its $2.5 million in funding to acquire friend.com, and plastered the NYC subway with ads promoting artificial companionship? Yeah well, if you didn't remember, Friend is back. And now, it's twice the price. This morning, Friend launched a new ad […]",
+      "type": "产品发布",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 82,
+      "source": {
+        "name": "The Verge",
+        "url": "https://www.theverge.com/gadgets/973163/friend-re-launches-its-ai-pendant-with-a-speaker-that-talks-to-you-for-twice-the-price",
+        "level": "媒体报道",
+        "platform": "The Verge"
+      },
+      "professionalMediaId": "the-verge",
+      "professionalMediaUrl": "https://www.theverge.com/",
+      "professionalMediaFocus": [
+        "消费科技",
+        "平台公司",
+        "人工智能"
+      ],
+      "trackSlugs": [
+        "ai",
+        "semiconductor",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "professional-media-dev-community-0405c8f8340e19e1",
       "sourceId": "user-source-source-dev-community",
       "title": "Databricks launches AI agent for legacy SQL migration",
@@ -1948,6 +1938,95 @@
         "包含明确事件动作"
       ],
       "qualityStatus": "高可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "prnewswire-tech-fd688d9e1ee98dd3",
+      "sourceId": "prnewswire-tech",
+      "title": "KaiNexus Introduces Insights, Bringing Artificial Intelligence to Operational Excellence",
+      "summary": "KaiNexus Intelligence brings AI analysis to operational excellence, reasoning over a team's own improvement data through the Lean methods they already use. AUSTIN, Texas, July 30, 2026 /PRNewswire-PRWeb/ -- KaiNexus (www.kainexus.com), a leading Operational Excellence software company,...",
+      "type": "产品发布",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 82,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/kainexus-introduces-insights-bringing-artificial-intelligence-to-operational-excellence-302839331.html",
+        "level": "媒体报道",
+        "platform": "新闻稿"
+      },
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "prnewswire-tech-e8487428e99dc6f4",
+      "sourceId": "prnewswire-tech",
+      "title": "DispatchTrack Launches DataSense to Connect Managers and Executives Directly to Their Delivery Data with AI",
+      "summary": "Logistics executives and managers need a way to intuitively connect with their operational data to make meaningful decisions. DataSense solves that challenge with a conversational AI layer embedded directly in the DispatchTrack platform. CAMPBELL, Calif., July 30, 2026 /PRNewswire-PRWeb/...",
+      "type": "产品发布",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 82,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/dispatchtrack-launches-datasense-to-connect-managers-and-executives-directly-to-their-delivery-data-with-ai-302838634.html",
+        "level": "媒体报道",
+        "platform": "新闻稿"
+      },
+      "trackSlugs": [
+        "ai",
+        "semiconductor",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "prnewswire-tech-8c5724be9cf73888",
+      "sourceId": "prnewswire-tech",
+      "title": "Infisical Launches Agent Proxy So Teams Can Ship AI Agents Without Handing Over Real Credentials",
+      "summary": "Agent Proxy gives an AI agent a fake credential and substitutes the real one at the network boundary, so an agent that is compromised or manipulated has no secret to leak. SAN FRANCISCO, July 30, 2026 /PRNewswire-PRWeb/ -- Infisical today announced the general availability of Infisical...",
+      "type": "产品发布",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 82,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/infisical-launches-agent-proxy-so-teams-can-ship-ai-agents-without-handing-over-real-credentials-302838708.html",
+        "level": "媒体报道",
+        "platform": "新闻稿"
+      },
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "prnewswire-tech-643f5576cb6817bf",
+      "sourceId": "prnewswire-tech",
+      "title": "Sledge launches Construction AI with nearly $20 million in project volume under management while still in beta",
+      "summary": "AI-native construction operating system, founded by a third-generation contractor running a $100M concrete company, opens beta waitlist ahead of public launch LOS ANGELES, July 30, 2026 /PRNewswire-PRWeb/ -- Sledge™ today announced the launch of its AI-native construction operating...",
+      "type": "产品发布",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 82,
+      "source": {
+        "name": "PR Newswire Consumer Technology",
+        "url": "https://www.prnewswire.com/news-releases/sledge-launches-construction-ai-with-nearly-20-million-in-project-volume-under-management-while-still-in-beta-302839071.html",
+        "level": "媒体报道",
+        "platform": "新闻稿"
+      },
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
@@ -1996,436 +2075,6 @@
       "trackSlugs": [
         "ai",
         "materials",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-openai-ed2e5558f5eed931",
-      "sourceId": "user-x-openai",
-      "title": "OpenAI：Making advanced intelligence more abundant and affordable is central to our mission to ensure AGI benefits all of humanity. With the help of GPT-5.6 S",
-      "summary": "Making advanced intelligence more abundant and affordable is central to our mission to ensure AGI benefits all of humanity. With the help of GPT-5.6 Sol, we have made leaps in efficiency. Today, we are passing those gains on in the API with lower prices for Luna and Terra, and",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2082878192390689147",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-openai-eb1023c278262a39",
-      "sourceId": "user-x-openai",
-      "title": "OpenAI：We are committed to pushing the model frontier across cost efficiency, capability, and speed. Starting today, we are reducing prices for GPT-5.6 Luna",
-      "summary": "We are committed to pushing the model frontier across cost efficiency, capability, and speed. Starting today, we are reducing prices for GPT-5.6 Luna by 80% and GPT-5.6 Terra by 20% , and offering a faster option for GPT-5.6 Sol in the API. Luna and Terra’s lower prices are https://t.co/rFhK7XKedp",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2082878156483219672",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-openai-d95db9dbe10e1bb4",
-      "sourceId": "user-x-openai",
-      "title": "OpenAI：Along with the price reduction on GPT-5.6 Luna and Terra, Fast mode for GPT-5.6 Sol in the API delivers up to 2.5x the speed of Standard processing at",
-      "summary": "Along with the price reduction on GPT-5.6 Luna and Terra, Fast mode for GPT-5.6 Sol in the API delivers up to 2.5x the speed of Standard processing at 2x the Standard price. Fast mode gives API customers faster access to GPT-5.6 Sol, with no change in intelligence.",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2082878168764207230",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "qualityScore": 59,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-openai-5593dd714f1f0f91",
-      "sourceId": "user-x-openai",
-      "title": "OpenAI：We’re also upgrading Auto-review in the ChatGPT app and Codex CLI from GPT-5.4 to GPT-5.6 Luna. Combined with Luna’s new price, we expect Auto-review",
-      "summary": "We’re also upgrading Auto-review in the ChatGPT app and Codex CLI from GPT-5.4 to GPT-5.6 Luna. Combined with Luna’s new price, we expect Auto-review to cost about 10x less, making your agentic workflows more cost-efficient.",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2082878180478910571",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-openai-37ad3d56aeb1567a",
-      "sourceId": "user-x-openai",
-      "title": "OpenAI：RT @jxnlco: one of the most beautiful things about OpenAI is that every employee really has a voice. i wanted to capture what it feels lik…",
-      "summary": "RT @jxnlco: one of the most beautiful things about OpenAI is that every employee really has a voice. i wanted to capture what it feels lik…",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "OpenAI on X",
-        "url": "https://x.com/OpenAI/status/2082866778774921261",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "companySlug": "openai",
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-deepmind-8767cc75590d4f17",
-      "sourceId": "user-x-googledeepmind",
-      "title": "Google DeepMind：Teamwork makes the dream work. To test multi-robot collaboration with Gemini Robotics 2, we challenged our Apollo and Duo robots to tidy up a messy ga",
-      "summary": "Teamwork makes the dream work. To test multi-robot collaboration with Gemini Robotics 2, we challenged our Apollo and Duo robots to tidy up a messy garage. The high-level reasoning model breaks down what to do, where to go, and identifies the exact moment to hand over control ↓ https://t.co/53p9GL0u6o",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2082904281838227562",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-deepmind-7d1834d8a758fb25",
-      "sourceId": "user-x-googledeepmind",
-      "title": "Google DeepMind：This is how Gemini Robotics 2 helps @Apptronik’s Apollo 2 use whole body intelligence to pack for a sports game ↓ https://t.co/rPYsclzJHR",
-      "summary": "This is how Gemini Robotics 2 helps @Apptronik’s Apollo 2 use whole body intelligence to pack for a sports game ↓ https://t.co/rPYsclzJHR",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2082904276293062994",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-deepmind-6b905d20dd715750",
-      "sourceId": "user-x-googledeepmind",
-      "title": "Google DeepMind：To be genuinely useful in our homes and workplaces, robots need finesse. Gemini Robotics 2 equips different hardware platforms with high dexterity. It",
-      "summary": "To be genuinely useful in our homes and workplaces, robots need finesse. Gemini Robotics 2 equips different hardware platforms with high dexterity. It can control a five-fingered hand to tie a knot or screw in a lightbulb - while also managing parallel grippers for complex https://t.co/mlsMxLWO3a",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2082844170998182350",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "x-deepmind-5a8cfde690903724",
-      "sourceId": "user-x-googledeepmind",
-      "title": "Google DeepMind：To be truly useful, a robot needs the dexterity that humans take for granted. But asking AI models to coordinate these motions is incredibly complicat",
-      "summary": "To be truly useful, a robot needs the dexterity that humans take for granted. But asking AI models to coordinate these motions is incredibly complicated. In this demo, we pushed Apollo 2 to master fine motor skills and complete tricky kitchen chores ↓ https://t.co/vb8wGHfpJ5",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "Google DeepMind on X",
-        "url": "https://x.com/GoogleDeepMind/status/2082904278461469091",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-x-washingtonpost-f613027c729b1a35",
-      "sourceId": "user-x-washingtonpost",
-      "title": "The Washington Post：Scientists have found that small changes — such as cutting down on plastic food containers and canned foods — can help lower your exposure to micropla",
-      "summary": "Scientists have found that small changes — such as cutting down on plastic food containers and canned foods — can help lower your exposure to microplastics. Here are six things to swap in your kitchen: https://t.co/Zgadng9UlF",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "The Washington Post on X",
-        "url": "https://x.com/washingtonpost/status/2082919195713405264",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "quantum",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-x-washingtonpost-c6d6d550696956e8",
-      "sourceId": "user-x-washingtonpost",
-      "title": "The Washington Post：“Jeopardy!” champion Jamie Ding teamed up with Ben Affleck on ABC’s “Who Wants To Be a Millionaire” and triumphed yet again, landing the rare $1 milli",
-      "summary": "“Jeopardy!” champion Jamie Ding teamed up with Ben Affleck on ABC’s “Who Wants To Be a Millionaire” and triumphed yet again, landing the rare $1 million prize. https://t.co/gOtcqkfAv7",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "The Washington Post on X",
-        "url": "https://x.com/washingtonpost/status/2082907851802972198",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-x-washingtonpost-8d15baae34c85330",
-      "sourceId": "user-x-washingtonpost",
-      "title": "The Washington Post：A fire whirl or “smokenado” was seen swirling as the Widemouth 2 fire burned near Kanosh in Millard County, Utah, prompting evacuation orders. Smokena",
-      "summary": "A fire whirl or “smokenado” was seen swirling as the Widemouth 2 fire burned near Kanosh in Millard County, Utah, prompting evacuation orders. Smokenados are capable of wind damage similar to weak or moderate tornadoes, according to the U.S. Forest Service. https://t.co/5M9vOGpwOW",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "The Washington Post on X",
-        "url": "https://x.com/washingtonpost/status/2082926939623375107",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "user-x-washingtonpost-7401861000eb61c4",
-      "sourceId": "user-x-washingtonpost",
-      "title": "The Washington Post：A family husky's protective instincts kicked in when a bear came running across their driveway, charging straight at a child nearby. “You’re always wo",
-      "summary": "A family husky's protective instincts kicked in when a bear came running across their driveway, charging straight at a child nearby. “You’re always wondering in the back of your head, ‘What’s gonna happen if she needs to protect us?’ And now we know,” Jeffrey Tazzara said. https://t.co/gaCtD39VTL",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "The Washington Post on X",
-        "url": "https://x.com/washingtonpost/status/2082911748793757983",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-x-washingtonpost-11c3b40733328ad3",
-      "sourceId": "user-x-washingtonpost",
-      "title": "The Washington Post：Column by Michelle Singletary: Last year, more than 1 in 3 working-age adults used credit cards to buy groceries — and many of them had trouble paying",
-      "summary": "Column by Michelle Singletary: Last year, more than 1 in 3 working-age adults used credit cards to buy groceries — and many of them had trouble paying them off, according to the latest Urban Institute survey. Here’s the problem: https://t.co/46ZtP0s1y3",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "The Washington Post on X",
-        "url": "https://x.com/washingtonpost/status/2082904108017570048",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-x-elonmusk-6bc596f21eda3927",
-      "sourceId": "user-x-elonmusk",
-      "title": "埃隆·马斯克：Congratulations to the Tesla Team! 10 million vehicles manufactured is an incredible amount of work.",
-      "summary": "Congratulations to the Tesla Team! 10 million vehicles manufactured is an incredible amount of work.",
-      "type": "人物观点",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "埃隆·马斯克",
-      "publishedAt": "2026-07-30",
-      "importance": 81,
-      "source": {
-        "name": "埃隆·马斯克 on X",
-        "url": "https://x.com/elonmusk/status/2082712206169256279",
-        "level": "原始材料",
-        "platform": "X"
-      },
-      "qualityScore": 53,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
         "track-1ccjq49"
       ]
     },
@@ -2724,6 +2373,32 @@
       ]
     },
     {
+      "id": "user-track-track-1ccjq49-google-us-3252ca277af0a9ce",
+      "sourceId": "user-track-track-1ccjq49-google-us",
+      "title": "Rome Odunze clarifies \"new normal\" comment: \"My foot feels amazing\" - NBC Sports",
+      "summary": "Rome Odunze clarifies \"new normal\" comment: \"My foot feels amazing\" NBC Sports",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "风险投资",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "风险投资 · Google News 英文",
+        "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQVDVCTllMZ2pTNE5rNzI0akZYeE4ybVNGZWoyNFB2TzIwS21EMVZBM1BRX1FKTjY1TVRLRDJxbGo2Z2R0UkZNR0lPLXB4UlBiUU12OFpCRnphSFhKV21BMGtTVWV3aW0xdEs1SXhjS1UyNDBQX00zOGo5VlVKcHl1UFlEY1ZWcW54RWM4QUUtSk1oLXFIMHFXZHMyTHdVQ0FxSzF5X1Baby1IeEl1eDF0RVpsNXJ6SlI3REhBTWF4SjJhdw?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "qualityScore": 39,
+      "qualitySignals": [
+        "标题命中 2 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-track-track-1ccjq49-google-us-239860c041cd414d",
       "sourceId": "user-track-track-1ccjq49-google-us",
       "title": "Notice of Public Comment Period for Putnam County’s Climate Change Adaptation & Resilience Plan (CCARP) - putnamcountyny.gov",
@@ -2773,32 +2448,6 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-track-semiconductor-toutiao-3e38cbac45014293",
-      "sourceId": "user-track-semiconductor-toutiao",
-      "title": "日本熊本强震，卢秀燕宣布台中捐10万美元赈灾，台中搜救队可随时支援救灾。熊本是台积电在日本唯一设厂所在地，境内聚集许多半导体相关工厂，影响恐扩及使用半导体的产业",
-      "summary": "日本熊本县7月28日发生规模7.1地震造成严重灾情，中国国民党籍台中市长卢秀燕当天才与熊本县知事木村敬会面交流。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 76,
-      "source": {
-        "name": "澳门月刊（澳新社）",
-        "url": "https://www.toutiao.com/group/7667866174029333019",
-        "level": "媒体报道",
-        "platform": "今日头条"
-      },
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "semiconductor"
       ]
     },
     {
@@ -2911,6 +2560,33 @@
       ]
     },
     {
+      "id": "user-track-materials-google-cn-76578cc0f0d03bf7",
+      "sourceId": "user-track-materials-google-cn",
+      "title": "全球份额调查：日企在半导体材料领域居首 - 日经中文网",
+      "summary": "全球份额调查：日企在半导体材料领域居首 日经中文网",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "新材料 · Google News 中文",
+        "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxObktaOE4xRmhFaWgzYzBNTjN3Y09fcXdGTHpJVVBnMVh2TUl3V2lJNkp4RXY2SVdVRVNUaDVxamRfMjZfWkFTNGRIYTdOd09kSjNCTUNGZW1jZ0xlaWl6OFRXVXUzMU9pWWdSaGthZnZVRnhaMTBaaFJjVHZncFZoTA?oc=5",
+        "level": "待交叉验证",
+        "platform": "Google News"
+      },
+      "qualityScore": 35,
+      "qualitySignals": [
+        "标题命中 2 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "semiconductor",
+        "materials"
+      ]
+    },
+    {
       "id": "user-track-fusion-google-cn-901a92eb37fee6e1",
       "sourceId": "user-track-fusion-google-cn",
       "title": "旭光电子拟募资10亿元 加码高压真空灭弧室与核聚变核心部件业务 - 经济参考报",
@@ -2935,6 +2611,32 @@
       "trackSlugs": [
         "semiconductor",
         "fusion"
+      ]
+    },
+    {
+      "id": "user-track-energy-toutiao-f195e07c54853888",
+      "sourceId": "user-track-energy-toutiao",
+      "title": "中国再夺一项世界第一！把太阳能板放在水中发电，不占用土地资源",
+      "summary": "中国再夺一项世界第一！把太阳能板放在水中发电，不占用土地资源",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "阿嘉爱分享",
+        "url": "https://www.toutiao.com/group/7668014249733652992",
+        "level": "媒体报道",
+        "platform": "今日头条"
+      },
+      "qualityScore": 30,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "energy"
       ]
     },
     {
@@ -3521,6 +3223,35 @@
       ]
     },
     {
+      "id": "user-source-source-yahoo-790037fcdac17281",
+      "sourceId": "user-source-source-yahoo-tw",
+      "title": "AI回檔非反轉 中租基金平台：長線邏輯不變",
+      "summary": "【記者柯安聰台北報導】美國FOMC會議30日決議維持利率不變，華許重申控制通膨的決心，但也暗示不會那麼快進行縮表，全球股市一項不確定性因素暫時消除。然而近期全球主要股市同步出現修正，因美國、台灣與南韓...",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Yahoo奇摩",
+        "url": "https://tw.news.yahoo.com/%E5%87%BA%E9%96%80-%E5%8F%AA%E6%9C%89-36g-even-g2-112157053.html",
+        "level": "媒体报道",
+        "platform": "Yahoo奇摩"
+      },
+      "qualityScore": 31,
+      "qualitySignals": [
+        "摘要命中 1 个追踪词",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "biotech",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-source-source-yahoo-757d9320ca0d771e",
       "sourceId": "user-source-source-yahoo-tw",
       "title": "韓股榮景大崩壞！《經濟學人》驚悚預告：恐是AI泡沫破滅凶兆",
@@ -3594,34 +3325,6 @@
       },
       "qualityScore": 19,
       "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-yahoo-13b082eda427b5f7",
-      "sourceId": "user-source-source-yahoo-tw",
-      "title": "Toast 藉 AI 智慧拓展餐飲版圖 獲利能力顯著提升",
-      "summary": "商傳媒｜何映辰／台北報導餐飲雲端服務商 Toast, Inc. 正積極擴展其平台，不再僅限於餐飲支付與銷售點（POS）技術，而是將業務範疇擴大至軟體、金融科技、硬體及整合營運工作流程，並將人工智慧（AI）應用作為其長期成長的關鍵驅動力。 根據《TradingView》報導，Toast, Inc. 旗下的人工智慧平台 Toast IQ，在 2026 年第一季已在每週超過 40,000 個餐飲據點啟用，協助客戶開拓營收機會、節省營運時間並識別市場趨勢。此外，Toast IQ Grow 這項服務則進一步將 AI 應用於行銷活動，能根據過往業績與銷售預測來規劃行銷策略。未來，AI 代理人更可望支援排班、薪資、庫存管理、食材成本控管及會計等多元餐廳功能。 Toast, Inc. 同時積極拓展市場客群，包括車道點餐餐廳、大型企業客戶、飯店、雜貨店及特定的國際城市。該公司已成功爭取到 Hungry Howie’s、墨菲爸爸的店（Papa Murphy’s）和 The Alinea Group 等企業客戶，並透過與 Preferred Hotels & Resorts 合作，進軍飯店餐飲服務市場。 這",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 76,
-      "source": {
-        "name": "Yahoo奇摩",
-        "url": "https://tw.stock.yahoo.com/news/toast-%E8%97%89-ai-%E6%99%BA%E6%85%A7%E6%8B%93%E5%B1%95%E9%A4%90%E9%A3%B2%E7%89%88%E5%9C%96-%E7%8D%B2%E5%88%A9%E8%83%BD%E5%8A%9B%E9%A1%AF%E8%91%97%E6%8F%90%E5%8D%87-144459869.html",
-        "level": "媒体报道",
-        "platform": "Yahoo奇摩"
-      },
-      "qualityScore": 25,
-      "qualitySignals": [
-        "包含明确事件动作",
         "未命中有效追踪词"
       ],
       "qualityStatus": "低可信",
@@ -4469,8 +4172,8 @@
     {
       "id": "user-source-source-track-1r4ht2r-1b0b2d7237ae56f6",
       "sourceId": "user-source-source-track-1r4ht2r",
-      "title": "Beyond Moore’s Law: The Full Stack Driving AI in 2026 - ETF Trends",
-      "summary": "Beyond Moore’s Law: The Full Stack Driving AI in 2026 ETF Trends",
+      "title": "Beyond Moore’s Law: The Full Stack Driving AI in 2026 - etftrends.com",
+      "summary": "Beyond Moore’s Law: The Full Stack Driving AI in 2026 etftrends.com",
       "type": "公司动态",
       "region": "全球",
       "sector": "AI / AGI",
@@ -5134,34 +4837,6 @@
       ]
     },
     {
-      "id": "user-source-source-techeblog-f7c7ef2069fe1fe4",
-      "sourceId": "user-source-source-techeblog",
-      "title": "Danny MacAskill and Kriss Kyle Take On Red Bull’s 200-Meter Floating Obstacle Course Without the Help of AI",
-      "summary": "Spring arrived at Eastnor Castle lake in Herefordshire with a surprise waiting for two of the most skilled bike riders on the planet. Danny MacAskill and Kriss Kyle knew only the broad outline of the day. They arrived ready to ride, yet the full scale of Red Bull’s construction floating on the water remained hidden [...]",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 76,
-      "source": {
-        "name": "TechEBlog",
-        "url": "https://www.techeblog.com/red-bull-floating-obstacle-course-pro-bikers",
-        "level": "媒体报道",
-        "platform": "TechEBlog"
-      },
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "user-source-source-techdirt-e96c1d4462c05588",
       "sourceId": "user-source-source-techdirt",
       "title": "The Worst Person You Know Just Filed A Good First Amendment Lawsuit Against A Very Badly Drafted Nudify App Ban",
@@ -5500,8 +5175,8 @@
     {
       "id": "user-source-source-siliconangle-de57ce915e39ffed",
       "sourceId": "user-source-source-siliconangle",
-      "title": "MiniIO debuts AIStor Memory, the long-term memory AI agents need to scale safely",
-      "summary": "Object storage software company MiniIO Inc. says it has cracked the persistent memory problem for artificial intelligence agents with the launch of a new offering called AIStor Memory. Whereas conventional chatbots like Claude and ChatGPT can generally get away with much more limited context because they usually only need to respond to a few prompts, […] The post MiniIO debuts AIStor Memory, the long-term memory AI agents need to scale safely appeared first on SiliconANGLE .",
+      "title": "MinIO debuts AIStor Memory, the long-term memory AI agents need to scale safely",
+      "summary": "Object storage software company MinIO Inc. says it has cracked the persistent memory problem for artificial intelligence agents with the launch of a new offering called AIStor Memory. Whereas conventional chatbots like Claude and ChatGPT can generally get away with much more limited context because they usually only need to respond to a few prompts, […] The post MinIO debuts AIStor Memory, the long-term memory AI agents need to scale safely appeared first on SiliconANGLE .",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
@@ -5636,6 +5311,33 @@
       "trackSlugs": [
         "ai",
         "semiconductor",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-scale-ai-c31ee223f16c18af",
+      "sourceId": "user-source-source-scale-ai",
+      "title": "Generative AI Data Engine",
+      "summary": "Generative AI Data Engine powers the most advanced LLMs and generative models in the world through world-class RLHF, human data generation, model evaluation, safety, and alignment.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Scale AI 官方来源",
+        "url": "https://scale.com/generative-ai-data-engine",
+        "level": "媒体报道",
+        "platform": "Scale AI 官方来源"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
         "track-1ccjq49"
       ]
     },
@@ -7025,6 +6727,34 @@
       ]
     },
     {
+      "id": "user-source-source-digital-trends-6d7cffbfe20ef176",
+      "sourceId": "user-source-source-digital-trends",
+      "title": "Lenovo’s leaked Yoga 9n could be the first RTX Spark-powered convertible laptop",
+      "summary": "A new leak suggests Lenovo is preparing the world's first NVIDIA RTX Spark-powered convertible laptop, the Yoga 9n 2-in-1, featuring a 360-degree design and AI-focused hardware.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Digital Trends",
+        "url": "https://www.digitaltrends.com/computing/lenovos-leaked-yoga-9n-could-be-the-first-rtx-spark-powered-convertible-laptop",
+        "level": "媒体报道",
+        "platform": "Digital Trends"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "semiconductor",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-source-source-digital-trends-243e7166f8f4f425",
       "sourceId": "user-source-source-digital-trends",
       "title": "Samsung confirms Galaxy Tab S12 and S26 FE are coming, but warns prices could go up",
@@ -7222,30 +6952,29 @@
       ]
     },
     {
-      "id": "user-source-source-dev-community-c36cecd368bd7749",
+      "id": "user-source-source-dev-community-b9e908f187859e11",
       "sourceId": "user-source-source-dev-community",
-      "title": "A Year of AI Pair Programming: What Actually Changed",
-      "summary": "Originally published on robatdasorvi.com The first sign that something had shifted was when I stopped feeling proud of finishing things. That sounds worse than it is. I don't mean I stopped caring about the work. I mean the small dopamine hit of writing a function from scratch and watching it pass, that feeling got quieter. Not gone, but quieter. Replaced by something more like project management satisfaction. Getting things done, quickly, moving on to the next thing. I had been using AI coding",
+      "title": "How to Verify an AI Crawler Is Who It Says It Is",
+      "summary": "Your server logs show a request from GPTBot . Should you trust it? The honest answer is: not on the strength of that string alone. A user-agent header is a claim the client makes about itself, and any client can claim anything. curl -A \"GPTBot\" takes about four seconds to type. If your robots.txt policy, your analytics, or your paywall logic branches on the user-agent string, it branches on unverified input. The good news is that most major AI crawlers publish a way to check. The less good news",
       "type": "公司动态",
       "region": "全球",
-      "sector": "新能源",
+      "sector": "机器人",
       "company": "科技产业",
       "publishedAt": "2026-07-30",
       "importance": 76,
       "source": {
         "name": "DEV Community",
-        "url": "https://dev.to/robat_das_3c6e956212f6408/a-year-of-ai-pair-programming-what-actually-changed-5579",
+        "url": "https://dev.to/inxprncd/how-to-verify-an-ai-crawler-is-who-it-says-it-is-470e",
         "level": "媒体报道",
         "platform": "DEV Community"
       },
-      "qualityScore": 19,
+      "qualityScore": 25,
       "qualitySignals": [
-        "未命中有效追踪词"
+        "摘要命中 1 个追踪词"
       ],
       "qualityStatus": "低可信",
       "trackSlugs": [
-        "semiconductor",
-        "energy",
+        "robotics",
         "track-1ccjq49"
       ]
     },
@@ -7300,6 +7029,33 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "space"
+      ]
+    },
+    {
+      "id": "user-source-source-dev-community-a6ba870a518c5d75",
+      "sourceId": "user-source-source-dev-community",
+      "title": "Opus 5, GPT-5.6, Gemini 3.1: A Practical Guide to Picking the Right AI Model (Without Going Broke)",
+      "summary": "July 2026 might be the most confusing month in AI model history. Anthropic shipped Opus 5. OpenAI dropped the GPT-5.6 family with three tiers (Sol, Terra, Luna). Google pushed Gemini 3.1 Pro Preview. And every one of them claims to be \"the best.\" If you're building with AI—especially using coding agents like Claude Code, Codex, or Cursor—you're probably asking the same question I was six months ago: which model should I actually use? The answer that saved me $7K/month: it depends on the task. Th",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "DEV Community",
+        "url": "https://dev.to/aplomb2/opus-5-gpt-56-gemini-31-a-practical-guide-to-picking-the-right-ai-model-without-going-broke-4hpj",
+        "level": "媒体报道",
+        "platform": "DEV Community"
+      },
+      "qualityScore": 37,
+      "qualitySignals": [
+        "摘要命中 6 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
       ]
     },
     {
@@ -7493,10 +7249,37 @@
       ]
     },
     {
-      "id": "user-source-source-cnet-ca3af10ad3afb51e",
-      "sourceId": "user-source-source-cnet",
-      "title": "LinkedIn Added a New Way to Report AI Slop",
-      "summary": "The “Seems like AI slop” button will help LinkedIn train its AI-detection tools.",
+      "id": "user-source-source-dev-community-6df0c827d9dfeffe",
+      "sourceId": "user-source-source-dev-community",
+      "title": "The memory layer that never calls an LLM: what that buys, and what it costs",
+      "summary": "Part 4 of **The Answerability Problem , and the one that isn't about abstention. Parts 1–3 argued that the field measures the wrong half and that my own system hits a wall on the right half. This part is the ledger: what RE-call is, what it loses at, and why you might still want the thing that loses. Code: RE-call (MIT). Three parts of \"here is what doesn't work\" earn one part of \"here is what this is for.\" So, plainly: on BEAM's 1M-token bucket, Mem0 scores better than RE-call on categories I c",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "新材料",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "DEV Community",
+        "url": "https://dev.to/gde03/the-memory-layer-that-never-calls-an-llm-what-that-buys-and-what-it-costs-12ch",
+        "level": "媒体报道",
+        "platform": "DEV Community"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "materials",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-dev-community-6c26ce78f47e19cb",
+      "sourceId": "user-source-source-dev-community",
+      "title": "The Parameters That Actually Matter When You're Tuning an AI Agent",
+      "summary": "Part 2 of 3 — building and testing MCP agents Every AI agent is a bundle of decisions, most of which get made once, informally, and never revisited: which model, what system prompt, which tools it's allowed to touch, how many steps it gets before you give up on it. Nobody writes these down as a config. They just happen, in code, and then everyone forgets they were choices at all. In Part 1 I argued those decisions have a shape: an agent definition (the class — loop, system context, capability bo",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
@@ -7517,8 +7300,60 @@
       "trackSlugs": [
         "ai",
         "semiconductor",
-        "biotech",
         "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-dev-community-65597bb39c6d1678",
+      "sourceId": "user-source-source-dev-community",
+      "title": "Your chatbot is a second door onto your content",
+      "summary": "Building a RAG chatbot has become a well-marked exercise: split the content into chunks, compute embeddings, search by similarity, hand the relevant passages to a model, generate the answer. It's an increasingly well-documented craft, built on solid pieces. We did it for GoodBarber apps: a chatbot that answers users' questions from the content published in the app — articles, events, points of interest — and not from the model's general memory. That part, the documented part, was by far the easi",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "DEV Community",
+        "url": "https://dev.to/goodbarber/your-chatbot-is-a-second-door-onto-your-content-535h",
+        "level": "媒体报道",
+        "platform": "DEV Community"
+      },
+      "qualityScore": 25,
+      "qualitySignals": [
+        "摘要命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai"
+      ]
+    },
+    {
+      "id": "user-source-source-dev-community-6004938fd6036186",
+      "sourceId": "user-source-source-dev-community",
+      "title": "The Modern API Gateway: Beyond Simple Routing",
+      "summary": "The API Gateway Has Grown Up When API gateways first entered the enterprise architecture conversation, the value proposition was straightforward: put a reverse proxy in front of your APIs, enforce authentication, and add basic rate limiting. Problem solved. That framing was adequate for 2012. It's dangerously incomplete for 2026. Today's API gateway sits at the intersection of integration, security, observability, and increasingly AI — and the organizations that still treat it as a simple routin",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "商业航天",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "DEV Community",
+        "url": "https://dev.to/n3xgen/the-modern-api-gateway-beyond-simple-routing-1m8f",
+        "level": "媒体报道",
+        "platform": "DEV Community"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "space"
       ]
     },
     {
@@ -7725,6 +7560,34 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-auto-media-news-slashdot-org-b4807a320b924e82",
+      "sourceId": "user-source-source-auto-media-slashdot-org",
+      "title": "Microsoft's $450 Billion Jump Is Biggest In Stock Market History",
+      "summary": "Microsoft shares surged as much as 17% after reporting 43% growth in Azure revenue, putting the company on track to add a record $490 billion in market value in a single day. Bloomberg notes that it \"would eclipse Nvidia's $440 billion addition, following President Donald Trump's announcement of a 90-day tariff pause last year, as the biggest ever.\" From the report: The nearly $500 billion jump is larger than the market capitalization of roughly 96% of S&P 500 stocks, data compiled by Bloomberg",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "风险投资",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Slashdot · 风险投资信源 · 风险投资信源",
+        "url": "https://news.slashdot.org/story/26/07/30/2027238/microsofts-450-billion-jump-is-biggest-in-stock-market-history",
+        "level": "媒体报道",
+        "platform": "Slashdot · 风险投资信源 · 风险投资信源"
+      },
+      "qualityScore": 22,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "semiconductor",
         "track-1ccjq49"
       ]
     },
@@ -8147,6 +8010,117 @@
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-android-headlines-5d67d17833b3117a",
+      "sourceId": "user-source-source-android-headlines",
+      "title": "Google Brings Wallpapers and Color Themes to Chrome's New Tab Page on Android",
+      "summary": "The post Google Brings Wallpapers and Color Themes to Chrome's New Tab Page on Android appeared first on Android Headlines .",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Android Headlines",
+        "url": "https://www.androidheadlines.com/2026/07/google-chrome-wallpapers-color-themes-new-tab-page-android.html",
+        "level": "媒体报道",
+        "platform": "Android Headlines"
+      },
+      "qualityScore": 40,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-android-headlines-47e8eec26f18591d",
+      "sourceId": "user-source-source-android-headlines",
+      "title": "Google says the Pixel battery drain is fixed, but it doesn't seem like it",
+      "summary": "The post Google says the Pixel battery drain is fixed, but it doesn't seem like it appeared first on Android Headlines .",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Android Headlines",
+        "url": "https://www.androidheadlines.com/2026/07/google-says-the-pixel-battery-drain-is-fixed-but-it-doesnt-seem-like-it.html",
+        "level": "媒体报道",
+        "platform": "Android Headlines"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "energy",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-android-headlines-443041dc7123067d",
+      "sourceId": "user-source-source-android-headlines",
+      "title": "OpenAI President Brushes Off Apple Lawsuit: We Have No Interest in Your Secrets",
+      "summary": "The post OpenAI President Brushes Off Apple Lawsuit: We Have No Interest in Your Secrets appeared first on Android Headlines .",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Android Headlines",
+        "url": "https://www.androidheadlines.com/2026/07/openai-president-greg-brockman-apple-lawsuit-response.html",
+        "level": "媒体报道",
+        "platform": "Android Headlines"
+      },
+      "companySlug": "openai",
+      "qualityScore": 41,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-android-headlines-028ad94ae5c80521",
+      "sourceId": "user-source-source-android-headlines",
+      "title": "Massive Leak Shows Google Pixel 11 Series in All Colors, Watch 5 Series in Two Premium Finishes",
+      "summary": "The post Massive Leak Shows Google Pixel 11 Series in All Colors, Watch 5 Series in Two Premium Finishes appeared first on Android Headlines .",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Android Headlines",
+        "url": "https://www.androidheadlines.com/2026/07/google-pixel-11-series-pixel-watch-5-leak-renders.html",
+        "level": "媒体报道",
+        "platform": "Android Headlines"
+      },
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "quantum"
       ]
     },
     {
@@ -10452,19 +10426,19 @@
       ]
     },
     {
-      "id": "professional-media-digital-trends-6d7cffbfe20ef176",
-      "sourceId": "user-source-source-digital-trends",
-      "title": "Lenovo’s leaked Yoga 9n could be the first RTX Spark-powered convertible laptop",
-      "summary": "A new leak suggests Lenovo is preparing the world's first NVIDIA RTX Spark-powered convertible laptop, the Yoga 9n 2-in-1, featuring a 360-degree design and AI-focused hardware.",
+      "id": "professional-media-digital-trends-97a5453bcc3ba8df",
+      "sourceId": "professional-media-digital-trends",
+      "title": "Viaim RecDot Review: These AI earbuds sounds great and also take notes for you",
+      "summary": "The Viaim RecDot earbuds deliver pleasing sound, passable noise cancellation, reliable battery, and most importantly, the convenience of one-touch AI transcription.",
       "type": "公司动态",
       "region": "美国",
-      "sector": "AI / AGI",
+      "sector": "新能源",
       "company": "科技产业",
       "publishedAt": "2026-07-30",
       "importance": 76,
       "source": {
         "name": "Digital Trends",
-        "url": "https://www.digitaltrends.com/computing/lenovos-leaked-yoga-9n-could-be-the-first-rtx-spark-powered-convertible-laptop",
+        "url": "https://www.digitaltrends.com/home-theater/viaim-recdot-review",
         "level": "媒体报道",
         "platform": "Digital Trends"
       },
@@ -10475,14 +10449,9 @@
         "汽车技术",
         "智能家居"
       ],
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
-        "semiconductor",
+        "energy",
         "track-1ccjq49"
       ]
     },
@@ -10590,44 +10559,10 @@
       ]
     },
     {
-      "id": "professional-media-dev-community-b9e908f187859e11",
-      "sourceId": "user-source-source-dev-community",
-      "title": "How to Verify an AI Crawler Is Who It Says It Is",
-      "summary": "Your server logs show a request from GPTBot . Should you trust it? The honest answer is: not on the strength of that string alone. A user-agent header is a claim the client makes about itself, and any client can claim anything. curl -A \"GPTBot\" takes about four seconds to type. If your robots.txt policy, your analytics, or your paywall logic branches on the user-agent string, it branches on unverified input. The good news is that most major AI crawlers publish a way to check. The less good news",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-30",
-      "importance": 76,
-      "source": {
-        "name": "DEV Community",
-        "url": "https://dev.to/inxprncd/how-to-verify-an-ai-crawler-is-who-it-says-it-is-470e",
-        "level": "媒体报道",
-        "platform": "DEV Community"
-      },
-      "professionalMediaId": "dev-community",
-      "professionalMediaUrl": "https://dev.to/",
-      "professionalMediaFocus": [
-        "软件开发",
-        "开源",
-        "开发者"
-      ],
-      "qualityScore": 25,
-      "qualitySignals": [
-        "摘要命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "professional-media-dev-community-6df0c827d9dfeffe",
-      "sourceId": "user-source-source-dev-community",
-      "title": "The memory layer that never calls an LLM: what that buys, and what it costs",
-      "summary": "Part 4 of **The Answerability Problem , and the one that isn't about abstention. Parts 1–3 argued that the field measures the wrong half and that my own system hits a wall on the right half. This part is the ledger: what RE-call is, what it loses at, and why you might still want the thing that loses. Code: RE-call (MIT). Three parts of \"here is what doesn't work\" earn one part of \"here is what this is for.\" So, plainly: on BEAM's 1M-token bucket, Mem0 scores better than RE-call on categories I c",
+      "id": "professional-media-dev-community-f9ad1dc0175980f1",
+      "sourceId": "professional-media-dev-community",
+      "title": "Building a Python Curriculum That Starts Before You've Opened a Terminal",
+      "summary": "Most \"beginner\" Python courses aren't actually beginner courses. Lesson one usually opens with variables or print(), quietly assuming you already know what a terminal is, how to install something, or what a .py file even means. That assumption is exactly where most self-taught learners bounce — not because Python is hard, but because the ten minutes of orientation that would've made everything after it make sense got skipped. I built Codes Are Simple to start there instead. Session 1, Level 1: w",
       "type": "公司动态",
       "region": "全球",
       "sector": "新材料",
@@ -10636,7 +10571,7 @@
       "importance": 76,
       "source": {
         "name": "DEV Community",
-        "url": "https://dev.to/gde03/the-memory-layer-that-never-calls-an-llm-what-that-buys-and-what-it-costs-12ch",
+        "url": "https://dev.to/psycgod/building-a-python-curriculum-that-starts-before-youve-opened-a-terminal-22o5",
         "level": "媒体报道",
         "platform": "DEV Community"
       },
@@ -10647,30 +10582,26 @@
         "开源",
         "开发者"
       ],
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
       "trackSlugs": [
+        "semiconductor",
         "materials",
         "track-1ccjq49"
       ]
     },
     {
-      "id": "professional-media-dev-community-1befe4f905e1f0b8",
+      "id": "professional-media-dev-community-bd692f873032c6f0",
       "sourceId": "professional-media-dev-community",
-      "title": "“Does your agent know what it doesn’t know?” has no answer. It has a coordinate.",
-      "summary": "Part 3 of **The Answerability Problem . Part 1 showed the standard harness excluding the questions that test refusal, and my own system scoring 0.000 on them. Part 2 measured six candidate signals and found none that beat plain cosine. This part explains why both were asking a question that has no answer. Code and every number: RE-call (MIT). Two public benchmarks disagree about whether memory systems can abstain. On LOCOMO's adversarial category my system scores 0.000 out of 446, and every leve",
+      "title": "What Is Temperature in AI? (And How to Stop Getting Poetry When You Asked for a Grocery List)",
+      "summary": "What Is Temperature in AI? (And How to Stop Getting Poetry When You Asked for a Grocery List) Remember Magic 8-Balls? Those plastic oracles you'd shake for life advice, only to get \"Reply hazy, try again\" when you asked if your crush liked you back? Imagine someone added a little dial on the bottom. Turn it all the way to zero and the thing becomes painfully predictable, only ever offering \"Yes\" or \"Most likely.\" Crank it all the way up and suddenly it's inventing answers that never appeared in",
       "type": "公司动态",
       "region": "全球",
-      "sector": "AI / AGI",
+      "sector": "机器人",
       "company": "科技产业",
       "publishedAt": "2026-07-30",
       "importance": 76,
       "source": {
         "name": "DEV Community",
-        "url": "https://dev.to/gde03/does-your-agent-know-what-it-doesnt-know-has-no-answer-it-has-a-coordinate-1p4f",
+        "url": "https://dev.to/scobsmett/what-is-temperature-in-ai-and-how-to-stop-getting-poetry-when-you-asked-for-a-grocery-list-32pn",
         "level": "媒体报道",
         "platform": "DEV Community"
       },
@@ -10682,7 +10613,68 @@
         "开发者"
       ],
       "trackSlugs": [
-        "ai"
+        "robotics",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "professional-media-dev-community-8cdc1b14e9bd2dee",
+      "sourceId": "professional-media-dev-community",
+      "title": "OpenAI’s Goblin Post Highlights an Emerging Risk in AI Alignment and Reliability",
+      "summary": "OpenAI has published a post-mortem examining an unusual pattern in its model testing: recurring references to “goblins” and “gremlins” in model outputs. The company’s official post, “Where the goblins came from” , published on April 29, 2026, frames the behavior as an emergent effect of reinforcement learning and human-feedback dynamics, not as a new product feature. Its practical message is more consequential than the metaphor suggests: unexpected model personas can affect the consistency, safe",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "DEV Community",
+        "url": "https://dev.to/alifar/openais-goblin-post-highlights-an-emerging-risk-in-ai-alignment-and-reliability-2dn8",
+        "level": "媒体报道",
+        "platform": "DEV Community"
+      },
+      "companySlug": "openai",
+      "professionalMediaId": "dev-community",
+      "professionalMediaUrl": "https://dev.to/",
+      "professionalMediaFocus": [
+        "软件开发",
+        "开源",
+        "开发者"
+      ],
+      "trackSlugs": [
+        "ai",
+        "semiconductor",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "professional-media-dev-community-39c2802389ff3139",
+      "sourceId": "professional-media-dev-community",
+      "title": "I checked every MCP server in the official registry. About 1 in 10 is broken.",
+      "summary": "There is a number going around that roughly half of all remote MCP servers are dead. I had repeated it myself, in the README of a tool I published. I could not find where it came from, so I measured it. The answer is that about one in ten is actually broken. The \"half\" figure appears to come from counting servers that require an API key as if they were down. Here is the method and the full breakdown. What I measured On 29 July 2026 I pulled every entry from the official MCP registry — 1,200 serv",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "新材料",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "DEV Community",
+        "url": "https://dev.to/parkerrrrr/i-checked-every-mcp-server-in-the-official-registry-about-1-in-10-is-broken-1ehj",
+        "level": "媒体报道",
+        "platform": "DEV Community"
+      },
+      "professionalMediaId": "dev-community",
+      "professionalMediaUrl": "https://dev.to/",
+      "professionalMediaFocus": [
+        "软件开发",
+        "开源",
+        "开发者"
+      ],
+      "trackSlugs": [
+        "ai",
+        "materials"
       ]
     },
     {
@@ -11026,7 +11018,7 @@
     },
     {
       "id": "professional-media-cmswire-7bd55f01aed48ea9",
-      "sourceId": "professional-media-cmswire",
+      "sourceId": "user-source-source-cmswire",
       "title": "8x8 Extends AI Across Its CX Platform to All Teams",
       "summary": "New tools bring routing, intelligence and automation beyond the contact center to every department. Continue reading...",
       "type": "公司动态",
@@ -11048,6 +11040,11 @@
         "数字体验",
         "内容管理"
       ],
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
@@ -11126,10 +11123,10 @@
       ]
     },
     {
-      "id": "professional-media-android-headlines-443041dc7123067d",
+      "id": "professional-media-android-headlines-d0662bbc48f52390",
       "sourceId": "user-source-source-android-headlines",
-      "title": "OpenAI President Brushes Off Apple Lawsuit: We Have No Interest in Your Secrets",
-      "summary": "The post OpenAI President Brushes Off Apple Lawsuit: We Have No Interest in Your Secrets appeared first on Android Headlines .",
+      "title": "OpenAI Plans Major ChatGPT Desktop App Redesign Following User Backlash: \"It’s Kind of a Mess\"",
+      "summary": "The post OpenAI Plans Major ChatGPT Desktop App Redesign Following User Backlash: \"It’s Kind of a Mess\" appeared first on Android Headlines .",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
@@ -11138,7 +11135,7 @@
       "importance": 76,
       "source": {
         "name": "Android Headlines",
-        "url": "https://www.androidheadlines.com/2026/07/openai-president-greg-brockman-apple-lawsuit-response.html",
+        "url": "https://www.androidheadlines.com/2026/07/openai-plans-major-chatgpt-desktop-app-redesign-following-user-backlash-its-kind-of-a-mess.html",
         "level": "媒体报道",
         "platform": "Android Headlines"
       },
@@ -11150,14 +11147,112 @@
         "移动设备",
         "应用"
       ],
-      "qualityScore": 41,
+      "qualityScore": 56,
       "qualitySignals": [
-        "标题命中 1 个追踪词",
+        "标题命中 2 个追踪词",
         "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "professional-media-android-headlines-abadc074762c4377",
+      "sourceId": "professional-media-android-headlines",
+      "title": "No More Window Switching: Gemini App for Mac Now Understands Your Active Screen and Voice Shortcuts",
+      "summary": "An update for Google Gemini macOS desktop app introduces Fn key voice control, smart dictation, and optional screen-aware AI reasoning.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Android Headlines",
+        "url": "https://www.androidheadlines.com/2026/07/gemini-for-mac-screen-aware-voice-control-update.html",
+        "level": "媒体报道",
+        "platform": "Android Headlines"
+      },
+      "professionalMediaId": "android-headlines",
+      "professionalMediaUrl": "https://www.androidheadlines.com/",
+      "professionalMediaFocus": [
+        "Android",
+        "移动设备",
+        "应用"
+      ],
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "professional-media-android-headlines-925da642feac0c66",
+      "sourceId": "user-source-source-android-headlines",
+      "title": "Google Earth Gets a Major AI Upgrade With Nano Banana Image Generation",
+      "summary": "The post Google Earth Gets a Major AI Upgrade With Nano Banana Image Generation appeared first on Android Headlines .",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Android Headlines",
+        "url": "https://www.androidheadlines.com/2026/07/google-earth-gets-a-major-ai-upgrade-with-nano-banana-image-generation.html",
+        "level": "媒体报道",
+        "platform": "Android Headlines"
+      },
+      "professionalMediaId": "android-headlines",
+      "professionalMediaUrl": "https://www.androidheadlines.com/",
+      "professionalMediaFocus": [
+        "Android",
+        "移动设备",
+        "应用"
+      ],
+      "qualityScore": 34,
+      "qualitySignals": [
+        "标题命中 1 个追踪词"
       ],
       "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "professional-media-android-headlines-769c65422125e384",
+      "sourceId": "user-source-source-android-headlines",
+      "title": "Meta Is Using AI on Instagram to Keep You Scrolling Longer",
+      "summary": "The post Meta Is Using AI on Instagram to Keep You Scrolling Longer appeared first on Android Headlines .",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-30",
+      "importance": 76,
+      "source": {
+        "name": "Android Headlines",
+        "url": "https://www.androidheadlines.com/2026/07/meta-ai-instagram-reels-engagement-growth-addiction.html",
+        "level": "媒体报道",
+        "platform": "Android Headlines"
+      },
+      "professionalMediaId": "android-headlines",
+      "professionalMediaUrl": "https://www.androidheadlines.com/",
+      "professionalMediaFocus": [
+        "Android",
+        "移动设备",
+        "应用"
+      ],
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
+        "semiconductor",
         "track-1ccjq49"
       ]
     },
@@ -11233,10 +11328,10 @@
       ]
     },
     {
-      "id": "prnewswire-tech-6f8041f51bf56ae3",
+      "id": "prnewswire-tech-70e77c3785b6cc29",
       "sourceId": "prnewswire-tech",
-      "title": "Smallest.ai gets $21 Million in Funding to Build Voice 4.0, the Next Generation of Enterprise Voice AI",
-      "summary": "Raises $13 million Series A led by Seligman Ventures, bringing total funding to more than $21 million Introduces Voice 4.0 and Hydra, an asynchronous AI architecture designed to make AI conversations as natural, responsive and scalable as human dialogue Pulse STT and Lightning TTS rank...",
+      "title": "Seamless.AI's New MCP Server Takes You From Prompt to Closed Won Deal",
+      "summary": "Seamless has launched a new MCP server that connects leading AI tools with real-time sales intelligence, enabling revenue teams to turn simple prompts into automated prospecting, enrichment, outreach, and pipeline-generation workflows. COLUMBUS, Ohio, July 30, 2026 /PRNewswire-PRWeb/ --...",
       "type": "公司动态",
       "region": "全球",
       "sector": "AI / AGI",
@@ -11245,12 +11340,13 @@
       "importance": 76,
       "source": {
         "name": "PR Newswire Consumer Technology",
-        "url": "https://www.prnewswire.com/news-releases/smallestai-gets-21-million-in-funding-to-build-voice-4-0--the-next-generation-of-enterprise-voice-ai-302839266.html",
+        "url": "https://www.prnewswire.com/news-releases/seamlessais-new-mcp-server-takes-you-from-prompt-to-closed-won-deal-302839077.html",
         "level": "媒体报道",
         "platform": "新闻稿"
       },
       "trackSlugs": [
         "ai",
+        "semiconductor",
         "track-1ccjq49"
       ]
     },
@@ -11677,6 +11773,29 @@
       ]
     },
     {
+      "id": "x-openai-bd44ff604d1f7e86",
+      "sourceId": "x-openai",
+      "title": "OpenAI：A benchmark score reflects the model as well as the harness and settings used to run it. For long-running agents, retaining reasoning and compacting c",
+      "summary": "A benchmark score reflects the model as well as the harness and settings used to run it. For long-running agents, retaining reasoning and compacting context lets the model build on what it has already learned. https://t.co/JBIKCKrUfw",
+      "type": "技术突破",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-29",
+      "importance": 85,
+      "source": {
+        "name": "OpenAI on X",
+        "url": "https://x.com/OpenAI/status/2082616641834422740",
+        "level": "原始材料",
+        "platform": "X"
+      },
+      "companySlug": "openai",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-source-source-track-1r4ht2r-9c2acbbd8ceafb25",
       "sourceId": "user-source-source-track-1r4ht2r",
       "title": "Research: How AI Agents Broaden the Scope of Knowledge Work - Harvard Business Review",
@@ -11825,12 +11944,6 @@
         "储能",
         "可再生能源"
       ],
-      "qualityScore": 25,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
       "trackSlugs": [
         "semiconductor",
         "energy"
@@ -15016,7 +15129,7 @@
       "id": "user-source-source-petapixel-58c4f3a4b0c9dc4f",
       "sourceId": "user-source-source-petapixel",
       "title": "Instagram Pushes AI Video of Film Crew Shooting Miami Disaster to 700 Million Views",
-      "summary": "A wild AI video depicting a miniature Miami being wiped out by a huge wave as an imaginary film crew captures it has gone incredibly viral on Instagram -- as some question why Meta is pushing such content. [ Read More ]",
+      "summary": "No CGI. Just Pure AI.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
@@ -15029,7 +15142,7 @@
         "level": "媒体报道",
         "platform": "PetaPixel"
       },
-      "qualityScore": 19,
+      "qualityScore": 15,
       "qualitySignals": [
         "未命中有效追踪词"
       ],
@@ -15037,7 +15150,7 @@
       "trackSlugs": [
         "ai",
         "semiconductor",
-        "web3",
+        "biotech",
         "track-1ccjq49"
       ]
     },
@@ -15045,7 +15158,7 @@
       "id": "user-source-source-petapixel-25ebb88d51c8c8e8",
       "sourceId": "user-source-source-petapixel",
       "title": "EU to Require Labels on Realistic AI Images From Sunday",
-      "summary": "The EU's AI Act is being introduced in stages, and this coming Sunday any AI-generated content impersonating people or real events will be required to have a label. [ Read More ]",
+      "summary": "The EU wants its citizens to believe what they see online.",
       "type": "公司动态",
       "region": "美国",
       "sector": "AI / AGI",
@@ -15065,6 +15178,7 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "ai",
+        "biotech",
         "track-1ccjq49"
       ]
     },
@@ -15595,6 +15709,34 @@
       ],
       "qualityStatus": "低可信",
       "trackSlugs": [
+        "semiconductor",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-mobilesyrup-f33eb8052abb689e",
+      "sourceId": "user-source-source-mobilesyrup",
+      "title": "RBC Foundation funds new AI platform for career support for skilled newcomers in Canada",
+      "summary": "The Toronto Region Immigrant Employment Council has announced a new AI platform which will help skilled individuals new to Canada find career support.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-29",
+      "importance": 76,
+      "source": {
+        "name": "MobileSyrup",
+        "url": "https://mobilesyrup.com/2026/07/29/rbc-foundation-funds-new-ai-platform-career-support-newcomers-canada",
+        "level": "媒体报道",
+        "platform": "MobileSyrup"
+      },
+      "qualityScore": 19,
+      "qualitySignals": [
+        "未命中有效追踪词"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "ai",
         "semiconductor",
         "track-1ccjq49"
       ]
@@ -18502,41 +18644,6 @@
       ]
     },
     {
-      "id": "professional-media-mobilesyrup-f33eb8052abb689e",
-      "sourceId": "user-source-source-mobilesyrup",
-      "title": "RBC Foundation funds new AI platform for career support for skilled newcomers in Canada",
-      "summary": "The Toronto Region Immigrant Employment Council has announced a new AI platform which will help skilled individuals new to Canada find career support.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-29",
-      "importance": 76,
-      "source": {
-        "name": "MobileSyrup",
-        "url": "https://mobilesyrup.com/2026/07/29/rbc-foundation-funds-new-ai-platform-career-support-newcomers-canada",
-        "level": "媒体报道",
-        "platform": "MobileSyrup"
-      },
-      "professionalMediaId": "mobilesyrup",
-      "professionalMediaUrl": "https://mobilesyrup.com/",
-      "professionalMediaFocus": [
-        "移动技术",
-        "通信",
-        "设备"
-      ],
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "professional-media-mit-technology-review-f3ba6426979fb08a",
       "sourceId": "user-source-source-mit-technology-review",
       "title": "The AI Hype Index: Unsexy AI",
@@ -20897,8 +21004,8 @@
     {
       "id": "user-track-semiconductor-google-us-edad990a1c5a474b",
       "sourceId": "user-track-semiconductor-google-us",
-      "title": "SpaceX IPO Frenzy Gets Fresh AI Fuel: Elon Musk Cheers Nvidia Vera CPU For Training Smarter AI Models - stocktwits.com",
-      "summary": "SpaceX IPO Frenzy Gets Fresh AI Fuel: Elon Musk Cheers Nvidia Vera CPU For Training Smarter AI Models stocktwits.com",
+      "title": "SpaceX IPO Frenzy Gets Fresh AI Fuel: Elon Musk Cheers Nvidia Vera CPU For Training Smarter AI Models - Stocktwits",
+      "summary": "SpaceX IPO Frenzy Gets Fresh AI Fuel: Elon Musk Cheers Nvidia Vera CPU For Training Smarter AI Models Stocktwits",
       "type": "公司动态",
       "region": "美国",
       "sector": "商业航天",
@@ -21492,6 +21599,34 @@
       "qualityScore": 57,
       "qualitySignals": [
         "标题命中 4 个追踪词"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai",
+        "biotech",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-the-verge-43d9cb7087abdb39",
+      "sourceId": "user-source-source-the-verge",
+      "title": "Agents just took your phone at the border. Is it legal to wipe it?",
+      "summary": "Courts are split on the constitutionality of warrantless phone searches.",
+      "type": "公司动态",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-28",
+      "importance": 76,
+      "source": {
+        "name": "The Verge",
+        "url": "https://theverge.com/report/972146/cbp-phone-search-airport-duress-password",
+        "level": "媒体报道",
+        "platform": "The Verge"
+      },
+      "qualityScore": 49,
+      "qualitySignals": [
+        "标题命中 2 个追踪词"
       ],
       "qualityStatus": "可用",
       "trackSlugs": [
@@ -22391,6 +22526,35 @@
       ]
     },
     {
+      "id": "user-source-source-makeuseof-913a40c00b956a6a",
+      "sourceId": "user-source-source-makeuseof",
+      "title": "I stopped over-prompting ChatGPT after reading OpenAI's new guide, and my answers got better",
+      "summary": "\"OpenAI's new prompting guide says shorter prompts reduce token usage while also improving answer quality.",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-28",
+      "importance": 76,
+      "source": {
+        "name": "MakeUseOf",
+        "url": "https://www.makeuseof.com/openais-new-prompting-guide-says-youre-over-prompting-chatgpt",
+        "level": "媒体报道",
+        "platform": "MakeUseOf"
+      },
+      "companySlug": "openai",
+      "qualityScore": 56,
+      "qualitySignals": [
+        "标题命中 2 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ]
+    },
+    {
       "id": "user-source-source-makeuseof-863d6de880624a4f",
       "sourceId": "user-source-source-makeuseof",
       "title": "ChatGPT just blocked its most controversial writing feature",
@@ -22413,35 +22577,6 @@
         "标题命中 1 个追踪词"
       ],
       "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-makeuseof-77bc62d225406f4f",
-      "sourceId": "user-source-source-makeuseof",
-      "title": "I stopped over-prompting ChatGPT after reading OpenAI's new guide, and my answers got better",
-      "summary": "\"OpenAI's new prompting guide says shorter prompts reduce token usage while also improving answer quality.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "MakeUseOf",
-        "url": "https://makeuseof.com/openais-new-prompting-guide-says-youre-over-prompting-chatgpt",
-        "level": "媒体报道",
-        "platform": "MakeUseOf"
-      },
-      "companySlug": "openai",
-      "qualityScore": 56,
-      "qualitySignals": [
-        "标题命中 2 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
       "trackSlugs": [
         "ai",
         "track-1ccjq49"
@@ -22888,6 +23023,34 @@
       "trackSlugs": [
         "ai",
         "biotech",
+        "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-source-source-electronics-weekly-f59fac7bfba71d1d",
+      "sourceId": "user-source-source-electronics-weekly",
+      "title": "Five DUV machines built by Shanghai Yuliansheng to ship this year ⋆ Electronics Weekly",
+      "summary": "The immersion DUV machine developed by Shanghai Yuliangsheng Technology, the semiconductor manufacturing equipment specialist, will be shipped by",
+      "type": "公司动态",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-28",
+      "importance": 76,
+      "source": {
+        "name": "Electronics Weekly",
+        "url": "https://www.electronicsweekly.com/news/business/shanghai-yuliansheng-to-ship-five-immersion-duv-machines-this-year-2026-07",
+        "level": "媒体报道",
+        "platform": "Electronics Weekly"
+      },
+      "qualityScore": 41,
+      "qualitySignals": [
+        "标题命中 1 个追踪词",
+        "标题命中公司/账号"
+      ],
+      "qualityStatus": "低可信",
+      "trackSlugs": [
+        "semiconductor",
         "track-1ccjq49"
       ]
     },
@@ -23607,169 +23770,6 @@
       "qualityStatus": "可用",
       "trackSlugs": [
         "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-android-headlines-f19d4c9deb089e9a",
-      "sourceId": "user-source-source-android-headlines",
-      "title": "Google Find Hub Finally Lets You Delete Old Headphones and Accessories",
-      "summary": "The post Google Find Hub Finally Lets You Delete Old Headphones and Accessories appeared first on Android Headlines .",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "Android Headlines",
-        "url": "https://www.androidheadlines.com/2026/07/google-find-hub-remove-old-devices-update.html",
-        "level": "媒体报道",
-        "platform": "Android Headlines"
-      },
-      "qualityScore": 34,
-      "qualitySignals": [
-        "标题命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-android-headlines-df75c46a8ff10962",
-      "sourceId": "user-source-source-android-headlines",
-      "title": "Google Refuses to Back Down in AI Scraping War Despite Legal Blow, Prepares Amended Complaint",
-      "summary": "The post Google Refuses to Back Down in AI Scraping War Despite Legal Blow, Prepares Amended Complaint appeared first on Android Headlines .",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "Android Headlines",
-        "url": "https://www.androidheadlines.com/2026/07/google-amends-lawsuit-serpapi-ai-scraping-search-results.html",
-        "level": "媒体报道",
-        "platform": "Android Headlines"
-      },
-      "qualityScore": 49,
-      "qualitySignals": [
-        "标题命中 2 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-android-headlines-bd3a2ce0d802efdc",
-      "sourceId": "user-source-source-android-headlines",
-      "title": "Google Clock Update Brings Live Updates to Timers & Stopwatches",
-      "summary": "The post Google Clock Update Brings Live Updates to Timers & Stopwatches appeared first on Android Headlines .",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "Android Headlines",
-        "url": "https://www.androidheadlines.com/2026/07/google-clock-update-brings-live-updates-to-timers-stopwatches.html",
-        "level": "媒体报道",
-        "platform": "Android Headlines"
-      },
-      "qualityScore": 34,
-      "qualitySignals": [
-        "标题命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-android-headlines-bc4effb4f5464b6f",
-      "sourceId": "user-source-source-android-headlines",
-      "title": "T-Mobile Outage Knocks Out Service for Thousands, Even Some Google Fi Users",
-      "summary": "The post T-Mobile Outage Knocks Out Service for Thousands, Even Some Google Fi Users appeared first on Android Headlines .",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "Android Headlines",
-        "url": "https://www.androidheadlines.com/2026/07/t-mobile-outage-knocks-out-service-for-thousands-even-some-google-fi-users.html",
-        "level": "媒体报道",
-        "platform": "Android Headlines"
-      },
-      "qualityScore": 34,
-      "qualitySignals": [
-        "标题命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-android-headlines-9783365609fe137d",
-      "sourceId": "user-source-source-android-headlines",
-      "title": "Google Translate Could Soon Get a Live Translate Widget for Faster Access",
-      "summary": "The post Google Translate Could Soon Get a Live Translate Widget for Faster Access appeared first on Android Headlines .",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "Android Headlines",
-        "url": "https://www.androidheadlines.com/2026/07/google-translate-could-soon-get-a-live-translate-widget-for-faster-access.html",
-        "level": "媒体报道",
-        "platform": "Android Headlines"
-      },
-      "qualityScore": 34,
-      "qualitySignals": [
-        "标题命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai"
-      ]
-    },
-    {
-      "id": "user-source-source-android-headlines-662fd7a21e1cc8ec",
-      "sourceId": "user-source-source-android-headlines",
-      "title": "Google's $1 Billion EU Fine Just Triggered a Wave of Private Lawsuits Across Europe",
-      "summary": "The post Google's $1 Billion EU Fine Just Triggered a Wave of Private Lawsuits Across Europe appeared first on Android Headlines .",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "Android Headlines",
-        "url": "https://www.androidheadlines.com/2026/07/googles-1-billion-eu-fine-just-triggered-a-wave-of-private-lawsuits-across-europe.html",
-        "level": "媒体报道",
-        "platform": "Android Headlines"
-      },
-      "qualityScore": 34,
-      "qualitySignals": [
-        "标题命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "semiconductor",
         "track-1ccjq49"
       ]
     },
@@ -24519,40 +24519,6 @@
       ]
     },
     {
-      "id": "professional-media-electronics-weekly-f59fac7bfba71d1d",
-      "sourceId": "user-source-source-electronics-weekly",
-      "title": "Five DUV machines built by Shanghai Yuliansheng to ship this year",
-      "summary": "The immersion DUV machine developed by Shanghai Yuliangsheng Technology, the semiconductor manufacturing equipment specialist, will be shipped by Shanghai Aishengna Technology which has taken over Yuliansheng’s team. The intention is […] The post Five DUV machines built by Shanghai Yuliansheng to ship this year appeared first on Electronics Weekly .",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "importance": 76,
-      "source": {
-        "name": "Electronics Weekly",
-        "url": "https://www.electronicsweekly.com/news/business/shanghai-yuliansheng-to-ship-five-immersion-duv-machines-this-year-2026-07",
-        "level": "媒体报道",
-        "platform": "Electronics Weekly"
-      },
-      "professionalMediaId": "electronics-weekly",
-      "professionalMediaUrl": "https://www.electronicsweekly.com/",
-      "professionalMediaFocus": [
-        "半导体",
-        "电子元件",
-        "物联网"
-      ],
-      "qualityScore": 25,
-      "qualitySignals": [
-        "摘要命中 1 个追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "professional-media-electronics-weekly-70b125c0feaf3039",
       "sourceId": "user-source-source-electronics-weekly",
       "title": "Nvidia says agentic AI is reshaping chip system design",
@@ -25115,6 +25081,33 @@
         "ai",
         "semiconductor",
         "track-1ccjq49"
+      ]
+    },
+    {
+      "id": "user-track-semiconductor-toutiao-d7decaec69b50ec6",
+      "sourceId": "user-track-semiconductor-toutiao",
+      "title": "英伟达遭偷家？AMD发布Zen6架构EPYC和MI455X GPU",
+      "summary": "极评测老高 在今日头条发布相关公开信息，完整内容见原文。",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "科技产业",
+      "publishedAt": "2026-07-27",
+      "importance": 82,
+      "source": {
+        "name": "极评测老高",
+        "url": "https://www.toutiao.com/group/7667014019416359462",
+        "level": "媒体报道",
+        "platform": "今日头条"
+      },
+      "qualityScore": 51,
+      "qualitySignals": [
+        "标题命中 2 个追踪词",
+        "包含明确事件动作"
+      ],
+      "qualityStatus": "可用",
+      "trackSlugs": [
+        "semiconductor"
       ]
     },
     {
@@ -28725,12 +28718,6 @@
         "储能",
         "可再生能源"
       ],
-      "qualityScore": 31,
-      "qualitySignals": [
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
       "trackSlugs": [
         "energy",
         "track-1ccjq49"
@@ -30204,36 +30191,6 @@
       ]
     },
     {
-      "id": "professional-media-the-verge-da4fb017387bf545",
-      "sourceId": "professional-media-the-verge",
-      "title": "Someone get these agents out of here.",
-      "summary": "This single-serving site, IMAXXING, lets you punch in your closest theater, a few parameters, and a notification window to get an email alert when seats to The Odyssey are available — theoretically a handy, low-stakes use of AI agents. (You’ll just have to ignore the image of Clavicular as Odysseus and the repeated incorrect usage of “frame mogging” on the webpage.) Does it work? I signed up, so we’ll see if I can get a ticket for the Lincoln Square AMC in the next month. Similarly, OpenAI has a",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-24",
-      "importance": 76,
-      "source": {
-        "name": "The Verge",
-        "url": "https://www.theverge.com/entertainment/970629/someone-get-these-agents-out-of-here",
-        "level": "媒体报道",
-        "platform": "The Verge"
-      },
-      "professionalMediaId": "the-verge",
-      "professionalMediaUrl": "https://www.theverge.com/",
-      "professionalMediaFocus": [
-        "消费科技",
-        "平台公司",
-        "人工智能"
-      ],
-      "trackSlugs": [
-        "ai",
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
       "id": "professional-media-notebookcheck-0b455d1b5c638305",
       "sourceId": "professional-media-notebookcheck",
       "title": "Gaming Monster with 4K Mini-LED, RTX 5090, and 128 GB RAM – Asus ROG Strix SCAR 18 G835LXG Review",
@@ -30598,414 +30555,6 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "robotics",
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-rigetti-computing-3730c3155a574b03",
-      "sourceId": "user-source-source-rigetti-computing",
-      "title": "Rigetti Computing to Report Second Quarter 2026 Financial Results and Host Conference Call on August 6, 2026 | Rigetti & Co, LLC",
-      "summary": "BERKELEY, Calif., July 23, 2026 (GLOBE NEWSWIRE) -- Rigetti Computing, Inc. (\"Rigetti\" or the \"Company\") (Nasdaq: RGTI), a pioneer in hybrid quantum-classical computing, announced today that it will release second quarter 2026 results on Thursday, August 6, 2026, after market close.",
-      "type": "财报",
-      "region": "美国",
-      "sector": "量子计算",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "Rigetti Computing 官方来源",
-        "url": "https://investors.rigetti.com/news-releases/news-release-details/rigetti-computing-report-second-quarter-2026-financial-results",
-        "level": "媒体报道",
-        "platform": "Rigetti Computing 官方来源"
-      },
-      "qualityScore": 63,
-      "qualitySignals": [
-        "标题命中 3 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "quantum",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-openai-ff6beb0c5ce1df49",
-      "sourceId": "user-source-source-openai",
-      "title": "OpenAI | Research & Deployment",
-      "summary": "Creemos que nuestras investigaciones acabarán por dar vida a una inteligencia artificial general, un sistema capaz de solucionar problemas a nivel humano. Nuestra misión es desarrollar una IAG segura y beneficiosa.",
-      "type": "商业进展",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "OpenAI 官方来源",
-        "url": "https://openai.com/es-ES",
-        "level": "媒体报道",
-        "platform": "OpenAI 官方来源"
-      },
-      "companySlug": "openai",
-      "qualityScore": 51,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "标题命中公司/账号"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-itpro-ee2ffcc13fc6f168",
-      "sourceId": "user-source-source-itpro",
-      "title": "AMD expands its software stack with Rocm.ai",
-      "summary": "The company wants to simplify AI workload deployment with unified development and optimization platform",
-      "type": "商业进展",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "ITPro",
-        "url": "https://www.itpro.com/hardware/amd-expands-its-software-stack-with-rocm-ai",
-        "level": "媒体报道",
-        "platform": "ITPro"
-      },
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-cmswire-e2104652a354a96a",
-      "sourceId": "user-source-source-cmswire",
-      "title": "Uber Joins Growing List of Companies Blaming AI for Customer Service Cuts",
-      "summary": "AI is becoming the go-to reason for support team layoffs. But Gartner says half may regret it. Continue reading...",
-      "type": "商业进展",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "CMSWire",
-        "url": "https://www.cmswire.com/customer-experience/uber-joins-growing-list-of-companies-blaming-ai-for-customer-service-cuts",
-        "level": "媒体报道",
-        "platform": "CMSWire"
-      },
-      "qualityScore": 19,
-      "qualitySignals": [
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-auto-media-fierceelectronics-com-7f1a11df2a95b565",
-      "sourceId": "user-source-source-auto-media-fierceelectronics-com",
-      "title": "AMD goes big on robots, physical AI with X100 SoC, open software and partnerships",
-      "summary": "AMD announced a comprehensive approach to advancing robotics and other physical AI on Thursday that combines System-on-Chip silicon with open software designed to rival Nvidia’s CUDA along with an | From robot body to robot brain: new AMD SoC combines CPU, GPU, NPU and company names robot sensing partners",
-      "type": "商业进展",
-      "region": "美国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 84,
-      "source": {
-        "name": "Fierce Electronics · 机器人信源",
-        "url": "https://fierceelectronics.com/embedded/amd-goes-big-robots-physical-ai-x100-soc-open-software-and-partnerships",
-        "level": "媒体报道",
-        "platform": "Fierce Electronics · 机器人信源"
-      },
-      "qualityScore": 40,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "robotics",
-        "semiconductor",
-        "web3",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-openai-eea6230f612ad113",
-      "sourceId": "user-source-source-openai",
-      "title": "Introducing GPT-5.4",
-      "summary": "Introducing GPT-5.4, OpenAI’s most most capable and efficient frontier model for professional work, with state-of-the-art coding, computer use, tool search, and 1M-token context.",
-      "type": "产品发布",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 82,
-      "source": {
-        "name": "OpenAI 官方来源",
-        "url": "https://openai.com/index/introducing-gpt-5-4",
-        "level": "媒体报道",
-        "platform": "OpenAI 官方来源"
-      },
-      "qualityScore": 50,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 1 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "relatedSources": [
-        {
-          "name": "OpenAI 官方来源",
-          "url": "https://openai.com/index/introducing-gpt-5-5",
-          "level": "媒体报道",
-          "platform": "OpenAI 官方来源",
-          "title": "Introducing GPT-5.5",
-          "publishedAt": "2026-07-23"
-        }
-      ],
-      "duplicateCount": 1,
-      "eventClusterId": "9e1f2ba913a79b60",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-source-source-itpro-eb82acd30e167d4b",
-      "sourceId": "user-source-source-itpro",
-      "title": "AMD Advancing AI 2026: Helios on the rise, with launch of new Instinct GPUs",
-      "summary": "The rack-scale architecture announced in 2025 is finally rolling off the production line",
-      "type": "产品发布",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 82,
-      "source": {
-        "name": "ITPro",
-        "url": "https://www.itpro.com/infrastructure/amd-advancing-ai-2026-helios-on-the-rise-with-launch-of-new-instinct-gpus",
-        "level": "媒体报道",
-        "platform": "ITPro"
-      },
-      "qualityScore": 27,
-      "qualitySignals": [
-        "包含明确事件动作",
-        "未命中有效追踪词"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "sec-0611c335ab074d56",
-      "sourceId": "sec",
-      "title": "Mobileye 提交 10-Q（季度报告）",
-      "summary": "SEC EDGAR 于 2026-07-23 收录 Mobileye 的 10-Q 文件。原始文件包含本次披露的完整正文、附件和财务口径。",
-      "type": "财报",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Mobileye",
-      "companySlug": "mobileye",
-      "publishedAt": "2026-07-23",
-      "importance": 82,
-      "source": {
-        "name": "SEC EDGAR",
-        "url": "https://www.sec.gov/Archives/edgar/data/1910139/000110465926086264/mbly-20260627x10q.htm",
-        "level": "监管文件",
-        "platform": "SEC"
-      },
-      "trackSlugs": [
-        "semiconductor"
-      ]
-    },
-    {
-      "id": "sec-8fba148a0f812784",
-      "sourceId": "sec",
-      "title": "Mobileye 提交 8-K（重大事项报告）",
-      "summary": "SEC EDGAR 于 2026-07-23 收录 Mobileye 的 8-K 文件。原始文件包含本次披露的完整正文、附件和财务口径。",
-      "type": "监管文件",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Mobileye",
-      "companySlug": "mobileye",
-      "publishedAt": "2026-07-23",
-      "importance": 80,
-      "source": {
-        "name": "SEC EDGAR",
-        "url": "https://www.sec.gov/Archives/edgar/data/1910139/000110465926086061/tm2621099d1_8k.htm",
-        "level": "监管文件",
-        "platform": "SEC"
-      },
-      "trackSlugs": [
-        "semiconductor"
-      ]
-    },
-    {
-      "id": "official-mobileye-6ef3a0a18b57c351",
-      "sourceId": "official-mobileye",
-      "title": "Mobileye announces planned leadership transition | Mobileye News",
-      "summary": "Founder Prof. Amnon Shashua informed the Board of his intention to step down as CEO after 27 years of building Mobileye into a global technology leader; Board will conduct a comprehensive CEO search process to name a successor; Board offers Shashua the role of Chairman following appointment of new CEO",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 80,
-      "source": {
-        "name": "Mobileye",
-        "url": "https://www.mobileye.com/news/mobileye-announces-planned-leadership-transition",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "xai-6415582bccdc3afe",
-      "sourceId": "user-source-source-xai",
-      "title": "Workflows in Grok Build",
-      "summary": "Grok Build can now write and run workflows: orchestration scripts that fan a task out across hundreds of parallel agents, verify the results, and report back in one background run.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "xAI 官方来源",
-        "url": "https://x.ai/news/workflows",
-        "level": "媒体报道",
-        "platform": "xAI 官方来源"
-      },
-      "qualityScore": 56,
-      "qualitySignals": [
-        "标题命中 1 个追踪词",
-        "摘要命中 2 个追踪词"
-      ],
-      "qualityStatus": "可用",
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-track-wechat-deeptechchina-ai-175a48861d90498f",
-      "sourceId": "user-track-wechat-deeptechchina-ai",
-      "title": "对话清华赵昊：物理AI，胜负关键在4D可控的世界模型基模",
-      "summary": "今天， 世界模型几乎成为 AI 领域最受关注的话题之一 ，但对于“什么才是真正的世界模型 ” 却依然存在巨大分歧。有人认为它只是视频生成的延伸，也有人认为只有能够理解物理规律、支持机器人行动的系统才是真正的世界模型。 清华大学智能产业研究院（AIR）助理教授赵昊提出了另一种答案—— 原生 4D 世界模型 。在他看来，仅仅生成一段看起来连贯的视频，还不足以说明模型理解了世界。真正面向自动驾驶和机器人的世界模型，需要进一步描述几何、时间、光学属性以及物体间的力学关系。 从室内布局、三维场景理解与几何约束，到 NeRF、自动驾驶仿真、4D 生成，再到推进至 3D 生成、机器人策略学习和 4D 世界模型，过去十几年，赵昊的研究路线几乎完整经历了空间智能的发展过程。 （来源：受访者） 在这次对话中，我们试图追问的并不是“世界模型是否重要”，而是一个更具体的问题： 为什么必须是 4D？这条强调显式几何与物理表征的路线，究竟是下一代基础模型，还是在大规模视频模型成熟前的一种阶段性方案？ 以下是我们的对话： 从场景理解到 4D 世界模型：一条清晰的技术演进路线 DeepTech： 在 AI 从看见世界",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "DeepTech深科技",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA==&mid=2649801244&idx=1&sn=40cc1f913aa0523bad276527dd473980&chksm=8777d605b0005f135fe15422df07eb8cc5ff44195fe267235c4daf9e8f9b5f52309d64a309a1#rd",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "刘雅坤"
-      ],
-      "wechatAccount": "DeepTech深科技",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Anthropic",
-        "字节跳动"
-      ],
-      "mentionedPeople": [
-        "李飞飞",
-        "World Token",
-        "助理",
-        "样的全明星"
-      ],
-      "matchedTrackingTerms": [
-        "大模型",
-        "基础模型",
-        "多模态",
-        "Agent",
-        "ChatGPT",
-        "强化学习",
-        "Meta",
-        "能力",
-        "Microsoft"
-      ],
-      "wechatAccountConfigId": "deeptechchina",
-      "wechatContentMode": "original-page",
-      "wechatDiscoveryProvider": "public-wechat-aggregator",
-      "qualityScore": 31,
-      "qualitySignals": [
-        "摘要命中 1 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "user-track-wechat-aitopics-ai-d21b0339fd258958",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "业界首个！5万国产卡跑出万亿模型，这家大厂抢人决心藏不住了",
-      "summary": "新智元报道 业界首个国产芯片上跑出的万亿参数模型LongCat-2.0于近日发布。 和LongCat-2.0同月发布的，还有一份独立升级的——美团LongCat顶尖人才校招计划。这两个动作背后，美团争夺顶尖AI人才的决心，逐渐浮出水面。 大模型竞速，争夺AI顶尖人才 又一家大厂正面加入日益激烈的顶尖AI人才争夺战。 6月，美团发布一项全新人才计划—— LongCat顶尖人才校招 。该计划从美团运行近10年的北斗计划中独立出来，意在以 更快的速度、更大的投入力度 招揽顶尖AI人才。 两项人才计划的区别是： LongCat顶尖人才校招计划为LongCat大模型团队在全球范围内吸引顶尖人才，目标是搭建一支高人才密度的基座大模型团队， 攀登模型能力的最前沿 。岗位包括基础模型、AI Infra、Agentic模型训练、多模态交互与Embodied AI、模型评测等。 北斗计划延续此前定位，除基座大模型相关岗位单独拆分出来之外，顶尖技术人才依然在北斗计划的框架内：面向全球校园精尖人才，覆盖大模型应用、自动驾驶、无人机、具身智能、智能决策等。 美团招聘团队制定了一系列与市场匹配的人才策略： 提供行",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-23",
-      "importance": 76,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA==&mid=2652714514&idx=1&sn=faf9f325fe985a7ac5d43b26da8dc19d&chksm=f12e42e3c659cbf5464124466d4e6116f9882347b316c0f43d68ca7dbfefcbca3ad8bd9ec324#rd",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [],
-      "mentionedPeople": [],
-      "matchedTrackingTerms": [
-        "大模型",
-        "Agent",
-        "多模态",
-        "基础模型",
-        "SOTA",
-        "能力",
-        "agentic"
-      ],
-      "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "wechatDiscoveryProvider": "public-wechat-aggregator",
-      "qualityScore": 43,
-      "qualitySignals": [
-        "摘要命中 6 个追踪词",
-        "包含明确事件动作"
-      ],
-      "qualityStatus": "低可信",
-      "trackSlugs": [
-        "ai",
         "semiconductor",
         "track-1ccjq49"
       ]
@@ -32873,22 +32422,21 @@
     {
       "id": "professional-media-9to5mac",
       "name": "9to5Mac",
-      "status": "partial",
-      "scanned": 4,
-      "accepted": 1,
-      "failed": 8,
+      "status": "error",
+      "scanned": 1,
+      "accepted": 0,
+      "failed": 1,
       "platform": "9to5Mac",
+      "error": "site HTTPError: HTTP Error 403: Forbidden",
       "attempted": true,
       "adapter": "professional-media-v1",
       "canonicalSourceUrl": "https://9to5mac.com/",
       "discoveryUrl": "https://www.bing.com/search?format=rss&q=site%3A9to5mac.com+%28%22%E5%8D%8A%E5%AF%BC%E4%BD%93%22+OR+%22AI+%E8%8A%AF%E7%89%87%22+OR+%22GPU%22+OR+%22%E6%8E%A8%E7%90%86%E8%8A%AF%E7%89%87%22+OR+%22%E5%85%88%E8%BF%9B%E5%B0%81%E8%A3%85%22+OR+%22%E5%9B%BD%E4%BA%A7%E7%AE%97%E5%8A%9B%22+OR+%22LPU%22+OR+%22AI+Agent%22+OR+%22%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6%22+OR+%22HBM%22+OR+%22Chiplet%22+OR+%22%E7%A1%85%E5%85%89%22+OR+%22%E7%AB%AF%E4%BE%A7%E6%A8%A1%E5%9E%8B%22+OR+%22WAIC%22+OR+%22AMD%22+OR+%22CoWoS%22+OR+%22EDA%22+OR+%22CPU%22+OR+%22Nvidia%22+OR+%22%E5%85%89%E6%A8%A1%E5%9D%97%22+OR+%22%E5%8F%91%E5%B8%83%22+OR+%22%E6%8E%A8%E5%87%BA%22+OR+%22%E8%9E%8D%E8%B5%84%22+OR+%22%E6%8A%95%E8%B5%84%22+OR+%22IPO%22+OR+%22%E4%B8%8A%E5%B8%82%22+OR+%22%E7%AA%81%E7%A0%B4%22+OR+%22%E7%A0%94%E7%A9%B6%22%29",
       "strategies": [
         "public-search-rss",
-        "original-site",
-        "original-feed",
-        "original-articles"
+        "original-site"
       ],
-      "candidateArticles": 1,
+      "candidateArticles": 0,
       "rejectedOutsideRegistry": 0,
       "requestBudget": {
         "timeoutSeconds": 8,
@@ -32929,10 +32477,10 @@
     {
       "id": "professional-media-android-headlines",
       "name": "Android Headlines",
-      "status": "error",
-      "scanned": 1,
-      "accepted": 0,
-      "failed": 1,
+      "status": "ok",
+      "scanned": 9,
+      "accepted": 4,
+      "failed": 0,
       "platform": "Android Headlines",
       "error": "site HTTPError: HTTP Error 429: Too Many Requests",
       "attempted": true,
@@ -32943,8 +32491,8 @@
         "public-search-rss",
         "original-site"
       ],
-      "candidateArticles": 0,
-      "rejectedOutsideRegistry": 0,
+      "candidateArticles": 7,
+      "rejectedOutsideRegistry": 3,
       "requestBudget": {
         "timeoutSeconds": 8,
         "attempts": 1,
@@ -34146,7 +33694,7 @@
       "name": "MakeUseOf",
       "status": "ok",
       "scanned": 10,
-      "accepted": 2,
+      "accepted": 1,
       "failed": 0,
       "platform": "MakeUseOf",
       "attempted": true,
@@ -34158,7 +33706,7 @@
         "original-site",
         "original-articles"
       ],
-      "candidateArticles": 2,
+      "candidateArticles": 1,
       "rejectedOutsideRegistry": 0,
       "requestBudget": {
         "timeoutSeconds": 8,
@@ -34228,7 +33776,7 @@
       "name": "MobileSyrup",
       "status": "partial",
       "scanned": 10,
-      "accepted": 3,
+      "accepted": 2,
       "failed": 1,
       "platform": "MobileSyrup",
       "attempted": true,
@@ -34241,7 +33789,7 @@
         "original-feed",
         "original-articles"
       ],
-      "candidateArticles": 3,
+      "candidateArticles": 2,
       "rejectedOutsideRegistry": 0,
       "requestBudget": {
         "timeoutSeconds": 8,
@@ -34852,7 +34400,7 @@
         "original-feed",
         "original-articles"
       ],
-      "candidateArticles": 0,
+      "candidateArticles": 3,
       "rejectedOutsideRegistry": 0,
       "requestBudget": {
         "timeoutSeconds": 8,
@@ -35279,7 +34827,7 @@
       "id": "professional-media-the-verge",
       "name": "The Verge",
       "status": "ok",
-      "scanned": 4,
+      "scanned": 3,
       "accepted": 4,
       "failed": 0,
       "platform": "The Verge",
@@ -35646,8 +35194,8 @@
       "id": "sina-finance",
       "name": "新浪财经",
       "status": "ok",
-      "scanned": 6,
-      "accepted": 6,
+      "scanned": 5,
+      "accepted": 5,
       "failed": 0,
       "platform": "新浪"
     },
@@ -35767,10 +35315,10 @@
     {
       "id": "user-source-source-android-headlines",
       "name": "Android Headlines",
-      "status": "error",
+      "status": "ok",
       "scanned": 7,
-      "accepted": 0,
-      "failed": 52,
+      "accepted": 20,
+      "failed": 0,
       "platform": "Android Headlines",
       "error": "source HTTPError: HTTP Error 429: Too Many Requests; sitemap HTTPError: HTTP Error 404: Not Found; sitemap HTTPError: HTTP Error 404: Not Found",
       "adapter": "adaptive-public-v1",
@@ -35793,7 +35341,10 @@
         "attempts": 2,
         "seedLimit": 6,
         "stopAfterAccepted": 3
-      }
+      },
+      "newAccepted": 7,
+      "retainedPrevious": true,
+      "retainedPreviousCount": 13
     },
     {
       "id": "user-source-source-anduril-industries",
@@ -35890,7 +35441,7 @@
       "id": "user-source-source-ars-technica",
       "name": "Ars Technica",
       "status": "ok",
-      "scanned": 19,
+      "scanned": 20,
       "accepted": 18,
       "failed": 0,
       "platform": "Ars Technica",
@@ -36418,7 +35969,7 @@
         "seedLimit": 2,
         "stopAfterAccepted": 1
       },
-      "discoveredAccepted": 2,
+      "discoveredAccepted": 1,
       "publisherHandoff": "eastmoney-strict-detail",
       "handoffStatusId": "official-user-东方财富"
     },
@@ -36547,7 +36098,7 @@
       "name": "Slashdot · 风险投资信源",
       "status": "partial",
       "scanned": 43,
-      "accepted": 2,
+      "accepted": 1,
       "failed": 7,
       "platform": "Slashdot · 风险投资信源",
       "adapter": "adaptive-public-v1",
@@ -36571,14 +36122,14 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 2
+      "newAccepted": 1
     },
     {
       "id": "user-source-source-auto-media-news-slashdot-org",
       "name": "Slashdot · 风险投资信源",
       "status": "ok",
       "scanned": 31,
-      "accepted": 9,
+      "accepted": 11,
       "failed": 0,
       "platform": "Slashdot · 风险投资信源",
       "adapter": "adaptive-public-v1",
@@ -36601,9 +36152,9 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 6,
+      "newAccepted": 7,
       "retainedPrevious": true,
-      "retainedPreviousCount": 3
+      "retainedPreviousCount": 4
     },
     {
       "id": "user-source-source-auto-media-portal-gigaom-com",
@@ -36640,7 +36191,7 @@
       "name": "Slashdot · 风险投资信源 · 风险投资信源",
       "status": "ok",
       "scanned": 31,
-      "accepted": 5,
+      "accepted": 6,
       "failed": 0,
       "platform": "Slashdot · 风险投资信源 · 风险投资信源",
       "adapter": "adaptive-public-v1",
@@ -36663,7 +36214,7 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 5
+      "newAccepted": 6
     },
     {
       "id": "user-source-source-auto-media-techfinancials-co-za",
@@ -36856,9 +36407,9 @@
       "id": "user-source-source-bleepingcomputer",
       "name": "BleepingComputer",
       "status": "partial",
-      "scanned": 7,
-      "accepted": 11,
-      "failed": 24,
+      "scanned": 8,
+      "accepted": 12,
+      "failed": 23,
       "platform": "BleepingComputer",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -36880,7 +36431,7 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 4,
+      "newAccepted": 5,
       "retainedPrevious": true,
       "retainedPreviousCount": 7
     },
@@ -37012,7 +36563,7 @@
       "name": "CMSWire",
       "status": "ok",
       "scanned": 3,
-      "accepted": 15,
+      "accepted": 16,
       "failed": 0,
       "platform": "CMSWire",
       "adapter": "adaptive-public-v1",
@@ -37037,7 +36588,7 @@
       },
       "newAccepted": 10,
       "retainedPrevious": true,
-      "retainedPreviousCount": 5
+      "retainedPreviousCount": 6
     },
     {
       "id": "user-source-source-cnet",
@@ -37262,13 +36813,13 @@
       },
       "newAccepted": 10,
       "retainedPrevious": true,
-      "retainedPreviousCount": 12
+      "retainedPreviousCount": 16
     },
     {
       "id": "user-source-source-digital-trends",
       "name": "Digital Trends",
       "status": "ok",
-      "scanned": 3,
+      "scanned": 5,
       "accepted": 20,
       "failed": 0,
       "platform": "Digital Trends",
@@ -37292,17 +36843,17 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 10,
+      "newAccepted": 9,
       "retainedPrevious": true,
-      "retainedPreviousCount": 11
+      "retainedPreviousCount": 12
     },
     {
       "id": "user-source-source-electrek",
       "name": "Electrek",
-      "status": "partial",
-      "scanned": 8,
-      "accepted": 7,
-      "failed": 25,
+      "status": "error",
+      "scanned": 2,
+      "accepted": 0,
+      "failed": 7,
       "platform": "Electrek",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -37329,10 +36880,10 @@
     {
       "id": "user-source-source-electronics-weekly",
       "name": "Electronics Weekly",
-      "status": "error",
-      "scanned": 2,
-      "accepted": 0,
-      "failed": 7,
+      "status": "ok",
+      "scanned": 33,
+      "accepted": 13,
+      "failed": 0,
       "platform": "Electronics Weekly",
       "error": "source HTTPError: HTTP Error 403: Forbidden; sitemap HTTPError: HTTP Error 403: Forbidden; sitemap HTTPError: HTTP Error 403: Forbidden",
       "adapter": "adaptive-public-v1",
@@ -37354,7 +36905,10 @@
         "attempts": 2,
         "seedLimit": 6,
         "stopAfterAccepted": 3
-      }
+      },
+      "newAccepted": 7,
+      "retainedPrevious": true,
+      "retainedPreviousCount": 6
     },
     {
       "id": "user-source-source-engadget",
@@ -37855,10 +37409,10 @@
     {
       "id": "user-source-source-it-news-africa",
       "name": "IT News Africa",
-      "status": "partial",
+      "status": "ok",
       "scanned": 11,
       "accepted": 9,
-      "failed": 1,
+      "failed": 0,
       "platform": "IT News Africa",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -38014,7 +37568,7 @@
       "id": "user-source-source-makeuseof",
       "name": "MakeUseOf",
       "status": "partial",
-      "scanned": 43,
+      "scanned": 45,
       "accepted": 14,
       "failed": 4,
       "platform": "MakeUseOf",
@@ -38331,7 +37885,7 @@
       "id": "user-source-source-petapixel",
       "name": "PetaPixel",
       "status": "ok",
-      "scanned": 17,
+      "scanned": 19,
       "accepted": 10,
       "failed": 0,
       "platform": "PetaPixel",
@@ -38363,9 +37917,9 @@
       "id": "user-source-source-phandroid",
       "name": "Phandroid",
       "status": "partial",
-      "scanned": 49,
+      "scanned": 47,
       "accepted": 8,
-      "failed": 8,
+      "failed": 63,
       "platform": "Phandroid",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -38679,9 +38233,9 @@
       "id": "user-source-source-sambanova-systems",
       "name": "SambaNova Systems 官方来源",
       "status": "partial",
-      "scanned": 35,
+      "scanned": 34,
       "accepted": 1,
-      "failed": 4,
+      "failed": 5,
       "platform": "SambaNova Systems 官方来源",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -38931,8 +38485,8 @@
       "id": "user-source-source-techdirt",
       "name": "Techdirt",
       "status": "ok",
-      "scanned": 11,
-      "accepted": 19,
+      "scanned": 10,
+      "accepted": 18,
       "failed": 0,
       "platform": "Techdirt",
       "adapter": "adaptive-public-v1",
@@ -38955,17 +38509,17 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 9,
+      "newAccepted": 8,
       "retainedPrevious": true,
       "retainedPreviousCount": 10
     },
     {
       "id": "user-source-source-techeblog",
       "name": "TechEBlog",
-      "status": "partial",
-      "scanned": 36,
-      "accepted": 4,
-      "failed": 9,
+      "status": "ok",
+      "scanned": 9,
+      "accepted": 6,
+      "failed": 0,
       "platform": "TechEBlog",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -38978,8 +38532,7 @@
       ],
       "nativeSearchSeeds": [],
       "strategies": [
-        "primary",
-        "structured-data"
+        "primary"
       ],
       "historyLimit": 20,
       "requestBudget": {
@@ -38988,7 +38541,7 @@
         "seedLimit": 6,
         "stopAfterAccepted": 3
       },
-      "newAccepted": 1,
+      "newAccepted": 3,
       "retainedPrevious": true,
       "retainedPreviousCount": 3
     },
@@ -39246,7 +38799,7 @@
       "id": "user-source-source-the-verge",
       "name": "The Verge",
       "status": "ok",
-      "scanned": 7,
+      "scanned": 8,
       "accepted": 20,
       "failed": 0,
       "platform": "The Verge",
@@ -39272,7 +38825,7 @@
       },
       "newAccepted": 10,
       "retainedPrevious": true,
-      "retainedPreviousCount": 11
+      "retainedPreviousCount": 12
     },
     {
       "id": "user-source-source-the-washington-post",
@@ -39847,7 +39400,7 @@
       "id": "user-source-source-track-1sp7gkg",
       "name": "东方财富",
       "status": "partial",
-      "scanned": 5,
+      "scanned": 8,
       "accepted": 0,
       "failed": 0,
       "platform": "东方财富",
@@ -40097,9 +39650,9 @@
       "id": "user-source-source-track-c6s6ma",
       "name": "投中网",
       "status": "partial",
-      "scanned": 55,
+      "scanned": 54,
       "accepted": 14,
-      "failed": 5,
+      "failed": 6,
       "platform": "投中网",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -40131,10 +39684,10 @@
     {
       "id": "user-source-source-track-e58ig",
       "name": "新浪财经",
-      "status": "partial",
+      "status": "ok",
       "scanned": 14,
       "accepted": 20,
-      "failed": 1,
+      "failed": 0,
       "platform": "新浪财经",
       "adapter": "adaptive-public-v1",
       "profile": "default",
@@ -41029,12 +40582,11 @@
     {
       "id": "user-track-biotech-toutiao",
       "name": "生物科技 · 今日头条",
-      "status": "error",
+      "status": "ok",
       "scanned": 28,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "今日头条",
-      "error": "No matching original Toutiao feed articles"
+      "accepted": 1,
+      "failed": 0,
+      "platform": "今日头条"
     },
     {
       "id": "user-track-energy-bing",
@@ -41066,12 +40618,11 @@
     {
       "id": "user-track-energy-toutiao",
       "name": "新能源 · 今日头条",
-      "status": "error",
+      "status": "ok",
       "scanned": 29,
-      "accepted": 0,
-      "failed": 1,
-      "platform": "今日头条",
-      "error": "No matching original Toutiao feed articles"
+      "accepted": 1,
+      "failed": 0,
+      "platform": "今日头条"
     },
     {
       "id": "user-track-fusion-bing",
@@ -41251,11 +40802,12 @@
     {
       "id": "user-track-robotics-toutiao",
       "name": "机器人 · 今日头条",
-      "status": "ok",
+      "status": "error",
       "scanned": 18,
-      "accepted": 1,
-      "failed": 0,
-      "platform": "今日头条"
+      "accepted": 0,
+      "failed": 1,
+      "platform": "今日头条",
+      "error": "No matching original Toutiao feed articles"
     },
     {
       "id": "user-track-semiconductor-bing",
@@ -41287,11 +40839,12 @@
     {
       "id": "user-track-semiconductor-toutiao",
       "name": "半导体 · 今日头条",
-      "status": "ok",
+      "status": "error",
       "scanned": 18,
-      "accepted": 1,
-      "failed": 0,
-      "platform": "今日头条"
+      "accepted": 0,
+      "failed": 1,
+      "platform": "今日头条",
+      "error": "No matching original Toutiao feed articles"
     },
     {
       "id": "user-track-space-bing",
@@ -41570,10 +41123,10 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "partial",
       "scanned": 18,
       "accepted": 6,
-      "failed": 0,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "public-wechat-aggregator"
     },
@@ -42050,7 +41603,7 @@
         "passed": true
       },
       "minimumHealthySources": {
-        "actual": 308,
+        "actual": 296,
         "required": 6,
         "passed": true
       },
@@ -42060,17 +41613,17 @@
         "passed": true
       },
       "minimumSourceLevels": {
-        "actual": 5,
+        "actual": 4,
         "required": 3,
         "passed": true
       },
       "minimumPlatforms": {
-        "actual": 110,
+        "actual": 108,
         "required": 4,
         "passed": true
       },
       "minimumEventTypes": {
-        "actual": 12,
+        "actual": 11,
         "required": 6,
         "passed": true
       },
@@ -42102,15 +41655,15 @@
     },
     "invalidArticles": [],
     "trackingQuality": {
-      "scoredUserArticles": 1091,
-      "acceptedUserArticles": 967,
-      "rejectedUserArticles": 124,
-      "clusteredDuplicates": 6,
+      "scoredUserArticles": 1079,
+      "acceptedUserArticles": 956,
+      "rejectedUserArticles": 123,
+      "clusteredDuplicates": 7,
       "minimumScore": 31
     }
   },
   "trackingConfigHash": "70521ed38d2ea8cf72f65cf318a3e0c8dd10fe744195aabaa519bff1e90da7f4",
-  "trackingEnrichedAt": "2026-07-30T21:02:58+00:00",
+  "trackingEnrichedAt": "2026-07-30T21:34:11+00:00",
   "trackCoverage": {
     "ai": {
       "slug": "ai",
@@ -42123,79 +41676,79 @@
       "failedSources": 1,
       "scanned": 34,
       "accepted": 16,
-      "matchedArticles": 849,
-      "backfilledArticles": 97,
-      "independentSources": 849,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 849 条事件，但有 1 路来源失败。"
+      "matchedArticles": 841,
+      "backfilledArticles": 98,
+      "independentSources": 838,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 841 条事件，但有 1 路来源失败。"
     },
     "robotics": {
       "slug": "robotics",
       "name": "机器人",
-      "status": "ready",
-      "label": "已完成",
+      "status": "partial",
+      "label": "部分可用",
       "expectedSources": 4,
       "completedSources": 4,
-      "healthySources": 3,
-      "failedSources": 0,
+      "healthySources": 2,
+      "failedSources": 1,
       "scanned": 34,
-      "accepted": 17,
-      "matchedArticles": 85,
-      "backfilledArticles": 27,
-      "independentSources": 85,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "4 路发现均已尝试，当前匹配 85 条公开事件。"
+      "accepted": 16,
+      "matchedArticles": 80,
+      "backfilledArticles": 25,
+      "independentSources": 80,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 80 条事件，但有 1 路来源失败。"
     },
     "semiconductor": {
       "slug": "semiconductor",
       "name": "半导体",
+      "status": "partial",
+      "label": "部分可用",
+      "expectedSources": 4,
+      "completedSources": 4,
+      "healthySources": 2,
+      "failedSources": 1,
+      "scanned": 34,
+      "accepted": 16,
+      "matchedArticles": 333,
+      "backfilledArticles": 208,
+      "independentSources": 331,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 333 条事件，但有 1 路来源失败。"
+    },
+    "energy": {
+      "slug": "energy",
+      "name": "新能源",
       "status": "ready",
       "label": "已完成",
       "expectedSources": 4,
       "completedSources": 4,
       "healthySources": 3,
       "failedSources": 0,
-      "scanned": 34,
-      "accepted": 17,
-      "matchedArticles": 335,
-      "backfilledArticles": 207,
-      "independentSources": 335,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "4 路发现均已尝试，当前匹配 335 条公开事件。"
-    },
-    "energy": {
-      "slug": "energy",
-      "name": "新能源",
-      "status": "partial",
-      "label": "部分可用",
-      "expectedSources": 4,
-      "completedSources": 4,
-      "healthySources": 2,
-      "failedSources": 1,
       "scanned": 45,
-      "accepted": 16,
-      "matchedArticles": 41,
+      "accepted": 17,
+      "matchedArticles": 43,
       "backfilledArticles": 8,
-      "independentSources": 41,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 41 条事件，但有 1 路来源失败。"
+      "independentSources": 43,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "4 路发现均已尝试，当前匹配 43 条公开事件。"
     },
     "biotech": {
       "slug": "biotech",
       "name": "生物科技",
-      "status": "partial",
-      "label": "部分可用",
+      "status": "ready",
+      "label": "已完成",
       "expectedSources": 4,
       "completedSources": 4,
-      "healthySources": 2,
-      "failedSources": 1,
+      "healthySources": 3,
+      "failedSources": 0,
       "scanned": 44,
-      "accepted": 16,
-      "matchedArticles": 174,
-      "backfilledArticles": 167,
-      "independentSources": 174,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 174 条事件，但有 1 路来源失败。"
+      "accepted": 17,
+      "matchedArticles": 177,
+      "backfilledArticles": 170,
+      "independentSources": 177,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "4 路发现均已尝试，当前匹配 177 条公开事件。"
     },
     "quantum": {
       "slug": "quantum",
@@ -42208,11 +41761,11 @@
       "failedSources": 1,
       "scanned": 34,
       "accepted": 16,
-      "matchedArticles": 10,
+      "matchedArticles": 9,
       "backfilledArticles": 4,
-      "independentSources": 10,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 10 条事件，但有 1 路来源失败。"
+      "independentSources": 9,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 9 条事件，但有 1 路来源失败。"
     },
     "space": {
       "slug": "space",
@@ -42225,11 +41778,11 @@
       "failedSources": 1,
       "scanned": 34,
       "accepted": 16,
-      "matchedArticles": 32,
+      "matchedArticles": 33,
       "backfilledArticles": 0,
-      "independentSources": 32,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 32 条事件，但有 1 路来源失败。"
+      "independentSources": 33,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 33 条事件，但有 1 路来源失败。"
     },
     "web3": {
       "slug": "web3",
@@ -42242,11 +41795,11 @@
       "failedSources": 1,
       "scanned": 45,
       "accepted": 16,
-      "matchedArticles": 64,
-      "backfilledArticles": 57,
-      "independentSources": 64,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 64 条事件，但有 1 路来源失败。"
+      "matchedArticles": 61,
+      "backfilledArticles": 54,
+      "independentSources": 61,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 61 条事件，但有 1 路来源失败。"
     },
     "materials": {
       "slug": "materials",
@@ -42259,11 +41812,11 @@
       "failedSources": 1,
       "scanned": 45,
       "accepted": 16,
-      "matchedArticles": 24,
-      "backfilledArticles": 9,
-      "independentSources": 24,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 24 条事件，但有 1 路来源失败。"
+      "matchedArticles": 27,
+      "backfilledArticles": 10,
+      "independentSources": 27,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 27 条事件，但有 1 路来源失败。"
     },
     "manufacturing": {
       "slug": "manufacturing",
@@ -42279,7 +41832,7 @@
       "matchedArticles": 10,
       "backfilledArticles": 2,
       "independentSources": 10,
-      "lastRun": "2026-07-30T21:02:56+00:00",
+      "lastRun": "2026-07-30T21:34:08+00:00",
       "message": "已匹配 10 条事件，但有 1 路来源失败。"
     },
     "fusion": {
@@ -42296,7 +41849,7 @@
       "matchedArticles": 9,
       "backfilledArticles": 7,
       "independentSources": 9,
-      "lastRun": "2026-07-30T21:02:56+00:00",
+      "lastRun": "2026-07-30T21:34:08+00:00",
       "message": "已匹配 9 条事件，但有 1 路来源失败。"
     },
     "track-1ccjq49": {
@@ -42310,11 +41863,11 @@
       "failedSources": 1,
       "scanned": 34,
       "accepted": 16,
-      "matchedArticles": 962,
-      "backfilledArticles": 944,
-      "independentSources": 962,
-      "lastRun": "2026-07-30T21:02:56+00:00",
-      "message": "已匹配 962 条事件，但有 1 路来源失败。"
+      "matchedArticles": 951,
+      "backfilledArticles": 931,
+      "independentSources": 948,
+      "lastRun": "2026-07-30T21:34:08+00:00",
+      "message": "已匹配 951 条事件，但有 1 路来源失败。"
     },
     "track-1p8ob4k": {
       "slug": "track-1p8ob4k",
@@ -42330,7 +41883,7 @@
       "matchedArticles": 3,
       "backfilledArticles": 0,
       "independentSources": 3,
-      "lastRun": "2026-07-30T21:02:56+00:00",
+      "lastRun": "2026-07-30T21:34:08+00:00",
       "message": "已匹配 3 条事件，但有 1 路来源失败。"
     }
   },
@@ -42349,14 +41902,14 @@
   "refreshAudit": {
     "mode": "frequent",
     "pipelineCompleted": true,
-    "completedAt": "2026-07-30T21:02:55+00:00",
+    "completedAt": "2026-07-30T21:34:08+00:00",
     "localDate": "2026-07-31",
     "stages": [
       "core-and-tracking-sources"
     ],
     "articleCount": 1069,
     "previousArticleCount": 1102,
-    "newArticleCount": 153,
+    "newArticleCount": 146,
     "latestPublishedAt": "2026-07-31",
     "todayArticleCount": 3,
     "todaySourceCount": 3,
