@@ -6,717 +6,795 @@ TAP version 13
 # Subtest: production catalog meets the initial coverage floor
 ok 1 - production catalog meets the initial coverage floor
   ---
-  duration_ms: 1.164742
+  duration_ms: 1.143854
   type: 'test'
   ...
 # Subtest: every production entity has a real source URL
 ok 2 - every production entity has a real source URL
   ---
-  duration_ms: 0.697829
+  duration_ms: 0.725264
   type: 'test'
   ...
 # Subtest: person pages expose at least five traceable materials
 ok 3 - person pages expose at least five traceable materials
   ---
-  duration_ms: 0.225459
+  duration_ms: 0.305262
   type: 'test'
   ...
 # Subtest: slugs are unique within each route collection
 ok 4 - slugs are unique within each route collection
   ---
-  duration_ms: 0.198239
+  duration_ms: 0.224412
   type: 'test'
   ...
 # Subtest: every linked event company has a generated company route
 ok 5 - every linked event company has a generated company route
   ---
-  duration_ms: 0.304408
+  duration_ms: 0.434454
   type: 'test'
   ...
 # Subtest: normalizeChannelDocuments keeps valid records and rejects unsafe ones
 ok 6 - normalizeChannelDocuments keeps valid records and rejects unsafe ones
   ---
-  duration_ms: 2.180419
+  duration_ms: 2.068334
   type: 'test'
   ...
 # Subtest: normalizeChannelDocuments tolerates malformed payloads
 ok 7 - normalizeChannelDocuments tolerates malformed payloads
   ---
-  duration_ms: 0.272039
+  duration_ms: 0.233936
   type: 'test'
   ...
 # Subtest: channelDocumentToUpdateItem renders the summary above the file link
 ok 8 - channelDocumentToUpdateItem renders the summary above the file link
   ---
-  duration_ms: 0.797369
+  duration_ms: 0.712666
   type: 'test'
   ...
 # Subtest: channelDocumentToUpdateItem falls back when the summary is empty
 ok 9 - channelDocumentToUpdateItem falls back when the summary is empty
   ---
-  duration_ms: 0.270657
+  duration_ms: 0.232785
   type: 'test'
   ...
 # Subtest: detectChannelDocumentFileType maps extensions and mime types
 ok 10 - detectChannelDocumentFileType maps extensions and mime types
   ---
-  duration_ms: 0.302315
+  duration_ms: 0.29679
   type: 'test'
   ...
 # Subtest: safeChannelDocumentFileName keeps CJK and strips unsafe characters
 ok 11 - safeChannelDocumentFileName keeps CJK and strips unsafe characters
   ---
-  duration_ms: 0.608695
+  duration_ms: 0.548502
   type: 'test'
   ...
 # Subtest: document ids and upload paths are deterministic
 ok 12 - document ids and upload paths are deterministic
   ---
-  duration_ms: 0.530618
+  duration_ms: 0.424759
   type: 'test'
   ...
 # Subtest: generateDocumentSummary extracts informative sentences in order
 ok 13 - generateDocumentSummary extracts informative sentences in order
   ---
-  duration_ms: 6.063299
+  duration_ms: 6.320783
   type: 'test'
   ...
 # Subtest: generateDocumentSummary caps length and handles empty input
 ok 14 - generateDocumentSummary caps length and handles empty input
   ---
-  duration_ms: 2.861364
+  duration_ms: 1.230022
   type: 'test'
   ...
 # Subtest: isMostlyLegibleText rejects mojibake from unmapped CJK fonts
 ok 15 - isMostlyLegibleText rejects mojibake from unmapped CJK fonts
   ---
-  duration_ms: 0.944781
+  duration_ms: 1.749742
   type: 'test'
   ...
 # Subtest: generateDocumentSummary prefers conclusion and quantified sentences
 ok 16 - generateDocumentSummary prefers conclusion and quantified sentences
   ---
-  duration_ms: 0.367533
+  duration_ms: 0.31708
   type: 'test'
   ...
 # Subtest: cleanExtractedText collapses layout whitespace
 ok 17 - cleanExtractedText collapses layout whitespace
   ---
-  duration_ms: 0.163897
+  duration_ms: 0.112768
   type: 'test'
   ...
 # Subtest: decodeXmlEntities handles named and numeric entities
 ok 18 - decodeXmlEntities handles named and numeric entities
   ---
-  duration_ms: 0.302085
+  duration_ms: 0.288587
   type: 'test'
   ...
 # Subtest: extractDocxXmlText follows runs, tabs, breaks and paragraphs
 ok 19 - extractDocxXmlText follows runs, tabs, breaks and paragraphs
   ---
-  duration_ms: 0.415094
+  duration_ms: 0.489976
   type: 'test'
   ...
 # Subtest: extractPptxXmlText joins text runs per paragraph
 ok 20 - extractPptxXmlText joins text runs per paragraph
   ---
-  duration_ms: 0.268604
+  duration_ms: 0.274486
   type: 'test'
   ...
 # Subtest: extractDocxDocument reads deflated word/document.xml from the zip
 ok 21 - extractDocxDocument reads deflated word/document.xml from the zip
   ---
-  duration_ms: 62.842698
+  duration_ms: 55.286051
   type: 'test'
   ...
 # Subtest: extractPptxDocument orders slides numerically and counts them
 ok 22 - extractPptxDocument orders slides numerically and counts them
   ---
-  duration_ms: 1.00423
+  duration_ms: 0.955816
   type: 'test'
   ...
 # Subtest: listZipEntries rejects non-zip payloads
 ok 23 - listZipEntries rejects non-zip payloads
   ---
-  duration_ms: 0.499872
+  duration_ms: 0.524697
   type: 'test'
   ...
 # Subtest: homepage channel update directory matches the 80-item column layout
 ok 24 - homepage channel update directory matches the 80-item column layout
   ---
-  duration_ms: 1.347296
+  duration_ms: 0.940253
   type: 'test'
   ...
 # Subtest: normalizes exact, relative and undated source labels
 ok 25 - normalizes exact, relative and undated source labels
   ---
-  duration_ms: 1.387967
+  duration_ms: 0.984959
   type: 'test'
   ...
 # Subtest: mixed person time labels sort by their normalized calendar dates
 ok 26 - mixed person time labels sort by their normalized calendar dates
   ---
-  duration_ms: 2.289874
+  duration_ms: 0.888086
   type: 'test'
   ...
 # Subtest: all requested channels expose a non-empty update directory
 ok 27 - all requested channels expose a non-empty update directory
   ---
-  duration_ms: 170.043394
+  duration_ms: 107.396892
   type: 'test'
   ...
 # Subtest: channel updates are newest-first and link to original public sources
 ok 28 - channel updates are newest-first and link to original public sources
   ---
-  duration_ms: 98.76915
+  duration_ms: 67.759353
   type: 'test'
   ...
 # Subtest: person dates use one visible calendar format without treating ongoing pages as new
 ok 29 - person dates use one visible calendar format without treating ongoing pages as new
   ---
-  duration_ms: 6.446375
+  duration_ms: 4.36121
   type: 'test'
   ...
 # Subtest: channel directories deduplicate repeated original links
 ok 30 - channel directories deduplicate repeated original links
   ---
-  duration_ms: 90.089511
+  duration_ms: 62.987861
   type: 'test'
   ...
 # Subtest: filter options are exactly the visible green event labels
 ok 31 - filter options are exactly the visible green event labels
   ---
-  duration_ms: 90.557496
+  duration_ms: 68.125736
   type: 'test'
   ...
 # Subtest: event label options classify every channel and report accurate counts
 ok 32 - event label options classify every channel and report accurate counts
   ---
-  duration_ms: 106.245384
+  duration_ms: 67.977787
   type: 'test'
   ...
 # Subtest: event-filtered updates remain time ordered
 ok 33 - event-filtered updates remain time ordered
   ---
-  duration_ms: 165.377011
+  duration_ms: 103.371451
   type: 'test'
   ...
 # Subtest: each source contributes at most five headlines per day
 ok 34 - each source contributes at most five headlines per day
   ---
-  duration_ms: 12.498918
+  duration_ms: 12.99447
   type: 'test'
   ...
 # Subtest: search proxies and regulators are excluded from headlines
 ok 35 - search proxies and regulators are excluded from headlines
   ---
-  duration_ms: 1.115137
+  duration_ms: 1.028183
   type: 'test'
   ...
 # Subtest: headlines cap at the rolling limit sorted by freshest day first
 ok 36 - headlines cap at the rolling limit sorted by freshest day first
   ---
-  duration_ms: 9.596092
+  duration_ms: 7.565477
   type: 'test'
   ...
 # Subtest: undated or unlinked records never become headlines
 ok 37 - undated or unlinked records never become headlines
   ---
-  duration_ms: 0.324248
+  duration_ms: 0.260075
   type: 'test'
   ...
 # Subtest: live payload selection stays within contract
 ok 38 - live payload selection stays within contract
   ---
-  duration_ms: 44.074787
+  duration_ms: 37.693495
   type: 'test'
   ...
 # Subtest: homepage intelligence titles always open the original source
 ok 39 - homepage intelligence titles always open the original source
   ---
-  duration_ms: 1.174496
+  duration_ms: 1.225656
   type: 'test'
   ...
 # Subtest: chinese companies get qcc and jingdata entry links
 ok 40 - chinese companies get qcc and jingdata entry links
   ---
-  duration_ms: 1.572485
+  duration_ms: 1.033411
   type: 'test'
   ...
 # Subtest: overseas companies and empty names produce no registry links
 ok 41 - overseas companies and empty names produce no registry links
   ---
-  duration_ms: 0.256165
+  duration_ms: 0.162501
   type: 'test'
   ...
 # Subtest: company names are whitespace-normalized before building urls
 ok 42 - company names are whitespace-normalized before building urls
   ---
-  duration_ms: 0.248804
+  duration_ms: 0.181409
   type: 'test'
   ...
 # Subtest: person links require a chinese name
 ok 43 - person links require a chinese name
   ---
-  duration_ms: 0.321123
+  duration_ms: 0.260727
   type: 'test'
   ...
 # Subtest: hanghangcha research link is a bing public-index search
 ok 44 - hanghangcha research link is a bing public-index search
   ---
-  duration_ms: 0.389476
+  duration_ms: 0.252634
   type: 'test'
   ...
 # Subtest: hanghangcha entry link points at the platform itself
 ok 45 - hanghangcha entry link points at the platform itself
   ---
-  duration_ms: 0.202905
+  duration_ms: 0.126537
   type: 'test'
   ...
 # Subtest: favorite payload normalization keeps safe structured recommendation signals
 ok 46 - favorite payload normalization keeps safe structured recommendation signals
   ---
-  duration_ms: 2.422574
+  duration_ms: 2.496748
   type: 'test'
   ...
 # Subtest: intelligence favorites retain card metadata and direct source links
 ok 47 - intelligence favorites retain card metadata and direct source links
   ---
-  duration_ms: 0.389305
+  duration_ms: 0.34432
   type: 'test'
   ...
 # Subtest: favorite payload parser deduplicates ids and rejects invalid records
 ok 48 - favorite payload parser deduplicates ids and rejects invalid records
   ---
-  duration_ms: 0.430277
+  duration_ms: 0.386292
   type: 'test'
   ...
 # Subtest: favorite toggle persists and removes an item in browser storage
 ok 49 - favorite toggle persists and removes an item in browser storage
   ---
-  duration_ms: 0.751971
+  duration_ms: 0.67528
   type: 'test'
   ...
 # Subtest: canonicalHotnessKey removes tracking noise and fragments
 ok 50 - canonicalHotnessKey removes tracking noise and fragments
   ---
-  duration_ms: 1.594928
+  duration_ms: 1.501775
   type: 'test'
   ...
 # Subtest: canonicalHotnessKey unwraps the internal read route
 ok 51 - canonicalHotnessKey unwraps the internal read route
   ---
-  duration_ms: 0.349145
+  duration_ms: 0.3307
   type: 'test'
   ...
 # Subtest: hotness score gives share and favorite stronger weights than opens
 ok 52 - hotness score gives share and favorite stronger weights than opens
   ---
-  duration_ms: 1.055959
+  duration_ms: 1.013351
   type: 'test'
   ...
 # Subtest: parseHotnessItems validates counts and deduplicates canonical URLs
 ok 53 - parseHotnessItems validates counts and deduplicates canonical URLs
   ---
-  duration_ms: 1.158843
+  duration_ms: 1.101241
+  type: 'test'
+  ...
+# Subtest: institution identity normalization joins spacing and punctuation variants
+ok 54 - institution identity normalization joins spacing and punctuation variants
+  ---
+  duration_ms: 0.854606
+  type: 'test'
+  ...
+# Subtest: explicit institution metadata activates the matching directory institution
+ok 55 - explicit institution metadata activates the matching directory institution
+  ---
+  duration_ms: 6.44714
+  type: 'test'
+  ...
+# Subtest: portfolio company activity creates a relation without pretending it is a direct investment
+ok 56 - portfolio company activity creates a relation without pretending it is a direct investment
+  ---
+  duration_ms: 1.72136
+  type: 'test'
+  ...
+# Subtest: technology tracks do not absorb ranking-only institutions through broad technology labels
+ok 57 - technology tracks do not absorb ranking-only institutions through broad technology labels
+  ---
+  duration_ms: 4.292709
+  type: 'test'
+  ...
+# Subtest: venture-capital tracks activate institutions from matching audited ranking categories
+ok 58 - venture-capital tracks activate institutions from matching audited ranking categories
+  ---
+  duration_ms: 20.924726
+  type: 'test'
+  ...
+# Subtest: directory href opens a profile when available and a focused directory result otherwise
+ok 59 - directory href opens a profile when available and a focused directory result otherwise
+  ---
+  duration_ms: 0.2974
+  type: 'test'
+  ...
+# Subtest: recent direct official activity outranks stale media activity
+ok 60 - recent direct official activity outranks stale media activity
+  ---
+  duration_ms: 13.336245
+  type: 'test'
+  ...
+# Subtest: direct institution evidence outweighs portfolio-only company activity
+ok 61 - direct institution evidence outweighs portfolio-only company activity
+  ---
+  duration_ms: 7.809368
+  type: 'test'
+  ...
+# Subtest: duplicate crawler records in the same event cluster count once
+ok 62 - duplicate crawler records in the same event cluster count once
+  ---
+  duration_ms: 10.683395
+  type: 'test'
+  ...
+# Subtest: local attention only adjusts the crawler ranking instead of replacing it
+ok 63 - local attention only adjusts the crawler ranking instead of replacing it
+  ---
+  duration_ms: 9.307718
   type: 'test'
   ...
 # Subtest: professional institution directory keeps complete Qingke main lists
-ok 54 - professional institution directory keeps complete Qingke main lists
+ok 64 - professional institution directory keeps complete Qingke main lists
   ---
-  duration_ms: 1.086855
+  duration_ms: 1.054762
   type: 'test'
   ...
 # Subtest: ordered rankings retain exact published positions
-ok 55 - ordered rankings retain exact published positions
+ok 65 - ordered rankings retain exact published positions
   ---
-  duration_ms: 0.254373
+  duration_ms: 0.273736
   type: 'test'
   ...
 # Subtest: cross-list institutions are merged and linked to detailed profiles
-ok 56 - cross-list institutions are merged and linked to detailed profiles
+ok 66 - cross-list institutions are merged and linked to detailed profiles
   ---
-  duration_ms: 0.985683
+  duration_ms: 1.006611
   type: 'test'
   ...
 # Subtest: source metadata distinguishes names from category-only cross checks
-ok 57 - source metadata distinguishes names from category-only cross checks
+ok 67 - source metadata distinguishes names from category-only cross checks
   ---
-  duration_ms: 0.217027
+  duration_ms: 0.240346
   type: 'test'
   ...
 # Subtest: normalizes A-share ticker variants
-ok 58 - normalizes A-share ticker variants
+ok 68 - normalizes A-share ticker variants
   ---
-  duration_ms: 1.708991
+  duration_ms: 2.176374
   type: 'test'
   ...
 # Subtest: normalizes Hong Kong ticker variants to five digits
-ok 59 - normalizes Hong Kong ticker variants to five digits
+ok 69 - normalizes Hong Kong ticker variants to five digits
   ---
-  duration_ms: 0.253622
+  duration_ms: 0.325833
   type: 'test'
   ...
 # Subtest: normalizes US tickers and preserves catalog routes
-ok 60 - normalizes US tickers and preserves catalog routes
+ok 70 - normalizes US tickers and preserves catalog routes
   ---
-  duration_ms: 0.329395
+  duration_ms: 0.450768
   type: 'test'
   ...
 # Subtest: cambricon renders numeric market cap and normalized region
-ok 61 - cambricon renders numeric market cap and normalized region
+ok 71 - cambricon renders numeric market cap and normalized region
   ---
-  duration_ms: 1.228548
+  duration_ms: 1.164765
   type: 'test'
   ...
 # Subtest: navigation labels cannot replace CATL industry or company introduction
-ok 62 - navigation labels cannot replace CATL industry or company introduction
+ok 72 - navigation labels cannot replace CATL industry or company introduction
   ---
-  duration_ms: 0.303626
+  duration_ms: 0.261938
   type: 'test'
   ...
 # Subtest: all enabled snapshot profiles have a display region and readable market cap when available
-ok 63 - all enabled snapshot profiles have a display region and readable market cap when available
+ok 73 - all enabled snapshot profiles have a display region and readable market cap when available
   ---
-  duration_ms: 0.334934
+  duration_ms: 0.326814
   type: 'test'
   ...
 # Subtest: quote and news normalization keeps optional double-source fields safe
-ok 64 - quote and news normalization keeps optional double-source fields safe
+ok 74 - quote and news normalization keeps optional double-source fields safe
   ---
-  duration_ms: 0.758721
+  duration_ms: 0.73585
   type: 'test'
   ...
 # Subtest: all real tracked people appear in the people research catalog
-ok 65 - all real tracked people appear in the people research catalog
+ok 75 - all real tracked people appear in the people research catalog
   ---
-  duration_ms: 1.223771
+  duration_ms: 1.264894
   type: 'test'
   ...
 # Subtest: organization accounts are excluded from person pages
-ok 66 - organization accounts are excluded from person pages
+ok 76 - organization accounts are excluded from person pages
   ---
-  duration_ms: 0.277076
+  duration_ms: 0.280586
   type: 'test'
   ...
 # Subtest: generated people expose the unified research schema
-ok 67 - generated people expose the unified research schema
+ok 77 - generated people expose the unified research schema
   ---
-  duration_ms: 0.207903
+  duration_ms: 0.207408
   type: 'test'
   ...
 # Subtest: sourced papers and talks populate works and speeches
-ok 68 - sourced papers and talks populate works and speeches
+ok 78 - sourced papers and talks populate works and speeches
   ---
-  duration_ms: 0.217828
+  duration_ms: 0.250421
   type: 'test'
   ...
 # Subtest: curated investment people remain available
-ok 69 - curated investment people remain available
+ok 79 - curated investment people remain available
   ---
-  duration_ms: 0.317768
+  duration_ms: 0.29639
   type: 'test'
   ...
 # Subtest: professional venture getter is safe before and after the first source refresh
-ok 70 - professional venture getter is safe before and after the first source refresh
+ok 80 - professional venture getter is safe before and after the first source refresh
   ---
-  duration_ms: 5.51203
+  duration_ms: 10.023873
   type: 'test'
   ...
 # Subtest: research report snapshot exposes valid PDF reader records
-ok 71 - research report snapshot exposes valid PDF reader records
+ok 81 - research report snapshot exposes valid PDF reader records
   ---
-  duration_ms: 1.056679
+  duration_ms: 0.99891
   type: 'test'
   ...
 # Subtest: company reports outrank sector-only matches
-ok 72 - company reports outrank sector-only matches
+ok 82 - company reports outrank sector-only matches
   ---
-  duration_ms: 0.450036
+  duration_ms: 0.487612
   type: 'test'
   ...
 # Subtest: arbitrary empty tracks receive a complete generated profile
-ok 73 - arbitrary empty tracks receive a complete generated profile
+ok 83 - arbitrary empty tracks receive a complete generated profile
   ---
-  duration_ms: 2.568984
+  duration_ms: 2.534715
   type: 'test'
   ...
 # Subtest: generated profiles incorporate configured terms and observed evidence
-ok 74 - generated profiles incorporate configured terms and observed evidence
+ok 84 - generated profiles incorporate configured terms and observed evidence
   ---
-  duration_ms: 0.987525
+  duration_ms: 0.932962
   type: 'test'
   ...
 # Subtest: curated definitions enhance rather than gate arbitrary track generation
-ok 75 - curated definitions enhance rather than gate arbitrary track generation
+ok 85 - curated definitions enhance rather than gate arbitrary track generation
   ---
-  duration_ms: 0.622557
+  duration_ms: 0.642442
   type: 'test'
   ...
 # Subtest: formats the last successful publication to Taipei minutes
-ok 76 - formats the last successful publication to Taipei minutes
+ok 86 - formats the last successful publication to Taipei minutes
   ---
-  duration_ms: 15.301963
+  duration_ms: 17.39863
   type: 'test'
   ...
 # Subtest: a completed current-day refresh is not marked stale when latest news is older
-ok 77 - a completed current-day refresh is not marked stale when latest news is older
+ok 87 - a completed current-day refresh is not marked stale when latest news is older
   ---
-  duration_ms: 0.705401
+  duration_ms: 0.662602
   type: 'test'
   ...
 # Subtest: same-day published intelligence keeps the stronger updated label
-ok 78 - same-day published intelligence keeps the stronger updated label
+ok 88 - same-day published intelligence keeps the stronger updated label
   ---
-  duration_ms: 0.437308
+  duration_ms: 0.43931
   type: 'test'
   ...
 # Subtest: an older uncompleted snapshot is marked stale
-ok 79 - an older uncompleted snapshot is marked stale
+ok 89 - an older uncompleted snapshot is marked stale
   ---
-  duration_ms: 0.411399
+  duration_ms: 0.406102
   type: 'test'
   ...
 # Subtest: quality failure takes precedence over publication dates
-ok 80 - quality failure takes precedence over publication dates
+ok 90 - quality failure takes precedence over publication dates
   ---
-  duration_ms: 0.446591
+  duration_ms: 0.4321
   type: 'test'
   ...
 # Subtest: normalizes source hosts
-ok 81 - normalizes source hosts
+ok 91 - normalizes source hosts
   ---
-  duration_ms: 1.212474
+  duration_ms: 1.284593
   type: 'test'
   ...
 # Subtest: collapses Yahoo regional and editorial sites into one brand
-ok 82 - collapses Yahoo regional and editorial sites into one brand
+ok 92 - collapses Yahoo regional and editorial sites into one brand
   ---
-  duration_ms: 1.233425
+  duration_ms: 1.190393
   type: 'test'
   ...
 # Subtest: collapses ordinary subdomains to the registrable brand domain
-ok 83 - collapses ordinary subdomains to the registrable brand domain
+ok 93 - collapses ordinary subdomains to the registrable brand domain
   ---
-  duration_ms: 0.331699
+  duration_ms: 0.312483
+  type: 'test'
+  ...
+# Subtest: STAR investor names normalize punctuation and legal-form spacing
+ok 94 - STAR investor names normalize punctuation and legal-form spacing
+  ---
+  duration_ms: 1.00598
+  type: 'test'
+  ...
+# Subtest: known prospectus investor resolves to the existing institution directory
+ok 95 - known prospectus investor resolves to the existing institution directory
+  ---
+  duration_ms: 0.282148
+  type: 'test'
+  ...
+# Subtest: unmatched prospectus investor opens a focused institution-directory search
+ok 96 - unmatched prospectus investor opens a focused institution-directory search
+  ---
+  duration_ms: 0.302899
   type: 'test'
   ...
 # Subtest: known AI companies cannot be recommended to commercial space even when an article is misclassified
-ok 84 - known AI companies cannot be recommended to commercial space even when an article is misclassified
+ok 97 - known AI companies cannot be recommended to commercial space even when an article is misclassified
   ---
-  duration_ms: 4.093847
+  duration_ms: 3.912615
   type: 'test'
   ...
 # Subtest: known commercial-space companies remain eligible in commercial space
-ok 85 - known commercial-space companies remain eligible in commercial space
+ok 98 - known commercial-space companies remain eligible in commercial space
   ---
-  duration_ms: 1.620717
+  duration_ms: 1.493562
   type: 'test'
   ...
 # Subtest: directory sync covers every non-tombstoned institution
-ok 86 - directory sync covers every non-tombstoned institution
+ok 99 - directory sync covers every non-tombstoned institution
   ---
-  duration_ms: 5.975337
+  duration_ms: 6.304839
   type: 'test'
   ...
 # Subtest: directory sync never restores an owner-deleted institution
-ok 87 - directory sync never restores an owner-deleted institution
+ok 100 - directory sync never restores an owner-deleted institution
   ---
-  duration_ms: 126.104566
+  duration_ms: 84.898159
   type: 'test'
   ...
 # Subtest: directory sync still rejects missing eligible coverage
-ok 88 - directory sync still rejects missing eligible coverage
+ok 101 - directory sync still rejects missing eligible coverage
   ---
-  duration_ms: 119.316287
+  duration_ms: 110.633702
   type: 'test'
   ...
 # Subtest: listed recommendations prioritize active companies in the selected sector
-ok 89 - listed recommendations prioritize active companies in the selected sector
+ok 102 - listed recommendations prioritize active companies in the selected sector
   ---
-  duration_ms: 2.13455
+  duration_ms: 1.994674
   type: 'test'
   ...
 # Subtest: already followed market and ticker pairs are removed
-ok 90 - already followed market and ticker pairs are removed
+ok 103 - already followed market and ticker pairs are removed
   ---
-  duration_ms: 0.515765
+  duration_ms: 0.51291
   type: 'test'
   ...
 # Subtest: ordinary technical concepts are never displayed as named entities
-ok 91 - ordinary technical concepts are never displayed as named entities
+ok 104 - ordinary technical concepts are never displayed as named entities
   ---
-  duration_ms: 1.318694
+  duration_ms: 1.291543
   type: 'test'
   ...
 # Subtest: unseen named technical entities remain eligible
-ok 92 - unseen named technical entities remain eligible
+ok 105 - unseen named technical entities remain eligible
   ---
-  duration_ms: 0.681735
+  duration_ms: 0.650794
   type: 'test'
   ...
 # Subtest: configured compound seed terms remain eligible
-ok 93 - configured compound seed terms remain eligible
+ok 106 - configured compound seed terms remain eligible
   ---
-  duration_ms: 0.572711
+  duration_ms: 0.619538
   type: 'test'
   ...
 # Subtest: tracking recommendations derive useful additions from sector intelligence
-ok 94 - tracking recommendations derive useful additions from sector intelligence
+ok 107 - tracking recommendations derive useful additions from sector intelligence
   ---
-  duration_ms: 27.518647
+  duration_ms: 20.243233
   type: 'test'
   ...
 # Subtest: unseen technical entities emerge from independent multi-source evidence
-ok 95 - unseen technical entities emerge from independent multi-source evidence
+ok 108 - unseen technical entities emerge from independent multi-source evidence
   ---
-  duration_ms: 3.199172
+  duration_ms: 2.996338
   type: 'test'
   ...
 # Subtest: country codes, roles and isolated acronyms are never recommended as entities
-ok 96 - country codes, roles and isolated acronyms are never recommended as entities
+ok 109 - country codes, roles and isolated acronyms are never recommended as entities
   ---
-  duration_ms: 2.805309
+  duration_ms: 3.966124
   type: 'test'
   ...
 # Subtest: common technical nouns are hidden while named entities remain visible
-ok 97 - common technical nouns are hidden while named entities remain visible
+ok 110 - common technical nouns are hidden while named entities remain visible
   ---
-  duration_ms: 0.940294
+  duration_ms: 0.844771
   type: 'test'
   ...
 # Subtest: existing source hosts are removed from recommendations
-ok 98 - existing source hosts are removed from recommendations
+ok 111 - existing source hosts are removed from recommendations
   ---
-  duration_ms: 4.855893
+  duration_ms: 2.348959
   type: 'test'
   ...
 # Subtest: favorite content receives top keyword and source recommendation weight
-ok 99 - favorite content receives top keyword and source recommendation weight
+ok 112 - favorite content receives top keyword and source recommendation weight
   ---
-  duration_ms: 5.197777
+  duration_ms: 4.397784
   type: 'test'
   ...
 # Subtest: favorite signals remain isolated to their matching sector
-ok 100 - favorite signals remain isolated to their matching sector
+ok 113 - favorite signals remain isolated to their matching sector
   ---
-  duration_ms: 0.654574
+  duration_ms: 0.666808
   type: 'test'
   ...
 # Subtest: known AI entities do not leak into renewable-energy recommendations
-ok 101 - known AI entities do not leak into renewable-energy recommendations
+ok 114 - known AI entities do not leak into renewable-energy recommendations
   ---
-  duration_ms: 18.87626
+  duration_ms: 16.097102
   type: 'test'
   ...
 # Subtest: sector-owned AI entities remain available in the AI track
-ok 102 - sector-owned AI entities remain available in the AI track
+ok 115 - sector-owned AI entities remain available in the AI track
   ---
-  duration_ms: 2.006538
+  duration_ms: 1.928676
   type: 'test'
   ...
 # Subtest: track aliases are derived for bilingual and punctuation-rich names
-ok 103 - track aliases are derived for bilingual and punctuation-rich names
+ok 116 - track aliases are derived for bilingual and punctuation-rich names
   ---
-  duration_ms: 2.468933
+  duration_ms: 1.905152
   type: 'test'
   ...
 # Subtest: identity terms include arbitrary track names and configured keywords
-ok 104 - identity terms include arbitrary track names and configured keywords
+ok 117 - identity terms include arbitrary track names and configured keywords
   ---
-  duration_ms: 0.399951
+  duration_ms: 0.357941
   type: 'test'
   ...
 # Subtest: equivalent track names are blocking taxonomy collisions
-ok 105 - equivalent track names are blocking taxonomy collisions
+ok 118 - equivalent track names are blocking taxonomy collisions
   ---
-  duration_ms: 11.434346
+  duration_ms: 8.034501
   type: 'test'
   ...
 # Subtest: shared companies and keywords are warnings rather than hard failures
-ok 106 - shared companies and keywords are warnings rather than hard failures
+ok 119 - shared companies and keywords are warnings rather than hard failures
   ---
-  duration_ms: 0.581284
+  duration_ms: 0.397238
   type: 'test'
   ...
 # Subtest: shared keywords do not own event matching for multiple sectors
-ok 107 - shared keywords do not own event matching for multiple sectors
+ok 120 - shared keywords do not own event matching for multiple sectors
   ---
-  duration_ms: 0.577178
+  duration_ms: 0.460082
   type: 'test'
   ...
 # Subtest: only sector-unique actors expand standalone crawler discovery
-ok 108 - only sector-unique actors expand standalone crawler discovery
+ok 121 - only sector-unique actors expand standalone crawler discovery
   ---
-  duration_ms: 0.499091
+  duration_ms: 0.368366
   type: 'test'
   ...
 # Subtest: normalizes and deduplicates listed companies before GitHub persistence
-ok 109 - normalizes and deduplicates listed companies before GitHub persistence
+ok 122 - normalizes and deduplicates listed companies before GitHub persistence
   ---
-  duration_ms: 1.405934
+  duration_ms: 1.96442
   type: 'test'
   ...
 # Subtest: retains enabled flags and catalog slugs while normalizing tickers
-ok 110 - retains enabled flags and catalog slugs while normalizing tickers
+ok 123 - retains enabled flags and catalog slugs while normalizing tickers
   ---
-  duration_ms: 0.227802
+  duration_ms: 0.265113
   type: 'test'
   ...
 # Subtest: venture profile snapshot only contains catalog entities
-ok 111 - venture profile snapshot only contains catalog entities
+ok 124 - venture profile snapshot only contains catalog entities
   ---
-  duration_ms: 1.025823
+  duration_ms: 0.998259
   type: 'test'
   ...
 # Subtest: venture profile getters are safe before and after the first crawl
-ok 112 - venture profile getters are safe before and after the first crawl
+ok 125 - venture profile getters are safe before and after the first crawl
   ---
-  duration_ms: 0.359201
+  duration_ms: 0.412361
   type: 'test'
   ...
 # Subtest: venture profile sources are traceable public URLs
-ok 113 - venture profile sources are traceable public URLs
+ok 126 - venture profile sources are traceable public URLs
   ---
-  duration_ms: 0.728335
+  duration_ms: 0.671395
   type: 'test'
   ...
 # Subtest: runtime sanitation removes navigation and editorial labels
-ok 114 - runtime sanitation removes navigation and editorial labels
+ok 127 - runtime sanitation removes navigation and editorial labels
   ---
-  duration_ms: 0.974495
+  duration_ms: 0.93176
   type: 'test'
   ...
 # Subtest: current snapshot is clean at the frontend boundary
-ok 115 - current snapshot is clean at the frontend boundary
+ok 128 - current snapshot is clean at the frontend boundary
   ---
-  duration_ms: 0.496346
+  duration_ms: 0.52661
   type: 'test'
   ...
 # Subtest: research model v2 exposes the same structured fields for every entity
-ok 116 - research model v2 exposes the same structured fields for every entity
+ok 129 - research model v2 exposes the same structured fields for every entity
   ---
-  duration_ms: 1.401218
+  duration_ms: 0.525568
   type: 'test'
   ...
 # Subtest: venture profile runtime statuses use unique entity keys
-ok 117 - venture profile runtime statuses use unique entity keys
+ok 130 - venture profile runtime statuses use unique entity keys
   ---
-  duration_ms: 0.273251
+  duration_ms: 0.306134
   type: 'test'
   ...
 # Subtest: venture profile quality gate has internally consistent checks
-ok 118 - venture profile quality gate has internally consistent checks
+ok 131 - venture profile quality gate has internally consistent checks
   ---
-  duration_ms: 0.124878
+  duration_ms: 0.138045
   type: 'test'
   ...
-1..118
-# tests 118
+1..131
+# tests 131
 # suites 0
-# pass 118
+# pass 131
 # fail 0
 # cancelled 0
 # skipped 0
 # todo 0
-# duration_ms 3744.783492
+# duration_ms 10526.63302
