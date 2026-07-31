@@ -1,12 +1,12 @@
 {
-  "snapshotGeneratedAt": "2026-07-31T11:44:04+00:00",
+  "snapshotGeneratedAt": "2026-07-31T14:32:10+00:00",
   "enabledTrackCount": 13,
   "generatedSourceCount": 34,
   "executedSourceCount": 34,
   "tracksWithoutExecutedSource": [],
   "originalUrlContractPassed": true,
   "wechatIngestion": {
-    "generatedAt": "2026-07-31T11:44:04+00:00",
+    "generatedAt": "2026-07-31T14:32:10+00:00",
     "configuredSources": 34,
     "successfulSources": 11,
     "acceptedArticles": 40,
@@ -14,8 +14,8 @@
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
     "retainedSources": 23,
-    "mentionedCompanyLinks": 56,
-    "mentionedPeopleLinks": 90
+    "mentionedCompanyLinks": 58,
+    "mentionedPeopleLinks": 98
   },
   "tracks": [
     {
@@ -66,7 +66,7 @@
           "status": "partial",
           "scanned": 26,
           "accepted": 6,
-          "failed": 3,
+          "failed": 2,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -99,10 +99,10 @@
         {
           "id": "user-track-wechat-deeptechchina-ai",
           "name": "DeepTech深科技",
-          "status": "ok",
+          "status": "partial",
           "scanned": 17,
           "accepted": 3,
-          "failed": 0,
+          "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -158,7 +158,7 @@
           "status": "partial",
           "scanned": 26,
           "accepted": 4,
-          "failed": 2,
+          "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -179,10 +179,10 @@
         {
           "id": "user-track-wechat-aitechuang-robotics",
           "name": "AI科技评论",
-          "status": "ok",
+          "status": "partial",
           "scanned": 19,
           "accepted": 2,
-          "failed": 0,
+          "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
@@ -384,10 +384,10 @@
       "genericSourcePresent": true,
       "sourceCount": 2,
       "statusCount": 2,
-      "acceptedThisRun": 1,
-      "retainedSourceCount": 1,
-      "snapshotArticleCount": 1,
-      "fullTextArticles": 1,
+      "acceptedThisRun": 0,
+      "retainedSourceCount": 2,
+      "snapshotArticleCount": 0,
+      "fullTextArticles": 0,
       "indexOnlyArticles": 0,
       "providers": {
         "sogou-weixin+fallback": 1,
@@ -411,14 +411,16 @@
         {
           "id": "user-track-wechat-deeptechchina-biotech",
           "name": "DeepTech深科技",
-          "status": "ok",
+          "status": "error",
           "scanned": 16,
-          "accepted": 1,
-          "failed": 0,
+          "accepted": 0,
+          "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
-          "sogouResolved": 0
+          "sogouResolved": 0,
+          "retainedPrevious": true,
+          "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
         }
       ]
     },
@@ -428,10 +430,10 @@
       "genericSourcePresent": true,
       "sourceCount": 2,
       "statusCount": 2,
-      "acceptedThisRun": 0,
-      "retainedSourceCount": 2,
-      "snapshotArticleCount": 0,
-      "fullTextArticles": 0,
+      "acceptedThisRun": 1,
+      "retainedSourceCount": 1,
+      "snapshotArticleCount": 1,
+      "fullTextArticles": 1,
       "indexOnlyArticles": 0,
       "providers": {
         "sogou-weixin+fallback": 1,
@@ -455,16 +457,14 @@
         {
           "id": "user-track-wechat-deeptechchina-quantum",
           "name": "DeepTech深科技",
-          "status": "error",
+          "status": "partial",
           "scanned": 15,
-          "accepted": 0,
+          "accepted": 1,
           "failed": 1,
           "platform": "微信",
           "discoveryProvider": "bing-or-public-index",
           "sogouScanned": 0,
-          "sogouResolved": 0,
-          "retainedPrevious": true,
-          "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
+          "sogouResolved": 0
         }
       ]
     },
