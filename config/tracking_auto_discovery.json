@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-31T14:45:28+00:00",
+  "updatedAt": "2026-08-01T11:03:02+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-07-31T14:44:04+00:00"
+      "lastExpandedAt": "2026-08-01T11:01:55+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-07-31T14:44:23+00:00"
+      "lastExpandedAt": "2026-08-01T11:02:14+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-07-31T14:44:39+00:00"
+      "lastExpandedAt": "2026-08-01T11:02:30+00:00"
     },
     "energy": {
-      "lastExpandedAt": "2026-07-31T14:45:10+00:00"
+      "lastExpandedAt": "2026-08-01T11:03:02+00:00"
     },
     "biotech": {
       "lastExpandedAt": "2026-07-31T14:45:28+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-07-31T14:27:29+00:00"
+      "lastExpandedAt": "2026-08-01T10:59:18+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-07-31T14:37:03+00:00"
+      "lastExpandedAt": "2026-08-01T10:59:33+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-07-31T14:37:17+00:00"
+      "lastExpandedAt": "2026-08-01T10:59:49+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-07-31T14:37:31+00:00"
+      "lastExpandedAt": "2026-08-01T11:00:06+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-07-31T14:37:45+00:00"
+      "lastExpandedAt": "2026-08-01T11:00:24+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-07-31T14:40:06+00:00"
+      "lastExpandedAt": "2026-08-01T11:00:51+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-07-31T14:42:03+00:00"
+      "lastExpandedAt": "2026-08-01T11:01:11+00:00"
     },
     "track-1p8ob4k": {
-      "lastExpandedAt": "2026-07-31T14:43:15+00:00"
+      "lastExpandedAt": "2026-08-01T11:01:28+00:00"
     }
   },
   "added": [
@@ -2135,6 +2135,44 @@
       "kind": "keywords",
       "value": "晶泰科技发布",
       "addedAt": "2026-07-31T14:45:28+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "Google Earth",
+      "addedAt": "2026-08-01T10:59:33+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://tech.slashdot.org/",
+      "addedAt": "2026-08-01T11:01:11+00:00",
+      "evidence": [
+        "wikidata-official-site"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "FCC",
+      "addedAt": "2026-08-01T11:02:14+00:00",
+      "evidence": [
+        "corpus-term",
+        "news-confirmed",
+        "news-term"
+      ]
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "Seedance",
+      "addedAt": "2026-08-01T11:02:30+00:00",
       "evidence": [
         "corpus-term"
       ]
