@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-07-31T23:13:08+00:00",
-  "articleCount": 1188,
+  "generatedAt": "2026-08-01T00:29:39+00:00",
+  "articleCount": 1200,
   "articles": [
     {
       "id": "official-user-东方财富-a1fa270d102d17b3",
@@ -844,29 +844,6 @@
       "qualityStatus": "低可信",
       "trackSlugs": [
         "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-minimax-9fd2209a2097c484",
-      "sourceId": "official-minimax",
-      "title": "MiniMax H3：打破任务和模态的边界 - MiniMax Research",
-      "summary": "今天，我们正式发布 MiniMax H3。这是一款通用的全模态生成模型，支持对文本、图像、视频、声音组成的多模态上下文的统一理解能力、能够输出具备原生双声道的音视频，最高可支持 15s 2K 分辨率。",
-      "type": "技术突破",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-31",
-      "importance": 85,
-      "source": {
-        "name": "MiniMax",
-        "url": "https://www.minimaxi.com/blog/minimax-h3",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "biotech",
         "track-1ccjq49"
       ]
     },
@@ -31046,6 +31023,46 @@
       ]
     },
     {
+      "id": "user-track-wechat-aitopics-ai-686c95754f414c83",
+      "sourceId": "user-track-wechat-aitopics-ai",
+      "title": "Claude Agent突然大更新！狂塞500个技能，网友直呼疯狂",
+      "summary": "新智元报道 过去45天，Anthropic几乎没停过手。 Fable 5和Mythos 5同时落地，Sonnet 5降价抢市场，Claude Code几乎日更。 昨天Cowork刚迭代完，今天Anthropic又在托管智能体平台（CMA）上一口气推出了六项更新： 技能上限从20拉到500： 一个会话装下整座企业知识库 思考力度五档调速 ：简单路由省token，深度推理拉满 种子会话一步创建： 直接带50条初始事件，冷启动归零 子agent实时流下探到线程级： 每个子agent跑到哪、想到哪，实时可见 7种新webhook覆盖环境与记忆存储全生命周期： 轮询可以退环境了 agent更新版本字段变可选： 单流程省掉版本管理开销 一个会话能挂500个技能、跑一整座企业知识库，Anthropic这是要给agent装操作系统啊！ 技能上限暴涨到500 一个会话装下整个业务部门 CMA的技能（Skills）是给agent注入专业指令的知识包，之前上限只有20个。 然而，一个金融客服agent，光覆盖开户、KYC、反洗钱、投诉处理、合规免责、多语言切换就七八个了。再加上监管差异和AB测试版本，直接撞",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-23",
+      "importance": 76,
+      "source": {
+        "name": "新智元",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e42e3c659cbf500bbb23161900f12285eb6207346ced57652e7be6617d3d1eb040ca2fe8d&idx=2&mid=2652714514&sn=821d99b44f0440868bc13b3e16dbd9da",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "ASI启示录"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "Google"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "Agent",
+        "AI agent",
+        "Claude",
+        "ChatGPT",
+        "API",
+        "Claude Agent",
+        "能力"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "official-weride-3de1ac9a4a12973f",
       "sourceId": "official-weride",
       "title": "WeRide to Report Second Quarter and First Half 2026 Financial Results on Wednesday, August 12, 2026 | WeRide Inc.",
@@ -31294,6 +31311,117 @@
       ]
     },
     {
+      "id": "user-track-wechat-jiqizhixin-robotics-ea66672861053092",
+      "sourceId": "user-track-wechat-jiqizhixin-robotics",
+      "title": "WAIC现场，这家公司让一群不同的机器人共用一个大脑",
+      "summary": "编辑｜+0 热热热热热！今年 WAIC 现场，大家对 AI 的热情，像上海的气温一样持续攀升。 去年逛 WAIC，机器人就已经很忙了。它们在展馆里写书法、舞龙、击鼓、打拳、踢球，也会调酒、按摩、拆快递、叠衣服，或是从货架上取下指定商品。 到了今年，机器人又解锁了一批新节目：组乐队、变魔术， 在擂台中上演双机综合格斗， 在迷你球场上争夺「WAIC 杯」。另外，一张张仿生面孔能够眨眼、微笑、转头，还能与观众实时对话——走上一圈，甚至还能和「秦始皇」打个照面。 逛完整个会场，可以看到，不同的机器人产品也正在沿着各自的方向加速生长：有的继续挑战奔跑、跳跃、格斗等高难度动作，不断抬高本体性能的上限；有的通过外形、情绪反馈和长期互动，寻找进入家庭的可能；还有更多机器人走向产线、仓库和商店，接受速度、精度、稳定性与连续作业能力的真实检验。 这也让今年的 WAIC 呈现出一个明显的变化：大家更关注机器人究竟能解决什么问题。对消费级产品来说，可能是足够有趣，让人愿意把它带回家；对产业机器人来说，则要足够有用，能够适应复杂环境，把任务稳定、高效、持续地完成。 梅卡曼德展台上的机器人们也忙得热火朝天，现场人",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e604ecb3918dfa72d2239c1ab961bf7c0519350541dff4f7d3190b081b03ea8d5b50d99705&idx=1&mid=2651046034&sn=662a7f71bb742a13ab9dbb7e817ce257",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注具身智能"
+      ],
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "人形机器人",
+        "灵巧手",
+        "WAIC",
+        "上海",
+        "汽车"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-ai-6741096badf52a95",
+      "sourceId": "user-track-wechat-aitechuang-ai",
+      "title": "现场直击：高昂真机成本锁死具身进化，Google 科学家用视频世界模型破局｜RSS 2026",
+      "summary": "Sherry Yang 独家解密 World Gym：两张 A100 跑通云端演练，让机器人从失败中自我恢复 作者丨 张 璐 编辑丨 齐铖湧 在机器人技术狂飙突进的今天，具身智能领域正面临着一个行业性的 核心困境 ： 我们已经拥有了高容量的深度神经网络，但 现实世界中高昂的交互与试错成本，成为了阻碍机器人通往AGI的最大瓶颈 。 在虚拟世界里，游戏和代码的执行成本几乎为零，因此我们见证了 AlphaGo 的奇迹和大语言模型在编程大赛中夺冠。但在物理世界中，机器人每一次真机试错，都伴随着昂贵的时间成本、设备损耗与安全隐患。 如果无法将这种高交互成本降下来，机器人就无法像大模型那样利用海量数据疯狂自我进化。 在机器人顶级学术会议 RSS 的现场，来自 Google 实验室和纽约大学（NYU）的助理教授 Sherry Yang 给出了答案。 她的演讲题目是： 《在世界模型中评估与提升物理代理》（Evaluating and Improving Physical Agents in a World Model） ，在演讲中，她提出了一个极具颠覆性的范式： 直接利用可控的视频生成模型来作为真实世",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Google",
+      "publishedAt": "2026-07-22",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2005a7eca9132526fc5582339569abe08b11ea371b87c2557471b64e0648996c3bb0db2c&idx=2&mid=2247739798&sn=d226ef640293985f9af357969f53032c",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "张璐"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "Google",
+        "OpenAI"
+      ],
+      "mentionedPeople": [
+        "李飞飞",
+        "Sherry Yang",
+        "World Gym",
+        "的助理"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Agents",
+        "ChatGPT",
+        "强化学习",
+        "能力",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitopics-robotics-bc3352dc463c4d88",
+      "sourceId": "user-track-wechat-aitopics-robotics",
+      "title": "5.83倍加速！PolicyTrim：让VLA机器人少走弯路、更快完成任务",
+      "summary": "新智元报道 【新智元导读】 VLA模型已经会做任务，但真实机器人还是慢！PolicyTrim是一种优化VLA机器人执行效率的方法，无需重新训练。它通过扩展可靠动作序列并减少冗余步骤，帮助机器人更直接完成任务，提升整体速度。 Vision-Language-Action（VLA）模型把视觉观测、语言指令和机器人动作统一到一个策略模型中，使机器人能够根据自然语言完成复杂操作任务。 从OpenVLA、OpenVLA-OFT到π0.5、GR00T，这类模型正在成为具身智能的重要技术路线。 但当VLA模型真正部署到机器人上时，一个关键瓶颈会立刻显现：机器人完成任务的总时间，不只取决于每次推理有多快，也取决于策略到底需要执行多少次推理、多少个真实物理动作。 在同一任务的多次rollout中，VLA模型的执行步数存在显著波动，说明更短、更直接的成功路径是可达的，但当前策略往往只能偶然找到。 动作chunk尾部不可靠：模型一次预测多个动作，但越靠后的动作越容易累积误差，系统不得不频繁重新规划，强行拉长执行长度会降低成功率并增加物理步数。 物理动作冗余严重： 即便任务最终成功，轨迹里也可能包含大量纠错、",
+      "type": "政策",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-21",
+      "importance": 86,
+      "source": {
+        "name": "新智元",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e4067c659c9717c165563ef7e8363c4d8b786e5a781ccefc86f3fb30c645d8b16c89efce2&idx=3&mid=2652714134&sn=4dd48803a6ab72a54035333ccf095d84",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "新智元"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "大学雷印杰"
+      ],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "机器人",
+        "VLA",
+        "强化学习"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "official-catl-0c3a1e9ca68ead8a",
       "sourceId": "official-catl",
       "title": "CATL and Solarpro Sign 2 GWh Sodium-ion Battery Storage Agreement for Eastern Europe",
@@ -31407,6 +31535,183 @@
         "space",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-ai-c0d45e1e53039127",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "视觉推理「囫囵吞枣」靠不住！ProLaViT教会多模态大模型在隐空间里「步步为营」",
+      "summary": "在多模态大模型（MLLM）时代，让模型看懂一张图早已不是难事，但要让它真正想清楚一张图，做多步的空间感知、几何分析与逻辑推断，却依然存在困难。 为了解决这种「看得到却想不对」的现象，研究界给推理链里塞进了视觉信息：一种是 显式生成 中间图像（如 Anole、ThinkMorph），效果理想，但算力开销高；另一种是 隐式隐空间推理 （如 Mirage、LVR），试图直接在特征空间里「一步」定位出目标区域，结果常常精度崩塌、注意力关注在无关的背景上。 针对这一挑战，腾讯内容服务部 BAC 提出了一个名为 ProLaViT（Progressive Latent Visual Thought） 的全新框架。它的核心思想是： 别急着下结论，先在连续隐空间里像人一样「步步推导」 。 即让模型遵循 「定位 → 聚焦 → 分离」（Locate → Focus → Isolate） 的因果链，逐步收紧视觉注意力，最终精准锁定目标。 该论文已被 ECCV 2026 接收。 论文地址：https://arxiv.org/abs/2607.02907 Github 地址：https://github.com/",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67bfeb391f2e8c58a8ee9fe85cb07cb9f1cdafa932134501721c8ae88061771ae8864b46a&idx=3&mid=2651045760&sn=8d88be3e9e18dc14794c474f98c34a1c",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "Latent Collapse",
+        "Distance-Weighted Diversity Loss"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "推理",
+        "多模态",
+        "能力"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-materials-c36ff5dda6fa17f4",
+      "sourceId": "user-track-wechat-deeptechchina-materials",
+      "title": "AI芯片散热迎来新希望？科学家首次造出理论中的金属材料，导热率是铜的3倍",
+      "summary": "AI 的发展正在不断推高全球对算力的需求，随着以英伟达（NVIDIA）为代表的高端 AI 加速器功耗快速攀升，数据中心的机架功率密度将被推至 300 千瓦级别。 巨大能耗之下，散热成为不容忽视的关键问题：芯片消耗的电能几乎全部以热的形式耗散出来。而在目前的芯片热传导路径中，铜是散热扩散层、热管、蒸汽腔和封装基板的主力材料，导热率约为 400 瓦每米每开尔文（W/m·K）。一个世纪以来，这就是金属导热的真实性能上限。 今年年初，加利福尼亚大学洛杉矶分校（UCLA）萨缪利工程学院的胡永杰教授团队在《科学》（ Science ）发文，他们造出一种曾经只存在于理论中的金属材料： θ 相氮化钽（θ-TaN）单晶。实验发现，该材料的室温导热率可达 1,100 W/m·K 左右，接近铜的三倍。 （来源： Science ） θ-TaN 的 70 年发现之旅 1950 年代，德国化学家布劳尔（Brauer）等人在高温高压条件下发现，TaN 存在一种 θ 相。近年来，学界预测，θ-TaN 具备远超常规金属的本征导热率，潜在值接近金刚石和砷化硼。但此前有关 θ-TaN 的研究都停留在理论层面，高质量 θ-",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新材料",
+      "company": "科技产业",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777d556b0005c40b203ffa3e71483f4ec78a6e8e6e9367ae025b772e41c0861042b52098fcd&idx=2&mid=2649801039&sn=c97f671dbd903789071de27a1e49d508",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "杨梦"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "院的胡永杰"
+      ],
+      "matchedTrackingTerms": [
+        "散热",
+        "材料"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitopics-ai-162df1f8e6738c19",
+      "sourceId": "user-track-wechat-aitopics-ai",
+      "title": "GPT-5.6-Sol在网络攻防能力上，超越了Mythos！开源模型也排好了",
+      "summary": "新智元报道 GPT-5.6-Sol 的攻防能力超越了 Claude Mythos 5！ 英国 AI 安全研究所（AISI）7 月 17 日发布了一份评估报告，第一次公开量化了开源 AI 模型与闭源前沿模型在网络攻击能力上的差距：4 到 7 个月。 https://www.aisi.gov.uk/blog/how-far-behind-the-frontier-are-leading-open-weight-models-on-cyber 去年同类内部测试中，这个差距是 6 到 10 个月。 防御窗口在收缩，而攻击前沿在加速。 今年 4 月，Mythos Preview 和 GPT-5.5 在 AISI 的评估中制造了自 2023 年开始测试以来最大的一次网络攻击能力飞跃，多国政府随即发出警告。 开源模型还没有复现这次跳跃，但它们追赶的脚步比去年更快了。 4 到 7 个月：怎么测的，差在哪 AISI 用两套体系评估模型的网络攻击能力。 第一套是 70 项窄任务，覆盖漏洞研究、逆向工程、Web 渗透、密码学四个方向，按难度分四级，从「有技术背景的非专业人士」到「十年以上经验的专家」。 第二",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "新智元",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e4067c659c97106ef7b456b39dbe0f79ad324c4c5a61472ef6f51127fa83a01e17cd3efd1&idx=2&mid=2652714134&sn=7192df80da4021f067f45495a8a71098",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "ASI启示录"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [
+        "Anthropic",
+        "DeepSeek",
+        "月之暗面",
+        "智谱AI"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "Claude",
+        "gpt-5",
+        "Kimi K3",
+        "能力"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-robotics-666b55df22840843",
+      "sourceId": "user-track-wechat-aitechuang-robotics",
+      "title": "李飞飞高徒黄文龙：具身智能需要一次「脑内搜索」革命 | RSS 2026",
+      "summary": "斯坦福团队提出：机器人不需要见过所有的失败，它只需要学会如何“脑补”另一种可能。 作者丨岑峰 在 AGI 的数字版图里，大语言模型仅靠“读遍互联网文本”就拼凑出了通往智能的通途。这种由 Scaling Law 带来的暴力美学，让整个具身智能行业在过去两年里陷入了一种盲目的“数据崇拜”：人们坚信，只要像训练大模型一样，喂下数以百万小时的视频，机械臂就能在物理世界中无所不能。 而在2026 年的悉尼 RSS 大会，AI科技评论注意到，越来越多的研究者开始讨论，物理世界的数据获取具有时间和空间的“不可逆性”——文本可以被瞬间复制亿万次，但机械臂抓取一次杯子，在物理时空中就必须实打实地消耗数秒。更致命的是长尾效应：摩擦、形变、流体……人类根本不可能通过穷举法，去收集齐机器人面临的所有场景。 来自斯坦福大学李飞飞实验室的 黄文龙（Wenlong Huang） ，在“Data-Centric Robotics”主题Workshop的演讲中给出了一个“降维打击”式的解法： 抛弃对海量“演示数据”的死记硬背，转向“反事实推理”与“脑内搜索”。 作为近年具身智能领域的明星学者，黄文龙的名字此前因 Vox",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2097a7eca981419e85a4bdbf0d77a05a1615fc34f1684a70f60e3a0bb70fe7fed2c2f97a&idx=2&mid=2247739652&sn=ab41bd2d7c5a1b85a79623af9710297e",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "岑峰"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "李飞飞",
+        "Scaling Law",
+        "Point World"
+      ],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "世界模型",
+        "灵巧手",
+        "RSS"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-ai-16c4c6514e4f05e1",
+      "sourceId": "user-track-wechat-aitechuang-ai",
+      "title": "内容创作者不会搭AI工作流？TRAE Work做了本40万字「入门宝典」",
+      "summary": "如果你还不知道怎么把 AI 用进自己的工作，或许可以先看看这本40万字“AI入门宝典”。 作者丨 胡敏 编辑丨 刘伟 前不久，一位媒体朋友讲起他参加活动时看到的一幕，坐在他右边的记者，AI录音笔和电脑上的AI助手同时开着，采访还没结束，资料整理已经开始；坐在他左边的记者，则还在用纸笔速记，回去以后再重新敲进Word。 两个人坐在同一场活动里，但似乎跨越了两个时代。 过去半年，从自己身边同事、媒体朋友观察，现在大家AI使用深度上，差异巨大。 一部分人已经把AI用到了近乎“炉火纯青”的程度。从选题检索、采访准备、录音转写，到纪要整理、文章结构、标题生成，AI几乎渗透进了内容生产的每一个环节。 但另一部分记者，仍然在沿用十年前的工作方式：手工记录、人工整理，再打开Word，一个字一个字地往下写。 为何会如此？除了认知、意愿外，但更重要的原因是，市面上真正告诉媒体从业者“AI具体该怎么用”的内容仍然太少，这种怎么用，里面包括工具层和内容层。 这两天上网冲浪，无意刷到了TRAE Work官方上线的一个AI工作知识库，点击去翻了翻，发现这个AI知识库对于做内容创作的朋友来说，可能会有挺大帮助。 0",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-21",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2097a7eca9814f5b0353f7aa846655f108989432f1d7875b48c56add6670572e79a32c6a&idx=1&mid=2247739652&sn=94cd05c209928c9a7de70a24de48ed0c",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "胡敏"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "百度",
+        "月之暗面",
+        "字节跳动"
+      ],
+      "mentionedPeople": [
+        "TRAE Work",
+        "他长期关注",
+        "并且对方在"
+      ],
+      "matchedTrackingTerms": [
+        "Agent",
+        "MCP",
+        "Kimi K3"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-anduril-b72b06daf8994ddb",
@@ -31523,6 +31828,164 @@
       ]
     },
     {
+      "id": "user-track-wechat-jiqizhixin-robotics-e938d6e9cdc06ba6",
+      "sourceId": "user-track-wechat-jiqizhixin-robotics",
+      "title": "WAIC画风最独特展台：不秀后空翻，只想做机器人界的「安卓」",
+      "summary": "编辑｜杨文 2026 年的 WAIC，人形机器人依然是展馆里最密集的品类。后空翻、跳舞、格斗，各类单机演示轮番上阵，技术完成度一年高过一年。 然而，产业化的进度似乎并不匹配。训练数据稀缺，跨本体迁移成本高，开发门槛高，多数成果停留在演示阶段。行业研究普遍判断，具身智能会沿着从工业到服务、从专用到通用的路径分阶段推进。 高盛在研报《人形机器人：比你想象的来得更快》中预计，2030 年全球人形机器人出货量仍将主要用于工业场景，消费级应用大致要到 2030—2035 年才可能加速。 这构成了观察 2026WAIC 的一个视角。整机表演的新鲜感逐年递减，更值得追问的是，谁在解决让机器人真正「用起来」的问题。 在人形机器人密集亮相的展馆里，完成首秀的启智 Openmind 采用了不同的展陈方式。其展台没有安排整机技巧表演，核心展品是 一套智能机器人通用技术底座 ，以及由它驱动的三个实景作业展项。 这三个展项各自对应真实作业场景中的一类核心难题，现场检验底座在真实条件下究竟可不可行。 「九星连珠」精细操作展项，验证的是 人机交互中的长尾任务泛化 。观众在九宫格屏上划出任意轨迹，机器人便在毫厘级微操",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67a45b391f3537d6084dbb0974434ba592b0fe9c19b4709d6add282e5566157f1a2768324&idx=1&mid=2651045435&sn=87e4632cd03583c94e44d603857b918f",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注具身智能的"
+      ],
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "文大学陈斐"
+      ],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "人形机器人",
+        "世界模型",
+        "WAIC",
+        "汽车"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-ai-7d361b7c7fc6edd4",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
+      "title": "强化学习之父萨顿中国演讲：大模型无法成为超级智能，真正的AI还在后面",
+      "summary": "今天，2026 世界人工智能大会（WAIC）正式落下帷幕。过去三天，从 OpenAI、Google DeepMind 到图灵奖得主、强化学习奠基人 Richard Sutton，多位人工智能领域的重要学者和企业代表围绕 AGI、大模型、智能体等话题分享了他们对未来 AI 的判断。 其中，Sutton 已经是连续 第二年在 WAIC 的舞台上进 行演讲 。 这也是他宣布创办 AI 公司 Oak Lab 后的首次公开演讲 。 就在一周前，他刚刚宣布离开 John Carmack 创办的 Keen Technologies，转而押注一条不同于当前大模型的发展路线：让 AI 像人一样，在与世界持续互动中不断学习，而不是主要依赖静态数据训练。 这其实也是他近两年来反复强调的核心观点。去年，他在 WAIC 提出人工智能正从依赖静态数据迈向依靠与世界互动不断学习的“体验时代”（Era of Experience）。今年，他则回到了自己最著名的观点——《苦涩的教训》（The Bitter Lesson），并借此追问：如果人工智能的发展仍遵循过去七十年的规律，那么今天如日中天的大语言模型（LLM），是不",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777d507b0005c11f4ae762eb0cf376872ec273ea66c8391190fb9f59345fba80a2cc3104c9f&idx=1&mid=2649800990&sn=0daca30fb1e4be221bb3c43125f1363f",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "张锦怡"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Google DeepMind",
+        "Google"
+      ],
+      "mentionedPeople": [
+        "John Carmack",
+        "Keen Technologies"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "机器学习",
+        "基础模型",
+        "DeepMind",
+        "强化学习",
+        "能力",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-robotics-c07012b46b90e158",
+      "sourceId": "user-track-wechat-aitechuang-robotics",
+      "title": "WAIC 观察：通用具身智能要在有生之年实现，急需「物理 AI 基建狂魔」",
+      "summary": "今天的物理 AI，不只比“武功”，更得拼“内力”。 作者 丨 齐铖湧 董子博 编辑丨马晓宁 WAIC 2026 到了最后一天，逛了无数个具身展台，心里不禁有了不少感慨。 柔性抓取可以抓异形物体了，长程任务也更复杂了——技术飞快进步，好像通用具身离我们已经不远。但 Demo 越炫，人气越足，作为一个参加过 n 次的 WAIC“老人”，就越觉得这届 WAIC 似乎少了些什么—— 模型吹得天花乱坠，底层的数据基建却鲜少有人谈及。 数据，无疑是具身智能行业中“房间里的大象”——在 WAIC 上随便和一位从业者深谈两句，大家都会不约而同地陷入同一种焦虑：实在太缺数据了。 在AI科技评论看来，要构建具身智能的数据基础设施，必须同时回答两个极其硬核的问题： 第一，你能搞到多少数据？ 第二，这些异构的、非结构化的数据，能不能被有效地共同学习？ 带着这两个问题，在今年的 WAIC 现场，有一家公司展台吸引了 AI 科技评论的关注：跨维智能（以下简称“跨维”）。 用一句话来说： 要实现通用的具身智能，跨维想做的，是“物理 AI 基建狂魔”。 要让具身智能通用泛化，首先要做到智能的涌现，去理解复杂多变的真实",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "阿里云 / Qwen",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b216aa7eca87c5305f613d9fc0fba02e39c7325dfd7c99fb02ef623a67fc106fecc54b448&idx=1&mid=2247739641&sn=62c440fbf1321b4afc9b76609948a4b5",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "齐铖湧 董子博"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "人形机器人",
+        "VLA",
+        "世界模型",
+        "WAIC",
+        "RSS"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "机器人"
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-ai-987432f619930d89",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "阿里荣膺 ACL 2026 最佳资源论文奖，揭示AI Agent的专家能力鸿沟",
+      "summary": "过去一年，Deep Research Agent 被视为大模型落地的下一个突破口，它们会检索、能用工具、可多步推理，在一个个榜单上高歌猛进。但把它们放到真实世界的专业场景里，表现是否也同样亮眼？ 先从一个每天都在发生、却少有人细想的问题说起：每一笔跨境货物通关，都必须先回答一个看似不起眼、却牵动巨大利益的问题：这件商品的海关编码（HS Code，商品名称及编码协调制度）是什么？这串编码是支撑全球每年约 26 万亿美元贸易的商品「唯一数字身份证」，直接决定关税计算与合规成败。如果报错，轻则多缴税款，重则货物滞留、触发合规风险。 那么，如果让今天最强的一批 AI Agent 去做这件跨境电商关务专员每天都在做的工作：给一件商品报出正确的海关编码，结果会怎样？ 答案可能出乎意料： 表现最 好的 系统也只能做对约 49.4%，而一位从业十年的人类专家能达到 95%。 这道接近腰斩的差距背后，藏着当前 AI Agent 一块被长期忽视的能力盲区， 面对人类专家编写的层级规则，先进的 Deep Search Agent 集体「失灵」了。 正是这项工作，让阿里巴巴 ATH-MaaS（Alibaba",
+      "type": "技术突破",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-19",
+      "importance": 85,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67a6eb391f378d613b9568b33fe98ad28561aaa17d5216f8dc2d4952fceda5ced72c59238&idx=3&mid=2651045392&sn=a5c40252a6af8fadd7707725b31cd3e3",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "DeepSeek",
+        "Anthropic",
+        "阿里云 / Qwen",
+        "智谱AI"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "基础模型",
+        "大模型",
+        "推理",
+        "Agent",
+        "多模态",
+        "AI agent",
+        "Grok",
+        "Claude",
+        "gpt-5",
+        "Gemini",
+        "能力",
+        "agentic"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "official-doubao-7828cf6b5f68ca7c",
       "sourceId": "official-doubao",
       "title": "从“会说”走向“会创作”｜ Seed Audio 1.0 音频创作模型发布",
@@ -31591,6 +32054,201 @@
         "robotics",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-ai-e9364ca5ee341c18",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "打破模态壁垒，11B通用底座，上智院开放多模态科学基础模型「神珍」",
+      "summary": "机器之心编辑部 人工智能（AI）模型在科学发现中的角色，正经历着一场从「工程缝合者」向「智能推演者」的深刻蜕变。 过去几年，AI for Science 领域涌现出众多性能优异的专用模型，蛋白质结构预测、分子生成、材料设计等单一任务频现进展。然而，在科研场景中，实质性的突破往往诞生于跨模态的交界地带。 以疾病研究为例，面对基因序列、蛋白质构象与药理活性数据交织而成的复杂因果网络，研究者需要的不是预测精准的蛋白质模型，而是一个能同时「阅读」序列语言、「理解」空间构象、「推演」动态交互的统一框架。 最近，由上海科学智能研究院（下称「上智院」）发布并开放的科学多模态基础模型 ——「神珍」，有力回应了这一需求。 作为一款总参数量为 110 亿的统一基座模型，「神珍」并非简单地将多个专用模型打包，而是从底层模态对齐入手，在一个统一架构内同时支撑科学理解与多类结果生成，现已覆盖 DNA、RNA、蛋白质、小分子、地球系统与医学影像六类科学数据。 科学智能新思路 2020 年，AlphaFold2 成功从氨基酸序列直接预测蛋白质的三维结构，证明了 AI 模型在单一科学任务上的潜力。以之为代表的专用模型",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "阿里云 / Qwen",
+      "publishedAt": "2026-07-19",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67a6eb391f3780e995a3a4afb84a33e942bbd9e397b15b0cda4914eb7163fcd4b3ed3acb4&idx=2&mid=2651045392&sn=3e0bb526b397cdf97d27d15e37a0608e",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注科学大模型的"
+      ],
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [
+        "上智院院长",
+        "旦大学特聘",
+        "学科背景的",
+        "它把"
+      ],
+      "matchedTrackingTerms": [
+        "基础模型",
+        "大模型",
+        "推理",
+        "多模态",
+        "能力"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitopics-ai-5ec382030539814e",
+      "sourceId": "user-track-wechat-aitopics-ai",
+      "title": "WAIC华山论剑，罕见AI新共识：机器人ChatGPT时刻，最快两年！",
+      "summary": "新智元报道 上海，WAIC 2026。 核心官方分论坛之一、具身智能的「华山论剑」智启具身论坛，今日终于开场。 Physical Intelligence、Genesis AI、Dyna Robotics、Sunday Robotics等海外明星机构，与智元、清华大学、腾讯Robotics X等学术与产业力量同台，一众具身智能核心人物悉数到场。 他们把各自的模型、数据和训练体系摆上桌面。表面看，大家都在追逐「通用机器人」；真正把几份技术路线叠在一起，却是刀光剑影。 谁都承认，具身智能正在逼近临界点。但对「最后一公里究竟该怎么走」，各有绝招。 具身智能的「最后一公里」，各有奇招 先亮战绩，再亮主张。五家最硬的成果和一句话立场摆出来，你会发现连「墙在哪」都没谈拢。 智元机器人 手握GO-2（LIBERO基准98.7%刷新SOTA）、世界模型GE-Sim 2.0（WorldArena全球第一）、龙旗南昌产线稳定运行3个月、成功率99.99%。智元机器人的姚卯青直言，模型决定起点，数据定义终局——靠全栈飞轮硬冲数据、表征、闭环三道墙。 清华大学计算机副研究员苏航，聚焦可恢复性——真正的智能不是",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-19",
+      "importance": 76,
+      "source": {
+        "name": "新智元",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e4743c659ce55acf5d02477e7b25f60710c73da9d02a086da045b79e524e7c7b4f1c68da8&idx=2&mid=2652713906&sn=4b4f0ab130e460a944473f4d1fcb16e0",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "openai",
+      "authors": [
+        "ASI启示录"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [
+        "OpenAI"
+      ],
+      "mentionedPeople": [
+        "Physical Intelligence",
+        "Sunday Robotics",
+        "Dyna Robotics",
+        "学计算机副",
+        "研究",
+        "始人兼首席"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "基础模型",
+        "ChatGPT",
+        "强化学习",
+        "API",
+        "SOTA",
+        "能力",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-robotics-eb36d7f607b80c35",
+      "sourceId": "user-track-wechat-jiqizhixin-robotics",
+      "title": "WAIC直击：200家机器人企业同场竞技，但物理AI的入场券属于闭环玩家",
+      "summary": "编辑｜杜伟 2026 年的 WAIC 展馆里，机器人已经多到很难成为新闻。 它们跳舞、递水、整理物品，在固定展台上完成一套套流畅动作。可演示越顺滑，越容易掩盖行业真正的难题。只要把货架换一个位置、把灯光调暗，或者让任务持续几个小时，演示中的确定性就可能迅速消失。 今年超过 200 家具身智能企业挤进了 WAIC，行业竞争看上去仍围绕本体、关节和动作展开。但展台背后，一场更关键的较量已经开始：谁能让模型持续理解变化中的现实，谁能规模化获得更多真实操作经验，谁又能把机器人运行中的失败重新变成训练数据。 这正是「物理 AI」受到关注并迅速升温的原因之一。它的竞争已经超出单台机器人的性能，真正拉开差距的，是数据、模型、终端与场景能否形成持续迭代的闭环。 在这条更长、更难的路上，京东是一位特殊玩家。它本身是领先的电商巨头，却选择押注物理 AI，上半年陆续开源 JoyAI 系列多款模型，围绕真实世界的感知、交互和行动构建更完整的技术体系，并设下了「建设全球最大物理世界运营中心」的战略目标。 在今天上午结束的「AI 进入物理世界」京东分论坛上，其对外集中展示了这套布局 。除了首次集体亮相的 JoyA",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-18",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e679f0b391f0e6434e6ae3f6236bbddb0e218ec31965f6950942db250c25077ef305a40bb4&idx=1&mid=2651045262&sn=4e9f234cb8189b966d219c24af3c6eee",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "并且",
+        "过去"
+      ],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "VLA",
+        "世界模型",
+        "WAIC",
+        "汽车"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-materials-b0c6106bda145f8a",
+      "sourceId": "user-track-wechat-deeptechchina-materials",
+      "title": "美国科学家用AI设计了一架会“隐形”的无人机，靠高速旋转骗过人眼",
+      "summary": "在 2005 年的科幻电影《绝密飞行》中，美国空军拥有了一种未来战争机器：一架没有飞行员的隐形战斗机。它能够依靠先进人工智能自主飞行，并凭借隐身技术突破敌方防御系统。 那时，人们对于“隐形飞机”的想象，主要来自雷达、材料和空气动力学，也就是让机器避开探测，让敌人无法发现。 但 20 年后的今天，一群研究人员正在尝试另一种完全不同的“隐形”：不是让无人机避开雷达，而是让它骗过人眼。 近日，来自美国西北大学的团队在悉尼举行的 2026 年机器人科学与系统大会上，展示了一款名 Phantom Twist 的无人机。这架无人机没有采用透明材料，也没有覆盖特殊涂层。 它只是高速旋转，让自己的形态变得模糊，最终在观察者眼中逐渐失去清晰的轮廓。 图 | Ph antom Twist 旋转飞行，几乎透明（来源：西北大学） 因此，严格意义上来说，这并不是一架真正“隐形”的无人机。它不会像科幻电影中的隐形战机一样从天空中彻底消失，也无法躲避雷达、红外或者其他传感设备。但它展示了一种新的可能：未来机器或许不一定需要改变自身属性，也可以通过改变观察者获取信息的方式，降低自己的存在感。 领导这项研究的是西北大学",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新材料",
+      "company": "科技产业",
+      "publishedAt": "2026-07-18",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777d4dab0005dccf97a477a63b7ad5e099f4039e4b9b45b7c44f6413d8de48537342767e350&idx=2&mid=2649800899&sn=1a1f990f5ba01cbf548971412a674e7d",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "胡莉花"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "Michael Rubenstein",
+        "Phantom Twist",
+        "美国",
+        "西北大学副"
+      ],
+      "matchedTrackingTerms": [
+        "碳纤维",
+        "材料"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitopics-ai-ebee7c609ed7028c",
+      "sourceId": "user-track-wechat-aitopics-ai",
+      "title": "ChatGPT终于能「搜自己」！攒了近4年的对话，一键翻出",
+      "summary": "新智元报道 ChatGPT推出快满4年了。 这4年，你跟它聊过多少句话、传过多少张图、开过多少个项目，大概连自己也数不清。 可有一个痛点，你一定记得：想翻回三个月前那次对话，基本得靠运气。 侧边栏那个搜索框约等于摆设，会话一多，搜旧对话近乎不可能。 在OpenAI开发者社区，苦这个旧搜索久矣： 终于能找到那条消息了，为什么拖了这么久；那个老搜索栏，从来就没好用过；会话一多，搜旧对话就变得不可能；翻旧对话简直成了噩梦…… 这不是零星几句抱怨。 ChatGPT什么都能生成，可是你写过的稿、讨论过的代码、生成过的图、囤过的资料，随着对话越堆越多，「翻记录」越来越像大海捞针，侧边栏拉到手酸，也未必找得到三周前那次关键讨论。 而这一次，变了。 7月14日，OpenAI给ChatGPT上线了一套全新的统一搜索，把你在ChatGPT里的所有东西，塞进了一个统一入口：历史聊天、项目、上传的文档、生成的图片，全部能搜。 Web、iOS、Android三端同步，从免费版到企业版，全球所有计划同步开放。 真去把那几年的「存货」翻一遍你就会反应过来：ChatGPT第一次能「搜自己」了。 而这，绝不是补了个搜索",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-18",
+      "importance": 76,
+      "source": {
+        "name": "新智元",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e47c0c659ced69247032f90f9a3afede1865b86c0b47a74b996ce83ad164f5a9e10e1acad&idx=2&mid=2652713777&sn=2ff907965d3c8535cb3dff432c8b17b9",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "openai",
+      "authors": [
+        "ASI启示录"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "Google"
+      ],
+      "mentionedPeople": [
+        "Sam Altman"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Claude",
+        "ChatGPT",
+        "gpt-5",
+        "Gemini"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-weride-0490c2ff99a87ed4",
@@ -31663,6 +32321,41 @@
       ]
     },
     {
+      "id": "user-track-wechat-aitopics-ai-444d5895e17ae348",
+      "sourceId": "user-track-wechat-aitopics-ai",
+      "title": "同一个链接，你和同事打开的不一样：Claude让AI页面活了",
+      "summary": "新智元报道 站会还没开始，故障已经快排查完了。 一位Anthropic工程师在开会前发起一次排查，Claude Code扒完日志，直接甩出一份Artifact：时间线、可疑提交、错误率曲线，全在上面。 她顺手把链接丢进群里。 到站会真正开始时，Claude已经跟着调查进展，把这个页面重新发布了两次。 所有人打开的是同一个视图、同一份上下文，谁也不用再追着问「你给我讲讲智能体到底查到了啥」。 注意，这位工程师分享的，并不是一张静态页面，而是一个能够自动更新、可交互的页面。 站会那一幕，靠的是Claude Code今年6月发布的Artifacts。7月16日，Anthropic又给它加了关键一手： Artifacts可以调用MCP连接器了。 按照官方的说法：你搭出来的仪表盘和应用，能给每个打开它的人，按需去取数据、执行操作。 同一个页面，面对不同的查看者，各自拉各自的数据，干各自权限内的活。 目前Pro、Max、Team、Enterprise四档都能用，唯一的限制是：公开分享出去的Artifact，享受不到这套能力。 看上去只是多了个数据接口，但真正的变化是过去AI生成的页面是死的，现在它",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-17",
+      "importance": 76,
+      "source": {
+        "name": "新智元",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e4660c659cf76eefc6bee872a0d9d5553d52c1a6e9791ccfc25b858ac0ebebb7925b35272&idx=2&mid=2652713617&sn=430f87167c36bbff17c30333e0b77383",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "ASI启示录"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [
+        "Anthropic"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "Claude",
+        "MCP",
+        "API",
+        "能力"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "official-svlot-533fb0d2467f8088",
       "sourceId": "official-svlot",
       "title": "蜂行短刀3.0首发、混合固液6C定档、飞叠4.0年内交付，蜂巢能源全球合作伙伴峰会秀出“量产加速度”-新闻资讯-蜂巢能源官方网站",
@@ -31706,6 +32399,43 @@
         "energy",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-ai-1a5575661075543a",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
+      "title": "Kimi发布史上最大开源模型！参数高达2.8T，离Fable 5和GPT-5.6只差半步？",
+      "summary": "7 月 16 日晚，在放出了一支很艺术的预告片之后，月之暗面正式上线了 Kimi K3。 这款混合专家模型拥有 2.8 万亿参数、100 万 token 上下文窗口和原生视觉理解能力，是 Kimi 迄今规模最大、能力最强的模型。 不过在官方发布前，K3 已经以另一种方式出名了：一款名为“ Kivine ”的匿名模型这几天出现在 Arena，连续几天产出高完成度的网页、3D 场景和小游戏，许多测试者直接把它称为“Fable 级”。 图丨KIMI K3 正式上线（来源：KIMI） Kivine 当时并未公开身份。外界根据模型 特点、 表现和月之暗面此前的匿名测试习惯，推测它是 K3 的预览版本。7 月 15 日，一名用户用相同提示词让它和 Claude Fable 5 制作宇宙模拟器。Fable 5 完成得更快，界面控件也更稳定； Kivine 搭建的场景则更加复杂，加入了丰富的天体细节和第一人称视角，视觉冲击力更强。这段对比很快在 X 上传开，也形成了外界对 K3 的第一印象：速度未必占优，却经常主动把任务做得更充分。 此后的测试大多延续了这一特点。在一项与 GPT-5.6 Sol 对照",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "月之暗面",
+      "publishedAt": "2026-07-16",
+      "importance": 82,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777d475b0005d63cbc8a3c5879755050240b7a64e17fc150d3cd3844cf363df617e1c9d6a5d&idx=1&mid=2649800812&sn=5a2330049252a4f8468d287c9df7b6be",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "moonshot-ai",
+      "authors": [
+        "加洋"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [
+        "月之暗面",
+        "Anthropic"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "Claude",
+        "API",
+        "gpt-5",
+        "Kimi K3",
+        "能力"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-sierra-07d3560239dec6d1",
@@ -31932,6 +32662,478 @@
       ]
     },
     {
+      "id": "user-track-wechat-qbitai-ai-2a70b5b73967722c",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "Claude Code砸的坑，蚂蚁安全在尝试填上",
+      "summary": "鹭羽 发自 凹非寺 量子位 | 公众号 QbitAI 2026年，AI安全终于被推到了台前。 就在前两天，工信部NVDB平台发布风险预警，明确指出 Claude Code 存在 安全后门隐患，可在用户不知情的情况下收集敏感信息。 时间线拨回更早，年初红遍全网的 OpenClaw 也屡屡被 曝出 高危险漏洞。 从横空出世到快速普及，再到漏洞频发、信任受损，这几乎是当前Agent产品共同的发展轨迹。 现在的AI能力是越来越大了，但闯出的祸也跟滚雪球似的。 滥用工具、恶意代码生成、提示注入等诸如此类的行为风险，早已不是一两个补丁就能彻底解决的。 △ 图片由AI生成 面对新的风险形态，一个越来越明显的趋势是，行业开始把注意力从“漏洞修补”转向“安全框架”本身。 最近蚂蚁开源的 SingGuard-NSFA 和 SingGuard ，就是其中比较值得关注的一次尝试。 前者看住智能体的行为，后者看住多模态大模型的感知。 其目的也很明确，就是在AI动手之前，将安全风险扼杀在摇篮之中。 之所以聊到这个项目，也是因为它的背景比较有意思。做这个框架的团队来自 蚂蚁 ，一家在安全领域拥有长期积累的公司。 先",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-12",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1001dfad99170826651e4621dab97f3698600572bca08146882fe8472dcda4814e31b0f3&idx=1&mid=2247903091&sn=6efa9d6657251390eda8017a73484478",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "Anthropic"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "大模型",
+        "智能体",
+        "Agent",
+        "多模态",
+        "Claude",
+        "SOTA",
+        "能力"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-ai-41e8b498e2c57b8e",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "98年哈工大教授带队，破晓智能要把触觉写进机器人基础模型",
+      "summary": "机器之心发布 机器人伸出食指，按向喷壶上的扳机。镜头里，指尖已经贴上去了，机器人也 “认为” 自己完成了动作，但水没有喷出来。 从画面上看，似乎一切都对。但问题在于，指尖只是碰到了按钮，却没有真正把它压下去。对摄像头来说，“手指贴在按钮上” 和 “按钮已经被按下”，可能几乎是同一幅画面；触觉却能直接告诉机器人：有没有接触、压在了哪里、力到底够不够。 瞄准这类 “看起来做对了，物理上却没完成” 的失败。破晓智能（PHANES AI）创始人、哈工大（深圳）长聘教授杨朔及其团队发布了最新论文 TouchWorld: A Predictive and Reactive Tactile Foundation Model for Dexterous Manipulation。 TouchWorld 让触觉同时承担两种角色：行动前，预测 “应该碰成什么样”；接触后，再根据真实反馈快速纠错。 在浇花、桌面清理、电源插头插入、杯子插入、擦锅、抽纸巾六项真机任务中，TouchWorld 在无额外干扰的场景下取得 65.0% 的平均成功率；加入目标移动、抓握干扰等人为扰动后，成功率为 57.2%，分别超过最",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Google",
+      "publishedAt": "2026-07-12",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67c3cb391f52a7543d26c5d1a6ae287f6ced43ab6e500995ac4f218624599958aa313ccad&idx=1&mid=2651043906&sn=f8bd8f3ee9b7bb634d9a4dea3eeb3545",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "Google"
+      ],
+      "mentionedPeople": [
+        "PHANES AI",
+        "Reactive Tactile Foundation",
+        "ICLR Best Paper",
+        "哈工大",
+        "博导",
+        "年哈工大",
+        "长聘"
+      ],
+      "matchedTrackingTerms": [
+        "基础模型",
+        "大模型",
+        "推理",
+        "能力"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitopics-ai-46b964a6ef3866c4",
+      "sourceId": "user-track-wechat-aitopics-ai",
+      "title": "全网骂Claude变笨，Anthropic下场揭秘：坑你的不是模型",
+      "summary": "新智元报道 【新智元导读】 换更大的模型就等于更聪明？这可能是Claude Code用户最深的误会。很多人为此一路换到最贵的Fable，近日，Anthropic，亲手澄清了这个误区。 你有没有过这种时刻：Claude Code写代码写砸了，第一反应，就是赶紧换个更强的模型。 但这一招，很多时候并不管用，甚至是在白花钱。 近日，Anthropic官方发了一篇长文专门来讲这件事。 起因是太多人把Claude Code里的两个选项搞混了： 一个是模型选择（Model），一个是努力度（Effort）。 过去，大家对这两个选项的理解都很简单：换更大的模型，AI就更聪明；把Effort调高，无非是让AI多想一会儿。 而就在今年3月，这个误会还惹出了一场不小的混乱。 当时，不少开发者发现，手里的Claude Code突然「变笨」了。该读的文件不读，该跑的测试不跑，任务干到一半就撂挑子，反过来问你要更多信息。 于是，GitHub上骂声一片。 最狠的一刀来自AMD的AI负责人Stella Laurenzo。 她在GitHub上翻出6852个会话的日志，实测Claude的思考量比2月之前掉了67%，撂下一",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-12",
+      "importance": 76,
+      "source": {
+        "name": "新智元",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e5901c659d01793446b2aa6ea3f0db1c29151c5dcc698eb18d88bc01ff9d882322e12c55a&idx=2&mid=2652712432&sn=b54298542d95ea1f2c6b5ab8d0a17c04",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "ASI启示录"
+      ],
+      "wechatAccount": "新智元",
+      "mentionedCompanies": [
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Stella Laurenzo"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Agent",
+        "Claude",
+        "Agents",
+        "Multi-Agent",
+        "API",
+        "AMD",
+        "能力"
+      ],
+      "wechatAccountConfigId": "aitopics",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-ai-48c88454c14b17b8",
+      "sourceId": "user-track-wechat-aitechuang-ai",
+      "title": "独家｜哈工大98年教授杨朔创业，要让机器人长出\"触觉大脑\"",
+      "summary": "让机器人\"摸得懂\"真实世界 作者丨 齐铖湧 编辑丨岑 峰 AI 科技评论独家获悉，哈尔滨工业大学（深圳）计算机科学与技术学院长聘教授、博导杨朔创立破晓智能（ PHANES AI ），聚焦人类数据、触觉感知与世界模型研究，希望让机器人从学习人类操作经验出发，走向面向人形机器人的全身移动灵巧操作。 01 98年教授的创业起点 公开资料显示，杨朔出生于 1998 年， 26 岁获评哈工大（深圳）计算机学院长聘教授、博士生导师。他曾获 Google Ph.D. Fellowship ，入选国家级高层次青年人才等，同时担任鹏城国家实验室、河套国家人工智能学院博导。 学术履历方面，杨朔长期研究多模态大模型、 Data-Centric AI 、可信 AI 、计算机视觉与具身智能，以第一作者、通讯作者身份发表 TPAMI 、 ICLR 、 ICML 、 NeurIPS 、 CVPR 等顶会顶刊论文 50 余篇。 2025 年入职哈工大（深圳），目前带领四十余人的硕博研发团队。 据 AI 科技评论了解，破晓智能的成立并非单篇论文转化，而是团队过去几年围绕人类数据、触觉感知、世界模型和机器人操作方向持续研",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Google",
+      "publishedAt": "2026-07-12",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2cdda7eca5cbc092745824ea3adca082ede5c12ce6a9bfee64aa312b41ca5717e4f9e8af&idx=1&mid=2247738702&sn=381b8f2353bf4d7fcf0104574363557d",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "齐铖湧"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "Google"
+      ],
+      "mentionedPeople": [
+        "PHANES AI",
+        "Data-Centric AI",
+        "博导杨朔创",
+        "生导师",
+        "通讯作者身",
+        "术学院长聘",
+        "机学院长聘"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "多模态",
+        "计算机视觉",
+        "能力",
+        "轮融资",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-ade93c5ff355edb9",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "GPT-5.6一小时解开50年数学猜想，700词Prompt驾驭64个子Agent",
+      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 我看呐，只要以后笔记本半开着，就没有人的事儿了。 刚刚，OpenAI研究院 Ethan Knight 宣布： 昨儿刚出的GPT-5.6，用不到一小时，就完成了一道存在了半个世纪的图论猜想证明。 而这道题呢，来头也还真不小，就是大名鼎鼎的 循环双覆盖猜想（Cycle Double Cover Conjecture） 。 为解决这道题，研究员把现在最顶的GPT-5.6 Sol蹬到Ultra；GPT呢，又自己蹬了64个子agent。 最后，硬是写出了一份三页的pdf，证明完毕，Over。 发布后，还在韩国开ICML的Noam Brown（o1核心贡献者）也隔着太平洋第一时间赶来捧场。 他表示，这次和此前的Erdős单位距离问题不同，不靠什么内部特供模型，靠公开能用的GPT-5.6 Sol Ultra就把活儿干了。 而且，GPT-5.6 Sol Ultra把测试时计算并行大幅铺开，原本可能要磨上一整天的证明，如今被64个子agent压进了一个小时。 可以说，在数学这块，前沿模型的天花板还在拉高。而多agent，也能极快地加速任务的处理",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-11",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da11dddfad98cb798410ee855583c0ee19fd4be0cddfd2fdedf2295e14e941ca238f6ceeec&idx=1&mid=2247902895&sn=e1b447a17522c5595d3096ff0ec17a64",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "OpenAI"
+      ],
+      "mentionedPeople": [
+        "Ethan Knight",
+        "Noam Brown"
+      ],
+      "matchedTrackingTerms": [
+        "智能体",
+        "Agent",
+        "gpt-5"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-ai-8dfb9465308a5eae",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "仅11天，Claude重写百万行代码，AI史诗级工程却引来愤怒",
+      "summary": "机器之心编辑部 这几天，科技圈都在吃瓜：编程语言 Zig 的创始人 Andrew Kelley 怒了。 原因在于原来全面押注 Zig 语言的 Bun，被其创始人 Jarred Sumner 用 Rust 语言重写了。 Andrew Kelley 毫无遮拦地展示了自己的怒火，他没有在这个现象级技术事件中说客套话，直接将矛头对准了 Jarred Sumner 的个人工程习惯、管理能力，以及这起事件背后的商业逻辑。 Bun 是一个高性能 JavaScript/TypeScript 运行时，旨在成为 Node.js 的更快速、现代的直接替代品，近年来已经成为了前端世界挑战 Node.js 霸权的重量级选手。 Bun 的核心卖点是极速：无论是启动速度、依赖安装还是测试运行，都远超竞品，其部分原因在于它是用 Zig 语言编写的。 去年 12 月，Anthropic 宣布收购了 Bun ，将其作为基础设施来驱动其 AI 编程工具 Claude Code 和 Claude Agent SDK。Jarred Sumner 和 Bun 团队的其他成员目前都在 Anthropic 工作。 在大规模应用，尤其",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-11",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67c6ab391f57cd91a351ee3b54b7e6b03b42b7f161674f84358259f5034a9d0ae8963a487&idx=2&mid=2651043860&sn=97c8f838e97a33452ca653c26acb0333",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "关注AI的"
+      ],
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Andrew Kelley",
+        "Jarred Sumner",
+        "Dynamic Workflows",
+        "Linus Torvalds",
+        "青年"
+      ],
+      "matchedTrackingTerms": [
+        "Agent",
+        "Claude",
+        "API",
+        "Claude Agent",
+        "能力",
+        "agentic"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-materials-4d9a7cda269bc7c5",
+      "sourceId": "user-track-wechat-deeptechchina-materials",
+      "title": "塑料与金属一样导电？华人科学家让塑料自己长成纳米带，或颠覆柔性电子材料",
+      "summary": "近日，美国普渡大学梅建国教授团队和中国科学院化学研究所狄重安研究员团队 让导电聚合物实现了金属级的导电率，或能为柔性电子材料带来革新， 相关论文发表于《科学》。 他们发现一种名为 n-PBDF 的导电聚合物可以在溶液中自发组装，生长出来长达数百纳米的整齐纳米带，将这些纳米带铺成薄膜之后，导电能力超过 10 ⁴ S/cm ，一举迈入金属 “ 俱乐部 ” ，让柔性屏、可穿戴设备以及生物传感器距离真正的高性能又近了一大步，并且这一切都是聚合物自己搞定的。 一直以来，导电高分子存在这样一个尴尬，它很希望能够替代金属和硅，但是电荷在里面跑得不够快。原因在于高分子链是长条状的，电荷沿着链条跑得飞快，但是跳到另一条链上的速度很慢。传统的高分子材料内部就像一锅煮过头的面条，所有的链缠在一起，方向也是乱七八糟的，这时电荷走两步就得跳一次车，速度自然也就上不去。 导电高分子有着广阔的应用范围，对于柔性显示屏、可穿戴电子设备、生物传感器以及热电转换器件来说，它们都需要一种既可以导电又非常柔韧的材料。已有的金属和硅太硬了，弯不了几下就会断掉。尽管导电高分子非常柔韧，可以弯曲也可以拉伸，但其之前的导电性能一直不",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "新材料",
+      "company": "科技产业",
+      "publishedAt": "2026-07-11",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777ab7ab000226c074f7856982a58b00d237215b458458fb8afa08093341c806aabd41f5260&idx=1&mid=2649800547&sn=542a31b10108937a43d8c90d0d9bd97f",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "胡巍巍"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [],
+      "mentionedPeople": [
+        "从左到右",
+        "华人",
+        "大学梅建国",
+        "究所狄重安",
+        "渡大学陈敏",
+        "究所王东洋",
+        "大学的陈敏",
+        "所的王东洋"
+      ],
+      "matchedTrackingTerms": [
+        "高性能材料",
+        "材料"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-2dd1b00738795f03",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "全球首个「具身原生」预训练模型发布，从物理世界出发为机器人造大脑！",
+      "summary": "金磊 发自 凹非寺 量子位 | 公众号 QbitAI 终于，那句用来教育年轻人的经典嗑，也是用到机器人身上了： 你们啊， 眼光得放长远点~~ △ 图片由AI生成 为啥？ 因为一个靠谱的机器人啊，它不能只是看到什么就做什么，现在还得学会 预判未来 —— 眼睛是看到了当下的这一帧，但脑子应该在盘算几步之后的画面了。 这个事儿在具身智能圈有个专门的名字，叫做 VA （Video-Action）模型。 咱们先来感受一下这个feel： 从视频中我们不难看出，桌上的冰球不仅速度快，轨迹还在不断变化，如果机器人只靠”看到哪打到哪”的反应式操作，大概率要被KO掉的。 正确的解法，应该是模型一边盯着球的运动轨迹，一边提前预判几步之后球会跑到哪，然后提前调整身位、伸拍。 这就是“预判式控制”和“反应式控制”的本质区别。 不过啊，就在今天，VA这件事儿本身也要变了。 因为从现在起，VA模型不仅要“眼光放长远”，还得从娘胎里就是具身的！ 这就是 蚂蚁灵波 刚刚发布的 LingBot-VA 2.0 ，全球第一个 具身原生的 预训练VA基座模型。 从架构，到数据，再到训练目标，第一天起就是为机器人量身定制的。 除",
+      "type": "产品发布",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-10",
+      "importance": 82,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1144dfad98525230c66ff20710ab81547ab4e360003c171868000d1b8cb9f486d9155e4b&idx=1&mid=2247902774&sn=55d8846a7ef42993d385848631d4cc2a",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "VLA",
+        "机器人",
+        "世界模型"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-ai-a485d2118b592c50",
+      "sourceId": "user-track-wechat-aitechuang-ai",
+      "title": "豆包2.1Pro实测：Agent 自主性极强，代码「规矩、干净、可运行」",
+      "summary": "能力相当于可靠的全栈工程师加夜班SRE，比不上技术总监。 作者丨 孟一凡 编辑丨 马晓宁 梁丙鉴 “生产级质变点”并不是一个生捏硬造的概念，所有试过用 Agent 驱动工作流的人，都不会对那种模型能力跨越带来的爽感陌生。退一步是玩具，进一步是工作搭档，中间的天差地别是交付水平、可靠度、性价比，以及最重要的商业化能力。 这也是豆包大模型 2.1 Pro 在发布时反复强调的概念。火山引擎总裁谭待表示，在全球范围内，第一个跨越质变点的模型，视频生成领域是 Seedance 2.0，Coding 与 Agent 领域则是 Claude Opus 4.6。而今天，“围绕 Coding、Agent、VLM 三大方向实现大幅升级”后，豆包大模型 2.1 Pro 也来到了同样的位置。 性能水平上的对标只是开始，模型是否真正跨过了“生产级质变点”，最终要在落地能力和商业化空间上经受审视。我们好奇的是，在真实工程场景里豆包 2.1 Pro 的质变论还经不经得起推敲。 为此，我们把它放进了三个极简但致命的工程任务里，录下了全过程，并让 Claude Opus 4.7/4.8 担任裁判模型，从可运行性、正确性",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "豆包",
+      "publishedAt": "2026-07-10",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2c90a7eca586bc4b2a2203f735a0be297bc3caf695cb63480c58c67dcaa6a124a89f270d&idx=1&mid=2247738627&sn=2dcbf63d8cbfe589c938c0206fa74052",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "孟一凡"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "豆包",
+        "火山引擎",
+        "Anthropic",
+        "月之暗面",
+        "字节跳动"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "大模型",
+        "推理",
+        "多模态",
+        "基础模型",
+        "Agent",
+        "Claude",
+        "长上下文",
+        "API",
+        "能力",
+        "豆包大模型",
+        "火山引擎",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-aitechuang-ai-196420be3f329de6",
+      "sourceId": "user-track-wechat-aitechuang-ai",
+      "title": "独家｜把芯片设计交给 AI，上海 AI Lab 李林阳创业获数千万元首轮融资",
+      "summary": "继晶圆制造后，芯片设计会成为半导体产业下一项被平台化的能力吗？ 作者丨 陈悦琳 编辑丨 包永刚 芯片设计服务正在迎来AI拐点。 雷峰网独家获悉，一家国内创企Novasilicon（芯星元）率先入局，近日已完成首轮融资，由五源资本独家投资数千万元。 与传统Design House不同的是，Novasilicon认为AI不再只是工具。“我们更希望从大模型本身出发，重新思考芯片设计。”创始人兼CEO李林阳告诉雷峰网。 要真正实现这一设想，仅懂AI或仅懂芯片都不够。 公开资料显示，李林阳目前担任上海人工智能实验室青年科学家，曾参与国内首个开源大语言模型MOSS研发，并带队完成国内首个兼具专业围棋能力与自然语言思维解释能力的大模型InternThinker。去年起他还负责了AI for Chip Design相关项目。 另外两位联合创始人则进一步补齐了芯片设计所需的工程能力——COO薛建喜深耕数字芯片设计二十余年，曾对接国内多家知名AI芯片企业；CTO陈建球为翱捷科技早期核心成员，拥有二十余年模拟及混合信号芯片设计经验。 Novasilicon的目标是服务包括大模型企业、智能机器人公司、云计算服",
+      "type": "融资",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-09",
+      "importance": 91,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2d13a7eca4059dba767c15b75766f61383f7463d4ffdec75f63af2c991f3cee047d38511&idx=2&mid=2247738496&sn=7ec58206cfe8acc18eb03a52340a101d",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "陈悦琳"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "OpenAI"
+      ],
+      "mentionedPeople": [
+        "Design House",
+        "Chip Design",
+        "AI EDA",
+        "AI Design House",
+        "曾参与国内",
+        "实验室青年"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "推理",
+        "基础模型",
+        "AI agent",
+        "Agent",
+        "DeepMind",
+        "强化学习",
+        "能力",
+        "轮融资",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-032105c91d8d3133",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "大三本科生一作，交出7.92倍加速的投机解码新答卷！DeepSeek和阶跃星辰双双引用",
+      "summary": "Domino团队 投稿 量子位 | 公众号 QbitAI DeepSeek的投机解码框架DSpark，让“如何把大模型推理做得更快”再次成为热点。 论文中仍有不少细节可挖。比如，作者提到了约一个月前来自上海交通大学等机构的工作 Domino ，并指出其CausalEncoder的设计与DSpark的理念相似。此外，Domino算法也在阶跃星辰发布的JetSpec中被提及。 而这篇论文的第一作者 黄佳诺 ，目前还是一名 大三的本科生 。 如果想理解DSpark中draft-model侧的关键设计，不妨先读Domino。Domino更像一个干净的研究原型，用更简单、更集中的结构讲清楚一个核心问题：如何在parallel backbone的低开销基础上，轻量地补回draft block内部的串行依赖，兼顾扩散与自回归的双重优势。 △ Domino方法总览。 核心问题：并行很快，但缺少因果依赖 投机解码的基本思路是：先让轻量draft model一次猜出多个未来token，再交给target model批量验证。它的速度取决于两个因素： draft要足够快，也要足够准。 这就带来一个trade",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "DeepSeek",
+      "publishedAt": "2026-07-09",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1209dfad9b1fe560d54a8062973ca62dc5648c3cffbfd33b523067447b9e4d3cbf0e8889&idx=3&mid=2247902587&sn=879066ecce663ab9daba5d73fe2dc27b",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "deepseek",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "DeepSeek"
+      ],
+      "mentionedPeople": [
+        "Jianuo Huang",
+        "Yaojie Zhang",
+        "Linfeng Zhang",
+        "黄佳诺"
+      ],
+      "matchedTrackingTerms": [
+        "大模型"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-ai-9c70d8770d180e3f",
+      "sourceId": "user-track-wechat-jiqizhixin-ai",
+      "title": "中国科学院携手全球顶尖机构发布首个十亿参数级的手术视频基础模型SurgMotion！",
+      "summary": "机器之心发布 手术 AI 正在从 “单帧感知” 迈向 “全流程视频理解” 的全新时代 ！近日，由中国科学院香港创新研究院人工智能与机器人创新中心领衔，联合中国科学院自动化所、香港中文大学、慕尼黑工业大学、北京协和医院、中山大学附属第一医院、香港威尔斯亲王医院、香港大学深圳医院等全球顶尖机构，正式发布了 全球首个十亿级参数、最大规模数据集练成的手术视频原生基础模型 ——SurgMotion ！ 论文：SurgMotion: A Video-Native Foundation Model for Universal Understanding of Surgical Videos 论文链接：https://arxiv.org/pdf/2602.05638 Github 仓库: https://github.com/CAIR-HKISI/SurgMotion Hugging Face 权重: https://huggingface.co/CAIR-HKISI/SurgMotion 作为手术 AI 领域的里程碑式成果，SurgMotion 依托于 迄今为止全球规模最大、术式覆盖最全的千万帧级（",
+      "type": "商业进展",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-08",
+      "importance": 84,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67139b391f82f3751778aa085368b070a521f659a95060596f1f07122251798330e4f4a20&idx=2&mid=2651043143&sn=22a3dc2927b9921240930c0e9a90dca9",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "基础模型",
+        "大模型",
+        "推理",
+        "多模态",
+        "能力"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "official-sambanova-d25d5c85a408bf76",
       "sourceId": "official-sambanova",
       "title": "SambaNova Completes First Close of $1B Financing at $11B Valuation",
@@ -31975,6 +33177,155 @@
         "semiconductor",
         "track-1ccjq49"
       ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-7ef545ed3faab70c",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "60000小时炼出新开源VLA！20多种机器人都能用",
+      "summary": "金磊 发自 凹非寺 量子位 | 公众号 QbitAI 整整 60000小时 的预训练数据。 一个新 VLA （视觉-语言-动作），就这么水灵灵地被“喂”了出来，而且还是 开源 的那种。 这就是 蚂蚁灵波 刚刚发布的 LingBot-VLA 2.0 ，一个面向复杂物理世界任务的通用VLA模型。 先来聊聊这60000小时真实物理数据是怎么来的。 其实它包含两个部分，其中50000小时来自机器人轨迹数据，覆盖20种机器人构型；另外10000小时来自第一视角人类操作视频。 而距蚂蚁灵波1月发布 LingBot-VLA 1.0 仅半年时间来， 数据规模 从20000小时直接 乘了个3 。 那么效果又如何呢？ 来，直接上结果： 我们从视频中可以看到，机器人先从操作台上拿起饮料、水果放进篮子里，再拎起篮子移动到冰箱前，打开冰箱门、把东西一件件放进去，最后关上冰箱门。 一整套长序列的移动操作，一气呵成，相当丝滑。 不过有一说一，数据规模还仅仅是LingBot-VLA 2.0亮点的一隅，在细扒相关技术报告后我们发现： 支持20多种机器人构型； 从双臂扩展到头部、腰部、移动底盘、灵巧手等更完整的动作空间；",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-08",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5699487ba0a6bdb1c5f2677248b84989dd836c96502d90eb4fdf52a87f7e65&idx=1&mid=2247902258&sn=09ea927102a45e58d2de764072287fc9",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "具身智能",
+        "人形机器人",
+        "VLA",
+        "机器人",
+        "灵巧手"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-ba425ecd1c304768",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "刚刚，OpenAI首席未来学家离职！曾被马斯克骂蠢驴",
+      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 刚刚，OpenAI首席未来学家 Joshua Achiam 在X上宣布离职。 这并不是一个普通员工变动。 在OpenAI内部， 首席未来学家 这个职位夹在AI安全、政策和公司使命之间，负责研究AI继续变强之后，可能给世界带来的风险和机会。 而Joshua Achiam，正是OpenAI这条安全与使命线上的核心人物之一。 9年前的2017，他以实习生身份加入OpenAI。早期，他是一名专注于AI安全的研究科学家，做过深度强化学习里的安全约束研究。 后来，他领导过OpenAI的 Mission Alignment （使命对齐）团队，负责维护这家公司最初那句使命： 确保AGI造福全人类。 今年2月，OpenAI解散Mission Alignment团队，Joshua转任公司首席未来学家。 只不过，短短5个月后，Joshua就宣布自己将在7月24日正式离开这家待了9年的公司。 至于离职原因，Joshua并没有透露太多。 他只是表示，自己离开并不是因为某个具体事件，也不是一时兴起，而是已经思考了很长一段时间。 为了安全的AGI 在X长文",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "OpenAI",
+      "publishedAt": "2026-07-08",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da1340dfad9a5697869e8644d4e3dd0563bf622cb244d475413509993f2678272aca03f685&idx=2&mid=2247902258&sn=9255dfa6c73c1433b887448e2fb783bb",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "openai",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Joshua Achiam",
+        "Chris Lehane",
+        "Dario Amodei",
+        "David Luan",
+        "Jan Leike",
+        "Miles Brundage",
+        "Steven Adler",
+        "Andrea Vallone",
+        "Boaz Barak",
+        "Noam Brown"
+      ],
+      "matchedTrackingTerms": [
+        "ChatGPT",
+        "强化学习",
+        "能力",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-jiqizhixin-robotics-2f49b75d484d8b38",
+      "sourceId": "user-track-wechat-jiqizhixin-robotics",
+      "title": "20种机器人本体通吃！蚂蚁新一代VLA具身大脑刚刚开源了",
+      "summary": "编辑｜杜伟 时隔 5 个月后，蚂蚁灵波亮出了自家新一代具身智能大脑。这一次，它试图把跨本体 VLA 从单点 Demo，推向可复现、可高效后训练与可部署的工程链路。 2026 开年以来，具身智能最重要的技术路线之一 VLA（视觉-语言-动作）， 其受行业关注的程度以及向前推进的速度超出了很多人的想象。 科技巨头英伟达推出专为人形机器人打造的开放 VLA 系列 GR00T N1.6 和 GR00T N1.7，具身智能独角兽 Physical Intelligence 推出的 π0.7 展现出了组合泛化、跨本体迁移能力。在国内，VLA 领域同样是百花齐放，涌现出了以蚂蚁灵波 LingBot-VLA 为代表的基座模型。 它们的出现让行业形成共识：机器人要进入开放环境，必须把视觉理解、语言指令和动作生成放进同一个模型框架里。同时，当把机器人从实验室搬到开放场景，各种现实问题很快出现：桌子高度变了、物体位置偏了、任务步骤被拉长了，换一台机器人本体又得重新适配。 不少 VLA Demo 已经能在特定设置下跑通，但距离稳定执行、跨本体泛化和低成本规模化部署，仍需要跨过数据、本体适配、工程系统等多重阻碍",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "机器人",
+      "company": "科技产业",
+      "publishedAt": "2026-07-08",
+      "importance": 76,
+      "source": {
+        "name": "机器之心",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw%3D%3D&chksm=84e67139b391f82f0b782eab9a57eee6e5514daba46ec184acedf0ccd6601b6f1fd82973bb15&idx=1&mid=2651043143&sn=b76e194c2c1a4c4c7aec0a39ae8f31e6",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注VLA模型的"
+      ],
+      "wechatAccount": "机器之心",
+      "mentionedCompanies": [],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "VLA",
+        "人形机器人",
+        "灵巧手",
+        "上海"
+      ],
+      "wechatAccountConfigId": "jiqizhixin",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-ai-6e3732a3d35e5abd",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
+      "title": "诺奖得主和Claude联手发论文，结论是：AI时代更需“笨功夫”",
+      "summary": "7 月，诺贝尔物理学奖得主乔治·帕里西（Giorgio Parisi）与意大利物理学家弗朗西斯科·赞波尼（Francesco Zamponi）在《统计力学：理论与实验》（ JSTAT ）发表论文，题为《阻塞临界指数一个恒等式的证明》，篇幅仅十余页。 在摘要末尾，两位作者写下这样一句话： “证明通过与 Claude（Sonnet 4.6 与 Opus 4.7）的互动获得，并由我们完成验证。” 在与 Claude 进行 40 轮对话后，他们联手终结了一个困扰复杂系统统计物理领域十二年的猜想。 2021 年，意大利理论物理学家帕里西被授予诺贝尔物理学奖，理由是“发现了从原子到行星尺度物理系统中无序与涨落的相互作用”。他在学术生涯中一直致力于自旋玻璃（spin glass）理论研究，并发明副本对称性破缺（RSB）方法，用于揭示看似混乱无序的复杂系统背后的深层规律。 图 | 乔治·帕里西（Giorgio Parisi）（来源：https://www.parisigiorgio.it/） 这次合作发生的一年多前，2025 年初，帕里西演示过一则近乎讽刺的实验：他成功说服一个大型语言模型接受“5×4",
+      "type": "技术突破",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "Anthropic",
+      "publishedAt": "2026-07-07",
+      "importance": 85,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777aa4db000235b13c2e5e07e98d890fd4cf1d1b2df048a16d085828b587391f7147bc80a1f&idx=2&mid=2649800276&sn=ca282abb5783283e17ee3e8142988f90",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "anthropic",
+      "authors": [
+        "杨梦"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [
+        "Anthropic"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "机器学习",
+        "Claude",
+        "能力",
+        "演讲"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-anduril-8d72dce938f5c050",
@@ -32094,6 +33445,79 @@
       ]
     },
     {
+      "id": "user-track-wechat-deeptechchina-biotech-7ca93f5df9d6d53f",
+      "sourceId": "user-track-wechat-deeptechchina-biotech",
+      "title": "AI产业正在围着OpenAI和Anthropic两家公司打转",
+      "summary": "过去半个月，AI 行业似乎迎来了一个短暂的平静期。预期中的 GPT-5.6 和 Gemini 3.5 Pro 并未到来，除了 Sonnet 5 的发布和 Fable 5 的回归，并没有什么重磅模型面世。但穿透平静的表象，我们可能正在目睹 AI 产业结构迎来的一场前所未有的密集重组。 6 月 24 日， OpenAI 发布了它的第一颗自研芯片 Jalapeño ，一颗专为推理设计的加速器，与 Broadcom 联合开发，从设计到流片只用了九个月。同一天，OpenAI 宣布与 Broadcom 签下 10 GW 的算力部署合作协议。一家模型公司开始造芯片，这在两年前几乎不可想象。 一周后的新闻密度更高。7 月 1 日， 彭博社报道 Meta 正在组建名为 Meta Compute 的云业务部门，计划对外出售 AI 算力 ，Meta 股价当天上涨 9%，CoreWeave 下跌 14%，Nebius 下跌 17%。7 月 2 日，微软宣布成立 Frontier Company，投入 25 亿美元、配备 6000 名工程师，专门帮企业客户部署 AI。 7 月 3 日，韩国媒体披露 Meta 正",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-06",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777aa09b000231f85aae8a59dbd6a2f3d9df15ea40b0e1e654d4981153d597771d83f3bfbdd&idx=2&mid=2649800208&sn=ae9757cfd6b145f74539c0c74f909558",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "加洋"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic",
+        "字节跳动"
+      ],
+      "mentionedPeople": [
+        "Frontier Company",
+        "SB Neo"
+      ],
+      "matchedTrackingTerms": [
+        "全球"
+      ],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "生物科技"
+    },
+    {
+      "id": "user-track-wechat-deeptechchina-biotech-b2185c32a1575652",
+      "sourceId": "user-track-wechat-deeptechchina-biotech",
+      "title": "Anthropic也要造芯片了，还挖了OpenAI的芯片工程师",
+      "summary": "继 OpenAI 发布首款自研 AI 芯片之后 ，Anthropic 也在加快向芯片领域延伸。 据 The Information 报道， Anthropic 正在与三星接洽，讨论由后者参与制造一款定制 AI 芯片。 双方目前仍处于探索阶段，Anthropic 尚未确定芯片的具体用途、性能指标，也没有明确它将如何集成到服务器和数据中心。 部分媒体称，双方的讨论涉及三星的 2 纳米制程和先进封装能力。不过，Anthropic 和三星均未确认这些细节。面对媒体询问，Anthropic 也没有进一步表态， 只强调包含谷歌、亚马逊和英伟达芯片在内的多元化硬件架构仍将是其算力战略的重要组成部分。 Anthropic一直在扩大芯片供应链 Anthropic 过去给外界的印象，主要是一家专注于模型研究和 AI 安全的公司。但实际上，它与芯片底层的联系早已不止于采购算力。 2024 年，Anthropic 宣布深化与亚马逊的合作。亚马逊云科技（AWS）成为其主要云服务和训练合作伙伴，亚马逊对 Anthropic 的总投资则增加至 80 亿美元。 双方的合作并不是简单地把 Claude 部署到 AWS",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-07-04",
+      "importance": 76,
+      "source": {
+        "name": "DeepTech深科技",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA3NTIyODUzNA%3D%3D&chksm=8777a9cab00020dc7056cb04a65c7aaadb7181a179a4ba5682421e00707f6c39babea0489a83&idx=1&mid=2649800147&sn=b9b2844a91662aaafa75ce7779d6c6bd",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "胡莉花"
+      ],
+      "wechatAccount": "DeepTech深科技",
+      "mentionedCompanies": [
+        "OpenAI",
+        "Anthropic"
+      ],
+      "mentionedPeople": [
+        "Clive Chan",
+        "Hock Tan",
+        "Sam Altman",
+        "Greg Brockman"
+      ],
+      "matchedTrackingTerms": [],
+      "wechatAccountConfigId": "deeptechchina",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "生物科技"
+    },
+    {
       "id": "official-landspace-2f4bc926d2e24d39",
       "sourceId": "official-landspace",
       "title": "蓝箭航天党委获评“全国先进基层党组织”称号",
@@ -32114,6 +33538,39 @@
       "trackSlugs": [
         "space"
       ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-robotics-0c52f993002fa373",
+      "sourceId": "user-track-wechat-qbitai-robotics",
+      "title": "冷门新语言AI写不动？IEEE论文：从零到及格线，MoonBit给出完整训练路线",
+      "summary": "宗恩 投稿 量子位 | 公众号 QbitAI 对于Python、Java、JavaScript这些语言，大模型通常能给出相当成熟的答案。 但如果换做小众的、样例不足的年轻语言呢？ 大模型到底是真的掌握了通用编程能力，还是更擅长那些在训练数据里出现过无数次的语言？ 一篇新论文把这个问题拉到了台前。 论文题为《No Resource, No Benchmarks, No Problem? Evaluating and Improving LLMs for Code Generation in No-Resource Languages》，已在arXiv发布，并标注被IEEE Transactions on Software Engineering接收。研究对象不是Python、Java这类高资源语言，而是两门较新的语言： MoonBit 和 Gleam 。 论文作者来自瑞士USI Software Institute/SEART研究组和西班牙塞维利亚大学SCORE Lab/I3US Institute。SEART长期研究软件分析、开发者推荐系统和AI4SE，这让这项工作更接近一次来自软件工",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "阿里云 / Qwen",
+      "publishedAt": "2026-07-01",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6804dfade1124bdebb162289b5507bb2b88a8884965e34e1bfe656db731c0d89d86a079f&idx=3&mid=2247901046&sn=f81efbdae1fa6cca391a9c4389820598",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "RAG",
+        "IEEE"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "official-joby-969e9c5712ddb0b4",
@@ -32161,6 +33618,48 @@
       ]
     },
     {
+      "id": "user-track-wechat-qbitai-ai-7cebb8e161b3b62e",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "「开源Claude时刻」，智谱GLM5.2与Mythos被放在一起了",
+      "summary": "克雷西 发自 凹非寺 量子位 | 公众号 QbitAI 这个周末，智谱没闲着。 多家外媒接连跟进报道，华尔街时报更是直言 「中国重置了AI竞赛」 。 因为，智谱的GLM-5.2，让Claude Mythos在找安全漏洞这件事上，不再是独一无二的神话了！ 代码安全公司Semgrep写了篇测评，标题直接叫「We have Mythos at Home」。 热议的核心只有一件事， GLM-5.2在找安全漏洞这件事上追平了Mythos 。 X上的讨论也跟着炸了。 Databricks研究员Yuchen Jin说，这是 「开源领域的Claude时刻」 ，他们看到的需求增长让人震惊。 GLM找漏洞追平Mythos Semgrep做这个测试，最初其实不是为了找最强的开源模型。 他们想弄清的是另一件事，AI找漏洞的成绩，到底有多少是模型本身的能力，又有多少是外面那层脚手架的功劳。 结果把他们自己吓到了。 GLM-5.2在这次测试里没有任何加持和引导， 只有一个prompt和一堆代码裸跑，结果最终在IDOR漏洞检测上拿到39%的F1分 。 这个成绩不仅超过了同样裸跑的其他开源模型，连带着完整SDK加持、",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-06-29",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6beadfade2fc068f50e81030952ce4708792b1e9abe0461959c42b137b89e7747a5bdf2f&idx=2&mid=2247900312&sn=b5ec17232d8089ec9bb546aec201c145",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "Anthropic",
+        "Databricks",
+        "Google",
+        "智谱AI"
+      ],
+      "mentionedPeople": [
+        "唐杰",
+        "Yuchen Jin",
+        "Lior Div",
+        "Nicholas Carlini",
+        "Niels Provos"
+      ],
+      "matchedTrackingTerms": [
+        "Claude",
+        "gpt-5",
+        "能力"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
       "id": "official-biren-471121fa444b7403",
       "sourceId": "official-biren",
       "title": "壁仞科技 智绘全球 | BIRENTECH",
@@ -32181,6 +33680,46 @@
       "trackSlugs": [
         "semiconductor"
       ]
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-457c47be6e9702c7",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "DeepSeek你怎么连HR都缺啊？！",
+      "summary": "克雷西 发自 凹非寺 量子位 | 公众号 QbitAI 不是，DeepSeek，我知道你缺人，但没想到你怎么连HR都缺啊？ 这不刚好是毕业季嘛，DeepSeek官方放出了全新一轮的招聘公告。 其中除了算法数据运维这些技术型岗位， 像HR法务行政等职能部门也都在招人 。 其中HR团队还特别加了一条横线，“地位”和AGI核心业务管培生一样，你品，你细品。 那么，这次DeepSeek具体都要招聘什么样的人才呢？ 技术&职能，30+岗位同时招人 DeepSeek官方的招聘页面，一共挂出了30+岗位，覆盖7个职能方向，横跨杭州、北京和内蒙古乌兰察布三地。 大概是这么个格局，全栈开发和算法方向10个、AI核心系统研发6个、模型数据策略5个、深度学习研究员4个，再加上产品、职能、管培各若干。 技术线这块招的最多，这点也符合人们对DeepSeek的一贯印象。 特别是最新押注的Agent Harness方向，正在在疯狂加人，研究员、工程师、产品经理三个方向全部开放，实习全职都收。 搜索方向则是在招算法和架构两个子方向，DeepSeek给搜索写的团队使命是「AGI感知世界的原生感官」，要做的「让每次提问都",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "DeepSeek",
+      "publishedAt": "2026-06-26",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6dabdfade4bd1d8de3d4da2ded03214705837d50fec3c8bc97968c2e937286852f3bb19a&idx=2&mid=2247899865&sn=2b0d2607ead8596c6276d6d76007a995",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "deepseek",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "DeepSeek",
+        "阿里云",
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [
+        "又细化出了",
+        "理负责连接"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Agent",
+        "多模态",
+        "Multi-Agent"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-doubao-a21adee6c789d228",
@@ -33056,636 +34595,6 @@
         "url": "https://x.ai/news/grok-stt-and-tts-apis",
         "level": "媒体报道",
         "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "biotech",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-relativity-space-9916b33a832d5c75",
-      "sourceId": "official-relativity-space",
-      "title": "March 2026 Company Update",
-      "summary": "March brought continued progress across the Terran R program, with key milestones across design, manufacturing, testing, and launch preparations. Design This month, the team released 2,207 flight parts, with a continued focus on completing the stage one shipping assembly. Work remains c",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "publishedAt": "2026-04-13",
-      "importance": 80,
-      "source": {
-        "name": "Relativity Space",
-        "url": "https://www.relativityspace.com/press-release/2026/4/13/march-2026-company-updatenbspnbsp",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "space"
-      ]
-    },
-    {
-      "id": "official-groq-b186b408c99ba400",
-      "sourceId": "official-groq",
-      "title": "Orpheus TTS by Canopy Labs Now Live on GroqCloud",
-      "summary": "Canopy Labs’ Orpheus TTS is now live on GroqCloud, offering low-latency, expressive English and authentic Saudi Arabic text-to-speech for real-time voice apps.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-04-09",
-      "importance": 80,
-      "source": {
-        "name": "Groq",
-        "url": "https://groq.com/blog/canopy-labs-orpheus-tts-is-live-on-groqcloud",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-galactic-energy-a39e834129de50db",
-      "sourceId": "official-galactic-energy",
-      "title": "工艺革新，星河动力 CQ-50 发动机交付速度再提升",
-      "summary": "...",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "companySlug": "galactic-energy",
-      "publishedAt": "2026-04-09",
-      "importance": 80,
-      "source": {
-        "name": "星河动力",
-        "url": "https://www.galactic-energy.cn/index.php/Show/cid/11/aid/272",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "space"
-      ]
-    },
-    {
-      "id": "official-doubao-5f5061ef09368e2a",
-      "sourceId": "official-doubao",
-      "title": "Seed 全双工语音大模型发布：懂倾听、抗干扰，走向更自然的交互",
-      "summary": "作为原生全双工语音大模型，实现精准抗干扰与动态判停，交互更自然",
-      "type": "产品发布",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "companySlug": "doubao",
-      "publishedAt": "2026-04-08",
-      "importance": 81,
-      "source": {
-        "name": "豆包",
-        "url": "https://seed.bytedance.com/zh/blog/seed-%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8F%91%E5%B8%83-%E6%87%82%E5%80%BE%E5%90%AC-%E6%8A%97%E5%B9%B2%E6%89%B0-%E8%B5%B0%E5%90%91%E6%9B%B4%E8%87%AA%E7%84%B6%E7%9A%84%E4%BA%A4%E4%BA%92",
-        "level": "媒体报道",
-        "platform": "豆包 Seed"
-      },
-      "trackSlugs": [
-        "ai",
-        "biotech",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-zhipu-ai-e463bc5feeb6cb51",
-      "sourceId": "official-zhipu-ai",
-      "title": "Z.ai - Inspiring AGI to Benefit Humanity",
-      "summary": "智谱推出 AutoClaw（澳龙）——国内首款一键安装的本地 OpenClaw 客户端。内置50+Skills，集成 AutoGLM 浏览器操作能力，下载地址：https://autoclaw.zhipuai.cn/?channel=AutoClaw20",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "companySlug": "zhipu-ai",
-      "publishedAt": "2026-03-31",
-      "importance": 80,
-      "source": {
-        "name": "智谱AI",
-        "url": "https://www.zhipuai.cn/zh/news/152",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-zhipu-ai-b4390a041d0fc1e3",
-      "sourceId": "official-zhipu-ai",
-      "title": "Z.ai - Inspiring AGI to Benefit Humanity",
-      "summary": "智谱推出 AutoClaw（澳龙）——国内首款一键安装的本地 OpenClaw 客户端。内置50+Skills，集成 AutoGLM 浏览器操作能力，下载地址：https://autoclaw.zhipuai.cn/?channel=AutoClaw20",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "companySlug": "zhipu-ai",
-      "publishedAt": "2026-03-30",
-      "importance": 80,
-      "source": {
-        "name": "智谱AI",
-        "url": "https://www.zhipuai.cn/zh/news/151",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-sierra-ec8fcde20f5bfa7b",
-      "sourceId": "official-sierra",
-      "title": "Agents as a service",
-      "summary": "Sierra is reimagining software for the agent era—where you simply describe the outcome, and intelligent agents build, execute, and continuously improve the work for you. Meet Ghostwriter, the agent that creates and optimizes other agents, turning your ideas into production-ready customer experiences without clicks, code, or complexity.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-03-25",
-      "importance": 80,
-      "source": {
-        "name": "Sierra",
-        "url": "https://sierra.ai/blog/agents-as-a-service",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-form-energy-afe04636dadad0f2",
-      "sourceId": "official-form-energy",
-      "title": "Form Energy & Crusoe Announce Agreement for 12 Gigawatt-Hours of Iron-Air Batteries for AI Data Centers",
-      "summary": "Partnership advances speed to power, domestic manufacturing, and U.S. leadership in the AI–energy nexus",
-      "type": "商业进展",
-      "region": "美国",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-03-24",
-      "importance": 84,
-      "source": {
-        "name": "Form Energy",
-        "url": "https://formenergy.com/form-energy-crusoe-announce-agreement-for-12-gigawatt-hours-of-iron-air-batteries-for-ai-data-centers",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "energy",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-form-energy-efc10c6b01624ea6",
-      "sourceId": "official-form-energy",
-      "title": "Form Energy and FuturEnergy Ireland Announce Agreement To Deploy First Iron-Air Battery Storage Project In Ireland",
-      "summary": "Somerville, MA - Form Energy, an American energy storage company, and FuturEnergy Ireland, a leading Irish clean energy developer, today announced an agreement to jointly deploy a 10 MW / 1,000 MWh iron-air battery system in the northwest of Ireland. The project will be used to demonstrate the value of multi-day energy storage in helping Ireland meet its energy targets, while ensuring grid reliability, affordability and security. Anticipated to come online in 2029, this is the first internationa",
-      "type": "商业进展",
-      "region": "美国",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-03-17",
-      "importance": 84,
-      "source": {
-        "name": "Form Energy",
-        "url": "https://formenergy.com/form-energy-and-futurenergy-ireland-announce-agreement-to-deploy-first-iron-air-battery-storage-project-in-ireland",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "energy",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-axiom-space-e9f1f68dda6dc735",
-      "sourceId": "official-axiom-space",
-      "title": "Meet Axiom Space Project Astronaut Emiliano Ventura",
-      "summary": "Mar 17, 2026 - Emiliano Ventura, a Portuguese physiologist, is Axiom Space’s first-ever Project Astronaut.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "publishedAt": "2026-03-17",
-      "importance": 80,
-      "source": {
-        "name": "Axiom Space",
-        "url": "https://www.axiomspace.com/news/meet-project-astronaut-emiliano-ventura",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "space"
-      ]
-    },
-    {
-      "id": "official-galactic-energy-af974b551b9f82ac",
-      "sourceId": "official-galactic-energy",
-      "title": "“希望”升空，喜迎商业航天开门红！谷神星一号海上发射圆满成功！",
-      "summary": "...",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "companySlug": "galactic-energy",
-      "publishedAt": "2026-03-12",
-      "importance": 80,
-      "source": {
-        "name": "星河动力",
-        "url": "https://www.galactic-energy.cn/index.php/Show/cid/11/aid/271",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "space"
-      ]
-    },
-    {
-      "id": "official-horizon-robotics-862cee3791a802e5",
-      "sourceId": "official-horizon-robotics",
-      "title": "技术进展_智驾技术_自动驾驶技术-地平线HorizonRobotics",
-      "summary": "地平线是业内率先提出并践行软硬结合技术路径的智驾科技公司，坚持通过软硬协同优化的方式，将更化繁为简的算法、端云结合的数据、软硬结合的算力，结合成为系统化的技术力量，以极致的计算性能，持续逼近用户体验的上限。",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "companySlug": "horizon-robotics",
-      "publishedAt": "2026-02-28",
-      "importance": 80,
-      "source": {
-        "name": "地平线机器人",
-        "url": "https://www.horizon.auto/news/technology",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "semiconductor"
-      ]
-    },
-    {
-      "id": "official-recursion-d45d876291d478c9",
-      "sourceId": "official-recursion",
-      "title": "ADMET Predictions Get AI Boost, Federated Data Network Unites Pharma",
-      "summary": "Recursion Pharmaceuticals 发布“ADMET Predictions Get AI Boost, Federated Data Network Unites Pharma”；完整事实、数据与附件见官方原文。",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "生物科技",
-      "company": "科技产业",
-      "companySlug": "recursion",
-      "publishedAt": "2026-02-25",
-      "importance": 80,
-      "source": {
-        "name": "Recursion Pharmaceuticals",
-        "url": "https://recursion.com/news/admet-predictions-get-ai-boost-federated-data-network-unites-pharma",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "biotech",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-groq-ea5fd6bd3e942926",
-      "sourceId": "official-groq",
-      "title": "GroqCloud: Expanding to Meet Demand",
-      "summary": "The Groq LPU delivers inference with the speed and cost developers need.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-02-16",
-      "importance": 80,
-      "source": {
-        "name": "Groq",
-        "url": "https://groq.com/blog/groqcloud-expanding-to-meet-demand",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-sierra-4e574c60782245bf",
-      "sourceId": "official-sierra",
-      "title": "Year two in review",
-      "summary": "Sierra is heading into year three with over $150M in ARR, powered by rapid adoption from some of the world’s largest companies. The growth reflects a simple idea: when AI is built around real jobs to be done (not experiments), even the biggest enterprises can see meaningful impact fast.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-02-06",
-      "importance": 80,
-      "source": {
-        "name": "Sierra",
-        "url": "https://sierra.ai/blog/year-two-in-review",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-figure-ai-c6840b1905087377",
-      "sourceId": "official-figure-ai",
-      "title": "Introducing Helix 02: Full-Body Autonomy",
-      "summary": "Introducing Helix 02: Full-Body Autonomy",
-      "type": "产品发布",
-      "region": "美国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2026-01-27",
-      "importance": 82,
-      "source": {
-        "name": "Figure AI",
-        "url": "https://www.figure.ai/news/helix-02",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "robotics",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-mobileye-9bd9dce1719f03a1",
-      "sourceId": "official-mobileye",
-      "title": "Mobileye To Acquire Mentee Robotics to Accelerate Physical AI Leadership | Mobileye News",
-      "summary": "Combination brings world-class AI talent together to scale autonomous vehicles and humanoid robots globally",
-      "type": "并购",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2026-01-06",
-      "importance": 89,
-      "source": {
-        "name": "Mobileye",
-        "url": "https://www.mobileye.com/news/mobileye-to-acquire-mentee-robotics-to-accelerate-physical-ai-leadership",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-moore-threads-393f440aea2aa98e",
-      "sourceId": "official-moore-threads",
-      "title": "让 AI 开发更简单！摩尔线程发布 AI 算力本 MTT AIBOOK",
-      "summary": "摩尔线程成立于 2020 年 6 月，以全功能 GPU 为核心，致力于向全球提供加速计算的基础设施和一站式解决方案，为各行各业的数智化转型提供强大的AI计算支持。",
-      "type": "产品发布",
-      "region": "中国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "companySlug": "moore-threads",
-      "publishedAt": "2025-12-29",
-      "importance": 82,
-      "source": {
-        "name": "摩尔线程",
-        "url": "https://www.mthreads.com/news/273",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-redwood-materials-b7ed5c141929c00c",
-      "sourceId": "official-redwood-materials",
-      "title": "2025: A defining year for Redwood",
-      "summary": "In 2025, we launched Redwood Energy, opened new facilities in South Carolina and San Francisco, produced 60,000 MT of critical minerals, and deployed the largest microgrid in North America—powered by second-life batteries.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2025-12-29",
-      "importance": 80,
-      "source": {
-        "name": "Redwood Materials",
-        "url": "https://www.redwoodmaterials.com/news/2025-a-defining-year-for-redwood",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "energy",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-groq-e4d31e1c99d0908d",
-      "sourceId": "official-groq",
-      "title": "Advancing the American AI Stack",
-      "summary": "The Groq LPU delivers inference with the speed and cost developers need.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "publishedAt": "2025-12-16",
-      "importance": 80,
-      "source": {
-        "name": "Groq",
-        "url": "https://groq.com/blog/advancingamericanai",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-user-shopify-97ea8784c7dfd921",
-      "sourceId": "official-user-shopify",
-      "title": "What Is Shopify and How Does It Work? (2026)",
-      "summary": "Discover how Shopify helps you sell online and in person. Explore features and pricing plans. Start your business journey with a free trial today.",
-      "type": "公司动态",
-      "region": "全球",
-      "sector": "新消费",
-      "company": "Shopify",
-      "publishedAt": "2025-11-25",
-      "importance": 80,
-      "source": {
-        "name": "Shopify",
-        "url": "https://www.shopify.com/blog/what-is-shopify",
-        "level": "官方披露",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "track-1ccjq49",
-        "track-1p8ob4k"
-      ]
-    },
-    {
-      "id": "official-xai-3ba15a3903f44c86",
-      "sourceId": "official-xai",
-      "title": "Grok 4.1",
-      "summary": "Grok 4.1 is now available to all users on grok.com, 𝕏, and the iOS and Android apps. It is rolling out immediately in Auto mode and can be selected explicitly as “Grok 4.1” in the model picker.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2025-11-17",
-      "importance": 80,
-      "source": {
-        "name": "xAI",
-        "url": "https://x.ai/news/grok-4-1",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-recursion-ed0e5e2b6aaab21c",
-      "sourceId": "official-recursion",
-      "title": "2025's Fiercest Women in Life Sciences",
-      "summary": "Recursion Pharmaceuticals 发布“2025's Fiercest Women in Life Sciences”；完整事实、数据与附件见官方原文。",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "生物科技",
-      "company": "科技产业",
-      "companySlug": "recursion",
-      "publishedAt": "2025-11-17",
-      "importance": 80,
-      "source": {
-        "name": "Recursion Pharmaceuticals",
-        "url": "https://recursion.com/news/2025s-fiercest-women-in-life-sciences",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "biotech"
-      ]
-    },
-    {
-      "id": "official-google-3058cf74e84fa35c",
-      "sourceId": "official-google",
-      "title": "SIMA 2: A Gemini-Powered AI Agent for 3D Virtual Worlds",
-      "summary": "Introducing SIMA 2, the next milestone in our research creating general and helpful AI agents. By integrating the advanced capabilities of our Gemini models, SIMA is evolving from an instruction-foll…",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2025-11-13",
-      "importance": 80,
-      "source": {
-        "name": "Google",
-        "url": "https://deepmind.google/blog/sima-2-an-agent-that-plays-reasons-and-learns-with-you-in-virtual-3d-worlds",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "semiconductor",
-        "web3",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-sierra-a643d9116c439376",
-      "sourceId": "official-sierra",
-      "title": "Sierra Agent OS 2.0: from answers to memory and action",
-      "summary": "Sierra’s first-of-its-kind Agent Data Platform (ADP) gives agents memory, context, and intelligence — turning every interaction into a human, personalized experience. Powered by Agent OS, ADP helps companies move from answering questions to anticipating needs.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2025-11-05",
-      "importance": 80,
-      "source": {
-        "name": "Sierra",
-        "url": "https://sierra.ai/blog/agent-os-2-0",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "ai",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-sambanova-d51d13da089df4db",
-      "sourceId": "official-sambanova",
-      "title": "SambaNova Powers the AI Backbone for Three Sovereign AI Providers Across Australia, Europe and the UK",
-      "summary": "SambaNova announces three breakthrough Sovereign AI agreements with leading partners in Australia (SCX), Europe (Infercom), and the United Kingdom (Argyll), establishing the most energy-efficient, and compliant AI inference clouds for their respective regions.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "科技产业",
-      "companySlug": "sambanova",
-      "publishedAt": "2025-10-22",
-      "importance": 80,
-      "source": {
-        "name": "SambaNova Systems",
-        "url": "https://sambanova.ai/press/sambanova-powers-the-ai-backbone-for-three-sovereign-ai-providers-across-australia-europe-and-the-u.k",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "semiconductor",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-shield-ai-942bfd76e3a9ca18",
-      "sourceId": "official-shield-ai",
-      "title": "X-BAT: Unmanned VTOL AI Fighter Jet",
-      "summary": "X-BAT is the world's first AI-piloted VTOL fighter jet, built by Shield AI to bring next-generation autonomy to fighter aircraft for defense and deterrence.",
-      "type": "公司动态",
-      "region": "美国",
-      "sector": "机器人",
-      "company": "科技产业",
-      "publishedAt": "2025-10-20",
-      "importance": 80,
-      "source": {
-        "name": "Shield AI",
-        "url": "https://shield.ai/x-bat",
-        "level": "媒体报道",
-        "platform": "官方网站"
-      },
-      "trackSlugs": [
-        "robotics",
-        "web3",
-        "track-1ccjq49"
-      ]
-    },
-    {
-      "id": "official-volcengine-9b7a2048c94eb408",
-      "sourceId": "official-volcengine",
-      "title": "HiAgent产品迭代：HiAgent v2.2.0版本发布",
-      "summary": "产品迭代 · 机器学习",
-      "type": "产品发布",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "companySlug": "volcengine",
-      "publishedAt": "2025-10-15",
-      "importance": 82,
-      "source": {
-        "name": "火山引擎",
-        "url": "https://www.volcengine.com/news/detail/16",
-        "level": "媒体报道",
-        "platform": "火山引擎发布中心"
       },
       "trackSlugs": [
         "ai",
@@ -44528,52 +45437,55 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitechuang-ai",
       "name": "AI科技评论",
-      "status": "ok",
+      "status": "partial",
       "scanned": 18,
-      "accepted": 6,
-      "failed": 0,
+      "accepted": 5,
+      "failed": 1,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitechuang-robotics",
       "name": "AI科技评论",
       "status": "ok",
-      "scanned": 18,
-      "accepted": 6,
+      "scanned": 19,
+      "accepted": 2,
       "failed": 0,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitopics-ai",
       "name": "新智元",
       "status": "partial",
-      "scanned": 18,
+      "scanned": 38,
       "accepted": 6,
-      "failed": 9,
+      "failed": 5,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-aitopics-robotics",
       "name": "新智元",
       "status": "partial",
-      "scanned": 18,
-      "accepted": 6,
-      "failed": 9,
+      "scanned": 38,
+      "accepted": 1,
+      "failed": 5,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-biotech",
@@ -44587,8 +45499,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-cbea-battery-energy",
@@ -44602,8 +45513,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-chiptrend-ic-semiconductor",
@@ -44617,52 +45527,57 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-ai",
       "name": "DeepTech深科技",
       "status": "ok",
-      "scanned": 18,
-      "accepted": 6,
+      "scanned": 17,
+      "accepted": 3,
       "failed": 0,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-biotech",
       "name": "DeepTech深科技",
-      "status": "ok",
-      "scanned": 18,
-      "accepted": 6,
-      "failed": 0,
+      "status": "partial",
+      "scanned": 16,
+      "accepted": 2,
+      "failed": 1,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-materials",
       "name": "DeepTech深科技",
       "status": "ok",
-      "scanned": 18,
-      "accepted": 6,
+      "scanned": 15,
+      "accepted": 3,
       "failed": 0,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "ok",
-      "scanned": 18,
-      "accepted": 6,
-      "failed": 0,
+      "status": "error",
+      "scanned": 15,
+      "accepted": 0,
+      "failed": 1,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-eefocus-semiconductor",
@@ -44676,8 +45591,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-energy",
@@ -44691,8 +45605,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-fusion",
@@ -44706,8 +45619,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-gg-lithium-energy",
@@ -44721,8 +45633,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-gg-robot-robotics",
@@ -44736,8 +45647,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-icbank-semiconductor",
@@ -44751,8 +45661,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-ijiwei-semiconductor",
@@ -44766,30 +45675,31 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-jiqizhixin-ai",
       "name": "机器之心",
-      "status": "ok",
-      "scanned": 18,
+      "status": "partial",
+      "scanned": 26,
       "accepted": 6,
-      "failed": 0,
+      "failed": 3,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-jiqizhixin-robotics",
       "name": "机器之心",
-      "status": "ok",
-      "scanned": 18,
-      "accepted": 6,
-      "failed": 0,
+      "status": "partial",
+      "scanned": 26,
+      "accepted": 4,
+      "failed": 2,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-manufacturing",
@@ -44803,8 +45713,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-materials",
@@ -44818,30 +45727,31 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-qbitai-ai",
       "name": "量子位",
-      "status": "ok",
-      "scanned": 18,
+      "status": "partial",
+      "scanned": 19,
       "accepted": 6,
-      "failed": 0,
+      "failed": 1,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-qbitai-robotics",
       "name": "量子位",
       "status": "partial",
-      "scanned": 18,
-      "accepted": 6,
+      "scanned": 26,
+      "accepted": 3,
       "failed": 1,
       "platform": "微信",
-      "discoveryProvider": "public-wechat-aggregator",
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "discoveryProvider": "bing-or-public-index",
+      "sogouScanned": 0,
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-quantum",
@@ -44855,8 +45765,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-robospeak-robotics",
@@ -44870,8 +45779,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-robotics",
@@ -44885,8 +45793,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-semiconductor",
@@ -44900,8 +45807,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-semiconductor-technology-semiconductor",
@@ -44915,8 +45821,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-space",
@@ -44930,8 +45835,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-track-1ccjq49",
@@ -44945,8 +45849,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-track-1p8ob4k",
@@ -44960,8 +45863,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-track-wechat-web3",
@@ -44975,8 +45877,7 @@
       "retainedPrevious": true,
       "discoveryProvider": "sogou-weixin+fallback",
       "sogouScanned": 0,
-      "sogouResolved": 0,
-      "lastAttemptAt": "2026-07-31T23:15:20+00:00"
+      "sogouResolved": 0
     },
     {
       "id": "user-x-anthropicai",
@@ -45519,5 +46420,17 @@
     "healthySourceCount": 303,
     "failedSourceCount": 104,
     "retainedPreviousSourceCount": 85
+  },
+  "wechatIngestion": {
+    "generatedAt": "2026-08-01T00:29:39+00:00",
+    "configuredSources": 34,
+    "successfulSources": 11,
+    "acceptedArticles": 41,
+    "fullTextArticles": 41,
+    "indexOnlyArticles": 0,
+    "removedProxyRecords": 0,
+    "retainedSources": 23,
+    "mentionedCompanyLinks": 57,
+    "mentionedPeopleLinks": 97
   }
 }
