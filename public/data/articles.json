@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-01T09:12:49+00:00",
-  "articleCount": 1096,
+  "generatedAt": "2026-08-01T09:44:58+00:00",
+  "articleCount": 1095,
   "articles": [
     {
       "id": "user-source-source-track-rcvvao-2-b552a4acea704321",
@@ -31489,42 +31489,6 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-qbitai-ai-ade93c5ff355edb9",
-      "sourceId": "user-track-wechat-qbitai-ai",
-      "title": "GPT-5.6一小时解开50年数学猜想，700词Prompt驾驭64个子Agent",
-      "summary": "henry 发自 凹非寺 量子位 | 公众号 QbitAI 我看呐，只要以后笔记本半开着，就没有人的事儿了。 刚刚，OpenAI研究院 Ethan Knight 宣布： 昨儿刚出的GPT-5.6，用不到一小时，就完成了一道存在了半个世纪的图论猜想证明。 而这道题呢，来头也还真不小，就是大名鼎鼎的 循环双覆盖猜想（Cycle Double Cover Conjecture） 。 为解决这道题，研究员把现在最顶的GPT-5.6 Sol蹬到Ultra；GPT呢，又自己蹬了64个子agent。 最后，硬是写出了一份三页的pdf，证明完毕，Over。 发布后，还在韩国开ICML的Noam Brown（o1核心贡献者）也隔着太平洋第一时间赶来捧场。 他表示，这次和此前的Erdős单位距离问题不同，不靠什么内部特供模型，靠公开能用的GPT-5.6 Sol Ultra就把活儿干了。 而且，GPT-5.6 Sol Ultra把测试时计算并行大幅铺开，原本可能要磨上一整天的证明，如今被64个子agent压进了一个小时。 可以说，在数学这块，前沿模型的天花板还在拉高。而多agent，也能极快地加速任务的处理",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-11",
-      "importance": 76,
-      "source": {
-        "name": "量子位",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da11dddfad98cb798410ee855583c0ee19fd4be0cddfd2fdedf2295e14e941ca238f6ceeec&idx=1&mid=2247902895&sn=e1b447a17522c5595d3096ff0ec17a64",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "关注前沿科技"
-      ],
-      "wechatAccount": "量子位",
-      "mentionedCompanies": [
-        "OpenAI"
-      ],
-      "mentionedPeople": [
-        "Ethan Knight",
-        "Noam Brown"
-      ],
-      "matchedTrackingTerms": [
-        "智能体",
-        "Agent",
-        "gpt-5"
-      ],
-      "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-track-wechat-jiqizhixin-ai-8dfb9465308a5eae",
       "sourceId": "user-track-wechat-jiqizhixin-ai",
       "title": "仅11天，Claude重写百万行代码，AI史诗级工程却引来愤怒",
@@ -31947,7 +31911,7 @@
     },
     {
       "id": "user-track-wechat-deeptechchina-biotech-7ca93f5df9d6d53f",
-      "sourceId": "user-track-wechat-deeptechchina-biotech",
+      "sourceId": "user-track-wechat-deeptechchina-ai",
       "title": "AI产业正在围着OpenAI和Anthropic两家公司打转",
       "summary": "过去半个月，AI 行业似乎迎来了一个短暂的平静期。预期中的 GPT-5.6 和 Gemini 3.5 Pro 并未到来，除了 Sonnet 5 的发布和 Fable 5 的回归，并没有什么重磅模型面世。但穿透平静的表象，我们可能正在目睹 AI 产业结构迎来的一场前所未有的密集重组。 6 月 24 日， OpenAI 发布了它的第一颗自研芯片 Jalapeño ，一颗专为推理设计的加速器，与 Broadcom 联合开发，从设计到流片只用了九个月。同一天，OpenAI 宣布与 Broadcom 签下 10 GW 的算力部署合作协议。一家模型公司开始造芯片，这在两年前几乎不可想象。 一周后的新闻密度更高。7 月 1 日， 彭博社报道 Meta 正在组建名为 Meta Compute 的云业务部门，计划对外出售 AI 算力 ，Meta 股价当天上涨 9%，CoreWeave 下跌 14%，Nebius 下跌 17%。7 月 2 日，微软宣布成立 Frontier Company，投入 25 亿美元、配备 6000 名工程师，专门帮企业客户部署 AI。 7 月 3 日，韩国媒体披露 Meta 正",
       "type": "公司动态",
@@ -31969,14 +31933,24 @@
       "mentionedCompanies": [
         "OpenAI",
         "Anthropic",
-        "字节跳动"
+        "xAI",
+        "Google",
+        "字节跳动",
+        "豆包"
       ],
       "mentionedPeople": [
         "Frontier Company",
         "SB Neo"
       ],
       "matchedTrackingTerms": [
-        "全球"
+        "大模型",
+        "Grok",
+        "Claude",
+        "gpt-5",
+        "Meta",
+        "Gemini",
+        "能力",
+        "字节跳动"
       ],
       "wechatAccountConfigId": "deeptechchina",
       "wechatContentMode": "original-page",
@@ -32017,45 +31991,6 @@
       "wechatAccountConfigId": "deeptechchina",
       "wechatContentMode": "original-page",
       "wechatSectorReassignedFrom": "量子计算"
-    },
-    {
-      "id": "user-track-wechat-qbitai-robotics-78857392e1eaf0bc",
-      "sourceId": "user-track-wechat-qbitai-robotics",
-      "title": "Loop世界模型论文登顶Hugging Face，来自中国一家初创，周鸿祎陆奇都投了",
-      "summary": "允中 发自 凹非寺 量子位 | 公众号 QbitAI Prompt还没退场，Loop已经开始接管AI叙事。 这两周，硅谷开发者圈最热的词之一，是 Loop Engineering 。 它讲的是一件很“Agent时代”的事：别再手动一轮轮prompt模型了，去设计一个循环系统，让AI自己执行、检查、修正、继续跑，直到任务完成。 传统模式以prompt为核心，现在开始转向以 工作流 为核心，这也是它突然爆红的原因。 而就在大家热议“怎么让AI自己跑起来”时，另一条更硬的线也在快速升温： Looped World Models（循环世界模型） ，简称 LoopWM 。 如果说Loop Engineering解决的是“AI怎么持续干活”，那LoopWM更像是在回答一个上限更高的问题： AI在持续干活时，能不能做到持续理解、修正、推演它所面对的世界。 这也是为什么，它虽然名字里也有“Loop”，但其展现出的技术含金量和想象空间，明显不是一个量级。 它登上了 Hugging Face Papers当日 Top1 ，现已进入了AI社区更广泛的公共讨论。 Loop Engineering为什么突然火了",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-01",
-      "importance": 76,
-      "source": {
-        "name": "量子位",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6804dfade112048d76394540f337d27817c96252271a35f45a7a2b9a8d82f96cbe0be301&idx=2&mid=2247901046&sn=da7bf1ec203f115bc3c7ead358b109aa",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "关注前沿科技"
-      ],
-      "wechatAccount": "量子位",
-      "mentionedCompanies": [
-        "Anthropic",
-        "Google"
-      ],
-      "mentionedPeople": [
-        "李飞飞",
-        "Addy Osmani",
-        "陆弘远"
-      ],
-      "matchedTrackingTerms": [
-        "具身智能",
-        "机器人",
-        "世界模型"
-      ],
-      "wechatAccountConfigId": "qbitai",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-track-wechat-qbitai-robotics-0c52f993002fa373",
@@ -32128,6 +32063,46 @@
         "Claude",
         "gpt-5",
         "能力"
+      ],
+      "wechatAccountConfigId": "qbitai",
+      "wechatContentMode": "original-page"
+    },
+    {
+      "id": "user-track-wechat-qbitai-ai-457c47be6e9702c7",
+      "sourceId": "user-track-wechat-qbitai-ai",
+      "title": "DeepSeek你怎么连HR都缺啊？！",
+      "summary": "克雷西 发自 凹非寺 量子位 | 公众号 QbitAI 不是，DeepSeek，我知道你缺人，但没想到你怎么连HR都缺啊？ 这不刚好是毕业季嘛，DeepSeek官方放出了全新一轮的招聘公告。 其中除了算法数据运维这些技术型岗位， 像HR法务行政等职能部门也都在招人 。 其中HR团队还特别加了一条横线，“地位”和AGI核心业务管培生一样，你品，你细品。 那么，这次DeepSeek具体都要招聘什么样的人才呢？ 技术&职能，30+岗位同时招人 DeepSeek官方的招聘页面，一共挂出了30+岗位，覆盖7个职能方向，横跨杭州、北京和内蒙古乌兰察布三地。 大概是这么个格局，全栈开发和算法方向10个、AI核心系统研发6个、模型数据策略5个、深度学习研究员4个，再加上产品、职能、管培各若干。 技术线这块招的最多，这点也符合人们对DeepSeek的一贯印象。 特别是最新押注的Agent Harness方向，正在在疯狂加人，研究员、工程师、产品经理三个方向全部开放，实习全职都收。 搜索方向则是在招算法和架构两个子方向，DeepSeek给搜索写的团队使命是「AGI感知世界的原生感官」，要做的「让每次提问都",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "DeepSeek",
+      "publishedAt": "2026-06-26",
+      "importance": 76,
+      "source": {
+        "name": "量子位",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzIzNjc1NzUzMw%3D%3D&chksm=e8da6dabdfade4bd1d8de3d4da2ded03214705837d50fec3c8bc97968c2e937286852f3bb19a&idx=2&mid=2247899865&sn=2b0d2607ead8596c6276d6d76007a995",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "companySlug": "deepseek",
+      "authors": [
+        "关注前沿科技"
+      ],
+      "wechatAccount": "量子位",
+      "mentionedCompanies": [
+        "DeepSeek",
+        "阿里云",
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [
+        "又细化出了",
+        "理负责连接"
+      ],
+      "matchedTrackingTerms": [
+        "大模型",
+        "Agent",
+        "多模态",
+        "Multi-Agent"
       ],
       "wechatAccountConfigId": "qbitai",
       "wechatContentMode": "original-page"
@@ -42754,10 +42729,10 @@
     {
       "id": "user-track-wechat-deeptechchina-ai",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "partial",
       "scanned": 17,
-      "accepted": 3,
-      "failed": 0,
+      "accepted": 4,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -42766,14 +42741,16 @@
     {
       "id": "user-track-wechat-deeptechchina-biotech",
       "name": "DeepTech深科技",
-      "status": "ok",
+      "status": "error",
       "scanned": 16,
-      "accepted": 1,
-      "failed": 0,
+      "accepted": 0,
+      "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-deeptechchina-materials",
@@ -42790,14 +42767,16 @@
     {
       "id": "user-track-wechat-deeptechchina-quantum",
       "name": "DeepTech深科技",
-      "status": "partial",
+      "status": "error",
       "scanned": 15,
-      "accepted": 1,
+      "accepted": 0,
       "failed": 1,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
-      "sogouResolved": 0
+      "sogouResolved": 0,
+      "retainedPrevious": true,
+      "error": "Discovery returned only proxy/index pages; no original mp.weixin.qq.com article was published"
     },
     {
       "id": "user-track-wechat-eefocus-semiconductor",
@@ -42966,8 +42945,8 @@
       "name": "量子位",
       "status": "partial",
       "scanned": 26,
-      "accepted": 4,
-      "failed": 4,
+      "accepted": 3,
+      "failed": 3,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -43618,15 +43597,15 @@
     }
   },
   "wechatIngestion": {
-    "generatedAt": "2026-08-01T09:12:49+00:00",
+    "generatedAt": "2026-08-01T09:44:58+00:00",
     "configuredSources": 34,
-    "successfulSources": 12,
-    "acceptedArticles": 42,
-    "fullTextArticles": 42,
+    "successfulSources": 10,
+    "acceptedArticles": 40,
+    "fullTextArticles": 40,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
-    "retainedSources": 22,
-    "mentionedCompanyLinks": 59,
-    "mentionedPeopleLinks": 97
+    "retainedSources": 24,
+    "mentionedCompanyLinks": 60,
+    "mentionedPeopleLinks": 90
   }
 }
