@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-08-02T00:35:10+00:00",
-  "articleCount": 1200,
+  "generatedAt": "2026-08-02T08:16:28+00:00",
+  "articleCount": 1198,
   "articles": [
     {
       "id": "user-source-source-track-zlbbw1-b51d8a2bf6542266",
@@ -31786,6 +31786,44 @@
       "wechatContentMode": "original-page"
     },
     {
+      "id": "user-track-wechat-aitechuang-robotics-c07012b46b90e158",
+      "sourceId": "user-track-wechat-aitechuang-robotics",
+      "title": "WAIC 观察：通用具身智能要在有生之年实现，急需「物理 AI 基建狂魔」",
+      "summary": "今天的物理 AI，不只比“武功”，更得拼“内力”。 作者 丨 齐铖湧 董子博 编辑丨马晓宁 WAIC 2026 到了最后一天，逛了无数个具身展台，心里不禁有了不少感慨。 柔性抓取可以抓异形物体了，长程任务也更复杂了——技术飞快进步，好像通用具身离我们已经不远。但 Demo 越炫，人气越足，作为一个参加过 n 次的 WAIC“老人”，就越觉得这届 WAIC 似乎少了些什么—— 模型吹得天花乱坠，底层的数据基建却鲜少有人谈及。 数据，无疑是具身智能行业中“房间里的大象”——在 WAIC 上随便和一位从业者深谈两句，大家都会不约而同地陷入同一种焦虑：实在太缺数据了。 在AI科技评论看来，要构建具身智能的数据基础设施，必须同时回答两个极其硬核的问题： 第一，你能搞到多少数据？ 第二，这些异构的、非结构化的数据，能不能被有效地共同学习？ 带着这两个问题，在今年的 WAIC 现场，有一家公司展台吸引了 AI 科技评论的关注：跨维智能（以下简称“跨维”）。 用一句话来说： 要实现通用的具身智能，跨维想做的，是“物理 AI 基建狂魔”。 要让具身智能通用泛化，首先要做到智能的涌现，去理解复杂多变的真实",
+      "type": "公司动态",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "阿里云 / Qwen",
+      "publishedAt": "2026-07-20",
+      "importance": 76,
+      "source": {
+        "name": "AI科技评论",
+        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b216aa7eca87c5305f613d9fc0fba02e39c7325dfd7c99fb02ef623a67fc106fecc54b448&idx=1&mid=2247739641&sn=62c440fbf1321b4afc9b76609948a4b5",
+        "level": "媒体报道",
+        "platform": "微信"
+      },
+      "authors": [
+        "齐铖湧 董子博"
+      ],
+      "wechatAccount": "AI科技评论",
+      "mentionedCompanies": [
+        "阿里云 / Qwen"
+      ],
+      "mentionedPeople": [],
+      "matchedTrackingTerms": [
+        "机器人",
+        "具身智能",
+        "人形机器人",
+        "VLA",
+        "世界模型",
+        "WAIC",
+        "RSS"
+      ],
+      "wechatAccountConfigId": "aitechuang",
+      "wechatContentMode": "original-page",
+      "wechatSectorReassignedFrom": "机器人"
+    },
+    {
       "id": "user-track-wechat-jiqizhixin-ai-987432f619930d89",
       "sourceId": "user-track-wechat-jiqizhixin-ai",
       "title": "阿里荣膺 ACL 2026 最佳资源论文奖，揭示AI Agent的专家能力鸿沟",
@@ -32053,8 +32091,8 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-aitopics-robotics-ebee7c609ed7028c",
-      "sourceId": "user-track-wechat-aitopics-robotics",
+      "id": "user-track-wechat-aitopics-ai-ebee7c609ed7028c",
+      "sourceId": "user-track-wechat-aitopics-ai",
       "title": "ChatGPT终于能「搜自己」！攒了近4年的对话，一键翻出",
       "summary": "新智元报道 ChatGPT推出快满4年了。 这4年，你跟它聊过多少句话、传过多少张图、开过多少个项目，大概连自己也数不清。 可有一个痛点，你一定记得：想翻回三个月前那次对话，基本得靠运气。 侧边栏那个搜索框约等于摆设，会话一多，搜旧对话近乎不可能。 在OpenAI开发者社区，苦这个旧搜索久矣： 终于能找到那条消息了，为什么拖了这么久；那个老搜索栏，从来就没好用过；会话一多，搜旧对话就变得不可能；翻旧对话简直成了噩梦…… 这不是零星几句抱怨。 ChatGPT什么都能生成，可是你写过的稿、讨论过的代码、生成过的图、囤过的资料，随着对话越堆越多，「翻记录」越来越像大海捞针，侧边栏拉到手酸，也未必找得到三周前那次关键讨论。 而这一次，变了。 7月14日，OpenAI给ChatGPT上线了一套全新的统一搜索，把你在ChatGPT里的所有东西，塞进了一个统一入口：历史聊天、项目、上传的文档、生成的图片，全部能搜。 Web、iOS、Android三端同步，从免费版到企业版，全球所有计划同步开放。 真去把那几年的「存货」翻一遍你就会反应过来：ChatGPT第一次能「搜自己」了。 而这，绝不是补了个搜索",
       "type": "公司动态",
@@ -32083,11 +32121,14 @@
         "Sam Altman"
       ],
       "matchedTrackingTerms": [
-        "机器人"
+        "大模型",
+        "Claude",
+        "ChatGPT",
+        "gpt-5",
+        "Gemini"
       ],
       "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人"
+      "wechatContentMode": "original-page"
     },
     {
       "id": "official-weride-0490c2ff99a87ed4",
@@ -32781,45 +32822,6 @@
       "wechatContentMode": "original-page"
     },
     {
-      "id": "user-track-wechat-aitopics-ai-30dfd23b2ff6c221",
-      "sourceId": "user-track-wechat-aitopics-ai",
-      "title": "诺奖得主、美联储前主席伯南克入局Anthropic！",
-      "summary": "新智元报道 【新智元导读】 Anthropic宣布诺贝尔经济学奖得主、前美联储主席伯南克加入长期利益信托（LTBT），成为第四位受托人。下一场「2008年环球金融危机」级风险，真的来自AI吗？ 2008年那个寒冷的秋夜，雷曼兄弟轰然倒塌，全球金融体系如多米诺骨牌般摇摇欲坠。 美联储主席本·伯南克坐在会议桌前，眼神疲惫却坚定——他必须用制度这把「手术刀」，切除系统性风险的毒瘤，避免大萧条重演。 十八年后，同样的伯南克，却悄然走进了另一场可能更剧烈的风暴中心： 人工智能 。 2026年7月9日，Anthropic正式宣布，诺贝尔经济学奖得主、曾带领美国穿越2008年金融危机的伯南克，加入其 长期利益信托基金（Long-Term Benefit Trust，LTBT） 。 人们惊呼：AI接管全球经济的序幕，已经拉开？ 管美元的人，来管AI了 这不是一个普通的任命。 LTBT是Anthropic治理结构里最特殊的一环：受托人 不持有公司股权、不分享利润 ，只按服务时间领取报酬，却 有权任免Anthropic的董事会成员。 而且这个权力会随时间扩大，直至控制董事会多数席位。 换句话说，这是一群「",
-      "type": "技术突破",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "publishedAt": "2026-07-10",
-      "importance": 85,
-      "source": {
-        "name": "新智元",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzI3MTA0MTk1MA%3D%3D&chksm=f12e581dc659d10b0ccf12c74550a39a3f4073a264c410a443395896c406d8657edd1c9cfed8&idx=2&mid=2652712172&sn=6c269c478f7a1206b8782efaca11191d",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "companySlug": "anthropic",
-      "authors": [
-        "ASI启示录"
-      ],
-      "wechatAccount": "新智元",
-      "mentionedCompanies": [
-        "Anthropic"
-      ],
-      "mentionedPeople": [
-        "Long-Term Benefit Trust",
-        "Neil Buddy",
-        "Richard Fontaine",
-        "Mariano-Florentino Cu",
-        "Daniela Amodei",
-        "斯学会杰出"
-      ],
-      "matchedTrackingTerms": [
-        "轮融资"
-      ],
-      "wechatAccountConfigId": "aitopics",
-      "wechatContentMode": "original-page"
-    },
-    {
       "id": "user-track-wechat-qbitai-robotics-2dd1b00738795f03",
       "sourceId": "user-track-wechat-qbitai-robotics",
       "title": "全球首个「具身原生」预训练模型发布，从物理世界出发为机器人造大脑！",
@@ -32941,49 +32943,6 @@
       ],
       "wechatAccountConfigId": "aitechuang",
       "wechatContentMode": "original-page"
-    },
-    {
-      "id": "user-track-wechat-aitechuang-robotics-196420be3f329de6",
-      "sourceId": "user-track-wechat-aitechuang-robotics",
-      "title": "独家｜把芯片设计交给 AI，上海 AI Lab 李林阳创业获数千万元首轮融资",
-      "summary": "继晶圆制造后，芯片设计会成为半导体产业下一项被平台化的能力吗？ 作者丨 陈悦琳 编辑丨 包永刚 芯片设计服务正在迎来AI拐点。 雷峰网独家获悉，一家国内创企Novasilicon（芯星元）率先入局，近日已完成首轮融资，由五源资本独家投资数千万元。 与传统Design House不同的是，Novasilicon认为AI不再只是工具。“我们更希望从大模型本身出发，重新思考芯片设计。”创始人兼CEO李林阳告诉雷峰网。 要真正实现这一设想，仅懂AI或仅懂芯片都不够。 公开资料显示，李林阳目前担任上海人工智能实验室青年科学家，曾参与国内首个开源大语言模型MOSS研发，并带队完成国内首个兼具专业围棋能力与自然语言思维解释能力的大模型InternThinker。去年起他还负责了AI for Chip Design相关项目。 另外两位联合创始人则进一步补齐了芯片设计所需的工程能力——COO薛建喜深耕数字芯片设计二十余年，曾对接国内多家知名AI芯片企业；CTO陈建球为翱捷科技早期核心成员，拥有二十余年模拟及混合信号芯片设计经验。 Novasilicon的目标是服务包括大模型企业、智能机器人公司、云计算服",
-      "type": "融资",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "OpenAI",
-      "publishedAt": "2026-07-09",
-      "importance": 91,
-      "source": {
-        "name": "AI科技评论",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2d13a7eca4059dba767c15b75766f61383f7463d4ffdec75f63af2c991f3cee047d38511&idx=2&mid=2247738496&sn=7ec58206cfe8acc18eb03a52340a101d",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "陈悦琳"
-      ],
-      "wechatAccount": "AI科技评论",
-      "mentionedCompanies": [
-        "OpenAI"
-      ],
-      "mentionedPeople": [
-        "Design House",
-        "Chip Design",
-        "AI EDA",
-        "AI Design House",
-        "曾参与国内",
-        "实验室青年"
-      ],
-      "matchedTrackingTerms": [
-        "机器人",
-        "世界模型",
-        "强化学习",
-        "上海",
-        "DeepMind"
-      ],
-      "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-track-wechat-qbitai-ai-032105c91d8d3133",
@@ -33210,51 +33169,6 @@
       ],
       "wechatAccountConfigId": "jiqizhixin",
       "wechatContentMode": "original-page"
-    },
-    {
-      "id": "user-track-wechat-aitechuang-robotics-6bc398cf6e91c0c1",
-      "sourceId": "user-track-wechat-aitechuang-robotics",
-      "title": "独家｜姚顺雨前同事田永龙加盟腾讯",
-      "summary": "鹅厂AI版图再添一员猛将 作者丨 成妍菁 编辑丨 董子博 AI科技评论独家获悉， OpenAI 前研究员 Yonglong Tian（田永龙）已于近期加入腾讯， 知情人士透露，其后续或将参与参与 VLM（视觉语言模型）相关研发。 一位与其相熟的人士向雷峰网表示， 田永龙在圈内口碑不错，“人挺好，与姚顺雨关系也不错”。 田永龙此前在 OpenAI 担任 Member of Technical Staff，主要研究方向包括计算机视觉、视觉表征学习（Representation Learning）以及生成式模型。在 OpenAI 之前，他曾在“谷歌系”深耕多年。2022年底，他加入位于剑桥的Google Research担任高级研究科学家，随后于2024年5月转入Google DeepMind。 据了解，田永龙与腾讯混元核心成员姚顺雨有过 OpenAI 阶段的共事经历。从履历路径来看，田永龙属于典型的“视觉系”研究员。 其本科毕业于清华大学，随后在香港中文大学获得研究硕士学位，之后赴 MIT 攻读博士，博士期间，其研究重点集中在对比学习、视觉表征学习等方向，并参与过 SupContrast",
-      "type": "公司动态",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-08",
-      "importance": 76,
-      "source": {
-        "name": "AI科技评论",
-        "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2a22a7eca33408dee051c91e112ee3bc6a301072295eed91dded6e59fe349904d06228cb&idx=3&mid=2247738289&sn=0aa5a1e1cf7ccbc7d5360a826640b714",
-        "level": "媒体报道",
-        "platform": "微信"
-      },
-      "authors": [
-        "成妍菁"
-      ],
-      "wechatAccount": "AI科技评论",
-      "mentionedCompanies": [
-        "OpenAI",
-        "Google DeepMind",
-        "百度",
-        "Google",
-        "腾讯 / 元宝"
-      ],
-      "mentionedPeople": [
-        "姚顺雨",
-        "Yonglong Tian",
-        "Technical Staff",
-        "Representation Learning",
-        "随后于",
-        "期间",
-        "任高级研究",
-        "攻读"
-      ],
-      "matchedTrackingTerms": [
-        "DeepMind"
-      ],
-      "wechatAccountConfigId": "aitechuang",
-      "wechatContentMode": "original-page",
-      "wechatSectorReassignedFrom": "机器人"
     },
     {
       "id": "user-track-wechat-deeptechchina-ai-6e3732a3d35e5abd",
@@ -45470,10 +45384,10 @@
     {
       "id": "user-track-wechat-aitechuang-robotics",
       "name": "AI科技评论",
-      "status": "partial",
+      "status": "ok",
       "scanned": 19,
-      "accepted": 3,
-      "failed": 2,
+      "accepted": 2,
+      "failed": 0,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -45496,8 +45410,8 @@
       "name": "新智元",
       "status": "partial",
       "scanned": 38,
-      "accepted": 2,
-      "failed": 7,
+      "accepted": 1,
+      "failed": 8,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -45671,7 +45585,7 @@
       "status": "error",
       "scanned": 0,
       "accepted": 0,
-      "failed": 5,
+      "failed": 6,
       "platform": "微信",
       "error": "No verified public WeChat article passed account and entity checks; previous snapshot retained",
       "retainedPrevious": true,
@@ -45699,7 +45613,7 @@
       "status": "partial",
       "scanned": 26,
       "accepted": 6,
-      "failed": 6,
+      "failed": 7,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -45711,7 +45625,7 @@
       "status": "partial",
       "scanned": 26,
       "accepted": 4,
-      "failed": 5,
+      "failed": 6,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -45751,7 +45665,7 @@
       "status": "partial",
       "scanned": 19,
       "accepted": 6,
-      "failed": 3,
+      "failed": 4,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -45763,7 +45677,7 @@
       "status": "partial",
       "scanned": 26,
       "accepted": 3,
-      "failed": 3,
+      "failed": 4,
       "platform": "微信",
       "discoveryProvider": "bing-or-public-index",
       "sogouScanned": 0,
@@ -46441,15 +46355,15 @@
     "retainedPreviousSourceCount": 90
   },
   "wechatIngestion": {
-    "generatedAt": "2026-08-02T00:35:10+00:00",
+    "generatedAt": "2026-08-02T08:16:28+00:00",
     "configuredSources": 34,
     "successfulSources": 11,
-    "acceptedArticles": 42,
-    "fullTextArticles": 42,
+    "acceptedArticles": 40,
+    "fullTextArticles": 40,
     "indexOnlyArticles": 0,
     "removedProxyRecords": 0,
     "retainedSources": 23,
-    "mentionedCompanyLinks": 62,
-    "mentionedPeopleLinks": 110
+    "mentionedCompanyLinks": 56,
+    "mentionedPeopleLinks": 90
   }
 }
