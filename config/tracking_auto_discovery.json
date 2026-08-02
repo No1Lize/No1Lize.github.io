@@ -1,45 +1,45 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-01T11:03:02+00:00",
+  "updatedAt": "2026-08-02T08:26:21+00:00",
   "tracks": {
     "ai": {
-      "lastExpandedAt": "2026-08-01T11:01:55+00:00"
+      "lastExpandedAt": "2026-08-02T08:25:51+00:00"
     },
     "robotics": {
-      "lastExpandedAt": "2026-08-01T11:02:14+00:00"
+      "lastExpandedAt": "2026-08-02T08:26:06+00:00"
     },
     "semiconductor": {
-      "lastExpandedAt": "2026-08-01T11:02:30+00:00"
+      "lastExpandedAt": "2026-08-02T08:26:21+00:00"
     },
     "energy": {
       "lastExpandedAt": "2026-08-01T11:03:02+00:00"
     },
     "biotech": {
-      "lastExpandedAt": "2026-07-31T14:45:28+00:00"
+      "lastExpandedAt": "2026-08-02T08:23:12+00:00"
     },
     "quantum": {
-      "lastExpandedAt": "2026-08-01T10:59:18+00:00"
+      "lastExpandedAt": "2026-08-02T08:23:29+00:00"
     },
     "space": {
-      "lastExpandedAt": "2026-08-01T10:59:33+00:00"
+      "lastExpandedAt": "2026-08-02T08:23:43+00:00"
     },
     "web3": {
-      "lastExpandedAt": "2026-08-01T10:59:49+00:00"
+      "lastExpandedAt": "2026-08-02T08:23:57+00:00"
     },
     "materials": {
-      "lastExpandedAt": "2026-08-01T11:00:06+00:00"
+      "lastExpandedAt": "2026-08-02T08:24:12+00:00"
     },
     "manufacturing": {
-      "lastExpandedAt": "2026-08-01T11:00:24+00:00"
+      "lastExpandedAt": "2026-08-02T08:24:27+00:00"
     },
     "fusion": {
-      "lastExpandedAt": "2026-08-01T11:00:51+00:00"
+      "lastExpandedAt": "2026-08-02T08:24:52+00:00"
     },
     "track-1ccjq49": {
-      "lastExpandedAt": "2026-08-01T11:01:11+00:00"
+      "lastExpandedAt": "2026-08-02T08:25:12+00:00"
     },
     "track-1p8ob4k": {
-      "lastExpandedAt": "2026-08-01T11:01:28+00:00"
+      "lastExpandedAt": "2026-08-02T08:25:25+00:00"
     }
   },
   "added": [
@@ -2175,6 +2175,51 @@
       "addedAt": "2026-08-01T11:02:30+00:00",
       "evidence": [
         "corpus-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "联盟",
+      "addedAt": "2026-08-02T08:23:12+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "科学智能开放生态联盟",
+      "addedAt": "2026-08-02T08:23:12+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "科学智能开放生态",
+      "addedAt": "2026-08-02T08:23:12+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "space",
+      "kind": "keywords",
+      "value": "Tesla",
+      "addedAt": "2026-08-02T08:23:43+00:00",
+      "evidence": [
+        "corpus-term"
+      ]
+    },
+    {
+      "track": "robotics",
+      "kind": "sources",
+      "value": "https://hackaday.com/",
+      "addedAt": "2026-08-02T08:26:06+00:00",
+      "evidence": [
+        "wikidata-official-site"
       ]
     }
   ],
