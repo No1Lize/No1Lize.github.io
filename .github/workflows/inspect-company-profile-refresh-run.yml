@@ -19,27 +19,29 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Export recent production and active runs
+      - name: Export production and repository queue state
         shell: bash
         run: |
           set -euo pipefail
+          fields='databaseId,name,workflowName,createdAt,updatedAt,status,conclusion,headBranch,headSha,event,url'
           gh run list \
             --workflow company-profile-incremental-refresh.yml \
             --branch main \
             --limit 10 \
             --json databaseId,createdAt,updatedAt,status,conclusion,headSha,event,url \
             > /tmp/company-profile-incremental-runs.json
-          gh run list \
-            --limit 50 \
-            --json databaseId,name,workflowName,createdAt,updatedAt,status,conclusion,headBranch,headSha,event,url \
-            > /tmp/all-recent-runs.json
+          gh run list --status in_progress --limit 100 --json "$fields" \
+            > /tmp/in-progress-runs.json
+          gh run list --status pending --limit 100 --json "$fields" \
+            > /tmp/pending-runs.json
           python - <<'PY'
           import json
 
-          rows = json.load(open('/tmp/all-recent-runs.json', encoding='utf-8'))
-          active = [row for row in rows if row.get('status') != 'completed']
-          json.dump(active, open('/tmp/active-runs.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
-          print(json.dumps(active, ensure_ascii=False, indent=2))
+          in_progress = json.load(open('/tmp/in-progress-runs.json', encoding='utf-8'))
+          pending = json.load(open('/tmp/pending-runs.json', encoding='utf-8'))
+          payload = {'inProgress': in_progress, 'pending': pending}
+          json.dump(payload, open('/tmp/active-runs.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+          print(json.dumps(payload, ensure_ascii=False, indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
