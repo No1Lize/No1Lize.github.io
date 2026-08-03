@@ -14,9 +14,12 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import {
   starInvestorInstitutionHref,
+  starInvestorReviewLabels,
+  starInvestorReviewReasonLabels,
   starMarketInvestorCompanies,
   starMarketInvestorRecords,
   starMarketInvestorStats,
+  type StarInvestorReviewStatus,
 } from "@/lib/star-market-investor-data";
 import styles from "./star-market-investor-directory.module.css";
 
@@ -27,10 +30,13 @@ function numberLabel(value?: number): string {
   return `${value.toLocaleString("zh-CN")} 股`;
 }
 
+type ReviewFilter = "all" | Exclude<StarInvestorReviewStatus, "rejected">;
+
 export function StarMarketInvestorDirectory() {
   const [query, setQuery] = useState("");
   const [sector, setSector] = useState("全部赛道");
   const [company, setCompany] = useState("全部公司");
+  const [reviewFilter, setReviewFilter] = useState<ReviewFilter>("all");
   const [contactOnly, setContactOnly] = useState(false);
 
   const sectors = useMemo(
@@ -47,6 +53,7 @@ export function StarMarketInvestorDirectory() {
     return starMarketInvestorRecords.filter((record) => {
       if (sector !== "全部赛道" && record.company.sector !== sector) return false;
       if (company !== "全部公司" && record.company.name !== company) return false;
+      if (reviewFilter !== "all" && record.investor.reviewStatus !== reviewFilter) return false;
       if (contactOnly && record.investor.contactStatus !== "prospectus-public") return false;
       if (!needle) return true;
       const institution = record.directoryInstitution;
@@ -62,15 +69,16 @@ export function StarMarketInvestorDirectory() {
         .filter(Boolean)
         .some((value) => String(value).toLocaleLowerCase("zh-CN").includes(needle));
     });
-  }, [company, contactOnly, query, sector]);
+  }, [company, contactOnly, query, reviewFilter, sector]);
 
   return (
     <div className={styles.directory}>
-      <section className={styles.stats} aria-label="科创板招股说明书自动抽取统计">
-        <div><span>已覆盖公司</span><strong>{starMarketInvestorStats.companies}</strong></div>
-        <div><span>待核验抽取记录</span><strong>{starMarketInvestorStats.investors}</strong></div>
-        <div><span>匹配站内机构</span><strong>{starMarketInvestorStats.linkedInstitutions}</strong></div>
-        <div><span>含联系字段记录</span><strong>{starMarketInvestorStats.prospectusContacts}</strong></div>
+      <section className={styles.stats} aria-label="科创板招股说明书自动抽取审核统计">
+        <div><span>原始抽取</span><strong>{starMarketInvestorStats.extracted}</strong></div>
+        <div><span>质量门后候选</span><strong>{starMarketInvestorStats.investors}</strong></div>
+        <div><span>待人工核验</span><strong>{starMarketInvestorStats.needsReview}</strong></div>
+        <div><span>已人工核验</span><strong>{starMarketInvestorStats.verified}</strong></div>
+        <div><span>自动排除</span><strong>{starMarketInvestorStats.rejected}</strong></div>
       </section>
 
       <div className={styles.filters}>
@@ -89,6 +97,15 @@ export function StarMarketInvestorDirectory() {
         <select aria-label="按上市公司筛选" value={company} onChange={(event) => setCompany(event.target.value)}>
           {companies.map((item) => <option key={item}>{item}</option>)}
         </select>
+        <select
+          aria-label="按审核状态筛选"
+          value={reviewFilter}
+          onChange={(event) => setReviewFilter(event.target.value as ReviewFilter)}
+        >
+          <option value="all">全部可见候选</option>
+          <option value="verified">已人工核验</option>
+          <option value="needs_review">待人工核验</option>
+        </select>
         <label className={styles.checkbox}>
           <input
             type="checkbox"
@@ -101,16 +118,22 @@ export function StarMarketInvestorDirectory() {
       </div>
 
       {filtered.length ? (
-        <section className={styles.grid} aria-label="科创板招股说明书自动抽取候选记录">
+        <section className={styles.grid} aria-label="科创板招股说明书质量门后候选记录">
           {filtered.map((record) => {
             const { investor, company: listedCompany, directoryInstitution } = record;
             const contact = investor.publicContact;
             const prospectusPage = `${listedCompany.prospectus.url}#page=${investor.sourcePage}`;
+            const reasonLabels = investor.reviewReasons
+              .map((reason) => starInvestorReviewReasonLabels[reason] ?? reason)
+              .filter((reason, index, values) => values.indexOf(reason) === index);
             return (
               <article className={styles.card} key={`${listedCompany.slug}:${investor.id}`}>
                 <div className={styles.cardTop}>
                   <span>{investor.investorType}</span>
                   <span>{listedCompany.sector}</span>
+                  <span className={styles.reviewBadge} data-review-status={investor.reviewStatus}>
+                    {starInvestorReviewLabels[investor.reviewStatus]}
+                  </span>
                 </div>
 
                 <div className={styles.titleRow}>
@@ -125,11 +148,11 @@ export function StarMarketInvestorDirectory() {
 
                 <dl className={styles.holdings}>
                   <div>
-                    <dt>抽取持股数</dt>
+                    <dt>自动抽取持股数</dt>
                     <dd>{numberLabel(investor.preIpoShares)}</dd>
                   </div>
                   <div>
-                    <dt>抽取比例 · 待核验</dt>
+                    <dt>自动抽取比例</dt>
                     <dd>
                       {investor.preIpoOwnershipPct === undefined
                         ? "未可靠提取"
@@ -143,6 +166,9 @@ export function StarMarketInvestorDirectory() {
                 </dl>
 
                 <p className={styles.evidence}>证据摘录：{investor.evidence}</p>
+                {reasonLabels.length > 0 && (
+                  <p className={styles.reviewNote}>审核提示：{reasonLabels.join("；")}</p>
+                )}
 
                 <div className={styles.contact}>
                   {contact?.officeAddress && (
@@ -184,13 +210,13 @@ export function StarMarketInvestorDirectory() {
       ) : (
         <section className={styles.empty}>
           <ShieldCheck size={26} />
-          <strong>当前筛选没有自动抽取候选记录</strong>
-          <p>自然人股东及其私人联系方式不会进入该目录。</p>
+          <strong>当前筛选没有质量门后候选记录</strong>
+          <p>被判定为句子碎片、通用法律形式或上市公司自身名称的记录不会展示。</p>
         </section>
       )}
 
       <p className={styles.disclosure}>
-        本目录为测试版自动抽取结果，不等同于经人工确认的机构股东名册。名称、持股字段和联系方式归属均应通过证据页及官方招股说明书核验；自然人股东、手机号码、身份证件信息和家庭地址不公开。
+        当前质量门在页面读取数据时运行，只排除明显的句子碎片、通用法律形式和上市公司自身名称；其余记录默认进入“待人工核验”，不会自动标记为已核验。解析器中的持股字段绑定与联系方式归属仍需继续修复。
       </p>
     </div>
   );
