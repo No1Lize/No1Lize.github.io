@@ -319,7 +319,10 @@ def migrate(
     result["articleCount"] = len(migrated)
     if isinstance(payload.get("sourceStatus"), list):
         result["sourceStatus"] = statuses
-    result, company_entity_report = resolve_company_entities(result)
+    result, company_entity_report = resolve_company_entities(
+        result,
+        allowed_slugs=company_route_slugs,
+    )
     report["resolvedCompanyEntities"] = company_entity_report["changedArticles"]
     if any(report.values()):
         result["generatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
