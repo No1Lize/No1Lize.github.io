@@ -1,0 +1,70 @@
+name: Discover candidate companies
+
+on:
+  schedule:
+    - cron: "45 7 * * *"
+      timezone: "Asia/Taipei"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - tools/build_company_candidates.py
+      - tools/resolve_company_entities.py
+      - config/company_candidate_decisions.json
+      - config/official_company_sources.json
+      - tests/test_company_candidates.py
+      - .github/workflows/company-candidate-discovery.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate candidate discovery
+        run: |
+          python -m py_compile tools/build_company_candidates.py
+          python -m unittest tests.test_company_candidates
+      - name: Build candidate review snapshot
+        run: |
+          python tools/build_company_candidates.py
+          python tools/build_company_candidates.py --check
+      - name: Commit changed candidate evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- public/data/company_candidates.json; then
+            echo "No semantic candidate changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/company_candidates.json
+          git commit -m "data: refresh candidate company review pool"
+          for attempt in 1 2 3; do
+            git pull --rebase -X theirs origin main
+            python tools/build_company_candidates.py
+            python tools/build_company_candidates.py --check
+            git add public/data/company_candidates.json
+            if ! git diff --cached --quiet; then
+              git commit --amend --no-edit
+            fi
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
