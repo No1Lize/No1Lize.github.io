@@ -27,10 +27,20 @@ class CompanyProfileIncrementalWorkflowTests(unittest.TestCase):
         self.assertIn("--kind company", text)
         self.assertIn('--slug "$slug"', text)
 
+    def test_evidence_alignment_reaches_a_fixed_point(self):
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("python tools/stabilize_venture_research_evidence.py", text)
+        self.assertIn("python tools/stabilize_venture_research_evidence.py --check", text)
+        self.assertNotIn("python tools/refine_venture_research_evidence.py\n", text)
+
     def test_profiles_are_only_committed_after_quality_validation(self):
         text = WORKFLOW.read_text(encoding="utf-8")
+        evidence_check = text.index(
+            "python tools/stabilize_venture_research_evidence.py --check"
+        )
         validation = text.index("python tools/crawl_venture_profiles.py --validate-only")
         commit = text.index('git commit -m "data: process queued company profile refreshes"')
+        self.assertLess(evidence_check, commit)
         self.assertLess(validation, commit)
 
 
