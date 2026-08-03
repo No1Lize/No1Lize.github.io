@@ -81,11 +81,11 @@ export function ChannelUpdateDirectoryClient({
       }),
     [allItems, keyword, sortOrder],
   );
-  const todayItemCount = useMemo(
-      () => countChannelUpdatesForSnapshotDay(allItems, directory.generatedAt),
-      [allItems, directory.generatedAt],
-    );
-    const latestDatedItemId = useMemo(() => {
+  const snapshotDayItemCount = useMemo(
+    () => countChannelUpdatesForSnapshotDay(allItems, directory.generatedAt),
+    [allItems, directory.generatedAt],
+  );
+  const latestDatedItemId = useMemo(() => {
     let latest: (typeof visibleItems)[number] | undefined;
     for (const item of visibleItems) {
       if (item.datePrecision === "undated") continue;
@@ -164,7 +164,9 @@ export function ChannelUpdateDirectoryClient({
         <div className={styles.snapshot}>
           <span>滚动总库</span>
           <strong>{allItems.length}</strong>
-          <small>今日新增 {todayItemCount} 条</small>
+          <small title="按来源事件日期与当前数据快照日期相同计算">
+            快照日事件 {snapshotDayItemCount} 条
+          </small>
         </div>
       </div>
 
