@@ -14,7 +14,9 @@ on:
     branches: [main]
     paths:
       - tools/company_profile_refresh_queue.py
+      - tools/ensure_venture_profile_coverage.py
       - tests/test_company_profile_refresh_queue.py
+      - tests/test_ensure_venture_profile_coverage.py
       - .github/workflows/company-profile-incremental-refresh.yml
 
 permissions:
@@ -41,16 +43,40 @@ jobs:
         run: |
           python -m py_compile \
             tools/company_profile_refresh_queue.py \
+            tools/ensure_venture_profile_coverage.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py
           python -m unittest \
             tests.test_company_profile_refresh_queue \
+            tests.test_ensure_venture_profile_coverage \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_enrichment \
             tests.test_venture_profile_postprocess \
             tests.test_finalize_venture_profiles \
             tests.test_venture_entity_semantics \
             tests.test_stabilize_venture_profiles
+
+      - name: Ensure complete catalog profile coverage
+        id: coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/ensure_venture_profile_coverage.py \
+            | tee /tmp/venture-profile-coverage-report.json
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(
+              Path('/tmp/venture-profile-coverage-report.json')
+              .read_text(encoding='utf-8')
+              .splitlines()[-1]
+          )
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write(f"changed={str(bool(report.get('changed'))).lower()}\n")
+          print(json.dumps(report, ensure_ascii=False))
+          PY
 
       - name: Select high-signal company events
         id: queue
@@ -103,7 +129,7 @@ jobs:
           done
 
       - name: Reconcile intelligence evidence and quality gates
-        if: steps.queue.outputs.count != '0'
+        if: steps.queue.outputs.count != '0' || steps.coverage.outputs.changed == 'true'
         run: |
           python tools/enrich_venture_profiles.py
           python tools/refine_venture_research_evidence.py
@@ -128,21 +154,22 @@ jobs:
             --select-limit "$SELECT_LIMIT" \
             --mark-processed $SELECTED_SLUGS
 
-      - name: Validate final queue snapshot
-        run: python tools/company_profile_refresh_queue.py --check
+      - name: Validate final queue and profile snapshots
+        run: |
+          python tools/company_profile_refresh_queue.py --check
+          python tools/ensure_venture_profile_coverage.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
 
       - name: Commit queue and validated profile changes
-        env:
-          SELECTED_COUNT: ${{ steps.queue.outputs.count }}
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/company_profile_refresh_queue.json
-          if [ "$SELECTED_COUNT" != "0" ]; then
-            git add public/data/venture_profiles.json
-          fi
+          git add \
+            public/data/company_profile_refresh_queue.json \
+            public/data/venture_profiles.json
           if git diff --cached --quiet; then
             echo "No queued profile or queue-state changes."
             exit 0
@@ -151,14 +178,13 @@ jobs:
           for attempt in 1 2 3; do
             git pull --rebase -X theirs origin main
             python tools/company_profile_refresh_queue.py --check
-            if [ "$SELECTED_COUNT" != "0" ]; then
-              python tools/crawl_venture_profiles.py --validate-only
-              python tools/enrich_venture_profiles.py --validate-only
-              python tools/refine_venture_research_evidence.py --check
-              python tools/stabilize_venture_profiles.py --check
-              python tools/finalize_venture_profiles.py --check
-              python tools/enforce_venture_entity_semantics.py --check
-            fi
+            python tools/ensure_venture_profile_coverage.py --check
+            python tools/crawl_venture_profiles.py --validate-only
+            python tools/enrich_venture_profiles.py --validate-only
+            python tools/refine_venture_research_evidence.py --check
+            python tools/stabilize_venture_profiles.py --check
+            python tools/finalize_venture_profiles.py --check
+            python tools/enforce_venture_entity_semantics.py --check
             if git push origin HEAD:main; then
               exit 0
             fi
