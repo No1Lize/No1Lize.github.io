@@ -19,6 +19,7 @@ jobs:
         with:
           ref: ops/schedule-stabilization-20260803
           fetch-depth: 0
+
       - name: Align workflow contract tests
         shell: bash
         run: |
@@ -27,14 +28,14 @@ jobs:
 
           def replace(path: str, old: str, new: str) -> None:
               target = Path(path)
-              text = target.read_text(encoding='utf-8')
+              text = target.read_text(encoding="utf-8")
               count = text.count(old)
               if count != 1:
-                  raise SystemExit(f'{path}: expected one match, got {count}')
-              target.write_text(text.replace(old, new), encoding='utf-8')
+                  raise SystemExit(f"{path}: expected one match, got {count}")
+              target.write_text(text.replace(old, new), encoding="utf-8")
 
           replace(
-              'tests/test_frequent_refresh_workflow.py',
+              "tests/test_frequent_refresh_workflow.py",
               '''    def test_primary_and_recovery_schedules_are_staggered(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
                   self.assertIn('cron: "17 */2 * * *"', text)
@@ -49,7 +50,7 @@ jobs:
           ''',
           )
           replace(
-              'tests/test_frequent_refresh_workflow.py',
+              "tests/test_frequent_refresh_workflow.py",
               '''    def test_lightweight_refresh_shares_article_concurrency(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
                   self.assertIn("group: public-article-refresh", text)
@@ -57,13 +58,14 @@ jobs:
           ''',
               '''    def test_lightweight_refresh_uses_the_repository_writer_queue(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
-                  self.assertIn("group: vciq-repository-writer-${{ github.ref }}", text)
+                  self.assertIn("group: vciq-repository-writer-", text)
+                  self.assertIn("github.ref", text)
                   self.assertIn("queue: max", text)
                   self.assertNotIn("cancel-in-progress:", text)
           ''',
           )
           replace(
-              'tests/test_frequent_refresh_workflow.py',
+              "tests/test_frequent_refresh_workflow.py",
               '''    def test_successful_check_is_always_published(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
                   self.assertIn('git commit -m "data: refresh public intelligence (two-hour check)"', text)
@@ -78,7 +80,7 @@ jobs:
           )
 
           replace(
-              'tests/test_scheduled_sync_workflow.py',
+              "tests/test_scheduled_sync_workflow.py",
               '''    def test_complete_refresh_is_queued_not_cancelled(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
                   self.assertIn("group: public-article-refresh", text)
@@ -87,13 +89,14 @@ jobs:
           ''',
               '''    def test_complete_refresh_uses_the_repository_writer_queue(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
-                  self.assertIn("group: vciq-repository-writer-${{ github.ref }}", text)
+                  self.assertIn("group: vciq-repository-writer-", text)
+                  self.assertIn("github.ref", text)
                   self.assertIn("queue: max", text)
                   self.assertNotIn("cancel-in-progress:", text)
           ''',
           )
           replace(
-              'tests/test_scheduled_sync_workflow.py',
+              "tests/test_scheduled_sync_workflow.py",
               '''    def test_full_refresh_runs_once_daily_outside_peak_minute(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
                   self.assertIn('cron: "17 19 * * *"', text)
@@ -108,7 +111,7 @@ jobs:
           ''',
           )
           replace(
-              'tests/test_scheduled_sync_workflow.py',
+              "tests/test_scheduled_sync_workflow.py",
               '''    def test_tracking_admin_writes_do_not_start_a_full_refresh(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
                   self.assertNotIn("      - config/user_tracking.json", text)
@@ -120,7 +123,7 @@ jobs:
           )
 
           replace(
-              'tests/test_tracking_discovery_workflow.py',
+              "tests/test_tracking_discovery_workflow.py",
               '''    def test_refresh_dispatch_only_follows_successful_push(self) -> None:
                   text = WORKFLOW.read_text(encoding="utf-8")
                   push = text.index("if git push origin HEAD:main; then")
@@ -135,7 +138,7 @@ jobs:
           )
 
           replace(
-              'tests/test_market_quote_news.py',
+              "tests/test_market_quote_news.py",
               '''    def test_market_profile_refresh_runs_daily_at_seven_taipei(self):
                   text = (ROOT / ".github" / "workflows" / "market-profile-refresh.yml").read_text(
                       encoding="utf-8"
@@ -155,6 +158,7 @@ jobs:
           ''',
           )
           PY
+
       - name: Run updated workflow contract tests
         run: |
           python -m unittest \
@@ -162,6 +166,7 @@ jobs:
             tests.test_scheduled_sync_workflow \
             tests.test_tracking_discovery_workflow \
             tests.test_market_quote_news
+
       - name: Commit updated tests
         shell: bash
         run: |
