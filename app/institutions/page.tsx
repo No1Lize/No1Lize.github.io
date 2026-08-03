@@ -48,15 +48,15 @@ export default function InstitutionsPage() {
             <span>BETA / STAR MARKET PROSPECTUS EXTRACTION</span>
             <strong>科创板招股说明书机构股东抽取（测试版）</strong>
             <p>
-              从公开招股说明书自动抽取机构候选、持股字段和证据页码。当前未完成逐条人工审核，请以原招股说明书为准。
+              从公开招股说明书自动抽取机构候选并经过页面质量门。可见候选仍未完成逐条人工审核，请以原招股说明书为准。
             </p>
           </div>
           <dl>
-            <div><dt>已覆盖公司</dt><dd>{starMarketInvestorStats.companies}</dd></div>
-            <div><dt>自动抽取记录</dt><dd>{starMarketInvestorStats.investors}</dd></div>
-            <div><dt>匹配站内机构</dt><dd>{starMarketInvestorStats.linkedInstitutions}</dd></div>
+            <div><dt>原始抽取</dt><dd>{starMarketInvestorStats.extracted}</dd></div>
+            <div><dt>质量门后候选</dt><dd>{starMarketInvestorStats.investors}</dd></div>
+            <div><dt>自动排除</dt><dd>{starMarketInvestorStats.rejected}</dd></div>
           </dl>
-          <b>查看测试目录 →</b>
+          <b>查看审核队列 →</b>
         </Link>
 
         <div className={styles.summary}>
