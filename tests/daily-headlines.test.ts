@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   DAILY_HEADLINES_LIMIT,
+  DAILY_HEADLINES_PER_SOURCE_PER_DAY,
   getDailyHeadlines,
   selectDailyHeadlines,
 } from "../lib/daily-headlines";
@@ -23,14 +24,53 @@ function article(overrides: Record<string, unknown> = {}) {
   };
 }
 
-test("each source contributes at most five headlines per day", () => {
-  const articles = Array.from({ length: 9 }, (_, index) =>
-    article({ id: `wx-${index}`, importance: 90 - index }),
+test("daily headline limits match the homepage product contract", () => {
+  assert.equal(DAILY_HEADLINES_LIMIT, 200);
+  assert.equal(DAILY_HEADLINES_PER_SOURCE_PER_DAY, 50);
+});
+
+test("each source contributes at most 50 headlines per day", () => {
+  const articles = Array.from({ length: 55 }, (_, index) =>
+    article({
+      id: `media-${index}`,
+      importance: 100 - index,
+      source: {
+        name: "投资界",
+        platform: "专业媒体",
+        url: `https://example.com/media-${index}`,
+      },
+    }),
   );
   const headlines = selectDailyHeadlines(articles);
-  assert.equal(headlines.length, 5);
+  assert.equal(headlines.length, DAILY_HEADLINES_PER_SOURCE_PER_DAY);
   assert.ok(headlines.every((item) => item.source === "投资界"));
-  assert.equal(headlines[0].importance, 90);
+  assert.equal(headlines[0].importance, 100);
+});
+
+test("the per-source allowance resets for each publication day", () => {
+  const articles = ["2026-07-26", "2026-07-25"].flatMap((publishedAt) =>
+    Array.from({ length: 55 }, (_, index) =>
+      article({
+        id: `${publishedAt}-${index}`,
+        publishedAt,
+        source: {
+          name: "新浪财经",
+          platform: "新浪财经",
+          url: `https://finance.sina.com.cn/${publishedAt}/${index}`,
+        },
+      }),
+    ),
+  );
+  const headlines = selectDailyHeadlines(articles);
+  assert.equal(headlines.length, DAILY_HEADLINES_PER_SOURCE_PER_DAY * 2);
+  assert.equal(
+    headlines.filter((item) => item.date === "2026-07-26").length,
+    DAILY_HEADLINES_PER_SOURCE_PER_DAY,
+  );
+  assert.equal(
+    headlines.filter((item) => item.date === "2026-07-25").length,
+    DAILY_HEADLINES_PER_SOURCE_PER_DAY,
+  );
 });
 
 test("search proxies and regulators are excluded from headlines", () => {
@@ -46,7 +86,7 @@ test("search proxies and regulators are excluded from headlines", () => {
 });
 
 test("headlines cap at the rolling limit sorted by freshest day first", () => {
-  const articles = Array.from({ length: 120 }, (_, index) =>
+  const articles = Array.from({ length: 260 }, (_, index) =>
     article({
       id: `m-${index}`,
       publishedAt: index % 2 === 0 ? "2026-07-26" : "2026-07-25",
