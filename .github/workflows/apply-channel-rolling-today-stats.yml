@@ -79,15 +79,8 @@ jobs:
           )
           replace(
               tests,
-              '''test("homepage channel update directory displays up to 200 deduplicated items", () => {
-                assert.equal(HOMEPAGE_CHANNEL_UPDATE_LIMIT, 200);
-              });
-          ''',
-              '''test("homepage channel update directory displays up to 200 deduplicated items", () => {
-                assert.equal(HOMEPAGE_CHANNEL_UPDATE_LIMIT, 200);
-              });
-
-              test("channel snapshot counts exact and relative updates on the generated day", () => {
+              'test("normalizes exact, relative and undated source labels", () => {\n',
+              '''test("channel snapshot counts exact and relative updates on the generated day", () => {
                 const sample = getChannelUpdateDirectory("technology").items[0];
                 assert.ok(sample);
                 const items = [
@@ -103,6 +96,8 @@ jobs:
                 );
                 assert.equal(countChannelUpdatesForSnapshotDay(items, "等待更新"), 0);
               });
+
+              test("normalizes exact, relative and undated source labels", () => {
           ''',
           )
           PY
