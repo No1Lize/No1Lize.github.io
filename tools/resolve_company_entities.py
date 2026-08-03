@@ -16,7 +16,7 @@ import re
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Iterable, Sequence
+from typing import Any, Iterable
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -126,15 +126,33 @@ def _domain_matches(host: str, domain: str) -> bool:
     return host == domain or host.endswith(f".{domain}")
 
 
-def _entities_for_host(host: str, registry: CompanyRegistry) -> list[CompanyEntity]:
+def _entity_allowed(entity: CompanyEntity, allowed_slugs: set[str] | None) -> bool:
+    return allowed_slugs is None or entity.slug in allowed_slugs
+
+
+def _entities_for_host(
+    host: str,
+    registry: CompanyRegistry,
+    allowed_slugs: set[str] | None = None,
+) -> list[CompanyEntity]:
     if not host:
         return []
+    matching_domains = [
+        domain for domain in registry.by_domain if _domain_matches(host, domain)
+    ]
+    if not matching_domains:
+        return []
+    # A specific product or brand subdomain must outrank its parent corporate
+    # domain. This avoids attributing a Seed/Doubao page to every ByteDance
+    # entity that happens to share the broader bytedance.com suffix.
+    maximum_specificity = max(len(domain) for domain in matching_domains)
     result: dict[str, CompanyEntity] = {}
-    for domain, entities in registry.by_domain.items():
-        if not _domain_matches(host, domain):
+    for domain in matching_domains:
+        if len(domain) != maximum_specificity:
             continue
-        for entity in entities:
-            result[entity.slug] = entity
+        for entity in registry.by_domain[domain]:
+            if _entity_allowed(entity, allowed_slugs):
+                result[entity.slug] = entity
     return sorted(result.values(), key=lambda entity: entity.order)
 
 
@@ -189,12 +207,38 @@ def _add_match(
     }
 
 
+def _stored_match_rows(article: dict[str, Any]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    if isinstance(article.get("companyMatches"), list):
+        rows.extend(
+            row for row in article["companyMatches"] if isinstance(row, dict)
+        )
+    if isinstance(article.get("companyMatch"), dict):
+        rows.append(article["companyMatch"])
+    return rows
+
+
 def resolve_article(
     raw: dict[str, Any],
     registry: CompanyRegistry,
+    allowed_slugs: set[str] | None = None,
 ) -> tuple[dict[str, Any], bool]:
     article = copy.deepcopy(raw)
     matches: dict[str, dict[str, Any]] = {}
+    stored_slugs: set[str] = set()
+
+    # Preserve the evidence method emitted by a previous resolver pass. Without
+    # this, the derived companySlug would be reinterpreted as a new explicit
+    # assertion and upgrade structured-company to explicit-slug on every run.
+    for row in _stored_match_rows(article):
+        slug = clean(row.get("slug"), 100)
+        entity = registry.by_slug.get(slug)
+        confidence = float(row.get("confidence", 0) or 0)
+        method = clean(row.get("method"), 80) or "stored-match"
+        if not entity or confidence < 0.9 or not _entity_allowed(entity, allowed_slugs):
+            continue
+        _add_match(matches, entity, method, confidence)
+        stored_slugs.add(slug)
 
     explicit_slugs: list[str] = []
     if isinstance(article.get("companySlugs"), list):
@@ -202,17 +246,21 @@ def resolve_article(
     explicit_slugs.append(clean(article.get("companySlug"), 100))
     for slug in explicit_slugs:
         entity = registry.by_slug.get(slug)
-        if entity:
+        if (
+            entity
+            and slug not in stored_slugs
+            and _entity_allowed(entity, allowed_slugs)
+        ):
             _add_match(matches, entity, "explicit-slug", 1.0)
 
     source = article.get("source") if isinstance(article.get("source"), dict) else {}
     source_host = normalized_host(source.get("url"))
-    for entity in _entities_for_host(source_host, registry):
+    for entity in _entities_for_host(source_host, registry, allowed_slugs):
         _add_match(matches, entity, "official-domain", 0.99)
 
     for value, method, confidence in _structured_values(article):
         entity = _unique_alias_entity(value, registry)
-        if entity:
+        if entity and _entity_allowed(entity, allowed_slugs):
             _add_match(matches, entity, method, confidence)
 
     accepted = sorted(
@@ -232,7 +280,7 @@ def resolve_article(
         if len(entities) != 1:
             continue
         entity = entities[0]
-        if entity.slug in matches:
+        if entity.slug in matches or not _entity_allowed(entity, allowed_slugs):
             continue
         aliases = [alias for alias in entity.aliases if normalize_identity(alias) == alias_key]
         if any(_safe_text_alias(alias) and _text_contains_alias(text, alias) for alias in aliases):
@@ -265,6 +313,7 @@ def resolve_article(
 def resolve_payload(
     payload: dict[str, Any],
     registry: CompanyRegistry | None = None,
+    allowed_slugs: set[str] | None = None,
 ) -> tuple[dict[str, Any], dict[str, int]]:
     active_registry = registry or load_registry()
     result = copy.deepcopy(payload)
@@ -276,7 +325,7 @@ def resolve_payload(
     for raw in payload.get("articles", []):
         if not isinstance(raw, dict):
             continue
-        resolved, changed = resolve_article(raw, active_registry)
+        resolved, changed = resolve_article(raw, active_registry, allowed_slugs)
         articles.append(resolved)
         changed_articles += int(changed)
         resolved_articles += int(bool(resolved.get("companySlugs")))
