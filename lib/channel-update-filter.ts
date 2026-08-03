@@ -13,6 +13,20 @@ function normalizeKeyword(value: string) {
   return value.trim().toLocaleLowerCase("zh-CN");
 }
 
+export function countChannelUpdatesForSnapshotDay(
+  items: ChannelUpdateItem[],
+  generatedAt: string,
+) {
+  const snapshotDate = generatedAt.slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/u.test(snapshotDate)) return 0;
+
+  return items.filter(
+    (item) =>
+      item.datePrecision !== "undated" &&
+      item.sortAt.slice(0, 10) === snapshotDate,
+  ).length;
+}
+
 export function collectChannelUpdateKeywords(
   items: ChannelUpdateItem[],
 ): ChannelUpdateKeywordOption[] {
