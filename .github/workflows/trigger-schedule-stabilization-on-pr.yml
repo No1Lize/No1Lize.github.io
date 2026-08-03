@@ -41,7 +41,6 @@ jobs:
               line[10:] if line.startswith("          ") else line
               for line in raw_code.splitlines()
           ) + "\n"
-          # Correct the indentation helper in the generated schedule blocks.
           code = code.replace(
               '.replace("              ", "    ", 1)',
               '.replace("              ", "    ")',
@@ -67,21 +66,43 @@ jobs:
           set -euo pipefail
           git diff --check
 
-          ! grep -R "gh workflow run pages.yml --ref main" \
-            .github/workflows/frequent-intelligence-refresh.yml \
-            .github/workflows/scheduled-sync.yml \
-            .github/workflows/wechat-sync.yml \
-            .github/workflows/refresh-all-track-wechat.yml \
-            .github/workflows/market-profile-refresh.yml \
-            .github/workflows/refresh-listed-company-disclosures.yml \
-            .github/workflows/research-report-refresh.yml \
-            .github/workflows/refresh-venture-profiles.yml \
-            .github/workflows/star-market-investor-refresh.yml
+          python - <<'PY'
+          from pathlib import Path
 
-          grep -Fq 'queue: max' .github/workflows/scheduled-sync.yml
-          grep -Fq 'timezone: "Asia/Taipei"' .github/workflows/frequent-intelligence-refresh.yml
-          grep -Fq 'paths-ignore:' .github/workflows/web-test.yml
-          grep -Fq 'cron: "30 6 * * *"' .github/workflows/scheduled-sync.yml
+          pages_targets = (
+              '.github/workflows/frequent-intelligence-refresh.yml',
+              '.github/workflows/scheduled-sync.yml',
+              '.github/workflows/wechat-sync.yml',
+              '.github/workflows/refresh-all-track-wechat.yml',
+              '.github/workflows/market-profile-refresh.yml',
+              '.github/workflows/refresh-listed-company-disclosures.yml',
+              '.github/workflows/research-report-refresh.yml',
+              '.github/workflows/refresh-venture-profiles.yml',
+              '.github/workflows/star-market-investor-refresh.yml',
+          )
+          for raw_path in pages_targets:
+              text = Path(raw_path).read_text(encoding='utf-8')
+              assert 'gh workflow run pages.yml --ref main' not in text, raw_path
+              print(f'pages dispatch removed: {raw_path}')
+
+          required = {
+              '.github/workflows/scheduled-sync.yml': (
+                  'queue: max',
+                  'cron: "30 6 * * *"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/frequent-intelligence-refresh.yml': (
+                  'cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/web-test.yml': ('paths-ignore:',),
+          }
+          for raw_path, needles in required.items():
+              text = Path(raw_path).read_text(encoding='utf-8')
+              for needle in needles:
+                  assert needle in text, f'{raw_path}: missing {needle}'
+                  print(f'found {needle!r} in {raw_path}')
+          PY
 
       - name: Commit stabilization changes
         shell: bash
