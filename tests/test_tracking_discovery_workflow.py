@@ -7,6 +7,22 @@ WORKFLOW = ROOT / ".github" / "workflows" / "tracking-discovery.yml"
 
 
 class TrackingDiscoveryWorkflowTests(unittest.TestCase):
+    def test_discovery_only_runs_on_schedule_or_manual_dispatch(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn('cron: "0 3 * * 0"', text)
+        self.assertIn('timezone: "Asia/Taipei"', text)
+        self.assertIn("workflow_dispatch:", text)
+        self.assertNotIn("  push:\n", text)
+        self.assertNotIn("config/user_tracking.json", text)
+
+    def test_job_has_a_hard_timeout_and_bounded_network_budget(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("timeout-minutes: 45", text)
+        self.assertIn("--max-requests 240", text)
+        self.assertIn("--max-requests 50", text)
+        self.assertIn("--max-requests 70", text)
+        self.assertNotIn("--max-requests 420", text)
+
     def test_mode_is_exported_for_concurrent_replay(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn('echo "mode=$MODE" >> "$GITHUB_OUTPUT"', text)
@@ -28,6 +44,11 @@ class TrackingDiscoveryWorkflowTests(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("if git push origin HEAD:main; then", text)
         self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", text)
+
+    def test_workflow_keeps_the_shared_writer_queue(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("group: vciq-repository-writer-${{ github.ref }}", text)
+        self.assertIn("queue: max", text)
 
 
 if __name__ == "__main__":
