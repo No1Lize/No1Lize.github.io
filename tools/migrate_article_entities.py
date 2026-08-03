@@ -18,8 +18,10 @@ from urllib.parse import urlsplit
 
 try:
     from .crawl_articles import normalize_date
+    from .resolve_company_entities import resolve_payload as resolve_company_entities
 except ImportError:
     from crawl_articles import normalize_date
+    from resolve_company_entities import resolve_payload as resolve_company_entities
 
 ROOT = Path(__file__).resolve().parents[1]
 TRACKING_PATH = ROOT / "config" / "user_tracking.json"
@@ -205,6 +207,7 @@ def migrate(
         "relabelledSources": 0,
         "removedLegacyStatuses": 0,
         "recoveredSpecializedStatuses": 0,
+        "resolvedCompanyEntities": 0,
     }
     migrated: list[dict[str, Any]] = []
 
@@ -316,6 +319,8 @@ def migrate(
     result["articleCount"] = len(migrated)
     if isinstance(payload.get("sourceStatus"), list):
         result["sourceStatus"] = statuses
+    result, company_entity_report = resolve_company_entities(result)
+    report["resolvedCompanyEntities"] = company_entity_report["changedArticles"]
     if any(report.values()):
         result["generatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     return result, report
