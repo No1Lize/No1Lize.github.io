@@ -19,10 +19,18 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      MERGED_AFTER: "2026-08-03T15:19:50Z"
+      MERGED_AFTER: "2026-08-03T16:00:00Z"
       SITE_URL: https://vciq.github.io/companies/
     steps:
-      - name: Find or dispatch the production incremental run
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cancel unbounded post-merge runs and dispatch a three-company run
         id: incremental
         shell: bash
         run: |
@@ -30,88 +38,126 @@ jobs:
           gh run list \
             --workflow company-profile-incremental-refresh.yml \
             --branch main \
-            --limit 10 \
-            --json databaseId,createdAt,status,conclusion,headSha,event,url \
-            | tee /tmp/incremental-runs.json
+            --limit 20 \
+            --json databaseId,createdAt,status,conclusion,event,url \
+            > /tmp/incremental-runs-before.json
 
-          run_id=$(python - <<'PY'
+          python - <<'PY' > /tmp/post-merge-active-runs.txt
           import json
           import os
           from datetime import datetime
 
           cutoff = datetime.fromisoformat(os.environ['MERGED_AFTER'].replace('Z', '+00:00'))
-          runs = json.load(open('/tmp/incremental-runs.json', encoding='utf-8'))
-          eligible = [
-              row for row in runs
-              if datetime.fromisoformat(row['createdAt'].replace('Z', '+00:00')) >= cutoff
-          ]
-          print(eligible[0]['databaseId'] if eligible else '')
+          rows = json.load(open('/tmp/incremental-runs-before.json', encoding='utf-8'))
+          for row in rows:
+              created = datetime.fromisoformat(row['createdAt'].replace('Z', '+00:00'))
+              if created >= cutoff and row.get('status') != 'completed':
+                  print(row['databaseId'])
           PY
-          )
+
+          while read -r run_id; do
+            [ -n "$run_id" ] || continue
+            echo "Cancelling unbounded post-merge run $run_id"
+            gh run cancel "$run_id" || true
+          done < /tmp/post-merge-active-runs.txt
+
+          sleep 8
+          before=$(gh run list \
+            --workflow company-profile-incremental-refresh.yml \
+            --branch main \
+            --event workflow_dispatch \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId // 0')
+
+          gh workflow run company-profile-incremental-refresh.yml \
+            --ref main \
+            -f max_companies=3
+
+          run_id=""
+          for attempt in $(seq 1 60); do
+            run_id=$(gh run list \
+              --workflow company-profile-incremental-refresh.yml \
+              --branch main \
+              --event workflow_dispatch \
+              --limit 5 \
+              --json databaseId \
+              --jq '[.[] | select(.databaseId != ('"$before"'))][0].databaseId // empty')
+            if [ -n "$run_id" ]; then
+              break
+            fi
+            sleep 5
+          done
 
           if [ -z "$run_id" ]; then
-            echo "No post-merge run found; dispatching a bounded three-company verification run."
-            before=$(python - <<'PY'
-          import json
-          rows = json.load(open('/tmp/incremental-runs.json', encoding='utf-8'))
-          print(rows[0]['databaseId'] if rows else 0)
-          PY
-            )
-            gh workflow run company-profile-incremental-refresh.yml \
-              --ref main \
-              -f max_companies=3
-            for attempt in $(seq 1 60); do
-              run_id=$(gh run list \
-                --workflow company-profile-incremental-refresh.yml \
-                --branch main \
-                --event workflow_dispatch \
-                --limit 5 \
-                --json databaseId \
-                --jq '[.[] | select(.databaseId != ('"$before"'))][0].databaseId // empty')
-              if [ -n "$run_id" ]; then
-                break
-              fi
-              sleep 5
-            done
-          fi
-
-          if [ -z "$run_id" ]; then
-            echo "Unable to identify a production incremental run." >&2
+            echo "Unable to identify the bounded production incremental run." >&2
             exit 1
           fi
           echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
           gh run view "$run_id" --json databaseId,createdAt,status,conclusion,headSha,event,url
 
-      - name: Wait for the production incremental run
+      - name: Wait for the bounded production run
         env:
           RUN_ID: ${{ steps.incremental.outputs.run_id }}
         run: gh run watch "$RUN_ID" --exit-status
 
-      - name: Validate the persisted queue snapshot
+      - name: Fetch persisted production snapshots
         shell: bash
         run: |
           set -euo pipefail
-          gh api "repos/${GITHUB_REPOSITORY}/contents/public/data/company_profile_refresh_queue.json?ref=main" \
-            --jq .content \
-            | tr -d '\n' \
-            | base64 --decode \
-            > /tmp/company-profile-refresh-queue.json
+          for name in company_profile_refresh_queue venture_profiles; do
+            gh api "repos/${GITHUB_REPOSITORY}/contents/public/data/${name}.json?ref=main" \
+              --jq .content \
+              | tr -d '\n' \
+              | base64 --decode \
+              > "/tmp/${name}.json"
+          done
+
+      - name: Validate queue, processing ledger and complete profile coverage
+        shell: bash
+        run: |
+          set -euo pipefail
           python - <<'PY'
           import json
+          from pathlib import Path
+          from tools.venture_profile_extraction import parse_catalog
 
-          payload = json.load(open('/tmp/company-profile-refresh-queue.json', encoding='utf-8'))
-          assert payload.get('schemaVersion') == 1
-          assert 0 <= int(payload.get('selectionLimit', 0)) <= 10
-          assert 0 <= int(payload.get('selectedCount', 0)) <= 10
-          assert len(payload.get('selectedSlugs', [])) == int(payload.get('selectedCount', 0))
-          assert isinstance(payload.get('processedEvents', {}), dict)
+          queue = json.load(open('/tmp/company_profile_refresh_queue.json', encoding='utf-8'))
+          profiles = json.load(open('/tmp/venture_profiles.json', encoding='utf-8'))
+          companies, institutions = parse_catalog(
+              Path('lib/catalog-data.ts').read_text(encoding='utf-8')
+          )
+
+          assert queue.get('schemaVersion') == 1
+          assert int(queue.get('selectionLimit', 0)) == 3
+          assert 0 <= int(queue.get('selectedCount', 0)) <= 3
+          assert len(queue.get('selectedSlugs', [])) == int(queue.get('selectedCount', 0))
+          assert isinstance(queue.get('processedEvents', {}), dict)
+          assert queue.get('lastProcessedAt')
+          assert len(queue.get('processedEvents', {})) > 0
+
+          company_profiles = profiles.get('companies', {})
+          institution_profiles = profiles.get('institutions', {})
+          assert len(company_profiles) == len(companies), (
+              len(company_profiles), len(companies)
+          )
+          assert len(institution_profiles) == len(institutions), (
+              len(institution_profiles), len(institutions)
+          )
+          assert profiles.get('qualityGate', {}).get('passed') is True
+
           print(json.dumps({
-              'generatedAt': payload.get('generatedAt'),
-              'pendingCount': payload.get('pendingCount'),
-              'selectedCount': payload.get('selectedCount'),
-              'selectedSlugs': payload.get('selectedSlugs'),
-              'lastProcessedAt': payload.get('lastProcessedAt'),
-              'processedEventCount': len(payload.get('processedEvents', {})),
+              'queueGeneratedAt': queue.get('generatedAt'),
+              'pendingCount': queue.get('pendingCount'),
+              'selectedCount': queue.get('selectedCount'),
+              'selectedSlugs': queue.get('selectedSlugs'),
+              'lastProcessedAt': queue.get('lastProcessedAt'),
+              'processedEventCount': len(queue.get('processedEvents', {})),
+              'companyCoverage': len(company_profiles),
+              'requiredCompanies': len(companies),
+              'institutionCoverage': len(institution_profiles),
+              'requiredInstitutions': len(institutions),
+              'qualityPassed': profiles.get('qualityGate', {}).get('passed'),
           }, ensure_ascii=False))
           PY
 
