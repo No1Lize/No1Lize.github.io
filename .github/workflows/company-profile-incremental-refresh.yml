@@ -1,0 +1,168 @@
+name: Refresh queued company profiles
+
+on:
+  schedule:
+    - cron: "35 13,17,21 * * *"
+      timezone: "Asia/Taipei"
+  workflow_dispatch:
+    inputs:
+      max_companies:
+        description: "Maximum companies refreshed in one run (1-10)"
+        required: false
+        default: "10"
+  push:
+    branches: [main]
+    paths:
+      - tools/company_profile_refresh_queue.py
+      - tests/test_company_profile_refresh_queue.py
+      - .github/workflows/company-profile-incremental-refresh.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate queue and partial profile pipeline
+        run: |
+          python -m py_compile \
+            tools/company_profile_refresh_queue.py \
+            tools/crawl_venture_profiles.py \
+            tools/enrich_venture_profiles.py
+          python -m unittest \
+            tests.test_company_profile_refresh_queue \
+            tests.test_venture_profile_extraction \
+            tests.test_venture_profile_enrichment \
+            tests.test_venture_profile_postprocess \
+            tests.test_finalize_venture_profiles \
+            tests.test_venture_entity_semantics \
+            tests.test_stabilize_venture_profiles
+
+      - name: Select high-signal company events
+        id: queue
+        shell: bash
+        env:
+          REQUESTED_LIMIT: ${{ inputs.max_companies || '10' }}
+        run: |
+          set -euo pipefail
+          MAX_COMPANIES=$(python - "$REQUESTED_LIMIT" <<'PY'
+          import sys
+          try:
+              value = int(sys.argv[1])
+          except ValueError:
+              value = 10
+          print(max(1, min(10, value)))
+          PY
+          )
+          python tools/company_profile_refresh_queue.py \
+            --select-limit "$MAX_COMPANIES" | tee /tmp/company-profile-queue-report.json
+          python - "$MAX_COMPANIES" <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          report = json.loads(Path('/tmp/company-profile-queue-report.json').read_text(encoding='utf-8').splitlines()[-1])
+          slugs = ' '.join(report.get('selectedSlugs', []))
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write(f"count={int(report.get('selectedCount', 0))}\n")
+              output.write(f"slugs={slugs}\n")
+              output.write(f"limit={sys.argv[1]}\n")
+          print(f"Selected {report.get('selectedCount', 0)} companies: {slugs or 'none'}")
+          PY
+
+      - name: Refresh selected official company profiles
+        if: steps.queue.outputs.count != '0'
+        env:
+          SELECTED_SLUGS: ${{ steps.queue.outputs.slugs }}
+          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for slug in $SELECTED_SLUGS; do
+            echo "Refreshing company profile: $slug"
+            python tools/crawl_venture_profiles.py \
+              --kind company \
+              --slug "$slug" \
+              --workers 1 \
+              --max-pages 6
+          done
+
+      - name: Reconcile intelligence evidence and quality gates
+        if: steps.queue.outputs.count != '0'
+        run: |
+          python tools/enrich_venture_profiles.py
+          python tools/refine_venture_research_evidence.py
+          python tools/refine_venture_research_evidence.py --check
+          python tools/normalize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+
+      - name: Mark successfully covered events
+        if: steps.queue.outputs.count != '0'
+        env:
+          SELECTED_SLUGS: ${{ steps.queue.outputs.slugs }}
+          SELECT_LIMIT: ${{ steps.queue.outputs.limit }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/company_profile_refresh_queue.py \
+            --select-limit "$SELECT_LIMIT" \
+            --mark-processed $SELECTED_SLUGS
+
+      - name: Validate final queue snapshot
+        run: python tools/company_profile_refresh_queue.py --check
+
+      - name: Commit queue and validated profile changes
+        env:
+          SELECTED_COUNT: ${{ steps.queue.outputs.count }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/company_profile_refresh_queue.json
+          if [ "$SELECTED_COUNT" != "0" ]; then
+            git add public/data/venture_profiles.json
+          fi
+          if git diff --cached --quiet; then
+            echo "No queued profile or queue-state changes."
+            exit 0
+          fi
+          git commit -m "data: process queued company profile refreshes"
+          for attempt in 1 2 3; do
+            git pull --rebase -X theirs origin main
+            python tools/company_profile_refresh_queue.py --check
+            if [ "$SELECTED_COUNT" != "0" ]; then
+              python tools/crawl_venture_profiles.py --validate-only
+              python tools/enrich_venture_profiles.py --validate-only
+              python tools/refine_venture_research_evidence.py --check
+              python tools/stabilize_venture_profiles.py --check
+              python tools/finalize_venture_profiles.py --check
+              python tools/enforce_venture_entity_semantics.py --check
+            fi
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
