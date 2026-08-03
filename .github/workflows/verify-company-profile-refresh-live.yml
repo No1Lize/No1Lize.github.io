@@ -1,0 +1,176 @@
+name: Verify live company profile refresh
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+    paths:
+      - .github/workflows/verify-company-profile-refresh-live.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    if: github.head_ref == 'ops/verify-company-profile-refresh-live-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      TARGET_SHA: 87e8b3f993c9b2878e2a6a6781e1dcfc01672f4b
+      SITE_URL: https://vciq.github.io/companies/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Cancel only redundant runs from the coverage-write merge
+        shell: bash
+        run: |
+          set -euo pipefail
+          for workflow in scheduled-sync.yml company-profile-incremental-refresh.yml; do
+            gh run list \
+              --workflow "$workflow" \
+              --branch main \
+              --limit 20 \
+              --json databaseId,headSha,status,event,url \
+              > "/tmp/${workflow}.json"
+            python - "$TARGET_SHA" "/tmp/${workflow}.json" <<'PY' > /tmp/target-runs.txt
+          import json
+          import sys
+
+          target, path = sys.argv[1:]
+          for row in json.load(open(path, encoding='utf-8')):
+              if row.get('headSha') == target and row.get('status') != 'completed':
+                  print(row['databaseId'])
+          PY
+            while read -r run_id; do
+              [ -n "$run_id" ] || continue
+              echo "Cancelling redundant $workflow run $run_id"
+              gh run cancel "$run_id" || true
+            done < /tmp/target-runs.txt
+          done
+          sleep 8
+
+      - name: Dispatch one bounded three-company production run
+        id: incremental
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_url=$(gh workflow run company-profile-incremental-refresh.yml \
+            --ref main \
+            -f max_companies=3)
+          echo "$run_url"
+          run_id="${run_url##*/}"
+          case "$run_id" in
+            ''|*[!0-9]*)
+              echo "Unexpected dispatch response: $run_url" >&2
+              exit 1
+              ;;
+          esac
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "run_url=$run_url" >> "$GITHUB_OUTPUT"
+          gh run view "$run_id" --json databaseId,createdAt,status,conclusion,headSha,event,url
+
+      - name: Wait for production processing
+        env:
+          RUN_ID: ${{ steps.incremental.outputs.run_id }}
+        run: gh run watch "$RUN_ID" --exit-status
+
+      - name: Fetch persisted production snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in company_profile_refresh_queue venture_profiles; do
+            gh api "repos/${GITHUB_REPOSITORY}/contents/public/data/${name}.json?ref=main" \
+              --jq .content \
+              | tr -d '\n' \
+              | base64 --decode \
+              > "/tmp/${name}.json"
+          done
+
+      - name: Validate queue ledger, coverage and quality gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from tools.venture_profile_extraction import parse_catalog
+
+          queue = json.load(open('/tmp/company_profile_refresh_queue.json', encoding='utf-8'))
+          profiles = json.load(open('/tmp/venture_profiles.json', encoding='utf-8'))
+          companies, institutions = parse_catalog(
+              Path('lib/catalog-data.ts').read_text(encoding='utf-8')
+          )
+
+          assert queue.get('schemaVersion') == 1
+          assert int(queue.get('selectionLimit', 0)) == 3
+          assert 0 <= int(queue.get('selectedCount', 0)) <= 3
+          assert len(queue.get('selectedSlugs', [])) == int(queue.get('selectedCount', 0))
+          assert queue.get('lastProcessedAt')
+          assert len(queue.get('processedEvents', {})) > 0
+
+          company_profiles = profiles.get('companies', {})
+          institution_profiles = profiles.get('institutions', {})
+          assert len(company_profiles) == len(companies), (len(company_profiles), len(companies))
+          assert len(institution_profiles) == len(institutions), (
+              len(institution_profiles), len(institutions)
+          )
+          assert profiles.get('qualityGate', {}).get('passed') is True
+
+          result = {
+              'productionRunId': '${{ steps.incremental.outputs.run_id }}',
+              'queueGeneratedAt': queue.get('generatedAt'),
+              'pendingCount': queue.get('pendingCount'),
+              'selectedCount': queue.get('selectedCount'),
+              'selectedSlugs': queue.get('selectedSlugs'),
+              'lastProcessedAt': queue.get('lastProcessedAt'),
+              'processedEventCount': len(queue.get('processedEvents', {})),
+              'companyCoverage': len(company_profiles),
+              'requiredCompanies': len(companies),
+              'institutionCoverage': len(institution_profiles),
+              'requiredInstitutions': len(institutions),
+              'qualityPassed': profiles.get('qualityGate', {}).get('passed'),
+          }
+          print(json.dumps(result, ensure_ascii=False))
+          Path('/tmp/company-profile-live-verification.json').write_text(
+              json.dumps(result, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
+      - name: Verify deployed company page status card
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            curl --fail --silent --show-error \
+              --retry 3 \
+              --retry-delay 2 \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?profile_queue_verify=${GITHUB_RUN_ID}-${attempt}" \
+              --output /tmp/companies.html
+            if grep -Fq '增量档案刷新' /tmp/companies.html && \
+               grep -Fq '待处理公司' /tmp/companies.html && \
+               grep -Fq '下一批' /tmp/companies.html && \
+               grep -Fq '最近处理' /tmp/companies.html; then
+              echo "Production company page exposes the incremental refresh status card."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Production page did not expose the status card in time." >&2
+          exit 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: company-profile-live-verification
+          path: /tmp/company-profile-live-verification.json
+          retention-days: 3
