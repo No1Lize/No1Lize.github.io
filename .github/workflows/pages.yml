@@ -27,6 +27,7 @@ jobs:
       - name: Reconcile tracking metadata with the latest config
         run: |
           python tools/migrate_article_entities.py
+          python tools/build_company_candidates.py
           python tools/refine_eastmoney_snapshot.py
           python tools/enrich_tracking_snapshot.py
           python tools/crawl_articles.py --validate-only
