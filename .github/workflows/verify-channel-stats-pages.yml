@@ -1,0 +1,73 @@
+name: Verify channel statistics Pages deployment
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/verify-channel-stats-pages.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    if: github.head_ref == 'ops/verify-channel-stats-pages-20260803'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SITE_URL: https://vciq.github.io/technology/
+    steps:
+      - name: Verify or redeploy production page
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          check_live() {
+            local cache_buster="$1"
+            curl --fail --silent --show-error \
+              --retry 3 \
+              --retry-delay 2 \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?deploy_verify=${cache_buster}" \
+              --output /tmp/technology.html
+            python - <<'PY'
+          import html
+          import re
+          from pathlib import Path
+
+          source = Path('/tmp/technology.html').read_text(encoding='utf-8')
+          text = html.unescape(re.sub(r'<[^>]+>', ' ', source))
+          text = re.sub(r'\s+', ' ', text)
+          match = re.search(r'滚动总库\s*(\d+)\s*今日新增\s*(\d+)\s*条', text)
+          if not match:
+              raise SystemExit(1)
+          print(f'线上新兴科技：滚动总库 {match.group(1)} 条；今日新增 {match.group(2)} 条')
+          PY
+          }
+
+          if check_live "${GITHUB_RUN_ID}-before"; then
+            echo "Production already serves the new channel statistics."
+            exit 0
+          fi
+
+          echo "Production is still serving the previous channel snapshot; dispatching Pages."
+          run_url="$(gh workflow run pages.yml --ref main)"
+          run_id="${run_url##*/}"
+          echo "Pages run: $run_url"
+          gh run watch "$run_id" --exit-status
+
+          for attempt in $(seq 1 60); do
+            if check_live "${GITHUB_RUN_ID}-${attempt}"; then
+              echo "Production channel statistics verification passed."
+              exit 0
+            fi
+            echo "Attempt ${attempt}: waiting for Pages cache propagation."
+            sleep 10
+          done
+
+          echo "Pages completed, but production did not expose the new channel statistics in time." >&2
+          exit 1
