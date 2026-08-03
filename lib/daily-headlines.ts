@@ -25,8 +25,8 @@ type ArticleRecord = {
 
 type ArticlesPayload = { generatedAt?: string; articles?: ArticleRecord[] };
 
-export const DAILY_HEADLINES_LIMIT = 80;
-export const DAILY_HEADLINES_PER_SOURCE_PER_DAY = 5;
+export const DAILY_HEADLINES_LIMIT = 200;
+export const DAILY_HEADLINES_PER_SOURCE_PER_DAY = 50;
 
 // Search and discovery proxies are query results, not the site's own
 // configured publishers; regulator filings and paper indexes are not
@@ -100,7 +100,7 @@ export function selectDailyHeadlines(
         left.title.localeCompare(right.title, "zh-CN"),
     );
 
-  // 每个信息源每天最多贡献几条头条，避免单一来源刷屏。
+  // 每个信息源每天最多贡献固定数量的头条，避免单一来源刷屏。
   const perGroup = new Map<string, number>();
   const seenUrls = new Set<string>();
   const headlines: DailyHeadline[] = [];
