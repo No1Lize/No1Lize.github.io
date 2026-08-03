@@ -9,16 +9,18 @@ WORKFLOW = ROOT / ".github" / "workflows" / "frequent-intelligence-refresh.yml"
 
 
 class FrequentRefreshWorkflowTests(unittest.TestCase):
-    def test_primary_and_recovery_schedules_are_staggered(self) -> None:
+    def test_lightweight_schedule_reserves_the_full_refresh_window(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn('cron: "17 */2 * * *"', text)
-        self.assertIn('cron: "47 */2 * * *"', text)
-        self.assertNotIn("timezone:", text)
+        self.assertIn('cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"', text)
+        self.assertIn('timezone: "Asia/Taipei"', text)
+        self.assertNotIn('cron: "47 */2 * * *"', text)
 
-    def test_lightweight_refresh_shares_article_concurrency(self) -> None:
+    def test_lightweight_refresh_uses_the_repository_writer_queue(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("group: public-article-refresh", text)
-        self.assertIn("cancel-in-progress: false", text)
+        self.assertIn("group: vciq-repository-writer-", text)
+        self.assertIn("github.ref", text)
+        self.assertIn("queue: max", text)
+        self.assertNotIn("cancel-in-progress:", text)
 
     def test_lightweight_refresh_only_crawls_news_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -28,10 +30,11 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         self.assertNotIn("python tools/refresh_market_profiles_enriched.py", text)
         self.assertNotIn("python tools/refresh_people_profiles_with_video.py", text)
 
-    def test_successful_check_is_always_published(self) -> None:
+    def test_semantic_change_uses_the_single_push_deploy_path(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("python tools/semantic_data_diff.py", text)
         self.assertIn('git commit -m "data: refresh public intelligence (two-hour check)"', text)
-        self.assertIn("gh workflow run pages.yml --ref main", text)
+        self.assertNotIn("gh workflow run pages.yml --ref main", text)
 
 
 if __name__ == "__main__":

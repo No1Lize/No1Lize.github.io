@@ -9,21 +9,22 @@ WORKFLOW = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
 
 
 class ScheduledSyncWorkflowTest(unittest.TestCase):
-    def test_complete_refresh_is_queued_not_cancelled(self) -> None:
+    def test_complete_refresh_uses_the_repository_writer_queue(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("group: public-article-refresh", text)
-        self.assertIn("cancel-in-progress: false", text)
-        self.assertNotIn("cancel-in-progress: true", text)
+        self.assertIn("group: vciq-repository-writer-", text)
+        self.assertIn("github.ref", text)
+        self.assertIn("queue: max", text)
+        self.assertNotIn("cancel-in-progress:", text)
 
-    def test_full_refresh_runs_once_daily_outside_peak_minute(self) -> None:
+    def test_full_refresh_runs_once_daily_after_the_us_close(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn('cron: "17 19 * * *"', text)
-        self.assertNotIn("timezone:", text)
+        self.assertIn('cron: "30 6 * * *"', text)
+        self.assertIn('timezone: "Asia/Taipei"', text)
         self.assertNotIn("4-22/2", text)
 
-    def test_tracking_admin_writes_do_not_start_a_full_refresh(self) -> None:
+    def test_tracking_config_changes_start_one_full_refresh(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertNotIn("      - config/user_tracking.json", text)
+        self.assertIn("      - config/user_tracking.json", text)
 
     def test_full_refresh_covers_required_source_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")

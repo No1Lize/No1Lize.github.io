@@ -13,8 +13,6 @@ on:
       - config/user_tracking.json
       - lib/catalog-data.ts
       - lib/institution-ranking-data.ts
-      - public/data/venture_profiles.json
-      - public/data/people.json
       - scripts/sync-tracking-institution-directory.ts
       - tools/expand_tracking_entities.py
       - tools/enrich_tracking_institutions.py
@@ -25,8 +23,9 @@ on:
       - tests/test_tracking_person_channels.py
       - .github/workflows/tracking-discovery.yml
   schedule:
-    - cron: "30 13 * * *"
-      timezone: "Asia/Taipei"
+  # Discover entities before the next daily full refresh consumes them.
+  - cron: "0 3 * * 0"
+    timezone: "Asia/Taipei"
   workflow_dispatch:
     inputs:
       mode:
@@ -40,8 +39,8 @@ permissions:
   actions: write
 
 concurrency:
-  group: tracking-discovery
-  cancel-in-progress: false
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   discover:
@@ -204,7 +203,6 @@ jobs:
 
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then
-              gh workflow run scheduled-sync.yml --ref main
               exit 0
             fi
 
