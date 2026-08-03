@@ -28,7 +28,6 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
-          import textwrap
 
           source = Path('.github/workflows/apply-schedule-stabilization.yml').read_text(
               encoding='utf-8'
@@ -37,7 +36,11 @@ jobs:
           end_marker = "\n          PY\n"
           start = source.index(start_marker) + len(start_marker)
           end = source.index(end_marker, start)
-          code = textwrap.dedent(source[start:end])
+          raw_code = source[start:end]
+          code = "\n".join(
+              line[10:] if line.startswith("          ") else line
+              for line in raw_code.splitlines()
+          ) + "\n"
           # Correct the indentation helper in the generated schedule blocks.
           code = code.replace(
               '.replace("              ", "    ", 1)',
