@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import unittest
 
+from tools.crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, load_snapshot
 from tools.ensure_venture_profile_coverage import ensure_catalog_coverage
 from tools.venture_profile_extraction import parse_catalog
 
@@ -11,9 +12,11 @@ export const companies: Company[] = [
   { slug:"alpha", name:"Alpha", region:"美国", sector:"AI / AGI", stage:"成长期", status:"运营中", summary:"Alpha summary", product:"Alpha product", source:official("Alpha","https://alpha.example/") },
   { slug:"beta", name:"Beta", region:"中国", sector:"机器人", stage:"成长期", status:"运营中", summary:"Beta summary", product:"Beta product", source:official("Beta","https://beta.example/") },
 ];
+export type Institution = {};
 export const institutionCatalog: Institution[] = [
   { slug:"sample-capital", name:"Sample Capital", region:"美国", type:"风险投资", stages:"种子至成长期", sectors:["AI"], source:official("Sample Capital","https://capital.example/") },
 ];
+export type IpoCompany = {};
 '''
 
 
@@ -89,6 +92,21 @@ class EnsureVentureProfileCoverageTests(unittest.TestCase):
         self.assertEqual(len(second_statuses), 3)
         self.assertTrue(quality["passed"])
         self.assertTrue(second_quality["passed"])
+
+    def test_production_snapshot_repairs_to_complete_catalog_coverage(self) -> None:
+        companies, institutions = parse_catalog(CATALOG_PATH.read_text(encoding="utf-8"))
+        company_profiles, institution_profiles, statuses, quality, report = ensure_catalog_coverage(
+            load_snapshot(OUTPUT_PATH),
+            companies,
+            institutions,
+            updated_at="2026-08-03T16:00:00+00:00",
+        )
+        self.assertEqual(len(company_profiles), len(companies))
+        self.assertEqual(len(institution_profiles), len(institutions))
+        self.assertEqual(report["companyCoverage"], len(companies))
+        self.assertEqual(report["institutionCoverage"], len(institutions))
+        self.assertEqual(report["runtimeStatusCoverage"], len(statuses))
+        self.assertTrue(quality["passed"])
 
 
 if __name__ == "__main__":
