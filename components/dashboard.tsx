@@ -37,6 +37,7 @@ const eventTypes = [
   "论文",
   "人物观点",
 ] as const;
+const KEY_EVENTS_LIMIT = 200;
 
 const enabledSectorNames = new Set(
   trackedSectors.flatMap((sector) => sector.aliases),
@@ -126,8 +127,7 @@ export function Dashboard({
         ),
     [activeArticles, eventSort, eventType, normalizedQuery, region],
   );
-  const displayedEvents = visibleEvents.slice(0, 80);
-  const eventOrderLabel = eventSort === "importance" ? "重要性" : "最新时间";
+  const displayedEvents = visibleEvents.slice(0, KEY_EVENTS_LIMIT);
   const sourceCount = new Set(activeArticles.map((item) => item.source.url)).size;
   const platformCount = new Set(
     activeArticles.map((item) => item.source.platform).filter(Boolean),
@@ -203,9 +203,7 @@ export function Dashboard({
               <h2>关键事件</h2>
             </div>
             <span>
-              {displayedEvents.length < visibleEvents.length
-                ? `按${eventOrderLabel}显示 ${displayedEvents.length} / ${visibleEvents.length} 条可追溯记录`
-                : `按${eventOrderLabel}显示 ${visibleEvents.length} 条可追溯记录`}
+              当前展示 {displayedEvents.length} 条；滚动总库 {activeArticles.length} 条；今日新增 {todayArticleCount} 条
             </span>
           </div>
 
