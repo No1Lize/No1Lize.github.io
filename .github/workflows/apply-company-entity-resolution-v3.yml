@@ -1,0 +1,161 @@
+name: Apply company entity resolution v3
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/apply-company-entity-resolution-v3.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      HEAD_BRANCH: ${{ github.head_ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+
+      - name: Integrate entity resolver
+        shell: bash
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          def replace(path: str, old: str, new: str) -> None:
+              target = Path(path)
+              text = target.read_text(encoding='utf-8')
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one exact match, got {count}')
+              target.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          def sub(path: str, pattern: str, replacement: str) -> None:
+              target = Path(path)
+              text = target.read_text(encoding='utf-8')
+              updated, count = re.subn(pattern, replacement, text, count=1, flags=re.MULTILINE | re.DOTALL)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one regex match, got {count}: {pattern}')
+              target.write_text(updated, encoding='utf-8')
+
+          migrate = 'tools/migrate_article_entities.py'
+          replace(
+              migrate,
+              'try:\n    from .crawl_articles import normalize_date\nexcept ImportError:\n    from crawl_articles import normalize_date\n',
+              'try:\n    from .crawl_articles import normalize_date\n    from .resolve_company_entities import resolve_payload as resolve_company_entities\nexcept ImportError:\n    from crawl_articles import normalize_date\n    from resolve_company_entities import resolve_payload as resolve_company_entities\n',
+          )
+          replace(
+              migrate,
+              '    if isinstance(payload.get("sourceStatus"), list):\n        result["sourceStatus"] = statuses\n    if any(report.values()):\n',
+              '    if isinstance(payload.get("sourceStatus"), list):\n        result["sourceStatus"] = statuses\n    result, company_entity_report = resolve_company_entities(result)\n    report["resolvedCompanyEntities"] = company_entity_report["changedArticles"]\n    if any(report.values()):\n',
+          )
+
+          channel = 'lib/channel-updates.ts'
+          replace(
+              channel,
+              'import { companies, institutionCatalog } from "@/lib/catalog-data";\n',
+              'import { institutionCatalog } from "@/lib/catalog-data";\nimport { resolveArticleCompanyEntities } from "@/lib/company-entity-registry";\n',
+          )
+          replace(
+              channel,
+              '  company?: string;\n  companySlug?: string;\n  institutions?: string[];\n',
+              '  company?: string;\n  companySlug?: string;\n  companySlugs?: string[];\n  companyMatch?: { slug: string; method: string; confidence: number };\n  companyMatches?: { slug: string; method: string; confidence: number }[];\n  companyCandidateSlugs?: string[];\n  institutions?: string[];\n',
+          )
+          replace(
+              channel,
+              'const genericCompanyNames = new Set(["", "科技产业", "产业", "行业", "公司", "科技公司"]);\n',
+              '',
+          )
+          sub(
+              channel,
+              r'const companyTerms = companies\.flatMap\(\(company\) =>\n.*?\n\);\n\n',
+              '',
+          )
+          sub(
+              channel,
+              r'function companiesDirectory\(\): ChannelUpdateDirectory \{\n  const items = articlesPayload\.articles\.flatMap\(\(article\) => \{\n.*?\n  \}\);\n  return \{',
+              '''function companiesDirectory(): ChannelUpdateDirectory {
+  const items = articlesPayload.articles.flatMap((article) => {
+    const matchedCompanies = resolveArticleCompanyEntities(article);
+    if (!matchedCompanies.length) return [];
+    const companyNames = matchedCompanies
+      .slice(0, 3)
+      .map((company) => company.name)
+      .join("、");
+    return [articleToUpdate(article, `${companyNames} · ${article.sector}`)];
+  });
+  return {''',
+          )
+
+          intelligence = 'lib/intelligence-data.ts'
+          replace(
+              intelligence,
+              'export type IntelligenceEvent = {\n',
+              'export type CompanyEntityMatch = {\n  slug: string;\n  method: string;\n  confidence: number;\n};\n\nexport type IntelligenceEvent = {\n',
+          )
+          replace(
+              intelligence,
+              '  company: string;\n  companySlug?: string;\n  personSlug?: string;\n',
+              '  company: string;\n  companySlug?: string;\n  companySlugs?: string[];\n  companyMatch?: CompanyEntityMatch;\n  companyMatches?: CompanyEntityMatch[];\n  companyCandidateSlugs?: string[];\n  mentionedCompanies?: string[];\n  personSlug?: string;\n',
+          )
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Validate entity resolution
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci
+          python -m py_compile tools/resolve_company_entities.py tools/migrate_article_entities.py
+          python -m unittest tests.test_company_entity_resolution
+          node --import tsx --test tests/company-entity-registry.test.ts tests/channel-updates.test.ts
+          npx eslint \
+            lib/company-entity-registry.ts \
+            lib/channel-updates.ts \
+            lib/intelligence-data.ts \
+            tests/company-entity-registry.test.ts
+          npx tsc --noEmit
+
+          cp public/data/articles.json /tmp/articles-before.json
+          python tools/migrate_article_entities.py
+          python tools/crawl_articles.py --validate-only
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          payload = json.loads(Path('public/data/articles.json').read_text(encoding='utf-8'))
+          accepted = sum(bool(item.get('companySlugs')) for item in payload.get('articles', []))
+          candidate_only = sum(
+              bool(item.get('companyCandidateSlugs')) and not bool(item.get('companySlugs'))
+              for item in payload.get('articles', [])
+          )
+          if accepted <= 0:
+              raise SystemExit('entity resolver produced no accepted company articles')
+          print({'acceptedCompanyArticles': accepted, 'candidateOnlyArticles': candidate_only})
+          PY
+          mv /tmp/articles-before.json public/data/articles.json
+
+      - name: Commit integration changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/migrate_article_entities.py lib/channel-updates.ts lib/intelligence-data.ts
+          git commit -m "feat: require evidence-backed company attribution"
+          git push origin "HEAD:${HEAD_BRANCH}"
