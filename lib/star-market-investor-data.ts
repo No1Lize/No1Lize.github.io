@@ -3,6 +3,19 @@ import {
   institutionDirectory,
   type InstitutionDirectoryEntry,
 } from "@/lib/institution-ranking-data";
+import {
+  deriveStarInvestorReview,
+  starInvestorReviewLabels,
+  starInvestorReviewReasonLabels,
+  type StarInvestorReviewStatus,
+} from "@/lib/star-market-investor-review";
+
+export {
+  deriveStarInvestorReview,
+  starInvestorReviewLabels,
+  starInvestorReviewReasonLabels,
+};
+export type { StarInvestorReviewStatus };
 
 export type StarMarketInvestorContact = {
   officeAddress?: string;
@@ -26,6 +39,13 @@ export type StarMarketInvestor = {
   preIpoOwnershipPct?: number;
   publicContact?: StarMarketInvestorContact;
   contactStatus: "prospectus-public" | "not-disclosed-in-prospectus";
+  reviewStatus?: StarInvestorReviewStatus;
+  reviewReasons?: string[];
+};
+
+export type ReviewedStarMarketInvestor = StarMarketInvestor & {
+  reviewStatus: StarInvestorReviewStatus;
+  reviewReasons: string[];
 };
 
 export type StarMarketCompanyInvestorProfile = {
@@ -89,7 +109,7 @@ type StarMarketInvestorSnapshot = {
 
 export type StarMarketInvestorRecord = {
   company: StarMarketCompanyInvestorProfile;
-  investor: StarMarketInvestor;
+  investor: ReviewedStarMarketInvestor;
   directoryInstitution?: InstitutionDirectoryEntry;
 };
 
@@ -143,26 +163,63 @@ export const starMarketInvestorCompanies = Object.values(snapshot.companies ?? {
     left.ticker.localeCompare(right.ticker),
 );
 
-export const starMarketInvestorRecords: StarMarketInvestorRecord[] =
+const reviewRank: Record<StarInvestorReviewStatus, number> = {
+  verified: 2,
+  needs_review: 1,
+  rejected: 0,
+};
+
+export const starMarketInvestorAllRecords: StarMarketInvestorRecord[] =
   starMarketInvestorCompanies
     .flatMap((company) =>
-      company.investors.map((investor) => ({
-        company,
-        investor,
-        directoryInstitution: resolveStarInvestorInstitution(investor),
-      })),
+      company.investors.map((rawInvestor) => {
+        const review = deriveStarInvestorReview({
+          ...rawInvestor,
+          companyName: company.name,
+        });
+        const investor: ReviewedStarMarketInvestor = {
+          ...rawInvestor,
+          ...review,
+        };
+        return {
+          company,
+          investor,
+          directoryInstitution:
+            review.reviewStatus === "rejected"
+              ? undefined
+              : resolveStarInvestorInstitution(investor),
+        };
+      }),
     )
     .sort(
       (left, right) =>
+        reviewRank[right.investor.reviewStatus] -
+          reviewRank[left.investor.reviewStatus] ||
         (right.investor.preIpoOwnershipPct ?? -1) -
           (left.investor.preIpoOwnershipPct ?? -1) ||
         left.company.sector.localeCompare(right.company.sector, "zh-CN") ||
         left.investor.name.localeCompare(right.investor.name, "zh-CN"),
     );
 
+export const starMarketInvestorRecords = starMarketInvestorAllRecords.filter(
+  (record) => record.investor.reviewStatus !== "rejected",
+);
+
+export const starMarketInvestorRejectedRecords = starMarketInvestorAllRecords.filter(
+  (record) => record.investor.reviewStatus === "rejected",
+);
+
 export const starMarketInvestorStats = {
   companies: starMarketInvestorCompanies.length,
+  extracted: starMarketInvestorAllRecords.length,
   investors: starMarketInvestorRecords.length,
+  verified: starMarketInvestorRecords.filter(
+    (record) => record.investor.reviewStatus === "verified",
+  ).length,
+  needsReview: starMarketInvestorRecords.filter(
+    (record) => record.investor.reviewStatus === "needs_review",
+  ).length,
+  rejected: starMarketInvestorRejectedRecords.length,
   linkedInstitutions: starMarketInvestorRecords.filter(
     (record) => Boolean(record.directoryInstitution),
   ).length,
