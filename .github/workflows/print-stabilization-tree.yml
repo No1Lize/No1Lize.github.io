@@ -1,0 +1,25 @@
+name: Print stabilization base tree
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/print-stabilization-tree.yml
+
+permissions:
+  contents: read
+
+jobs:
+  print:
+    if: github.head_ref == 'ops/schedule-stabilization-20260803'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/schedule-stabilization-20260803
+          fetch-depth: 0
+      - name: Print base object identifiers
+        run: |
+          echo "BASE_COMMIT_SHA=$(git rev-parse HEAD)"
+          echo "BASE_TREE_SHA=$(git rev-parse 'HEAD^{tree}')"
