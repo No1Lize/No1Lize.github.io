@@ -24,11 +24,10 @@ class TrackingDiscoveryWorkflowTests(unittest.TestCase):
         self.assertIn("npm run validate:taxonomy", text)
         self.assertNotIn("git pull --rebase origin main", text)
 
-    def test_refresh_dispatch_only_follows_successful_push(self) -> None:
+    def test_successful_push_relies_on_the_full_refresh_push_trigger(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        push = text.index("if git push origin HEAD:main; then")
-        dispatch = text.index("gh workflow run scheduled-sync.yml --ref main")
-        self.assertGreater(dispatch, push)
+        self.assertIn("if git push origin HEAD:main; then", text)
+        self.assertNotIn("gh workflow run scheduled-sync.yml --ref main", text)
 
 
 if __name__ == "__main__":

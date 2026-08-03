@@ -334,12 +334,13 @@ class EnrichmentTests(unittest.TestCase):
 
 
 class MarketRefreshScheduleTests(unittest.TestCase):
-    def test_market_profile_refresh_runs_daily_at_seven_taipei(self):
+    def test_market_profile_refresh_is_an_explicit_maintenance_task(self):
         text = (ROOT / ".github" / "workflows" / "market-profile-refresh.yml").read_text(
             encoding="utf-8"
         )
-        self.assertIn('cron: "0 7 * * *"', text)
-        self.assertIn('timezone: "Asia/Taipei"', text)
+        self.assertIn("workflow_dispatch:", text)
+        self.assertNotIn("  schedule:", text)
+        self.assertNotIn("  push:", text)
         self.assertIn("tests.test_market_quote_news", text)
 
     def test_scheduled_sync_watches_quote_news_module(self):
