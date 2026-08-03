@@ -1,0 +1,139 @@
+name: Verify company profile refresh production
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/verify-company-profile-refresh-production.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    if: github.head_ref == 'ops/verify-company-profile-refresh-20260803'
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      MERGED_AFTER: "2026-08-03T15:19:50Z"
+      SITE_URL: https://vciq.github.io/companies/
+    steps:
+      - name: Find or dispatch the production incremental run
+        id: incremental
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run list \
+            --workflow company-profile-incremental-refresh.yml \
+            --branch main \
+            --limit 10 \
+            --json databaseId,createdAt,status,conclusion,headSha,event,url \
+            | tee /tmp/incremental-runs.json
+
+          run_id=$(python - <<'PY'
+          import json
+          import os
+          from datetime import datetime
+
+          cutoff = datetime.fromisoformat(os.environ['MERGED_AFTER'].replace('Z', '+00:00'))
+          runs = json.load(open('/tmp/incremental-runs.json', encoding='utf-8'))
+          eligible = [
+              row for row in runs
+              if datetime.fromisoformat(row['createdAt'].replace('Z', '+00:00')) >= cutoff
+          ]
+          print(eligible[0]['databaseId'] if eligible else '')
+          PY
+          )
+
+          if [ -z "$run_id" ]; then
+            echo "No post-merge run found; dispatching a bounded three-company verification run."
+            before=$(python - <<'PY'
+          import json
+          rows = json.load(open('/tmp/incremental-runs.json', encoding='utf-8'))
+          print(rows[0]['databaseId'] if rows else 0)
+          PY
+            )
+            gh workflow run company-profile-incremental-refresh.yml \
+              --ref main \
+              -f max_companies=3
+            for attempt in $(seq 1 60); do
+              run_id=$(gh run list \
+                --workflow company-profile-incremental-refresh.yml \
+                --branch main \
+                --event workflow_dispatch \
+                --limit 5 \
+                --json databaseId \
+                --jq '[.[] | select(.databaseId != ('"$before"'))][0].databaseId // empty')
+              if [ -n "$run_id" ]; then
+                break
+              fi
+              sleep 5
+            done
+          fi
+
+          if [ -z "$run_id" ]; then
+            echo "Unable to identify a production incremental run." >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          gh run view "$run_id" --json databaseId,createdAt,status,conclusion,headSha,event,url
+
+      - name: Wait for the production incremental run
+        env:
+          RUN_ID: ${{ steps.incremental.outputs.run_id }}
+        run: gh run watch "$RUN_ID" --exit-status
+
+      - name: Validate the persisted queue snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api "repos/${GITHUB_REPOSITORY}/contents/public/data/company_profile_refresh_queue.json?ref=main" \
+            --jq .content \
+            | tr -d '\n' \
+            | base64 --decode \
+            > /tmp/company-profile-refresh-queue.json
+          python - <<'PY'
+          import json
+
+          payload = json.load(open('/tmp/company-profile-refresh-queue.json', encoding='utf-8'))
+          assert payload.get('schemaVersion') == 1
+          assert 0 <= int(payload.get('selectionLimit', 0)) <= 10
+          assert 0 <= int(payload.get('selectedCount', 0)) <= 10
+          assert len(payload.get('selectedSlugs', [])) == int(payload.get('selectedCount', 0))
+          assert isinstance(payload.get('processedEvents', {}), dict)
+          print(json.dumps({
+              'generatedAt': payload.get('generatedAt'),
+              'pendingCount': payload.get('pendingCount'),
+              'selectedCount': payload.get('selectedCount'),
+              'selectedSlugs': payload.get('selectedSlugs'),
+              'lastProcessedAt': payload.get('lastProcessedAt'),
+              'processedEventCount': len(payload.get('processedEvents', {})),
+          }, ensure_ascii=False))
+          PY
+
+      - name: Verify the production company page
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            curl --fail --silent --show-error \
+              --retry 3 \
+              --retry-delay 2 \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?profile_queue_verify=${GITHUB_RUN_ID}-${attempt}" \
+              --output /tmp/companies.html
+            if grep -Fq '增量档案刷新' /tmp/companies.html && \
+               grep -Fq '待处理公司' /tmp/companies.html && \
+               grep -Fq '下一批' /tmp/companies.html && \
+               grep -Fq '最近处理' /tmp/companies.html; then
+              echo "Production company page exposes the incremental refresh status card."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Production page did not expose the incremental refresh card in time." >&2
+          exit 1
