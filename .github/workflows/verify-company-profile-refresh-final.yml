@@ -1,0 +1,163 @@
+name: Final company profile refresh verification
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+    paths:
+      - .github/workflows/verify-company-profile-refresh-final.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    if: github.head_ref == 'ops/verify-company-profile-refresh-final-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SITE_URL: https://vciq.github.io/companies/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dispatch exactly one bounded three-company production run
+        id: incremental
+        shell: bash
+        run: |
+          set -euo pipefail
+          previous=$(gh run list \
+            --workflow company-profile-incremental-refresh.yml \
+            --branch main \
+            --event workflow_dispatch \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId // 0')
+
+          gh workflow run company-profile-incremental-refresh.yml \
+            --ref main \
+            -f max_companies=3
+
+          run_id=""
+          for attempt in $(seq 1 60); do
+            run_id=$(gh run list \
+              --workflow company-profile-incremental-refresh.yml \
+              --branch main \
+              --event workflow_dispatch \
+              --limit 5 \
+              --json databaseId \
+              --jq '[.[] | select(.databaseId != ('"$previous"'))][0].databaseId // empty')
+            if [ -n "$run_id" ]; then
+              break
+            fi
+            sleep 5
+          done
+
+          if [ -z "$run_id" ]; then
+            echo "Unable to identify the bounded incremental run." >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          gh run view "$run_id" --json databaseId,createdAt,status,conclusion,headSha,event,url
+
+      - name: Wait for production processing
+        env:
+          RUN_ID: ${{ steps.incremental.outputs.run_id }}
+        run: gh run watch "$RUN_ID" --exit-status
+
+      - name: Fetch persisted production snapshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in company_profile_refresh_queue venture_profiles; do
+            gh api "repos/${GITHUB_REPOSITORY}/contents/public/data/${name}.json?ref=main" \
+              --jq .content \
+              | tr -d '\n' \
+              | base64 --decode \
+              > "/tmp/${name}.json"
+          done
+
+      - name: Validate processing ledger and complete catalog coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from tools.venture_profile_extraction import parse_catalog
+
+          queue = json.load(open('/tmp/company_profile_refresh_queue.json', encoding='utf-8'))
+          profiles = json.load(open('/tmp/venture_profiles.json', encoding='utf-8'))
+          companies, institutions = parse_catalog(
+              Path('lib/catalog-data.ts').read_text(encoding='utf-8')
+          )
+
+          assert queue.get('schemaVersion') == 1
+          assert int(queue.get('selectionLimit', 0)) == 3
+          assert 0 <= int(queue.get('selectedCount', 0)) <= 3
+          assert len(queue.get('selectedSlugs', [])) == int(queue.get('selectedCount', 0))
+          assert queue.get('lastProcessedAt')
+          assert len(queue.get('processedEvents', {})) > 0
+
+          company_profiles = profiles.get('companies', {})
+          institution_profiles = profiles.get('institutions', {})
+          assert len(company_profiles) == len(companies)
+          assert len(institution_profiles) == len(institutions)
+          assert profiles.get('qualityGate', {}).get('passed') is True
+
+          result = {
+              'queueGeneratedAt': queue.get('generatedAt'),
+              'pendingCount': queue.get('pendingCount'),
+              'selectedCount': queue.get('selectedCount'),
+              'selectedSlugs': queue.get('selectedSlugs'),
+              'lastProcessedAt': queue.get('lastProcessedAt'),
+              'processedEventCount': len(queue.get('processedEvents', {})),
+              'companyCoverage': len(company_profiles),
+              'requiredCompanies': len(companies),
+              'institutionCoverage': len(institution_profiles),
+              'requiredInstitutions': len(institutions),
+              'qualityPassed': profiles.get('qualityGate', {}).get('passed'),
+          }
+          print(json.dumps(result, ensure_ascii=False))
+          Path('/tmp/final-company-profile-verification.json').write_text(
+              json.dumps(result, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          PY
+
+      - name: Verify the deployed company page
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            curl --fail --silent --show-error \
+              --retry 3 \
+              --retry-delay 2 \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?profile_queue_verify=${GITHUB_RUN_ID}-${attempt}" \
+              --output /tmp/companies.html
+            if grep -Fq '增量档案刷新' /tmp/companies.html && \
+               grep -Fq '待处理公司' /tmp/companies.html && \
+               grep -Fq '下一批' /tmp/companies.html && \
+               grep -Fq '最近处理' /tmp/companies.html; then
+              echo "Production company page exposes the incremental refresh status card."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Production page did not expose the status card in time." >&2
+          exit 1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-company-profile-verification
+          path: /tmp/final-company-profile-verification.json
+          retention-days: 3
