@@ -18,6 +18,7 @@ export type CompanyEntityArticle = {
   company?: string;
   companySlug?: string;
   companySlugs?: string[];
+  companyMatch?: CompanyEntityMatch;
   companyMatches?: CompanyEntityMatch[];
   mentionedCompanies?: string[];
   source?: { url?: string };
@@ -109,9 +110,22 @@ function domainMatches(host: string, domain: string) {
 function entitiesForSourceUrl(url: string | undefined) {
   const host = hostname(url);
   if (!host) return [];
-  return companyEntities.filter((entity) =>
-    entity.domains.some((domain) => domainMatches(host, domain)),
+
+  const matches = companyEntities.flatMap((entity) =>
+    entity.domains
+      .filter((domain) => domainMatches(host, domain))
+      .map((domain) => ({ entity, specificity: domain.length })),
   );
+  if (!matches.length) return [];
+
+  const maximumSpecificity = Math.max(...matches.map((match) => match.specificity));
+  const resolved = new Map<string, CompanyEntity>();
+  for (const match of matches) {
+    if (match.specificity === maximumSpecificity) {
+      resolved.set(match.entity.slug, match.entity);
+    }
+  }
+  return [...resolved.values()].sort((left, right) => left.order - right.order);
 }
 
 export function resolveArticleCompanyEntities(article: CompanyEntityArticle) {
@@ -129,7 +143,11 @@ export function resolveArticleCompanyEntities(article: CompanyEntityArticle) {
   }
   for (const name of article.mentionedCompanies ?? []) add(uniqueAliasEntity(name));
 
-  for (const match of article.companyMatches ?? []) {
+  const storedMatches = [
+    ...(article.companyMatches ?? []),
+    ...(article.companyMatch ? [article.companyMatch] : []),
+  ];
+  for (const match of storedMatches) {
     if (Number(match.confidence) >= 0.9) add(bySlug.get(match.slug));
   }
 
