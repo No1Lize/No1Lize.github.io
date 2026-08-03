@@ -1,3 +1,3 @@
-// Matches the key-events feed and the daily-headlines column so the three
-// homepage columns stay visually aligned.
-export const HOMEPAGE_CHANNEL_UPDATE_LIMIT = 80;
+// The homepage channel feed keeps a larger rolling window while preserving
+// cross-channel deduplication and the latest/importance sort controls.
+export const HOMEPAGE_CHANNEL_UPDATE_LIMIT = 200;
