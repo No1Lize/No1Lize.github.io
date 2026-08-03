@@ -66,7 +66,7 @@ python3 tools/crawl_articles.py --validate-only
 - 对已确认身份，X handle 会进入公开时间线抓取；微信公开材料、知乎、即刻、小红书、微博、Bilibili、GitHub、LinkedIn、YouTube、Medium、Substack、个人博客和媒体专栏等精确公开入口会登记为人物信源；
 - 只使用仓库已有材料或公开实体声明中的精确 URL，不猜测账号，不访问登录后内容、私有接口或受限页面；
 - 管理页新增赛道（关键词为空）推送配置后，工作流立即用赛道名在网络上取词，直接种入关键词区域；
-- 每日 13:30（台北时间）对最久未扩展的赛道轮转执行完整扩展（关键词、人物、样本公司、团队公开入口和公司官网源），候选需通过与 `/tracking` 管理页一致的校验规则；
+- 每周日 03:00（台北时间）执行完整轮转扩展，覆盖关键词、人物、样本公司、团队公开入口、公司官网源与投资机构目录；管理配置推送仅为新赛道补充种子；
 - 自动添加记录保存在 `config/tracking_auto_discovery.json`，管理页会标注"自动"；管理员删除或忽略过的条目成为 tombstone，永不重复添加；
 - 网络不可用时不做任何修改，绝不虚构实体；提交前会先跑 `validate:tracking` 与 `validate:taxonomy`。
 
@@ -78,11 +78,16 @@ python3 tools/crawl_articles.py --validate-only
 4. 日期、链接、分类、地区、信源层级、来源集中度和最低覆盖量均通过质量门检查；
 5. 质量门失败时不覆盖上一版快照。
 
-## GitHub Pages
+## GitHub Pages 与自动更新时间
 
 仓库必须命名为 `VCIQ.github.io`，并在 **Settings → Pages → Source** 中选择 **GitHub Actions**。`.github/workflows/pages.yml` 构建并发布根路径站点；构建失败不会替换上一版。
 
-`.github/workflows/scheduled-sync.yml` 每两小时执行一次，也支持手动选择来源。抓取逻辑或来源配置更新推送到 `main` 时会自动执行一次完整刷新。数据变化由 `github-actions[bot]` 提交，并触发 Pages 再发布。
+当前生产计划以工作流 YAML 为准：
+
+- `.github/workflows/scheduled-sync.yml` 每日 06:30（台北时间）执行一次完整、带质量门的数据刷新；抓取逻辑或来源配置推送到 `main` 时也会触发完整刷新；
+- `.github/workflows/tracking-discovery.yml` 每周日 03:00（台北时间）执行实体和公开信源扩展；
+- `.github/workflows/star-market-investor-refresh.yml` 每周一 03:10（台北时间）刷新科创板招股说明书自动抽取目录；
+- 上述工作流均支持手动触发。数据发生语义变化时由 `github-actions[bot]` 提交，并触发 Pages 重新构建发布。
 
 SEC 建议在 **Settings → Secrets and variables → Actions → Variables** 中设置 `SEC_USER_AGENT`，例如 `VCIQ research contact@example.com`。它不是密钥；未设置时脚本使用仓库主页作为联系信息。
 
