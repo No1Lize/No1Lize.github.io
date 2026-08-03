@@ -136,8 +136,8 @@ def ensure_catalog_coverage(
         if institution.slug not in institution_profiles:
             profile = build_institution_profile(
                 institution,
-                companies,
                 [],
+                companies,
                 ["目录已收录，但尚未完成首次公开页面档案抓取。"],
                 updated_at,
             )
