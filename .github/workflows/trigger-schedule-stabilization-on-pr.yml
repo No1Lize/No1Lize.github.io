@@ -1,0 +1,81 @@
+name: Trigger schedule stabilization on PR
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/apply-schedule-stabilization.yml
+      - .github/workflows/trigger-schedule-stabilization-on-pr.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: >-
+      github.head_ref == 'ops/schedule-stabilization-20260803' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/schedule-stabilization-20260803
+          fetch-depth: 0
+
+      - name: Execute the reviewed branch patch
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import textwrap
+
+          source = Path('.github/workflows/apply-schedule-stabilization.yml').read_text(
+              encoding='utf-8'
+          )
+          start_marker = "          python - <<'PY'\n"
+          end_marker = "\n          PY\n"
+          start = source.index(start_marker) + len(start_marker)
+          end = source.index(end_marker, start)
+          code = textwrap.dedent(source[start:end])
+          # Correct the indentation helper in the generated schedule blocks.
+          code = code.replace(
+              '.replace("              ", "    ", 1)',
+              '.replace("              ", "    ")',
+          )
+          exec(compile(code, '<schedule-stabilization>', 'exec'))
+          PY
+
+          rm .github/workflows/trigger-schedule-stabilization-on-pr.yml
+
+      - name: Validate stabilization invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+
+          ! grep -R "gh workflow run pages.yml --ref main" \
+            .github/workflows/frequent-intelligence-refresh.yml \
+            .github/workflows/scheduled-sync.yml \
+            .github/workflows/wechat-sync.yml \
+            .github/workflows/refresh-all-track-wechat.yml \
+            .github/workflows/market-profile-refresh.yml \
+            .github/workflows/refresh-listed-company-disclosures.yml \
+            .github/workflows/research-report-refresh.yml \
+            .github/workflows/refresh-venture-profiles.yml \
+            .github/workflows/star-market-investor-refresh.yml
+
+          grep -q 'queue: max' .github/workflows/scheduled-sync.yml
+          grep -q 'timezone: "Asia/Taipei"' .github/workflows/frequent-intelligence-refresh.yml
+          grep -q 'paths-ignore:' .github/workflows/web-test.yml
+          grep -q 'cron: "30 6 \* \* \*"' .github/workflows/scheduled-sync.yml
+
+      - name: Commit stabilization changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "ci: stabilize background refresh schedules"
+          git push origin HEAD:ops/schedule-stabilization-20260803
