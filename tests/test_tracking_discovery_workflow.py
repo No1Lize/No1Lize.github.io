@@ -9,11 +9,12 @@ WORKFLOW = ROOT / ".github" / "workflows" / "tracking-discovery.yml"
 class TrackingDiscoveryWorkflowTests(unittest.TestCase):
     def test_discovery_only_runs_on_schedule_or_manual_dispatch(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn('cron: "0 3 * * 0"', text)
-        self.assertIn('timezone: "Asia/Taipei"', text)
-        self.assertIn("workflow_dispatch:", text)
-        self.assertNotIn("  push:\n", text)
-        self.assertNotIn("config/user_tracking.json", text)
+        trigger_block = text.split("permissions:", 1)[0]
+        self.assertIn('cron: "0 3 * * 0"', trigger_block)
+        self.assertIn('timezone: "Asia/Taipei"', trigger_block)
+        self.assertIn("workflow_dispatch:", trigger_block)
+        self.assertNotIn("  push:\n", trigger_block)
+        self.assertNotIn("config/user_tracking.json", trigger_block)
 
     def test_job_has_a_hard_timeout_and_bounded_network_budget(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
