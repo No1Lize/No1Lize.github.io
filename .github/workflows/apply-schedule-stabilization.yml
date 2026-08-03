@@ -1,0 +1,338 @@
+name: Apply schedule stabilization patch
+
+on:
+  push:
+    branches:
+      - ops/schedule-stabilization-20260803
+    paths:
+      - .github/workflows/apply-schedule-stabilization.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ops/schedule-stabilization-20260803
+          fetch-depth: 0
+
+      - name: Patch workflow schedules and triggers
+        shell: bash
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import re
+          from pathlib import Path
+
+          ROOT = Path(".")
+          changed: set[str] = set()
+
+
+          def load(path: str) -> str:
+              return (ROOT / path).read_text(encoding="utf-8")
+
+
+          def save(path: str, text: str) -> None:
+              target = ROOT / path
+              previous = target.read_text(encoding="utf-8")
+              if text != previous:
+                  target.write_text(text, encoding="utf-8")
+                  changed.add(path)
+
+
+          def regex_replace(
+              path: str,
+              pattern: str,
+              replacement: str,
+              *,
+              expected: int = 1,
+              flags: int = re.MULTILINE | re.DOTALL,
+          ) -> None:
+              text = load(path)
+              updated, count = re.subn(pattern, replacement, text, flags=flags)
+              if count != expected:
+                  raise SystemExit(
+                      f"{path}: expected {expected} replacements for {pattern!r}, got {count}"
+                  )
+              save(path, updated)
+
+
+          def replace_exact(path: str, old: str, new: str, *, expected: int = 1) -> None:
+              text = load(path)
+              count = text.count(old)
+              if count != expected:
+                  raise SystemExit(
+                      f"{path}: expected {expected} occurrences of {old!r}, got {count}"
+                  )
+              save(path, text.replace(old, new, expected))
+
+
+          def remove_exact_line(path: str, line: str) -> None:
+              replace_exact(path, line, "")
+
+
+          def set_schedule(path: str, block: str) -> None:
+              regex_replace(
+                  path,
+                  r"^  schedule:\n.*?(?=^  [A-Za-z_][A-Za-z0-9_-]*:|^permissions:)",
+                  block.rstrip() + "\n",
+              )
+
+
+          def remove_on_block(path: str, key: str) -> None:
+              regex_replace(
+                  path,
+                  rf"^  {re.escape(key)}:\n.*?(?=^  [A-Za-z_][A-Za-z0-9_-]*:|^permissions:)",
+                  "",
+              )
+
+
+          def set_writer_concurrency(path: str) -> None:
+              regex_replace(
+                  path,
+                  r"^concurrency:\n.*?(?=^jobs:)",
+                  "concurrency:\n"
+                  "  group: vciq-repository-writer-${{ github.ref }}\n"
+                  "  queue: max\n\n",
+              )
+
+
+          def remove_step_containing(path: str, needle: str) -> None:
+              text = load(path)
+              lines = text.splitlines(keepends=True)
+              output: list[str] = []
+              index = 0
+              removed = 0
+              while index < len(lines):
+                  if lines[index].startswith("      - "):
+                      end = index + 1
+                      while end < len(lines) and not lines[end].startswith("      - "):
+                          end += 1
+                      block = "".join(lines[index:end])
+                      if needle in block:
+                          removed += 1
+                          index = end
+                          continue
+                  output.append(lines[index])
+                  index += 1
+              if removed != 1:
+                  raise SystemExit(
+                      f"{path}: expected one step containing {needle!r}, removed {removed}"
+                  )
+              save(path, "".join(output))
+
+
+          frequent = ".github/workflows/frequent-intelligence-refresh.yml"
+          scheduled = ".github/workflows/scheduled-sync.yml"
+          wechat = ".github/workflows/wechat-sync.yml"
+          all_track = ".github/workflows/refresh-all-track-wechat.yml"
+          market = ".github/workflows/market-profile-refresh.yml"
+          disclosures = ".github/workflows/refresh-listed-company-disclosures.yml"
+          reports = ".github/workflows/research-report-refresh.yml"
+          venture = ".github/workflows/refresh-venture-profiles.yml"
+          discovery = ".github/workflows/tracking-discovery.yml"
+          star = ".github/workflows/star-market-investor-refresh.yml"
+          rankings = ".github/workflows/refresh-institution-rankings.yml"
+          security = ".github/workflows/security.yml"
+          web_test = ".github/workflows/web-test.yml"
+
+          set_schedule(
+              frequent,
+              """  schedule:
+              # Lightweight user-visible intelligence checks. The 06:17 run is
+              # intentionally omitted to leave a clean window for the full refresh.
+              - cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+          replace_exact(
+              frequent,
+              "      - name: Skip redundant recovery runs after a recent successful refresh\n",
+              "      - name: Skip refresh when the current snapshot is still recent\n",
+          )
+
+          set_schedule(
+              scheduled,
+              """  schedule:
+              # One complete, quality-gated refresh after the US market close.
+              - cron: "30 6 * * *"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+          replace_exact(
+              scheduled,
+              "      - config/intelligence_sources.json\n",
+              "      - config/intelligence_sources.json\n      - config/user_tracking.json\n",
+          )
+
+          # These workflows duplicate work already covered by the lightweight or
+          # full refresh. Keep them as explicit maintenance tools only.
+          for path in (wechat, all_track, market, disclosures):
+              remove_on_block(path, "schedule")
+              remove_on_block(path, "push")
+
+          set_schedule(
+              reports,
+              """  schedule:
+              # PDF archives are comparatively heavy and change less frequently.
+              - cron: "15 11 * * 2,5"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+          remove_exact_line(reports, "      - config/user_tracking.json\n")
+
+          set_schedule(
+              venture,
+              """  schedule:
+              - cron: "15 9 * * *"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+          remove_exact_line(venture, "      - public/data/articles.json\n")
+          replace_exact(venture, "          npm install\n", "          npm ci\n")
+
+          set_schedule(
+              discovery,
+              """  schedule:
+              # Discover entities before the next daily full refresh consumes them.
+              - cron: "0 3 * * 0"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+          remove_exact_line(discovery, "      - public/data/venture_profiles.json\n")
+          remove_exact_line(discovery, "      - public/data/people.json\n")
+          replace_exact(
+              discovery,
+              "            if git push origin HEAD:main; then\n              gh workflow run scheduled-sync.yml --ref main\n              exit 0\n            fi\n",
+              "            if git push origin HEAD:main; then\n              exit 0\n            fi\n",
+          )
+
+          set_schedule(
+              star,
+              """  schedule:
+              - cron: "10 3 * * 1"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+          remove_exact_line(star, "      - public/data/star_market_investors.json\n")
+
+          set_schedule(
+              rankings,
+              """  schedule:
+              - cron: "10 13 * * 1"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+          set_schedule(
+              security,
+              """  schedule:
+              - cron: "40 13 * * 1"
+                timezone: "Asia/Taipei""".replace("              ", "    ", 1),
+          )
+
+          for path in (
+              frequent,
+              scheduled,
+              wechat,
+              all_track,
+              market,
+              disclosures,
+              reports,
+              venture,
+              discovery,
+              star,
+              rankings,
+          ):
+              set_writer_concurrency(path)
+
+          for path in (
+              frequent,
+              scheduled,
+              wechat,
+              all_track,
+              market,
+              disclosures,
+              reports,
+              venture,
+              star,
+          ):
+              remove_step_containing(path, "gh workflow run pages.yml --ref main")
+
+          semantic_guard = """          SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD public/data/articles.json)
+          echo "$SEMANTIC_JSON"
+          SEMANTIC_CHANGED=$(printf '%s' "$SEMANTIC_JSON" | python -c 'import json,sys; print(str(json.load(sys.stdin)["changed"]).lower())')
+          if [ "$SEMANTIC_CHANGED" != "true" ]; then
+            echo "No semantic intelligence changes; skipping Git commit and Pages build."
+            git restore public/data/articles.json
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+"""
+          replace_exact(
+              frequent,
+              "          git add public/data/articles.json\n          git commit -m \"data: refresh public intelligence (two-hour check)\"\n",
+              semantic_guard
+              + "          git add public/data/articles.json\n"
+              + "          git commit -m \"data: refresh public intelligence (two-hour check)\"\n",
+          )
+          replace_exact(
+              wechat,
+              "          git add public/data/articles.json\n          git commit -m \"data: refresh verified WeChat intelligence\"\n",
+              semantic_guard
+              + "          git add public/data/articles.json\n"
+              + "          git commit -m \"data: refresh verified WeChat intelligence\"\n",
+          )
+
+          replace_exact(
+              web_test,
+              "  push:\n    branches: [main]\n",
+              "  push:\n"
+              "    branches: [main]\n"
+              "    paths-ignore:\n"
+              "      - \"public/data/**\"\n"
+              "      - \"public/research-reports/**\"\n"
+              "      - \"diagnostics/**\"\n"
+              "      - \".github/diagnostics/**\"\n",
+          )
+          replace_exact(web_test, "      - run: npm install\n", "      - run: npm ci\n")
+
+          # The branch-only patch workflow removes itself so it cannot become part
+          # of the final pull-request diff.
+          patch_workflow = ROOT / ".github/workflows/apply-schedule-stabilization.yml"
+          patch_workflow.unlink()
+          changed.add(str(patch_workflow))
+
+          print("Changed files:")
+          for path in sorted(changed):
+              print(f"- {path}")
+          PY
+
+      - name: Validate stabilization invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --check
+
+          ! grep -R "gh workflow run pages.yml --ref main" \
+            .github/workflows/frequent-intelligence-refresh.yml \
+            .github/workflows/scheduled-sync.yml \
+            .github/workflows/wechat-sync.yml \
+            .github/workflows/refresh-all-track-wechat.yml \
+            .github/workflows/market-profile-refresh.yml \
+            .github/workflows/refresh-listed-company-disclosures.yml \
+            .github/workflows/research-report-refresh.yml \
+            .github/workflows/refresh-venture-profiles.yml \
+            .github/workflows/star-market-investor-refresh.yml
+
+          grep -q 'queue: max' .github/workflows/scheduled-sync.yml
+          grep -q 'timezone: "Asia/Taipei"' .github/workflows/frequent-intelligence-refresh.yml
+          grep -q 'paths-ignore:' .github/workflows/web-test.yml
+          grep -q 'cron: "30 6 \* \* \*"' .github/workflows/scheduled-sync.yml
+
+      - name: Commit stabilization changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "ci: stabilize background refresh schedules"
+          git push origin HEAD:ops/schedule-stabilization-20260803
