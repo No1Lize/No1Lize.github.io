@@ -9,7 +9,7 @@ on:
       - .github/workflows/trigger-schedule-stabilization-on-pr.yml
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   patch:
@@ -180,90 +180,39 @@ jobs:
                   print(f'found {needle!r} in {raw_path}')
           PY
 
-      - name: Create detached Git commit objects
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Package validated workflow files
         shell: bash
         run: |
           set -euo pipefail
-          git add -A
-          python - <<'PY'
-          from __future__ import annotations
+          output="$RUNNER_TEMP/schedule-stabilization"
+          mkdir -p "$output/.github/workflows"
+          for path in \
+            .github/workflows/frequent-intelligence-refresh.yml \
+            .github/workflows/market-profile-refresh.yml \
+            .github/workflows/refresh-all-track-wechat.yml \
+            .github/workflows/refresh-institution-rankings.yml \
+            .github/workflows/refresh-listed-company-disclosures.yml \
+            .github/workflows/refresh-venture-profiles.yml \
+            .github/workflows/research-report-refresh.yml \
+            .github/workflows/scheduled-sync.yml \
+            .github/workflows/security.yml \
+            .github/workflows/star-market-investor-refresh.yml \
+            .github/workflows/tracking-discovery.yml \
+            .github/workflows/web-test.yml \
+            .github/workflows/wechat-sync.yml; do
+            cp "$path" "$output/$path"
+          done
+          printf '%s\n' \
+            '.github/workflows/apply-schedule-stabilization.yml' \
+            '.github/workflows/trigger-schedule-stabilization-on-pr.yml' \
+            > "$output/delete-paths.txt"
+          git diff --binary > "$output/schedule-stabilization.patch"
+          tar -C "$RUNNER_TEMP" -czf "$RUNNER_TEMP/schedule-stabilization.tar.gz" schedule-stabilization
 
-          import base64
-          import json
-          import os
-          import subprocess
-          import urllib.request
-          from pathlib import Path
-
-          repository = os.environ['GITHUB_REPOSITORY']
-          token = os.environ['GH_TOKEN']
-          api = 'https://api.github.com'
-
-          def git(*args: str) -> str:
-              return subprocess.check_output(['git', *args], text=True).strip()
-
-          def request(method: str, endpoint: str, payload: dict) -> dict:
-              body = json.dumps(payload).encode('utf-8')
-              req = urllib.request.Request(
-                  f'{api}{endpoint}',
-                  data=body,
-                  method=method,
-                  headers={
-                      'Accept': 'application/vnd.github+json',
-                      'Authorization': f'Bearer {token}',
-                      'X-GitHub-Api-Version': '2022-11-28',
-                      'Content-Type': 'application/json',
-                  },
-              )
-              with urllib.request.urlopen(req) as response:
-                  return json.load(response)
-
-          parent_sha = git('rev-parse', 'HEAD')
-          base_tree_sha = git('rev-parse', 'HEAD^{tree}')
-          changed = subprocess.check_output(
-              ['git', 'diff', '--cached', '--name-status', '-z']
-          ).decode('utf-8').split('\0')
-
-          entries: list[dict] = []
-          index = 0
-          while index < len(changed) and changed[index]:
-              status = changed[index]
-              path = changed[index + 1]
-              index += 2
-              if status.startswith(('R', 'C')):
-                  path = changed[index]
-                  index += 1
-              if status.startswith('D'):
-                  entries.append(
-                      {'path': path, 'mode': '100644', 'type': 'blob', 'sha': None}
-                  )
-                  continue
-              content = base64.b64encode(Path(path).read_bytes()).decode('ascii')
-              blob = request(
-                  'POST',
-                  f'/repos/{repository}/git/blobs',
-                  {'content': content, 'encoding': 'base64'},
-              )
-              entries.append(
-                  {'path': path, 'mode': '100644', 'type': 'blob', 'sha': blob['sha']}
-              )
-
-          tree = request(
-              'POST',
-              f'/repos/{repository}/git/trees',
-              {'base_tree': base_tree_sha, 'tree': entries},
-          )
-          commit = request(
-              'POST',
-              f'/repos/{repository}/git/commits',
-              {
-                  'message': 'ci: stabilize background refresh schedules',
-                  'tree': tree['sha'],
-                  'parents': [parent_sha],
-              },
-          )
-          print(f"REMOTE_TREE_SHA={tree['sha']}")
-          print(f"REMOTE_COMMIT_SHA={commit['sha']}")
-          PY
+      - name: Upload validated workflow bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: schedule-stabilization-workflows
+          path: ${{ runner.temp }}/schedule-stabilization.tar.gz
+          if-no-files-found: error
+          retention-days: 3
