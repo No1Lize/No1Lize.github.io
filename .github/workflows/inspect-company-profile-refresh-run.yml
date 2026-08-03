@@ -1,0 +1,37 @@
+name: Inspect company profile refresh run
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/inspect-company-profile-refresh-run.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect:
+    if: github.head_ref == 'ops/verify-company-profile-refresh-20260803'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Export recent production runs
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run list \
+            --workflow company-profile-incremental-refresh.yml \
+            --branch main \
+            --limit 10 \
+            --json databaseId,createdAt,updatedAt,status,conclusion,headSha,event,url \
+            > /tmp/company-profile-incremental-runs.json
+          cat /tmp/company-profile-incremental-runs.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: company-profile-incremental-runs
+          path: /tmp/company-profile-incremental-runs.json
+          retention-days: 1
