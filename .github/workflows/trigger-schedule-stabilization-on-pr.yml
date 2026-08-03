@@ -78,10 +78,10 @@ jobs:
             .github/workflows/refresh-venture-profiles.yml \
             .github/workflows/star-market-investor-refresh.yml
 
-          grep -q 'queue: max' .github/workflows/scheduled-sync.yml
-          grep -q 'timezone: "Asia/Taipei"' .github/workflows/frequent-intelligence-refresh.yml
-          grep -q 'paths-ignore:' .github/workflows/web-test.yml
-          grep -q 'cron: "30 6 \* \* \*"' .github/workflows/scheduled-sync.yml
+          grep -Fq 'queue: max' .github/workflows/scheduled-sync.yml
+          grep -Fq 'timezone: "Asia/Taipei"' .github/workflows/frequent-intelligence-refresh.yml
+          grep -Fq 'paths-ignore:' .github/workflows/web-test.yml
+          grep -Fq 'cron: "30 6 * * *"' .github/workflows/scheduled-sync.yml
 
       - name: Commit stabilization changes
         shell: bash
