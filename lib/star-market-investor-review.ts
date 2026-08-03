@@ -113,7 +113,10 @@ export function deriveStarInvestorReview(
     return { reviewStatus: "rejected", reviewReasons: ["issuer-name"] };
   }
 
-  if (genericLegalFormKeys.has(nameKey)) {
+  if (
+    genericLegalFormKeys.has(nameKey) ||
+    /^[（(]?[一二三四五六七八九十百0-9]+[）)]?(?:有限公司|股份有限公司|有限合伙企业?)$/u.test(name)
+  ) {
     return { reviewStatus: "rejected", reviewReasons: ["generic-legal-form"] };
   }
 
