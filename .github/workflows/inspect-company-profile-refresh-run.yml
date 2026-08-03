@@ -19,7 +19,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
     steps:
-      - name: Export recent production runs
+      - name: Export recent production and active runs
         shell: bash
         run: |
           set -euo pipefail
@@ -29,9 +29,22 @@ jobs:
             --limit 10 \
             --json databaseId,createdAt,updatedAt,status,conclusion,headSha,event,url \
             > /tmp/company-profile-incremental-runs.json
-          cat /tmp/company-profile-incremental-runs.json
+          gh run list \
+            --limit 50 \
+            --json databaseId,name,workflowName,createdAt,updatedAt,status,conclusion,headBranch,headSha,event,url \
+            > /tmp/all-recent-runs.json
+          python - <<'PY'
+          import json
+
+          rows = json.load(open('/tmp/all-recent-runs.json', encoding='utf-8'))
+          active = [row for row in rows if row.get('status') != 'completed']
+          json.dump(active, open('/tmp/active-runs.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+          print(json.dumps(active, ensure_ascii=False, indent=2))
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: company-profile-incremental-runs
-          path: /tmp/company-profile-incremental-runs.json
+          path: |
+            /tmp/company-profile-incremental-runs.json
+            /tmp/active-runs.json
           retention-days: 1
