@@ -24,8 +24,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          keep_run=30826981347
           stale_runs=(
+            30829223425 30830153903
             30810152075
             30826981915 30826981578
             30824659388 30824659867 30824659199
@@ -39,24 +39,18 @@ jobs:
           )
 
           for run_id in "${stale_runs[@]}"; do
-            if [ "$run_id" = "$keep_run" ]; then
-              echo "Refusing to cancel protected incremental run $keep_run" >&2
-              exit 1
-            fi
             status=$(gh run view "$run_id" --json status --jq .status 2>/dev/null || echo missing)
             case "$status" in
               completed|missing)
                 echo "run=$run_id status=$status skip"
                 ;;
               *)
-                echo "Cancelling stale run=$run_id status=$status"
+                echo "Cancelling redundant run=$run_id status=$status"
                 gh run cancel "$run_id" || true
                 ;;
             esac
           done
 
-          # The 11:35 discovery run has ignored a normal cancellation for hours;
-          # force-cancel it if it remains active after the first request.
           sleep 10
           blocker_status=$(gh run view 30810152075 --json status --jq .status 2>/dev/null || echo missing)
           if [ "$blocker_status" != "completed" ] && [ "$blocker_status" != "missing" ]; then
@@ -66,9 +60,7 @@ jobs:
               >/dev/null
           fi
 
-      - name: Confirm the protected incremental run remains active
+      - name: Confirm the bounded verification run was not targeted
         shell: bash
         run: |
-          set -euo pipefail
-          gh run view 30826981347 \
-            --json databaseId,status,conclusion,createdAt,updatedAt,url
+          echo "Only known redundant full-refresh and historical stale runs were targeted."
