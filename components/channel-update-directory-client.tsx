@@ -3,7 +3,6 @@
 import {
   ArrowDownUp,
   ArrowUpRight,
-  Clock3,
   RadioTower,
   Tags,
   Upload,
@@ -14,6 +13,7 @@ import { ChannelDocumentImport } from "@/components/channel-document-import";
 import {
   ALL_CHANNEL_UPDATE_KEYWORDS,
   collectChannelUpdateKeywords,
+  countChannelUpdatesForSnapshotDay,
   filterAndSortChannelUpdates,
   type ChannelUpdateSortOrder,
 } from "@/lib/channel-update-filter";
@@ -81,7 +81,11 @@ export function ChannelUpdateDirectoryClient({
       }),
     [allItems, keyword, sortOrder],
   );
-  const latestDatedItemId = useMemo(() => {
+  const todayItemCount = useMemo(
+      () => countChannelUpdatesForSnapshotDay(allItems, directory.generatedAt),
+      [allItems, directory.generatedAt],
+    );
+    const latestDatedItemId = useMemo(() => {
     let latest: (typeof visibleItems)[number] | undefined;
     for (const item of visibleItems) {
       if (item.datePrecision === "undated") continue;
@@ -158,12 +162,9 @@ export function ChannelUpdateDirectoryClient({
           </button>
         </div>
         <div className={styles.snapshot}>
-          <span>{isFiltered ? "筛选结果" : "公开资料快照"}</span>
-          <strong>{visibleItems.length}</strong>
-          <small>
-            <Clock3 size={12} aria-hidden="true" />
-            {directory.generatedAt.slice(0, 10) || "等待更新"}
-          </small>
+          <span>滚动总库</span>
+          <strong>{allItems.length}</strong>
+          <small>今日新增 {todayItemCount} 条</small>
         </div>
       </div>
 
