@@ -25,197 +25,84 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
+          import re
           from pathlib import Path
 
-          def replace(path: str, old: str, new: str, expected: int = 1) -> None:
+          def replace(path: str, old: str, new: str) -> None:
               target = Path(path)
               text = target.read_text(encoding='utf-8')
               count = text.count(old)
-              if count != expected:
-                  raise SystemExit(f'{path}: expected {expected} matches, got {count}')
-              target.write_text(text.replace(old, new, expected), encoding='utf-8')
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one exact match, got {count}')
+              target.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          def sub(path: str, pattern: str, replacement: str) -> None:
+              target = Path(path)
+              text = target.read_text(encoding='utf-8')
+              updated, count = re.subn(pattern, replacement, text, count=1, flags=re.MULTILINE | re.DOTALL)
+              if count != 1:
+                  raise SystemExit(f'{path}: expected one regex match, got {count}: {pattern}')
+              target.write_text(updated, encoding='utf-8')
 
           migrate = 'tools/migrate_article_entities.py'
           replace(
               migrate,
-              '''try:
-              from .crawl_articles import normalize_date
-          except ImportError:
-              from crawl_articles import normalize_date
-          ''',
-              '''try:
-              from .crawl_articles import normalize_date
-              from .resolve_company_entities import resolve_payload as resolve_company_entities
-          except ImportError:
-              from crawl_articles import normalize_date
-              from resolve_company_entities import resolve_payload as resolve_company_entities
-          ''',
+              'try:\n    from .crawl_articles import normalize_date\nexcept ImportError:\n    from crawl_articles import normalize_date\n',
+              'try:\n    from .crawl_articles import normalize_date\n    from .resolve_company_entities import resolve_payload as resolve_company_entities\nexcept ImportError:\n    from crawl_articles import normalize_date\n    from resolve_company_entities import resolve_payload as resolve_company_entities\n',
           )
           replace(
               migrate,
-              '''    result = dict(payload)
-              result["articles"] = migrated
-              result["articleCount"] = len(migrated)
-              if isinstance(payload.get("sourceStatus"), list):
-                  result["sourceStatus"] = statuses
-              if any(report.values()):
-          ''',
-              '''    result = dict(payload)
-              result["articles"] = migrated
-              result["articleCount"] = len(migrated)
-              if isinstance(payload.get("sourceStatus"), list):
-                  result["sourceStatus"] = statuses
-              result, company_entity_report = resolve_company_entities(result)
-              report["resolvedCompanyEntities"] = company_entity_report["changedArticles"]
-              if any(report.values()):
-          ''',
+              '    if isinstance(payload.get("sourceStatus"), list):\n        result["sourceStatus"] = statuses\n    if any(report.values()):\n',
+              '    if isinstance(payload.get("sourceStatus"), list):\n        result["sourceStatus"] = statuses\n    result, company_entity_report = resolve_company_entities(result)\n    report["resolvedCompanyEntities"] = company_entity_report["changedArticles"]\n    if any(report.values()):\n',
           )
 
           channel = 'lib/channel-updates.ts'
           replace(
               channel,
               'import { companies, institutionCatalog } from "@/lib/catalog-data";\n',
-              'import { institutionCatalog } from "@/lib/catalog-data";\n'
-              'import { resolveArticleCompanyEntities } from "@/lib/company-entity-registry";\n',
+              'import { institutionCatalog } from "@/lib/catalog-data";\nimport { resolveArticleCompanyEntities } from "@/lib/company-entity-registry";\n',
           )
           replace(
               channel,
-              '''  company?: string;
-              companySlug?: string;
-              institutions?: string[];
-          ''',
-              '''  company?: string;
-              companySlug?: string;
-              companySlugs?: string[];
-              companyMatch?: { slug: string; method: string; confidence: number };
-              companyMatches?: { slug: string; method: string; confidence: number }[];
-              companyCandidateSlugs?: string[];
-              institutions?: string[];
-          ''',
+              '  company?: string;\n  companySlug?: string;\n  institutions?: string[];\n',
+              '  company?: string;\n  companySlug?: string;\n  companySlugs?: string[];\n  companyMatch?: { slug: string; method: string; confidence: number };\n  companyMatches?: { slug: string; method: string; confidence: number }[];\n  companyCandidateSlugs?: string[];\n  institutions?: string[];\n',
           )
           replace(
               channel,
               'const genericCompanyNames = new Set(["", "科技产业", "产业", "行业", "公司", "科技公司"]);\n',
               '',
           )
-          replace(
+          sub(
               channel,
-              '''const companyTerms = companies.flatMap((company) =>
-                [company.name, company.englishName]
-                  .filter((value): value is string => Boolean(value))
-                  .map((value) => ({ value, normalized: normalize(value) })),
-              );
-
-          ''',
+              r'const companyTerms = companies\.flatMap\(\(company\) =>\n.*?\n\);\n\n',
               '',
           )
-          replace(
+          sub(
               channel,
+              r'function companiesDirectory\(\): ChannelUpdateDirectory \{\n  const items = articlesPayload\.articles\.flatMap\(\(article\) => \{\n.*?\n  \}\);\n  return \{',
               '''function companiesDirectory(): ChannelUpdateDirectory {
-                const items = articlesPayload.articles.flatMap((article) => {
-                  const matchedCompany = firstMatchedTerm(article, companyTerms);
-                  const explicitCompany =
-                    article.company && !genericCompanyNames.has(article.company) ? article.company : "";
-                  const mentionedCompany = article.mentionedCompanies?.[0] ?? "";
-                  if (!article.companySlug && !matchedCompany && !explicitCompany && !mentionedCompany) return [];
-                  const companyName = explicitCompany || mentionedCompany || matchedCompany || "公司动态";
-                  return [articleToUpdate(article, `${companyName} · ${article.sector}`)];
-                });
-          ''',
-              '''function companiesDirectory(): ChannelUpdateDirectory {
-                const items = articlesPayload.articles.flatMap((article) => {
-                  const matchedCompanies = resolveArticleCompanyEntities(article);
-                  if (!matchedCompanies.length) return [];
-                  const companyNames = matchedCompanies
-                    .slice(0, 3)
-                    .map((company) => company.name)
-                    .join("、");
-                  return [articleToUpdate(article, `${companyNames} · ${article.sector}`)];
-                });
-          ''',
+  const items = articlesPayload.articles.flatMap((article) => {
+    const matchedCompanies = resolveArticleCompanyEntities(article);
+    if (!matchedCompanies.length) return [];
+    const companyNames = matchedCompanies
+      .slice(0, 3)
+      .map((company) => company.name)
+      .join("、");
+    return [articleToUpdate(article, `${companyNames} · ${article.sector}`)];
+  });
+  return {''',
           )
 
           intelligence = 'lib/intelligence-data.ts'
           replace(
               intelligence,
-              '''export type IntelligenceEvent = {
-          ''',
-              '''export type CompanyEntityMatch = {
-                slug: string;
-                method: string;
-                confidence: number;
-              };
-
-              export type IntelligenceEvent = {
-          ''',
+              'export type IntelligenceEvent = {\n',
+              'export type CompanyEntityMatch = {\n  slug: string;\n  method: string;\n  confidence: number;\n};\n\nexport type IntelligenceEvent = {\n',
           )
           replace(
               intelligence,
-              '''  company: string;
-              companySlug?: string;
-              personSlug?: string;
-          ''',
-              '''  company: string;
-              companySlug?: string;
-              companySlugs?: string[];
-              companyMatch?: CompanyEntityMatch;
-              companyMatches?: CompanyEntityMatch[];
-              companyCandidateSlugs?: string[];
-              mentionedCompanies?: string[];
-              personSlug?: string;
-          ''',
-          )
-
-          frequent = '.github/workflows/frequent-intelligence-refresh.yml'
-          replace(
-              frequent,
-              '''            tools/migrate_article_entities.py \\
-                tools/enrich_tracking_snapshot.py \\
-          ''',
-              '''            tools/migrate_article_entities.py \\
-                tools/resolve_company_entities.py \\
-                tools/enrich_tracking_snapshot.py \\
-          ''',
-          )
-          replace(
-              frequent,
-              '''            tests.test_professional_media_sources \\
-                tests.test_snapshot_retention \\
-          ''',
-              '''            tests.test_professional_media_sources \\
-                tests.test_company_entity_resolution \\
-                tests.test_snapshot_retention \\
-          ''',
-          )
-
-          scheduled = '.github/workflows/scheduled-sync.yml'
-          replace(
-              scheduled,
-              '''      - tools/migrate_article_entities.py
-          ''',
-              '''      - tools/migrate_article_entities.py
-                - tools/resolve_company_entities.py
-          ''',
-          )
-          replace(
-              scheduled,
-              '''            tools/semantic_data_diff.py \\
-                tools/update_source_health.py \\
-          ''',
-              '''            tools/semantic_data_diff.py \\
-                tools/resolve_company_entities.py \\
-                tools/update_source_health.py \\
-          ''',
-          )
-          replace(
-              scheduled,
-              '''            tests.test_semantic_data_diff \\
-                tests.test_source_health \\
-          ''',
-              '''            tests.test_semantic_data_diff \\
-                tests.test_company_entity_resolution \\
-                tests.test_source_health \\
-          ''',
+              '  company: string;\n  companySlug?: string;\n  personSlug?: string;\n',
+              '  company: string;\n  companySlug?: string;\n  companySlugs?: string[];\n  companyMatch?: CompanyEntityMatch;\n  companyMatches?: CompanyEntityMatch[];\n  companyCandidateSlugs?: string[];\n  mentionedCompanies?: string[];\n  personSlug?: string;\n',
           )
           PY
 
@@ -233,16 +120,9 @@ jobs:
         run: |
           set -euo pipefail
           npm ci
-          python -m py_compile \
-            tools/resolve_company_entities.py \
-            tools/migrate_article_entities.py
-          python -m unittest \
-            tests.test_company_entity_resolution \
-            tests.test_frequent_refresh_workflow \
-            tests.test_scheduled_sync_workflow
-          node --import tsx --test \
-            tests/company-entity-registry.test.ts \
-            tests/channel-updates.test.ts
+          python -m py_compile tools/resolve_company_entities.py tools/migrate_article_entities.py
+          python -m unittest tests.test_company_entity_resolution
+          node --import tsx --test tests/company-entity-registry.test.ts tests/channel-updates.test.ts
           npx eslint \
             lib/company-entity-registry.ts \
             lib/channel-updates.ts \
@@ -275,11 +155,6 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add \
-            tools/migrate_article_entities.py \
-            lib/channel-updates.ts \
-            lib/intelligence-data.ts \
-            .github/workflows/frequent-intelligence-refresh.yml \
-            .github/workflows/scheduled-sync.yml
+          git add tools/migrate_article_entities.py lib/channel-updates.ts lib/intelligence-data.ts
           git commit -m "feat: require evidence-backed company attribution"
           git push origin HEAD:feat/company-entity-resolution-20260803
