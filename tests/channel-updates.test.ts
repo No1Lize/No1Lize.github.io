@@ -8,6 +8,7 @@ import {
 import {
   ALL_CHANNEL_UPDATE_KEYWORDS,
   collectChannelUpdateKeywords,
+  countChannelUpdatesForSnapshotDay,
   filterAndSortChannelUpdates,
 } from "../lib/channel-update-filter";
 import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "../lib/homepage-channel-update-config";
@@ -30,7 +31,24 @@ test("homepage channel update directory displays up to 200 deduplicated items", 
   assert.equal(HOMEPAGE_CHANNEL_UPDATE_LIMIT, 200);
 });
 
-test("normalizes exact, relative and undated source labels", () => {
+test("channel snapshot counts exact and relative updates on the generated day", () => {
+      const sample = getChannelUpdateDirectory("technology").items[0];
+      assert.ok(sample);
+      const items = [
+        { ...sample, id: "today-exact", sortAt: "2026-08-03T10:00:00.000Z", datePrecision: "exact" as const },
+        { ...sample, id: "today-relative", sortAt: "2026-08-03T00:00:00.000Z", datePrecision: "approximate" as const },
+        { ...sample, id: "yesterday", sortAt: "2026-08-02T23:59:59.000Z", datePrecision: "exact" as const },
+        { ...sample, id: "undated", sortAt: UNDATED_CHANNEL_UPDATE_SORT_AT, datePrecision: "undated" as const },
+      ];
+
+      assert.equal(
+        countChannelUpdatesForSnapshotDay(items, "2026-08-03T12:17:00.000Z"),
+        2,
+      );
+      assert.equal(countChannelUpdatesForSnapshotDay(items, "等待更新"), 0);
+    });
+
+    test("normalizes exact, relative and undated source labels", () => {
   const exact = normalizeChannelUpdateDate("2020-05-29", snapshotTime);
   assert.equal(exact.displayDate, "2020-05-29");
   assert.equal(exact.precision, "exact");
