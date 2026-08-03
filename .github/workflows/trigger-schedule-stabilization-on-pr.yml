@@ -47,6 +47,16 @@ jobs:
               '.replace("              ", "    ")',
           )
           exec(compile(code, '<schedule-stabilization>', 'exec'))
+
+          for raw_path in (
+              '.github/workflows/refresh-all-track-wechat.yml',
+              '.github/workflows/star-market-investor-refresh.yml',
+          ):
+              path = Path(raw_path)
+              path.write_text(
+                  path.read_text(encoding='utf-8').rstrip() + '\n',
+                  encoding='utf-8',
+              )
           PY
 
           rm .github/workflows/trigger-schedule-stabilization-on-pr.yml
