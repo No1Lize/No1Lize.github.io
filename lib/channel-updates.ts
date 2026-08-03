@@ -1,8 +1,9 @@
 import rawArticles from "@/public/data/articles.json";
 import rawPeople from "@/public/data/people.json";
 import rawResearchReports from "@/public/data/research_reports.json";
-import { companies, institutionCatalog } from "@/lib/catalog-data";
+import { institutionCatalog } from "@/lib/catalog-data";
 import { getChannelDocumentUpdateItems } from "@/lib/channel-documents";
+import { resolveArticleCompanyEntities } from "@/lib/company-entity-registry";
 import {
   normalizeChannelUpdateDate,
   type ChannelUpdateDatePrecision,
@@ -47,6 +48,10 @@ type ArticleRecord = {
   sector: string;
   company?: string;
   companySlug?: string;
+  companySlugs?: string[];
+  companyMatch?: { slug: string; method: string; confidence: number };
+  companyMatches?: { slug: string; method: string; confidence: number }[];
+  companyCandidateSlugs?: string[];
   institutions?: string[];
   mentionedCompanies?: string[];
   mentionedPeople?: string[];
@@ -108,7 +113,6 @@ const articlesPayload = rawArticles as ArticlePayload;
 const researchReportsPayload = rawResearchReports as ResearchReportPayload;
 const peoplePayload = rawPeople as PeoplePayload;
 
-const genericCompanyNames = new Set(["", "科技产业", "产业", "行业", "公司", "科技公司"]);
 const capitalEventTypes = new Set(["融资", "产业投资", "并购", "IPO"]);
 const materialTypeLabels: Record<string, string> = {
   speech: "演讲",
@@ -124,12 +128,6 @@ const materialTypeLabels: Record<string, string> = {
 
 const enabledSectorNames = new Set(
   trackedSectors.flatMap((sector) => [sector.name, ...(sector.aliases ?? [])]),
-);
-
-const companyTerms = companies.flatMap((company) =>
-  [company.name, company.englishName]
-    .filter((value): value is string => Boolean(value))
-    .map((value) => ({ value, normalized: normalize(value) })),
 );
 
 const institutionTerms = institutionCatalog.flatMap((institution) =>
@@ -228,13 +226,13 @@ function technologyDirectory(): ChannelUpdateDirectory {
 
 function companiesDirectory(): ChannelUpdateDirectory {
   const items = articlesPayload.articles.flatMap((article) => {
-    const matchedCompany = firstMatchedTerm(article, companyTerms);
-    const explicitCompany =
-      article.company && !genericCompanyNames.has(article.company) ? article.company : "";
-    const mentionedCompany = article.mentionedCompanies?.[0] ?? "";
-    if (!article.companySlug && !matchedCompany && !explicitCompany && !mentionedCompany) return [];
-    const companyName = explicitCompany || mentionedCompany || matchedCompany || "公司动态";
-    return [articleToUpdate(article, `${companyName} · ${article.sector}`)];
+    const matchedCompanies = resolveArticleCompanyEntities(article);
+    if (!matchedCompanies.length) return [];
+    const companyNames = matchedCompanies
+      .slice(0, 3)
+      .map((company) => company.name)
+      .join("、");
+    return [articleToUpdate(article, `${companyNames} · ${article.sector}`)];
   });
   return {
     title: "公司更新目录",
