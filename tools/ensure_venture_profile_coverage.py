@@ -85,16 +85,24 @@ def ensure_catalog_coverage(
 
     raw_companies = snapshot.get("companies", {})
     raw_institutions = snapshot.get("institutions", {})
-    company_profiles = {
-        slug: copy.deepcopy(profile)
-        for slug, profile in raw_companies.items()
-        if slug in company_slugs and isinstance(profile, dict)
-    } if isinstance(raw_companies, dict) else {}
-    institution_profiles = {
-        slug: copy.deepcopy(profile)
-        for slug, profile in raw_institutions.items()
-        if slug in institution_slugs and isinstance(profile, dict)
-    } if isinstance(raw_institutions, dict) else {}
+    company_profiles = (
+        {
+            slug: copy.deepcopy(profile)
+            for slug, profile in raw_companies.items()
+            if slug in company_slugs and isinstance(profile, dict)
+        }
+        if isinstance(raw_companies, dict)
+        else {}
+    )
+    institution_profiles = (
+        {
+            slug: copy.deepcopy(profile)
+            for slug, profile in raw_institutions.items()
+            if slug in institution_slugs and isinstance(profile, dict)
+        }
+        if isinstance(raw_institutions, dict)
+        else {}
+    )
 
     raw_statuses = snapshot.get("sourceStatus", [])
     status_map: dict[tuple[str, str], dict[str, Any]] = {}
@@ -180,16 +188,40 @@ def ensure_catalog_coverage(
     return company_profiles, institution_profiles, statuses, quality, report
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--catalog", type=Path, default=CATALOG_PATH)
-    parser.add_argument("--snapshot", type=Path, default=OUTPUT_PATH)
-    parser.add_argument("--check", action="store_true")
-    args = parser.parse_args()
+def build_repaired_snapshot(
+    previous: dict[str, Any],
+    company_profiles: dict[str, dict[str, Any]],
+    institution_profiles: dict[str, dict[str, Any]],
+    statuses: Sequence[dict[str, Any]],
+    quality: dict[str, Any],
+    *,
+    generated_at: str,
+) -> dict[str, Any]:
+    """Return a standard venture snapshot while preserving unrelated metadata."""
+    payload = copy.deepcopy(previous)
+    payload.update(
+        {
+            "schemaVersion": max(1, int(previous.get("schemaVersion", 1) or 1)),
+            "generatedAt": generated_at,
+            "companies": dict(sorted(company_profiles.items())),
+            "institutions": dict(sorted(institution_profiles.items())),
+            "sourceStatus": list(statuses),
+            "qualityGate": quality,
+        }
+    )
+    return payload
 
-    companies, institutions = parse_catalog(args.catalog.read_text(encoding="utf-8"))
-    snapshot = load_snapshot(args.snapshot)
-    updated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
+
+def repair_snapshot(
+    *,
+    catalog_path: Path = CATALOG_PATH,
+    snapshot_path: Path = OUTPUT_PATH,
+    check: bool = False,
+    now: datetime | None = None,
+) -> dict[str, Any]:
+    companies, institutions = parse_catalog(catalog_path.read_text(encoding="utf-8"))
+    snapshot = load_snapshot(snapshot_path)
+    updated_at = (now or datetime.now(UTC)).astimezone(UTC).replace(microsecond=0).isoformat()
     company_profiles, institution_profiles, statuses, quality, report = ensure_catalog_coverage(
         snapshot,
         companies,
@@ -198,8 +230,7 @@ def main() -> int:
     )
 
     if not quality.get("passed"):
-        print(json.dumps({**report, "changed": False}, ensure_ascii=False))
-        return 1
+        return {**report, "changed": False}
 
     missing = bool(
         report["addedCompanies"]
@@ -207,18 +238,34 @@ def main() -> int:
         or report["addedStatuses"]
     )
     changed = False
-    if not args.check and missing:
-        changed = write_snapshot(
+    if not check and missing:
+        payload = build_repaired_snapshot(
             snapshot,
             company_profiles,
             institution_profiles,
             statuses,
             quality,
-            path=args.snapshot,
+            generated_at=updated_at,
         )
+        changed = write_snapshot(payload, snapshot, snapshot_path)
 
-    print(json.dumps({**report, "changed": changed}, ensure_ascii=False))
-    return 0
+    return {**report, "changed": changed}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--catalog", type=Path, default=CATALOG_PATH)
+    parser.add_argument("--snapshot", type=Path, default=OUTPUT_PATH)
+    parser.add_argument("--check", action="store_true")
+    args = parser.parse_args()
+
+    report = repair_snapshot(
+        catalog_path=args.catalog,
+        snapshot_path=args.snapshot,
+        check=args.check,
+    )
+    print(json.dumps(report, ensure_ascii=False))
+    return 0 if report.get("qualityPassed") else 1
 
 
 if __name__ == "__main__":

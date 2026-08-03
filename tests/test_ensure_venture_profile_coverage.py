@@ -1,9 +1,16 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from datetime import UTC, datetime
+from pathlib import Path
 
-from tools.crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, load_snapshot
-from tools.ensure_venture_profile_coverage import ensure_catalog_coverage
+from tools.crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, ROOT, load_snapshot
+from tools.ensure_venture_profile_coverage import (
+    ensure_catalog_coverage,
+    repair_snapshot,
+)
 from tools.venture_profile_extraction import parse_catalog
 
 
@@ -92,6 +99,53 @@ class EnsureVentureProfileCoverageTests(unittest.TestCase):
         self.assertEqual(len(second_statuses), 3)
         self.assertTrue(quality["passed"])
         self.assertTrue(second_quality["passed"])
+
+    def test_repair_snapshot_writes_standard_payload_and_is_idempotent(self) -> None:
+        initial = {
+            "schemaVersion": 1,
+            "researchModelVersion": 3,
+            "generatedAt": "2026-08-01T00:00:00Z",
+            "companies": {},
+            "institutions": {},
+            "sourceStatus": [],
+            "qualityGate": {"passed": False},
+        }
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            base = Path(directory)
+            catalog_path = base / "catalog-data.ts"
+            snapshot_path = base / "venture_profiles.json"
+            catalog_path.write_text(CATALOG, encoding="utf-8")
+            snapshot_path.write_text(
+                json.dumps(initial, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            first = repair_snapshot(
+                catalog_path=catalog_path,
+                snapshot_path=snapshot_path,
+                now=datetime(2026, 8, 3, 16, 0, tzinfo=UTC),
+            )
+            persisted = json.loads(snapshot_path.read_text(encoding="utf-8"))
+
+            self.assertTrue(first["changed"])
+            self.assertTrue(first["qualityPassed"])
+            self.assertEqual(set(persisted["companies"]), {"alpha", "beta"})
+            self.assertEqual(set(persisted["institutions"]), {"sample-capital"})
+            self.assertEqual(len(persisted["sourceStatus"]), 3)
+            self.assertTrue(persisted["qualityGate"]["passed"])
+            self.assertEqual(persisted["researchModelVersion"], 3)
+            self.assertEqual(persisted["generatedAt"], "2026-08-03T16:00:00+00:00")
+
+            second = repair_snapshot(
+                catalog_path=catalog_path,
+                snapshot_path=snapshot_path,
+                now=datetime(2026, 8, 3, 16, 5, tzinfo=UTC),
+            )
+            self.assertFalse(second["changed"])
+            self.assertEqual(
+                json.loads(snapshot_path.read_text(encoding="utf-8")),
+                persisted,
+            )
 
     def test_production_snapshot_repairs_to_complete_catalog_coverage(self) -> None:
         companies, institutions = parse_catalog(CATALOG_PATH.read_text(encoding="utf-8"))
