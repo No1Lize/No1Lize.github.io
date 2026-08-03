@@ -27,6 +27,7 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
+          import re
           from pathlib import Path
 
           source = Path('.github/workflows/apply-schedule-stabilization.yml').read_text(
@@ -46,6 +47,57 @@ jobs:
               '.replace("              ", "    ")',
           )
           exec(compile(code, '<schedule-stabilization>', 'exec'))
+
+          def enforce_schedule(raw_path: str, block: str) -> None:
+              path = Path(raw_path)
+              text = path.read_text(encoding='utf-8')
+              updated, count = re.subn(
+                  r'(?ms)^  schedule:\n.*?(?=^  [A-Za-z_][A-Za-z0-9_-]*:|^permissions:)',
+                  block.rstrip() + '\n',
+                  text,
+                  count=1,
+              )
+              if count != 1:
+                  raise SystemExit(f'{raw_path}: could not enforce schedule block')
+              path.write_text(updated, encoding='utf-8')
+
+          schedules = {
+              '.github/workflows/frequent-intelligence-refresh.yml': '''  schedule:
+            # Lightweight user-visible intelligence checks. The 06:17 run is
+            # intentionally omitted to leave a clean window for the full refresh.
+            - cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"
+              timezone: "Asia/Taipei"''',
+              '.github/workflows/scheduled-sync.yml': '''  schedule:
+            # One complete, quality-gated refresh after the US market close.
+            - cron: "30 6 * * *"
+              timezone: "Asia/Taipei"''',
+              '.github/workflows/research-report-refresh.yml': '''  schedule:
+            # PDF archives are comparatively heavy and change less frequently.
+            - cron: "15 11 * * 2,5"
+              timezone: "Asia/Taipei"''',
+              '.github/workflows/refresh-venture-profiles.yml': '''  schedule:
+            - cron: "15 9 * * *"
+              timezone: "Asia/Taipei"''',
+              '.github/workflows/tracking-discovery.yml': '''  schedule:
+            # Discover entities before the next daily full refresh consumes them.
+            - cron: "0 3 * * 0"
+              timezone: "Asia/Taipei"''',
+              '.github/workflows/star-market-investor-refresh.yml': '''  schedule:
+            - cron: "10 3 * * 1"
+              timezone: "Asia/Taipei"''',
+              '.github/workflows/refresh-institution-rankings.yml': '''  schedule:
+            - cron: "10 13 * * 1"
+              timezone: "Asia/Taipei"''',
+              '.github/workflows/security.yml': '''  schedule:
+            - cron: "40 13 * * 1"
+              timezone: "Asia/Taipei"''',
+          }
+          for raw_path, block in schedules.items():
+              normalized = '\n'.join(
+                  line[10:] if line.startswith('          ') else line
+                  for line in block.splitlines()
+              )
+              enforce_schedule(raw_path, normalized)
 
           for raw_path in (
               '.github/workflows/refresh-all-track-wechat.yml',
@@ -93,6 +145,30 @@ jobs:
               ),
               '.github/workflows/frequent-intelligence-refresh.yml': (
                   'cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/research-report-refresh.yml': (
+                  'cron: "15 11 * * 2,5"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/refresh-venture-profiles.yml': (
+                  'cron: "15 9 * * *"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/tracking-discovery.yml': (
+                  'cron: "0 3 * * 0"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/star-market-investor-refresh.yml': (
+                  'cron: "10 3 * * 1"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/refresh-institution-rankings.yml': (
+                  'cron: "10 13 * * 1"',
+                  'timezone: "Asia/Taipei"',
+              ),
+              '.github/workflows/security.yml': (
+                  'cron: "40 13 * * 1"',
                   'timezone: "Asia/Taipei"',
               ),
               '.github/workflows/web-test.yml': ('paths-ignore:',),
