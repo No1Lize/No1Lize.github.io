@@ -15,8 +15,10 @@ on:
     paths:
       - tools/company_profile_refresh_queue.py
       - tools/ensure_venture_profile_coverage.py
+      - tools/stabilize_venture_research_evidence.py
       - tests/test_company_profile_refresh_queue.py
       - tests/test_ensure_venture_profile_coverage.py
+      - tests/test_stabilize_venture_research_evidence.py
       - .github/workflows/company-profile-incremental-refresh.yml
 
 permissions:
@@ -44,11 +46,13 @@ jobs:
           python -m py_compile \
             tools/company_profile_refresh_queue.py \
             tools/ensure_venture_profile_coverage.py \
+            tools/stabilize_venture_research_evidence.py \
             tools/crawl_venture_profiles.py \
             tools/enrich_venture_profiles.py
           python -m unittest \
             tests.test_company_profile_refresh_queue \
             tests.test_ensure_venture_profile_coverage \
+            tests.test_stabilize_venture_research_evidence \
             tests.test_venture_profile_extraction \
             tests.test_venture_profile_enrichment \
             tests.test_venture_profile_postprocess \
@@ -132,8 +136,8 @@ jobs:
         if: steps.queue.outputs.count != '0' || steps.coverage.outputs.changed == 'true'
         run: |
           python tools/enrich_venture_profiles.py
-          python tools/refine_venture_research_evidence.py
-          python tools/refine_venture_research_evidence.py --check
+          python tools/stabilize_venture_research_evidence.py
+          python tools/stabilize_venture_research_evidence.py --check
           python tools/normalize_venture_profiles.py
           python tools/stabilize_venture_profiles.py
           python tools/stabilize_venture_profiles.py --check
@@ -158,6 +162,7 @@ jobs:
         run: |
           python tools/company_profile_refresh_queue.py --check
           python tools/ensure_venture_profile_coverage.py --check
+          python tools/stabilize_venture_research_evidence.py --check
           python tools/crawl_venture_profiles.py --validate-only
           python tools/enrich_venture_profiles.py --validate-only
 
@@ -181,7 +186,7 @@ jobs:
             python tools/ensure_venture_profile_coverage.py --check
             python tools/crawl_venture_profiles.py --validate-only
             python tools/enrich_venture_profiles.py --validate-only
-            python tools/refine_venture_research_evidence.py --check
+            python tools/stabilize_venture_research_evidence.py --check
             python tools/stabilize_venture_profiles.py --check
             python tools/finalize_venture_profiles.py --check
             python tools/enforce_venture_entity_semantics.py --check
