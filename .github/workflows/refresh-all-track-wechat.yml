@@ -2,27 +2,13 @@ name: Refresh WeChat coverage for all enabled tracks
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "23 2 * * *"
-  push:
-    branches: [main]
-    paths:
-      - config/user_tracking.json
-      - config/wechat_sources.json
-      - config/wechat_public_indexes.json
-      - tools/wechat_*.py
-      - tools/refresh_wechat_snapshot.py
-      - tests/test_wechat_*.py
-      - tests/test_refresh_wechat_snapshot.py
-      - .github/workflows/refresh-all-track-wechat.yml
-
 permissions:
   contents: write
   actions: write
 
 concurrency:
-  group: all-track-wechat-refresh
-  cancel-in-progress: true
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   refresh:
@@ -247,9 +233,3 @@ jobs:
             fi
           done
           echo "changed=true" >> "$GITHUB_OUTPUT"
-
-      - name: Publish refreshed snapshot
-        if: steps.update.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main

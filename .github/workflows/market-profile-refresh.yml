@@ -1,14 +1,6 @@
 name: Enriched three-market profile refresh v6
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - .github/workflows/market-profile-refresh.yml
-  schedule:
-    # 上市跟踪频道每天早上 7 点（Asia/Taipei，与北京时间一致）刷新一次。
-    - cron: "0 7 * * *"
-      timezone: "Asia/Taipei"
   workflow_dispatch:
 
 permissions:
@@ -16,8 +8,8 @@ permissions:
   actions: write
 
 concurrency:
-  group: enriched-market-profile-refresh
-  cancel-in-progress: true
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   refresh:
@@ -116,11 +108,6 @@ jobs:
           git pull --rebase origin main
           git push origin HEAD:main
           echo "changed=true" >> "$GITHUB_OUTPUT"
-      - name: Trigger Pages
-        if: steps.snapshot.outputs.changed == 'true' && steps.snapshot.outputs.valid == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main
       - name: Fail when market product validation failed
         if: steps.refresh.outputs.crawl != '0' || steps.refresh.outputs.tests != '0' || steps.refresh.outputs.validator != '0' || steps.refresh.outputs.npm != '0' || steps.refresh.outputs.build != '0'
         run: exit 1

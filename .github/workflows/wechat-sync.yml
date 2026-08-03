@@ -1,27 +1,6 @@
 name: Refresh WeChat intelligence
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - tools/refresh_wechat_snapshot.py
-      - tools/crawl_with_wechat_registry.py
-      - tools/wechat_public_sources.py
-      - tools/wechat_source_registry.py
-      - tools/wechat_registry_bridge.py
-      - tools/wechat_index_context_guard.py
-      - tools/wechat_index_record_fallback.py
-      - tools/wechat_sogou_index.py
-      - tools/wechat_sogou_bridge.py
-      - tools/wechat_snapshot_quality.py
-      - tests/test_wechat_*.py
-      - tests/test_refresh_wechat_snapshot.py
-      - config/wechat_sources.json
-      - config/wechat_public_indexes.json
-      - config/user_tracking.json
-      - .github/workflows/wechat-sync.yml
-  schedule:
-    - cron: "47 */4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -29,8 +8,8 @@ permissions:
   actions: write
 
 concurrency:
-  group: public-article-refresh
-  cancel-in-progress: false
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   refresh:
@@ -81,6 +60,16 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD public/data/articles.json)
+          echo "$SEMANTIC_JSON"
+          SEMANTIC_CHANGED=$(printf '%s' "$SEMANTIC_JSON" | python -c 'import json,sys; print(str(json.load(sys.stdin)["changed"]).lower())')
+          if [ "$SEMANTIC_CHANGED" != "true" ]; then
+            echo "No semantic intelligence changes; skipping Git commit and Pages build."
+            git restore public/data/articles.json
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
           git add public/data/articles.json
           git commit -m "data: refresh verified WeChat intelligence"
 
@@ -109,8 +98,3 @@ jobs:
             fi
           done
           echo "changed=true" >> "$GITHUB_OUTPUT"
-      - name: Publish updated snapshot
-        if: steps.data-update.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main

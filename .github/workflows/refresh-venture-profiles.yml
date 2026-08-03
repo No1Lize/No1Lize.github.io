@@ -19,7 +19,6 @@ on:
       - lib/venture-profile-data.ts
       - lib/professional-venture-data.ts
       - components/company-equity-evidence.tsx
-      - public/data/articles.json
       - app/companies/**
       - app/institutions/**
       - tests/test_venture_profile_extraction.py
@@ -37,7 +36,8 @@ on:
       - tests/professional-venture-data.test.ts
       - .github/workflows/refresh-venture-profiles.yml
   schedule:
-    - cron: "41 3 * * *"
+  - cron: "15 9 * * *"
+    timezone: "Asia/Taipei"
   workflow_dispatch:
 
 permissions:
@@ -45,8 +45,8 @@ permissions:
   actions: write
 
 concurrency:
-  group: venture-profile-refresh
-  cancel-in-progress: false
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   refresh:
@@ -148,7 +148,7 @@ jobs:
           node-version: 22
       - name: Validate venture frontend data model
         run: |
-          npm install
+          npm ci
           node --import tsx --test \
             tests/venture-profile-data.test.ts \
             tests/professional-venture-data.test.ts \
@@ -175,8 +175,3 @@ jobs:
           gh api --method PUT "$ENDPOINT" --input "$REQUEST" >/dev/null
           rm -f "$REQUEST"
           echo "changed=true" >> "$GITHUB_OUTPUT"
-      - name: Publish updated site
-        if: steps.publish.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main

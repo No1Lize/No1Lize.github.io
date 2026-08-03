@@ -2,13 +2,14 @@ name: Refresh all listed-company research PDFs
 
 on:
   schedule:
-    - cron: "25 2 * * *"
+  # PDF archives are comparatively heavy and change less frequently.
+  - cron: "15 11 * * 2,5"
+    timezone: "Asia/Taipei"
   workflow_dispatch:
   push:
     branches: [main]
     paths:
       - .github/workflows/research-report-refresh.yml
-      - config/user_tracking.json
       - tools/crawl_research_reports.py
       - tools/research_report_adapters.py
       - tests/test_research_reports.py
@@ -23,8 +24,8 @@ permissions:
   actions: write
 
 concurrency:
-  group: research-report-refresh
-  cancel-in-progress: true
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   refresh:
@@ -176,11 +177,6 @@ jobs:
             sleep 4
           done
           exit 1
-      - name: Trigger Pages
-        if: steps.publish.outputs.changed == 'true' && steps.publish.outputs.valid == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main
       - name: Fail when all-market PDF archive is invalid
         if: steps.check.outputs.crawl != '0' || steps.check.outputs.pytest != '0' || steps.check.outputs.npm != '0' || steps.check.outputs.tstest != '0' || steps.check.outputs.build != '0' || steps.check.outputs.tracked == '0'
         run: exit 1

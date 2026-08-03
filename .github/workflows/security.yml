@@ -1,7 +1,8 @@
 name: Dependency security
 on:
   schedule:
-    - cron: "41 3 * * 1"
+  - cron: "40 13 * * 1"
+    timezone: "Asia/Taipei"
   pull_request:
 permissions:
   contents: read

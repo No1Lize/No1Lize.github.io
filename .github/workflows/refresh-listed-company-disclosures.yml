@@ -2,42 +2,13 @@ name: Refresh listed-company disclosures
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "35 1 * * *"
-  push:
-    branches: [main]
-    paths:
-      - config/listed_company_disclosure_sources.json
-      - config/user_tracking.json
-      - tools/__init__.py
-      - tools/bootstrap_listed_company_disclosures.py
-      - tools/crawl_listed_company_disclosures.py
-      - tools/cninfo_structured_disclosures.py
-      - tools/sec_structured_disclosures.py
-      - tools/sec_configured_disclosures.py
-      - tools/us_ir_sec_disclosures.py
-      - tools/us_ir_search_disclosures.py
-      - tools/us_ir_baseline_disclosures.py
-      - tools/publish_us_ir_baselines.py
-      - tests/test_listed_company_disclosures.py
-      - tests/test_cninfo_structured_disclosures.py
-      - tests/test_sec_structured_disclosures.py
-      - tests/test_sec_configured_disclosures.py
-      - tests/test_us_ir_sec_disclosures.py
-      - tests/test_us_ir_search_disclosures.py
-      - tests/test_us_ir_baseline_disclosures.py
-      - lib/listed-company-disclosure-data.ts
-      - lib/venture-profile-data-with-disclosures.ts
-      - tsconfig.json
-      - .github/workflows/refresh-listed-company-disclosures.yml
-
 permissions:
   contents: write
   actions: write
 
 concurrency:
-  group: listed-company-disclosure-refresh
-  cancel-in-progress: true
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   refresh:
@@ -108,8 +79,3 @@ jobs:
             fi
           done
           echo "changed=true" >> "$GITHUB_OUTPUT"
-      - name: Publish company pages
-        if: steps.update.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main

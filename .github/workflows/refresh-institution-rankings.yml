@@ -12,14 +12,14 @@ on:
       - ".github/workflows/refresh-institution-rankings.yml"
   workflow_dispatch:
   schedule:
-    - cron: "23 3 * * 1"
-
+  - cron: "10 13 * * 1"
+    timezone: "Asia/Taipei"
 permissions:
   contents: write
 
 concurrency:
-  group: institution-rankings-${{ github.ref }}
-  cancel-in-progress: false
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   validate:

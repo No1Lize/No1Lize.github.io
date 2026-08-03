@@ -66,6 +66,7 @@ on:
       - tsconfig.json
       - tests/**/*.py
       - config/intelligence_sources.json
+      - config/user_tracking.json
       - config/listed_company_disclosure_sources.json
       - config/professional_technology_media_sources.json
       - config/wechat_sources.json
@@ -75,8 +76,9 @@ on:
       - config/source_health_policy.json
       - .github/workflows/scheduled-sync.yml
   schedule:
-    # 19:17 UTC = 03:17 Asia/Taipei. The lightweight workflow handles two-hour checks.
-    - cron: "17 19 * * *"
+  # One complete, quality-gated refresh after the US market close.
+  - cron: "30 6 * * *"
+    timezone: "Asia/Taipei"
   workflow_dispatch:
 
 permissions:
@@ -85,8 +87,8 @@ permissions:
   issues: write
 
 concurrency:
-  group: public-article-refresh
-  cancel-in-progress: false
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
 
 jobs:
   crawl:
@@ -281,8 +283,3 @@ jobs:
             gh issue comment "$ISSUE_NUMBER" --body '所有持续异常来源均已恢复，自动关闭告警。'
             gh issue close "$ISSUE_NUMBER" --reason completed
           fi
-      - name: Publish the updated snapshot
-        if: steps.data-update.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main
