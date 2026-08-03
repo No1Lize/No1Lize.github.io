@@ -1,0 +1,36 @@
+name: Cancel duplicate company profile verifier
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/cancel-duplicate-profile-verifier.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  cancel:
+    if: github.head_ref == 'ops/cancel-duplicate-profile-verifier-20260803'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Cancel only the duplicate verifier
+        shell: bash
+        run: |
+          set -euo pipefail
+          target=30830597755
+          status=$(gh run view "$target" --json status --jq .status 2>/dev/null || echo missing)
+          case "$status" in
+            completed|missing)
+              echo "duplicate verifier status=$status; nothing to cancel"
+              ;;
+            *)
+              gh run cancel "$target"
+              echo "cancelled duplicate verifier $target"
+              ;;
+          esac
