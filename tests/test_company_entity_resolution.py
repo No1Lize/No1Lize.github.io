@@ -22,6 +22,13 @@ REGISTRY = build_registry(
                 "aliases": ["ByteDance"],
             },
             {
+                "slug": "doubao",
+                "name": "豆包",
+                "homepage": "https://www.doubao.com/",
+                "newsUrls": ["https://seed.bytedance.com/zh/"],
+                "aliases": ["Doubao"],
+            },
+            {
                 "slug": "meta",
                 "name": "Meta",
                 "homepage": "https://about.meta.com/",
@@ -66,6 +73,18 @@ class CompanyEntityResolutionTests(unittest.TestCase):
         self.assertEqual(resolved["companySlugs"], ["openai"])
         self.assertEqual(resolved["companyMatch"]["method"], "official-domain")
 
+    def test_specific_brand_domain_outranks_parent_domain(self):
+        resolved, _ = resolve_article(
+            article(
+                source={
+                    "name": "Doubao Seed",
+                    "url": "https://seed.bytedance.com/zh/technology/example",
+                }
+            ),
+            REGISTRY,
+        )
+        self.assertEqual(resolved["companySlugs"], ["doubao"])
+
     def test_exact_structured_company_is_publishable(self):
         resolved, _ = resolve_article(article(company="ByteDance"), REGISTRY)
         self.assertEqual(resolved["companySlugs"], ["bytedance"])
@@ -97,6 +116,15 @@ class CompanyEntityResolutionTests(unittest.TestCase):
         )
         self.assertNotIn("companySlugs", resolved)
         self.assertNotIn("companyCandidateSlugs", resolved)
+
+    def test_disallowed_route_is_not_reintroduced_from_structured_text(self):
+        resolved, _ = resolve_article(
+            article(company="OpenAI", companySlug="openai"),
+            REGISTRY,
+            allowed_slugs={"bytedance"},
+        )
+        self.assertNotIn("companySlug", resolved)
+        self.assertNotIn("companySlugs", resolved)
 
     def test_payload_resolution_is_idempotent(self):
         payload = {"articles": [article(company="OpenAI")], "articleCount": 1}
