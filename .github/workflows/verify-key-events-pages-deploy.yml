@@ -1,0 +1,102 @@
+name: Verify key events Pages deployment
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/verify-key-events-pages-deploy.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    if: github.head_ref == 'ops/verify-key-events-pages-20260803-1909'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SITE_URL: https://vciq.github.io/
+    steps:
+      - name: Record current Pages run
+        id: before
+        shell: bash
+        run: |
+          set -euo pipefail
+          current=$(gh run list \
+            --workflow pages.yml \
+            --event workflow_dispatch \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId // 0')
+          echo "run_id=$current" >> "$GITHUB_OUTPUT"
+          echo "Previous dispatched Pages run: $current"
+
+      - name: Dispatch Pages from main
+        run: gh workflow run pages.yml --ref main
+
+      - name: Locate dispatched Pages run
+        id: pages
+        shell: bash
+        env:
+          BEFORE_RUN_ID: ${{ steps.before.outputs.run_id }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            run_id=$(gh run list \
+              --workflow pages.yml \
+              --event workflow_dispatch \
+              --limit 5 \
+              --json databaseId,createdAt,status,conclusion,headSha \
+              --jq '[.[] | select(.databaseId != ('"${BEFORE_RUN_ID}"'))][0].databaseId // empty')
+            if [ -n "$run_id" ]; then
+              echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+              gh run view "$run_id" --json databaseId,createdAt,status,conclusion,headSha,url
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Unable to locate the newly dispatched Pages run" >&2
+          exit 1
+
+      - name: Wait for Pages deployment
+        shell: bash
+        env:
+          PAGES_RUN_ID: ${{ steps.pages.outputs.run_id }}
+        run: gh run watch "$PAGES_RUN_ID" --exit-status
+
+      - name: Verify production homepage content
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            cache_buster="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${attempt}"
+            html=$(curl --fail --silent --show-error \
+              --retry 3 \
+              --retry-delay 2 \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?deploy_verify=${cache_buster}")
+            if grep -Fq '当前展示' <<<"$html" && \
+               grep -Fq '滚动总库' <<<"$html" && \
+               grep -Fq '今日新增' <<<"$html"; then
+              echo "Production homepage contains the new three-part key-events statistics."
+              python - <<'PY' "$html"
+          import re
+          import sys
+
+          html = sys.argv[1]
+          text = re.sub(r'<[^>]+>', ' ', html)
+          text = re.sub(r'\s+', ' ', text)
+          match = re.search(r'当前展示.{0,160}?今日新增.{0,40}?条', text)
+          print(match.group(0) if match else 'New statistics markers found in generated HTML.')
+          PY
+              exit 0
+            fi
+            echo "Attempt ${attempt}: production still serves the previous homepage; retrying."
+            sleep 10
+          done
+          echo "Pages completed, but the production homepage did not expose the new statistics in time." >&2
+          exit 1
