@@ -1,0 +1,1706 @@
+name: Apply STAR investor review gate
+
+on:
+  push:
+    branches: [fix/star-investor-review-gate-20260804]
+    paths:
+      - .github/workflows/apply-star-investor-review-gate.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-star-investor-review-gate
+  cancel-in-progress: false
+
+jobs:
+  patch-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/star-investor-review-gate-20260804
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Apply conservative extraction and review gate
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(text: str, old: str, new: str, label: str) -> str:
+              if new in text:
+                  return text
+              if old not in text:
+                  raise SystemExit(f"patch anchor not found: {label}")
+              return text.replace(old, new, 1)
+
+          path = Path("tools/crawl_star_market_investors.py")
+          text = path.read_text(encoding="utf-8")
+
+          constants_anchor = '''CONTACT_LABELS = (
+              "注册地址",
+              "住所",
+              "主要经营场所",
+              "办公地址",
+              "联系地址",
+              "联系电话",
+              "电话",
+              "电子邮箱",
+              "邮箱",
+              "互联网网址",
+              "公司网址",
+              "网站",
+          )
+          '''
+          constants_replacement = constants_anchor + '''
+          REVIEW_STATUSES = {"verified", "needs_review", "rejected"}
+          GENERIC_LEGAL_FORM_NAMES = (
+              "有限公司",
+              "股份有限公司",
+              "有限责任公司",
+              "管理有限公司",
+              "投资管理有限公司",
+              "基金管理有限公司",
+              "资本管理有限公司",
+              "股权投资有限公司",
+              "管理合伙企业（有限合伙）",
+              "管理合伙企业(有限合伙)",
+              "投资管理中心（有限合伙）",
+              "投资管理中心(有限合伙)",
+              "有限合伙",
+              "有限合伙企业",
+          )
+          NARRATIVE_NAME_PREFIXES = (
+              "整体变更",
+              "事务合伙人为",
+              "执行事务合伙人为",
+              "伙人暨执行事务合伙人为",
+              "普通合伙人为",
+              "均为",
+              "立群通过",
+              "雨持有",
+          )
+          NARRATIVE_NAME_MARKERS = (
+              "的董事长",
+              "的普通合伙人",
+              "的执行事务合伙人",
+              "担任",
+              "持有公司股票",
+              "间接持有",
+              "的出资额",
+              "为发行人",
+          )
+          '''
+          text = replace_once(text, constants_anchor, constants_replacement, "review constants")
+
+          evidence_anchor = '''def evidence_for_match(text: str, start: int, end: int, limit: int = 220) -> str:
+              line_start = text.rfind("\\n", 0, start) + 1
+              line_end = text.find("\\n", end)
+              if line_end < 0:
+                  line_end = len(text)
+              line = clean_text(text[line_start:line_end], limit * 2)
+              if line and len(line) <= limit * 2:
+                  return redact_private_text(line, limit)
+              return redact_private_text(text[start : min(len(text), end + limit)], limit)
+
+
+          def _candidate_name(raw: str, company_name: str) -> str:
+          '''
+          evidence_replacement = '''def evidence_for_match(text: str, start: int, end: int, limit: int = 220) -> str:
+              line_start = text.rfind("\\n", 0, start) + 1
+              line_end = text.find("\\n", end)
+              if line_end < 0:
+                  line_end = len(text)
+              line = clean_text(text[line_start:line_end], limit * 2)
+              if line and len(line) <= limit * 2:
+                  return redact_private_text(line, limit)
+              return redact_private_text(text[start : min(len(text), end + limit)], limit)
+
+
+          def holding_context_for_match(text: str, start: int, end: int, limit: int = 180) -> str:
+              """Return only the row-local text following a candidate name.
+
+              Percentages from preceding prose or a later institution must never be
+              attached to the current candidate. False negatives are preferred over
+              cross-row holding attribution.
+              """
+              hard_end = min(len(text), end + limit)
+              line_end = text.find("\\n", end, hard_end)
+              boundary = line_end if line_end >= 0 else hard_end
+              next_match = INSTITUTION_PATTERN.search(text, end, boundary)
+              if next_match:
+                  boundary = next_match.start()
+              return clean_text(text[start:boundary], limit)
+
+
+          def review_investor_candidate(
+              name: str,
+              evidence: str,
+              *,
+              shares: float | None,
+              ownership: float | None,
+          ) -> tuple[str, list[str]]:
+              """Classify automatic extraction without claiming human verification."""
+              reasons: list[str] = []
+              name_key = normalized_name(name)
+              evidence_key = normalized_name(evidence)
+              generic_keys = {normalized_name(value) for value in GENERIC_LEGAL_FORM_NAMES}
+              compact = re.sub(r"\\s+", "", name)
+
+              if not name_key:
+                  return "rejected", ["invalid-name"]
+              if name_key in generic_keys:
+                  return "rejected", ["generic-legal-form"]
+              if compact.startswith(NARRATIVE_NAME_PREFIXES):
+                  return "rejected", ["narrative-name-fragment"]
+              if any(marker in compact for marker in NARRATIVE_NAME_MARKERS):
+                  return "rejected", ["narrative-name-fragment"]
+              if re.match(r"^(管理|投资管理|基金管理|资本管理)[（(]", compact):
+                  return "rejected", ["generic-legal-form"]
+
+              if not evidence_key or name_key not in evidence_key:
+                  reasons.append("name-not-in-evidence")
+              if shares is None and ownership is None:
+                  reasons.append("no-row-local-holding")
+              reasons.append("awaiting-human-review")
+              return "needs_review", reasons
+
+
+          def _candidate_name(raw: str, company_name: str) -> str:
+          '''
+          text = replace_once(text, evidence_anchor, evidence_replacement, "holding and review helpers")
+
+          candidate_old = '''def _candidate_name(raw: str, company_name: str) -> str:
+              value = clean_text(raw, 120)
+              value = re.sub(r"^\\d+[、.．)）]?", "", value).strip()
+              value = re.sub(r"^(股东|名称|机构股东)", "", value).strip(" ：:")
+              if not value or len(value) < 3 or len(value) > 100:
+                  return ""
+              if normalized_name(value) == normalized_name(company_name):
+                  return ""
+              if any(fragment in value for fragment in BLOCKED_NAME_FRAGMENTS):
+                  return ""
+              if re.fullmatch(r"[A-Za-z]+", value) and len(value) < 5:
+                  return ""
+              return value
+          '''
+          candidate_new = '''def _candidate_name(raw: str, company_name: str) -> str:
+              value = clean_text(raw, 120)
+              value = re.sub(r"^\\d+[、.．)）]?", "", value).strip()
+              value = re.sub(r"^(股东|名称|机构股东)", "", value).strip(" ：:")
+              if not value or len(value) < 3 or len(value) > 100:
+                  return ""
+              candidate_key = normalized_name(value)
+              company_key = normalized_name(company_name)
+              if candidate_key == company_key:
+                  return ""
+              if company_key and len(company_key) >= 3 and company_key in candidate_key:
+                  return ""
+              if any(fragment in value for fragment in BLOCKED_NAME_FRAGMENTS):
+                  return ""
+              if re.fullmatch(r"[A-Za-z]+", value) and len(value) < 5:
+                  return ""
+              return value
+          '''
+          text = replace_once(text, candidate_old, candidate_new, "issuer-name exclusion")
+
+          contact_old = '''def extract_investor_contact(pages: list[PdfPage], name: str) -> dict[str, Any]:
+              for page in pages:
+                  position = page.text.find(name)
+                  if position < 0:
+                      continue
+                  block = _context(page.text, position, 700)
+                  if not any(label in block for label in CONTACT_LABELS):
+                      continue
+                  address = _extract_labeled_value(
+                      block,
+                      ("注册地址", "住所", "主要经营场所", "办公地址"),
+                      180,
+                  )
+                  phone = _safe_landline(block)
+                  email = _safe_email(block)
+                  website = _safe_website(block)
+                  contact = {
+                      key: value
+                      for key, value in {
+                          "officeAddress": address,
+                          "phone": phone,
+                          "email": email,
+                          "website": website,
+                      }.items()
+                      if value
+                  }
+                  if contact:
+                      contact["sourcePage"] = page.number
+                      contact["scope"] = "招股说明书公开的机构级联系方式"
+                      return contact
+              return {}
+          '''
+          contact_new = '''def extract_investor_contact(pages: list[PdfPage], name: str) -> dict[str, Any]:
+              for page in pages:
+                  offset = 0
+                  while True:
+                      position = page.text.find(name, offset)
+                      if position < 0:
+                          break
+                      offset = position + max(1, len(name))
+                      block = clean_text(page.text[position : position + 700], 700)
+                      label_positions = [block.find(label) for label in CONTACT_LABELS if block.find(label) >= 0]
+                      if not label_positions:
+                          continue
+                      first_label = min(label_positions)
+                      if first_label > 420:
+                          continue
+                      between = block[len(name) : first_label]
+                      if INSTITUTION_PATTERN.search(between):
+                          continue
+                      address = _extract_labeled_value(
+                          block,
+                          ("注册地址", "住所", "主要经营场所", "办公地址"),
+                          180,
+                      )
+                      phone = _safe_landline(block)
+                      email = _safe_email(block)
+                      website = _safe_website(block)
+                      contact = {
+                          key: value
+                          for key, value in {
+                              "officeAddress": address,
+                              "phone": phone,
+                              "email": email,
+                              "website": website,
+                          }.items()
+                          if value
+                      }
+                      if contact:
+                          contact["sourcePage"] = page.number
+                          contact["scope"] = "招股说明书公开的机构级联系方式"
+                          return contact
+              return {}
+          '''
+          text = replace_once(text, contact_old, contact_new, "contact attribution scope")
+
+          extraction_start = text.index("def extract_institutional_investors(")
+          extraction_end = text.index("\n\ndef _official_prospectus_host", extraction_start)
+          extraction_new = '''def extract_institutional_investors(
+              pages: list[PdfPage],
+              company_name: str,
+              *,
+              max_investors: int,
+          ) -> list[dict[str, Any]]:
+              candidates: dict[str, dict[str, Any]] = {}
+              likely_pages = [
+                  page
+                  for page in pages
+                  if any(term in page.text for term in SHAREHOLDER_PAGE_TERMS)
+              ]
+              status_rank = {"rejected": 0, "needs_review": 1, "verified": 2}
+
+              def quality(item: dict[str, Any]) -> tuple[int, int, int]:
+                  return (
+                      status_rank.get(str(item.get("reviewStatus")), 0),
+                      int("preIpoOwnershipPct" in item) + int("preIpoShares" in item),
+                      len(str(item.get("evidence", ""))),
+                  )
+
+              for page in likely_pages:
+                  for match in INSTITUTION_PATTERN.finditer(page.text):
+                      name = _candidate_name(match.group("name"), company_name)
+                      if not name:
+                          continue
+                      context = _context(page.text, match.start(), 260)
+                      if any(term in context for term in ("保荐机构（主承销商）", "发行人律师", "审计机构")) and not any(
+                          term in context for term in SHAREHOLDER_PAGE_TERMS
+                      ):
+                          continue
+                      key = normalized_name(name)
+                      if not key:
+                          continue
+                      evidence = evidence_for_match(page.text, match.start(), match.end(), 220)
+                      holding_context = holding_context_for_match(
+                          page.text,
+                          match.start(),
+                          match.end(),
+                      )
+                      shares, ownership = extract_holding(holding_context)
+                      review_status, review_reasons = review_investor_candidate(
+                          name,
+                          evidence,
+                          shares=shares,
+                          ownership=ownership,
+                      )
+                      item = {
+                          "id": "star-investor-" + hashlib.sha256(key.encode("utf-8")).hexdigest()[:18],
+                          "name": name,
+                          "normalizedName": key,
+                          "institutional": True,
+                          "investorType": classify_investor(name, context),
+                          "sourcePage": page.number,
+                          "sourceSection": next(
+                              (term for term in SHAREHOLDER_PAGE_TERMS if term in page.text),
+                              "股东情况",
+                          ),
+                          "evidence": evidence,
+                          "reviewStatus": review_status,
+                          "reviewReasons": review_reasons,
+                      }
+                      if shares is not None:
+                          item["preIpoShares"] = round(shares, 4)
+                      if ownership is not None:
+                          item["preIpoOwnershipPct"] = round(ownership, 6)
+                      current = candidates.get(key)
+                      if current is None or quality(item) > quality(current):
+                          candidates[key] = item
+
+              result: list[dict[str, Any]] = []
+              for item in candidates.values():
+                  if item["reviewStatus"] != "rejected":
+                      contact = extract_investor_contact(pages, item["name"])
+                      if contact:
+                          item["publicContact"] = contact
+                          item["contactStatus"] = "prospectus-public"
+                      else:
+                          item["contactStatus"] = "not-disclosed-in-prospectus"
+                  else:
+                      item["contactStatus"] = "not-disclosed-in-prospectus"
+                  result.append(item)
+
+              result.sort(
+                  key=lambda item: (
+                      -status_rank.get(str(item.get("reviewStatus")), 0),
+                      -float(item.get("preIpoOwnershipPct", -1)),
+                      -float(item.get("preIpoShares", -1)),
+                      item["name"],
+                  )
+              )
+              return result[: max(1, max_investors)]
+
+
+          def summarize_review_statuses(investors: Iterable[dict[str, Any]]) -> dict[str, int]:
+              summary = {status: 0 for status in REVIEW_STATUSES}
+              for investor in investors:
+                  status = str(investor.get("reviewStatus") or "needs_review")
+                  if status not in REVIEW_STATUSES:
+                      status = "needs_review"
+                  summary[status] += 1
+              return summary
+          '''
+          text = text[:extraction_start] + extraction_new + text[extraction_end:]
+
+          build_old = '''    issuer_contact = extract_issuer_contact(pages, listing.name)
+              minimum = max(0, int(settings.get("minimumInvestorsPerCompany", 1)))
+              status = "ok" if len(investors) >= minimum else "partial"
+              errors = [] if status == "ok" else [f"only {len(investors)} institutional investors extracted"]
+              return {
+          '''
+          build_new = '''    issuer_contact = extract_issuer_contact(pages, listing.name)
+              review_summary = summarize_review_statuses(investors)
+              candidate_count = review_summary["verified"] + review_summary["needs_review"]
+              minimum = max(0, int(settings.get("minimumInvestorsPerCompany", 1)))
+              status = "ok" if candidate_count >= minimum else "partial"
+              errors = [] if status == "ok" else [f"only {candidate_count} non-rejected institutional candidates extracted"]
+              return {
+          '''
+          text = replace_once(text, build_old, build_new, "company review summary")
+
+          record_old = '''        "issuerInvestorRelations": issuer_contact,
+                  "institutionalInvestorCount": len(investors),
+                  "naturalPersonContactsPublished": False,
+                  "investors": investors,
+                  "errors": errors,
+          '''
+          record_new = '''        "issuerInvestorRelations": issuer_contact,
+                  "extractedInvestorCount": len(investors),
+                  "institutionalInvestorCount": candidate_count,
+                  "reviewSummary": review_summary,
+                  "naturalPersonContactsPublished": False,
+                  "investors": investors,
+                  "errors": errors,
+          '''
+          text = replace_once(text, record_old, record_new, "company record counts")
+
+          validate_init_old = '''    investor_count = 0
+              human_text = public_human_text(snapshot)
+          '''
+          validate_init_new = '''    investor_count = 0
+              review_counts = {status: 0 for status in REVIEW_STATUSES}
+              human_text = public_human_text(snapshot)
+          '''
+          text = replace_once(text, validate_init_old, validate_init_new, "validation review counts")
+
+          validate_investor_old = '''            if int(investor.get("sourcePage", 0)) <= 0:
+                          errors.append(f"{slug}: investor {name} missing source page")
+                      investor_count += 1
+          '''
+          validate_investor_new = '''            if int(investor.get("sourcePage", 0)) <= 0:
+                          errors.append(f"{slug}: investor {name} missing source page")
+                      review_status = clean_text(investor.get("reviewStatus"), 30) or "needs_review"
+                      if review_status not in REVIEW_STATUSES:
+                          errors.append(f"{slug}: investor {name} has invalid review status {review_status}")
+                      else:
+                          review_counts[review_status] += 1
+                      review_reasons = investor.get("reviewReasons")
+                      if review_status == "rejected" and not (
+                          isinstance(review_reasons, list) and any(str(reason).strip() for reason in review_reasons)
+                      ):
+                          errors.append(f"{slug}: rejected investor {name} missing review reason")
+                      if review_status == "verified" and not any(
+                          key in investor for key in ("preIpoShares", "preIpoOwnershipPct")
+                      ):
+                          errors.append(f"{slug}: verified investor {name} missing row-local holding fact")
+                      investor_count += 1
+          '''
+          text = replace_once(text, validate_investor_old, validate_investor_new, "review validation")
+
+          validate_end_old = '''    if int(snapshot.get("investorCount", -1)) != investor_count:
+                  errors.append("investorCount mismatch")
+              return errors
+          '''
+          validate_end_new = '''    if int(snapshot.get("investorCount", -1)) != investor_count:
+                  errors.append("investorCount mismatch")
+              snapshot_review = snapshot.get("reviewSummary")
+              if isinstance(snapshot_review, dict):
+                  for status, count in review_counts.items():
+                      if int(snapshot_review.get(status, -1)) != count:
+                          errors.append(f"reviewSummary mismatch for {status}")
+              return errors
+          '''
+          text = replace_once(text, validate_end_old, validate_end_new, "snapshot review validation")
+
+          snapshot_count_old = '''    investor_count = sum(
+                  len(company.get("investors", []))
+                  for company in companies.values()
+                  if isinstance(company, dict)
+              )
+              return {
+          '''
+          snapshot_count_new = '''    all_investors = [
+                  investor
+                  for company in companies.values()
+                  if isinstance(company, dict)
+                  for investor in company.get("investors", [])
+                  if isinstance(investor, dict)
+              ]
+              investor_count = len(all_investors)
+              review_summary = summarize_review_statuses(all_investors)
+              candidate_count = review_summary["verified"] + review_summary["needs_review"]
+              return {
+          '''
+          text = replace_once(text, snapshot_count_old, snapshot_count_new, "snapshot review counts")
+
+          snapshot_fields_old = '''        "companyCount": len(companies),
+                  "investorCount": investor_count,
+                  "scope": {
+          '''
+          snapshot_fields_new = '''        "companyCount": len(companies),
+                  "investorCount": investor_count,
+                  "candidateCount": candidate_count,
+                  "reviewSummary": review_summary,
+                  "scope": {
+          '''
+          text = replace_once(text, snapshot_fields_old, snapshot_fields_new, "snapshot fields")
+
+          methodology_old = '''            "retention": "previous verified company record retained on source failure",
+                  },
+          '''
+          methodology_new = '''            "retention": "previous verified company record retained on source failure",
+                      "review": "automatic candidates default to needs_review; obvious sentence fragments are retained as rejected audit records and hidden from the public directory",
+                  },
+          '''
+          text = replace_once(text, methodology_old, methodology_new, "methodology review note")
+
+          print_old = '''                "investorCount": snapshot["investorCount"],
+                          "sourceStatus": snapshot["sourceStatus"],
+          '''
+          print_new = '''                "investorCount": snapshot["investorCount"],
+                          "candidateCount": snapshot["candidateCount"],
+                          "reviewSummary": snapshot["reviewSummary"],
+                          "sourceStatus": snapshot["sourceStatus"],
+          '''
+          text = replace_once(text, print_old, print_new, "CLI review output")
+
+          path.write_text(text, encoding="utf-8")
+          PY
+
+          cat > lib/star-market-investor-data.ts <<'EOF'
+          import rawSnapshot from "@/public/data/star_market_investors.json";
+          import {
+            institutionDirectory,
+            type InstitutionDirectoryEntry,
+          } from "@/lib/institution-ranking-data";
+
+          export type StarInvestorReviewStatus = "verified" | "needs_review" | "rejected";
+
+          export const starInvestorReviewLabels: Record<StarInvestorReviewStatus, string> = {
+            verified: "已人工核验",
+            needs_review: "待人工核验",
+            rejected: "质量门已排除",
+          };
+
+          export const starInvestorReviewReasonLabels: Record<string, string> = {
+            "awaiting-human-review": "等待人工核验",
+            "generic-legal-form": "名称仅为通用法律形式",
+            "narrative-name-fragment": "名称疑似正文句子片段",
+            "name-not-in-evidence": "名称与证据摘录不一致",
+            "no-row-local-holding": "同一证据行未提取到持股数或比例",
+            "invalid-name": "名称不完整",
+          };
+
+          export type StarMarketInvestorContact = {
+            officeAddress?: string;
+            phone?: string;
+            email?: string;
+            website?: string;
+            sourcePage: number;
+            scope: string;
+          };
+
+          export type StarMarketInvestor = {
+            id: string;
+            name: string;
+            normalizedName: string;
+            institutional: true;
+            investorType: string;
+            sourcePage: number;
+            sourceSection: string;
+            evidence: string;
+            preIpoShares?: number;
+            preIpoOwnershipPct?: number;
+            publicContact?: StarMarketInvestorContact;
+            contactStatus: "prospectus-public" | "not-disclosed-in-prospectus";
+            reviewStatus?: StarInvestorReviewStatus;
+            reviewReasons?: string[];
+          };
+
+          export type ReviewedStarMarketInvestor = StarMarketInvestor & {
+            reviewStatus: StarInvestorReviewStatus;
+            reviewReasons: string[];
+          };
+
+          export type StarMarketCompanyInvestorProfile = {
+            slug: string;
+            name: string;
+            ticker: string;
+            exchange: string;
+            sector: string;
+            updatedAt: string;
+            status: "ok" | "partial" | "retained";
+            prospectus: {
+              title: string;
+              url: string;
+              publishedAt: string;
+              announcementId: string;
+              pageCount: number;
+              textPageCount: number;
+              sha256: string;
+              provider: string;
+            };
+            issuerInvestorRelations?: StarMarketInvestorContact;
+            extractedInvestorCount?: number;
+            institutionalInvestorCount: number;
+            reviewSummary?: Partial<Record<StarInvestorReviewStatus, number>>;
+            naturalPersonContactsPublished: false;
+            investors: StarMarketInvestor[];
+            errors: string[];
+          };
+
+          type StarMarketInvestorSnapshot = {
+            schemaVersion: number;
+            generatedAt: string;
+            companyCount: number;
+            investorCount: number;
+            candidateCount?: number;
+            reviewSummary?: Partial<Record<StarInvestorReviewStatus, number>>;
+            scope: {
+              market: string;
+              listingRule: string;
+              shareholderRule: string;
+            };
+            privacy: {
+              naturalPersonShareholdersExcluded: boolean;
+              personalPhonesExcluded: boolean;
+              identityNumbersExcluded: boolean;
+              contacts: string;
+            };
+            methodology: {
+              prospectusProvider: string;
+              pdfExtraction: string;
+              retention: string;
+              review?: string;
+            };
+            companies: Record<string, StarMarketCompanyInvestorProfile>;
+            sourceStatus: {
+              id: string;
+              companySlug: string;
+              ticker: string;
+              status: string;
+              investorCount: number;
+              retainedPrevious: boolean;
+              durationMs: number;
+              errors: string[];
+            }[];
+          };
+
+          export type StarMarketInvestorRecord = {
+            company: StarMarketCompanyInvestorProfile;
+            investor: ReviewedStarMarketInvestor;
+            directoryInstitution?: InstitutionDirectoryEntry;
+          };
+
+          const snapshot = rawSnapshot as StarMarketInvestorSnapshot;
+
+          export function normalizeStarInvestorName(value: string): string {
+            return value
+              .normalize("NFKC")
+              .toLocaleLowerCase("zh-CN")
+              .replace(/[\s·•・()（）\[\]【】{}<>《》,，.。:：;；'"“”‘’_\-/\\&+－—]/gu, "")
+              .trim();
+          }
+
+          const genericLegalFormNames = new Set(
+            [
+              "有限公司",
+              "股份有限公司",
+              "有限责任公司",
+              "管理有限公司",
+              "投资管理有限公司",
+              "基金管理有限公司",
+              "资本管理有限公司",
+              "股权投资有限公司",
+              "管理合伙企业（有限合伙）",
+              "投资管理中心（有限合伙）",
+              "有限合伙",
+              "有限合伙企业",
+            ].map(normalizeStarInvestorName),
+          );
+
+          const narrativePrefixes = [
+            "整体变更",
+            "事务合伙人为",
+            "执行事务合伙人为",
+            "伙人暨执行事务合伙人为",
+            "普通合伙人为",
+            "均为",
+            "立群通过",
+            "雨持有",
+          ];
+
+          const narrativeMarkers = [
+            "的董事长",
+            "的普通合伙人",
+            "的执行事务合伙人",
+            "担任",
+            "持有公司股票",
+            "间接持有",
+            "的出资额",
+            "为发行人",
+          ];
+
+          export function deriveStarInvestorReview(
+            investor: Pick<
+              StarMarketInvestor,
+              | "name"
+              | "evidence"
+              | "preIpoShares"
+              | "preIpoOwnershipPct"
+              | "reviewStatus"
+              | "reviewReasons"
+            >,
+          ): { reviewStatus: StarInvestorReviewStatus; reviewReasons: string[] } {
+            if (investor.reviewStatus) {
+              return {
+                reviewStatus: investor.reviewStatus,
+                reviewReasons: [...(investor.reviewReasons ?? [])],
+              };
+            }
+
+            const name = investor.name.normalize("NFKC").replace(/\s+/gu, "").trim();
+            const nameKey = normalizeStarInvestorName(name);
+            const evidenceKey = normalizeStarInvestorName(investor.evidence ?? "");
+
+            if (!nameKey) {
+              return { reviewStatus: "rejected", reviewReasons: ["invalid-name"] };
+            }
+            if (genericLegalFormNames.has(nameKey)) {
+              return { reviewStatus: "rejected", reviewReasons: ["generic-legal-form"] };
+            }
+            if (
+              narrativePrefixes.some((prefix) => name.startsWith(prefix)) ||
+              narrativeMarkers.some((marker) => name.includes(marker))
+            ) {
+              return { reviewStatus: "rejected", reviewReasons: ["narrative-name-fragment"] };
+            }
+            if (/^(管理|投资管理|基金管理|资本管理)[（(]/u.test(name)) {
+              return { reviewStatus: "rejected", reviewReasons: ["generic-legal-form"] };
+            }
+
+            const reviewReasons: string[] = [];
+            if (!evidenceKey || !evidenceKey.includes(nameKey)) {
+              reviewReasons.push("name-not-in-evidence");
+            }
+            if (
+              investor.preIpoShares === undefined &&
+              investor.preIpoOwnershipPct === undefined
+            ) {
+              reviewReasons.push("no-row-local-holding");
+            }
+            reviewReasons.push("awaiting-human-review");
+            return { reviewStatus: "needs_review", reviewReasons };
+          }
+
+          function institutionIdentityTerms(entry: InstitutionDirectoryEntry): string[] {
+            return [entry.name, entry.fullName ?? ""]
+              .map(normalizeStarInvestorName)
+              .filter(Boolean);
+          }
+
+          export function resolveStarInvestorInstitution(
+            investor: Pick<StarMarketInvestor, "name" | "normalizedName">,
+          ): InstitutionDirectoryEntry | undefined {
+            const investorKey = investor.normalizedName || normalizeStarInvestorName(investor.name);
+            if (!investorKey) return undefined;
+            return institutionDirectory.find((entry) =>
+              institutionIdentityTerms(entry).some((term) => {
+                if (term === investorKey) return true;
+                if (term.length < 4 || investorKey.length < 4) return false;
+                return term.includes(investorKey) || investorKey.includes(term);
+              }),
+            );
+          }
+
+          export function starInvestorInstitutionHref(
+            record: StarMarketInvestorRecord,
+          ): string {
+            const institution = record.directoryInstitution;
+            if (institution?.profileSlug) return `/institutions/${institution.profileSlug}`;
+            const query = institution?.name ?? record.investor.name;
+            return `/institutions?institution=${encodeURIComponent(query)}`;
+          }
+
+          export const starMarketInvestorGeneratedAt = snapshot.generatedAt || "";
+          export const starMarketInvestorScope = snapshot.scope;
+          export const starMarketInvestorPrivacy = snapshot.privacy;
+          export const starMarketInvestorMethodology = snapshot.methodology;
+
+          export const starMarketInvestorCompanies = Object.values(snapshot.companies ?? {}).sort(
+            (left, right) =>
+              left.sector.localeCompare(right.sector, "zh-CN") ||
+              left.ticker.localeCompare(right.ticker),
+          );
+
+          export const starMarketInvestorAllRecords: StarMarketInvestorRecord[] =
+            starMarketInvestorCompanies
+              .flatMap((company) =>
+                company.investors.map((rawInvestor) => {
+                  const review = deriveStarInvestorReview(rawInvestor);
+                  const investor: ReviewedStarMarketInvestor = { ...rawInvestor, ...review };
+                  return {
+                    company,
+                    investor,
+                    directoryInstitution:
+                      review.reviewStatus === "rejected"
+                        ? undefined
+                        : resolveStarInvestorInstitution(investor),
+                  };
+                }),
+              )
+              .sort((left, right) => {
+                const rank: Record<StarInvestorReviewStatus, number> = {
+                  verified: 2,
+                  needs_review: 1,
+                  rejected: 0,
+                };
+                return (
+                  rank[right.investor.reviewStatus] - rank[left.investor.reviewStatus] ||
+                  (right.investor.preIpoOwnershipPct ?? -1) -
+                    (left.investor.preIpoOwnershipPct ?? -1) ||
+                  left.company.sector.localeCompare(right.company.sector, "zh-CN") ||
+                  left.investor.name.localeCompare(right.investor.name, "zh-CN")
+                );
+              });
+
+          export const starMarketInvestorRecords = starMarketInvestorAllRecords.filter(
+            (record) => record.investor.reviewStatus !== "rejected",
+          );
+
+          export const starMarketInvestorRejectedRecords = starMarketInvestorAllRecords.filter(
+            (record) => record.investor.reviewStatus === "rejected",
+          );
+
+          export const starMarketInvestorStats = {
+            companies: starMarketInvestorCompanies.length,
+            extracted: starMarketInvestorAllRecords.length,
+            investors: starMarketInvestorRecords.length,
+            verified: starMarketInvestorRecords.filter(
+              (record) => record.investor.reviewStatus === "verified",
+            ).length,
+            needsReview: starMarketInvestorRecords.filter(
+              (record) => record.investor.reviewStatus === "needs_review",
+            ).length,
+            rejected: starMarketInvestorRejectedRecords.length,
+            linkedInstitutions: starMarketInvestorRecords.filter(
+              (record) => Boolean(record.directoryInstitution),
+            ).length,
+            prospectusContacts: starMarketInvestorRecords.filter(
+              (record) => record.investor.contactStatus === "prospectus-public",
+            ).length,
+            sectors: new Set(starMarketInvestorCompanies.map((company) => company.sector)).size,
+          };
+
+          export function getStarMarketInvestorCompany(
+            slug: string,
+          ): StarMarketCompanyInvestorProfile | undefined {
+            return snapshot.companies?.[slug];
+          }
+          EOF
+
+          cat > components/star-market-investor-directory.tsx <<'EOF'
+          "use client";
+
+          import {
+            ArrowUpRight,
+            Building2,
+            FileText,
+            Mail,
+            MapPin,
+            Phone,
+            Search,
+            ShieldCheck,
+          } from "lucide-react";
+          import Link from "next/link";
+          import { useMemo, useState } from "react";
+          import {
+            starInvestorInstitutionHref,
+            starInvestorReviewLabels,
+            starInvestorReviewReasonLabels,
+            starMarketInvestorCompanies,
+            starMarketInvestorRecords,
+            starMarketInvestorStats,
+            type StarInvestorReviewStatus,
+          } from "@/lib/star-market-investor-data";
+          import styles from "./star-market-investor-directory.module.css";
+
+          function numberLabel(value?: number): string {
+            if (value === undefined || !Number.isFinite(value)) return "未可靠提取";
+            if (value >= 100_000_000) return `${(value / 100_000_000).toFixed(2)} 亿股`;
+            if (value >= 10_000) return `${(value / 10_000).toFixed(2)} 万股`;
+            return `${value.toLocaleString("zh-CN")} 股`;
+          }
+
+          type ReviewFilter = "all" | Exclude<StarInvestorReviewStatus, "rejected">;
+
+          export function StarMarketInvestorDirectory() {
+            const [query, setQuery] = useState("");
+            const [sector, setSector] = useState("全部赛道");
+            const [company, setCompany] = useState("全部公司");
+            const [reviewFilter, setReviewFilter] = useState<ReviewFilter>("all");
+            const [contactOnly, setContactOnly] = useState(false);
+
+            const sectors = useMemo(
+              () => ["全部赛道", ...new Set(starMarketInvestorCompanies.map((item) => item.sector))],
+              [],
+            );
+            const companies = useMemo(
+              () => ["全部公司", ...starMarketInvestorCompanies.map((item) => item.name)],
+              [],
+            );
+
+            const filtered = useMemo(() => {
+              const needle = query.normalize("NFKC").trim().toLocaleLowerCase("zh-CN");
+              return starMarketInvestorRecords.filter((record) => {
+                if (sector !== "全部赛道" && record.company.sector !== sector) return false;
+                if (company !== "全部公司" && record.company.name !== company) return false;
+                if (reviewFilter !== "all" && record.investor.reviewStatus !== reviewFilter) return false;
+                if (contactOnly && record.investor.contactStatus !== "prospectus-public") return false;
+                if (!needle) return true;
+                const institution = record.directoryInstitution;
+                return [
+                  record.investor.name,
+                  record.investor.investorType,
+                  record.company.name,
+                  record.company.ticker,
+                  record.company.sector,
+                  institution?.name,
+                  institution?.fullName,
+                ]
+                  .filter(Boolean)
+                  .some((value) => String(value).toLocaleLowerCase("zh-CN").includes(needle));
+              });
+            }, [company, contactOnly, query, reviewFilter, sector]);
+
+            return (
+              <div className={styles.directory}>
+                <section className={styles.stats} aria-label="科创板招股说明书自动抽取审核统计">
+                  <div><span>原始抽取</span><strong>{starMarketInvestorStats.extracted}</strong></div>
+                  <div><span>质量门后候选</span><strong>{starMarketInvestorStats.investors}</strong></div>
+                  <div><span>待人工核验</span><strong>{starMarketInvestorStats.needsReview}</strong></div>
+                  <div><span>已人工核验</span><strong>{starMarketInvestorStats.verified}</strong></div>
+                  <div><span>自动排除</span><strong>{starMarketInvestorStats.rejected}</strong></div>
+                </section>
+
+                <div className={styles.filters}>
+                  <label className={styles.search}>
+                    <Search size={15} aria-hidden="true" />
+                    <input
+                      aria-label="搜索自动抽取机构候选"
+                      placeholder="搜索候选名称、上市公司、代码或赛道"
+                      value={query}
+                      onChange={(event) => setQuery(event.target.value)}
+                    />
+                  </label>
+                  <select aria-label="按赛道筛选" value={sector} onChange={(event) => setSector(event.target.value)}>
+                    {sectors.map((item) => <option key={item}>{item}</option>)}
+                  </select>
+                  <select aria-label="按上市公司筛选" value={company} onChange={(event) => setCompany(event.target.value)}>
+                    {companies.map((item) => <option key={item}>{item}</option>)}
+                  </select>
+                  <select
+                    aria-label="按审核状态筛选"
+                    value={reviewFilter}
+                    onChange={(event) => setReviewFilter(event.target.value as ReviewFilter)}
+                  >
+                    <option value="all">全部可见候选</option>
+                    <option value="verified">已人工核验</option>
+                    <option value="needs_review">待人工核验</option>
+                  </select>
+                  <label className={styles.checkbox}>
+                    <input
+                      type="checkbox"
+                      checked={contactOnly}
+                      onChange={(event) => setContactOnly(event.target.checked)}
+                    />
+                    仅显示自动关联联系字段
+                  </label>
+                  <span className={styles.count}>显示 {filtered.length} 条候选</span>
+                </div>
+
+                {filtered.length ? (
+                  <section className={styles.grid} aria-label="科创板招股说明书质量门后候选记录">
+                    {filtered.map((record) => {
+                      const { investor, company: listedCompany, directoryInstitution } = record;
+                      const contact = investor.publicContact;
+                      const prospectusPage = `${listedCompany.prospectus.url}#page=${investor.sourcePage}`;
+                      const reasonLabels = investor.reviewReasons
+                        .map((reason) => starInvestorReviewReasonLabels[reason] ?? reason)
+                        .filter((reason, index, values) => values.indexOf(reason) === index);
+                      return (
+                        <article className={styles.card} key={`${listedCompany.slug}:${investor.id}`}>
+                          <div className={styles.cardTop}>
+                            <span>{investor.investorType}</span>
+                            <span>{listedCompany.sector}</span>
+                            <span className={styles.reviewBadge} data-review-status={investor.reviewStatus}>
+                              {starInvestorReviewLabels[investor.reviewStatus]}
+                            </span>
+                          </div>
+
+                          <div className={styles.titleRow}>
+                            <div className={styles.icon}><Building2 size={18} /></div>
+                            <div>
+                              <h2>{investor.name}</h2>
+                              <p>
+                                抽取自 {listedCompany.name}（{listedCompany.ticker}）招股说明书
+                              </p>
+                            </div>
+                          </div>
+
+                          <dl className={styles.holdings}>
+                            <div>
+                              <dt>同一证据行持股数</dt>
+                              <dd>{numberLabel(investor.preIpoShares)}</dd>
+                            </div>
+                            <div>
+                              <dt>同一证据行比例</dt>
+                              <dd>
+                                {investor.preIpoOwnershipPct === undefined
+                                  ? "未可靠提取"
+                                  : `${investor.preIpoOwnershipPct.toFixed(4)}%`}
+                              </dd>
+                            </div>
+                            <div>
+                              <dt>证据页</dt>
+                              <dd>第 {investor.sourcePage} 页</dd>
+                            </div>
+                          </dl>
+
+                          <p className={styles.evidence}>证据摘录：{investor.evidence}</p>
+                          {reasonLabels.length > 0 && (
+                            <p className={styles.reviewNote}>审核提示：{reasonLabels.join("；")}</p>
+                          )}
+
+                          <div className={styles.contact}>
+                            {contact?.officeAddress && (
+                              <p><MapPin size={13} />{contact.officeAddress}</p>
+                            )}
+                            {contact?.phone && (
+                              <a href={`tel:${contact.phone}`}><Phone size={13} />{contact.phone}</a>
+                            )}
+                            {contact?.email && (
+                              <a href={`mailto:${contact.email}`}><Mail size={13} />{contact.email}</a>
+                            )}
+                            {contact?.website && (
+                              <a href={contact.website} target="_blank" rel="noreferrer">
+                                <ArrowUpRight size={13} />招股书抽取网站字段
+                              </a>
+                            )}
+                            {!contact && (
+                              <p className={styles.muted}>未自动抽取到该候选记录的机构级联系字段。</p>
+                            )}
+                          </div>
+
+                          <div className={styles.actions}>
+                            <Link href={starInvestorInstitutionHref(record)}>
+                              {directoryInstitution ? "查看匹配的机构档案" : "在机构目录中检索"}
+                            </Link>
+                            {directoryInstitution?.officialUrl && (
+                              <a href={directoryInstitution.officialUrl} target="_blank" rel="noreferrer">
+                                机构官网 <ArrowUpRight size={12} />
+                              </a>
+                            )}
+                            <a href={prospectusPage} target="_blank" rel="noreferrer">
+                              核对招股书原页 <FileText size={12} />
+                            </a>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </section>
+                ) : (
+                  <section className={styles.empty}>
+                    <ShieldCheck size={26} />
+                    <strong>当前筛选没有质量门后候选记录</strong>
+                    <p>被判定为句子碎片或通用法律形式的记录不会在公开目录展示。</p>
+                  </section>
+                )}
+
+                <p className={styles.disclosure}>
+                  自动质量门只排除明显的句子碎片、通用法律形式和高风险字段错配；其余记录默认进入“待人工核验”，不会自动标记为已核验。名称、持股字段和联系方式归属仍应通过证据页及官方招股说明书确认。
+                </p>
+              </div>
+            );
+          }
+          EOF
+
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("components/star-market-investor-directory.module.css")
+          text = path.read_text(encoding="utf-8")
+          text = text.replace(
+              "grid-template-columns: repeat(4, minmax(0, 1fr));",
+              "grid-template-columns: repeat(5, minmax(0, 1fr));",
+              1,
+          )
+          text = text.replace(
+              "grid-template-columns: minmax(240px, 1fr) 150px 170px auto auto;",
+              "grid-template-columns: minmax(230px, 1fr) 140px 160px 140px auto auto;",
+              1,
+          )
+          badge_anchor = '''.cardTop span:first-child {
+            border-color: color-mix(in srgb, var(--green) 45%, var(--border));
+            color: var(--green-bright);
+          }
+          '''
+          badge_new = badge_anchor + '''
+          .reviewBadge {
+            margin-left: auto;
+          }
+
+          .reviewBadge[data-review-status="verified"] {
+            border-color: color-mix(in srgb, var(--green) 65%, var(--border));
+            color: var(--green-bright);
+          }
+
+          .reviewBadge[data-review-status="needs_review"] {
+            border-color: color-mix(in srgb, var(--blue) 55%, var(--border));
+            color: var(--blue);
+          }
+          '''
+          if ".reviewBadge {" not in text:
+              if badge_anchor not in text:
+                  raise SystemExit("CSS badge anchor not found")
+              text = text.replace(badge_anchor, badge_new, 1)
+          evidence_anchor = '''.evidence {
+            margin: 13px 0 0;
+            padding-left: 10px;
+            border-left: 2px solid var(--border);
+            color: var(--muted);
+            font-size: 10px;
+            line-height: 1.65;
+          }
+          '''
+          evidence_new = evidence_anchor + '''
+          .reviewNote {
+            margin: 9px 0 0;
+            color: var(--faint);
+            font-size: 9px;
+            line-height: 1.65;
+          }
+          '''
+          if ".reviewNote {" not in text:
+              if evidence_anchor not in text:
+                  raise SystemExit("CSS review note anchor not found")
+              text = text.replace(evidence_anchor, evidence_new, 1)
+          text = text.replace(
+              "grid-template-columns: minmax(220px, 1fr) 150px 170px;",
+              "grid-template-columns: minmax(220px, 1fr) 140px 160px 140px;",
+              1,
+          )
+          path.write_text(text, encoding="utf-8")
+          PY
+
+          cat > app/institutions/star-market/page.tsx <<'EOF'
+          import type { Metadata } from "next";
+          import { FileSearch } from "lucide-react";
+          import Link from "next/link";
+          import { ChannelSplitLayout } from "@/components/channel-split-layout";
+          import { StarMarketInvestorDirectory } from "@/components/star-market-investor-directory";
+          import {
+            starMarketInvestorGeneratedAt,
+            starMarketInvestorMethodology,
+            starMarketInvestorPrivacy,
+            starMarketInvestorStats,
+          } from "@/lib/star-market-investor-data";
+          import styles from "./page.module.css";
+
+          export const metadata: Metadata = {
+            title: "科创板招股说明书机构股东抽取（测试版）",
+            description:
+              "从科创板上市公司公开招股说明书中自动抽取机构候选、持股字段和证据页码；明显错误由质量门排除，其余记录仍需人工核验。",
+          };
+
+          export default function StarMarketInvestorPage() {
+            return (
+              <main className="page-shell subpage">
+                <header className="page-header">
+                  <p className="eyebrow">04A / STAR MARKET INVESTORS · BETA</p>
+                  <h1>科创板招股说明书机构股东抽取（测试版）</h1>
+                  <p>
+                    从当前赛道内已追踪的科创板上市公司招股说明书中自动抽取机构候选。明显的句子碎片和通用法律形式会被质量门排除，其余记录默认等待人工核验。
+                  </p>
+                  <Link className="text-link" href="/institutions">
+                    返回投资机构目录 →
+                  </Link>
+                </header>
+
+                <ChannelSplitLayout
+                  channel="institutions"
+                  eyebrow="PROSPECTUS EXTRACTION REVIEW QUEUE"
+                  title="质量门后候选记录"
+                  description="自动排除明显错误；保留官方招股书证据页，其余候选不自动宣称已核验。"
+                  count={starMarketInvestorStats.investors}
+                  countLabel="质量门后候选"
+                  icon={<FileSearch size={19} aria-hidden="true" />}
+                  bodyClassName={styles.body}
+                >
+                  <section className={styles.warning} role="note" aria-label="测试版数据提示">
+                    <strong>测试版数据提示</strong>
+                    <p>
+                      质量门只能识别部分明显错误，不能替代人工审核。机构名称、持股比例和联系方式仍可能出现文本截断或关联错误；请以证据页及官方招股说明书为准，不应用于尽职调查、法律判断或投资决策。
+                    </p>
+                  </section>
+
+                  <section className={styles.methodology}>
+                    <div>
+                      <span>已覆盖上市公司</span>
+                      <strong>{starMarketInvestorStats.companies}</strong>
+                      <p>仅覆盖当前追踪配置中的 688xxx A 股公司，不代表完整科创板。</p>
+                    </div>
+                    <div>
+                      <span>质量门自动排除</span>
+                      <strong>{starMarketInvestorStats.rejected}</strong>
+                      <p>明显的正文句子碎片、通用法律形式及高风险名称不在公开列表展示。</p>
+                    </div>
+                    <div>
+                      <span>待人工核验</span>
+                      <strong>{starMarketInvestorStats.needsReview}</strong>
+                      <p>自动规则通过后仍默认待核验；只有人工确认才能进入“已人工核验”。</p>
+                    </div>
+                  </section>
+
+                  <section className={styles.notes}>
+                    <h2>数据口径</h2>
+                    <p>
+                      文件发现采用巨潮资讯结构化公告数据并保留官方 PDF 地址；PDF 使用文本层解析，不启用 OCR，也不绕过登录、验证码或访问控制。
+                    </p>
+                    <p>
+                      持股数和比例只从候选名称之后的同一证据行局部提取，不再使用候选名称前后的大段上下文，以降低跨行错配。自然人股东、手机号码、身份证件信息和家庭地址不公开。
+                    </p>
+                    <p>
+                      当前原始抽取 {starMarketInvestorStats.extracted} 条，公开候选 {starMarketInvestorStats.investors} 条，已人工核验 {starMarketInvestorStats.verified} 条；匹配站内机构 {starMarketInvestorStats.linkedInstitutions} 条，含自动关联联系字段 {starMarketInvestorStats.prospectusContacts} 条。
+                    </p>
+                    <p>
+                      数据失败时保留上一版通过程序校验的快照。最近生成时间：
+                      {starMarketInvestorGeneratedAt
+                        ? new Date(starMarketInvestorGeneratedAt).toLocaleString("zh-CN", {
+                            timeZone: "Asia/Taipei",
+                            hour12: false,
+                          })
+                        : "等待首次生产采集"}
+                      。
+                    </p>
+                    <details>
+                      <summary>机器可读方法说明</summary>
+                      <pre>
+                        {JSON.stringify(
+                          {
+                            methodology: starMarketInvestorMethodology,
+                            privacy: starMarketInvestorPrivacy,
+                          },
+                          null,
+                          2,
+                        )}
+                      </pre>
+                    </details>
+                  </section>
+
+                  <StarMarketInvestorDirectory />
+                </ChannelSplitLayout>
+              </main>
+            );
+          }
+          EOF
+
+          python - <<'PY'
+          from pathlib import Path
+          path = Path("app/institutions/page.tsx")
+          text = path.read_text(encoding="utf-8")
+          old = '''          <dl>
+                    <div><dt>已覆盖公司</dt><dd>{starMarketInvestorStats.companies}</dd></div>
+                    <div><dt>自动抽取记录</dt><dd>{starMarketInvestorStats.investors}</dd></div>
+                    <div><dt>匹配站内机构</dt><dd>{starMarketInvestorStats.linkedInstitutions}</dd></div>
+                  </dl>
+          '''
+          new = '''          <dl>
+                    <div><dt>已覆盖公司</dt><dd>{starMarketInvestorStats.companies}</dd></div>
+                    <div><dt>质量门后候选</dt><dd>{starMarketInvestorStats.investors}</dd></div>
+                    <div><dt>自动排除</dt><dd>{starMarketInvestorStats.rejected}</dd></div>
+                  </dl>
+          '''
+          if old not in text:
+              raise SystemExit("institution page stats anchor not found")
+          path.write_text(text.replace(old, new, 1), encoding="utf-8")
+          PY
+
+          cat > tests/test_star_market_investors.py <<'EOF'
+          import json
+          import tempfile
+          import unittest
+          from pathlib import Path
+
+          from tools import crawl_star_market_investors as star
+
+
+          class StarMarketInvestorTests(unittest.TestCase):
+              def _write_json(self, path: Path, payload: object) -> None:
+                  path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+              def test_load_star_listings_only_accepts_enabled_688_a_share(self):
+                  with tempfile.TemporaryDirectory() as directory:
+                      root = Path(directory)
+                      tracking = root / "tracking.json"
+                      config = root / "config.json"
+                      self._write_json(
+                          tracking,
+                          {
+                              "listedCompanies": [
+                                  {
+                                      "catalogSlug": "cambricon",
+                                      "name": "寒武纪",
+                                      "ticker": "688256",
+                                      "market": "A股",
+                                      "sector": "半导体",
+                                      "enabled": True,
+                                  },
+                                  {
+                                      "catalogSlug": "bgi",
+                                      "name": "华大基因",
+                                      "ticker": "300676",
+                                      "market": "A股",
+                                      "sector": "生物科技",
+                                      "enabled": True,
+                                  },
+                                  {
+                                      "catalogSlug": "disabled",
+                                      "name": "停用公司",
+                                      "ticker": "688999",
+                                      "market": "A股",
+                                      "sector": "半导体",
+                                      "enabled": False,
+                                  },
+                              ]
+                          },
+                      )
+                      self._write_json(config, {"schemaVersion": 1, "settings": {}, "extraListings": []})
+                      listings = star.load_star_listings(tracking, config)
+                      self.assertEqual([item.ticker for item in listings], ["688256"])
+
+              def test_final_prospectus_beats_summary_and_application_drafts(self):
+                  final = star.prospectus_title_score("首次公开发行股票并在科创板上市招股说明书")
+                  summary = star.prospectus_title_score("首次公开发行股票招股说明书摘要")
+                  draft = star.prospectus_title_score("首次公开发行股票招股说明书（申报稿）")
+                  unrelated = star.prospectus_title_score("2025年年度报告")
+                  self.assertGreater(final, summary)
+                  self.assertGreater(final, draft)
+                  self.assertLess(unrelated, 0)
+
+              def test_extracts_institutional_shareholder_and_marks_for_review(self):
+                  pages = [
+                      star.PdfPage(
+                          88,
+                          """
+                          发行前股本结构
+                          序号 股东名称 持股数量 持股比例
+                          1 北京示例创业投资基金（有限合伙） 1,250万股 12.50%
+                          2 张三 800万股 8.00%
+                          北京示例创业投资基金（有限合伙）住所：北京市海淀区科创路1号
+                          联系电话：010-12345678 电子邮箱：contact@examplefund.cn
+                          """,
+                      )
+                  ]
+                  investors = star.extract_institutional_investors(
+                      pages,
+                      "示例科技",
+                      max_investors=20,
+                  )
+                  self.assertEqual(len(investors), 1)
+                  investor = investors[0]
+                  self.assertEqual(investor["name"], "北京示例创业投资基金（有限合伙）")
+                  self.assertEqual(investor["preIpoShares"], 12500000)
+                  self.assertEqual(investor["preIpoOwnershipPct"], 12.5)
+                  self.assertEqual(investor["reviewStatus"], "needs_review")
+                  self.assertIn("awaiting-human-review", investor["reviewReasons"])
+                  self.assertEqual(investor["publicContact"]["phone"], "010-12345678")
+                  self.assertEqual(investor["publicContact"]["email"], "contact@examplefund.cn")
+                  self.assertNotIn("张三", json.dumps(investors, ensure_ascii=False))
+
+              def test_duplicate_institution_evidence_prefers_row_with_holding_percentage(self):
+                  pages = [
+                      star.PdfPage(
+                          30,
+                          "主要股东情况 北京示例资本有限公司为发行人机构股东。",
+                      ),
+                      star.PdfPage(
+                          31,
+                          "发行前股本结构 北京示例资本有限公司 500万股 5.25%",
+                      ),
+                  ]
+                  investors = star.extract_institutional_investors(
+                      pages,
+                      "示例科技",
+                      max_investors=20,
+                  )
+                  self.assertEqual(len(investors), 1)
+                  self.assertEqual(investors[0]["preIpoOwnershipPct"], 5.25)
+
+              def test_holding_is_not_taken_from_preceding_context(self):
+                  pages = [
+                      star.PdfPage(
+                          31,
+                          """
+                          发行前股本结构
+                          北京前一投资有限公司 500万股 33.19%
+                          上海目标投资有限公司为发行人机构股东
+                          """,
+                      )
+                  ]
+                  investors = star.extract_institutional_investors(
+                      pages,
+                      "示例科技",
+                      max_investors=20,
+                  )
+                  target = next(item for item in investors if item["name"] == "上海目标投资有限公司")
+                  self.assertNotIn("preIpoShares", target)
+                  self.assertNotIn("preIpoOwnershipPct", target)
+                  self.assertIn("no-row-local-holding", target["reviewReasons"])
+
+              def test_sentence_fragments_and_generic_legal_forms_are_rejected(self):
+                  pages = [
+                      star.PdfPage(
+                          97,
+                          """
+                          股东基本情况
+                          事务合伙人为知己行远（天津）科技有限公司 20.00%
+                          管理（苏州）有限公司 5.00%
+                          均为有限合伙企业 1.00%
+                          """,
+                      )
+                  ]
+                  investors = star.extract_institutional_investors(
+                      pages,
+                      "示例科技",
+                      max_investors=20,
+                  )
+                  self.assertTrue(investors)
+                  rejected = [item for item in investors if item["reviewStatus"] == "rejected"]
+                  self.assertGreaterEqual(len(rejected), 2)
+                  self.assertTrue(
+                      all(item["reviewReasons"] for item in rejected),
+                  )
+                  self.assertTrue(
+                      any("narrative-name-fragment" in item["reviewReasons"] for item in rejected),
+                  )
+
+              def test_issuer_legal_name_is_not_published_as_its_own_investor(self):
+                  pages = [
+                      star.PdfPage(
+                          74,
+                          "发行前股本结构 中科寒武纪科技股份有限公司 33.19% 国投基金 3.92%",
+                      )
+                  ]
+                  investors = star.extract_institutional_investors(
+                      pages,
+                      "寒武纪",
+                      max_investors=20,
+                  )
+                  self.assertNotIn(
+                      "中科寒武纪科技股份有限公司",
+                      [item["name"] for item in investors],
+                  )
+
+              def test_contact_and_evidence_redact_mobile_and_identity_numbers(self):
+                  pages = [
+                      star.PdfPage(
+                          42,
+                          """
+                          发行人股东情况
+                          上海示例股权投资有限公司 300万股 3.00%
+                          上海示例股权投资有限公司办公地址：上海市浦东新区示例路8号
+                          联系人李某，手机13812345678，身份证310101199001011234，电话021-87654321。
+                          """,
+                      )
+                  ]
+                  investors = star.extract_institutional_investors(
+                      pages,
+                      "示例科技",
+                      max_investors=20,
+                  )
+                  serialized = json.dumps(investors, ensure_ascii=False)
+                  self.assertNotIn("13812345678", serialized)
+                  self.assertNotIn("310101199001011234", serialized)
+                  self.assertIn("021-87654321", serialized)
+
+              def test_snapshot_validation_rejects_personal_mobile_in_contact_fields(self):
+                  snapshot = {
+                      "schemaVersion": 1,
+                      "companyCount": 1,
+                      "investorCount": 1,
+                      "companies": {
+                          "sample": {
+                              "ticker": "688001",
+                              "prospectus": {"url": "https://static.cninfo.com.cn/sample.pdf"},
+                              "investors": [
+                                  {
+                                      "name": "示例投资有限公司",
+                                      "normalizedName": "示例投资有限公司",
+                                      "institutional": True,
+                                      "sourcePage": 1,
+                                      "publicContact": {"phone": "13812345678"},
+                                  }
+                              ],
+                          }
+                      },
+                  }
+                  errors = star.validate_snapshot(snapshot, require_companies=True)
+                  self.assertTrue(any("mobile number" in error for error in errors))
+
+              def test_verified_record_requires_row_local_holding_fact(self):
+                  snapshot = {
+                      "schemaVersion": 1,
+                      "companyCount": 1,
+                      "investorCount": 1,
+                      "reviewSummary": {"verified": 1, "needs_review": 0, "rejected": 0},
+                      "companies": {
+                          "sample": {
+                              "ticker": "688001",
+                              "prospectus": {"url": "https://static.cninfo.com.cn/sample.pdf"},
+                              "investors": [
+                                  {
+                                      "name": "示例投资有限公司",
+                                      "normalizedName": "示例投资有限公司",
+                                      "institutional": True,
+                                      "sourcePage": 1,
+                                      "reviewStatus": "verified",
+                                      "reviewReasons": [],
+                                  }
+                              ],
+                          }
+                      },
+                  }
+                  errors = star.validate_snapshot(snapshot, require_companies=True)
+                  self.assertTrue(any("missing row-local holding fact" in error for error in errors))
+
+
+          if __name__ == "__main__":
+              unittest.main()
+          EOF
+
+          cat > tests/star-market-investor-data.test.ts <<'EOF'
+          import assert from "node:assert/strict";
+          import test from "node:test";
+          import {
+            deriveStarInvestorReview,
+            normalizeStarInvestorName,
+            resolveStarInvestorInstitution,
+            starInvestorInstitutionHref,
+            starMarketInvestorAllRecords,
+            starMarketInvestorRecords,
+            starMarketInvestorStats,
+            type StarMarketInvestorRecord,
+          } from "../lib/star-market-investor-data";
+
+          test("STAR investor names normalize punctuation and legal-form spacing", () => {
+            assert.equal(
+              normalizeStarInvestorName("IDG 资本（中国）"),
+              normalizeStarInvestorName("IDG资本(中国)"),
+            );
+            assert.equal(
+              normalizeStarInvestorName("北京示例基金（有限合伙）"),
+              "北京示例基金有限合伙",
+            );
+          });
+
+          test("strong automatic row remains pending rather than being auto-verified", () => {
+            const review = deriveStarInvestorReview({
+              name: "北京示例创业投资基金（有限合伙）",
+              evidence: "北京示例创业投资基金（有限合伙） 1,250万股 12.50%",
+              preIpoShares: 12_500_000,
+              preIpoOwnershipPct: 12.5,
+            });
+            assert.equal(review.reviewStatus, "needs_review");
+            assert.ok(review.reviewReasons.includes("awaiting-human-review"));
+          });
+
+          test("narrative fragments and generic legal forms are rejected", () => {
+            assert.equal(
+              deriveStarInvestorReview({
+                name: "事务合伙人为知己行远（天津）科技有限公司",
+                evidence: "事务合伙人为知己行远（天津）科技有限公司",
+              }).reviewStatus,
+              "rejected",
+            );
+            assert.equal(
+              deriveStarInvestorReview({
+                name: "管理有限公司",
+                evidence: "管理有限公司",
+              }).reviewStatus,
+              "rejected",
+            );
+          });
+
+          test("explicit human verification status is preserved", () => {
+            const review = deriveStarInvestorReview({
+              name: "北京示例投资有限公司",
+              evidence: "北京示例投资有限公司 100万股 1.00%",
+              preIpoOwnershipPct: 1,
+              reviewStatus: "verified",
+              reviewReasons: [],
+            });
+            assert.equal(review.reviewStatus, "verified");
+          });
+
+          test("known prospectus investor resolves to the existing institution directory", () => {
+            const institution = resolveStarInvestorInstitution({
+              name: "IDG资本",
+              normalizedName: normalizeStarInvestorName("IDG资本"),
+            });
+            assert.ok(institution);
+            assert.equal(institution.name, "IDG资本");
+          });
+
+          test("unmatched prospectus investor opens a focused institution-directory search", () => {
+            const record = {
+              company: {
+                slug: "sample",
+                name: "示例科技",
+                ticker: "688001",
+                exchange: "上海证券交易所科创板",
+                sector: "半导体",
+                updatedAt: "2026-07-29T00:00:00Z",
+                status: "ok",
+                prospectus: {
+                  title: "示例科技招股说明书",
+                  url: "https://static.cninfo.com.cn/sample.pdf",
+                  publishedAt: "2020-01-01",
+                  announcementId: "sample",
+                  pageCount: 100,
+                  textPageCount: 100,
+                  sha256: "a".repeat(64),
+                  provider: "cninfo-prospectus",
+                },
+                institutionalInvestorCount: 1,
+                naturalPersonContactsPublished: false,
+                investors: [],
+                errors: [],
+              },
+              investor: {
+                id: "star-investor-sample",
+                name: "北京未收录产业投资有限公司",
+                normalizedName: normalizeStarInvestorName("北京未收录产业投资有限公司"),
+                institutional: true,
+                investorType: "产业投资者",
+                sourcePage: 88,
+                sourceSection: "发行前股本结构",
+                evidence: "北京未收录产业投资有限公司 100万股 1.00%",
+                contactStatus: "not-disclosed-in-prospectus",
+                reviewStatus: "needs_review",
+                reviewReasons: ["awaiting-human-review"],
+              },
+            } as StarMarketInvestorRecord;
+
+            assert.equal(
+              starInvestorInstitutionHref(record),
+              `/institutions?institution=${encodeURIComponent(record.investor.name)}`,
+            );
+          });
+
+          test("public records exclude rejected audit candidates", () => {
+            assert.ok(starMarketInvestorRecords.every((record) => record.investor.reviewStatus !== "rejected"));
+            assert.equal(
+              starMarketInvestorStats.extracted,
+              starMarketInvestorAllRecords.length,
+            );
+            assert.equal(
+              starMarketInvestorStats.extracted,
+              starMarketInvestorStats.investors + starMarketInvestorStats.rejected,
+            );
+          });
+          EOF
+
+      - name: Verify crawler and application
+        shell: bash
+        run: |
+          python -m py_compile tools/crawl_star_market_investors.py
+          python -m unittest tests.test_star_market_investors
+          npm ci
+          npm run lint
+          npm run test:unit
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+
+      - name: Commit verified review gate
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tools/crawl_star_market_investors.py \
+            lib/star-market-investor-data.ts \
+            components/star-market-investor-directory.tsx \
+            components/star-market-investor-directory.module.css \
+            app/institutions/page.tsx \
+            app/institutions/star-market/page.tsx \
+            tests/test_star_market_investors.py \
+            tests/star-market-investor-data.test.ts
+          git rm .github/workflows/apply-star-investor-review-gate.yml
+          git commit -m "fix: add review gate to STAR investor extraction"
+          git pull --rebase origin fix/star-investor-review-gate-20260804
+          git push origin HEAD:fix/star-investor-review-gate-20260804
