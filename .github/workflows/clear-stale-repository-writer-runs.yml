@@ -1,0 +1,74 @@
+name: Clear stale repository writer runs
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - .github/workflows/clear-stale-repository-writer-runs.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  clear:
+    if: github.head_ref == 'ops/verify-company-profile-refresh-20260803'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Cancel stale main-branch writer runs
+        shell: bash
+        run: |
+          set -euo pipefail
+          keep_run=30826981347
+          stale_runs=(
+            30810152075
+            30826981915 30826981578
+            30824659388 30824659867 30824659199
+            30823797044
+            30810276321 30810276301 30810270202 30810270495
+            30810264395 30810265007 30810257754 30810257800
+            30810220705 30810220661 30810210350 30810210336
+            30810206421 30810206412 30810191971 30810192012
+            30810176711 30810176765 30810172574 30810172662
+            30810168730 30810168397 30810165072 30810165037
+          )
+
+          for run_id in "${stale_runs[@]}"; do
+            if [ "$run_id" = "$keep_run" ]; then
+              echo "Refusing to cancel protected incremental run $keep_run" >&2
+              exit 1
+            fi
+            status=$(gh run view "$run_id" --json status --jq .status 2>/dev/null || echo missing)
+            case "$status" in
+              completed|missing)
+                echo "run=$run_id status=$status skip"
+                ;;
+              *)
+                echo "Cancelling stale run=$run_id status=$status"
+                gh run cancel "$run_id" || true
+                ;;
+            esac
+          done
+
+          # The 11:35 discovery run has ignored a normal cancellation for hours;
+          # force-cancel it if it remains active after the first request.
+          sleep 10
+          blocker_status=$(gh run view 30810152075 --json status --jq .status 2>/dev/null || echo missing)
+          if [ "$blocker_status" != "completed" ] && [ "$blocker_status" != "missing" ]; then
+            echo "Force-cancelling blocker 30810152075 (status=$blocker_status)"
+            gh api --method POST \
+              "repos/${GITHUB_REPOSITORY}/actions/runs/30810152075/force-cancel" \
+              >/dev/null
+          fi
+
+      - name: Confirm the protected incremental run remains active
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run view 30826981347 \
+            --json databaseId,status,conclusion,createdAt,updatedAt,url
