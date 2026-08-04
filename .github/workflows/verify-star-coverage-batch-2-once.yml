@@ -3,9 +3,10 @@ name: Verify STAR coverage batch 2 once
 on:
   pull_request:
     branches: [main]
-    types: [opened]
+    types: [opened, synchronize]
     paths:
       - config/star_market_investor_sources.json
+      - requirements-star-investors.txt
       - .github/workflows/verify-star-coverage-batch-2-once.yml
   workflow_dispatch:
 
