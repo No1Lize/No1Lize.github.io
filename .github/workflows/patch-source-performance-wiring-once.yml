@@ -1,0 +1,116 @@
+name: Patch source performance wiring once
+
+on:
+  push:
+    branches: [feat/source-performance-review]
+    paths:
+      - .github/workflows/patch-source-performance-wiring-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/source-performance-review
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Apply deterministic wiring fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str, label: str) -> None:
+              target = Path(path)
+              text = target.read_text(encoding='utf-8')
+              if new in text:
+                  print(f'{label}: already applied')
+                  return
+              if old not in text:
+                  raise SystemExit(f'{label}: target not found')
+              target.write_text(text.replace(old, new, 1), encoding='utf-8')
+              print(f'{label}: applied')
+
+          replace_once(
+              'tools/update_source_health.py',
+              '        productive = accepted > 0 and state.casefold() in {"ok", "partial"}\n',
+              '        productive = (\n            accepted > 0\n            and state.casefold() in {"ok", "partial"}\n            and not bool(raw_status.get("retainedPrevious"))\n        )\n',
+              'retained snapshot productivity guard',
+          )
+
+          replace_once(
+              '.github/workflows/scheduled-sync.yml',
+              '      - tools/source_health_runtime.py\n',
+              '      - tools/source_health_runtime.py\n      - tools/source_performance.py\n      - tools/source_quality_reviews.py\n      - tools/source_performance_review.py\n',
+              'scheduled sync source-performance paths',
+          )
+          replace_once(
+              '.github/workflows/scheduled-sync.yml',
+              '      - config/source_health_policy.json\n',
+              '      - config/source_health_policy.json\n      - config/source_quality_reviews.json\n      - .github/workflows/source-performance-review.yml\n',
+              'scheduled sync review configuration paths',
+          )
+          replace_once(
+              '.github/workflows/scheduled-sync.yml',
+              '            tools/source_health_runtime.py \\\n',
+              '            tools/source_health_runtime.py \\\n            tools/source_performance.py \\\n            tools/source_quality_reviews.py \\\n            tools/source_performance_review.py \\\n',
+              'scheduled sync source-performance compilation',
+          )
+          replace_once(
+              '.github/workflows/scheduled-sync.yml',
+              '            tests.test_source_health_runtime \\\n',
+              '            tests.test_source_health_runtime \\\n            tests.test_source_performance \\\n            tests.test_source_quality_reviews \\\n            tests.test_source_performance_review \\\n            tests.test_source_health_performance \\\n            tests.test_source_performance_workflow \\\n            tests.test_source_performance_review_cli \\\n',
+              'scheduled sync source-performance tests',
+          )
+
+          replace_once(
+              'README.md',
+              '- `.github/workflows/star-market-investor-refresh.yml` 每周一 03:10（台北时间）刷新科创板招股说明书自动抽取目录；\n',
+              '- `.github/workflows/star-market-investor-refresh.yml` 每周一 03:10（台北时间）刷新科创板招股说明书自动抽取目录；\n- `.github/workflows/source-performance-review.yml` 每月 1 日 08:30（台北时间）生成信源效能、重复率、发现延迟和人工误归属审查清单，仅提出降级或停用建议，不自动删除来源；\n',
+              'README monthly source review schedule',
+          )
+
+          test_path = Path('tests/test_source_health_performance.py')
+          text = test_path.read_text(encoding='utf-8')
+          marker = '\n\nif __name__ == "__main__":\n'
+          test_block = '''\n    def test_retained_previous_batch_is_not_counted_as_productive(self) -> None:\n        previous = {\n            "generatedAt": "2026-08-01T00:00:00+00:00",\n            "sources": {\n                "source-a": {\n                    "id": "source-a",\n                    "name": "Source A",\n                    "platform": "专业媒体",\n                    "evidenceGrade": "C",\n                    "collectionState": "active",\n                    "priority": "normal",\n                    "alertActive": False,\n                    "consecutiveFailures": 0,\n                    "firstObservedAt": "2026-07-01T00:00:00+00:00",\n                    "lastProductiveAt": "2026-07-31T00:00:00+00:00",\n                }\n            },\n        }\n        state, _ = update_health(\n            previous,\n            {\n                "sourceStatus": [\n                    {\n                        "id": "source-a",\n                        "name": "Source A",\n                        "platform": "专业媒体",\n                        "status": "partial",\n                        "accepted": 3,\n                        "retainedPrevious": True,\n                    }\n                ],\n                "articles": [\n                    {\n                        "sourceId": "source-a",\n                        "source": {"evidenceGrade": "C"},\n                    }\n                ],\n            },\n            DEFAULT_POLICY,\n            now=datetime(2026, 8, 2, tzinfo=UTC),\n        )\n        entry = state["sources"]["source-a"]\n        self.assertEqual(entry["lastProductiveAt"], "2026-07-31T00:00:00+00:00")\n        self.assertEqual(entry["performance"]["productiveRuns"], 0)\n\n'''
+          if 'test_retained_previous_batch_is_not_counted_as_productive' not in text:
+              if marker not in text:
+                  raise SystemExit('retained productivity test marker not found')
+              test_path.write_text(text.replace(marker, test_block + marker, 1), encoding='utf-8')
+          PY
+
+      - name: Verify complete implementation
+        run: |
+          npm ci
+          npm run lint
+          npm run test:unit
+          npm run test:crawler
+          npx tsc --noEmit
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+
+      - name: Commit fixes and remove one-time workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -f .github/workflows/patch-source-performance-wiring-once.yml
+          git add \
+            tools/update_source_health.py \
+            .github/workflows/scheduled-sync.yml \
+            README.md \
+            tests/test_source_health_performance.py
+          git commit -m "fix: complete source performance production wiring"
+          git pull --rebase origin feat/source-performance-review
+          git push origin HEAD:feat/source-performance-review
