@@ -1,0 +1,192 @@
+name: Verify final company profile publication
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+    paths:
+      - .github/workflows/verify-company-profile-publication-final.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    if: github.head_ref == 'ops/verify-company-profile-publication-final-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SITE_URL: https://vciq.github.io/companies/
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dispatch and capture one bounded production run
+        id: production
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_url=$(gh workflow run company-profile-incremental-refresh.yml \
+            --ref main \
+            -f max_companies=3)
+          echo "$run_url"
+          run_id="${run_url##*/}"
+          case "$run_id" in
+            ''|*[!0-9]*)
+              echo "Unexpected dispatch response: $run_url" >&2
+              exit 1
+              ;;
+          esac
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          echo "run_url=$run_url" >> "$GITHUB_OUTPUT"
+          gh run view "$run_id" \
+            --json databaseId,createdAt,status,conclusion,headSha,event,url \
+            | tee /tmp/production-run.json
+
+      - name: Wait for production processing
+        env:
+          RUN_ID: ${{ steps.production.outputs.run_id }}
+        run: gh run watch "$RUN_ID" --exit-status
+
+      - name: Fetch production logs and latest main
+        env:
+          RUN_ID: ${{ steps.production.outputs.run_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run view "$RUN_ID" --log > /tmp/production-run.log
+          git fetch origin main
+          git reset --hard origin/main
+          git rev-parse HEAD | tee /tmp/production-main-sha.txt
+          cp public/data/company_profile_refresh_queue.json /tmp/company-profile-refresh-queue.json
+          cp public/data/venture_profiles.json /tmp/venture-profiles.json
+
+      - name: Validate all persisted publication gates
+        run: |
+          python tools/company_profile_refresh_queue.py --check
+          python tools/ensure_venture_profile_coverage.py --check
+          python tools/stabilize_venture_publication_pipeline.py --check
+          python tools/stabilize_venture_research_evidence.py --check
+          python tools/normalize_venture_publication.py --check
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+
+      - name: Validate queue ledger and complete catalog coverage
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import re
+          from datetime import datetime, timedelta
+          from pathlib import Path
+
+          from tools.venture_profile_extraction import parse_catalog
+
+          queue = json.loads(Path('/tmp/company-profile-refresh-queue.json').read_text(encoding='utf-8'))
+          profiles = json.loads(Path('/tmp/venture-profiles.json').read_text(encoding='utf-8'))
+          run_meta = json.loads(Path('/tmp/production-run.json').read_text(encoding='utf-8'))
+          log = Path('/tmp/production-run.log').read_text(encoding='utf-8', errors='replace')
+          companies, institutions = parse_catalog(Path('lib/catalog-data.ts').read_text(encoding='utf-8'))
+
+          matches = re.findall(r'Selected\s+(\d+)\s+companies:\s*([^\r\n]+)', log)
+          assert matches, 'production log did not expose the selected company list'
+          selected_count = int(matches[-1][0])
+          selected_slugs = [slug for slug in matches[-1][1].strip().split() if slug and slug != 'none']
+          assert 1 <= selected_count <= 3, selected_count
+          assert len(selected_slugs) == selected_count, (selected_count, selected_slugs)
+
+          assert queue.get('schemaVersion') == 1
+          assert int(queue.get('selectionLimit', -1)) == 3
+          assert 0 <= int(queue.get('selectedCount', -1)) <= 3
+          assert len(queue.get('selectedSlugs', [])) == int(queue.get('selectedCount', 0))
+          assert queue.get('lastProcessedAt')
+          processed = queue.get('processedEvents', {})
+          assert isinstance(processed, dict) and processed
+
+          started = datetime.fromisoformat(run_meta['createdAt'].replace('Z', '+00:00'))
+          tolerance = started - timedelta(minutes=5)
+          covered_slugs = set()
+          for row in processed.values():
+              if not isinstance(row, dict):
+                  continue
+              processed_at = datetime.fromisoformat(str(row.get('processedAt', '')).replace('Z', '+00:00'))
+              if processed_at >= tolerance:
+                  covered_slugs.add(str(row.get('companySlug', '')))
+          missing_processed = sorted(set(selected_slugs) - covered_slugs)
+          assert not missing_processed, missing_processed
+
+          assert profiles.get('qualityGate', {}).get('passed') is True
+          assert len(profiles.get('companies', {})) == len(companies)
+          assert len(profiles.get('institutions', {})) == len(institutions)
+          statuses = profiles.get('sourceStatus', [])
+          assert len(statuses) == len(companies) + len(institutions)
+          status_keys = {
+              (str(row.get('kind', '')), str(row.get('slug', '')))
+              for row in statuses
+              if isinstance(row, dict)
+          }
+          assert len(status_keys) == len(statuses)
+
+          print(json.dumps({
+              'runId': run_meta.get('databaseId'),
+              'selectedSlugs': selected_slugs,
+              'nextSelectedSlugs': queue.get('selectedSlugs', []),
+              'pendingCount': queue.get('pendingCount'),
+              'lastProcessedAt': queue.get('lastProcessedAt'),
+              'processedEventCount': len(processed),
+              'companyCoverage': len(profiles.get('companies', {})),
+              'institutionCoverage': len(profiles.get('institutions', {})),
+              'runtimeStatusCoverage': len(statuses),
+              'qualityPassed': profiles.get('qualityGate', {}).get('passed'),
+          }, ensure_ascii=False))
+          PY
+
+      - name: Verify deployed company page status card
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 90); do
+            curl --fail --silent --show-error \
+              --retry 3 \
+              --retry-delay 2 \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?profile_publication_verify=${GITHUB_RUN_ID}-${attempt}" \
+              --output /tmp/companies.html
+            if grep -Fq '增量档案刷新' /tmp/companies.html && \
+               grep -Fq '待处理公司' /tmp/companies.html && \
+               grep -Fq '下一批' /tmp/companies.html && \
+               grep -Fq '最近处理' /tmp/companies.html; then
+              echo "Production company page exposes the incremental refresh status card."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Production page did not expose the incremental refresh card in time." >&2
+          exit 1
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-company-profile-publication-verification
+          path: |
+            /tmp/production-run.json
+            /tmp/production-run.log
+            /tmp/production-main-sha.txt
+            /tmp/company-profile-refresh-queue.json
+            /tmp/venture-profiles.json
+            /tmp/companies.html
+          if-no-files-found: ignore
+          retention-days: 7
