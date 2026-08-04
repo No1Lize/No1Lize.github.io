@@ -157,12 +157,15 @@ def _install_source_governance() -> None:
                     quarantined_ids,
                 )
             )
+            # Keep the caller-owned status ledger aligned with publication
+            # quarantine decisions; crawler.main later persists this same list.
+            statuses[:] = replacement_statuses
             if quarantined_ids:
                 print(
                     "Source publication quarantine: "
                     + json.dumps(sorted(quarantined_ids), ensure_ascii=False)
                 )
-            published = original_replace(existing, publishable, replacement_statuses)
+            published = original_replace(existing, publishable, statuses)
             source_performance.annotate_publication_metrics(
                 incoming,
                 published,
