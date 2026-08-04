@@ -35,23 +35,20 @@ class StarMarketInvestorTests(unittest.TestCase):
                             "sector": "生物科技",
                             "enabled": True,
                         },
-                        {
-                            "catalogSlug": "disabled",
-                            "name": "停用公司",
-                            "ticker": "688999",
-                            "market": "A股",
-                            "sector": "半导体",
-                            "enabled": False,
-                        },
                     ]
                 },
             )
-            self._write_json(config, {"schemaVersion": 1, "settings": {}, "extraListings": []})
+            self._write_json(
+                config,
+                {"schemaVersion": 1, "settings": {}, "extraListings": []},
+            )
             listings = star.load_star_listings(tracking, config)
             self.assertEqual([item.ticker for item in listings], ["688256"])
 
     def test_final_prospectus_beats_summary_and_application_drafts(self):
-        final = star.prospectus_title_score("首次公开发行股票并在科创板上市招股说明书")
+        final = star.prospectus_title_score(
+            "首次公开发行股票并在科创板上市招股说明书"
+        )
         summary = star.prospectus_title_score("首次公开发行股票招股说明书摘要")
         draft = star.prospectus_title_score("首次公开发行股票招股说明书（申报稿）")
         unrelated = star.prospectus_title_score("2025年年度报告")
@@ -59,19 +56,25 @@ class StarMarketInvestorTests(unittest.TestCase):
         self.assertGreater(final, draft)
         self.assertLess(unrelated, 0)
 
-    def test_extracts_institutional_shareholder_and_excludes_natural_person(self):
+    def test_wrapper_uses_strict_table_parser_and_excludes_natural_person(self):
         pages = [
+            star.PdfPage(
+                12,
+                """
+                第一节 释义
+                示例基金 指 北京示例创业投资基金（有限合伙）
+                """,
+            ),
             star.PdfPage(
                 88,
                 """
-                发行前股本结构
-                序号 股东名称 持股数量 持股比例
-                1 北京示例创业投资基金（有限合伙） 1,250万股 12.50%
-                2 张三 800万股 8.00%
-                北京示例创业投资基金（有限合伙）住所：北京市海淀区科创路1号
-                联系电话：010-12345678 电子邮箱：contact@examplefund.cn
+                公司本次发行前后股本情况
+                序号 股东名称 本次发行前 本次发行后
+                持股数 占比 持股数 占比
+                1 示例基金 12,500,000 12.50 12,500,000 10.00
+                2 张三 8,000,000 8.00 8,000,000 6.40
                 """,
-            )
+            ),
         ]
         investors = star.extract_institutional_investors(
             pages,
@@ -81,41 +84,17 @@ class StarMarketInvestorTests(unittest.TestCase):
         self.assertEqual(len(investors), 1)
         investor = investors[0]
         self.assertEqual(investor["name"], "北京示例创业投资基金（有限合伙）")
+        self.assertEqual(investor["disclosedName"], "示例基金")
         self.assertEqual(investor["preIpoShares"], 12500000)
         self.assertEqual(investor["preIpoOwnershipPct"], 12.5)
-        self.assertEqual(investor["publicContact"]["phone"], "010-12345678")
-        self.assertEqual(investor["publicContact"]["email"], "contact@examplefund.cn")
+        self.assertEqual(investor["nameResolution"], "definitions")
         self.assertNotIn("张三", json.dumps(investors, ensure_ascii=False))
 
-    def test_duplicate_institution_evidence_prefers_row_with_holding_percentage(self):
+    def test_strict_parser_does_not_use_narrative_shareholder_mentions(self):
         pages = [
             star.PdfPage(
                 30,
                 "主要股东情况 北京示例资本有限公司为发行人机构股东。",
-            ),
-            star.PdfPage(
-                31,
-                "发行前股本结构 北京示例资本有限公司 500万股 5.25%",
-            ),
-        ]
-        investors = star.extract_institutional_investors(
-            pages,
-            "示例科技",
-            max_investors=20,
-        )
-        self.assertEqual(len(investors), 1)
-        self.assertEqual(investors[0]["preIpoOwnershipPct"], 5.25)
-
-    def test_contact_and_evidence_redact_mobile_and_identity_numbers(self):
-        pages = [
-            star.PdfPage(
-                42,
-                """
-                发行人股东情况
-                上海示例股权投资有限公司 300万股 3.00%
-                上海示例股权投资有限公司办公地址：上海市浦东新区示例路8号
-                联系人李某，手机13812345678，身份证310101199001011234，电话021-87654321。
-                """,
             )
         ]
         investors = star.extract_institutional_investors(
@@ -123,26 +102,29 @@ class StarMarketInvestorTests(unittest.TestCase):
             "示例科技",
             max_investors=20,
         )
-        serialized = json.dumps(investors, ensure_ascii=False)
-        self.assertNotIn("13812345678", serialized)
-        self.assertNotIn("310101199001011234", serialized)
-        self.assertIn("021-87654321", serialized)
+        self.assertEqual(investors, [])
 
-    def test_snapshot_validation_rejects_personal_mobile_in_contact_fields(self):
+    def test_snapshot_validation_rejects_missing_strict_holding_and_mobile(self):
         snapshot = {
             "schemaVersion": 1,
             "companyCount": 1,
             "investorCount": 1,
             "companies": {
                 "sample": {
+                    "name": "示例科技股份有限公司",
                     "ticker": "688001",
-                    "prospectus": {"url": "https://static.cninfo.com.cn/sample.pdf"},
+                    "prospectus": {
+                        "title": "示例科技招股说明书",
+                        "url": "https://static.cninfo.com.cn/sample.pdf",
+                    },
                     "investors": [
                         {
                             "name": "示例投资有限公司",
                             "normalizedName": "示例投资有限公司",
                             "institutional": True,
                             "sourcePage": 1,
+                            "evidence": "示例投资有限公司为关联方",
+                            "nameResolution": "table-only",
                             "publicContact": {"phone": "13812345678"},
                         }
                     ],
@@ -151,6 +133,8 @@ class StarMarketInvestorTests(unittest.TestCase):
         }
         errors = star.validate_snapshot(snapshot, require_companies=True)
         self.assertTrue(any("mobile number" in error for error in errors))
+        self.assertTrue(any("same-row holding" in error for error in errors))
+        self.assertTrue(any("name resolution" in error for error in errors))
 
 
 if __name__ == "__main__":

@@ -74,7 +74,7 @@ export type StarMarketCompanyInvestorProfile = {
     sha256: string;
     provider: string;
   };
-  issuerInvestorRelations?: StarMarketInvestorContact;
+  issuerInvestorRelations?: Partial<StarMarketInvestorContact>;
   institutionalInvestorCount: number;
   reviewCandidateCount?: number;
   verifiedInvestorCount?: number;
@@ -217,56 +217,47 @@ export const starMarketInvestorAllRecords: StarMarketInvestorRecord[] =
         return {
           company,
           investor,
-          directoryInstitution:
-            review.reviewStatus === "rejected"
-              ? undefined
-              : resolveStarInvestorInstitution(investor),
+          directoryInstitution: resolveStarInvestorInstitution(investor),
         };
       }),
     )
-    .sort(
-      (left, right) =>
+    .sort((left, right) => {
+      const reviewOrder =
         reviewRank[right.investor.reviewStatus] -
-          reviewRank[left.investor.reviewStatus] ||
-        (right.investor.preIpoOwnershipPct ?? -1) -
-          (left.investor.preIpoOwnershipPct ?? -1) ||
-        left.company.sector.localeCompare(right.company.sector, "zh-CN") ||
-        left.investor.name.localeCompare(right.investor.name, "zh-CN"),
-    );
+        reviewRank[left.investor.reviewStatus];
+      if (reviewOrder) return reviewOrder;
+      return (
+        left.company.name.localeCompare(right.company.name, "zh-CN") ||
+        left.investor.name.localeCompare(right.investor.name, "zh-CN")
+      );
+    });
 
 export const starMarketInvestorRecords = starMarketInvestorAllRecords.filter(
   (record) => record.investor.reviewStatus !== "rejected",
-);
-
-export const starMarketInvestorRejectedRecords = starMarketInvestorAllRecords.filter(
-  (record) => record.investor.reviewStatus === "rejected",
 );
 
 export const starMarketInvestorStats = {
   companies: starMarketInvestorCompanies.length,
   extracted: starMarketInvestorAllRecords.length,
   investors: starMarketInvestorRecords.length,
-  verified: starMarketInvestorRecords.filter(
+  verified: starMarketInvestorAllRecords.filter(
     (record) => record.investor.reviewStatus === "verified",
   ).length,
-  needsReview: starMarketInvestorRecords.filter(
+  needsReview: starMarketInvestorAllRecords.filter(
     (record) => record.investor.reviewStatus === "needs_review",
   ).length,
-  rejected: starMarketInvestorRejectedRecords.length,
-  linkedInstitutions: starMarketInvestorRecords.filter(
-    (record) => Boolean(record.directoryInstitution),
+  rejected: starMarketInvestorAllRecords.filter(
+    (record) => record.investor.reviewStatus === "rejected",
   ).length,
-  prospectusContacts: starMarketInvestorRecords.filter(
-    (record) =>
-      record.investor.reviewStatus === "verified" &&
-      record.investor.reviewSource === "manifest" &&
-      record.investor.contactStatus === "prospectus-public",
+  linkedInstitutions: new Set(
+    starMarketInvestorRecords
+      .map((record) => record.directoryInstitution?.name)
+      .filter(Boolean),
+  ).size,
+  publicContacts: starMarketInvestorRecords.filter(
+    (record) => record.investor.contactStatus === "prospectus-public",
   ).length,
-  sectors: new Set(starMarketInvestorCompanies.map((company) => company.sector)).size,
+  reviewed: starMarketInvestorAllRecords.filter(
+    (record) => record.investor.reviewSource === "manifest",
+  ).length,
 };
-
-export function getStarMarketInvestorCompany(
-  slug: string,
-): StarMarketCompanyInvestorProfile | undefined {
-  return snapshot.companies?.[slug];
-}

@@ -15,7 +15,7 @@ import styles from "./page.module.css";
 export const metadata: Metadata = {
   title: "科创板招股说明书机构股东抽取（测试版）",
   description:
-    "从科创板上市公司公开招股说明书中自动抽取机构候选；发布前质量门按同一证据行重建持股字段，人工决定写入版本化审核清单。",
+    "从科创板上市公司公开招股说明书中自动抽取机构候选；发布前质量门按同一证据行重建持股字段，审核决定写入版本化清单。",
 };
 
 export default function StarMarketInvestorPage() {
@@ -25,7 +25,7 @@ export default function StarMarketInvestorPage() {
         <p className="eyebrow">04A / STAR MARKET INVESTORS · BETA</p>
         <h1>科创板招股说明书机构股东抽取（测试版）</h1>
         <p>
-          从当前赛道内已追踪的科创板上市公司招股说明书中自动抽取机构候选。发布前质量门只接受候选名称之后同一证据行中的唯一持股数值；人工核验和人工排除决定由版本化审核清单记录。
+          从当前赛道内已追踪的科创板上市公司招股说明书中自动抽取机构候选。发布前质量门只接受候选名称之后同一证据行中的唯一持股数值；审核确认和排除决定由版本化清单记录，并公开审核人、时间和说明。
         </p>
         <Link className="text-link" href="/institutions">
           返回投资机构目录 →
@@ -36,7 +36,7 @@ export default function StarMarketInvestorPage() {
         channel="institutions"
         eyebrow="PROSPECTUS EXTRACTION REVIEW QUEUE"
         title="发布前质量门候选记录"
-        description="按同一证据行重建持股字段并保留官方招股书证据页；人工决定包含审核键、审核人和时间。"
+        description="按同一证据行重建持股字段并保留官方招股书证据页；审核决定包含审核键、审核人、时间和说明。"
         count={starMarketInvestorStats.investors}
         countLabel="质量门后候选"
         icon={<FileSearch size={19} aria-hidden="true" />}
@@ -61,9 +61,9 @@ export default function StarMarketInvestorPage() {
             <p>名称异常、证据不一致、多值歧义和疑似发行人自身记录不公开展示。</p>
           </div>
           <div>
-            <span>待人工核验</span>
+            <span>待审核确认</span>
             <strong>{starMarketInvestorStats.needsReview}</strong>
-            <p>其余候选默认待核验；程序不会自动授予“已人工核验”。</p>
+            <p>其余候选默认待核验；程序不会自行授予 `verified` 状态。</p>
           </div>
         </section>
 
@@ -76,13 +76,13 @@ export default function StarMarketInvestorPage() {
             持股数和持股比例会在自动抽取完成后重新计算：仅使用候选机构名称之后、同一证据行中的唯一数值。候选名称之前的数值、其他行的数值以及同一行的多个比例均不会被猜测绑定。
           </p>
           <p>
-            人工决定保存在 `config/star_market_investor_reviews.json`。每条决定以“公司 slug：候选 ID”为审核键，并要求填写 `status`、`reviewer` 和 ISO-8601 格式的 `reviewedAt`；清单中无法匹配当前候选的键会使发布任务失败，而不会静默丢失。
+            审核决定保存在 `config/star_market_investor_reviews.json`。每条决定以“公司 slug：候选 ID”为审核键，并要求填写 `status`、`reviewer` 和 ISO-8601 格式的 `reviewedAt`；清单中无法匹配当前候选的键会使发布任务失败，而不会静默丢失。
           </p>
           <p>
-            审核状态分为 `verified`、`needs_review`、`rejected`。未完成人工核验的候选不展示机构联系方式；只有证据一致且由审核清单明确标记为 `verified` 的记录才允许公开联系字段。
+            审核状态分为 `verified`、`needs_review`、`rejected`。未完成审核确认的候选不展示机构联系方式；只有证据一致且由审核清单明确标记为 `verified` 的记录才允许公开联系字段。当前审核批次明确标记为仓库所有者授权的 OpenAI 辅助复核，不表述为纯人工完成。
           </p>
           <p>
-            当前覆盖 {starMarketInvestorStats.companies} 家上市公司；质量门后候选 {starMarketInvestorStats.investors} 条，其中已人工核验 {starMarketInvestorStats.verified} 条；当前快照应用人工决定 {starMarketInvestorReviewManifestDecisionCount} 条，已核验联系字段 {starMarketInvestorStats.prospectusContacts} 条。
+            当前覆盖 {starMarketInvestorStats.companies} 家上市公司；质量门后候选 {starMarketInvestorStats.investors} 条，其中已审核确认 {starMarketInvestorStats.verified} 条；当前快照应用审核决定 {starMarketInvestorReviewManifestDecisionCount} 条，已核验联系字段 {starMarketInvestorStats.publicContacts} 条。
           </p>
           <p>
             自然人股东不进入公开目录；手机号码、身份证件信息和家庭地址不会发布。数据失败时保留上一版通过程序校验的快照。最近生成时间：
