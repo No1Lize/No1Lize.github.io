@@ -36,6 +36,7 @@ jobs:
           python -m py_compile \
             tools/company_profile_refresh_queue.py \
             tools/ensure_venture_profile_coverage.py \
+            tools/normalize_venture_publication.py \
             tools/stabilize_venture_research_evidence.py \
             tools/stabilize_venture_publication_pipeline.py \
             tools/crawl_venture_profiles.py \
@@ -131,7 +132,7 @@ jobs:
           python tools/stabilize_venture_publication_pipeline.py
           python tools/stabilize_venture_publication_pipeline.py --check
           python tools/stabilize_venture_research_evidence.py --check
-          python tools/normalize_venture_profiles.py --check
+          python tools/normalize_venture_publication.py --check
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
@@ -156,7 +157,7 @@ jobs:
           python tools/ensure_venture_profile_coverage.py --check
           python tools/stabilize_venture_publication_pipeline.py --check
           python tools/stabilize_venture_research_evidence.py --check
-          python tools/normalize_venture_profiles.py --check
+          python tools/normalize_venture_publication.py --check
           python tools/stabilize_venture_profiles.py --check
           python tools/finalize_venture_profiles.py --check
           python tools/enforce_venture_entity_semantics.py --check
@@ -183,7 +184,7 @@ jobs:
             python tools/ensure_venture_profile_coverage.py --check
             python tools/stabilize_venture_publication_pipeline.py --check
             python tools/stabilize_venture_research_evidence.py --check
-            python tools/normalize_venture_profiles.py --check
+            python tools/normalize_venture_publication.py --check
             python tools/stabilize_venture_profiles.py --check
             python tools/finalize_venture_profiles.py --check
             python tools/enforce_venture_entity_semantics.py --check
