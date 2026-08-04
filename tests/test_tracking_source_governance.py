@@ -140,14 +140,14 @@ class TrackingSourceGovernanceTests(unittest.TestCase):
         )
         health = {
             "sources": {
-                "source-auto-media-dead": {
+                "user-source-source-auto-media-dead": {
                     "collectionState": "quarantined",
                     "consecutiveFailures": 20,
                     "quarantineThreshold": 7,
                     "lastProductiveAt": None,
                     "alertActive": True,
                 },
-                "source-auto-media-productive": {
+                "user-source-source-auto-media-productive": {
                     "collectionState": "quarantined",
                     "consecutiveFailures": 20,
                     "quarantineThreshold": 7,
@@ -165,7 +165,10 @@ class TrackingSourceGovernanceTests(unittest.TestCase):
             [source["id"] for source in next_config["sources"]],
             ["source-auto-media-productive"],
         )
-        self.assertNotIn("source-auto-media-dead", next_health["sources"])
+        self.assertNotIn(
+            "user-source-source-auto-media-dead",
+            next_health["sources"],
+        )
         self.assertEqual(stats["deadAutoSourcesRemoved"], 1)
         self.assertEqual(stats["healthRowsRemoved"], 1)
 
@@ -208,7 +211,7 @@ class TrackingSourceGovernanceTests(unittest.TestCase):
         config = self._config([])
         health = {
             "sources": {
-                "source-auto-media-old": {
+                "user-source-source-auto-media-old": {
                     "alertActive": True,
                     "collectionState": "quarantined",
                 },
@@ -223,11 +226,55 @@ class TrackingSourceGovernanceTests(unittest.TestCase):
             {"added": [], "removed": []},
             health,
         )
-        self.assertNotIn("source-auto-media-old", next_health["sources"])
+        self.assertNotIn(
+            "user-source-source-auto-media-old",
+            next_health["sources"],
+        )
         self.assertIn("owner-source", next_health["sources"])
         self.assertEqual(next_health["activeAlertCount"], 1)
         self.assertEqual(stats["healthRowsRemoved"], 1)
 
+
+    def test_manual_duplicates_are_preserved(self):
+        config = self._config(
+            [
+                {
+                    "id": "owner-a",
+                    "name": "Owner A",
+                    "url": "https://owner.example/",
+                    "sourceCategory": "media",
+                    "sector": "风险投资",
+                },
+                {
+                    "id": "owner-b",
+                    "name": "Owner B",
+                    "url": "https://www.owner.example/news",
+                    "sourceCategory": "media",
+                    "sector": "风险投资",
+                },
+            ]
+        )
+        next_config, _, _, stats = governance.normalize_tracking_sources(
+            config, {"added": [], "removed": []}, {"sources": {}}
+        )
+        self.assertEqual(len(next_config["sources"]), 2)
+        self.assertEqual(stats["duplicatesRemoved"], 0)
+        self.assertEqual(governance.validate_tracking_sources(next_config), [])
+
+    def test_runtime_source_identity_maps_to_config_source(self):
+        self.assertEqual(
+            governance.runtime_source_id("source-auto-media-example"),
+            "user-source-source-auto-media-example",
+        )
+        self.assertEqual(
+            governance.config_source_id("user-source-source-auto-media-example"),
+            "source-auto-media-example",
+        )
+        self.assertTrue(
+            governance.is_runtime_auto_source_id(
+                "user-source-source-auto-media-example"
+            )
+        )
 
 if __name__ == "__main__":
     unittest.main()

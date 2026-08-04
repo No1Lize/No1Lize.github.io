@@ -31,6 +31,12 @@ DEFAULT_HEALTH_PATH = ROOT / "public" / "data" / "source_health.json"
 
 AUTO_SOURCE_PREFIX = "source-auto-"
 AUTO_MEDIA_PREFIX = "source-auto-media-"
+PUBLISHER_ROOT_DOMAINS = {
+    # Slashdot exposes topic-specific hosts that are one publisher and one
+    # discovery source for a given track. Keep this explicit rather than
+    # broadly collapsing every news.* or tech.* subdomain on the web.
+    "slashdot.org",
+}
 FEED_SUBDOMAIN_PREFIXES = {
     "www",
     "www1",
@@ -78,6 +84,9 @@ def canonical_source_host(value: Any) -> str:
         return ""
     parsed = urlparse(text if "://" in text else f"https://{text}")
     host = (parsed.hostname or "").strip(".").casefold()
+    for root in PUBLISHER_ROOT_DOMAINS:
+        if host == root or host.endswith(f".{root}"):
+            return root
     labels = [label for label in host.split(".") if label]
     while len(labels) > 2 and labels[0] in FEED_SUBDOMAIN_PREFIXES:
         labels.pop(0)
@@ -113,6 +122,27 @@ def discovery_suffix_count(value: Any) -> int:
 
 def is_auto_source(source: dict[str, Any] | None) -> bool:
     return str((source or {}).get("id") or "").startswith(AUTO_SOURCE_PREFIX)
+
+
+def runtime_source_id(config_source_id: Any) -> str:
+    source_id = str(config_source_id or "").strip()
+    return f"user-source-{source_id}" if source_id else ""
+
+
+def config_source_id(runtime_id: Any) -> str:
+    source_id = str(runtime_id or "").strip()
+    if source_id.startswith("user-source-"):
+        return source_id[len("user-source-") :]
+    return source_id
+
+
+def runtime_source_ids(config_source_id_value: Any) -> set[str]:
+    source_id = str(config_source_id_value or "").strip()
+    return {value for value in (source_id, runtime_source_id(source_id)) if value}
+
+
+def is_runtime_auto_source_id(value: Any) -> bool:
+    return config_source_id(value).startswith(AUTO_SOURCE_PREFIX)
 
 
 def is_auto_media_source(source: dict[str, Any] | None) -> bool:
@@ -345,6 +375,7 @@ def normalize_tracking_sources(
             continue
         source = deepcopy(raw)
         source["_index"] = index
+        source["_originalName"] = str(source.get("name") or "")
         source["_originalUrl"] = str(source.get("url") or "")
         source["_trackSlug"] = track_by_sector.get(normalize_text(source.get("sector")), "")
         if is_auto_media_source(source):
@@ -357,10 +388,15 @@ def normalize_tracking_sources(
                 url_rewrites[str(source.get("url") or "")] = clean_url
                 source["url"] = clean_url
                 canonicalized += 1
-        if _health_entry_is_dead_auto_source(
-            source,
-            health_sources.get(str(source.get("id") or "")),
-        ):
+        source_health = next(
+            (
+                health_sources.get(source_id)
+                for source_id in runtime_source_ids(source.get("id"))
+                if isinstance(health_sources.get(source_id), dict)
+            ),
+            None,
+        )
+        if _health_entry_is_dead_auto_source(source, source_health):
             source["_removalReason"] = "never-productive-quarantine"
             removed_sources.append(source)
             dead_removed += 1
@@ -375,18 +411,27 @@ def normalize_tracking_sources(
     duplicate_removed = 0
     recursive_removed = 0
     for rows in grouped.values():
-        ranked = sorted(
-            rows,
-            key=lambda row: _source_score(row, int(row.get("_index") or 0)),
-            reverse=True,
-        )
-        winner = ranked[0]
-        keep_ids.add(int(winner.get("_index") or 0))
-        for duplicate in ranked[1:]:
+        manual_rows = [row for row in rows if not is_auto_source(row)]
+        if manual_rows:
+            # Governance never removes owner-entered duplicates. It only
+            # removes automatic rows colliding with an owner source.
+            for manual in manual_rows:
+                keep_ids.add(int(manual.get("_index") or 0))
+            duplicates = [row for row in rows if is_auto_source(row)]
+        else:
+            ranked = sorted(
+                rows,
+                key=lambda row: _source_score(row, int(row.get("_index") or 0)),
+                reverse=True,
+            )
+            winner = ranked[0]
+            keep_ids.add(int(winner.get("_index") or 0))
+            duplicates = ranked[1:]
+        for duplicate in duplicates:
             duplicate["_removalReason"] = "canonical-duplicate"
             removed_sources.append(duplicate)
             duplicate_removed += 1
-            if discovery_suffix_count(duplicate.get("name")) > 1:
+            if discovery_suffix_count(duplicate.get("_originalName")) > 1:
                 recursive_removed += 1
 
     final_sources: list[dict[str, Any]] = []
@@ -411,15 +456,20 @@ def normalize_tracking_sources(
     )
 
     configured_ids = {str(source.get("id") or "") for source in final_sources}
-    removed_ids = {
+    removed_config_ids = {
         str(source.get("id") or "") for source in removed_sources if source.get("id")
+    }
+    removed_ids = {
+        source_id
+        for config_id in removed_config_ids
+        for source_id in runtime_source_ids(config_id)
     }
     health_removed = 0
     if health_sources:
         for source_id in list(health_sources):
             if source_id in removed_ids or (
-                source_id.startswith(AUTO_SOURCE_PREFIX)
-                and source_id not in configured_ids
+                is_runtime_auto_source_id(source_id)
+                and config_source_id(source_id) not in configured_ids
             ):
                 health_sources.pop(source_id, None)
                 health_removed += 1
@@ -448,7 +498,7 @@ def validate_tracking_sources(
     health: dict[str, Any] | None = None,
 ) -> list[str]:
     errors: list[str] = []
-    seen: dict[tuple[str, str, str, str], str] = {}
+    seen: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     configured_ids: set[str] = set()
     for source in config.get("sources", []):
         if not isinstance(source, dict):
@@ -460,10 +510,12 @@ def validate_tracking_sources(
         if not key[0]:
             errors.append(f"{source_id}: missing canonical host")
         previous = seen.get(key)
-        if previous:
-            errors.append(f"{source_id}: duplicates canonical source {previous}")
-        else:
-            seen[key] = source_id
+        if previous and (is_auto_source(source) or is_auto_source(previous)):
+            errors.append(
+                f"{source_id}: duplicates canonical source {previous.get('id', '')}"
+            )
+        elif previous is None:
+            seen[key] = source
         if is_auto_media_source(source):
             if discovery_suffix_count(source.get("name")) != 1:
                 errors.append(f"{source_id}: recursive or missing discovery suffix")
@@ -472,7 +524,10 @@ def validate_tracking_sources(
     health_sources = (health or {}).get("sources")
     if isinstance(health_sources, dict):
         for source_id in health_sources:
-            if source_id.startswith(AUTO_SOURCE_PREFIX) and source_id not in configured_ids:
+            if (
+                is_runtime_auto_source_id(source_id)
+                and config_source_id(source_id) not in configured_ids
+            ):
                 errors.append(f"{source_id}: stale automatic source-health row")
     return errors
 

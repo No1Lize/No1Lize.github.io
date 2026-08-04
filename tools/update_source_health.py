@@ -47,6 +47,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 DEFAULT_STATE_PATH = ROOT / "public" / "data" / "source_health.json"
 DEFAULT_POLICY_PATH = ROOT / "config" / "source_health_policy.json"
+DEFAULT_TRACKING_CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 DEFAULT_SUMMARY_PATH = Path("/tmp/source-health-issue.md")
 
 DEFAULT_POLICY = {
@@ -90,6 +91,23 @@ def _accepted_count(status: dict[str, Any]) -> int:
 
 def _source_id(status: dict[str, Any]) -> str:
     return str(status.get("id") or status.get("sourceId") or status.get("name") or "").strip()
+
+
+def _configured_source_present(
+    runtime_id: str,
+    configured_source_ids: set[str] | None,
+) -> bool:
+    if configured_source_ids is None:
+        return True
+    config_id = (
+        runtime_id[len("user-source-") :]
+        if runtime_id.startswith("user-source-")
+        else runtime_id
+    )
+    return (
+        not config_id.startswith("source-auto-")
+        or config_id in configured_source_ids
+    )
 
 
 def _parse_time(value: Any) -> datetime | None:
@@ -169,6 +187,7 @@ def update_health(
     *,
     now: datetime | None = None,
     manual_reviews: dict[str, dict[str, Any]] | None = None,
+    configured_source_ids: set[str] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     current_time = (now or datetime.now(UTC)).astimezone(UTC).replace(microsecond=0)
     timestamp = current_time.isoformat()
@@ -212,6 +231,8 @@ def update_health(
             continue
         source_id = _source_id(raw_status)
         if not source_id:
+            continue
+        if not _configured_source_present(source_id, configured_source_ids):
             continue
         seen_ids.add(source_id)
         previous = previous_sources.get(source_id, {})
@@ -338,6 +359,8 @@ def update_health(
     # their cross-run streak, quarantine, performance or historical timestamps.
     for source_id, raw_previous in previous_sources.items():
         if source_id in seen_ids or not isinstance(raw_previous, dict):
+            continue
+        if not _configured_source_present(source_id, configured_source_ids):
             continue
         preserved = dict(raw_previous)
         preserved["missingFromCurrentRun"] = True
@@ -517,6 +540,11 @@ def main() -> int:
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE_PATH)
     parser.add_argument("--policy", type=Path, default=DEFAULT_POLICY_PATH)
     parser.add_argument("--reviews", type=Path, default=DEFAULT_REVIEW_PATH)
+    parser.add_argument(
+        "--tracking-config",
+        type=Path,
+        default=DEFAULT_TRACKING_CONFIG_PATH,
+    )
     parser.add_argument("--summary", type=Path, default=DEFAULT_SUMMARY_PATH)
     parser.add_argument("--github-output", default=os.environ.get("GITHUB_OUTPUT"))
     args = parser.parse_args()
@@ -528,12 +556,20 @@ def main() -> int:
     if isinstance(configured, dict):
         policy.update(configured)
     manual_reviews = review_index(load_review_manifest(args.reviews))
+    tracking_payload = _read_json(args.tracking_config, {})
+    configured_source_ids = {
+        str(source.get("id") or "")
+        for source in tracking_payload.get("sources", [])
+        if isinstance(source, dict)
+        and str(source.get("id") or "").startswith("source-auto-")
+    }
 
     state, summary = update_health(
         previous_payload,
         article_payload,
         policy,
         manual_reviews=manual_reviews,
+        configured_source_ids=configured_source_ids,
     )
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.state.write_text(
