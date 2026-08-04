@@ -82,7 +82,7 @@ export default function StarMarketInvestorPage() {
             审核状态分为 `verified`、`needs_review`、`rejected`。未完成人工核验的候选不展示机构联系方式；只有证据一致且由审核清单明确标记为 `verified` 的记录才允许公开联系字段。
           </p>
           <p>
-            当前覆盖 {starMarketInvestorStats.companies} 家上市公司；质量门后候选 {starMarketInvestorStats.investors} 条，其中已人工核验 {starMarketInvestorStats.verified} 条；当前快照应用人工决定 {starMarketInvestorReviewManifestDecisionCount} 条，已核验联系字段 {starMarketInvestorStats.prospectusContacts} 条。
+            当前覆盖 {starMarketInvestorStats.companies} 家上市公司；质量门后候选 {starMarketInvestorStats.investors} 条，其中已人工核验 {starMarketInvestorStats.verified} 条；当前快照应用人工决定 {starMarketInvestorReviewManifestDecisionCount} 条，已核验联系字段 {starMarketInvestorStats.publicContacts} 条。
           </p>
           <p>
             自然人股东不进入公开目录；手机号码、身份证件信息和家庭地址不会发布。数据失败时保留上一版通过程序校验的快照。最近生成时间：
