@@ -1,0 +1,132 @@
+name: Patch institution data layer consumers once
+
+on:
+  push:
+    branches: [feat/institution-auditable-data-layers]
+    paths:
+      - .github/workflows/patch-institution-data-layer-consumers-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: patch-institution-data-layer-consumers-once
+  cancel-in-progress: false
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/institution-auditable-data-layers
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Switch institution channel to generated event layer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path: str, old: str, new: str, label: str) -> None:
+              file = Path(path)
+              text = file.read_text(encoding='utf-8')
+              if new in text:
+                  print(f'{label}: already applied')
+                  return
+              if old not in text:
+                  raise SystemExit(f'{label}: target not found')
+              file.write_text(text.replace(old, new, 1), encoding='utf-8')
+              print(f'{label}: applied')
+
+          replace_once(
+              'lib/channel-updates.ts',
+              'import { resolveArticleInstitutionEntities } from "@/lib/institution-entity-registry";\n',
+              '''import {\n  institutionDataLayerVersions,\n  institutionEventLayerRecords,\n  type InstitutionEventLayerRecord,\n} from "@/lib/institution-data-layer-data";\n''',
+              'institution event layer import',
+          )
+          replace_once(
+              'lib/channel-updates.ts',
+              'const capitalEventTypes = new Set(["融资", "产业投资", "并购", "IPO"]);\n',
+              '',
+              'remove runtime capital event classification',
+          )
+          replace_once(
+              'lib/channel-updates.ts',
+              '''function technologyDirectory(): ChannelUpdateDirectory {\n''',
+              '''function institutionEventToUpdate(\n  event: InstitutionEventLayerRecord,\n): ChannelUpdateItem {\n  const normalizedDate = normalizeChannelUpdateDate(\n    event.publishedAt,\n    institutionDataLayerVersions.eventsGeneratedAt,\n  );\n  const sourceClassifications = event.source.evidenceGrade\n    ? [`${event.source.evidenceGrade}级来源`]\n    : [];\n  if (event.source.evidenceGrade === "D") {\n    sourceClassifications.push("待交叉验证");\n  }\n  const institutionNames = event.institutionNames.slice(0, 3);\n  const channelClassification =\n    event.scope === "institution-event" ? "机构动态" : "资本事件";\n\n  return {\n    id: event.id,\n    title: event.title,\n    summary: event.summary,\n    href: event.source.url,\n    source: event.source.platform || event.source.name,\n    label: event.eventType,\n    context:\n      event.scope === "institution-event"\n        ? `${institutionNames.join("、")} · ${event.sector}`\n        : `资本事件 · ${event.sector}`,\n    date: normalizedDate.displayDate,\n    dateOriginal: normalizedDate.originalDate,\n    datePrecision: normalizedDate.precision,\n    sortAt: normalizedDate.sortAt,\n    keywords: [event.eventType],\n    classifications: uniqueKeywords([\n      channelClassification,\n      ...sourceClassifications,\n    ]),\n    firstSeenAt: event.firstSeenAt,\n    firstSeenEstimated: event.firstSeenEstimated,\n    lastVerifiedAt: event.lastVerifiedAt,\n    lastVerifiedEstimated: event.lastVerifiedEstimated,\n    sourceGrade: event.source.evidenceGrade,\n    sourceGradeLabel: event.source.evidenceLabel,\n    sourceVerificationPolicy: event.source.evidencePolicy,\n  };\n}\n\nfunction technologyDirectory(): ChannelUpdateDirectory {\n''',
+              'institution event update mapper',
+          )
+          replace_once(
+              'lib/channel-updates.ts',
+              '''function institutionsDirectory(): ChannelUpdateDirectory {\n  const items = articlesPayload.articles.flatMap((article) => {\n    const matchedInstitutions = resolveArticleInstitutionEntities(article);\n    const institutionNames = uniqueKeywords([\n      ...matchedInstitutions.map((institution) => institution.name),\n      ...(article.institutions ?? []),\n    ]).slice(0, 3);\n\n    if (institutionNames.length) {\n      return [\n        articleToUpdate(\n          article,\n          `${institutionNames.join("、")} · ${article.sector}`,\n          ["机构动态"],\n        ),\n      ];\n    }\n\n    if (!capitalEventTypes.has(article.type)) return [];\n    return [\n      articleToUpdate(article, `资本事件 · ${article.sector}`, ["资本事件"]),\n    ];\n  });\n  return {\n    title: "机构与资本事件更新目录",\n    description:\n      "已识别具体机构的记录归为“机构动态”；未识别机构的融资、并购与 IPO 归为“资本事件”。事件类型和来源/机构分类分别筛选；A/B 级为原始或官方来源，C 级为专业报道，D 级仅作待交叉验证线索。",\n    generatedAt: articlesPayload.generatedAt,\n    items: dedupeAndSort([\n      ...getChannelDocumentUpdateItems("institutions"),\n      ...items,\n    ]),\n  };\n}\n''',
+              '''function institutionsDirectory(): ChannelUpdateDirectory {\n  const items = institutionEventLayerRecords.map(institutionEventToUpdate);\n  return {\n    title: "机构与资本事件更新目录",\n    description:\n      "读取独立机构事件数据层：已识别具体机构的记录归为“机构动态”；未识别机构的融资、并购与 IPO 归为“资本事件”。每条机构归属均保留结构化字段、官网域名或审核别名证据。",\n    generatedAt: institutionDataLayerVersions.eventsGeneratedAt,\n    items: dedupeAndSort([\n      ...getChannelDocumentUpdateItems("institutions"),\n      ...items,\n    ]),\n  };\n}\n''',
+              'institution directory data source',
+          )
+
+          replace_once(
+              'app/institutions/page.tsx',
+              '''import {\n  institutionDirectoryStats,\n  institutionRankingSources,\n} from "@/lib/institution-ranking-data";\n''',
+              '''import {\n  institutionDirectoryStats,\n  institutionRankingDataVersion,\n  institutionRankingSources,\n  institutionRankingUpdatedAt,\n} from "@/lib/institution-ranking-data";\nimport {\n  institutionDataLayerStats,\n  institutionDataLayerVersions,\n} from "@/lib/institution-data-layer-data";\n''',
+              'institution page layer imports',
+          )
+          replace_once(
+              'app/institutions/page.tsx',
+              '''  const chinaventureSource = institutionRankingSources[1];\n\n  return (\n''',
+              '''  const chinaventureSource = institutionRankingSources[1];\n  const displayDate = (value: string) => value?.slice(0, 10) || "待生成";\n\n  return (\n''',
+              'institution page date formatter',
+          )
+          replace_once(
+              'app/institutions/page.tsx',
+              '''        <div className={styles.summary}>\n          <div>\n            <span>中国榜单机构</span>\n            <strong>{institutionDirectoryStats.china}</strong>\n          </div>\n          <div>\n            <span>海外代表机构</span>\n            <strong>{institutionDirectoryStats.us}</strong>\n          </div>\n          <p>\n            共 {institutionDirectoryStats.rankedRecords} 条清科榜单记录；\n            {institutionDirectoryStats.detailedProfiles} 家机构已连接站内研究档案。\n          </p>\n        </div>\n''',
+              '''        <div className={styles.summary}>\n          <div>\n            <span>中国榜单机构</span>\n            <strong>{institutionDataLayerStats.chinaEntities}</strong>\n          </div>\n          <div>\n            <span>海外代表机构</span>\n            <strong>{institutionDataLayerStats.usEntities}</strong>\n          </div>\n          <div>\n            <span>已归属机构事件</span>\n            <strong>{institutionDataLayerStats.institutionEvents}</strong>\n          </div>\n          <div>\n            <span>已核验股权关系</span>\n            <strong>{institutionDataLayerStats.verifiedEquityRelationships}</strong>\n          </div>\n          <p>\n            数据版本 {institutionRankingDataVersion}，榜单审计日期 {institutionRankingUpdatedAt}；\n            主体层 {displayDate(institutionDataLayerVersions.entitiesGeneratedAt)}、\n            事件层 {displayDate(institutionDataLayerVersions.eventsGeneratedAt)}、\n            股权层 {displayDate(institutionDataLayerVersions.equityGeneratedAt)}。\n            共 {institutionDirectoryStats.rankedRecords} 条清科榜单记录、\n            {institutionDirectoryStats.detailedProfiles} 家站内档案；\n            当前另有 {institutionDataLayerStats.needsReviewEquityCandidates} 条股权候选待核验、\n            {institutionDataLayerStats.rejectedEquityCandidates} 条已隔离。\n          </p>\n        </div>\n''',
+              'institution page layer coverage',
+          )
+          replace_once(
+              'app/institutions/page.tsx',
+              '''          。当前结构化排名记录仅保存清科榜单明确披露的名次；未排序榜单统一标记为“入选”，不推断具体位次。\n''',
+              '''          。当前结构化排名记录仅保存清科榜单明确披露的名次；未排序榜单统一标记为“入选”，不推断具体位次。\n          榜单、机构主体、机构事件和股权关系分别保存为独立 JSON 数据层，页面不再从同一混合数组临时推导全部关系。\n''',
+              'institution page data layer note',
+          )
+
+          replace_once(
+              'README.md',
+              '- `.github/workflows/source-performance-review.yml` 每月 1 日 08:30（台北时间）生成信源效能、重复率、发现延迟和人工误归属审查清单，仅提出降级或停用建议，不自动删除来源；\n',
+              '- `.github/workflows/source-performance-review.yml` 每月 1 日 08:30（台北时间）生成信源效能、重复率、发现延迟和人工误归属审查清单，仅提出降级或停用建议，不自动删除来源；\n- `.github/workflows/institution-data-layers.yml` 在榜单、机构别名、文章或科创板股权候选变化后，重建机构主体、机构事件和股权关系三个独立审计快照；\n',
+              'README institution data layer workflow',
+          )
+          PY
+
+      - name: Regenerate and verify all institution layers
+        run: |
+          npm ci
+          node --import tsx scripts/build-institution-data-layers.ts
+          node --import tsx --test \
+            tests/institution-entity-registry.test.ts \
+            tests/institution-data-layers.test.ts
+          npm run lint
+          npm run test:unit
+          npm run test:crawler
+          npx tsc --noEmit
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+
+      - name: Commit consumer migration and remove one-time workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            lib/channel-updates.ts \
+            app/institutions/page.tsx \
+            README.md \
+            public/data/institution_entities.json \
+            public/data/institution_events.json \
+            public/data/institution_equity_relationships.json
+          git rm -f .github/workflows/patch-institution-data-layer-consumers-once.yml
+          git commit -m "feat: consume independent institution data layers"
+          git pull --rebase origin feat/institution-auditable-data-layers
+          git push origin HEAD:feat/institution-auditable-data-layers
