@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 try:
-    from .normalize_venture_profiles import normalize_payload
+    from .normalize_venture_publication import normalize_publication_payload
     from .stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
     from .stabilize_venture_research_evidence import (
         ARTICLE_PATH,
@@ -19,7 +19,7 @@ try:
         stabilize_evidence_snapshot,
     )
 except ImportError:
-    from normalize_venture_profiles import normalize_payload
+    from normalize_venture_publication import normalize_publication_payload
     from stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
     from stabilize_venture_research_evidence import (
         ARTICLE_PATH,
@@ -119,12 +119,12 @@ def stabilize_publication_snapshot(
     *,
     max_passes: int = 8,
     evidence_stabilizer: EvidenceStabilizer = stabilize_evidence_snapshot,
-    normalizer: Normalizer = normalize_payload,
+    normalizer: Normalizer = normalize_publication_payload,
     terminal_stabilizer: TerminalStabilizer = stabilize_terminal_snapshot,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     """Return a snapshot unchanged by every deterministic publication gate.
 
-    Evidence alignment, cross-entity normalization, and terminal structural /
+    Evidence alignment, publication-aware normalization, and terminal structural /
     entity-semantic cleanup are deterministic in isolation. One layer can still
     expose fields that another layer subsequently rewrites, so the full sequence
     is repeated until every layer individually leaves the same candidate
