@@ -1,6 +1,7 @@
 import type { ChannelUpdateItem } from "./channel-updates";
 
 export const ALL_CHANNEL_UPDATE_KEYWORDS = "全部";
+export const ALL_CHANNEL_UPDATE_CLASSIFICATIONS = "全部分类";
 
 export type ChannelUpdateSortOrder = "newest" | "oldest";
 
@@ -47,14 +48,12 @@ export function countChannelUpdatesFirstSeenForSnapshotDay(
   ).length;
 }
 
-export function collectChannelUpdateKeywords(
-  items: ChannelUpdateItem[],
-): ChannelUpdateKeywordOption[] {
+function collectOptions(valuesByItem: string[][]): ChannelUpdateKeywordOption[] {
   const counts = new Map<string, { keyword: string; count: number }>();
 
-  for (const item of items) {
+  for (const values of valuesByItem) {
     const seenForItem = new Set<string>();
-    for (const rawKeyword of item.keywords) {
+    for (const rawKeyword of values) {
       const keyword = rawKeyword.trim();
       const normalized = normalizeKeyword(keyword);
       if (!normalized || seenForItem.has(normalized)) continue;
@@ -73,24 +72,45 @@ export function collectChannelUpdateKeywords(
   );
 }
 
+export function collectChannelUpdateKeywords(
+  items: ChannelUpdateItem[],
+): ChannelUpdateKeywordOption[] {
+  return collectOptions(items.map((item) => item.keywords));
+}
+
+export function collectChannelUpdateClassifications(
+  items: ChannelUpdateItem[],
+): ChannelUpdateKeywordOption[] {
+  return collectOptions(items.map((item) => item.classifications ?? []));
+}
+
 export function filterAndSortChannelUpdates({
   items,
   keyword,
+  classification = ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
   sortOrder,
 }: {
   items: ChannelUpdateItem[];
   keyword: string;
+  classification?: string;
   sortOrder: ChannelUpdateSortOrder;
 }) {
   const normalizedKeyword = normalizeKeyword(keyword);
-  const filtered =
-    keyword === ALL_CHANNEL_UPDATE_KEYWORDS
-      ? [...items]
-      : items.filter((item) =>
-          item.keywords.some(
-            (itemKeyword) => normalizeKeyword(itemKeyword) === normalizedKeyword,
-          ),
-        );
+  const normalizedClassification = normalizeKeyword(classification);
+  const filtered = items.filter((item) => {
+    const keywordMatches =
+      keyword === ALL_CHANNEL_UPDATE_KEYWORDS ||
+      item.keywords.some(
+        (itemKeyword) => normalizeKeyword(itemKeyword) === normalizedKeyword,
+      );
+    const classificationMatches =
+      classification === ALL_CHANNEL_UPDATE_CLASSIFICATIONS ||
+      (item.classifications ?? []).some(
+        (itemClassification) =>
+          normalizeKeyword(itemClassification) === normalizedClassification,
+      );
+    return keywordMatches && classificationMatches;
+  });
 
   return filtered.sort((left, right) => {
     const dateComparison =
