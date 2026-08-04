@@ -2,8 +2,12 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
+  ALL_CHANNEL_UPDATE_KEYWORDS,
+  collectChannelUpdateClassifications,
   countChannelUpdatesFirstSeenForSnapshotDay,
   countChannelUpdatesForSnapshotDay,
+  filterAndSortChannelUpdates,
 } from "../lib/channel-update-filter";
 import type { ChannelUpdateItem } from "../lib/channel-updates";
 
@@ -60,4 +64,38 @@ test("missing and invalid snapshot dates return zero", () => {
   const items = [item("sample", "2026-08-04", "2026-08-04T01:00:00Z", false)];
   assert.equal(countChannelUpdatesFirstSeenForSnapshotDay(items, ""), 0);
   assert.equal(countChannelUpdatesForSnapshotDay(items, "not-a-date"), 0);
+});
+
+test("source and channel classifications remain independent from event labels", () => {
+  const official = {
+    ...item("official", "2026-08-04"),
+    classifications: ["机构动态", "B级来源"],
+  };
+  const media = {
+    ...item("media", "2026-08-03"),
+    classifications: ["资本事件", "C级来源"],
+  };
+  const items = [official, media];
+
+  assert.ok(items.every((entry) => entry.keywords.length === 1));
+  assert.deepEqual(
+    collectChannelUpdateClassifications(items).map((option) => option.keyword),
+    ["B级来源", "C级来源", "机构动态", "资本事件"],
+  );
+
+  const filtered = filterAndSortChannelUpdates({
+    items,
+    keyword: ALL_CHANNEL_UPDATE_KEYWORDS,
+    classification: "B级来源",
+    sortOrder: "newest",
+  });
+  assert.deepEqual(filtered.map((entry) => entry.id), ["official"]);
+
+  const all = filterAndSortChannelUpdates({
+    items,
+    keyword: ALL_CHANNEL_UPDATE_KEYWORDS,
+    classification: ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
+    sortOrder: "newest",
+  });
+  assert.equal(all.length, 2);
 });
