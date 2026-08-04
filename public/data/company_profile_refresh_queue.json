@@ -1,12 +1,671 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-03T14:57:00+00:00",
+  "generatedAt": "2026-08-04T10:38:04+00:00",
   "lookbackDays": 7,
-  "selectionLimit": 10,
-  "pendingCount": 0,
-  "selectedCount": 0,
-  "selectedSlugs": [],
-  "lastProcessedAt": "",
-  "entries": [],
-  "processedEvents": {}
+  "selectionLimit": 3,
+  "pendingCount": 14,
+  "selectedCount": 3,
+  "selectedSlugs": [
+    "deepseek",
+    "minimax",
+    "scale-ai"
+  ],
+  "lastProcessedAt": "2026-08-04T11:30:20+00:00",
+  "entries": [
+    {
+      "companySlug": "deepseek",
+      "companyName": "DeepSeek",
+      "priority": 121,
+      "status": "selected",
+      "eventCount": 3,
+      "sourceCount": 3,
+      "eventTypes": {
+        "技术突破": 1,
+        "产品发布": 2
+      },
+      "newestPublishedAt": "2026-08-04",
+      "reasons": [
+        "产品发布 2 条",
+        "技术突破 1 条",
+        "3 个独立来源"
+      ],
+      "eventFingerprints": [
+        "deepseek:221e5bbcc242312ba6e31a2670b4fbd44f76058b",
+        "deepseek:68db89b514b7b6db943f97e15b51a906028d7a74",
+        "deepseek:c20d070e98c7a4b4cb937cf32825d0b702f38fc1"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "deepseek:221e5bbcc242312ba6e31a2670b4fbd44f76058b",
+          "articleId": "user-source-source-auto-media-thenextweb-com-45cd705bdfd328f8",
+          "title": "DeepSeek’s V4-Flash is the cheapest well-known AI model to run, research firm finds",
+          "eventType": "技术突破",
+          "publishedAt": "2026-08-03",
+          "importance": 85,
+          "priority": 111,
+          "sourceName": "TNW · 风险投资信源",
+          "sourceUrl": "https://thenextweb.com/news/deepseek-v4-flash-cheapest-ai-model-to-run",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "deepseek:68db89b514b7b6db943f97e15b51a906028d7a74",
+          "articleId": "professional-media-technode-97f88f4e6f999563",
+          "title": "DeepSeek-V4-Flash API launches on China’s National Supercomputing Internet",
+          "eventType": "产品发布",
+          "publishedAt": "2026-08-04",
+          "importance": 82,
+          "priority": 104,
+          "sourceName": "TechNode",
+          "sourceUrl": "https://technode.com/2026/08/04/deepseek-v4-flash-api-launches-on-chinas-national-supercomputing-internet",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "deepseek:c20d070e98c7a4b4cb937cf32825d0b702f38fc1",
+          "articleId": "user-source-source-track-zlbbw1-e9696d196f95e01f",
+          "title": "超聚变AI Lab平台上线DeepSeek-V4-Flash正式版",
+          "eventType": "产品发布",
+          "publishedAt": "2026-08-01",
+          "importance": 82,
+          "priority": 98,
+          "sourceName": "钛媒体",
+          "sourceUrl": "https://tmtpost.com/nictation/8088038.html",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "minimax",
+      "companyName": "MiniMax",
+      "priority": 115,
+      "status": "selected",
+      "eventCount": 2,
+      "sourceCount": 1,
+      "eventTypes": {
+        "技术突破": 2
+      },
+      "newestPublishedAt": "2026-08-04",
+      "reasons": [
+        "技术突破 2 条"
+      ],
+      "eventFingerprints": [
+        "minimax:3022b74561cfaf749755333eccf42035b167d982",
+        "minimax:0a5c618627578db6dead1e1849624f762186c8f7"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "minimax:3022b74561cfaf749755333eccf42035b167d982",
+          "articleId": "user-source-source-minimax-7efe141583d86523",
+          "title": "MiniMax M2.7 - 模型自我进化，以技术突破驱动生产力革新",
+          "eventType": "技术突破",
+          "publishedAt": "2026-08-04",
+          "importance": 85,
+          "priority": 113,
+          "sourceName": "MiniMax 官方来源",
+          "sourceUrl": "https://minimaxi.com/models/text/m27",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "minimax:0a5c618627578db6dead1e1849624f762186c8f7",
+          "articleId": "user-source-source-minimax-67fe86f321966d02",
+          "title": "MiniMax H3：打破任务和模态的边界 - MiniMax Research",
+          "eventType": "技术突破",
+          "publishedAt": "2026-07-31",
+          "importance": 85,
+          "priority": 105,
+          "sourceName": "MiniMax 官方来源",
+          "sourceUrl": "https://minimaxi.com/blog/minimax-h3",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "scale-ai",
+      "companyName": "Scale AI",
+      "priority": 115,
+      "status": "selected",
+      "eventCount": 2,
+      "sourceCount": 1,
+      "eventTypes": {
+        "技术突破": 1,
+        "商业进展": 1
+      },
+      "newestPublishedAt": "2026-08-04",
+      "reasons": [
+        "技术突破 1 条",
+        "商业进展 1 条"
+      ],
+      "eventFingerprints": [
+        "scale-ai:e3f1b2b31d01121b07699ab147f2302caf887ed7",
+        "scale-ai:71dd5ae4ef3273dad142ce67cca1bf0b42ece6d8"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "scale-ai:e3f1b2b31d01121b07699ab147f2302caf887ed7",
+          "articleId": "user-source-source-scale-ai-830511cf032b2562",
+          "title": "AI Model Leaderboards & Benchmarks",
+          "eventType": "技术突破",
+          "publishedAt": "2026-08-04",
+          "importance": 85,
+          "priority": 113,
+          "sourceName": "Scale AI 官方来源",
+          "sourceUrl": "https://labs.scale.com/leaderboard",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "scale-ai:71dd5ae4ef3273dad142ce67cca1bf0b42ece6d8",
+          "articleId": "user-source-source-scale-ai-c0aaee3b81f7729f",
+          "title": "Customer Success Story: TIME | Scale AI | Scale AI",
+          "eventType": "商业进展",
+          "publishedAt": "2026-07-30",
+          "importance": 84,
+          "priority": 82,
+          "sourceName": "Scale AI 官方来源",
+          "sourceUrl": "https://scale.com/customers/time",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "harvey",
+      "companyName": "Harvey",
+      "priority": 113,
+      "status": "pending",
+      "eventCount": 2,
+      "sourceCount": 1,
+      "eventTypes": {
+        "技术突破": 2
+      },
+      "newestPublishedAt": "2026-08-03",
+      "reasons": [
+        "技术突破 2 条"
+      ],
+      "eventFingerprints": [
+        "harvey:570263b9737f7c991d050116815b40549c028607",
+        "harvey:126406b894af5c6c5e6e8ebd6ade1a0724c1137b"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "harvey:570263b9737f7c991d050116815b40549c028607",
+          "articleId": "user-source-source-harvey-61495fd82bdab1d9",
+          "title": "Analytics, Benchmarking, and Intelligent Recommendations for Legal AI | Harvey Command Center",
+          "eventType": "技术突破",
+          "publishedAt": "2026-08-03",
+          "importance": 85,
+          "priority": 111,
+          "sourceName": "Harvey 官方来源",
+          "sourceUrl": "https://harvey.ai/en-US/command-center",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "harvey:126406b894af5c6c5e6e8ebd6ade1a0724c1137b",
+          "articleId": "user-source-source-harvey-f76cdefa9f533d54",
+          "title": "Harvey Research",
+          "eventType": "技术突破",
+          "publishedAt": "2026-08-03",
+          "importance": 85,
+          "priority": 111,
+          "sourceName": "Harvey 官方来源",
+          "sourceUrl": "https://harvey.ai/en-US/research",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "svlot",
+      "companyName": "蜂巢能源",
+      "priority": 111,
+      "status": "pending",
+      "eventCount": 1,
+      "sourceCount": 1,
+      "eventTypes": {
+        "技术突破": 1
+      },
+      "newestPublishedAt": "2026-08-03",
+      "reasons": [
+        "技术突破 1 条"
+      ],
+      "eventFingerprints": [
+        "svlot:3ba436d7fbb7e52e55d38196ceddca4230e95d22"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "svlot:3ba436d7fbb7e52e55d38196ceddca4230e95d22",
+          "articleId": "user-source-source-track-obfl4u-e355094f5b127316",
+          "title": "蜂巢能源荣获2026高工储能“AIDC储能TOP标杆”大奖",
+          "eventType": "技术突破",
+          "publishedAt": "2026-08-03",
+          "importance": 85,
+          "priority": 111,
+          "sourceName": "蜂巢能源 官方来源",
+          "sourceUrl": "https://svolt.cn/news/252",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "anthropic",
+      "companyName": "Anthropic",
+      "priority": 110,
+      "status": "pending",
+      "eventCount": 3,
+      "sourceCount": 2,
+      "eventTypes": {
+        "技术突破": 1,
+        "产品发布": 1,
+        "商业进展": 1
+      },
+      "newestPublishedAt": "2026-07-30",
+      "reasons": [
+        "技术突破 1 条",
+        "产品发布 1 条",
+        "商业进展 1 条",
+        "2 个独立来源"
+      ],
+      "eventFingerprints": [
+        "anthropic:353a6e9688c3623eda6d4d41d0b267b1abd39475",
+        "anthropic:517b77dd8a4ca47895c494816f48d84a4894eab1",
+        "anthropic:300f04f00bdcf28bb1647c9004bf7fa0c57b7e5b"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "anthropic:353a6e9688c3623eda6d4d41d0b267b1abd39475",
+          "articleId": "anthropic-26b4e01c469da5de",
+          "title": "Supporting ambitious external research through the Anthropic Economic Futures Research Fund",
+          "eventType": "技术突破",
+          "publishedAt": "2026-07-30",
+          "importance": 85,
+          "priority": 103,
+          "sourceName": "官方网站",
+          "sourceUrl": "https://www.anthropic.com/news/economic-futures-research-fund-agenda",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "anthropic:517b77dd8a4ca47895c494816f48d84a4894eab1",
+          "articleId": "anthropic-c34a327604b5be4a",
+          "title": "Introducing Claude Opus 5",
+          "eventType": "产品发布",
+          "publishedAt": "2026-07-30",
+          "importance": 82,
+          "priority": 94,
+          "sourceName": "Anthropic 官方来源",
+          "sourceUrl": "https://www.anthropic.com/news/claude-opus-5",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "anthropic:300f04f00bdcf28bb1647c9004bf7fa0c57b7e5b",
+          "articleId": "anthropic-7b68f4f0be7a0fcc",
+          "title": "Expanding our partnership with Cognizant",
+          "eventType": "商业进展",
+          "publishedAt": "2026-07-30",
+          "importance": 84,
+          "priority": 82,
+          "sourceName": "官方网站",
+          "sourceUrl": "https://www.anthropic.com/news/cognizant-anthropic",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "recursion",
+      "companyName": "Recursion Pharmaceuticals",
+      "priority": 107,
+      "status": "pending",
+      "eventCount": 2,
+      "sourceCount": 1,
+      "eventTypes": {
+        "技术突破": 1,
+        "财报": 1
+      },
+      "newestPublishedAt": "2026-07-31",
+      "reasons": [
+        "技术突破 1 条",
+        "财报 1 条"
+      ],
+      "eventFingerprints": [
+        "recursion:a0c209cb3a186e328d876ce3515a9b5aaedf5322",
+        "recursion:046895f37d8fc4732ea616b72f9d426cb7c20947"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "recursion:a0c209cb3a186e328d876ce3515a9b5aaedf5322",
+          "articleId": "user-source-source-auto-media-ir-recursion-com-86a5643c075af30e",
+          "title": "Recursion Reports Grant of Inducement Awards as Permitted by the Nasdaq Listing Rules | Recursion Pharmaceuticals, Inc.",
+          "eventType": "技术突破",
+          "publishedAt": "2026-07-31",
+          "importance": 85,
+          "priority": 105,
+          "sourceName": "Recursion Pharmaceuticals 官方来源 · 生物科技信源",
+          "sourceUrl": "https://ir.recursion.com/news-releases/news-release-details/recursion-reports-grant-inducement-awards-permitted-nasdaq-1",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "recursion:046895f37d8fc4732ea616b72f9d426cb7c20947",
+          "articleId": "user-source-source-auto-media-ir-recursion-com-46be8e5059aa5da1",
+          "title": "Recursion to Report Second Quarter 2026 Business Updates and Financial Results on August 5th | Recursion Pharmaceuticals, Inc.",
+          "eventType": "财报",
+          "publishedAt": "2026-07-29",
+          "importance": 84,
+          "priority": 98,
+          "sourceName": "Recursion Pharmaceuticals 官方来源 · 生物科技信源",
+          "sourceUrl": "https://ir.recursion.com/news-releases/news-release-details/recursion-report-second-quarter-2026-business-updates-and",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "cerebras",
+      "companyName": "Cerebras Systems",
+      "priority": 107,
+      "status": "pending",
+      "eventCount": 2,
+      "sourceCount": 2,
+      "eventTypes": {
+        "产品发布": 2
+      },
+      "newestPublishedAt": "2026-08-03",
+      "reasons": [
+        "产品发布 2 条",
+        "2 个独立来源"
+      ],
+      "eventFingerprints": [
+        "cerebras:46af7348c8f2ff07ebf0d3083969e73e3827c17f",
+        "cerebras:ee8fa7033f0efdca1a366ea706624f78fb139a73"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "cerebras:46af7348c8f2ff07ebf0d3083969e73e3827c17f",
+          "articleId": "user-source-source-cerebras-systems-2139142b9a1c8e73",
+          "title": "AMD and Cerebras Launch AI Inference Solution",
+          "eventType": "产品发布",
+          "publishedAt": "2026-08-03",
+          "importance": 82,
+          "priority": 102,
+          "sourceName": "Cerebras Systems 官方来源",
+          "sourceUrl": "https://cerebras.ai/press-release/amd-and-cerebras-announce-industry-leading-ultra-low-latency-and-high-throughput-ai-inference",
+          "sourceLevel": "媒体报道"
+        },
+        {
+          "fingerprint": "cerebras:ee8fa7033f0efdca1a366ea706624f78fb139a73",
+          "articleId": "official-cerebras-04ccf492e1fd6805",
+          "title": "AMD and Cerebras Launch AI Inference Solution",
+          "eventType": "产品发布",
+          "publishedAt": "2026-08-03",
+          "importance": 82,
+          "priority": 102,
+          "sourceName": "官方网站",
+          "sourceUrl": "https://www.cerebras.ai/press-release/amd-and-cerebras-announce-industry-leading-ultra-low-latency-and-high-throughput-ai-inference",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "bgi-genomics",
+      "companyName": "华大基因",
+      "priority": 102,
+      "status": "pending",
+      "eventCount": 1,
+      "sourceCount": 1,
+      "eventTypes": {
+        "产品发布": 1
+      },
+      "newestPublishedAt": "2026-08-03",
+      "reasons": [
+        "产品发布 1 条"
+      ],
+      "eventFingerprints": [
+        "bgi-genomics:e4fded56cc356b594ffeaf1eb1b80e90f2e6cce9"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "bgi-genomics:e4fded56cc356b594ffeaf1eb1b80e90f2e6cce9",
+          "articleId": "user-source-source-track-1thijny-c35a908f8e8b8793",
+          "title": "全新推出！华大长短读长联合检测方案，定义复杂变异精准解析新标准",
+          "eventType": "产品发布",
+          "publishedAt": "2026-08-03",
+          "importance": 82,
+          "priority": 102,
+          "sourceName": "华大基因 官方来源",
+          "sourceUrl": "https://www.bgi.com/news/2026072701",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "commonwealth-fusion",
+      "companyName": "Commonwealth Fusion Systems",
+      "priority": 100,
+      "status": "pending",
+      "eventCount": 1,
+      "sourceCount": 1,
+      "eventTypes": {
+        "财报": 1
+      },
+      "newestPublishedAt": "2026-07-31",
+      "reasons": [
+        "财报 1 条"
+      ],
+      "eventFingerprints": [
+        "commonwealth-fusion:0c7d641080e5f378026ffa629df6c3790ebbd078"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "commonwealth-fusion:0c7d641080e5f378026ffa629df6c3790ebbd078",
+          "articleId": "official-commonwealth-fusion-ded54885a80d1d16",
+          "title": "Commonwealth Fusion Systems Builds on Learnings From SPARC to Publish Five Peer-Reviewed Papers Validating the Physics of the ARC Fusion Power Plant",
+          "eventType": "财报",
+          "publishedAt": "2026-07-31",
+          "importance": 84,
+          "priority": 100,
+          "sourceName": "官方网站",
+          "sourceUrl": "https://cfs.energy/news-and-media/commonwealth-fusion-systems-builds-on-learnings-from-sparc-to-publish-five-peer-reviewed-papers-validating-the-physics-of-the-arc-fusion-power-plant",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "xai",
+      "companyName": "xAI",
+      "priority": 94,
+      "status": "pending",
+      "eventCount": 1,
+      "sourceCount": 1,
+      "eventTypes": {
+        "产品发布": 1
+      },
+      "newestPublishedAt": "2026-07-29",
+      "reasons": [
+        "产品发布 1 条"
+      ],
+      "eventFingerprints": [
+        "xai:466573300e5c077edb7a8910c0a1eaf3cbebe1a0"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "xai:466573300e5c077edb7a8910c0a1eaf3cbebe1a0",
+          "articleId": "xai-a4ea106eb8577dfb",
+          "title": "Introducing Grok Voice Think Fast 2.0",
+          "eventType": "产品发布",
+          "publishedAt": "2026-07-29",
+          "importance": 82,
+          "priority": 94,
+          "sourceName": "xAI 官方来源",
+          "sourceUrl": "https://x.ai/news/grok-voice-think-fast-2",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "rocket-lab",
+      "companyName": "Rocket Lab",
+      "priority": 94,
+      "status": "pending",
+      "eventCount": 1,
+      "sourceCount": 1,
+      "eventTypes": {
+        "产品发布": 1
+      },
+      "newestPublishedAt": "2026-07-30",
+      "reasons": [
+        "产品发布 1 条"
+      ],
+      "eventFingerprints": [
+        "rocket-lab:98a50aed62457ce18683496ab580d455655675ac"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "rocket-lab:98a50aed62457ce18683496ab580d455655675ac",
+          "articleId": "rocket-lab-6fdf2ddb511009e5",
+          "title": "Rocket Lab Secures Multi-Launch Deal with iQPS for Three Dedicated Missions | Thu, 07/30/2026 - 06:00",
+          "eventType": "产品发布",
+          "publishedAt": "2026-07-30",
+          "importance": 82,
+          "priority": 94,
+          "sourceName": "Rocket Lab 官方来源",
+          "sourceUrl": "https://investors.rocketlabcorp.com/news-releases/news-release-details/rocket-lab-secures-multi-launch-deal-iqps-three-dedicated",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "xtalpi",
+      "companyName": "晶泰科技",
+      "priority": 94,
+      "status": "pending",
+      "eventCount": 1,
+      "sourceCount": 1,
+      "eventTypes": {
+        "产品发布": 1
+      },
+      "newestPublishedAt": "2026-07-30",
+      "reasons": [
+        "产品发布 1 条"
+      ],
+      "eventFingerprints": [
+        "xtalpi:73addb878a0fde5262f0c9f8749a80fc60a62e71"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "xtalpi:73addb878a0fde5262f0c9f8749a80fc60a62e71",
+          "articleId": "user-source-source-track-1ihs8gk-b0225208f0686fcd",
+          "title": "跨越数字鸿沟，迈向物理智能：晶泰科技发布XtalPi Science，发起“科学智能开放生态联盟”",
+          "eventType": "产品发布",
+          "publishedAt": "2026-07-30",
+          "importance": 82,
+          "priority": 94,
+          "sourceName": "晶泰科技 官方来源",
+          "sourceUrl": "https://www.xtalpi.com/%e8%b7%a8%e8%b6%8a%e6%95%b0%e5%ad%97%e9%b8%bf%e6%b2%9f%ef%bc%8c%e8%bf%88%e5%90%91%e7%89%a9%e7%90%86%e6%99%ba%e8%83%bd%ef%bc%9a%e6%99%b6%e6%b3%b0%e7%a7%91%e6%8a%80%e5%8f%91%e5%b8%83xtalpi-science",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    },
+    {
+      "companySlug": "weride",
+      "companyName": "文远知行",
+      "priority": 90,
+      "status": "pending",
+      "eventCount": 1,
+      "sourceCount": 1,
+      "eventTypes": {
+        "商业进展": 1
+      },
+      "newestPublishedAt": "2026-08-03",
+      "reasons": [
+        "商业进展 1 条"
+      ],
+      "eventFingerprints": [
+        "weride:6e0bfa40f97cb60d60e633291e38db678aa24847"
+      ],
+      "evidence": [
+        {
+          "fingerprint": "weride:6e0bfa40f97cb60d60e633291e38db678aa24847",
+          "articleId": "weride-f9d33dabd20e2290",
+          "title": "WeRide and GreenMobility Announce Strategic Partnership to Advance Level 4 Autonomous Mobility in Denmark, Marking WeRide’s Entry into the Nordic Region | WeRide Inc.",
+          "eventType": "商业进展",
+          "publishedAt": "2026-08-03",
+          "importance": 84,
+          "priority": 90,
+          "sourceName": "文远知行 官方来源",
+          "sourceUrl": "https://ir.weride.ai/news-releases/news-release-details/weride-and-greenmobility-announce-strategic-partnership-advance",
+          "sourceLevel": "媒体报道"
+        }
+      ]
+    }
+  ],
+  "processedEvents": {
+    "openai:071bf5e0ff0da4d525a9df8d16a6e6f5bbaae286": {
+      "companySlug": "openai",
+      "articleId": "user-source-source-track-zlbbw1-ddaeec1d34c33738",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:c70e40e28f9dd780e2bb0eaf4891be5794f046af": {
+      "companySlug": "openai",
+      "articleId": "user-source-source-track-e58ig-43aebc8f354a60c4",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:189b3d7dac6f7f5358ba0743a38964f4570c61ba": {
+      "companySlug": "openai",
+      "articleId": "user-source-source-engadget-6c3188ce6f34fa2b",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:cf5ffd828664fe949f0ac08ae5550419bdabf658": {
+      "companySlug": "openai",
+      "articleId": "user-source-source-openai-839f7a51d7b587ae",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:c5632ae12eb556c108acca1113464f6bf53e628f": {
+      "companySlug": "openai",
+      "articleId": "user-source-source-openai-078f0d540d88f110",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:cce824414f7f724e0b8c95addaa37f6dd5dcfc63": {
+      "companySlug": "openai",
+      "articleId": "",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:1e8f9346dc3afcb073aab35d3e501ecf3a55eb94": {
+      "companySlug": "openai",
+      "articleId": "",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:a0cc3b887113ae2407a89f84a9fd75b33b9f201a": {
+      "companySlug": "openai",
+      "articleId": "",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "openai:d919a652537c61b0832ccf4c54845986d33eb40b": {
+      "companySlug": "openai",
+      "articleId": "",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "moonshot-ai:51780c0e5d6ce96262fd5b61fd8fcf7d4a748aae": {
+      "companySlug": "moonshot-ai",
+      "articleId": "user-source-source-track-rcvvao-2-3d1c9745ccc688ed",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "moonshot-ai:12d1c8e04c6c01b99fd4d7a6294eb8e035d021d8": {
+      "companySlug": "moonshot-ai",
+      "articleId": "user-source-source-tom-s-hardware-142b11abb4f31a2e",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "moonshot-ai:d588beb95b60c7e31f16751071daf33219aba98d": {
+      "companySlug": "moonshot-ai",
+      "articleId": "user-source-source-auto-media-thenextweb-com-2feddc0c4230710a",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "ionq:c7d25c6374050a7a1767a7034ec7b091c4947d90": {
+      "companySlug": "ionq",
+      "articleId": "ionq-4c04c6fc43e7d969",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "ionq:f25758687a0a801013e2fc828eb93b8d0aa601a8": {
+      "companySlug": "ionq",
+      "articleId": "ionq-53b35f6e7969e34f",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    },
+    "ionq:3d0fd864e9bbf3ea83ac90c2cda0f62685305244": {
+      "companySlug": "ionq",
+      "articleId": "ionq-94a24b6211d7e94c",
+      "processedAt": "2026-08-04T11:30:20+00:00"
+    }
+  }
 }
