@@ -42,36 +42,70 @@ jobs:
               target.write_text(text.replace(old, new, 1), encoding='utf-8')
               print(f'{label}: applied')
 
+          def insert_after(path: str, anchor: str, additions: list[str], label: str) -> None:
+              target = Path(path)
+              lines = target.read_text(encoding='utf-8').splitlines()
+              if all(item in lines for item in additions):
+                  print(f'{label}: already applied')
+                  return
+              try:
+                  index = lines.index(anchor)
+              except ValueError as exc:
+                  raise SystemExit(f'{label}: anchor not found: {anchor!r}') from exc
+              lines[index + 1:index + 1] = [item for item in additions if item not in lines]
+              target.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+              print(f'{label}: applied')
+
           replace_once(
               'tools/update_source_health.py',
               '        productive = accepted > 0 and state.casefold() in {"ok", "partial"}\n',
               '        productive = (\n            accepted > 0\n            and state.casefold() in {"ok", "partial"}\n            and not bool(raw_status.get("retainedPrevious"))\n        )\n',
               'retained snapshot productivity guard',
           )
-          replace_once(
+
+          insert_after(
               '.github/workflows/scheduled-sync.yml',
-              '      - tools/source_health_runtime.py\n',
-              '      - tools/source_health_runtime.py\n      - tools/source_performance.py\n      - tools/source_quality_reviews.py\n      - tools/source_performance_review.py\n',
+              '      - tools/source_health_runtime.py',
+              [
+                  '      - tools/source_performance.py',
+                  '      - tools/source_quality_reviews.py',
+                  '      - tools/source_performance_review.py',
+              ],
               'scheduled sync source-performance paths',
           )
-          replace_once(
+          insert_after(
               '.github/workflows/scheduled-sync.yml',
-              '      - config/source_health_policy.json\n',
-              '      - config/source_health_policy.json\n      - config/source_quality_reviews.json\n      - .github/workflows/source-performance-review.yml\n',
+              '      - config/source_health_policy.json',
+              [
+                  '      - config/source_quality_reviews.json',
+                  '      - .github/workflows/source-performance-review.yml',
+              ],
               'scheduled sync review paths',
           )
-          replace_once(
+          insert_after(
               '.github/workflows/scheduled-sync.yml',
-              '            tools/source_health_runtime.py \\\n',
-              '            tools/source_health_runtime.py \\\n            tools/source_performance.py \\\n            tools/source_quality_reviews.py \\\n            tools/source_performance_review.py \\\n',
+              '            tools/source_health_runtime.py \\',
+              [
+                  '            tools/source_performance.py \\',
+                  '            tools/source_quality_reviews.py \\',
+                  '            tools/source_performance_review.py \\',
+              ],
               'scheduled sync source-performance compilation',
           )
-          replace_once(
+          insert_after(
               '.github/workflows/scheduled-sync.yml',
-              '            tests.test_source_health_runtime \\\n',
-              '            tests.test_source_health_runtime \\\n            tests.test_source_performance \\\n            tests.test_source_quality_reviews \\\n            tests.test_source_performance_review \\\n            tests.test_source_health_performance \\\n            tests.test_source_performance_workflow \\\n            tests.test_source_performance_review_cli \\\n',
+              '            tests.test_source_health_runtime \\',
+              [
+                  '            tests.test_source_performance \\',
+                  '            tests.test_source_quality_reviews \\',
+                  '            tests.test_source_performance_review \\',
+                  '            tests.test_source_health_performance \\',
+                  '            tests.test_source_performance_workflow \\',
+                  '            tests.test_source_performance_review_cli \\',
+              ],
               'scheduled sync source-performance tests',
           )
+
           replace_once(
               'README.md',
               '- `.github/workflows/star-market-investor-refresh.yml` 每周一 03:10（台北时间）刷新科创板招股说明书自动抽取目录；\n',
@@ -88,6 +122,13 @@ jobs:
                   raise SystemExit('retained productivity test marker not found')
               test_path.write_text(text.replace(marker, test_block + marker, 1), encoding='utf-8')
           PY
+
+      - name: Validate patched files
+        run: |
+          python -m py_compile tools/update_source_health.py tools/source_performance.py
+          python -m unittest \
+            tests.test_source_health_performance \
+            tests.test_source_performance_workflow
 
       - name: Commit fixes and remove one-time workflow
         run: |
