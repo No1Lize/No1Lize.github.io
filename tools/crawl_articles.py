@@ -35,6 +35,19 @@ from email.utils import parsedate_to_datetime
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable, Sequence
+
+try:
+    from .article_observation import (
+        apply_incoming_observations,
+        prepare_existing_articles,
+        validate_observation_metadata,
+    )
+except ImportError:
+    from article_observation import (
+        apply_incoming_observations,
+        prepare_existing_articles,
+        validate_observation_metadata,
+    )
 from urllib.error import HTTPError, URLError
 from urllib.parse import parse_qsl, quote_plus, urlencode, urljoin, urlsplit, urlunsplit
 from urllib.request import Request, urlopen
@@ -1873,6 +1886,7 @@ def validate_article(article: dict[str, Any]) -> list[str]:
         errors.append("invalid:source-level")
     if not (0 <= int(article.get("importance", -1)) <= 100):
         errors.append("invalid:importance")
+    errors.extend(validate_observation_metadata(article))
     return errors
 
 
@@ -2050,6 +2064,10 @@ def main() -> int:
 
     config = load_config()
     payload = load_existing_payload()
+    observation_at = datetime.now(UTC).replace(microsecond=0).isoformat()
+    existing_articles = prepare_existing_articles(
+        payload.get("articles", []), payload.get("generatedAt")
+    )
     if args.validate_only:
         quality = evaluate_quality(
             payload.get("articles", []),
@@ -2098,10 +2116,13 @@ def main() -> int:
                 errors.append(f"{group}: {type(exc).__name__}: {exc}")
 
     if args.offline:
-        merged = merge_articles([], payload.get("articles", []))
+        merged = merge_articles([], existing_articles)
     else:
+        incoming = apply_incoming_observations(
+            existing_articles, incoming, observation_at
+        )
         merged = replace_source_batches(
-            payload.get("articles", []), incoming, new_statuses
+            existing_articles, incoming, new_statuses
         )
     merged = repair_media_company_attribution(merged)
     source_status = merge_source_status(

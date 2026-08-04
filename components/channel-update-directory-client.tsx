@@ -13,6 +13,7 @@ import { ChannelDocumentImport } from "@/components/channel-document-import";
 import {
   ALL_CHANNEL_UPDATE_KEYWORDS,
   collectChannelUpdateKeywords,
+  countChannelUpdatesFirstSeenForSnapshotDay,
   countChannelUpdatesForSnapshotDay,
   filterAndSortChannelUpdates,
   type ChannelUpdateSortOrder,
@@ -80,6 +81,10 @@ export function ChannelUpdateDirectoryClient({
         sortOrder,
       }),
     [allItems, keyword, sortOrder],
+  );
+  const firstSeenItemCount = useMemo(
+    () => countChannelUpdatesFirstSeenForSnapshotDay(allItems, directory.generatedAt),
+    [allItems, directory.generatedAt],
   );
   const snapshotDayItemCount = useMemo(
     () => countChannelUpdatesForSnapshotDay(allItems, directory.generatedAt),
@@ -164,8 +169,8 @@ export function ChannelUpdateDirectoryClient({
         <div className={styles.snapshot}>
           <span>滚动总库</span>
           <strong>{allItems.length}</strong>
-          <small title="按来源事件日期与当前数据快照日期相同计算">
-            快照日事件 {snapshotDayItemCount} 条
+          <small title="首次收录按精确 firstSeenAt 计算；快照日事件按来源事件日期计算">
+            今日首次收录 {firstSeenItemCount} · 快照日事件 {snapshotDayItemCount}
           </small>
         </div>
       </div>

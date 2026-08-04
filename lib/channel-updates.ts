@@ -30,6 +30,10 @@ export type ChannelUpdateItem = {
   datePrecision: ChannelUpdateDatePrecision;
   sortAt: string;
   keywords: string[];
+  firstSeenAt?: string;
+  firstSeenEstimated?: boolean;
+  lastVerifiedAt?: string;
+  lastVerifiedEstimated?: boolean;
 };
 
 export type ChannelUpdateDirectory = {
@@ -57,6 +61,10 @@ type ArticleRecord = {
   mentionedPeople?: string[];
   publishedAt: string;
   importance?: number;
+  firstSeenAt?: string;
+  firstSeenEstimated?: boolean;
+  lastVerifiedAt?: string;
+  lastVerifiedEstimated?: boolean;
   source: {
     name: string;
     url: string;
@@ -182,6 +190,10 @@ function articleToUpdate(
     datePrecision: normalizedDate.precision,
     sortAt: normalizedDate.sortAt,
     keywords: uniqueKeywords([article.type, ...additionalKeywords]),
+    firstSeenAt: article.firstSeenAt,
+    firstSeenEstimated: article.firstSeenEstimated,
+    lastVerifiedAt: article.lastVerifiedAt,
+    lastVerifiedEstimated: article.lastVerifiedEstimated,
   };
 }
 
