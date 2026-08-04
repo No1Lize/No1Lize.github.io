@@ -21,6 +21,7 @@ class SourceHealthPerformanceIntegrationTest(unittest.TestCase):
                 "candidateCount": 5,
                 "publishedCount": 4,
                 "duplicateCount": 1,
+                "droppedCount": 0,
                 "withheldCount": 0,
             }
             state, _ = update_health(
@@ -50,6 +51,7 @@ class SourceHealthPerformanceIntegrationTest(unittest.TestCase):
         self.assertEqual(performance["productiveRate"], 1.0)
         self.assertEqual(performance["validYieldRate"], 0.5)
         self.assertEqual(performance["duplicateRate"], 0.2)
+        self.assertEqual(performance["dropRate"], 0.0)
         self.assertEqual(performance["newArticles"], 4)
         self.assertEqual(performance["averageDiscoveryLagDays"], 1.0)
         self.assertEqual(performance["reviewState"], "retain")
@@ -81,6 +83,7 @@ class SourceHealthPerformanceIntegrationTest(unittest.TestCase):
                             "candidateCount": 5,
                             "publishedCount": 5,
                             "duplicateCount": 0,
+                            "droppedCount": 0,
                         }
                     ],
                     "articles": [
@@ -98,6 +101,81 @@ class SourceHealthPerformanceIntegrationTest(unittest.TestCase):
         self.assertEqual(performance["manualQuality"]["reviewedRecords"], 20)
         self.assertIn("manual-misattribution", performance["reviewReasons"])
         self.assertEqual(performance["reviewState"], "monitor")
+
+    def test_retained_previous_batch_is_not_counted_as_productive(self) -> None:
+        previous = {
+            "generatedAt": "2026-08-01T00:00:00+00:00",
+            "sources": {
+                "source-a": {
+                    "id": "source-a",
+                    "name": "Source A",
+                    "platform": "专业媒体",
+                    "evidenceGrade": "C",
+                    "collectionState": "active",
+                    "priority": "normal",
+                    "alertActive": False,
+                    "consecutiveFailures": 0,
+                    "firstObservedAt": "2026-07-01T00:00:00+00:00",
+                    "lastProductiveAt": "2026-07-31T00:00:00+00:00",
+                }
+            },
+        }
+        state, _ = update_health(
+            previous,
+            {
+                "sourceStatus": [
+                    {
+                        "id": "source-a",
+                        "name": "Source A",
+                        "platform": "专业媒体",
+                        "status": "partial",
+                        "accepted": 3,
+                        "retainedPrevious": True,
+                    }
+                ],
+                "articles": [
+                    {
+                        "sourceId": "source-a",
+                        "source": {"evidenceGrade": "C"},
+                    }
+                ],
+            },
+            DEFAULT_POLICY,
+            now=datetime(2026, 8, 2, tzinfo=UTC),
+        )
+        entry = state["sources"]["source-a"]
+        self.assertEqual(entry["lastProductiveAt"], "2026-07-31T00:00:00+00:00")
+        self.assertEqual(entry["performance"]["productiveRuns"], 0)
+
+    def test_adaptive_new_accepted_count_drives_productivity(self) -> None:
+        state, _ = update_health(
+            {},
+            {
+                "sourceStatus": [
+                    {
+                        "id": "adaptive",
+                        "name": "Adaptive",
+                        "platform": "专业媒体",
+                        "status": "partial",
+                        "accepted": 12,
+                        "newAccepted": 0,
+                        "retainedPrevious": True,
+                    }
+                ],
+                "articles": [
+                    {
+                        "sourceId": "adaptive",
+                        "source": {"evidenceGrade": "C"},
+                    }
+                ],
+            },
+            DEFAULT_POLICY,
+            now=datetime(2026, 8, 2, tzinfo=UTC),
+        )
+        entry = state["sources"]["adaptive"]
+        self.assertEqual(entry["accepted"], 0)
+        self.assertIsNone(entry["lastProductiveAt"])
+        self.assertEqual(entry["performance"]["productiveRuns"], 0)
 
 
 if __name__ == "__main__":
