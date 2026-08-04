@@ -9,12 +9,14 @@ Metrics are deliberately separated:
 * availabilityRate -- the source endpoint was reachable and parsable;
 * productiveRate -- the run produced at least one accepted record;
 * validYieldRate -- accepted records divided by scanned candidates;
-* duplicateRate -- accepted candidates removed as duplicates/superseded;
+* duplicateRate -- current candidates removed by URL/fingerprint deduplication;
+* dropRate -- unique current candidates omitted for non-duplicate reasons;
 * averageDiscoveryLagDays -- calendar-day lag from publication to first sighting.
 """
 
 from __future__ import annotations
 
+import re
 from collections import defaultdict
 from datetime import UTC, date, datetime
 from typing import Any, Iterable
@@ -129,15 +131,84 @@ def _source_id(record: dict[str, Any]) -> str:
     return str(record.get("sourceId") or record.get("id") or "").strip()
 
 
-def _article_identity(article: dict[str, Any]) -> str:
-    article_id = str(article.get("id") or "").strip()
+def _title_fingerprint(article: dict[str, Any]) -> str:
+    title = re.sub(
+        r"[^\w\u4e00-\u9fff]+",
+        "",
+        str(article.get("title") or "").casefold(),
+    )
+    if not title:
+        return ""
+    company = str(article.get("companySlug") or article.get("company") or "")
+    published_at = str(article.get("publishedAt") or "")
+    return "|".join((company, published_at, title))
+
+
+def _article_keys(article: dict[str, Any]) -> tuple[str, ...]:
+    keys: list[str] = []
     source = article.get("source") if isinstance(article.get("source"), dict) else {}
     url = _normalized_url(source.get("url"))
+    fingerprint = _title_fingerprint(article)
     if url:
-        return f"url:{url}"
-    if article_id:
-        return f"id:{article_id}"
-    return ""
+        keys.append(f"url:{url}")
+    if fingerprint:
+        keys.append(f"fingerprint:{fingerprint}")
+    article_id = str(article.get("id") or "").strip()
+    if not keys and article_id:
+        keys.append(f"id:{article_id}")
+    return tuple(keys)
+
+
+def _current_candidate_groups(
+    incoming: list[dict[str, Any]],
+    statuses: list[dict[str, Any]],
+) -> tuple[dict[str, list[dict[str, Any]]], set[str]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for article in incoming:
+        if not isinstance(article, dict):
+            continue
+        source_id = _source_id(article)
+        if source_id:
+            grouped[source_id].append(article)
+
+    status_by_id = {
+        _source_id(status): status
+        for status in statuses
+        if isinstance(status, dict) and _source_id(status)
+    }
+    selected: dict[str, list[dict[str, Any]]] = {}
+    estimated_ids: set[str] = set()
+    for source_id, group in grouped.items():
+        status = status_by_id.get(source_id, {})
+        if status.get("newAccepted") is None:
+            selected[source_id] = group
+            continue
+        expected = _integer(status.get("newAccepted"))
+        if expected <= 0:
+            selected[source_id] = []
+            continue
+
+        verified_values = [
+            str(article.get("lastVerifiedAt") or "")
+            for article in group
+            if str(article.get("lastVerifiedAt") or "")
+        ]
+        latest_verified = max(verified_values) if verified_values else ""
+        current = [
+            article
+            for article in group
+            if latest_verified
+            and str(article.get("lastVerifiedAt") or "") == latest_verified
+        ]
+        if len(current) >= expected:
+            selected[source_id] = current[:expected]
+        else:
+            # Legacy rows should already have observation metadata. If they do
+            # not, use the bounded expected count and explicitly mark the metric
+            # as estimated rather than treating all retained history as current.
+            selected[source_id] = group[:expected]
+            estimated_ids.add(source_id)
+    return selected, estimated_ids
 
 
 def annotate_publication_metrics(
@@ -147,35 +218,28 @@ def annotate_publication_metrics(
     *,
     withheld_source_ids: Iterable[str] = (),
 ) -> list[dict[str, Any]]:
-    """Annotate mutable source statuses with candidate/publication counts.
+    """Annotate current-run candidate, publication and deduplication counts.
 
-    Quarantined rows are counted as withheld rather than duplicates. A duplicate
-    is an accepted candidate that did not survive URL/fingerprint publication
-    deduplication. The function returns ``statuses`` for convenient composition.
+    Adaptive sources may carry bounded historical rows in ``incoming``. Their
+    ``newAccepted`` count and current ``lastVerifiedAt`` values isolate the
+    current crawl batch. A candidate is a duplicate only when it repeats a URL
+    or crawler title fingerprint, or loses to the same identity from another
+    source. Other unpublished candidates are recorded separately as dropped.
     """
 
     withheld_ids = {str(value) for value in withheld_source_ids if str(value)}
-    raw_counts: dict[str, int] = defaultdict(int)
-    unique_candidates: dict[str, set[str]] = defaultdict(set)
-    for article in incoming:
-        if not isinstance(article, dict):
-            continue
-        source_id = _source_id(article)
-        identity = _article_identity(article)
-        if not source_id:
-            continue
-        raw_counts[source_id] += 1
-        if identity:
-            unique_candidates[source_id].add(identity)
+    current_groups, estimated_ids = _current_candidate_groups(incoming, statuses)
 
-    published_keys: dict[str, set[str]] = defaultdict(set)
+    published_by_source: dict[str, set[str]] = defaultdict(set)
+    published_global: set[str] = set()
     for article in published:
         if not isinstance(article, dict):
             continue
         source_id = _source_id(article)
-        identity = _article_identity(article)
-        if source_id and identity:
-            published_keys[source_id].add(identity)
+        keys = _article_keys(article)
+        if source_id:
+            published_by_source[source_id].update(keys)
+        published_global.update(keys)
 
     for status in statuses:
         if not isinstance(status, dict):
@@ -183,27 +247,53 @@ def annotate_publication_metrics(
         source_id = _source_id(status)
         if not source_id:
             continue
-        candidates = raw_counts.get(source_id, 0)
-        unique_count = len(unique_candidates.get(source_id, set()))
+        candidates = current_groups.get(source_id, [])
+        candidate_count = len(candidates)
+        seen_keys: set[str] = set()
+        unique_candidates: list[tuple[str, ...]] = []
+        intrinsic_duplicates = 0
+        for article in candidates:
+            keys = _article_keys(article)
+            if keys and any(key in seen_keys for key in keys):
+                intrinsic_duplicates += 1
+                continue
+            unique_candidates.append(keys)
+            seen_keys.update(keys)
+
         if source_id in withheld_ids:
-            withheld = candidates
             published_count = 0
             duplicate_count = 0
+            dropped_count = 0
+            withheld_count = candidate_count
         else:
-            withheld = 0
-            published_count = len(
-                unique_candidates.get(source_id, set())
-                & published_keys.get(source_id, set())
-            )
-            duplicate_count = max(0, candidates - published_count)
+            published_count = 0
+            cross_source_duplicates = 0
+            dropped_count = 0
+            same_source_keys = published_by_source.get(source_id, set())
+            for keys in unique_candidates:
+                if keys and any(key in same_source_keys for key in keys):
+                    published_count += 1
+                elif keys and any(key in published_global for key in keys):
+                    cross_source_duplicates += 1
+                else:
+                    dropped_count += 1
+            duplicate_count = intrinsic_duplicates + cross_source_duplicates
+            withheld_count = 0
 
-        status["candidateCount"] = candidates
-        status["uniqueCandidateCount"] = unique_count
+        denominator = candidate_count - withheld_count
+        status["candidateCount"] = candidate_count
+        status["uniqueCandidateCount"] = len(unique_candidates)
         status["publishedCount"] = published_count
         status["duplicateCount"] = duplicate_count
-        status["withheldCount"] = withheld
-        status["publicationRate"] = _ratio(published_count, candidates)
-        status["duplicateRate"] = _ratio(duplicate_count, candidates - withheld)
+        status["droppedCount"] = dropped_count
+        status["withheldCount"] = withheld_count
+        status["publicationRate"] = _ratio(published_count, denominator)
+        status["duplicateRate"] = _ratio(duplicate_count, denominator)
+        status["dropRate"] = _ratio(dropped_count, denominator)
+        if source_id in estimated_ids:
+            status["candidateMetricEstimated"] = True
+        else:
+            status.pop("candidateMetricEstimated", None)
     return statuses
 
 
@@ -266,7 +356,11 @@ def _run_sample(
         return None
     retained = bool(status.get("retainedPrevious"))
     successful = state in {"ok", "partial", "empty"} and not retained
-    accepted = _integer(status.get("accepted"))
+    accepted = _integer(
+        status.get("newAccepted")
+        if status.get("newAccepted") is not None
+        else status.get("accepted")
+    )
     productive = accepted > 0 and state in {"ok", "partial"} and not retained
     article_metric = article_metric or {}
     return {
@@ -281,6 +375,7 @@ def _run_sample(
         "published": _integer(status.get("publishedCount")),
         "duplicates": _integer(status.get("duplicateCount")),
         "withheld": _integer(status.get("withheldCount")),
+        "dropped": _integer(status.get("droppedCount")),
         "newArticles": _integer(article_metric.get("newArticleCount")),
         "lagDayTotal": _integer(article_metric.get("discoveryLagDayTotal")),
         "lagSamples": _integer(article_metric.get("discoveryLagSampleCount")),
@@ -299,6 +394,7 @@ def _aggregate(samples: list[dict[str, Any]]) -> dict[str, Any]:
         "published": sum(_integer(item.get("published")) for item in samples),
         "duplicates": sum(_integer(item.get("duplicates")) for item in samples),
         "withheld": sum(_integer(item.get("withheld")) for item in samples),
+        "dropped": sum(_integer(item.get("dropped")) for item in samples),
         "newArticles": sum(_integer(item.get("newArticles")) for item in samples),
         "lagDayTotal": sum(_integer(item.get("lagDayTotal")) for item in samples),
         "lagSamples": sum(_integer(item.get("lagSamples")) for item in samples),
@@ -311,6 +407,7 @@ def _aggregate(samples: list[dict[str, Any]]) -> dict[str, Any]:
         "validYieldRate": _ratio(totals["accepted"], totals["scanned"]),
         "publicationRate": _ratio(totals["published"], duplicate_denominator),
         "duplicateRate": _ratio(totals["duplicates"], duplicate_denominator),
+        "dropRate": _ratio(totals["dropped"], duplicate_denominator),
         "averageDiscoveryLagDays": _ratio(
             totals["lagDayTotal"], totals["lagSamples"]
         ),
