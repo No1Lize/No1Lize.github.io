@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T15:55:21+00:00",
+  "generatedAt": "2026-08-04T16:07:02+00:00",
   "companyCount": 3,
-  "investorCount": 71,
+  "investorCount": 83,
   "scope": {
     "market": "上海证券交易所科创板",
     "listingRule": "enabled A-share listings with 688xxx ticker",
@@ -30,7 +30,7 @@
       "ticker": "688008",
       "exchange": "上海证券交易所科创板",
       "sector": "半导体",
-      "updatedAt": "2026-08-04T15:54:30+00:00",
+      "updatedAt": "2026-08-04T16:06:04+00:00",
       "status": "ok",
       "prospectus": {
         "title": "首次公开发行股票并在科创板上市招股说明书",
@@ -43,7 +43,7 @@
         "provider": "cninfo-prospectus"
       },
       "issuerInvestorRelations": {},
-      "institutionalInvestorCount": 29,
+      "institutionalInvestorCount": 38,
       "naturalPersonContactsPublished": false,
       "investors": [
         {
@@ -68,9 +68,9 @@
           ]
         },
         {
-          "id": "star-investor-a14fecea71891102bb",
-          "name": "Intel Capital Corporation 成立时间 1998 年 4 月 6 日统一社会信用代码 2880872 经营范围/主营业务投资",
-          "normalizedName": "intelcapitalcorporation成立时间1998年4月6日统一社会信用代码2880872经营范围主营业务投资",
+          "id": "star-investor-a5995aabad4de6a213",
+          "name": "Intel Capital Corporation",
+          "normalizedName": "intelcapitalcorporation",
           "institutional": true,
           "investorType": "其他机构股东",
           "sourcePage": 97,
@@ -80,9 +80,30 @@
           "disclosedName": "Intel Capital",
           "definitionSourcePage": 19,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-a14fecea71891102bb",
+          "reviewKey": "montage-technology:star-investor-a5995aabad4de6a213",
           "preIpoShares": 101683250.0,
           "preIpoOwnershipPct": 10.0,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-093a4a20c1748b8689",
+          "name": "WLT Partners, L.P.",
+          "normalizedName": "wltpartnerslp",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 95,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "3 WLT 87,816,687 8.636 87,816,687 7.773",
+          "nameResolution": "definitions",
+          "disclosedName": "WLT",
+          "definitionSourcePage": 18,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-093a4a20c1748b8689",
+          "preIpoShares": 87816687.0,
+          "preIpoOwnershipPct": 8.636,
           "reviewStatus": "needs_review",
           "reviewReasons": [
             "awaiting-human-review"
@@ -110,9 +131,9 @@
           ]
         },
         {
-          "id": "star-investor-a031d176fb5adab456",
-          "name": "上海理能资产管理有限公司成立时间 2013 年 7 月 16 日统一社会信用代码 [已移除身份证件信息] 经营范围/主营业务资产管理；投资管理",
-          "normalizedName": "上海理能资产管理有限公司成立时间2013年7月16日统一社会信用代码已移除身份证件信息经营范围主营业务资产管理投资管理",
+          "id": "star-investor-0a17f350d068c988ce",
+          "name": "上海理能资产管理有限公司",
+          "normalizedName": "上海理能资产管理有限公司",
           "institutional": true,
           "investorType": "其他机构股东",
           "sourcePage": 95,
@@ -122,7 +143,7 @@
           "disclosedName": "上海临理",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-a031d176fb5adab456",
+          "reviewKey": "montage-technology:star-investor-0a17f350d068c988ce",
           "preIpoShares": 53506750.0,
           "preIpoOwnershipPct": 5.262,
           "reviewStatus": "needs_review",
@@ -152,9 +173,30 @@
           ]
         },
         {
-          "id": "star-investor-f05bfb775a5017e6c3",
-          "name": "嘉兴宏鼎投资管理合伙企业（有限合伙） 成立时间 2015 年 11 月 12 日统一社会信用代码 91330402MA28A27P7T 经营范围/主营业务投资管理",
-          "normalizedName": "嘉兴宏鼎投资管理合伙企业有限合伙成立时间2015年11月12日统一社会信用代码91330402ma28a27p7t经营范围主营业务投资管理",
+          "id": "star-investor-258dac8aee2e43ec8c",
+          "name": "Xinyun Capital Fund I, L.P .",
+          "normalizedName": "xinyuncapitalfundilp",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "14 Xinyun I 44,247,750 4.352 44,247,750 3.916",
+          "nameResolution": "definitions",
+          "disclosedName": "Xinyun I",
+          "definitionSourcePage": 18,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-258dac8aee2e43ec8c",
+          "preIpoShares": 44247750.0,
+          "preIpoOwnershipPct": 4.352,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-2248583505fd07c64b",
+          "name": "嘉兴宏鼎投资管理合伙企业（有限合伙）",
+          "normalizedName": "嘉兴宏鼎投资管理合伙企业有限合伙",
           "institutional": true,
           "investorType": "投资合伙企业",
           "sourcePage": 96,
@@ -164,7 +206,7 @@
           "disclosedName": "嘉兴宏越",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-f05bfb775a5017e6c3",
+          "reviewKey": "montage-technology:star-investor-2248583505fd07c64b",
           "preIpoShares": 44247750.0,
           "preIpoOwnershipPct": 4.352,
           "reviewStatus": "needs_review",
@@ -278,9 +320,9 @@
           ]
         },
         {
-          "id": "star-investor-d934d3e70c65b1f047",
-          "name": "嘉兴中电朝云投资管理有限公司成立时间 2016 年 9 月 26 日统一社会信用代码 91330402MA28ANKX26 经营范围/主营业务投资管理、资产管理",
-          "normalizedName": "嘉兴中电朝云投资管理有限公司成立时间2016年9月26日统一社会信用代码91330402ma28ankx26经营范围主营业务投资管理、资产管理",
+          "id": "star-investor-dc8f7e4a3424f71576",
+          "name": "嘉兴中电朝云投资管理有限公司",
+          "normalizedName": "嘉兴中电朝云投资管理有限公司",
           "institutional": true,
           "investorType": "其他机构股东",
           "sourcePage": 95,
@@ -290,7 +332,7 @@
           "disclosedName": "嘉兴芯电",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-d934d3e70c65b1f047",
+          "reviewKey": "montage-technology:star-investor-dc8f7e4a3424f71576",
           "preIpoShares": 21128300.0,
           "preIpoOwnershipPct": 2.078,
           "reviewStatus": "needs_review",
@@ -299,9 +341,9 @@
           ]
         },
         {
-          "id": "star-investor-c258b043c759523cfd",
-          "name": "宁波梅山保税港区宏燚投资管理有限公司成立时间 2018 年 3 月 15 日",
-          "normalizedName": "宁波梅山保税港区宏燚投资管理有限公司成立时间2018年3月15日",
+          "id": "star-investor-eeb69f260432da5584",
+          "name": "宁波梅山保税港区宏燚投资管理有限公司",
+          "normalizedName": "宁波梅山保税港区宏燚投资管理有限公司",
           "institutional": true,
           "investorType": "其他机构股东",
           "sourcePage": 96,
@@ -311,7 +353,7 @@
           "disclosedName": "嘉兴莫奈",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-c258b043c759523cfd",
+          "reviewKey": "montage-technology:star-investor-eeb69f260432da5584",
           "preIpoShares": 20634525.0,
           "preIpoOwnershipPct": 2.029,
           "reviewStatus": "needs_review",
@@ -320,9 +362,9 @@
           ]
         },
         {
-          "id": "star-investor-484b0b1f91b086e0cb",
-          "name": "法鳌资本管理（北京）有限公司成立时间 2016 年 3 月 11 日统一社会信用代码 91110105MA0043NX3P 经营范围/主营业务资产管理；投资管理；项目投资",
-          "normalizedName": "法鳌资本管理北京有限公司成立时间2016年3月11日统一社会信用代码91110105ma0043nx3p经营范围主营业务资产管理投资管理项目投资",
+          "id": "star-investor-89ce3f18582ebd7274",
+          "name": "法鳌资本管理（北京）有限公司",
+          "normalizedName": "法鳌资本管理北京有限公司",
           "institutional": true,
           "investorType": "股权投资机构",
           "sourcePage": 95,
@@ -332,7 +374,7 @@
           "disclosedName": "上海临丰",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-484b0b1f91b086e0cb",
+          "reviewKey": "montage-technology:star-investor-89ce3f18582ebd7274",
           "preIpoShares": 18610575.0,
           "preIpoOwnershipPct": 1.83,
           "reviewStatus": "needs_review",
@@ -362,9 +404,9 @@
           ]
         },
         {
-          "id": "star-investor-cdbd09163240f40cef",
-          "name": "深圳市领骥资本管理有限公司成立时间 2015 年 2 月 28 日统一社会信用代码 [已移除身份证件信息]",
-          "normalizedName": "深圳市领骥资本管理有限公司成立时间2015年2月28日统一社会信用代码已移除身份证件信息",
+          "id": "star-investor-c00250a493afda7f3e",
+          "name": "深圳市领骥资本管理有限公司",
+          "normalizedName": "深圳市领骥资本管理有限公司",
           "institutional": true,
           "investorType": "股权投资机构",
           "sourcePage": 96,
@@ -374,7 +416,7 @@
           "disclosedName": "上海临骥",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-cdbd09163240f40cef",
+          "reviewKey": "montage-technology:star-investor-c00250a493afda7f3e",
           "preIpoShares": 15234825.0,
           "preIpoOwnershipPct": 1.498,
           "reviewStatus": "needs_review",
@@ -383,9 +425,9 @@
           ]
         },
         {
-          "id": "star-investor-cf4535f57a9e331494",
-          "name": "北京盛世共赢资产管理有限公司成立时间 2014 年 11 月 6 日统一社会信用代码 91110105318162288D 经营范围/主营业务",
-          "normalizedName": "北京盛世共赢资产管理有限公司成立时间2014年11月6日统一社会信用代码91110105318162288d经营范围主营业务",
+          "id": "star-investor-8282c55eb82ee6704f",
+          "name": "北京盛世共赢资产管理有限公司",
+          "normalizedName": "北京盛世共赢资产管理有限公司",
           "institutional": true,
           "investorType": "其他机构股东",
           "sourcePage": 96,
@@ -395,7 +437,7 @@
           "disclosedName": "上海临利",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-cf4535f57a9e331494",
+          "reviewKey": "montage-technology:star-investor-8282c55eb82ee6704f",
           "preIpoShares": 13339175.0,
           "preIpoOwnershipPct": 1.312,
           "reviewStatus": "needs_review",
@@ -404,9 +446,9 @@
           ]
         },
         {
-          "id": "star-investor-9bdb8120af8fa8dfa0",
-          "name": "青岛海丝泉宗投资管理有限公司成立时间 2015 年 9 月 7 日统一社会信用代码 91370212350344436P",
-          "normalizedName": "青岛海丝泉宗投资管理有限公司成立时间2015年9月7日统一社会信用代码91370212350344436p",
+          "id": "star-investor-6faed10c8767a32d49",
+          "name": "青岛海丝泉宗投资管理有限公司",
+          "normalizedName": "青岛海丝泉宗投资管理有限公司",
           "institutional": true,
           "investorType": "其他机构股东",
           "sourcePage": 96,
@@ -416,7 +458,7 @@
           "disclosedName": "上海临国",
           "definitionSourcePage": 18,
           "contactStatus": "withheld-pending-review",
-          "reviewKey": "montage-technology:star-investor-9bdb8120af8fa8dfa0",
+          "reviewKey": "montage-technology:star-investor-6faed10c8767a32d49",
           "preIpoShares": 13070825.0,
           "preIpoOwnershipPct": 1.285,
           "reviewStatus": "needs_review",
@@ -440,6 +482,27 @@
           "reviewKey": "montage-technology:star-investor-c6d02d50556b91540c",
           "preIpoShares": 13038000.0,
           "preIpoOwnershipPct": 1.282,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-e01ef67b998cf7966a",
+          "name": "Xinyun Capital Fund, L.P.",
+          "normalizedName": "xinyuncapitalfundlp",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "15 Xinyun 12,057,500 1.186 12,057,500 1.067",
+          "nameResolution": "definitions",
+          "disclosedName": "Xinyun",
+          "definitionSourcePage": 18,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-e01ef67b998cf7966a",
+          "preIpoShares": 12057500.0,
+          "preIpoOwnershipPct": 1.186,
           "reviewStatus": "needs_review",
           "reviewReasons": [
             "awaiting-human-review"
@@ -593,6 +656,27 @@
           ]
         },
         {
+          "id": "star-investor-e14249db328643788c",
+          "name": "Green Spark Investment Limited",
+          "normalizedName": "greensparkinvestmentlimited",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "33 Green Spark 7,525,000 0.740 7,525,000 0.666",
+          "nameResolution": "definitions",
+          "disclosedName": "Green Spark",
+          "definitionSourcePage": 19,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-e14249db328643788c",
+          "preIpoShares": 7525000.0,
+          "preIpoOwnershipPct": 0.74,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
           "id": "star-investor-079d618464da42bcef",
           "name": "上海临齐投资合伙企业（有限合伙）",
           "normalizedName": "上海临齐投资合伙企业有限合伙",
@@ -635,6 +719,111 @@
           ]
         },
         {
+          "id": "star-investor-de034e04e0c5b38b5d",
+          "name": "New Speed Consultancy Co., Ltd.",
+          "normalizedName": "newspeedconsultancycoltd",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "35 New Speed 3,125,000 0.307 3,125,000 0.277",
+          "nameResolution": "definitions",
+          "disclosedName": "New Speed",
+          "definitionSourcePage": 19,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-de034e04e0c5b38b5d",
+          "preIpoShares": 3125000.0,
+          "preIpoOwnershipPct": 0.307,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-32ee56148cf362c7e8",
+          "name": "TransLink Capital Partners I, L.P.",
+          "normalizedName": "translinkcapitalpartnersilp",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "36 TransLink 3,125,000 0.307 3,125,000 0.277",
+          "nameResolution": "definitions",
+          "disclosedName": "TransLink",
+          "definitionSourcePage": 19,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-32ee56148cf362c7e8",
+          "preIpoShares": 3125000.0,
+          "preIpoOwnershipPct": 0.307,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-4acb2115617535ce80",
+          "name": "Hong Kong Pine Stone Capital Limited",
+          "normalizedName": "hongkongpinestonecapitallimited",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "37 Pine Stone Capital 2,212,500 0.218 2,212,500 0.196",
+          "nameResolution": "definitions",
+          "disclosedName": "Pine Stone Capital",
+          "definitionSourcePage": 19,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-4acb2115617535ce80",
+          "preIpoShares": 2212500.0,
+          "preIpoOwnershipPct": 0.218,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-260cee3c8d877735f6",
+          "name": "Xinyun Capital Fund III, L.P.",
+          "normalizedName": "xinyuncapitalfundiiilp",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "16 Xinyun III 2,076,425 0.204 2,076,425 0.184",
+          "nameResolution": "definitions",
+          "disclosedName": "Xinyun III",
+          "definitionSourcePage": 18,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-260cee3c8d877735f6",
+          "preIpoShares": 2076425.0,
+          "preIpoOwnershipPct": 0.204,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-72e324f2a26c6dbe0a",
+          "name": "Beijing Integrated Circuit Industry International Fund, L.P.",
+          "normalizedName": "beijingintegratedcircuitindustryinternationalfundlp",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 96,
+          "sourceSection": "公司本次发行前后股本情况",
+          "evidence": "38 BICI 1,047,350 0.103 1,047,350 0.093",
+          "nameResolution": "definitions",
+          "disclosedName": "BICI",
+          "definitionSourcePage": 19,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "montage-technology:star-investor-72e324f2a26c6dbe0a",
+          "preIpoShares": 1047350.0,
+          "preIpoOwnershipPct": 0.103,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
           "id": "star-investor-71f2ecb9c9bf1fe001",
           "name": "深圳前海珂玺资本管理有限公司",
           "normalizedName": "深圳前海珂玺资本管理有限公司",
@@ -657,7 +846,7 @@
         }
       ],
       "errors": [],
-      "reviewCandidateCount": 29,
+      "reviewCandidateCount": 38,
       "verifiedInvestorCount": 0,
       "rejectedInvestorCount": 0
     },
@@ -667,7 +856,7 @@
       "ticker": "688012",
       "exchange": "上海证券交易所科创板",
       "sector": "半导体",
-      "updatedAt": "2026-08-04T15:54:52+00:00",
+      "updatedAt": "2026-08-04T16:06:28+00:00",
       "status": "ok",
       "prospectus": {
         "title": "首次公开发行股票并在科创板上市招股说明书",
@@ -680,7 +869,7 @@
         "provider": "cninfo-prospectus"
       },
       "issuerInvestorRelations": {},
-      "institutionalInvestorCount": 11,
+      "institutionalInvestorCount": 14,
       "naturalPersonContactsPublished": false,
       "investors": [
         {
@@ -768,6 +957,27 @@
           ]
         },
         {
+          "id": "star-investor-5de6efc5b3c411a8a2",
+          "name": "Advanced Micro-Fabrication Equipment Inc. Asia",
+          "normalizedName": "advancedmicrofabricationequipmentincasia",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 83,
+          "sourceSection": "本次发行前股东持股情况",
+          "evidence": "5 中微亚洲 24,821,537 5.15%",
+          "nameResolution": "definitions",
+          "disclosedName": "中微亚洲",
+          "definitionSourcePage": 17,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "amec:star-investor-5de6efc5b3c411a8a2",
+          "preIpoShares": 24821537.0,
+          "preIpoOwnershipPct": 5.15,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
           "id": "star-investor-cbff853c51da0ab505",
           "name": "嘉兴悦橙投资合伙企业（有限合伙）",
           "normalizedName": "嘉兴悦橙投资合伙企业有限合伙",
@@ -804,6 +1014,27 @@
           "reviewKey": "amec:star-investor-852d2284e905a66a95",
           "preIpoShares": 19691183.0,
           "preIpoOwnershipPct": 4.09,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
+          "id": "star-investor-1ba0420f78aa242634",
+          "name": "Primrose Capital Limited",
+          "normalizedName": "primrosecapitallimited",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 83,
+          "sourceSection": "本次发行前股东持股情况",
+          "evidence": "8 Primrose 19,598,224 4.07%",
+          "nameResolution": "definitions",
+          "disclosedName": "Primrose",
+          "definitionSourcePage": 17,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "amec:star-investor-1ba0420f78aa242634",
+          "preIpoShares": 19598224.0,
+          "preIpoOwnershipPct": 4.07,
           "reviewStatus": "needs_review",
           "reviewReasons": [
             "awaiting-human-review"
@@ -873,6 +1104,27 @@
           ]
         },
         {
+          "id": "star-investor-392e8dec6b1f255462",
+          "name": "Futago Pte. Ltd.",
+          "normalizedName": "futagopteltd",
+          "institutional": true,
+          "investorType": "其他机构股东",
+          "sourcePage": 83,
+          "sourceSection": "本次发行前股东持股情况",
+          "evidence": "25 Futago 3,767,092 0.78% 3,767,092 0.70%",
+          "nameResolution": "definitions",
+          "disclosedName": "Futago",
+          "definitionSourcePage": 18,
+          "contactStatus": "withheld-pending-review",
+          "reviewKey": "amec:star-investor-392e8dec6b1f255462",
+          "preIpoShares": 3767092.0,
+          "preIpoOwnershipPct": 0.78,
+          "reviewStatus": "needs_review",
+          "reviewReasons": [
+            "awaiting-human-review"
+          ]
+        },
+        {
           "id": "star-investor-bac4f487ba4aa6be89",
           "name": "上海励微投资管理合伙企业（有限合伙）",
           "normalizedName": "上海励微投资管理合伙企业有限合伙",
@@ -916,7 +1168,7 @@
         }
       ],
       "errors": [],
-      "reviewCandidateCount": 11,
+      "reviewCandidateCount": 14,
       "verifiedInvestorCount": 0,
       "rejectedInvestorCount": 0
     },
@@ -926,7 +1178,7 @@
       "ticker": "688256",
       "exchange": "上海证券交易所科创板",
       "sector": "半导体",
-      "updatedAt": "2026-08-04T15:55:21+00:00",
+      "updatedAt": "2026-08-04T16:07:02+00:00",
       "status": "ok",
       "prospectus": {
         "title": "首次公开发行股票并在科创板上市招股说明书",
@@ -1832,9 +2084,9 @@
       "companySlug": "montage-technology",
       "ticker": "688008",
       "status": "ok",
-      "investorCount": 29,
+      "investorCount": 38,
       "retainedPrevious": false,
-      "durationMs": 26158,
+      "durationMs": 26205,
       "errors": []
     },
     {
@@ -1842,9 +2094,9 @@
       "companySlug": "amec",
       "ticker": "688012",
       "status": "ok",
-      "investorCount": 11,
+      "investorCount": 14,
       "retainedPrevious": false,
-      "durationMs": 22141,
+      "durationMs": 24309,
       "errors": []
     },
     {
@@ -1854,13 +2106,13 @@
       "status": "ok",
       "investorCount": 31,
       "retainedPrevious": false,
-      "durationMs": 28364,
+      "durationMs": 33973,
       "errors": []
     }
   ],
-  "reviewCandidateCount": 71,
+  "reviewCandidateCount": 83,
   "verifiedInvestorCount": 31,
-  "needsReviewInvestorCount": 40,
+  "needsReviewInvestorCount": 52,
   "rejectedInvestorCount": 0,
   "reviewManifestDecisionCount": 31
 }

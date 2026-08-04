@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T15:55:21+00:00",
+  "generatedAt": "2026-08-04T16:07:02+00:00",
   "verifiedRelationshipCount": 31,
-  "needsReviewCount": 40,
+  "needsReviewCount": 52,
   "rejectedCount": 0,
   "publicationRule": "Only manifest-backed verified records are authoritative equity relationships; needs-review and rejected extraction rows remain separate audit queues.",
   "relationships": [
@@ -1406,7 +1406,7 @@
   ],
   "candidates": [
     {
-      "id": "montage-technology:star-investor-cf4535f57a9e331494",
+      "id": "montage-technology:star-investor-8282c55eb82ee6704f",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -1415,9 +1415,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-cf4535f57a9e331494",
-        "name": "北京盛世共赢资产管理有限公司成立时间 2014 年 11 月 6 日统一社会信用代码 91110105318162288D 经营范围/主营业务",
-        "normalizedName": "北京盛世共赢资产管理有限公司成立时间2014年11月6日统一社会信用代码91110105318162288d经营范围主营业务",
+        "candidateId": "star-investor-8282c55eb82ee6704f",
+        "name": "北京盛世共赢资产管理有限公司",
+        "normalizedName": "北京盛世共赢资产管理有限公司",
         "investorType": "其他机构股东"
       },
       "holding": {
@@ -1433,7 +1433,7 @@
         "excerpt": "8 上海临利 13,339,175 1.312 13,339,175 1.181"
       },
       "review": {
-        "key": "montage-technology:star-investor-cf4535f57a9e331494",
+        "key": "montage-technology:star-investor-8282c55eb82ee6704f",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -1445,7 +1445,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-484b0b1f91b086e0cb",
+      "id": "montage-technology:star-investor-89ce3f18582ebd7274",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -1454,9 +1454,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-484b0b1f91b086e0cb",
-        "name": "法鳌资本管理（北京）有限公司成立时间 2016 年 3 月 11 日统一社会信用代码 91110105MA0043NX3P 经营范围/主营业务资产管理；投资管理；项目投资",
-        "normalizedName": "法鳌资本管理北京有限公司成立时间2016年3月11日统一社会信用代码91110105ma0043nx3p经营范围主营业务资产管理投资管理项目投资",
+        "candidateId": "star-investor-89ce3f18582ebd7274",
+        "name": "法鳌资本管理（北京）有限公司",
+        "normalizedName": "法鳌资本管理北京有限公司",
         "investorType": "股权投资机构"
       },
       "holding": {
@@ -1472,7 +1472,7 @@
         "excerpt": "6 上海临丰 18,610,575 1.830 18,610,575 1.647"
       },
       "review": {
-        "key": "montage-technology:star-investor-484b0b1f91b086e0cb",
+        "key": "montage-technology:star-investor-89ce3f18582ebd7274",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -1523,7 +1523,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-f05bfb775a5017e6c3",
+      "id": "montage-technology:star-investor-2248583505fd07c64b",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -1532,9 +1532,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-f05bfb775a5017e6c3",
-        "name": "嘉兴宏鼎投资管理合伙企业（有限合伙） 成立时间 2015 年 11 月 12 日统一社会信用代码 91330402MA28A27P7T 经营范围/主营业务投资管理",
-        "normalizedName": "嘉兴宏鼎投资管理合伙企业有限合伙成立时间2015年11月12日统一社会信用代码91330402ma28a27p7t经营范围主营业务投资管理",
+        "candidateId": "star-investor-2248583505fd07c64b",
+        "name": "嘉兴宏鼎投资管理合伙企业（有限合伙）",
+        "normalizedName": "嘉兴宏鼎投资管理合伙企业有限合伙",
         "investorType": "投资合伙企业"
       },
       "holding": {
@@ -1550,7 +1550,7 @@
         "excerpt": "12 嘉兴宏越 44,247,750 4.352 44,247,750 3.916"
       },
       "review": {
-        "key": "montage-technology:star-investor-f05bfb775a5017e6c3",
+        "key": "montage-technology:star-investor-2248583505fd07c64b",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -1679,7 +1679,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-d934d3e70c65b1f047",
+      "id": "montage-technology:star-investor-dc8f7e4a3424f71576",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -1688,9 +1688,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-d934d3e70c65b1f047",
-        "name": "嘉兴中电朝云投资管理有限公司成立时间 2016 年 9 月 26 日统一社会信用代码 91330402MA28ANKX26 经营范围/主营业务投资管理、资产管理",
-        "normalizedName": "嘉兴中电朝云投资管理有限公司成立时间2016年9月26日统一社会信用代码91330402ma28ankx26经营范围主营业务投资管理、资产管理",
+        "candidateId": "star-investor-dc8f7e4a3424f71576",
+        "name": "嘉兴中电朝云投资管理有限公司",
+        "normalizedName": "嘉兴中电朝云投资管理有限公司",
         "investorType": "其他机构股东"
       },
       "holding": {
@@ -1706,7 +1706,7 @@
         "excerpt": "2 嘉兴芯电 21,128,300 2.078 21,128,300 1.870"
       },
       "review": {
-        "key": "montage-technology:star-investor-d934d3e70c65b1f047",
+        "key": "montage-technology:star-investor-dc8f7e4a3424f71576",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -1796,7 +1796,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-c258b043c759523cfd",
+      "id": "montage-technology:star-investor-eeb69f260432da5584",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -1805,9 +1805,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-c258b043c759523cfd",
-        "name": "宁波梅山保税港区宏燚投资管理有限公司成立时间 2018 年 3 月 15 日",
-        "normalizedName": "宁波梅山保税港区宏燚投资管理有限公司成立时间2018年3月15日",
+        "candidateId": "star-investor-eeb69f260432da5584",
+        "name": "宁波梅山保税港区宏燚投资管理有限公司",
+        "normalizedName": "宁波梅山保税港区宏燚投资管理有限公司",
         "investorType": "其他机构股东"
       },
       "holding": {
@@ -1823,7 +1823,7 @@
         "excerpt": "13 嘉兴莫奈 20,634,525 2.029 20,634,525 1.826"
       },
       "review": {
-        "key": "montage-technology:star-investor-c258b043c759523cfd",
+        "key": "montage-technology:star-investor-eeb69f260432da5584",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -1874,7 +1874,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-9bdb8120af8fa8dfa0",
+      "id": "montage-technology:star-investor-6faed10c8767a32d49",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -1883,9 +1883,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-9bdb8120af8fa8dfa0",
-        "name": "青岛海丝泉宗投资管理有限公司成立时间 2015 年 9 月 7 日统一社会信用代码 91370212350344436P",
-        "normalizedName": "青岛海丝泉宗投资管理有限公司成立时间2015年9月7日统一社会信用代码91370212350344436p",
+        "candidateId": "star-investor-6faed10c8767a32d49",
+        "name": "青岛海丝泉宗投资管理有限公司",
+        "normalizedName": "青岛海丝泉宗投资管理有限公司",
         "investorType": "其他机构股东"
       },
       "holding": {
@@ -1901,7 +1901,7 @@
         "excerpt": "9 上海临国 13,070,825 1.285 13,070,825 1.157"
       },
       "review": {
-        "key": "montage-technology:star-investor-9bdb8120af8fa8dfa0",
+        "key": "montage-technology:star-investor-6faed10c8767a32d49",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -2030,7 +2030,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-a031d176fb5adab456",
+      "id": "montage-technology:star-investor-0a17f350d068c988ce",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -2039,9 +2039,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-a031d176fb5adab456",
-        "name": "上海理能资产管理有限公司成立时间 2013 年 7 月 16 日统一社会信用代码 [已移除身份证件信息] 经营范围/主营业务资产管理；投资管理",
-        "normalizedName": "上海理能资产管理有限公司成立时间2013年7月16日统一社会信用代码已移除身份证件信息经营范围主营业务资产管理投资管理",
+        "candidateId": "star-investor-0a17f350d068c988ce",
+        "name": "上海理能资产管理有限公司",
+        "normalizedName": "上海理能资产管理有限公司",
         "investorType": "其他机构股东"
       },
       "holding": {
@@ -2057,7 +2057,7 @@
         "excerpt": "5 上海临理 53,506,750 5.262 53,506,750 4.736"
       },
       "review": {
-        "key": "montage-technology:star-investor-a031d176fb5adab456",
+        "key": "montage-technology:star-investor-0a17f350d068c988ce",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -2186,7 +2186,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-cdbd09163240f40cef",
+      "id": "montage-technology:star-investor-c00250a493afda7f3e",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -2195,9 +2195,9 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-cdbd09163240f40cef",
-        "name": "深圳市领骥资本管理有限公司成立时间 2015 年 2 月 28 日统一社会信用代码 [已移除身份证件信息]",
-        "normalizedName": "深圳市领骥资本管理有限公司成立时间2015年2月28日统一社会信用代码已移除身份证件信息",
+        "candidateId": "star-investor-c00250a493afda7f3e",
+        "name": "深圳市领骥资本管理有限公司",
+        "normalizedName": "深圳市领骥资本管理有限公司",
         "investorType": "股权投资机构"
       },
       "holding": {
@@ -2213,7 +2213,7 @@
         "excerpt": "7 上海临骥 15,234,825 1.498 15,234,825 1.348"
       },
       "review": {
-        "key": "montage-technology:star-investor-cdbd09163240f40cef",
+        "key": "montage-technology:star-investor-c00250a493afda7f3e",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -2498,7 +2498,7 @@
       }
     },
     {
-      "id": "montage-technology:star-investor-a14fecea71891102bb",
+      "id": "montage-technology:star-investor-72e324f2a26c6dbe0a",
       "company": {
         "slug": "montage-technology",
         "name": "澜起科技",
@@ -2507,9 +2507,126 @@
         "sector": "半导体"
       },
       "investor": {
-        "candidateId": "star-investor-a14fecea71891102bb",
-        "name": "Intel Capital Corporation 成立时间 1998 年 4 月 6 日统一社会信用代码 2880872 经营范围/主营业务投资",
-        "normalizedName": "intelcapitalcorporation成立时间1998年4月6日统一社会信用代码2880872经营范围主营业务投资",
+        "candidateId": "star-investor-72e324f2a26c6dbe0a",
+        "name": "Beijing Integrated Circuit Industry International Fund, L.P.",
+        "normalizedName": "beijingintegratedcircuitindustryinternationalfundlp",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 1047350,
+        "preIpoOwnershipPct": 0.103
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "38 BICI 1,047,350 0.103 1,047,350 0.093"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-72e324f2a26c6dbe0a",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-e14249db328643788c",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-e14249db328643788c",
+        "name": "Green Spark Investment Limited",
+        "normalizedName": "greensparkinvestmentlimited",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 7525000,
+        "preIpoOwnershipPct": 0.74
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "33 Green Spark 7,525,000 0.740 7,525,000 0.666"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-e14249db328643788c",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-4acb2115617535ce80",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-4acb2115617535ce80",
+        "name": "Hong Kong Pine Stone Capital Limited",
+        "normalizedName": "hongkongpinestonecapitallimited",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 2212500,
+        "preIpoOwnershipPct": 0.218
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "37 Pine Stone Capital 2,212,500 0.218 2,212,500 0.196"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-4acb2115617535ce80",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-a5995aabad4de6a213",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-a5995aabad4de6a213",
+        "name": "Intel Capital Corporation",
+        "normalizedName": "intelcapitalcorporation",
         "investorType": "其他机构股东"
       },
       "holding": {
@@ -2525,7 +2642,241 @@
         "excerpt": "45 Intel Capital 101,683,250 10.000 101,683,250 9.000"
       },
       "review": {
-        "key": "montage-technology:star-investor-a14fecea71891102bb",
+        "key": "montage-technology:star-investor-a5995aabad4de6a213",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-de034e04e0c5b38b5d",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-de034e04e0c5b38b5d",
+        "name": "New Speed Consultancy Co., Ltd.",
+        "normalizedName": "newspeedconsultancycoltd",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 3125000,
+        "preIpoOwnershipPct": 0.307
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "35 New Speed 3,125,000 0.307 3,125,000 0.277"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-de034e04e0c5b38b5d",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-32ee56148cf362c7e8",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-32ee56148cf362c7e8",
+        "name": "TransLink Capital Partners I, L.P.",
+        "normalizedName": "translinkcapitalpartnersilp",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 3125000,
+        "preIpoOwnershipPct": 0.307
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "36 TransLink 3,125,000 0.307 3,125,000 0.277"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-32ee56148cf362c7e8",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-093a4a20c1748b8689",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-093a4a20c1748b8689",
+        "name": "WLT Partners, L.P.",
+        "normalizedName": "wltpartnerslp",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 87816687,
+        "preIpoOwnershipPct": 8.636
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 95,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "3 WLT 87,816,687 8.636 87,816,687 7.773"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-093a4a20c1748b8689",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-258dac8aee2e43ec8c",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-258dac8aee2e43ec8c",
+        "name": "Xinyun Capital Fund I, L.P .",
+        "normalizedName": "xinyuncapitalfundilp",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 44247750,
+        "preIpoOwnershipPct": 4.352
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "14 Xinyun I 44,247,750 4.352 44,247,750 3.916"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-258dac8aee2e43ec8c",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-260cee3c8d877735f6",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-260cee3c8d877735f6",
+        "name": "Xinyun Capital Fund III, L.P.",
+        "normalizedName": "xinyuncapitalfundiiilp",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 2076425,
+        "preIpoOwnershipPct": 0.204
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "16 Xinyun III 2,076,425 0.204 2,076,425 0.184"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-260cee3c8d877735f6",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "montage-technology:star-investor-e01ef67b998cf7966a",
+      "company": {
+        "slug": "montage-technology",
+        "name": "澜起科技",
+        "ticker": "688008",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-e01ef67b998cf7966a",
+        "name": "Xinyun Capital Fund, L.P.",
+        "normalizedName": "xinyuncapitalfundlp",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 12057500,
+        "preIpoOwnershipPct": 1.186
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-12/1206441634.PDF",
+        "prospectusSha256": "67f7db2387c7016e2bf6391f1a84e06628fcc1251082ded1cedd2e974ddf0f44",
+        "sourcePage": 96,
+        "sourceSection": "公司本次发行前后股本情况",
+        "excerpt": "15 Xinyun 12,057,500 1.186 12,057,500 1.067"
+      },
+      "review": {
+        "key": "montage-technology:star-investor-e01ef67b998cf7966a",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"
@@ -2955,6 +3306,123 @@
       },
       "review": {
         "key": "amec:star-investor-8d661f7dbe9c3e6a5e",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "amec:star-investor-5de6efc5b3c411a8a2",
+      "company": {
+        "slug": "amec",
+        "name": "中微公司",
+        "ticker": "688012",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-5de6efc5b3c411a8a2",
+        "name": "Advanced Micro-Fabrication Equipment Inc. Asia",
+        "normalizedName": "advancedmicrofabricationequipmentincasia",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 24821537,
+        "preIpoOwnershipPct": 5.15
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-16/1206447929.PDF",
+        "prospectusSha256": "19cdb41e03b2d86ac15007753784f5859e1450a2bf79b514a7c0d4bd6830be67",
+        "sourcePage": 83,
+        "sourceSection": "本次发行前股东持股情况",
+        "excerpt": "5 中微亚洲 24,821,537 5.15%"
+      },
+      "review": {
+        "key": "amec:star-investor-5de6efc5b3c411a8a2",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "amec:star-investor-392e8dec6b1f255462",
+      "company": {
+        "slug": "amec",
+        "name": "中微公司",
+        "ticker": "688012",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-392e8dec6b1f255462",
+        "name": "Futago Pte. Ltd.",
+        "normalizedName": "futagopteltd",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 3767092,
+        "preIpoOwnershipPct": 0.78
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-16/1206447929.PDF",
+        "prospectusSha256": "19cdb41e03b2d86ac15007753784f5859e1450a2bf79b514a7c0d4bd6830be67",
+        "sourcePage": 83,
+        "sourceSection": "本次发行前股东持股情况",
+        "excerpt": "25 Futago 3,767,092 0.78% 3,767,092 0.70%"
+      },
+      "review": {
+        "key": "amec:star-investor-392e8dec6b1f255462",
+        "status": "needs_review",
+        "reasons": [
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "amec:star-investor-1ba0420f78aa242634",
+      "company": {
+        "slug": "amec",
+        "name": "中微公司",
+        "ticker": "688012",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-1ba0420f78aa242634",
+        "name": "Primrose Capital Limited",
+        "normalizedName": "primrosecapitallimited",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoShares": 19598224,
+        "preIpoOwnershipPct": 4.07
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市招股说明书",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2019-07-16/1206447929.PDF",
+        "prospectusSha256": "19cdb41e03b2d86ac15007753784f5859e1450a2bf79b514a7c0d4bd6830be67",
+        "sourcePage": 83,
+        "sourceSection": "本次发行前股东持股情况",
+        "excerpt": "8 Primrose 19,598,224 4.07%"
+      },
+      "review": {
+        "key": "amec:star-investor-1ba0420f78aa242634",
         "status": "needs_review",
         "reasons": [
           "awaiting-human-review"

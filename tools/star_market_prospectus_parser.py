@@ -172,7 +172,12 @@ FIELD_LABELS = (
     "注册资本",
     "认缴出资额",
     "实缴出资额",
+    "统一社会信用代码",
+    "注册号",
+    "成立时间",
     "成立日期",
+    "经营范围/主营业务",
+    "经营范围",
     "主营业务",
     "主要财务数据",
     "总资产",
@@ -340,6 +345,24 @@ def _is_numbered_heading(line: str) -> bool:
     return bool(re.match(r"^\s*(?:\d{1,3}|[一二三四五六七八九十]{1,4})[、.．]\s*\S+", line))
 
 
+def _truncate_inline_fields(value: str, current_labels: tuple[str, ...]) -> str:
+    text = clean_text(value, 600)
+    other_labels = sorted(
+        (label for label in FIELD_LABELS if label not in current_labels),
+        key=len,
+        reverse=True,
+    )
+    if not other_labels:
+        return text
+    marker = re.search(
+        r"\s+(?:" + "|".join(re.escape(label) for label in other_labels) + r")\s*[：:]?",
+        text,
+    )
+    if marker:
+        text = text[: marker.start()]
+    return clean_text(text, 300)
+
+
 def _field_value(block: list[tuple[int, str]], labels: tuple[str, ...], limit: int) -> tuple[str, int]:
     labels_pattern = "|".join(re.escape(label) for label in labels)
     all_labels_pattern = "|".join(re.escape(label) for label in FIELD_LABELS)
@@ -347,7 +370,7 @@ def _field_value(block: list[tuple[int, str]], labels: tuple[str, ...], limit: i
         match = re.match(rf"^(?:{labels_pattern})\s*[：:]?\s*(?P<value>.*)$", line)
         if not match:
             continue
-        parts = [match.group("value")]
+        parts = [_truncate_inline_fields(match.group("value"), labels)]
         for next_page, following in block[index + 1 : index + 4]:
             if re.match(rf"^(?:{all_labels_pattern})\s*[：:]?", following):
                 break
@@ -437,7 +460,25 @@ def _institutional_name(alias: str, full_name: str, resolved: bool) -> bool:
         return False
     if any(fragment in full_name or fragment in alias for fragment in NARRATIVE_NAME_FRAGMENTS):
         return False
+    if any(
+        marker in full_name
+        for marker in (
+            "成立时间",
+            "成立日期",
+            "统一社会信用代码",
+            "注册号",
+            "经营范围/主营业务",
+            "经营范围",
+        )
+    ):
+        return False
     if resolved and any(hint in full_name for hint in INSTITUTION_HINTS):
+        return True
+    if resolved and re.search(
+        r"\b(?:capital|corporation|inc\.?|limited|ltd\.?|llc|fund|partners?)\b",
+        full_name,
+        flags=re.IGNORECASE,
+    ):
         return True
     return any(hint in alias for hint in INSTITUTION_HINTS)
 
