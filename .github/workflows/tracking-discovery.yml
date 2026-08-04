@@ -48,13 +48,24 @@ jobs:
       - name: Validate institution, sample-company and public-channel discovery
         run: |
           node --import tsx scripts/sync-tracking-institution-directory.ts --dry-run
+          python -m py_compile tools/tracking_source_governance.py
           python -m py_compile tools/enrich_tracking_institutions.py
           python -m py_compile tools/enrich_tracking_people_from_sample_companies.py
           python -m py_compile tools/enrich_tracking_person_channels.py
           python -m unittest \
+            tests.test_tracking_source_governance \
             tests.test_tracking_institution_people \
             tests.test_tracking_sample_company_people \
             tests.test_tracking_person_channels
+
+      - name: Normalize automatic sources before discovery
+        id: source-governance-before
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/tracking_source_governance.py | tee /tmp/source-governance-before.json
+          CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/source-governance-before.json'))['changed']).lower())")
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
 
       - name: Expand tracking entities from public web sources
         id: expand
@@ -118,15 +129,26 @@ jobs:
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/channel-discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
 
+      - name: Normalize automatic sources after discovery
+        id: source-governance-after
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/tracking_source_governance.py | tee /tmp/source-governance-after.json
+          CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/source-governance-after.json'))['changed']).lower())")
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
       - name: Consolidate discovery changes
         id: changes
         shell: bash
         run: |
-          if [ "${{ steps.expand.outputs.changed }}" = "true" ] || \
+          if [ "${{ steps.source-governance-before.outputs.changed }}" = "true" ] || \
+             [ "${{ steps.expand.outputs.changed }}" = "true" ] || \
              [ "${{ steps.directory.outputs.changed }}" = "true" ] || \
              [ "${{ steps.institutions.outputs.changed }}" = "true" ] || \
              [ "${{ steps.team.outputs.changed }}" = "true" ] || \
-             [ "${{ steps.channels.outputs.changed }}" = "true" ]; then
+             [ "${{ steps.channels.outputs.changed }}" = "true" ] || \
+             [ "${{ steps.source-governance-after.outputs.changed }}" = "true" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -135,6 +157,7 @@ jobs:
       - name: Validate the expanded config before committing
         if: steps.changes.outputs.changed == 'true'
         run: |
+          python tools/tracking_source_governance.py --check
           npm run validate:tracking
           npm run validate:taxonomy
 
@@ -149,7 +172,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           commit_current_config() {
-            git add config/user_tracking.json config/tracking_auto_discovery.json
+            git add \
+              config/user_tracking.json \
+              config/tracking_auto_discovery.json \
+              public/data/source_health.json
             if git diff --cached --quiet; then
               return 1
             fi
@@ -159,6 +185,8 @@ jobs:
           regenerate_from_latest_main() {
             git fetch origin main
             git reset --hard origin/main
+            python tools/tracking_source_governance.py \
+              | tee /tmp/source-governance-before-replay.json
 
             if [ "$DISCOVERY_MODE" = "seed-only" ]; then
               python tools/expand_tracking_entities.py --seed-new-only \
@@ -177,7 +205,10 @@ jobs:
               --max-requests 70 | tee /tmp/team-discovery-replay.json
             python tools/enrich_tracking_person_channels.py \
               --max-tracks 20 | tee /tmp/channel-discovery-replay.json
+            python tools/tracking_source_governance.py \
+              | tee /tmp/source-governance-after-replay.json
 
+            python tools/tracking_source_governance.py --check
             npm run validate:tracking
             npm run validate:taxonomy
           }

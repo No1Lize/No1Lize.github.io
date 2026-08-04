@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-03T06:23:24+00:00",
+  "updatedAt": "2026-08-04T16:44:18+00:00",
   "tracks": {
     "ai": {
       "lastExpandedAt": "2026-08-03T06:23:05+00:00"
@@ -297,16 +297,7 @@
     {
       "track": "track-1ccjq49",
       "kind": "sources",
-      "value": "https://news.slashdot.org/",
-      "addedAt": "2026-07-26T15:47:49+00:00",
-      "evidence": [
-        "wikidata-official-site"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "sources",
-      "value": "https://hardware.slashdot.org/",
+      "value": "https://slashdot.org/",
       "addedAt": "2026-07-26T15:47:49+00:00",
       "evidence": [
         "wikidata-official-site"
@@ -1817,15 +1808,6 @@
       ]
     },
     {
-      "track": "track-1ccjq49",
-      "kind": "sources",
-      "value": "https://it.slashdot.org/",
-      "addedAt": "2026-07-29T04:57:38+00:00",
-      "evidence": [
-        "wikidata-official-site"
-      ]
-    },
-    {
       "track": "track-1p8ob4k",
       "kind": "sampleCompanies",
       "value": "Lazada",
@@ -2023,38 +2005,11 @@
     },
     {
       "track": "track-1ccjq49",
-      "kind": "sources",
-      "value": "https://slashdot.org/",
-      "addedAt": "2026-07-30T12:10:42+00:00",
-      "evidence": [
-        "wikidata-official-site"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
       "kind": "keywords",
       "value": "LinkedIn",
       "addedAt": "2026-07-31T12:32:33+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "sources",
-      "value": "https://yro.slashdot.org/",
-      "addedAt": "2026-07-31T12:32:33+00:00",
-      "evidence": [
-        "wikidata-official-site"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "sources",
-      "value": "https://cordcuttersnews.com/",
-      "addedAt": "2026-07-31T12:32:33+00:00",
-      "evidence": [
-        "wikidata-official-site"
       ]
     },
     {
@@ -2149,15 +2104,6 @@
       ]
     },
     {
-      "track": "track-1ccjq49",
-      "kind": "sources",
-      "value": "https://tech.slashdot.org/",
-      "addedAt": "2026-08-01T11:01:11+00:00",
-      "evidence": [
-        "wikidata-official-site"
-      ]
-    },
-    {
       "track": "robotics",
       "kind": "keywords",
       "value": "FCC",
@@ -2211,15 +2157,6 @@
       "addedAt": "2026-08-02T08:23:43+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "robotics",
-      "kind": "sources",
-      "value": "https://hackaday.com/",
-      "addedAt": "2026-08-02T08:26:06+00:00",
-      "evidence": [
-        "wikidata-official-site"
       ]
     },
     {
@@ -3199,6 +3136,48 @@
       "kind": "sampleCompanies",
       "value": "东方财富",
       "removedAt": "2026-07-29T22:37:27+00:00"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://cordcuttersnews.com/",
+      "removedAt": "2026-08-04T16:44:18+00:00",
+      "reason": "auto-source-governance"
+    },
+    {
+      "track": "robotics",
+      "kind": "sources",
+      "value": "https://hackaday.com/",
+      "removedAt": "2026-08-04T16:44:18+00:00",
+      "reason": "auto-source-governance"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://hardware.slashdot.org/",
+      "removedAt": "2026-08-04T16:44:18+00:00",
+      "reason": "auto-source-governance"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://it.slashdot.org/",
+      "removedAt": "2026-08-04T16:44:18+00:00",
+      "reason": "auto-source-governance"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://yro.slashdot.org/",
+      "removedAt": "2026-08-04T16:44:18+00:00",
+      "reason": "auto-source-governance"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "sources",
+      "value": "https://tech.slashdot.org/",
+      "removedAt": "2026-08-04T16:44:18+00:00",
+      "reason": "auto-source-governance"
     }
   ]
 }

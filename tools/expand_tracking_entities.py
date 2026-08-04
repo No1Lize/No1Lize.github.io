@@ -42,6 +42,19 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote, quote_plus, urlparse
 from urllib.request import Request, urlopen
 
+try:
+    from .tracking_source_governance import (
+        canonical_source_host,
+        looks_like_derived_source_name,
+        strip_discovery_source_suffix,
+    )
+except ImportError:
+    from tracking_source_governance import (
+        canonical_source_host,
+        looks_like_derived_source_name,
+        strip_discovery_source_suffix,
+    )
+
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 LEDGER_PATH = ROOT / "config" / "tracking_auto_discovery.json"
@@ -381,8 +394,7 @@ def extract_title_terms(title: str) -> set[str]:
 
 
 def source_host(url: str) -> str:
-    host = urlparse(url).netloc.lower()
-    return host[4:] if host.startswith("www.") else host
+    return canonical_source_host(url)
 
 
 def load_track_corpus() -> dict[str, dict[str, Any]]:
@@ -400,6 +412,12 @@ def load_track_corpus() -> dict[str, dict[str, Any]]:
         title = str(article.get("title") or "")
         source = article.get("source") or {}
         source_name = str(source.get("name") or source.get("platform") or "")
+        source_id = str(source.get("id") or source.get("sourceId") or "")
+        derived_source = (
+            source_id.startswith("source-auto-")
+            or source_id.startswith("user-source-source-auto-")
+            or looks_like_derived_source_name(source_name)
+        )
         host = source_host(str(source.get("url") or ""))
         region = str(article.get("region") or "全球")
         companies = [str(article.get("company") or "")] + [
@@ -429,7 +447,7 @@ def load_track_corpus() -> dict[str, dict[str, Any]]:
             for term in title_terms:
                 row["terms"][term] += 1
                 row["termSources"].setdefault(term, set()).add(source_name)
-            if host and host not in DENY_SOURCE_HOSTS:
+            if host and host not in DENY_SOURCE_HOSTS and not derived_source:
                 srow = row["sources"].setdefault(
                     host,
                     {"count": 0, "names": Counter(), "regions": Counter()},
@@ -1110,6 +1128,8 @@ def expand_track(
         existing_hosts = {
             source_host(str(source.get("url") or ""))
             for source in config.get("sources", [])
+            if normalize_term(str(source.get("sector") or ""))
+            == normalize_term(str(track.get("name") or ""))
         }
         existing_hosts.discard("")
         ranked_hosts = sorted(
@@ -1129,7 +1149,9 @@ def expand_track(
             ):
                 continue
             top_names = srow["names"].most_common(1)
-            name = clean_candidate(top_names[0][0]) if top_names else host
+            name = strip_discovery_source_suffix(
+                clean_candidate(top_names[0][0]) if top_names else host
+            )
             region = (
                 srow["regions"].most_common(1)[0][0]
                 if srow["regions"]
@@ -1139,7 +1161,10 @@ def expand_track(
                 region = "全球"
             added["sources"].append(
                 {
-                    "id": f"source-auto-media-{slugify(host)}",
+                    "id": (
+                        f"source-auto-media-{slugify(host)}-"
+                        f"{slugify(str(track.get('slug') or track.get('name') or 'track'))}"
+                    ),
                     "name": f"{name or host} · {track.get('name')}信源",
                     "url": url,
                     "sourceType": "listing-search",
@@ -1195,7 +1220,11 @@ def expand_track(
                 "kind": "sources",
                 "value": source["url"],
                 "addedAt": stamp,
-                "evidence": ["wikidata-official-site"],
+                "evidence": [
+                    "corpus-proven-publisher"
+                    if str(source.get("sourceCategory") or "") == "media"
+                    else "wikidata-official-site"
+                ],
             }
         )
     ledger.setdefault("tracks", {})[str(track.get("slug"))] = {

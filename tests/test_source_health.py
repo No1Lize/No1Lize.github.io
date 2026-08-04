@@ -234,5 +234,44 @@ class SourceHealthTest(unittest.TestCase):
         self.assertTrue(state["sources"]["missing-source"]["missingFromCurrentRun"])
 
 
+    def test_removed_auto_runtime_source_is_not_preserved(self) -> None:
+        previous = {
+            "sources": {
+                "user-source-source-auto-media-retired": {
+                    "id": "user-source-source-auto-media-retired",
+                    "collectionState": "quarantined",
+                    "alertActive": True,
+                },
+                "owner-source": {
+                    "id": "owner-source",
+                    "collectionState": "quarantined",
+                    "alertActive": True,
+                },
+            }
+        }
+        article_payload = {
+            "sourceStatus": [
+                {
+                    "id": "user-source-source-auto-media-retired",
+                    "status": "error",
+                    "error": "HTTP 403",
+                }
+            ],
+            "articles": [],
+        }
+        state, _ = update_health(
+            previous,
+            article_payload,
+            DEFAULT_POLICY,
+            now=datetime(2026, 8, 4, tzinfo=UTC),
+            configured_source_ids=set(),
+        )
+        self.assertNotIn(
+            "user-source-source-auto-media-retired",
+            state["sources"],
+        )
+        self.assertIn("owner-source", state["sources"])
+        self.assertTrue(state["sources"]["owner-source"]["missingFromCurrentRun"])
+
 if __name__ == "__main__":
     unittest.main()
