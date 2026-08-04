@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "failureThreshold": 3,
   "quarantineThreshold": 7,
   "recoverySuccessThreshold": 3,
@@ -9,5 +9,17 @@
   "criticalSourceIds": [],
   "countEmptyForCriticalSources": true,
   "alertOnRetainedPrevious": true,
-  "alertOnExplicitError": true
+  "alertOnExplicitError": true,
+  "performanceWindowRuns": 30,
+  "performanceMinimumRuns": 5,
+  "performanceMinimumScanned": 20,
+  "minimumAvailabilityRate": 0.6,
+  "minimumProductiveRate": 0.15,
+  "minimumValidYieldRate": 0.08,
+  "maximumDuplicateRate": 0.8,
+  "maximumAverageDiscoveryLagDays": 7,
+  "maximumMisattributionRate": 0.05,
+  "retirementMinimumRuns": 10,
+  "retirementMaximumAvailabilityRate": 0.2,
+  "retirementMaximumProductiveRate": 0.05
 }

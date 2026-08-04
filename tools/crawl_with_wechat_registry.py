@@ -13,6 +13,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import search_index_feed_redirects
     from . import source_evidence
     from . import source_health_runtime
+    from . import source_performance
     from . import toutiao_public_feed
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
@@ -34,6 +35,7 @@ except ImportError:  # Executed directly with python tools/...
     import search_index_feed_redirects
     import source_evidence
     import source_health_runtime
+    import source_performance
     import toutiao_public_feed
     import wechat_fetch_compat
     import wechat_index_context_guard
@@ -160,7 +162,18 @@ def _install_source_governance() -> None:
                     "Source publication quarantine: "
                     + json.dumps(sorted(quarantined_ids), ensure_ascii=False)
                 )
-            return original_replace(existing, publishable, replacement_statuses)
+            # replacement_statuses intentionally excludes quarantined sources so
+            # their previously verified article batches remain published. The
+            # caller-owned statuses list is retained and already carries probe
+            # metadata such as publicationWithheld/collectionState.
+            published = original_replace(existing, publishable, replacement_statuses)
+            source_performance.annotate_publication_metrics(
+                incoming,
+                published,
+                statuses,
+                withheld_source_ids=quarantined_ids,
+            )
+            return published
 
         setattr(replace_source_batches, "_source_publication_quarantine", True)
         crawler.replace_source_batches = replace_source_batches

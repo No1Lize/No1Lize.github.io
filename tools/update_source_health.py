@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Persist cross-run source health, quarantine state and one alert summary."""
+"""Persist cross-run source health, performance, quarantine and alert state."""
 
 from __future__ import annotations
 
@@ -16,11 +16,31 @@ try:
         article_source_grade_index,
         classify_source_evidence,
     )
+    from .source_performance import (
+        DEFAULT_PERFORMANCE_POLICY,
+        new_article_metrics,
+        update_source_performance,
+    )
+    from .source_quality_reviews import (
+        DEFAULT_REVIEW_PATH,
+        load_review_manifest,
+        review_index,
+    )
 except ImportError:
     from source_evidence import (
         VALID_EVIDENCE_GRADES,
         article_source_grade_index,
         classify_source_evidence,
+    )
+    from source_performance import (
+        DEFAULT_PERFORMANCE_POLICY,
+        new_article_metrics,
+        update_source_performance,
+    )
+    from source_quality_reviews import (
+        DEFAULT_REVIEW_PATH,
+        load_review_manifest,
+        review_index,
     )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,7 +50,7 @@ DEFAULT_POLICY_PATH = ROOT / "config" / "source_health_policy.json"
 DEFAULT_SUMMARY_PATH = Path("/tmp/source-health-issue.md")
 
 DEFAULT_POLICY = {
-    "schemaVersion": 2,
+    "schemaVersion": 3,
     "failureThreshold": 3,
     "quarantineThreshold": 7,
     "recoverySuccessThreshold": 3,
@@ -41,6 +61,8 @@ DEFAULT_POLICY = {
     "countEmptyForCriticalSources": True,
     "alertOnRetainedPrevious": True,
     "alertOnExplicitError": True,
+    "maximumMisattributionRate": 0.05,
+    **DEFAULT_PERFORMANCE_POLICY,
 }
 
 
@@ -56,6 +78,14 @@ def _integer(value: Any) -> int:
         return int(value or 0)
     except (TypeError, ValueError):
         return 0
+
+
+def _accepted_count(status: dict[str, Any]) -> int:
+    """Return this run's accepted count, excluding retained adaptive history."""
+
+    if status.get("newAccepted") is not None:
+        return _integer(status.get("newAccepted"))
+    return _integer(status.get("accepted"))
 
 
 def _source_id(status: dict[str, Any]) -> str:
@@ -82,7 +112,7 @@ def _classification(
     state = str(status.get("status") or "unknown").casefold()
     source_id = _source_id(status)
     platform = str(status.get("platform") or "").strip()
-    accepted = _integer(status.get("accepted"))
+    accepted = _accepted_count(status)
     retained_previous = bool(status.get("retainedPrevious"))
     critical = source_id in set(policy.get("criticalSourceIds", [])) or platform in set(
         policy.get("criticalPlatforms", [])
@@ -138,6 +168,7 @@ def update_health(
     policy: dict[str, Any],
     *,
     now: datetime | None = None,
+    manual_reviews: dict[str, dict[str, Any]] | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     current_time = (now or datetime.now(UTC)).astimezone(UTC).replace(microsecond=0)
     timestamp = current_time.isoformat()
@@ -162,6 +193,12 @@ def update_health(
     statuses = article_payload.get("sourceStatus", [])
     statuses = statuses if isinstance(statuses, list) else []
     grade_index = article_source_grade_index(article_payload)
+    first_seen_metrics = new_article_metrics(
+        article_payload,
+        previous_generated_at=previous_payload.get("generatedAt"),
+        now=current_time,
+    )
+    manual_reviews = manual_reviews or {}
 
     next_sources: dict[str, dict[str, Any]] = {}
     new_alerts: list[str] = []
@@ -184,9 +221,13 @@ def update_health(
         previous_active = bool(previous.get("alertActive"))
         previous_collection_state = str(previous.get("collectionState") or "active")
         previous_recovery = _integer(previous.get("recoverySuccesses"))
-        accepted = _integer(raw_status.get("accepted"))
+        accepted = _accepted_count(raw_status)
         state = str(raw_status.get("status") or "unknown")
-        productive = accepted > 0 and state.casefold() in {"ok", "partial"}
+        productive = (
+            accepted > 0
+            and state.casefold() in {"ok", "partial"}
+            and not bool(raw_status.get("retainedPrevious"))
+        )
         grade = _evidence_grade(raw_status, previous, grade_index)
         pausable = grade in quarantine_grades
         first_observed_at = previous.get("firstObservedAt") or timestamp
@@ -243,6 +284,18 @@ def update_health(
             unhealthy and streak >= threshold
         ) or collection_state in {"quarantined", "probation"}
 
+        performance = update_source_performance(
+            previous.get("performance") if isinstance(previous, dict) else None,
+            raw_status,
+            first_seen_metrics.get(source_id),
+            evidence_grade=grade,
+            collection_state=collection_state,
+            priority=priority,
+            manual_quality=manual_reviews.get(source_id),
+            policy=policy,
+            now=current_time,
+        )
+
         if alert_active and not previous_active:
             new_alerts.append(source_id)
         if previous_active and not alert_active:
@@ -254,8 +307,13 @@ def update_health(
             "platform": str(raw_status.get("platform") or previous.get("platform") or ""),
             "evidenceGrade": grade,
             "lastStatus": state,
+            "scanned": _integer(raw_status.get("scanned")),
             "accepted": accepted,
             "failed": _integer(raw_status.get("failed")),
+            "candidateCount": _integer(raw_status.get("candidateCount")),
+            "publishedCount": _integer(raw_status.get("publishedCount")),
+            "duplicateCount": _integer(raw_status.get("duplicateCount")),
+            "withheldCount": _integer(raw_status.get("withheldCount")),
             "consecutiveFailures": streak,
             "failureThreshold": threshold,
             "quarantineThreshold": quarantine_threshold,
@@ -273,10 +331,11 @@ def update_health(
             "lastSuccessAt": last_success_at,
             "lastProductiveAt": last_productive_at,
             "lastFailureAt": last_failure_at,
+            "performance": performance,
         }
 
     # Preserve sources missing from the current ledger instead of silently deleting
-    # their cross-run streak, quarantine or historical timestamps.
+    # their cross-run streak, quarantine, performance or historical timestamps.
     for source_id, raw_previous in previous_sources.items():
         if source_id in seen_ids or not isinstance(raw_previous, dict):
             continue
@@ -309,13 +368,39 @@ def update_health(
         for source_id, entry in next_sources.items()
         if str(entry.get("priority")) == "low"
     )
+    performance_review_ids = sorted(
+        source_id
+        for source_id, entry in next_sources.items()
+        if isinstance(entry.get("performance"), dict)
+        and bool(entry["performance"].get("reviewRequired"))
+    )
+    downgrade_candidate_ids = sorted(
+        source_id
+        for source_id, entry in next_sources.items()
+        if isinstance(entry.get("performance"), dict)
+        and entry["performance"].get("reviewState") == "downgrade-candidate"
+    )
+    retirement_candidate_ids = sorted(
+        source_id
+        for source_id, entry in next_sources.items()
+        if isinstance(entry.get("performance"), dict)
+        and entry["performance"].get("reviewState") == "retire-candidate"
+    )
+    monitor_ids = sorted(
+        source_id
+        for source_id, entry in next_sources.items()
+        if isinstance(entry.get("performance"), dict)
+        and entry["performance"].get("reviewState") == "monitor"
+    )
+
     result = {
-        "schemaVersion": 2,
+        "schemaVersion": 3,
         "generatedAt": timestamp,
         "failureThreshold": threshold,
         "quarantineThreshold": quarantine_threshold,
         "recoverySuccessThreshold": recovery_threshold,
         "inactivityDays": inactivity_threshold,
+        "performanceWindowRuns": _integer(policy.get("performanceWindowRuns")) or 30,
         "sourceCount": len(next_sources),
         "activeAlertCount": len(active_alerts),
         "activeAlerts": active_alerts,
@@ -325,6 +410,14 @@ def update_health(
         "probationSources": probation_ids,
         "lowPrioritySourceCount": len(low_priority_ids),
         "lowPrioritySources": low_priority_ids,
+        "performanceReviewSourceCount": len(performance_review_ids),
+        "performanceReviewSources": performance_review_ids,
+        "downgradeCandidateCount": len(downgrade_candidate_ids),
+        "downgradeCandidates": downgrade_candidate_ids,
+        "retirementCandidateCount": len(retirement_candidate_ids),
+        "retirementCandidates": retirement_candidate_ids,
+        "monitorSourceCount": len(monitor_ids),
+        "monitorSources": monitor_ids,
         "sources": dict(sorted(next_sources.items())),
     }
     summary = {
@@ -336,6 +429,10 @@ def update_health(
         "quarantinedSources": quarantined_ids,
         "probationSources": probation_ids,
         "lowPrioritySources": low_priority_ids,
+        "performanceReviewSources": performance_review_ids,
+        "downgradeCandidates": downgrade_candidate_ids,
+        "retirementCandidates": retirement_candidate_ids,
+        "monitorSources": monitor_ids,
         "alertChanged": active_alerts != previous_active_alerts,
         "generatedAt": timestamp,
     }
@@ -383,6 +480,8 @@ def render_issue_markdown(state: dict[str, Any], summary: dict[str, Any]) -> str
         [
             f"隔离来源：**{state.get('quarantinedSourceCount', 0)}**；恢复观察：**{state.get('probationSourceCount', 0)}**；低优先级：**{state.get('lowPrioritySourceCount', 0)}**。",
             "",
+            f"效能人工审查：**{state.get('performanceReviewSourceCount', 0)}**；建议降级：**{state.get('downgradeCandidateCount', 0)}**；建议停用候选：**{state.get('retirementCandidateCount', 0)}**。系统只提出建议，不自动删除来源。",
+            "",
             f"最后检查：`{summary.get('generatedAt', '')}`",
             "",
             "处理原则：不绕过验证码或访问限制；隔离时保留上一版已验证快照，连续三次产生有效记录后恢复发布。",
@@ -400,6 +499,15 @@ def _write_github_output(path: str | None, summary: dict[str, Any]) -> None:
         handle.write(f"recovery_count={len(summary.get('recoveries', []))}\n")
         handle.write(f"quarantine_count={len(summary.get('quarantinedSources', []))}\n")
         handle.write(f"probation_count={len(summary.get('probationSources', []))}\n")
+        handle.write(
+            f"performance_review_count={len(summary.get('performanceReviewSources', []))}\n"
+        )
+        handle.write(
+            f"downgrade_candidate_count={len(summary.get('downgradeCandidates', []))}\n"
+        )
+        handle.write(
+            f"retirement_candidate_count={len(summary.get('retirementCandidates', []))}\n"
+        )
         handle.write(f"alert_changed={str(bool(summary.get('alertChanged'))).lower()}\n")
 
 
@@ -408,6 +516,7 @@ def main() -> int:
     parser.add_argument("--articles", type=Path, default=DEFAULT_ARTICLES_PATH)
     parser.add_argument("--state", type=Path, default=DEFAULT_STATE_PATH)
     parser.add_argument("--policy", type=Path, default=DEFAULT_POLICY_PATH)
+    parser.add_argument("--reviews", type=Path, default=DEFAULT_REVIEW_PATH)
     parser.add_argument("--summary", type=Path, default=DEFAULT_SUMMARY_PATH)
     parser.add_argument("--github-output", default=os.environ.get("GITHUB_OUTPUT"))
     args = parser.parse_args()
@@ -418,8 +527,14 @@ def main() -> int:
     configured = _read_json(args.policy, {})
     if isinstance(configured, dict):
         policy.update(configured)
+    manual_reviews = review_index(load_review_manifest(args.reviews))
 
-    state, summary = update_health(previous_payload, article_payload, policy)
+    state, summary = update_health(
+        previous_payload,
+        article_payload,
+        policy,
+        manual_reviews=manual_reviews,
+    )
     args.state.parent.mkdir(parents=True, exist_ok=True)
     args.state.write_text(
         json.dumps(state, ensure_ascii=False, indent=2) + "\n",

@@ -24,6 +24,9 @@ on:
       - tools/update_source_health.py
       - tools/source_evidence.py
       - tools/source_health_runtime.py
+      - tools/source_performance.py
+      - tools/source_quality_reviews.py
+      - tools/source_performance_review.py
       - tools/professional_media_progress.py
       - tools/professional_media_sources.py
       - tools/validate_professional_media_snapshot.py
@@ -76,6 +79,8 @@ on:
       - config/official_company_sources.json
       - config/person_profile_overrides.json
       - config/source_health_policy.json
+      - config/source_quality_reviews.json
+      - .github/workflows/source-performance-review.yml
       - .github/workflows/scheduled-sync.yml
   schedule:
   # One complete, quality-gated refresh after the US market close.
@@ -112,6 +117,9 @@ jobs:
             tools/update_source_health.py \
             tools/source_evidence.py \
             tools/source_health_runtime.py \
+            tools/source_performance.py \
+            tools/source_quality_reviews.py \
+            tools/source_performance_review.py \
             tools/professional_media_progress.py \
             tools/professional_media_sources.py \
             tools/validate_professional_media_snapshot.py \
@@ -131,6 +139,12 @@ jobs:
             tests.test_source_health \
             tests.test_source_evidence \
             tests.test_source_health_runtime \
+            tests.test_source_performance \
+            tests.test_source_quality_reviews \
+            tests.test_source_performance_review \
+            tests.test_source_health_performance \
+            tests.test_source_performance_workflow \
+            tests.test_source_performance_review_cli \
             tests.test_professional_media_progress \
             tests.test_professional_media_sources \
             tests.test_listed_company_disclosures \
