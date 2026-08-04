@@ -1,12 +1,11 @@
 {
   "schemaVersion": 1,
   "generatedAt": "2026-08-04T11:01:19+00:00",
-  "verifiedRelationshipCount": 0,
-  "needsReviewCount": 31,
+  "verifiedRelationshipCount": 31,
+  "needsReviewCount": 0,
   "rejectedCount": 0,
   "publicationRule": "Only manifest-backed verified records are authoritative equity relationships; needs-review and rejected extraction rows remain separate audit queues.",
-  "relationships": [],
-  "candidates": [
+  "relationships": [
     {
       "id": "cambricon:star-investor-dfdfc41b02d093b61a",
       "company": {
@@ -36,10 +35,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-dfdfc41b02d093b61a",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -75,10 +80,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-5763ee0787075e4d9d",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -114,10 +125,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-9b884572395fe8f8bf",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -153,10 +170,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-5c3c29643a18264d20",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -192,10 +215,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-e5e08822b145ca5d0b",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -231,10 +260,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-1bc38c3f16916fb932",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -270,10 +305,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-b20a02e5c1aaacd0fa",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -309,10 +350,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-50a5ae553ba4730308",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -348,10 +395,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-fab4129524f7d5fd7c",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -387,10 +440,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-bdc569f31f51810020",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -426,10 +485,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-87903c82b52631fcd8",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -465,10 +530,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-48dd3c88b6d806e861",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -504,10 +575,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-997a3acb509c8f3d44",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -543,10 +620,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-e25e56989c7e5480f1",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -582,10 +665,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-f97ea2d32eb1b0fed0",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -623,10 +712,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-08b2bee55925373c3e",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -662,10 +757,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-d70b3769e5984388b8",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -701,10 +802,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-f3ea281e8db211547e",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -740,10 +847,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-812c0648a4bbc01d0b",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -779,10 +892,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-60d2435478f060a05c",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -818,10 +937,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-adc27edadaf1ab6615",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -857,10 +982,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-ddbe8204e350fde241",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -896,10 +1027,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-fbbd4f64289044f2d8",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -935,10 +1072,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-200d5909617626ef6c",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -974,10 +1117,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-83eec2580f2892228b",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -1013,10 +1162,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-bb930146f73e75be8c",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -1052,10 +1207,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-dd9f718e6d5861ecc2",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -1091,10 +1252,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-c3c80a306a953b580a",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -1130,10 +1297,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-60b3c68bf8913400ba",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -1169,10 +1342,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-966043452d4cfdba42",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -1208,10 +1387,16 @@
       },
       "review": {
         "key": "cambricon:star-investor-d8b671dbad05384680",
-        "status": "needs_review",
+        "status": "verified",
         "reasons": [
-          "awaiting-human-review"
-        ]
+          "official-cninfo-prospectus",
+          "same-row-shareholding-verified",
+          "legal-name-resolved-from-prospectus"
+        ],
+        "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+        "reviewedAt": "2026-08-04T11:10:00+00:00",
+        "note": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
+        "source": "manifest"
       },
       "contactPublication": {
         "status": "withheld-pending-review",
@@ -1219,5 +1404,6 @@
       }
     }
   ],
+  "candidates": [],
   "rejected": []
 }

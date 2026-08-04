@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T08:35:56+00:00",
-  "eventCount": 82,
-  "institutionEventCount": 40,
-  "capitalEventCount": 42,
+  "generatedAt": "2026-08-04T10:38:04+00:00",
+  "eventCount": 71,
+  "institutionEventCount": 35,
+  "capitalEventCount": 36,
   "attributedInstitutionCount": 27,
   "methodology": {
     "structuredField": "article.institutions exact reviewed alias match",
@@ -12,36 +12,6 @@
     "genericCapitalEvents": "financing, industrial investment, M&A and IPO records without a resolved institution remain separate unattributed capital events"
   },
   "events": [
-    {
-      "id": "sina-finance-020666d3666dbd66",
-      "articleId": "sina-finance-020666d3666dbd66",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "融资",
-      "title": "谷歌向Anthropic投入2000亿美元，华尔街融资运作内幕",
-      "summary": "谷歌搭建起史上规模最大的基础设施融资项目之一，将为Anthropic供应价值超1500亿美元的人工智能芯片。 参与该项目的知情人士以及英国媒体查阅的企业备案文件显示...",
-      "region": "中国",
-      "sector": "半导体",
-      "company": "Anthropic",
-      "companySlug": "anthropic",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T08:04:30+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "sina-finance",
-      "source": {
-        "name": "新浪财经",
-        "platform": "新浪",
-        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-04/doc-inimctrr2128364.shtml",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
     {
       "id": "user-source-source-track-rcvvao-b552a4acea704321",
       "articleId": "user-source-source-track-rcvvao-b552a4acea704321",
@@ -72,93 +42,6 @@
       }
     },
     {
-      "id": "prnewswire-tech-a4a5bf7183423988",
-      "articleId": "prnewswire-tech-a4a5bf7183423988",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "BOA Acquisition Corp. II Announces Pricing of $125 Million Initial Public Offering",
-      "summary": "WASHINGTON, Aug. 3, 2026 /PRNewswire/ -- BOA Acquisition Corp. II (the \"Company\"), a special purpose acquisition company, today announced the pricing of its initial public offering of 12,500,000 units at a price of $10.00 per unit. The units are expected to be listed for trading on the...",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T02:38:45+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "prnewswire-tech",
-      "source": {
-        "name": "PR Newswire Consumer Technology",
-        "platform": "新闻稿",
-        "url": "https://www.prnewswire.com/news-releases/boa-acquisition-corp-ii-announces-pricing-of-125-million-initial-public-offering-302841796.html",
-        "evidenceGrade": "B",
-        "evidenceLabel": "主体官方/原始材料",
-        "evidencePolicy": "可作为信息主体的正式公开声明"
-      }
-    },
-    {
-      "id": "prnewswire-tech-15be64e6b2341b05",
-      "articleId": "prnewswire-tech-15be64e6b2341b05",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Prologis Announces Recommended Acquisition of SEGRO plc",
-      "summary": "Combination expands Prologis' European platform and enhances long-term growth opportunities SAN FRANCISCO, Aug. 4, 2026 /PRNewswire/ -- Prologis, Inc. (NYSE: PLD) today announced that it has reached agreement with the board of SEGRO plc (LSE: SGRO) on the terms of a recommended...",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T08:04:30+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "prnewswire-tech",
-      "source": {
-        "name": "PR Newswire Consumer Technology",
-        "platform": "新闻稿",
-        "url": "https://www.prnewswire.com/news-releases/prologis-announces-recommended-acquisition-of-segro-plc-302842042.html",
-        "evidenceGrade": "B",
-        "evidenceLabel": "主体官方/原始材料",
-        "evidencePolicy": "可作为信息主体的正式公开声明"
-      }
-    },
-    {
-      "id": "prnewswire-tech-0f35ccdad6b60472",
-      "articleId": "prnewswire-tech-0f35ccdad6b60472",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "PointsKash Begins Phase One of National KashPoint™ Infrastructure Rollout with Acquisition of More Than 2,100 Cryptocurrency Kiosks",
-      "summary": "Strategic Acquisition Accelerates Deployment of AI-Enabled Financial Centers Across Enterprise Pipeline Representing More Than 100,000 Commercial Locations Nationwide SCOTTSDALE, Ariz., Aug. 4, 2026 /PRNewswire/ -- PointsKash, Inc. (\"PointsKash\" or the \"Company\"), a rapidly emerging...",
-      "region": "全球",
-      "sector": "Web3",
-      "company": "科技产业",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T05:08:52+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "prnewswire-tech",
-      "source": {
-        "name": "PR Newswire Consumer Technology",
-        "platform": "新闻稿",
-        "url": "https://www.prnewswire.com/news-releases/pointskash-begins-phase-one-of-national-kashpoint-infrastructure-rollout-with-acquisition-of-more-than-2-100-cryptocurrency-kiosks-302840659.html",
-        "evidenceGrade": "B",
-        "evidenceLabel": "主体官方/原始材料",
-        "evidencePolicy": "可作为信息主体的正式公开声明"
-      }
-    },
-    {
       "id": "user-source-source-scale-ai-830511cf032b2562",
       "articleId": "user-source-source-scale-ai-830511cf032b2562",
       "scope": "institution-event",
@@ -173,7 +56,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -380,7 +263,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T02:38:45+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:sequoia-capital"
@@ -424,7 +307,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T05:08:52+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:阿里巴巴"
@@ -896,7 +779,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -941,7 +824,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -1066,15 +949,15 @@
       "scope": "capital-event",
       "attributionStatus": "unattributed",
       "eventType": "产业投资",
-      "title": "首程控股投资国内唯一QCCD离子阱量子计算公司幺正量子 - guandian.cn",
-      "summary": "首程控股投资国内唯一QCCD离子阱量子计算公司幺正量子 guandian.cn",
+      "title": "首程控股投资国内唯一QCCD离子阱量子计算公司幺正量子 - 观点网",
+      "summary": "首程控股投资国内唯一QCCD离子阱量子计算公司幺正量子 观点网",
       "region": "中国",
       "sector": "量子计算",
       "company": "科技产业",
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1352,7 +1235,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:阿里巴巴"
@@ -1396,7 +1279,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T05:08:52+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:蚂蚁集团",
@@ -1452,7 +1335,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:商汤科技"
@@ -1759,7 +1642,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1788,7 +1671,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1817,7 +1700,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1846,7 +1729,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1904,7 +1787,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1933,7 +1816,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1954,7 +1837,7 @@
       "scope": "capital-event",
       "attributionStatus": "unattributed",
       "eventType": "并购",
-      "title": "IonQ | IonQ Receives Regulatory Approval for SkyWater Acquisition",
+      "title": "IonQ Receives Regulatory Approval for SkyWater Acquisition",
       "summary": "IonQ receives final regulatory approval to acquire SkyWater Technology, creating a vertically integrated U.S. quantum platform. Closing set for July 31, 2026.",
       "region": "美国",
       "sector": "量子计算",
@@ -1963,16 +1846,19 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
       "attributions": [],
-      "sourceId": "official-ionq",
+      "sourceId": "ionq",
       "source": {
         "name": "IonQ",
         "platform": "官方网站",
-        "url": "https://ionq.com/news/ionq-receives-regulatory-approval-to-complete-acquisition-of-skywater-technology"
+        "url": "https://ionq.com/news/ionq-receives-regulatory-approval-to-complete-acquisition-of-skywater-technology",
+        "evidenceGrade": "B",
+        "evidenceLabel": "主体官方/原始材料",
+        "evidencePolicy": "可作为信息主体的正式公开声明"
       }
     },
     {
@@ -1981,7 +1867,7 @@
       "scope": "capital-event",
       "attributionStatus": "unattributed",
       "eventType": "并购",
-      "title": "IonQ | IonQ Completes Acquisition of SkyWater Technology",
+      "title": "IonQ Completes Acquisition of SkyWater Technology",
       "summary": "IonQ completes its acquisition of SkyWater Technology, creating the only vertically integrated full-stack quantum platform to accelerate quantum computing.",
       "region": "美国",
       "sector": "量子计算",
@@ -1990,16 +1876,19 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
       "attributions": [],
-      "sourceId": "official-ionq",
+      "sourceId": "ionq",
       "source": {
         "name": "IonQ",
         "platform": "官方网站",
-        "url": "https://ionq.com/news/ionq-completes-acquisition-of-skywater-technology"
+        "url": "https://ionq.com/news/ionq-completes-acquisition-of-skywater-technology",
+        "evidenceGrade": "B",
+        "evidenceLabel": "主体官方/原始材料",
+        "evidencePolicy": "可作为信息主体的正式公开声明"
       }
     },
     {
@@ -2017,7 +1906,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -2396,7 +2285,7 @@
       "publishedAt": "2026-07-30",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -2900,242 +2789,6 @@
         "evidenceGrade": "B",
         "evidenceLabel": "主体官方/原始材料",
         "evidencePolicy": "可作为信息主体的正式公开声明"
-      }
-    },
-    {
-      "id": "official-psiquantum-a553685b7f26d9f4",
-      "articleId": "official-psiquantum-a553685b7f26d9f4",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "商业进展",
-      "title": "PsiQuantum Signs $125 Million Agreement with DARPA",
-      "summary": "PsiQuantum today announced that the company has signed a new $125 million contract with the Defense Advanced Research Projects Agency (DARPA) under DARPA’s Quantum Benchmarking Initiative (QBI), the U.S. government’s most rigorous effort to evaluate commercial pathways to utility-scale quantum computing.",
-      "region": "美国",
-      "sector": "量子计算",
-      "company": "PsiQuantum",
-      "companySlug": "psiquantum",
-      "publishedAt": "2026-07-22",
-      "institutionIds": [
-        "profile:benchmark"
-      ],
-      "institutionNames": [
-        "Benchmark"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:benchmark",
-          "institutionName": "Benchmark",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "Benchmark"
-          ]
-        }
-      ],
-      "sourceId": "official-psiquantum",
-      "source": {
-        "name": "PsiQuantum",
-        "platform": "官方网站",
-        "url": "https://www.psiquantum.com/news-import/psiquantum-signs-125-million-agreement-with-darpa"
-      }
-    },
-    {
-      "id": "official-catl-0c3a1e9ca68ead8a",
-      "articleId": "official-catl-0c3a1e9ca68ead8a",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "商业进展",
-      "title": "CATL and Solarpro Sign 2 GWh Sodium-ion Battery Storage Agreement for Eastern Europe",
-      "summary": "CATL and Solarpro Technology AD (Solarpro) announced the signing of a strategic cooperation agreement for 2 GWh sodium-ion systems. This marks a significant milestone in advancing the adoption of next-generation storage technologies and the transition toward more resilient and sustainable energy systems in Eastern Europe.Contemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative technologies, committed to providing premier solutions and services for new energ",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-21",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6916.html"
-      }
-    },
-    {
-      "id": "official-catl-da49e430cb7409e3",
-      "articleId": "official-catl-da49e430cb7409e3",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "商业进展",
-      "title": "Alfen and CATL Reach 5 GWh Sodium-Ion Battery Storage Partnership in Europe",
-      "summary": "Alfen N.V., a leading European energy solutions provider, and Contemporary Amperex Technology Co., Limited (CATL), the world's largest battery manufacturer, today announced their collaboration to deploy 5 GWh of CATL's advanced sodium-ion battery energy storage systems across Europe. This brings the two companies' long-standing partnership to a new level, opening a new chapter of diversified, technology-driven development supporting EContemporary Amperex Technology Co., Limited (CATL) is a globa",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-16",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6900.html"
-      }
-    },
-    {
-      "id": "official-catl-821ed428caa29f17",
-      "articleId": "official-catl-821ed428caa29f17",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "技术突破",
-      "title": "CATL Receives the 2026 Volkswagen Group Award",
-      "summary": "Recently, CATL was granted the 2026 Volkswagen Group Award . With outstanding overall performance in battery technology R&D, supply chain stability, and efficient global execution, CATL stands as the sole power battery manufacturer and the only enterprise from Chinese mainland to be recognized this year.CATL has been supplying NCM battery cells for Volkswagen's MEB platform since 2018. This yearContemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative techno",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-12",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6896.html"
-      }
-    },
-    {
-      "id": "official-catl-257a5d62bbd36386",
-      "articleId": "official-catl-257a5d62bbd36386",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "产品发布",
-      "title": "CATL Launches 8C Superfast Charging Battery for Light-Duty Commercial Vehicles",
-      "summary": "For logistics operators, charging speed, battery durability, cold-weather performance and charging infrastructure remain key concerns.Recently, CATL launched the Tectrans II superfast charging battery for light-duty commercial vehicles, ushering the logistics industry into the era of 8C superfast charging with a refueling-like charging experience.01 Tectrans II Superfast Charging Battery: Ultra-Fast Charging, Longer Lifespan, and Reliable Cold-WeContemporary Amperex Technology Co., Limited (CATL",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-06",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6925.html"
-      }
-    },
-    {
-      "id": "official-shield-ai-9ce8918aad4f1d23",
-      "articleId": "official-shield-ai-9ce8918aad4f1d23",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Shield AI completes acquisition of Aechelon Technology",
-      "summary": "SAN DIEGO (June 22, 2026) — Shield AI, the defense technology company building the world’s best AI pilots and next-generation aircraft, today announced the completion of its acquisition of Aechelon Technology, Inc, a leader in high-fidelity simulation, physics-based sensor modeling, and synthetic reality technologies. The transaction follows the successful close of Shield AI’s $2 billion strategic financing […]",
-      "region": "美国",
-      "sector": "机器人",
-      "company": "Shield AI",
-      "companySlug": "shield-ai",
-      "publishedAt": "2026-06-22",
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "official-shield-ai",
-      "source": {
-        "name": "Shield AI",
-        "platform": "官方网站",
-        "url": "https://shield.ai/shield-ai-completes-acquisition-of-aechelon-technology"
-      }
-    },
-    {
-      "id": "official-mobileye-9bd9dce1719f03a1",
-      "articleId": "official-mobileye-9bd9dce1719f03a1",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Mobileye To Acquire Mentee Robotics to Accelerate Physical AI Leadership | Mobileye News",
-      "summary": "Combination brings world-class AI talent together to scale autonomous vehicles and humanoid robots globally",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Mobileye",
-      "companySlug": "mobileye",
-      "publishedAt": "2026-01-06",
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "official-mobileye",
-      "source": {
-        "name": "Mobileye",
-        "platform": "官方网站",
-        "url": "https://www.mobileye.com/news/mobileye-to-acquire-mentee-robotics-to-accelerate-physical-ai-leadership"
       }
     }
   ]
