@@ -13,17 +13,37 @@ function normalizeKeyword(value: string) {
   return value.trim().toLocaleLowerCase("zh-CN");
 }
 
+function snapshotDate(generatedAt: string) {
+  const value = generatedAt.slice(0, 10);
+  return /^\d{4}-\d{2}-\d{2}$/u.test(value) ? value : "";
+}
+
 export function countChannelUpdatesForSnapshotDay(
   items: ChannelUpdateItem[],
   generatedAt: string,
 ) {
-  const snapshotDate = generatedAt.slice(0, 10);
-  if (!/^\d{4}-\d{2}-\d{2}$/u.test(snapshotDate)) return 0;
+  const date = snapshotDate(generatedAt);
+  if (!date) return 0;
 
   return items.filter(
     (item) =>
       item.datePrecision !== "undated" &&
-      item.sortAt.slice(0, 10) === snapshotDate,
+      item.sortAt.slice(0, 10) === date,
+  ).length;
+}
+
+export function countChannelUpdatesFirstSeenForSnapshotDay(
+  items: ChannelUpdateItem[],
+  generatedAt: string,
+) {
+  const date = snapshotDate(generatedAt);
+  if (!date) return 0;
+
+  return items.filter(
+    (item) =>
+      Boolean(item.firstSeenAt) &&
+      item.firstSeenEstimated !== true &&
+      item.firstSeenAt?.slice(0, 10) === date,
   ).length;
 }
 
