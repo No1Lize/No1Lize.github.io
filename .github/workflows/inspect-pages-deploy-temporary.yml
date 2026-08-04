@@ -1,0 +1,46 @@
+name: Inspect final Pages deployment
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+    paths:
+      - .github/workflows/inspect-pages-deploy-temporary.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect:
+    if: github.head_ref == 'ops/inspect-pages-deploy-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Inspect Pages runs for the production data commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run list \
+            --workflow pages.yml \
+            --branch main \
+            --limit 20 \
+            --json databaseId,workflowName,displayTitle,status,conclusion,createdAt,updatedAt,headSha,event,url \
+            > /tmp/pages-runs.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          rows = json.loads(Path('/tmp/pages-runs.json').read_text(encoding='utf-8'))
+          relevant = [
+              row for row in rows
+              if row.get('headSha') in {
+                  '998fa1a717a86bc37ae23f4157e6587c290e16b6',
+                  'a3f0b12642677473a6948645bf63b6fe3c8f2ad3',
+              }
+          ]
+          print(json.dumps(relevant or rows[:5], ensure_ascii=False, indent=2))
+          PY
