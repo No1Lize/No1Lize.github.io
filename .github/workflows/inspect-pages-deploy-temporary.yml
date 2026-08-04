@@ -3,7 +3,7 @@ name: Inspect final Pages deployment
 on:
   pull_request:
     branches: [main]
-    types: [opened]
+    types: [opened, synchronize]
     paths:
       - .github/workflows/inspect-pages-deploy-temporary.yml
 
@@ -15,32 +15,74 @@ jobs:
   inspect:
     if: github.head_ref == 'ops/inspect-pages-deploy-20260804'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
+      TARGET_SHA: 37021032dba72ca10ce0b028905512501ae71962
+      SITE_URL: https://vciq.github.io/companies/
     steps:
-      - name: Inspect Pages runs for the production data commit
+      - name: Find the repaired Pages run
+        id: pages
         shell: bash
         run: |
           set -euo pipefail
-          gh run list \
-            --workflow pages.yml \
-            --branch main \
-            --limit 20 \
-            --json databaseId,workflowName,displayTitle,status,conclusion,createdAt,updatedAt,headSha,event,url \
-            > /tmp/pages-runs.json
-          python - <<'PY'
+          run_id=""
+          for attempt in $(seq 1 90); do
+            gh run list \
+              --workflow pages.yml \
+              --branch main \
+              --limit 30 \
+              --json databaseId,workflowName,displayTitle,status,conclusion,createdAt,updatedAt,headSha,event,url \
+              > /tmp/pages-runs.json
+            run_id=$(python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
           rows = json.loads(Path('/tmp/pages-runs.json').read_text(encoding='utf-8'))
-          relevant = [
-              row for row in rows
-              if row.get('headSha') in {
-                  '998fa1a717a86bc37ae23f4157e6587c290e16b6',
-                  'a3f0b12642677473a6948645bf63b6fe3c8f2ad3',
-              }
-          ]
-          print(json.dumps(relevant or rows[:5], ensure_ascii=False, indent=2))
+          matches = [row for row in rows if row.get('headSha') == os.environ['TARGET_SHA']]
+          print(matches[0]['databaseId'] if matches else '')
           PY
+            )
+            if [ -n "$run_id" ]; then
+              break
+            fi
+            sleep 5
+          done
+          if [ -z "$run_id" ]; then
+            echo "No Pages run found for $TARGET_SHA" >&2
+            cat /tmp/pages-runs.json
+            exit 1
+          fi
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          gh run view "$run_id" \
+            --json databaseId,workflowName,displayTitle,status,conclusion,createdAt,updatedAt,headSha,event,url
+
+      - name: Wait for the repaired Pages deployment
+        env:
+          RUN_ID: ${{ steps.pages.outputs.run_id }}
+        run: gh run watch "$RUN_ID" --exit-status
+
+      - name: Verify the live incremental refresh card
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 90); do
+            curl --fail --silent --show-error \
+              --retry 3 \
+              --retry-delay 2 \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?pages_repair_verify=${GITHUB_RUN_ID}-${attempt}" \
+              --output /tmp/companies.html
+            if grep -Fq '增量档案刷新' /tmp/companies.html && \
+               grep -Fq '待处理公司' /tmp/companies.html && \
+               grep -Fq '下一批' /tmp/companies.html && \
+               grep -Fq '最近处理' /tmp/companies.html; then
+              echo "Pages deployment succeeded and the live status card is visible."
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Pages deployed but the live status card was not visible in time." >&2
+          exit 1
