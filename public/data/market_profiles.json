@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T01:28:36+00:00",
+  "generatedAt": "2026-08-04T03:11:10+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-04T01:28:08+00:00",
+      "updatedAt": "2026-08-04T03:10:20+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -974,42 +974,42 @@
         {
           "date": "2026-08-04",
           "open": 1041.0,
-          "close": 1041.0,
-          "high": 1041.0,
-          "low": 1041.0,
-          "volume": 84361.0
+          "close": 1035.18,
+          "high": 1067.38,
+          "low": 1019.0,
+          "volume": 8954376.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥6540.53亿"
+          "value": "¥6503.33亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥6540.53亿"
+          "value": "¥6503.33亿"
         },
         {
           "id": "pe",
           "label": "市盈率",
-          "value": "161.38"
+          "value": "160.46"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "53.44"
+          "value": "53.14"
         },
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "0.01%"
+          "value": "1.43%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "¥8781.98万"
+          "value": "¥92.95亿"
         },
         {
           "id": "totalShares",
@@ -1073,6 +1073,18 @@
       },
       "news": [
         {
+          "title": "海外云厂商订单积压验证AI盈利正循环，国产算力订单传导路径渐明",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimchzv2209896.shtml",
+          "publishedAt": "2026-08-04T09:49:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "硬件创新的寒武纪来了，嘉立创如何成为物理AI时代的基础设施",
+          "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002ymp0",
+          "publishedAt": "2026-08-04T09:03:00+08:00",
+          "source": "新浪财经"
+        },
+        {
           "title": "寒武纪：8月3日获融资买入9.20亿元，融资余额172.57亿元占流通市值比例2.67%，超过近一年60%分位水平",
           "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-04/doc-inimcatp4176579.shtml",
           "publishedAt": "2026-08-04T08:19:00+08:00",
@@ -1080,7 +1092,7 @@
         },
         {
           "title": "确认赴港上市后 智元创新合伙人团队全阵容曝光",
-          "url": "https://t.cj.sina.cn/articles/view/1650111241/625ab30902001h3jc",
+          "url": "https://t.cj.sina.cn/articles/view/6248544856/174713a5802003nnc2",
           "publishedAt": "2026-08-04T06:54:00+08:00",
           "source": "新浪财经"
         },
@@ -1115,23 +1127,15 @@
           "source": "新浪财经"
         },
         {
-          "title": "独家丨智元官网首度披露合伙人团队，上市核心班底正式曝光",
-          "url": "https://finance.sina.com.cn/stock/t/2026-08-03/doc-inikzuyf6206119.shtml",
-          "publishedAt": "2026-08-03T19:18:00+08:00",
-          "source": "新浪财经"
-        },
-        {
           "title": "半导体大跌解读！全球芯片“过山车”，机构：去杠杆最陡峭的阶段或已过去",
           "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002sk5o",
           "publishedAt": "2026-08-03T18:44:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "智元创新最新合伙人团队曝光",
-          "url": "https://finance.sina.com.cn/7x24/2026-08-03/doc-inikzuyp2743277.shtml",
-          "publishedAt": "2026-08-03T18:34:00+08:00",
-          "source": "新浪财经"
         }
+      ],
+      "warnings": [
+        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "catl": {
@@ -1139,7 +1143,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-04T01:28:08+00:00",
+      "updatedAt": "2026-08-04T03:10:38+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2102,42 +2106,42 @@
         {
           "date": "2026-08-04",
           "open": 395.0,
-          "close": 395.0,
-          "high": 395.0,
-          "low": 395.0,
-          "volume": 2580.0
+          "close": 396.74,
+          "high": 397.5,
+          "low": 391.22,
+          "volume": 125991.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥1.83万亿"
+          "value": "¥1.84万亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥1.68万亿"
+          "value": "¥1.69万亿"
         },
         {
           "id": "pe",
           "label": "市盈率",
-          "value": "21.11"
+          "value": "21.21"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "4.90"
+          "value": "4.92"
         },
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "0.01%"
+          "value": "0.30%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "¥1.02亿"
+          "value": "¥49.76亿"
         },
         {
           "id": "totalShares",
@@ -2188,18 +2192,60 @@
         "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml"
       },
       "quote": {
-        "price": 394.4,
+        "price": 396.77,
         "currency": "CNY",
-        "previousClose": 395.3,
-        "change": -0.9,
-        "changePercent": -0.23,
-        "asOf": "2026-08-03T16:29:00+08:00",
+        "previousClose": 394.4,
+        "change": 2.37,
+        "changePercent": 0.6,
+        "asOf": "2026-08-04T11:10:39+08:00",
         "source": {
           "name": "新浪财经",
           "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml"
         }
       },
       "news": [
+        {
+          "title": "券商8月金股热捧宁德时代、药明康德，中际旭创被推荐次数减少8家",
+          "url": "https://cj.sina.cn/articles/view/1644119190/61ff449600102mg2w",
+          "publishedAt": "2026-08-04T11:00:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "嘉立创敲钟，深圳千亿IPO诞生",
+          "url": "https://cj.sina.cn/articles/view/1774800467/69c94e5302701d7h4",
+          "publishedAt": "2026-08-04T10:55:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "银河通用三年吸金70亿，王鹤的“通用大脑”走到哪一关了？",
+          "url": "https://t.cj.sina.cn/articles/view/1800320207/6b4eb4cf001013zs0",
+          "publishedAt": "2026-08-04T10:30:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "旺季到来电池ETF招商(561910)吸金超5400万，摩根大通：8月产量有望加速增长",
+          "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002hqie",
+          "publishedAt": "2026-08-04T10:03:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "中国储能出海抢接AI“电老虎”",
+          "url": "https://finance.sina.com.cn/stock/t/2026-08-04/doc-inimchzm4154117.shtml",
+          "publishedAt": "2026-08-04T09:58:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "国内首家ESG人力资源专业智库落地天津滨海新区",
+          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimchzt5433238.shtml",
+          "publishedAt": "2026-08-04T09:53:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "硬件创新基础设施龙头嘉立创登陆深市主板 申购倍数超4500倍",
+          "url": "https://finance.sina.com.cn/7x24/2026-08-04/doc-inimchzp5723679.shtml",
+          "publishedAt": "2026-08-04T09:38:00+08:00",
+          "source": "新浪财经"
+        },
         {
           "title": "宁德时代：8月3日获融资买入4.98亿元，融资余额223.25亿元占流通市值比例1.28%，超过近一年60%分位水平",
           "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-04/doc-inimcatx2302760.shtml",
@@ -2217,53 +2263,7 @@
           "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimcatx2273704.shtml",
           "publishedAt": "2026-08-04T08:32:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "宁德时代A股2026年中期分红总额约61.8亿元",
-          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimcatr5783781.shtml",
-          "publishedAt": "2026-08-04T08:22:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "锂电：强现实，弱预期",
-          "url": "https://cj.sina.cn/articles/view/1768359107/696704c300102g644",
-          "publishedAt": "2026-08-04T08:00:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "财经早报：股票私募仓位创4年多新高 “算力金属”需求爆发(股)丨2026年8月4日",
-          "url": "https://finance.sina.com.cn/stock/y/2026-08-04/doc-inimcatv5478402.shtml",
-          "publishedAt": "2026-08-04T07:43:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "交银施罗德基金收费不合理：基民累亏16亿，基金公司收2亿管理费",
-          "url": "https://finance.sina.com.cn/money/fund/2026-08-04/doc-inimcatx2279345.shtml",
-          "publishedAt": "2026-08-04T07:30:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "跨行业共筑绿色国际发展平台",
-          "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcatv5461346.shtml",
-          "publishedAt": "2026-08-04T07:21:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "宁德时代杀入船舶行业",
-          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimcatv5461735.shtml",
-          "publishedAt": "2026-08-04T07:18:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "新型电力系统“十五五”规划发布，宁德时代推出大手笔分红 | 新能源早参",
-          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimawmx5584427.shtml",
-          "publishedAt": "2026-08-04T07:00:00+08:00",
-          "source": "新浪财经"
         }
-      ],
-      "warnings": [
-        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "bgi-genomics": {
@@ -2271,7 +2271,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-04T01:28:09+00:00",
+      "updatedAt": "2026-08-04T03:10:18+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3235,37 +3235,37 @@
         {
           "date": "2026-08-04",
           "open": 38.25,
-          "close": 38.25,
-          "high": 38.25,
-          "low": 38.25,
-          "volume": 259.0
+          "close": 38.45,
+          "high": 38.93,
+          "low": 38.15,
+          "volume": 38244.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥160.01亿"
+          "value": "¥160.80亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥159.13亿"
+          "value": "¥159.92亿"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "1.90"
+          "value": "1.91"
         },
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "0.01%"
+          "value": "0.92%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "¥99.07万"
+          "value": "¥1.47亿"
         },
         {
           "id": "totalShares",
@@ -3335,6 +3335,12 @@
           "source": "新浪财经"
         },
         {
+          "title": "公司大模型发展的如何？华大基因回应",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcatx2283844.shtml",
+          "publishedAt": "2026-08-04T09:01:00+08:00",
+          "source": "新浪财经"
+        },
+        {
           "title": "华大基因：介绍基于mNGS技术的病原检测主力产品及优势",
           "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-04/doc-inimcatr5809801.shtml",
           "publishedAt": "2026-08-04T08:55:00+08:00",
@@ -3381,13 +3387,11 @@
           "url": "https://finance.sina.com.cn/roll/2026-08-03/doc-inikzuyf6151129.shtml",
           "publishedAt": "2026-08-03T17:50:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "华大基因：截至7月底累计斥资1.67亿元回购1.10%公司股份",
-          "url": "https://finance.sina.com.cn/7x24/2026-08-03/doc-inikzqsr2840773.shtml",
-          "publishedAt": "2026-08-03T17:30:00+08:00",
-          "source": "新浪财经"
         }
+      ],
+      "warnings": [
+        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>",
+        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "horizon-robotics": {
@@ -3395,7 +3399,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-04T01:28:07+00:00",
+      "updatedAt": "2026-08-04T03:10:37+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -3407,14 +3411,6 @@
         "region": "中国香港"
       },
       "priceHistory": [
-        {
-          "date": "2026-02-03",
-          "open": 8.0,
-          "close": 8.09,
-          "high": 8.19,
-          "low": 7.9,
-          "volume": 143026981.0
-        },
         {
           "date": "2026-02-04",
           "open": 8.09,
@@ -4366,28 +4362,41 @@
           "high": 5.29,
           "low": 5.085,
           "volume": 123697885.0
+        },
+        {
+          "date": "2026-08-04",
+          "open": 5.1,
+          "close": 5.14,
+          "high": 5.21,
+          "low": 5.065,
+          "volume": 44517300.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "HK$743.16亿"
+          "value": "HK$748.26亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "HK$635.41亿"
+          "value": "HK$639.77亿"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "5.34"
+          "value": "5.38"
+        },
+        {
+          "id": "turnover",
+          "label": "换手率",
+          "value": "0.36%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "HK$205.63万"
+          "value": "HK$2.29亿"
         },
         {
           "id": "totalShares",
@@ -4439,15 +4448,15 @@
         "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html"
       },
       "quote": {
-        "price": 5.1,
+        "price": 5.135,
+        "previousClose": 5.0,
+        "change": 0.135,
+        "changePercent": 2.7,
         "currency": "HKD",
-        "previousClose": 5.135,
-        "change": -0.035,
-        "changePercent": -0.68,
-        "asOf": "2026-08-04T09:20:30+08:00",
+        "asOf": "2026-08-04T02:55:50+00:00",
         "source": {
-          "name": "新浪财经",
-          "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html"
+          "name": "Yahoo财经",
+          "url": "https://sg.finance.yahoo.com/quote/9660.HK/"
         }
       },
       "news": [
@@ -4511,6 +4520,9 @@
           "publishedAt": "2026-07-28T11:01:00+08:00",
           "source": "新浪财经"
         }
+      ],
+      "warnings": [
+        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>"
       ]
     },
     "xtalpi": {
@@ -4518,7 +4530,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-04T01:28:07+00:00",
+      "updatedAt": "2026-08-04T03:10:37+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -4530,14 +4542,6 @@
         "region": "中国香港"
       },
       "priceHistory": [
-        {
-          "date": "2026-02-03",
-          "open": 11.71,
-          "close": 11.66,
-          "high": 11.82,
-          "low": 11.41,
-          "volume": 44425983.0
-        },
         {
           "date": "2026-02-04",
           "open": 11.42,
@@ -5489,28 +5493,41 @@
           "high": 6.95,
           "low": 6.665,
           "volume": 33085660.0
+        },
+        {
+          "date": "2026-08-04",
+          "open": 6.91,
+          "close": 6.99,
+          "high": 7.17,
+          "low": 6.91,
+          "volume": 18981365.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "HK$297.37亿"
+          "value": "HK$300.17亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "HK$297.37亿"
+          "value": "HK$300.17亿"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "2.86"
+          "value": "2.89"
+        },
+        {
+          "id": "turnover",
+          "label": "换手率",
+          "value": "0.44%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "HK$86.38万"
+          "value": "HK$1.33亿"
         },
         {
           "id": "totalShares",
@@ -5562,18 +5579,24 @@
         "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html"
       },
       "quote": {
-        "price": 6.91,
+        "price": 6.965,
+        "previousClose": 7.12,
+        "change": -0.155,
+        "changePercent": -2.18,
         "currency": "HKD",
-        "previousClose": 6.87,
-        "change": 0.04,
-        "changePercent": 0.58,
-        "asOf": "2026-08-04T09:20:30+08:00",
+        "asOf": "2026-08-04T02:55:37+00:00",
         "source": {
-          "name": "新浪财经",
-          "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html"
+          "name": "Yahoo财经",
+          "url": "https://sg.finance.yahoo.com/quote/2228.HK/"
         }
       },
       "news": [
+        {
+          "title": "【券商聚焦】浙商证券维持晶泰控股（02228）买入评级 指主业强劲增长",
+          "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-03/doc-inikzuym5977425.shtml",
+          "publishedAt": "2026-08-03T16:54:00+08:00",
+          "source": "新浪财经"
+        },
         {
           "title": "AI的下一个 Claude Code，可能诞生在实验室",
           "url": "https://finance.sina.com.cn/tech/roll/2026-08-03/doc-inikzeat6085781.shtml",
@@ -5627,13 +5650,10 @@
           "url": "https://t.cj.sina.cn/articles/view/2118746300/7e4980bc02001ob6y",
           "publishedAt": "2026-07-31T00:50:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "晶泰控股联合26家生态伙伴成立“科学智能开放生态联盟”",
-          "url": "https://finance.sina.com.cn/roll/2026-07-30/doc-inikquqc1255136.shtml",
-          "publishedAt": "2026-07-30T19:13:00+08:00",
-          "source": "新浪财经"
         }
+      ],
+      "warnings": [
+        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>"
       ]
     },
     "pony-ai": {
@@ -5641,7 +5661,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-04T01:28:17+00:00",
+      "updatedAt": "2026-08-04T03:10:46+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6748,7 +6768,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-04T01:28:17+00:00",
+      "updatedAt": "2026-08-04T03:10:46+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7850,7 +7870,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-04T01:28:18+00:00",
+      "updatedAt": "2026-08-04T03:10:51+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8962,7 +8982,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-04T01:28:20+00:00",
+      "updatedAt": "2026-08-04T03:10:57+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -10074,7 +10094,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-04T01:28:25+00:00",
+      "updatedAt": "2026-08-04T03:10:57+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -11186,7 +11206,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-04T01:28:26+00:00",
+      "updatedAt": "2026-08-04T03:11:01+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -12291,6 +12311,9 @@
           "publishedAt": "2026-07-30T20:01:00+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "recursion": {
@@ -12298,7 +12321,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-04T01:28:27+00:00",
+      "updatedAt": "2026-08-04T03:11:03+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -13410,7 +13433,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-04T01:28:28+00:00",
+      "updatedAt": "2026-08-04T03:11:04+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -14522,7 +14545,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-04T01:28:32+00:00",
+      "updatedAt": "2026-08-04T03:11:07+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -15633,7 +15656,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-04T01:28:34+00:00",
+      "updatedAt": "2026-08-04T03:11:08+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
