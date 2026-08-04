@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
@@ -22,6 +23,8 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 65
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -191,6 +194,7 @@ jobs:
             python tools/crawl_venture_profiles.py --validate-only
             python tools/enrich_venture_profiles.py --validate-only
             if git push origin HEAD:main; then
+              gh workflow run pages.yml --ref main
               exit 0
             fi
             if [ "$attempt" -eq 3 ]; then
