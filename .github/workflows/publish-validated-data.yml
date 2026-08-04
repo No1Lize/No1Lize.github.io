@@ -1,0 +1,53 @@
+name: Publish validated data updates
+
+on:
+  workflow_run:
+    workflows:
+      - Refresh public intelligence every two hours
+      - Refresh public intelligence
+      - Refresh venture profiles
+      - Refresh all listed-company research PDFs
+      - Refresh institution rankings
+      - Refresh STAR Market investors
+      - Monthly source performance review
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: vciq-pages-dispatch
+  queue: max
+
+jobs:
+  publish:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Record the validated writer run
+        if: github.event_name == 'workflow_run'
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            "workflow=${{ github.event.workflow_run.name }}" \
+            "run_id=${{ github.event.workflow_run.id }}" \
+            "event=${{ github.event.workflow_run.event }}" \
+            "head_branch=${{ github.event.workflow_run.head_branch }}" \
+            "head_sha=${{ github.event.workflow_run.head_sha }}" \
+            "conclusion=${{ github.event.workflow_run.conclusion }}"
+
+      - name: Dispatch one Pages build from the latest main
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh workflow run pages.yml --ref main
