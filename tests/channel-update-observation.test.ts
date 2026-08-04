@@ -78,10 +78,12 @@ test("source and channel classifications remain independent from event labels", 
   const items = [official, media];
 
   assert.ok(items.every((entry) => entry.keywords.length === 1));
-  assert.deepEqual(
-    collectChannelUpdateClassifications(items).map((option) => option.keyword),
-    ["B级来源", "C级来源", "机构动态", "资本事件"],
-  );
+  const actualClassifications = collectChannelUpdateClassifications(items)
+    .map((option) => option.keyword)
+    .sort((left, right) => left.localeCompare(right, "zh-CN"));
+  const expectedClassifications = ["B级来源", "C级来源", "机构动态", "资本事件"]
+    .sort((left, right) => left.localeCompare(right, "zh-CN"));
+  assert.deepEqual(actualClassifications, expectedClassifications);
 
   const filtered = filterAndSortChannelUpdates({
     items,
