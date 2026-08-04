@@ -1,0 +1,1225 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-02T23:46:07+00:00",
+  "verifiedRelationshipCount": 0,
+  "needsReviewCount": 5,
+  "rejectedCount": 28,
+  "publicationRule": "Only manifest-backed verified records are authoritative equity relationships; needs-review and rejected extraction rows remain separate audit queues.",
+  "relationships": [],
+  "candidates": [
+    {
+      "id": "cambricon:star-investor-aeacbcf08edf069d46",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-aeacbcf08edf069d46",
+        "name": "（深圳）有限公司",
+        "normalizedName": "深圳有限公司",
+        "investorType": "股权投资机构",
+        "institutionEntityId": "institution:招银国际资本",
+        "institutionEntityName": "招银国际资本"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 116,
+        "sourceSection": "持股情况",
+        "excerpt": "长城招银资产管理（深圳）有限公司 董事长 关联方"
+      },
+      "review": {
+        "status": "needs_review",
+        "reasons": [
+          "no-holding-fact",
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-e82940b8a75a3df877",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-e82940b8a75a3df877",
+        "name": "湖北长江招银产业基金",
+        "normalizedName": "湖北长江招银产业基金",
+        "investorType": "股权投资机构"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 116,
+        "sourceSection": "持股情况",
+        "excerpt": "湖北长江招银产业基金管理有限公司 董事长 关联方"
+      },
+      "review": {
+        "status": "needs_review",
+        "reasons": [
+          "no-holding-fact",
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-857cf810c1c0b0df3b",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-857cf810c1c0b0df3b",
+        "name": "深圳招银电信股权投资基金",
+        "normalizedName": "深圳招银电信股权投资基金",
+        "investorType": "股权投资机构"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "深圳招银电信股权投资基金管理有限公司、湖北长江"
+      },
+      "review": {
+        "status": "needs_review",
+        "reasons": [
+          "no-holding-fact",
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-bbfbed16636186417b",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-bbfbed16636186417b",
+        "name": "新疆招银新投天山基金",
+        "normalizedName": "新疆招银新投天山基金",
+        "investorType": "股权投资机构"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 116,
+        "sourceSection": "持股情况",
+        "excerpt": "新疆招银新投天山基金有限公司 董事长 关联方"
+      },
+      "review": {
+        "status": "needs_review",
+        "reasons": [
+          "no-holding-fact",
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-73664054d70d94cdd0",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-73664054d70d94cdd0",
+        "name": "长城招银资产管理",
+        "normalizedName": "长城招银资产管理",
+        "investorType": "股权投资机构"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 116,
+        "sourceSection": "持股情况",
+        "excerpt": "长城招银资产管理（深圳）有限公司 董事长 关联方"
+      },
+      "review": {
+        "status": "needs_review",
+        "reasons": [
+          "no-holding-fact",
+          "awaiting-human-review"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "id": "cambricon:star-investor-3c4df9095ae16cd473",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-3c4df9095ae16cd473",
+        "name": "（十）有限公司",
+        "normalizedName": "十有限公司",
+        "investorType": "国资投资平台"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 33.19
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 74,
+        "sourceSection": "持股情况",
+        "excerpt": "（十）有限公司整体变更为股份有限公司"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "generic-legal-form"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-b6cedf2e80327dde6e",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-b6cedf2e80327dde6e",
+        "name": "国投基金",
+        "normalizedName": "国投基金",
+        "investorType": "国资投资平台"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 33.19
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 74,
+        "sourceSection": "持股情况",
+        "excerpt": "5 国投基金 14,124,730 3.92%"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-0f57d50d92cd85531e",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-0f57d50d92cd85531e",
+        "name": "整体变更为股份有限公司",
+        "normalizedName": "整体变更为股份有限公司",
+        "investorType": "国资投资平台"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 33.19
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 74,
+        "sourceSection": "持股情况",
+        "excerpt": "（十）有限公司整体变更为股份有限公司"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "narrative-name-fragment"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-9273fc1d6216a70163",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-9273fc1d6216a70163",
+        "name": "中科寒武纪科技股份有限公司",
+        "normalizedName": "中科寒武纪科技股份有限公司",
+        "investorType": "产业投资者"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 33.19
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 74,
+        "sourceSection": "持股情况",
+        "excerpt": "中科寒武纪科技股份有限公司 首次公开发行股票并在科创板上市招股说明书"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "issuer-name"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-daf3746b17143f1dd3",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-daf3746b17143f1dd3",
+        "name": "珠海大横琴科技发展有限公司",
+        "normalizedName": "珠海大横琴科技发展有限公司",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 30
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 85,
+        "sourceSection": "股东基本情况",
+        "excerpt": "2 珠海大横琴科技发展有限公司 150.00 30.00"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-427963c126f520c7da",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-427963c126f520c7da",
+        "name": "电信股权投资基金",
+        "normalizedName": "电信股权投资基金",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "电信股权投资基金管理有限公司，连素萍担任深圳招"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-04ba80b3820dbab2ce",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-04ba80b3820dbab2ce",
+        "name": "管理有限公司",
+        "normalizedName": "管理有限公司",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "电信股权投资基金管理有限公司，连素萍担任深圳招"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "generic-legal-form"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-95092f38d169e6941a",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-95092f38d169e6941a",
+        "name": "伙人暨执行事务合伙人为湖北长江招银产业基金",
+        "normalizedName": "伙人暨执行事务合伙人为湖北长江招银产业基金",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "伙人暨执行事务合伙人为湖北长江招银产业基金管理"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "narrative-name-fragment"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-62fced142b3d60a0fb",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-62fced142b3d60a0fb",
+        "name": "事务合伙人为知己行远（天津）科技有限公司",
+        "normalizedName": "事务合伙人为知己行远天津科技有限公司",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "事务合伙人为知己行远（天津）科技有限公司，宋春"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "narrative-name-fragment"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-3140caf5fd734f77a1",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-3140caf5fd734f77a1",
+        "name": "行远投资管理中心（有限合伙",
+        "normalizedName": "行远投资管理中心有限合伙",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "行远投资管理中心（有限合伙）的普通合伙人暨执行"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-ce404b71393032c22d",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-ce404b71393032c22d",
+        "name": "银产业基金管理有限公司",
+        "normalizedName": "银产业基金管理有限公司",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "银产业基金管理有限公司的董事长"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-a3f2019bef4d7014ba",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-a3f2019bef4d7014ba",
+        "name": "银电信股权投资基金",
+        "normalizedName": "银电信股权投资基金",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "银电信股权投资基金管理有限公司的董事长兼总经理"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-a3f39d1e78f6048f52",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-a3f39d1e78f6048f52",
+        "name": "雨持有知己行远（天津）科技有限公司",
+        "normalizedName": "雨持有知己行远天津科技有限公司",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "雨持有知己行远（天津）科技有限公司 20%的出资额"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "narrative-name-fragment"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-4303b47f93aab19024",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-4303b47f93aab19024",
+        "name": "招银产业基金",
+        "normalizedName": "招银产业基金",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "招银产业基金管理有限公司，连素萍担任湖北长江招"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-2fb39ad64c0f57c6ff",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-2fb39ad64c0f57c6ff",
+        "name": "知己行远投资管理中心（有限合伙",
+        "normalizedName": "知己行远投资管理中心有限合伙",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 20
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "知己行远投资管理中心（有限合伙），湖北长江知己"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-1903e920725c1c56b7",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-1903e920725c1c56b7",
+        "name": "港区禾芯投资管理合伙企业（有限合伙）",
+        "normalizedName": "港区禾芯投资管理合伙企业有限合伙",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 5
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "港区禾芯投资管理合伙企业（有限合伙）的普通合伙"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-ee844c34cef27b6505",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-ee844c34cef27b6505",
+        "name": "管理（苏州）有限公司",
+        "normalizedName": "管理苏州有限公司",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 5
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "和利创业投资管理（苏州）有限公司为宁波梅山保税"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "generic-legal-form"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-9027ba18373dafb7a9",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-9027ba18373dafb7a9",
+        "name": "管理合伙企业（有限合伙）",
+        "normalizedName": "管理合伙企业有限合伙",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 5
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "管理合伙企业（有限合伙）；"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "generic-legal-form"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-2f797222b1f1f19f70",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-2f797222b1f1f19f70",
+        "name": "和利创业投资",
+        "normalizedName": "和利创业投资",
+        "investorType": "股权投资机构"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 5
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "和利创业投资管理（苏州）有限公司为宁波梅山保税"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-924b771bff9e7dfbce",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-924b771bff9e7dfbce",
+        "name": "国新资本",
+        "normalizedName": "国新资本",
+        "investorType": "国资投资平台"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 2.38
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 74,
+        "sourceSection": "持股情况",
+        "excerpt": "19 国新资本 3,796,999 1.05%"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-e4d9e4b0227fbe19af",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-e4d9e4b0227fbe19af",
+        "name": "天津玄思企业管理有限公司",
+        "normalizedName": "天津玄思企业管理有限公司",
+        "investorType": "其他机构股东"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 0.7
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 117,
+        "sourceSection": "持股情况",
+        "excerpt": "天津玄思企业管理有限公司 80.00%"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-35b92bdc0ec1424e56",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-35b92bdc0ec1424e56",
+        "name": "天津玄算二号企业管理合伙企业（有限合伙）",
+        "normalizedName": "天津玄算二号企业管理合伙企业有限合伙",
+        "investorType": "投资合伙企业"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 0.7
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 117,
+        "sourceSection": "持股情况",
+        "excerpt": "天津玄算二号企业管理合伙企业（有限合伙） 48.15%"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-32083f1a260718edc2",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-32083f1a260718edc2",
+        "name": "天津玄算九号企业管理合伙企业（有限合伙）",
+        "normalizedName": "天津玄算九号企业管理合伙企业有限合伙",
+        "investorType": "投资合伙企业"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 0.7
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 117,
+        "sourceSection": "持股情况",
+        "excerpt": "天津玄算九号企业管理合伙企业（有限合伙） 2.18%"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-18eefa7a33e8b878e7",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-18eefa7a33e8b878e7",
+        "name": "天津玄算一号企业管理合伙企业（有限合伙）",
+        "normalizedName": "天津玄算一号企业管理合伙企业有限合伙",
+        "investorType": "投资合伙企业"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 0.7
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 117,
+        "sourceSection": "持股情况",
+        "excerpt": "天津玄算一号企业管理合伙企业（有限合伙） 43.67%"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "holding-value-mismatch"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-0662ca5059a5f4c453",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-0662ca5059a5f4c453",
+        "name": "立群通过国投基金",
+        "normalizedName": "立群通过国投基金",
+        "investorType": "国资投资平台"
+      },
+      "holding": {
+        "preIpoOwnershipPct": 0.04
+      },
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 117,
+        "sourceSection": "持股情况",
+        "excerpt": "立群通过国投基金和宁波瀚高间接持有公司股票。宋春雨通过湖北联想间接持有公司股票。"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "narrative-name-fragment"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-6b1f17a34cbbb094b9",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-6b1f17a34cbbb094b9",
+        "name": "均为有限合伙",
+        "normalizedName": "均为有限合伙",
+        "investorType": "投资合伙企业"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "申报前一年内发行人通过增资或股权转让引入的股东共 9 名，均为有限合伙企业。"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "narrative-name-fragment"
+        ]
+      },
+      "contactPublication": {
+        "status": "not-disclosed-in-prospectus",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-c3a624905d8a4a643d",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-c3a624905d8a4a643d",
+        "name": "投资管理（苏州）有限公司",
+        "normalizedName": "投资管理苏州有限公司",
+        "investorType": "股权投资机构"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "投资管理（苏州）有限公司，国调国信智芯的普通合"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "generic-legal-form"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    },
+    {
+      "id": "cambricon:star-investor-6dcb0981a182b1b936",
+      "company": {
+        "slug": "cambricon",
+        "name": "寒武纪",
+        "ticker": "688256",
+        "exchange": "上海证券交易所科创板",
+        "sector": "半导体"
+      },
+      "investor": {
+        "candidateId": "star-investor-6dcb0981a182b1b936",
+        "name": "资本管理（深圳）有限公司",
+        "normalizedName": "资本管理深圳有限公司",
+        "investorType": "股权投资机构"
+      },
+      "holding": {},
+      "evidence": {
+        "prospectusTitle": "首次公开发行股票并在科创板上市<em>招股说明书</em>",
+        "prospectusUrl": "https://static.cninfo.com.cn/finalpage/2020-07-14/1208028359.PDF",
+        "prospectusSha256": "a673413cd86856974e6b1f524e38b3c57aa8e6bfad7f8f819083a0bcc2765adb",
+        "sourcePage": 97,
+        "sourceSection": "股东基本情况",
+        "excerpt": "资本管理（深圳）有限公司"
+      },
+      "review": {
+        "status": "rejected",
+        "reasons": [
+          "generic-legal-form"
+        ]
+      },
+      "contactPublication": {
+        "status": "withheld-pending-review",
+        "published": false
+      }
+    }
+  ]
+}

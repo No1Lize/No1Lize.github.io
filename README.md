@@ -88,6 +88,7 @@ python3 tools/crawl_articles.py --validate-only
 - `.github/workflows/tracking-discovery.yml` 每周日 03:00（台北时间）执行实体和公开信源扩展；
 - `.github/workflows/star-market-investor-refresh.yml` 每周一 03:10（台北时间）刷新科创板招股说明书自动抽取目录；
 - `.github/workflows/source-performance-review.yml` 每月 1 日 08:30（台北时间）生成信源效能、重复率、发现延迟和人工误归属审查清单，仅提出降级或停用建议，不自动删除来源；
+- `.github/workflows/institution-data-layers.yml` 在榜单、机构别名、文章或科创板股权候选变化后，重建机构主体、机构事件和股权关系三个独立审计快照；
 - 上述工作流均支持手动触发。数据发生语义变化时由 `github-actions[bot]` 提交，并触发 Pages 重新构建发布。
 
 SEC 建议在 **Settings → Secrets and variables → Actions → Variables** 中设置 `SEC_USER_AGENT`，例如 `VCIQ research contact@example.com`。它不是密钥；未设置时脚本使用仓库主页作为联系信息。

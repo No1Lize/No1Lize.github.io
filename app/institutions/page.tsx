@@ -5,8 +5,14 @@ import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { InstitutionDirectory } from "@/components/institution-directory";
 import {
   institutionDirectoryStats,
+  institutionRankingDataVersion,
   institutionRankingSources,
+  institutionRankingUpdatedAt,
 } from "@/lib/institution-ranking-data";
+import {
+  institutionDataLayerStats,
+  institutionDataLayerVersions,
+} from "@/lib/institution-data-layer-data";
 import { starMarketInvestorStats } from "@/lib/star-market-investor-data";
 import styles from "./page.module.css";
 
@@ -18,6 +24,7 @@ export const metadata: Metadata = {
 export default function InstitutionsPage() {
   const qingkeSource = institutionRankingSources[0];
   const chinaventureSource = institutionRankingSources[1];
+  const displayDate = (value: string) => value?.slice(0, 10) || "待生成";
 
   return (
     <main className="page-shell subpage">
@@ -62,15 +69,29 @@ export default function InstitutionsPage() {
         <div className={styles.summary}>
           <div>
             <span>中国榜单机构</span>
-            <strong>{institutionDirectoryStats.china}</strong>
+            <strong>{institutionDataLayerStats.chinaEntities}</strong>
           </div>
           <div>
             <span>海外代表机构</span>
-            <strong>{institutionDirectoryStats.us}</strong>
+            <strong>{institutionDataLayerStats.usEntities}</strong>
+          </div>
+          <div>
+            <span>已归属机构事件</span>
+            <strong>{institutionDataLayerStats.institutionEvents}</strong>
+          </div>
+          <div>
+            <span>已核验股权关系</span>
+            <strong>{institutionDataLayerStats.verifiedEquityRelationships}</strong>
           </div>
           <p>
-            共 {institutionDirectoryStats.rankedRecords} 条清科榜单记录；
-            {institutionDirectoryStats.detailedProfiles} 家机构已连接站内研究档案。
+            数据版本 {institutionRankingDataVersion}，榜单审计日期 {institutionRankingUpdatedAt}；
+            主体层 {displayDate(institutionDataLayerVersions.entitiesGeneratedAt)}、
+            事件层 {displayDate(institutionDataLayerVersions.eventsGeneratedAt)}、
+            股权层 {displayDate(institutionDataLayerVersions.equityGeneratedAt)}。
+            共 {institutionDirectoryStats.rankedRecords} 条清科榜单记录、
+            {institutionDirectoryStats.detailedProfiles} 家站内档案；
+            当前另有 {institutionDataLayerStats.needsReviewEquityCandidates} 条股权候选待核验、
+            {institutionDataLayerStats.rejectedEquityCandidates} 条已隔离。
           </p>
         </div>
 
@@ -84,6 +105,7 @@ export default function InstitutionsPage() {
             {chinaventureSource.publisher}《{chinaventureSource.title}》
           </a>
           。当前结构化排名记录仅保存清科榜单明确披露的名次；未排序榜单统一标记为“入选”，不推断具体位次。
+          榜单、机构主体、机构事件和股权关系分别保存为独立 JSON 数据层，页面不再从同一混合数组临时推导全部关系。
         </p>
 
         <InstitutionDirectory compact pageSize={6} />

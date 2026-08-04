@@ -25,6 +25,17 @@ export type InstitutionEntityArticle = {
   source?: { url?: string };
 };
 
+export type InstitutionEntityMatchMethod =
+  | "structured-field"
+  | "official-domain"
+  | "reviewed-alias-text";
+
+export type InstitutionEntityMatch = {
+  entity: InstitutionEntity;
+  methods: InstitutionEntityMatchMethod[];
+  evidence: string[];
+};
+
 type AliasConfig = {
   schemaVersion?: number;
   entities?: Record<string, string[]>;
@@ -104,14 +115,14 @@ function domainMatches(host: string, domain: string) {
 
 function entitiesForSourceUrl(url: string | undefined) {
   const host = hostname(url);
-  if (!host) return [];
+  if (!host) return { host: "", entities: [] as InstitutionEntity[] };
 
   const matches = institutionEntities.flatMap((entity) =>
     entity.domains
       .filter((domain) => domainMatches(host, domain))
       .map((domain) => ({ entity, specificity: domain.length })),
   );
-  if (!matches.length) return [];
+  if (!matches.length) return { host, entities: [] as InstitutionEntity[] };
 
   const maximumSpecificity = Math.max(...matches.map((match) => match.specificity));
   const resolved = new Map<string, InstitutionEntity>();
@@ -120,7 +131,10 @@ function entitiesForSourceUrl(url: string | undefined) {
       resolved.set(match.entity.id, match.entity);
     }
   }
-  return [...resolved.values()].sort((left, right) => left.order - right.order);
+  return {
+    host,
+    entities: [...resolved.values()].sort((left, right) => left.order - right.order),
+  };
 }
 
 function searchableArticleText(article: InstitutionEntityArticle) {
@@ -161,26 +175,63 @@ const textAliases = [...byAlias.entries()]
       left.entity.order - right.entity.order,
   );
 
-export function resolveArticleInstitutionEntities(article: InstitutionEntityArticle) {
-  const resolved = new Map<string, InstitutionEntity>();
-  const add = (entity: InstitutionEntity | undefined) => {
-    if (entity) resolved.set(entity.id, entity);
+export function resolveArticleInstitutionEntityMatches(
+  article: InstitutionEntityArticle,
+): InstitutionEntityMatch[] {
+  const resolved = new Map<
+    string,
+    {
+      entity: InstitutionEntity;
+      methods: Set<InstitutionEntityMatchMethod>;
+      evidence: Set<string>;
+    }
+  >();
+  const add = (
+    entity: InstitutionEntity | undefined,
+    method: InstitutionEntityMatchMethod,
+    evidence: string,
+  ) => {
+    if (!entity) return;
+    const current = resolved.get(entity.id) ?? {
+      entity,
+      methods: new Set<InstitutionEntityMatchMethod>(),
+      evidence: new Set<string>(),
+    };
+    current.methods.add(method);
+    if (evidence.trim()) current.evidence.add(evidence.trim());
+    resolved.set(entity.id, current);
   };
 
   for (const institution of article.institutions ?? []) {
-    add(uniqueAliasEntity(institution));
+    add(uniqueAliasEntity(institution), "structured-field", institution);
   }
-  for (const entity of entitiesForSourceUrl(article.source?.url)) add(entity);
+
+  const sourceMatch = entitiesForSourceUrl(article.source?.url);
+  for (const entity of sourceMatch.entities) {
+    add(entity, "official-domain", sourceMatch.host);
+  }
 
   const haystack = searchableArticleText(article);
   if (haystack) {
     for (const candidate of textAliases) {
-      if (haystack.includes(candidate.normalized)) add(candidate.entity);
+      if (haystack.includes(candidate.normalized)) {
+        add(candidate.entity, "reviewed-alias-text", candidate.alias);
+      }
       if (resolved.size >= 5) break;
     }
   }
 
-  return [...resolved.values()].sort((left, right) => left.order - right.order);
+  return [...resolved.values()]
+    .sort((left, right) => left.entity.order - right.entity.order)
+    .map((match) => ({
+      entity: match.entity,
+      methods: [...match.methods],
+      evidence: [...match.evidence],
+    }));
+}
+
+export function resolveArticleInstitutionEntities(article: InstitutionEntityArticle) {
+  return resolveArticleInstitutionEntityMatches(article).map((match) => match.entity);
 }
 
 export function institutionEntityById(id: string) {
