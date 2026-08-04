@@ -1,0 +1,83 @@
+name: Diagnose tracking source recursion once
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+    paths:
+      - .github/workflows/diagnose-tracking-source-recursion-once.yml
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    if: github.head_ref == 'fix/tracking-source-recursion-20260804' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/tracking-source-recursion-20260804
+      - name: Print recursive and automatic source identities
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlparse
+
+          config = json.loads(Path('config/user_tracking.json').read_text())
+          ledger = json.loads(Path('config/tracking_auto_discovery.json').read_text())
+          health = json.loads(Path('public/data/source_health.json').read_text())
+          articles = json.loads(Path('public/data/articles.json').read_text())
+
+          source_urls = {
+              row.get('value')
+              for row in ledger.get('added', [])
+              if row.get('kind') == 'sources'
+          }
+          rows = []
+          for source in config.get('sources', []):
+              name = str(source.get('name') or '')
+              url = str(source.get('url') or '')
+              if '信源' in name or source.get('id', '').startswith('source-auto') or url in source_urls:
+                  state = health.get('sources', {}).get(source.get('id'), {})
+                  rows.append({
+                      'id': source.get('id'),
+                      'name': name,
+                      'url': url,
+                      'host': urlparse(url).netloc,
+                      'sector': source.get('sector'),
+                      'category': source.get('sourceCategory'),
+                      'ledgerAuto': url in source_urls,
+                      'health': {
+                          'state': state.get('collectionState'),
+                          'failures': state.get('consecutiveFailures'),
+                          'productive': state.get('lastProductiveAt'),
+                          'alert': state.get('alertActive'),
+                      },
+                  })
+          print('CONFIG_ROWS_BEGIN')
+          print(json.dumps(rows, ensure_ascii=False, indent=2))
+          print('CONFIG_ROWS_END')
+
+          statuses = []
+          for status in articles.get('sourceStatus', []):
+              name = str(status.get('name') or status.get('platform') or '')
+              if '信源' in name:
+                  statuses.append({
+                      'id': status.get('id') or status.get('sourceId'),
+                      'name': name,
+                      'url': status.get('url'),
+                      'platform': status.get('platform'),
+                      'status': status.get('status'),
+                  })
+          print('STATUS_ROWS_BEGIN')
+          print(json.dumps(statuses, ensure_ascii=False, indent=2))
+          print('STATUS_ROWS_END')
+          print(json.dumps({
+              'configSources': len(config.get('sources', [])),
+              'ledgerSourceRows': len(source_urls),
+              'healthSources': len(health.get('sources', {})),
+              'statusRows': len(articles.get('sourceStatus', [])),
+              'matchingConfigRows': len(rows),
+              'matchingStatusRows': len(statuses),
+          }, ensure_ascii=False))
+          PY
