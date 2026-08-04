@@ -22,13 +22,13 @@ export type StarInvestorEvidenceHolding = {
 };
 
 export const starInvestorReviewLabels: Record<StarInvestorReviewStatus, string> = {
-  verified: "已人工核验",
-  needs_review: "待人工核验",
+  verified: "已审核确认",
+  needs_review: "待审核确认",
   rejected: "质量门已排除",
 };
 
 export const starInvestorReviewReasonLabels: Record<string, string> = {
-  "awaiting-human-review": "等待人工核验",
+  "awaiting-human-review": "等待审核确认",
   "generic-legal-form": "名称仅为通用法律形式",
   "narrative-name-fragment": "名称疑似正文句子片段",
   "name-not-in-evidence": "名称与证据摘录不一致",
