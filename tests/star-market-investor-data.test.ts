@@ -62,6 +62,8 @@ test("unmatched prospectus investor opens a focused institution-directory search
       sourceSection: "发行前股本结构",
       evidence: "公开招股说明书股东表",
       contactStatus: "not-disclosed-in-prospectus",
+      reviewStatus: "needs_review",
+      reviewReasons: ["awaiting-human-review"],
     },
   } as StarMarketInvestorRecord;
 
