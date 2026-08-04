@@ -88,8 +88,8 @@ export function StarMarketInvestorDirectory() {
       <section className={styles.stats} aria-label="科创板招股说明书自动抽取审核统计">
         <div><span>原始抽取</span><strong>{starMarketInvestorStats.extracted}</strong></div>
         <div><span>质量门后候选</span><strong>{starMarketInvestorStats.investors}</strong></div>
-        <div><span>待人工核验</span><strong>{starMarketInvestorStats.needsReview}</strong></div>
-        <div><span>已人工核验</span><strong>{starMarketInvestorStats.verified}</strong></div>
+        <div><span>待审核确认</span><strong>{starMarketInvestorStats.needsReview}</strong></div>
+        <div><span>已审核确认</span><strong>{starMarketInvestorStats.verified}</strong></div>
         <div><span>自动排除</span><strong>{starMarketInvestorStats.rejected}</strong></div>
       </section>
 
@@ -115,8 +115,8 @@ export function StarMarketInvestorDirectory() {
           onChange={(event) => setReviewFilter(event.target.value as ReviewFilter)}
         >
           <option value="all">全部可见候选</option>
-          <option value="verified">已人工核验</option>
-          <option value="needs_review">待人工核验</option>
+          <option value="verified">已审核确认</option>
+          <option value="needs_review">待审核确认</option>
         </select>
         <label className={styles.checkbox}>
           <input
@@ -185,7 +185,7 @@ export function StarMarketInvestorDirectory() {
                 )}
                 {investor.reviewStatus === "verified" && investor.reviewedBy && (
                   <p className={styles.reviewNote}>
-                    人工核验：{investor.reviewedBy}
+                    审核记录：{investor.reviewedBy}
                     {investor.reviewedAt ? ` · ${reviewTimeLabel(investor.reviewedAt)}` : ""}
                     {investor.reviewNote ? ` · ${investor.reviewNote}` : ""}
                   </p>
@@ -207,7 +207,7 @@ export function StarMarketInvestorDirectory() {
                     </a>
                   )}
                   {!contact && investor.contactStatus === "withheld-pending-review" && (
-                    <p className={styles.muted}>联系字段暂缓展示，待机构候选完成逐条人工核验。</p>
+                    <p className={styles.muted}>联系字段暂缓展示，待机构候选完成逐条审核确认。</p>
                   )}
                   {!contact && investor.contactStatus === "not-disclosed-in-prospectus" && (
                     <p className={styles.muted}>招股说明书未可靠披露该机构的公开联系字段。</p>
@@ -240,7 +240,7 @@ export function StarMarketInvestorDirectory() {
       )}
 
       <p className={styles.disclosure}>
-        人工决定由版本化审核清单按“公司 slug：候选 ID”记录审核人、时间和说明。持股字段只接受候选名称之后同一证据行中的唯一数值；未经清单明确核验的候选不展示机构联系方式。
+        审核决定由版本化清单按“公司 slug：候选 ID”记录审核人、时间和说明。持股字段只接受候选名称之后同一证据行中的唯一数值；未经清单明确核验的候选不展示机构联系方式。
       </p>
     </div>
   );
