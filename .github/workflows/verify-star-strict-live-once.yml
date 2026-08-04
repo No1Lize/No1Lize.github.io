@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/verify-star-strict-live-once.yml
+      - tests/institution-data-layers.test.ts
   workflow_dispatch:
 
 permissions:
