@@ -30,6 +30,16 @@ function numberLabel(value?: number): string {
   return `${value.toLocaleString("zh-CN")} 股`;
 }
 
+function reviewTimeLabel(value?: string): string {
+  if (!value) return "";
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return value;
+  return parsed.toLocaleString("zh-CN", {
+    timeZone: "Asia/Taipei",
+    hour12: false,
+  });
+}
+
 type ReviewFilter = "all" | Exclude<StarInvestorReviewStatus, "rejected">;
 
 export function StarMarketInvestorDirectory() {
@@ -60,6 +70,8 @@ export function StarMarketInvestorDirectory() {
       return [
         record.investor.name,
         record.investor.investorType,
+        record.investor.reviewKey,
+        record.investor.reviewedBy,
         record.company.name,
         record.company.ticker,
         record.company.sector,
@@ -86,7 +98,7 @@ export function StarMarketInvestorDirectory() {
           <Search size={15} aria-hidden="true" />
           <input
             aria-label="搜索自动抽取机构候选"
-            placeholder="搜索候选名称、上市公司、代码或赛道"
+            placeholder="搜索候选名称、审核键、公司、代码或赛道"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
@@ -126,6 +138,7 @@ export function StarMarketInvestorDirectory() {
             const reasonLabels = investor.reviewReasons
               .map((reason) => starInvestorReviewReasonLabels[reason] ?? reason)
               .filter((reason, index, values) => values.indexOf(reason) === index);
+            const reviewKey = investor.reviewKey ?? `${listedCompany.slug}:${investor.id}`;
             return (
               <article className={styles.card} key={`${listedCompany.slug}:${investor.id}`}>
                 <div className={styles.cardTop}>
@@ -166,8 +179,16 @@ export function StarMarketInvestorDirectory() {
                 </dl>
 
                 <p className={styles.evidence}>证据摘录：{investor.evidence}</p>
+                <p className={styles.reviewNote}>审核键：{reviewKey}</p>
                 {reasonLabels.length > 0 && (
                   <p className={styles.reviewNote}>审核提示：{reasonLabels.join("；")}</p>
+                )}
+                {investor.reviewStatus === "verified" && investor.reviewedBy && (
+                  <p className={styles.reviewNote}>
+                    人工核验：{investor.reviewedBy}
+                    {investor.reviewedAt ? ` · ${reviewTimeLabel(investor.reviewedAt)}` : ""}
+                    {investor.reviewNote ? ` · ${investor.reviewNote}` : ""}
+                  </p>
                 )}
 
                 <div className={styles.contact}>
@@ -219,7 +240,7 @@ export function StarMarketInvestorDirectory() {
       )}
 
       <p className={styles.disclosure}>
-        持股字段只接受候选名称之后同一证据行中的唯一数值；跨行数值和多值行不会被猜测。未完成逐条人工核验的候选不展示机构联系方式。可见候选仍不等同于已确认的机构股东名册。
+        人工决定由版本化审核清单按“公司 slug：候选 ID”记录审核人、时间和说明。持股字段只接受候选名称之后同一证据行中的唯一数值；未经清单明确核验的候选不展示机构联系方式。
       </p>
     </div>
   );
