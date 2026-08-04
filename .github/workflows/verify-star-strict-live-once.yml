@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/verify-star-strict-live-once.yml
       - tests/institution-data-layers.test.ts
+      - lib/star-market-investor-data.ts
   workflow_dispatch:
 
 permissions:
