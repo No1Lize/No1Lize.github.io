@@ -38,7 +38,10 @@ export type StarMarketInvestor = {
   preIpoShares?: number;
   preIpoOwnershipPct?: number;
   publicContact?: StarMarketInvestorContact;
-  contactStatus: "prospectus-public" | "not-disclosed-in-prospectus";
+  contactStatus:
+    | "prospectus-public"
+    | "not-disclosed-in-prospectus"
+    | "withheld-pending-review";
   reviewStatus?: StarInvestorReviewStatus;
   reviewReasons?: string[];
 };
@@ -68,6 +71,9 @@ export type StarMarketCompanyInvestorProfile = {
   };
   issuerInvestorRelations?: StarMarketInvestorContact;
   institutionalInvestorCount: number;
+  reviewCandidateCount?: number;
+  verifiedInvestorCount?: number;
+  rejectedInvestorCount?: number;
   naturalPersonContactsPublished: false;
   investors: StarMarketInvestor[];
   errors: string[];
@@ -78,6 +84,10 @@ type StarMarketInvestorSnapshot = {
   generatedAt: string;
   companyCount: number;
   investorCount: number;
+  reviewCandidateCount?: number;
+  verifiedInvestorCount?: number;
+  needsReviewInvestorCount?: number;
+  rejectedInvestorCount?: number;
   scope: {
     market: string;
     listingRule: string;
@@ -92,6 +102,9 @@ type StarMarketInvestorSnapshot = {
   methodology: {
     prospectusProvider: string;
     pdfExtraction: string;
+    holdingBinding?: string;
+    reviewGate?: string;
+    contactPublication?: string;
     retention: string;
   };
   companies: Record<string, StarMarketCompanyInvestorProfile>;
@@ -177,9 +190,19 @@ export const starMarketInvestorAllRecords: StarMarketInvestorRecord[] =
           ...rawInvestor,
           companyName: company.name,
         });
+        const contactVerified =
+          review.reviewStatus === "verified" &&
+          rawInvestor.contactStatus === "prospectus-public" &&
+          Boolean(rawInvestor.publicContact);
         const investor: ReviewedStarMarketInvestor = {
           ...rawInvestor,
           ...review,
+          publicContact: contactVerified ? rawInvestor.publicContact : undefined,
+          contactStatus: contactVerified
+            ? "prospectus-public"
+            : rawInvestor.contactStatus === "not-disclosed-in-prospectus"
+              ? "not-disclosed-in-prospectus"
+              : "withheld-pending-review",
         };
         return {
           company,
@@ -224,7 +247,9 @@ export const starMarketInvestorStats = {
     (record) => Boolean(record.directoryInstitution),
   ).length,
   prospectusContacts: starMarketInvestorRecords.filter(
-    (record) => record.investor.contactStatus === "prospectus-public",
+    (record) =>
+      record.investor.reviewStatus === "verified" &&
+      record.investor.contactStatus === "prospectus-public",
   ).length,
   sectors: new Set(starMarketInvestorCompanies.map((company) => company.sector)).size,
 };
