@@ -1,0 +1,44 @@
+name: Refresh patched dependency lock
+
+on:
+  push:
+    branches:
+      - security/refresh-transitive-lock-20260804
+    paths:
+      - package.json
+      - .github/workflows/refresh-security-lock-temporary.yml
+
+permissions:
+  contents: write
+
+jobs:
+  refresh-lock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Resolve patched transitive dependencies
+        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
+      - name: Verify locked installation and security policy
+        run: |
+          npm ci
+          node scripts/audit-dependencies.mjs
+      - name: Commit the regenerated lock
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo "Dependency lock is already current."
+            exit 0
+          fi
+          git commit -m "security: regenerate patched dependency lock"
+          git push origin HEAD:security/refresh-transitive-lock-20260804
