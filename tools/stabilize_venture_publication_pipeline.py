@@ -43,6 +43,75 @@ def _state_key(payload: dict[str, Any]) -> str:
     )
 
 
+def _preview(value: Any, limit: int = 180) -> str:
+    rendered = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return rendered if len(rendered) <= limit else rendered[: limit - 1] + "…"
+
+
+def _diff_paths(
+    left: Any,
+    right: Any,
+    *,
+    prefix: str = "$",
+    limit: int = 30,
+) -> list[dict[str, str]]:
+    """Return a bounded set of JSON-style paths changed by one gate."""
+    differences: list[dict[str, str]] = []
+
+    def visit(before: Any, after: Any, path: str) -> None:
+        if len(differences) >= limit or before == after:
+            return
+        if isinstance(before, dict) and isinstance(after, dict):
+            keys = sorted(set(before) | set(after), key=str)
+            for key in keys:
+                if len(differences) >= limit:
+                    break
+                child_path = f"{path}.{key}"
+                if key not in before:
+                    differences.append(
+                        {"path": child_path, "before": "<missing>", "after": _preview(after[key])}
+                    )
+                elif key not in after:
+                    differences.append(
+                        {"path": child_path, "before": _preview(before[key]), "after": "<missing>"}
+                    )
+                else:
+                    visit(before[key], after[key], child_path)
+            return
+        if isinstance(before, list) and isinstance(after, list):
+            shared = min(len(before), len(after))
+            for index in range(shared):
+                if len(differences) >= limit:
+                    break
+                visit(before[index], after[index], f"{path}[{index}]")
+            for index in range(shared, max(len(before), len(after))):
+                if len(differences) >= limit:
+                    break
+                if index >= len(before):
+                    differences.append(
+                        {
+                            "path": f"{path}[{index}]",
+                            "before": "<missing>",
+                            "after": _preview(after[index]),
+                        }
+                    )
+                else:
+                    differences.append(
+                        {
+                            "path": f"{path}[{index}]",
+                            "before": _preview(before[index]),
+                            "after": "<missing>",
+                        }
+                    )
+            return
+        differences.append(
+            {"path": path, "before": _preview(before), "after": _preview(after)}
+        )
+
+    visit(left, right, prefix)
+    return differences
+
+
 def stabilize_publication_snapshot(
     snapshot: dict[str, Any],
     articles: dict[str, Any],
@@ -65,7 +134,7 @@ def stabilize_publication_snapshot(
         raise ValueError("max_passes must be positive")
 
     current = copy.deepcopy(snapshot)
-    seen = {_state_key(current)}
+    seen: dict[str, int] = {_state_key(current): 0}
     history: list[dict[str, Any]] = []
 
     for pass_index in range(1, max_passes + 1):
@@ -103,6 +172,11 @@ def stabilize_publication_snapshot(
         normalization_stable = normalized_check == candidate
         terminal_stable = terminal_check == candidate
         changed = candidate != current
+        gate_diffs = {
+            "evidence": _diff_paths(candidate, evidence_check),
+            "normalization": _diff_paths(candidate, normalized_check),
+            "terminal": _diff_paths(candidate, terminal_check),
+        }
         history.append(
             {
                 "pass": pass_index,
@@ -116,6 +190,7 @@ def stabilize_publication_snapshot(
                 "evidenceCheck": evidence_check_diagnostics,
                 "normalizationCheck": normalization_check_diagnostics,
                 "terminalCheck": terminal_check_diagnostics,
+                "gateDiffs": gate_diffs,
             }
         )
 
@@ -129,14 +204,25 @@ def stabilize_publication_snapshot(
 
         state_key = _state_key(candidate)
         if state_key in seen:
+            cycle = {
+                "repeatedFromPass": seen[state_key],
+                "repeatedAtPass": pass_index,
+                "evidenceStable": evidence_stable,
+                "normalizationStable": normalization_stable,
+                "terminalStable": terminal_stable,
+                "gateDiffs": gate_diffs,
+            }
             raise RuntimeError(
-                "venture publication gates entered a cycle before reaching a shared fixed point"
+                "venture publication gates entered a cycle before reaching a shared fixed point: "
+                + json.dumps(cycle, ensure_ascii=False, sort_keys=True)
             )
-        seen.add(state_key)
+        seen[state_key] = pass_index
         current = candidate
 
+    last = history[-1] if history else {}
     raise RuntimeError(
-        f"venture publication gates did not converge within {max_passes} passes"
+        f"venture publication gates did not converge within {max_passes} passes: "
+        + json.dumps(last.get("gateDiffs", {}), ensure_ascii=False, sort_keys=True)
     )
 
 
