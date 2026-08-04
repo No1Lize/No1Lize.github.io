@@ -22,6 +22,7 @@ on:
       - tools/http_policy_bridge.py
       - tools/semantic_data_diff.py
       - tools/update_source_health.py
+      - tools/tracking_source_governance.py
       - tools/source_evidence.py
       - tools/source_health_runtime.py
       - tools/source_performance.py
@@ -115,6 +116,7 @@ jobs:
             tools/http_policy_bridge.py \
             tools/semantic_data_diff.py \
             tools/update_source_health.py \
+            tools/tracking_source_governance.py \
             tools/source_evidence.py \
             tools/source_health_runtime.py \
             tools/source_performance.py \
@@ -137,6 +139,7 @@ jobs:
             tests.test_http_request_policy \
             tests.test_semantic_data_diff \
             tests.test_source_health \
+            tests.test_tracking_source_governance \
             tests.test_source_evidence \
             tests.test_source_health_runtime \
             tests.test_source_performance \
@@ -156,6 +159,8 @@ jobs:
             tests.test_us_ir_baseline_disclosures \
             tests.test_scheduled_sync_workflow \
             tests.test_snapshot_retention
+      - name: Require a normalized automatic source registry
+        run: python tools/tracking_source_governance.py --check
       - name: Start a clean full-source status ledger
         run: python tools/prepare_full_refresh.py
       - name: Crawl core, tracking, professional media, X and WeChat sources
