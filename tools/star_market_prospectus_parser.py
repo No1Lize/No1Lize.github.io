@@ -297,6 +297,7 @@ def parse_shareholder_rows(pages: list[PageLike]) -> list[ShareholderRow]:
 
 def _definition_full_name(value: str) -> str:
     text = _display_join([value], 500)
+    text = re.sub(r"\bL\.P\s+\.", "L.P.", text, flags=re.IGNORECASE)
     text = re.split(r"[，,；;](?:曾用名|原名|英文名|现名)", text, maxsplit=1)[0]
     if "，" in text:
         text = text.split("，", 1)[0]

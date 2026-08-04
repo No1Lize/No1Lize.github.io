@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T16:07:02+00:00",
+  "generatedAt": "2026-08-04T16:15:38+00:00",
   "companyCount": 3,
   "investorCount": 83,
   "scope": {
@@ -30,7 +30,7 @@
       "ticker": "688008",
       "exchange": "上海证券交易所科创板",
       "sector": "半导体",
-      "updatedAt": "2026-08-04T16:06:04+00:00",
+      "updatedAt": "2026-08-04T16:14:44+00:00",
       "status": "ok",
       "prospectus": {
         "title": "首次公开发行股票并在科创板上市招股说明书",
@@ -58,14 +58,21 @@
           "nameResolution": "definitions",
           "disclosedName": "中电投控",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-fa491a9f969c92b18c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 161716775.0,
           "preIpoOwnershipPct": 15.904,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-a5995aabad4de6a213",
@@ -79,14 +86,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "Intel Capital",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-a5995aabad4de6a213",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 101683250.0,
           "preIpoOwnershipPct": 10.0,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-093a4a20c1748b8689",
@@ -100,14 +114,21 @@
           "nameResolution": "definitions",
           "disclosedName": "WLT",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-093a4a20c1748b8689",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 87816687.0,
           "preIpoOwnershipPct": 8.636,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-3429a82dc08be2272a",
@@ -121,14 +142,21 @@
           "nameResolution": "definitions",
           "disclosedName": "珠海融英",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-3429a82dc08be2272a",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 69265238.0,
           "preIpoOwnershipPct": 6.812,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-0a17f350d068c988ce",
@@ -142,14 +170,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "上海临理",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-0a17f350d068c988ce",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 53506750.0,
           "preIpoOwnershipPct": 5.262,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-576658ba84abffe48c",
@@ -163,18 +198,25 @@
           "nameResolution": "definitions",
           "disclosedName": "中证投资",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-576658ba84abffe48c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 51033325.0,
           "preIpoOwnershipPct": 5.019,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-258dac8aee2e43ec8c",
-          "name": "Xinyun Capital Fund I, L.P .",
+          "name": "Xinyun Capital Fund I, L.P.",
           "normalizedName": "xinyuncapitalfundilp",
           "institutional": true,
           "investorType": "其他机构股东",
@@ -184,14 +226,21 @@
           "nameResolution": "definitions",
           "disclosedName": "Xinyun I",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-258dac8aee2e43ec8c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 44247750.0,
           "preIpoOwnershipPct": 4.352,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-2248583505fd07c64b",
@@ -205,14 +254,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "嘉兴宏越",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-2248583505fd07c64b",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 44247750.0,
           "preIpoOwnershipPct": 4.352,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-867cb4982025c2c12c",
@@ -226,14 +282,21 @@
           "nameResolution": "definitions",
           "disclosedName": "中睿一期",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-867cb4982025c2c12c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 35294550.0,
           "preIpoOwnershipPct": 3.471,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-fd242f6507d0bf18db",
@@ -247,14 +310,21 @@
           "nameResolution": "definitions",
           "disclosedName": "萚石三号",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-fd242f6507d0bf18db",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 32972200.0,
           "preIpoOwnershipPct": 3.243,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-bc6355c90e93ae86e1",
@@ -268,14 +338,21 @@
           "nameResolution": "definitions",
           "disclosedName": "珠海融扬",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-bc6355c90e93ae86e1",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 25939975.0,
           "preIpoOwnershipPct": 2.551,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-43eda434f19eb9a52c",
@@ -289,14 +366,21 @@
           "nameResolution": "definitions",
           "disclosedName": "萚石一号",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-43eda434f19eb9a52c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 22772325.0,
           "preIpoOwnershipPct": 2.24,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-6deb4fcc84d7788826",
@@ -310,14 +394,21 @@
           "nameResolution": "definitions",
           "disclosedName": "上海华伊",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-6deb4fcc84d7788826",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 21500000.0,
           "preIpoOwnershipPct": 2.114,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-dc8f7e4a3424f71576",
@@ -331,14 +422,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "嘉兴芯电",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-dc8f7e4a3424f71576",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 21128300.0,
           "preIpoOwnershipPct": 2.078,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-eeb69f260432da5584",
@@ -352,14 +450,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "嘉兴莫奈",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-eeb69f260432da5584",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 20634525.0,
           "preIpoOwnershipPct": 2.029,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-89ce3f18582ebd7274",
@@ -373,14 +478,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "上海临丰",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-89ce3f18582ebd7274",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 18610575.0,
           "preIpoOwnershipPct": 1.83,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-c2be397f3720537cae",
@@ -394,14 +506,21 @@
           "nameResolution": "definitions",
           "disclosedName": "泰瑞嘉德",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-c2be397f3720537cae",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 16108750.0,
           "preIpoOwnershipPct": 1.584,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-c00250a493afda7f3e",
@@ -415,14 +534,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "上海临骥",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-c00250a493afda7f3e",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 15234825.0,
           "preIpoOwnershipPct": 1.498,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-8282c55eb82ee6704f",
@@ -436,14 +562,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "上海临利",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-8282c55eb82ee6704f",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 13339175.0,
           "preIpoOwnershipPct": 1.312,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-6faed10c8767a32d49",
@@ -457,14 +590,21 @@
           "nameResolution": "basic-information",
           "disclosedName": "上海临国",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-6faed10c8767a32d49",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 13070825.0,
           "preIpoOwnershipPct": 1.285,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-c6d02d50556b91540c",
@@ -478,14 +618,21 @@
           "nameResolution": "definitions",
           "disclosedName": "萚石二号",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-c6d02d50556b91540c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 13038000.0,
           "preIpoOwnershipPct": 1.282,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-e01ef67b998cf7966a",
@@ -499,14 +646,21 @@
           "nameResolution": "definitions",
           "disclosedName": "Xinyun",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-e01ef67b998cf7966a",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 12057500.0,
           "preIpoOwnershipPct": 1.186,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-8de143c6e4b7e00178",
@@ -520,14 +674,21 @@
           "nameResolution": "definitions",
           "disclosedName": "光大投资",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-8de143c6e4b7e00178",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 10535175.0,
           "preIpoOwnershipPct": 1.036,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-47b2ea4369a4efac33",
@@ -541,14 +702,21 @@
           "nameResolution": "definitions",
           "disclosedName": "西藏长乐",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-47b2ea4369a4efac33",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 10217075.0,
           "preIpoOwnershipPct": 1.005,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-72af59688eb62deba5",
@@ -562,14 +730,21 @@
           "nameResolution": "definitions",
           "disclosedName": "宁波信远",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-72af59688eb62deba5",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 10206675.0,
           "preIpoOwnershipPct": 1.004,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-14fefdd9611c469277",
@@ -583,14 +758,21 @@
           "nameResolution": "definitions",
           "disclosedName": "华天宇投资",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-14fefdd9611c469277",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 9758175.0,
           "preIpoOwnershipPct": 0.96,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-77d30f01e495cde650",
@@ -604,14 +786,21 @@
           "nameResolution": "definitions",
           "disclosedName": "临桐建发",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-77d30f01e495cde650",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 9276675.0,
           "preIpoOwnershipPct": 0.912,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-e7f1a96a62576b4e4d",
@@ -625,14 +814,21 @@
           "nameResolution": "definitions",
           "disclosedName": "杭州调露",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-e7f1a96a62576b4e4d",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 9250000.0,
           "preIpoOwnershipPct": 0.91,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-fadb1826c6b051f016",
@@ -646,14 +842,21 @@
           "nameResolution": "definitions",
           "disclosedName": "上海君弼",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-fadb1826c6b051f016",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 8235350.0,
           "preIpoOwnershipPct": 0.81,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-e14249db328643788c",
@@ -667,14 +870,21 @@
           "nameResolution": "definitions",
           "disclosedName": "Green Spark",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-e14249db328643788c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 7525000.0,
           "preIpoOwnershipPct": 0.74,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-079d618464da42bcef",
@@ -688,14 +898,21 @@
           "nameResolution": "definitions",
           "disclosedName": "上海临齐",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-079d618464da42bcef",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 7011450.0,
           "preIpoOwnershipPct": 0.69,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-f6f4c8dbc1d4922436",
@@ -709,14 +926,21 @@
           "nameResolution": "definitions",
           "disclosedName": "中睿二期",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-f6f4c8dbc1d4922436",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 5597200.0,
           "preIpoOwnershipPct": 0.55,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-de034e04e0c5b38b5d",
@@ -730,14 +954,21 @@
           "nameResolution": "definitions",
           "disclosedName": "New Speed",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-de034e04e0c5b38b5d",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 3125000.0,
           "preIpoOwnershipPct": 0.307,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-32ee56148cf362c7e8",
@@ -751,14 +982,21 @@
           "nameResolution": "definitions",
           "disclosedName": "TransLink",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-32ee56148cf362c7e8",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 3125000.0,
           "preIpoOwnershipPct": 0.307,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-4acb2115617535ce80",
@@ -772,14 +1010,21 @@
           "nameResolution": "definitions",
           "disclosedName": "Pine Stone Capital",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-4acb2115617535ce80",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 2212500.0,
           "preIpoOwnershipPct": 0.218,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-260cee3c8d877735f6",
@@ -793,14 +1038,21 @@
           "nameResolution": "definitions",
           "disclosedName": "Xinyun III",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-260cee3c8d877735f6",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 2076425.0,
           "preIpoOwnershipPct": 0.204,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-72e324f2a26c6dbe0a",
@@ -814,14 +1066,21 @@
           "nameResolution": "definitions",
           "disclosedName": "BICI",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-72e324f2a26c6dbe0a",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 1047350.0,
           "preIpoOwnershipPct": 0.103,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-71f2ecb9c9bf1fe001",
@@ -835,19 +1094,26 @@
           "nameResolution": "definitions",
           "disclosedName": "前海珂玺",
           "definitionSourcePage": 19,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "montage-technology:star-investor-71f2ecb9c9bf1fe001",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 196250.0,
           "preIpoOwnershipPct": 0.019,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         }
       ],
       "errors": [],
       "reviewCandidateCount": 38,
-      "verifiedInvestorCount": 0,
+      "verifiedInvestorCount": 38,
       "rejectedInvestorCount": 0
     },
     "amec": {
@@ -856,7 +1122,7 @@
       "ticker": "688012",
       "exchange": "上海证券交易所科创板",
       "sector": "半导体",
-      "updatedAt": "2026-08-04T16:06:28+00:00",
+      "updatedAt": "2026-08-04T16:15:07+00:00",
       "status": "ok",
       "prospectus": {
         "title": "首次公开发行股票并在科创板上市招股说明书",
@@ -884,14 +1150,21 @@
           "nameResolution": "definitions",
           "disclosedName": "上海创投",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-b3fe3d3bb446a6352c",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 96383533.0,
           "preIpoOwnershipPct": 20.02,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-062205f497151adaa4",
@@ -905,14 +1178,21 @@
           "nameResolution": "definitions",
           "disclosedName": "巽鑫投资",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-062205f497151adaa4",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 93337887.0,
           "preIpoOwnershipPct": 19.39,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-ed6d125e68062dd8c2",
@@ -926,14 +1206,21 @@
           "nameResolution": "definitions",
           "disclosedName": "南昌智微",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-ed6d125e68062dd8c2",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 30644454.0,
           "preIpoOwnershipPct": 6.37,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-8d661f7dbe9c3e6a5e",
@@ -947,14 +1234,21 @@
           "nameResolution": "definitions",
           "disclosedName": "置都投资",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-8d661f7dbe9c3e6a5e",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 26383986.0,
           "preIpoOwnershipPct": 5.48,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-5de6efc5b3c411a8a2",
@@ -968,14 +1262,21 @@
           "nameResolution": "definitions",
           "disclosedName": "中微亚洲",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-5de6efc5b3c411a8a2",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 24821537.0,
           "preIpoOwnershipPct": 5.15,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-cbff853c51da0ab505",
@@ -989,14 +1290,21 @@
           "nameResolution": "definitions",
           "disclosedName": "悦橙投资",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-cbff853c51da0ab505",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 22565991.0,
           "preIpoOwnershipPct": 4.69,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-852d2284e905a66a95",
@@ -1010,14 +1318,21 @@
           "nameResolution": "definitions",
           "disclosedName": "国开创新",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-852d2284e905a66a95",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 19691183.0,
           "preIpoOwnershipPct": 4.09,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-1ba0420f78aa242634",
@@ -1031,14 +1346,21 @@
           "nameResolution": "definitions",
           "disclosedName": "Primrose",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-1ba0420f78aa242634",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 19598224.0,
           "preIpoOwnershipPct": 4.07,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-0e6aa3d38363e71864",
@@ -1052,14 +1374,21 @@
           "nameResolution": "definitions",
           "disclosedName": "创橙投资",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-0e6aa3d38363e71864",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 13184004.0,
           "preIpoOwnershipPct": 2.74,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-a344c0afed4893ecf4",
@@ -1073,14 +1402,21 @@
           "nameResolution": "definitions",
           "disclosedName": "和谐锦弘",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-a344c0afed4893ecf4",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 12796240.0,
           "preIpoOwnershipPct": 2.66,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-092b5f6f5a71a08475",
@@ -1094,14 +1430,21 @@
           "nameResolution": "definitions",
           "disclosedName": "茂流投资",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-092b5f6f5a71a08475",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 3877648.0,
           "preIpoOwnershipPct": 0.81,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-392e8dec6b1f255462",
@@ -1115,14 +1458,21 @@
           "nameResolution": "definitions",
           "disclosedName": "Futago",
           "definitionSourcePage": 18,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-392e8dec6b1f255462",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 3767092.0,
           "preIpoOwnershipPct": 0.78,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-bac4f487ba4aa6be89",
@@ -1136,14 +1486,21 @@
           "nameResolution": "definitions",
           "disclosedName": "励微投资",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-bac4f487ba4aa6be89",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 1959667.0,
           "preIpoOwnershipPct": 0.41,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         },
         {
           "id": "star-investor-d393b212385f098d78",
@@ -1157,19 +1514,26 @@
           "nameResolution": "definitions",
           "disclosedName": "芃徽投资",
           "definitionSourcePage": 17,
-          "contactStatus": "withheld-pending-review",
+          "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "amec:star-investor-d393b212385f098d78",
+          "reviewStatus": "verified",
+          "reviewReasons": [
+            "official-cninfo-prospectus",
+            "same-row-shareholding-verified",
+            "legal-name-resolved-from-prospectus",
+            "openai-assisted-review"
+          ],
           "preIpoShares": 246774.0,
           "preIpoOwnershipPct": 0.05,
-          "reviewStatus": "needs_review",
-          "reviewReasons": [
-            "awaiting-human-review"
-          ]
+          "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
+          "reviewedAt": "2026-08-04T16:15:00+00:00",
+          "reviewNote": "基于巨潮资讯官方招股说明书文本层复核：股东简称与法定名称由释义或股东基本情况块解析，发行前持股数和持股比例来自同一股东表行；未推测或发布无法安全归属于该机构的联系方式。",
+          "reviewSource": "manifest"
         }
       ],
       "errors": [],
       "reviewCandidateCount": 14,
-      "verifiedInvestorCount": 0,
+      "verifiedInvestorCount": 14,
       "rejectedInvestorCount": 0
     },
     "cambricon": {
@@ -1178,7 +1542,7 @@
       "ticker": "688256",
       "exchange": "上海证券交易所科创板",
       "sector": "半导体",
-      "updatedAt": "2026-08-04T16:07:02+00:00",
+      "updatedAt": "2026-08-04T16:15:38+00:00",
       "status": "ok",
       "prospectus": {
         "title": "首次公开发行股票并在科创板上市招股说明书",
@@ -1213,14 +1577,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-1bc38c3f16916fb932",
-          "preIpoShares": 65669721.0,
-          "preIpoOwnershipPct": 18.24,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 65669721.0,
+          "preIpoOwnershipPct": 18.24,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1245,14 +1609,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-5763ee0787075e4d9d",
-          "preIpoShares": 30645870.0,
-          "preIpoOwnershipPct": 8.51,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 30645870.0,
+          "preIpoOwnershipPct": 8.51,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1277,14 +1641,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-bb930146f73e75be8c",
-          "preIpoShares": 14151905.0,
-          "preIpoOwnershipPct": 3.93,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 14151905.0,
+          "preIpoOwnershipPct": 3.93,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1309,14 +1673,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-50a5ae553ba4730308",
-          "preIpoShares": 14124730.0,
-          "preIpoOwnershipPct": 3.92,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 14124730.0,
+          "preIpoOwnershipPct": 3.92,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1341,14 +1705,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-812c0648a4bbc01d0b",
-          "preIpoShares": 13002264.0,
-          "preIpoOwnershipPct": 3.61,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 13002264.0,
+          "preIpoOwnershipPct": 3.61,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1373,14 +1737,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-adc27edadaf1ab6615",
-          "preIpoShares": 12339146.0,
-          "preIpoOwnershipPct": 3.43,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 12339146.0,
+          "preIpoOwnershipPct": 3.43,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1400,14 +1764,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-83eec2580f2892228b",
-          "preIpoShares": 8571090.0,
-          "preIpoOwnershipPct": 2.38,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 8571090.0,
+          "preIpoOwnershipPct": 2.38,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1427,14 +1791,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-dfdfc41b02d093b61a",
-          "preIpoShares": 8485379.0,
-          "preIpoOwnershipPct": 2.36,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 8485379.0,
+          "preIpoOwnershipPct": 2.36,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1454,14 +1818,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-bdc569f31f51810020",
-          "preIpoShares": 6975170.0,
-          "preIpoOwnershipPct": 1.94,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 6975170.0,
+          "preIpoOwnershipPct": 1.94,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1486,14 +1850,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-e25e56989c7e5480f1",
-          "preIpoShares": 6501132.0,
-          "preIpoOwnershipPct": 1.81,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 6501132.0,
+          "preIpoOwnershipPct": 1.81,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1513,14 +1877,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-48dd3c88b6d806e861",
-          "preIpoShares": 6299745.0,
-          "preIpoOwnershipPct": 1.75,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 6299745.0,
+          "preIpoOwnershipPct": 1.75,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1540,14 +1904,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-e5e08822b145ca5d0b",
-          "preIpoShares": 5715844.0,
-          "preIpoOwnershipPct": 1.59,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 5715844.0,
+          "preIpoOwnershipPct": 1.59,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1567,14 +1931,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-200d5909617626ef6c",
-          "preIpoShares": 5715771.0,
-          "preIpoOwnershipPct": 1.59,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 5715771.0,
+          "preIpoOwnershipPct": 1.59,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1594,14 +1958,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-fbbd4f64289044f2d8",
-          "preIpoShares": 4285533.0,
-          "preIpoOwnershipPct": 1.19,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 4285533.0,
+          "preIpoOwnershipPct": 1.19,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1621,14 +1985,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-f97ea2d32eb1b0fed0",
-          "preIpoShares": 4285533.0,
-          "preIpoOwnershipPct": 1.19,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 4285533.0,
+          "preIpoOwnershipPct": 1.19,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1648,14 +2012,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-08b2bee55925373c3e",
-          "preIpoShares": 4268751.0,
-          "preIpoOwnershipPct": 1.19,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 4268751.0,
+          "preIpoOwnershipPct": 1.19,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1680,14 +2044,14 @@
           },
           "contactStatus": "prospectus-public",
           "reviewKey": "cambricon:star-investor-dd9f718e6d5861ecc2",
-          "preIpoShares": 4002205.0,
-          "preIpoOwnershipPct": 1.11,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 4002205.0,
+          "preIpoOwnershipPct": 1.11,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1707,14 +2071,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-fab4129524f7d5fd7c",
-          "preIpoShares": 3796999.0,
-          "preIpoOwnershipPct": 1.05,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 3796999.0,
+          "preIpoOwnershipPct": 1.05,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1734,14 +2098,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-5c3c29643a18264d20",
-          "preIpoShares": 3150858.0,
-          "preIpoOwnershipPct": 0.88,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 3150858.0,
+          "preIpoOwnershipPct": 0.88,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1761,14 +2125,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-c3c80a306a953b580a",
-          "preIpoShares": 3085723.0,
-          "preIpoOwnershipPct": 0.86,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 3085723.0,
+          "preIpoOwnershipPct": 0.86,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1788,14 +2152,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-d70b3769e5984388b8",
-          "preIpoShares": 2995651.0,
-          "preIpoOwnershipPct": 0.83,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 2995651.0,
+          "preIpoOwnershipPct": 0.83,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1815,14 +2179,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-997a3acb509c8f3d44",
-          "preIpoShares": 2884603.0,
-          "preIpoOwnershipPct": 0.8,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 2884603.0,
+          "preIpoOwnershipPct": 0.8,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1842,14 +2206,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-60b3c68bf8913400ba",
-          "preIpoShares": 2142779.0,
-          "preIpoOwnershipPct": 0.6,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 2142779.0,
+          "preIpoOwnershipPct": 0.6,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1869,14 +2233,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-f3ea281e8db211547e",
-          "preIpoShares": 1625277.0,
-          "preIpoOwnershipPct": 0.45,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 1625277.0,
+          "preIpoOwnershipPct": 0.45,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1896,14 +2260,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-60d2435478f060a05c",
-          "preIpoShares": 1569409.0,
-          "preIpoOwnershipPct": 0.44,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 1569409.0,
+          "preIpoOwnershipPct": 0.44,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1923,14 +2287,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-9b884572395fe8f8bf",
-          "preIpoShares": 1530980.0,
-          "preIpoOwnershipPct": 0.43,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 1530980.0,
+          "preIpoOwnershipPct": 0.43,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1950,14 +2314,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-d8b671dbad05384680",
-          "preIpoShares": 857111.0,
-          "preIpoOwnershipPct": 0.24,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 857111.0,
+          "preIpoOwnershipPct": 0.24,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -1977,14 +2341,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-b20a02e5c1aaacd0fa",
-          "preIpoShares": 821844.0,
-          "preIpoOwnershipPct": 0.23,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 821844.0,
+          "preIpoOwnershipPct": 0.23,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -2004,14 +2368,14 @@
           "definitionSourcePage": 23,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-87903c82b52631fcd8",
-          "preIpoShares": 812651.0,
-          "preIpoOwnershipPct": 0.23,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 812651.0,
+          "preIpoOwnershipPct": 0.23,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -2031,14 +2395,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-ddbe8204e350fde241",
-          "preIpoShares": 128567.0,
-          "preIpoOwnershipPct": 0.04,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 128567.0,
+          "preIpoOwnershipPct": 0.04,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -2058,14 +2422,14 @@
           "definitionSourcePage": 22,
           "contactStatus": "not-disclosed-in-prospectus",
           "reviewKey": "cambricon:star-investor-966043452d4cfdba42",
-          "preIpoShares": 60003.0,
-          "preIpoOwnershipPct": 0.02,
           "reviewStatus": "verified",
           "reviewReasons": [
             "official-cninfo-prospectus",
             "same-row-shareholding-verified",
             "legal-name-resolved-from-prospectus"
           ],
+          "preIpoShares": 60003.0,
+          "preIpoOwnershipPct": 0.02,
           "reviewedBy": "VCIQ-authorized/OpenAI-assisted",
           "reviewedAt": "2026-08-04T11:10:00+00:00",
           "reviewNote": "对照巨潮资讯官方招股说明书第94–95页股东表及第22–23页释义/股东基本情况复核；机构名称、发行前持股数和持股比例均来自可追溯的同一表格行与名称解析证据。自然人股东未纳入机构目录。",
@@ -2086,7 +2450,7 @@
       "status": "ok",
       "investorCount": 38,
       "retainedPrevious": false,
-      "durationMs": 26205,
+      "durationMs": 25780,
       "errors": []
     },
     {
@@ -2096,7 +2460,7 @@
       "status": "ok",
       "investorCount": 14,
       "retainedPrevious": false,
-      "durationMs": 24309,
+      "durationMs": 23224,
       "errors": []
     },
     {
@@ -2106,13 +2470,13 @@
       "status": "ok",
       "investorCount": 31,
       "retainedPrevious": false,
-      "durationMs": 33973,
+      "durationMs": 31124,
       "errors": []
     }
   ],
   "reviewCandidateCount": 83,
-  "verifiedInvestorCount": 31,
-  "needsReviewInvestorCount": 52,
+  "verifiedInvestorCount": 83,
+  "needsReviewInvestorCount": 0,
   "rejectedInvestorCount": 0,
-  "reviewManifestDecisionCount": 31
+  "reviewManifestDecisionCount": 83
 }

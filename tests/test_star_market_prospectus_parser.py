@@ -162,5 +162,11 @@ class ConservativeStarParserTests(unittest.TestCase):
         self.assertEqual(by_alias["上海临理"]["name"], "上海理能资产管理有限公司")
         self.assertFalse(any(marker in item["name"] for item in investors for marker in ("成立时间", "统一社会信用代码", "经营范围")))
 
+    def test_definition_names_normalize_lp_spacing(self):
+        self.assertEqual(
+            parser._definition_full_name("Xinyun Capital Fund I, L.P ."),
+            "Xinyun Capital Fund I, L.P.",
+        )
+
 if __name__ == "__main__":
     unittest.main()
