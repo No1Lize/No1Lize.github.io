@@ -112,7 +112,7 @@ export function StarMarketInvestorDirectory() {
             checked={contactOnly}
             onChange={(event) => setContactOnly(event.target.checked)}
           />
-          仅显示自动关联联系字段
+          仅显示已核验联系字段
         </label>
         <span className={styles.count}>显示 {filtered.length} 条候选</span>
       </div>
@@ -148,11 +148,11 @@ export function StarMarketInvestorDirectory() {
 
                 <dl className={styles.holdings}>
                   <div>
-                    <dt>自动抽取持股数</dt>
+                    <dt>同一证据行持股数</dt>
                     <dd>{numberLabel(investor.preIpoShares)}</dd>
                   </div>
                   <div>
-                    <dt>自动抽取比例</dt>
+                    <dt>同一证据行比例</dt>
                     <dd>
                       {investor.preIpoOwnershipPct === undefined
                         ? "未可靠提取"
@@ -182,11 +182,14 @@ export function StarMarketInvestorDirectory() {
                   )}
                   {contact?.website && (
                     <a href={contact.website} target="_blank" rel="noreferrer">
-                      <ArrowUpRight size={13} />招股书抽取网站字段
+                      <ArrowUpRight size={13} />已核验招股书网站字段
                     </a>
                   )}
-                  {!contact && (
-                    <p className={styles.muted}>未自动抽取到该候选记录的机构级联系字段。</p>
+                  {!contact && investor.contactStatus === "withheld-pending-review" && (
+                    <p className={styles.muted}>联系字段暂缓展示，待机构候选完成逐条人工核验。</p>
+                  )}
+                  {!contact && investor.contactStatus === "not-disclosed-in-prospectus" && (
+                    <p className={styles.muted}>招股说明书未可靠披露该机构的公开联系字段。</p>
                   )}
                 </div>
 
@@ -211,12 +214,12 @@ export function StarMarketInvestorDirectory() {
         <section className={styles.empty}>
           <ShieldCheck size={26} />
           <strong>当前筛选没有质量门后候选记录</strong>
-          <p>被判定为句子碎片、通用法律形式或上市公司自身名称的记录不会展示。</p>
+          <p>被判定为句子碎片、通用法律形式、证据数值冲突或上市公司自身名称的记录不会展示。</p>
         </section>
       )}
 
       <p className={styles.disclosure}>
-        当前质量门在页面读取数据时运行，只排除明显的句子碎片、通用法律形式和上市公司自身名称；其余记录默认进入“待人工核验”，不会自动标记为已核验。解析器中的持股字段绑定与联系方式归属仍需继续修复。
+        持股字段只接受候选名称之后同一证据行中的唯一数值；跨行数值和多值行不会被猜测。未完成逐条人工核验的候选不展示机构联系方式。可见候选仍不等同于已确认的机构股东名册。
       </p>
     </div>
   );
