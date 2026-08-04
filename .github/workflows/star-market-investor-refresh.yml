@@ -5,16 +5,22 @@ on:
     branches: [main]
     paths:
       - tools/crawl_star_market_investors.py
+      - tools/star_investor_quality.py
+      - tools/review_star_market_investors.py
       - config/star_market_investor_sources.json
+      - config/star_market_investor_reviews.json
       - requirements-star-investors.txt
       - lib/star-market-investor-data.ts
+      - lib/star-market-investor-review.ts
       - components/star-market-investor-directory.tsx
       - components/star-market-investor-directory.module.css
       - app/institutions/star-market/**
       - app/institutions/page.tsx
       - app/institutions/page.module.css
       - tests/test_star_market_investors.py
+      - tests/test_review_star_market_investors.py
       - tests/star-market-investor-data.test.ts
+      - tests/star-market-investor-review.test.ts
       - .github/workflows/star-market-investor-refresh.yml
   schedule:
   - cron: "10 3 * * 1"
@@ -52,13 +58,21 @@ jobs:
       - name: Install pinned prospectus parser
         run: python -m pip install --disable-pip-version-check -r requirements-star-investors.txt
 
-      - name: Validate crawler before network access
+      - name: Validate crawler, review gate and human manifest before network access
         run: |
           python -m py_compile \
             tools/crawl_star_market_investors.py \
+            tools/star_investor_quality.py \
+            tools/review_star_market_investors.py \
             tools/cninfo_structured_disclosures.py \
             tools/crawl_listed_company_disclosures.py
-          python -m unittest tests.test_star_market_investors
+          python -m unittest \
+            tests.test_star_market_investors \
+            tests.test_review_star_market_investors
+          python - <<'PY'
+          from tools.review_star_market_investors import load_review_manifest
+          load_review_manifest()
+          PY
 
       - name: Refresh official prospectus investor directory
         env:
@@ -70,8 +84,13 @@ jobs:
           fi
           python tools/crawl_star_market_investors.py "${args[@]}"
 
-      - name: Validate privacy and official-source constraints
-        run: python tools/crawl_star_market_investors.py --check --require-companies
+      - name: Apply evidence and human-review gates
+        run: python tools/review_star_market_investors.py
+
+      - name: Validate privacy, official-source and review constraints
+        run: |
+          python tools/crawl_star_market_investors.py --check --require-companies
+          python tools/review_star_market_investors.py --check
 
       - uses: actions/setup-node@v4
         with:
@@ -107,7 +126,9 @@ jobs:
 
           for attempt in 1 2 3; do
             git pull --rebase -X theirs origin main
+            python tools/review_star_market_investors.py
             python tools/crawl_star_market_investors.py --check --require-companies
+            python tools/review_star_market_investors.py --check
             npm run test:unit
             ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
             git add "$path"

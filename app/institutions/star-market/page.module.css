@@ -2,6 +2,26 @@
   min-width: 0;
 }
 
+.warning {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  background: color-mix(in srgb, var(--blue) 8%, var(--surface));
+}
+
+.warning strong {
+  display: block;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.warning p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.75;
+}
+
 .methodology {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
