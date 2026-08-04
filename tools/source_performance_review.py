@@ -86,6 +86,7 @@ def build_review(
             "validYieldRate": performance.get("validYieldRate"),
             "publicationRate": performance.get("publicationRate"),
             "duplicateRate": performance.get("duplicateRate"),
+            "dropRate": performance.get("dropRate"),
             "averageDiscoveryLagDays": performance.get("averageDiscoveryLagDays"),
             "newArticles": int(performance.get("newArticles", 0) or 0),
             "lastProductiveAt": raw.get("lastProductiveAt"),
@@ -144,7 +145,7 @@ def render_markdown(report: dict[str, Any], *, limit: int = 100) -> str:
         "",
         f"共评估 **{report.get('sourceCount', 0)}** 个来源，**{report.get('reviewRequiredSourceCount', 0)}** 个进入人工审查队列。",
         "",
-        "口径：成功率表示来源可访问且可解析；有效产出率表示该轮产生至少一条合格记录；有效产出率（扫描转化）为 accepted/scanned；重复率仅统计已接受候选在发布去重阶段被移除的比例。系统只提出建议，不自动删除来源。",
+        "口径：成功率表示来源可访问且可解析；有效产出率表示该轮产生至少一条合格记录；扫描转化为 accepted/scanned；重复率只统计 URL 或事件指纹重复；未发布但非重复的候选单列为丢弃率；隔离候选单列为 withheld，不混入重复率。系统只提出建议，不自动删除来源。",
         "",
     ]
     if not review_rows:
@@ -152,8 +153,8 @@ def render_markdown(report: dict[str, Any], *, limit: int = 100) -> str:
     else:
         lines.extend(
             [
-                "| 来源 | 等级 | 建议 | 成功率 | 有效轮次 | 扫描转化 | 重复率 | 平均发现延迟 | 人工误归属 | 原因 |",
-                "|---|---|---|---:|---:|---:|---:|---:|---:|---|",
+                "| 来源 | 等级 | 建议 | 成功率 | 有效轮次 | 扫描转化 | 重复率 | 丢弃率 | 平均发现延迟 | 人工误归属 | 原因 |",
+                "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|",
             ]
         )
         for row in review_rows[:limit]:
@@ -161,7 +162,7 @@ def render_markdown(report: dict[str, Any], *, limit: int = 100) -> str:
             delay = row.get("averageDiscoveryLagDays")
             delay_text = f"{float(delay):.1f} 天" if delay is not None else "—"
             lines.append(
-                "| {name} | {grade} | {state} | {availability} | {productive} | {yield_rate} | {duplicates} | {delay} | {misattribution} | {reasons} |".format(
+                "| {name} | {grade} | {state} | {availability} | {productive} | {yield_rate} | {duplicates} | {drops} | {delay} | {misattribution} | {reasons} |".format(
                     name=str(row.get("name") or row.get("sourceId")).replace("|", "\\|"),
                     grade=row.get("evidenceGrade") or "D",
                     state=row.get("reviewStateLabel") or row.get("reviewState"),
@@ -169,6 +170,7 @@ def render_markdown(report: dict[str, Any], *, limit: int = 100) -> str:
                     productive=_percent(row.get("productiveRate")),
                     yield_rate=_percent(row.get("validYieldRate")),
                     duplicates=_percent(row.get("duplicateRate")),
+                    drops=_percent(row.get("dropRate")),
                     delay=delay_text,
                     misattribution=_percent(row.get("misattributionRate")),
                     reasons=reasons.replace("|", "\\|"),
