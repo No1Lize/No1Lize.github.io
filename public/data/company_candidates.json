@@ -1,9 +1,128 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "",
-  "candidateCount": 0,
-  "pendingCount": 0,
+  "generatedAt": "2026-08-04T08:35:56+00:00",
+  "candidateCount": 3,
+  "pendingCount": 3,
   "acceptedCount": 0,
   "rejectedCount": 0,
-  "candidates": []
+  "candidates": [
+    {
+      "id": "candidate-shopify-c3a45cb7",
+      "decisionKey": "shopify",
+      "name": "Shopify",
+      "aliases": [
+        "Shopify"
+      ],
+      "region": "全球",
+      "sector": "新消费",
+      "score": 70,
+      "status": "pending",
+      "reasons": [
+        "6 条结构化公司记录",
+        "至少两个独立公开来源",
+        "存在官方、原始或监管来源",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2025-11-25T00:00:00+00:00",
+      "lastSeenAt": "2026-08-03T00:00:00+00:00",
+      "articleCount": 6,
+      "sourceCount": 2,
+      "sourceHosts": [
+        "help.shopify.com",
+        "shopify.com"
+      ],
+      "sourceArticleIds": [
+        "official-user-shopify-23e3e463dc8eaad1",
+        "official-user-shopify-97ea8784c7dfd921",
+        "official-user-shopify-cf0fa6cfe8a41107",
+        "official-user-shopify-daa260464549b1d1",
+        "official-user-shopify-f8bf13b91565337b",
+        "user-source-source-auto-shopify-cb8e5b9d50117d8b"
+      ],
+      "sourceUrls": [
+        "https://www.shopify.com/blog/latest",
+        "https://help.shopify.com/en",
+        "https://www.shopify.com/enterprise/blog/latest",
+        "https://www.shopify.com/partners/blog/latest",
+        "https://www.shopify.com/editions/spring2026",
+        "https://www.shopify.com/blog/what-is-shopify"
+      ],
+      "eventTypes": [
+        "公司动态"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": ""
+    },
+    {
+      "id": "candidate-company-f2a4dca8",
+      "decisionKey": "埃隆马斯克",
+      "name": "埃隆·马斯克",
+      "aliases": [
+        "埃隆·马斯克"
+      ],
+      "region": "全球",
+      "sector": "商业航天",
+      "score": 40,
+      "status": "pending",
+      "reasons": [
+        "存在官方、原始或监管来源",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-01T00:00:00+00:00",
+      "lastSeenAt": "2026-08-01T00:00:00+00:00",
+      "articleCount": 1,
+      "sourceCount": 1,
+      "sourceHosts": [
+        "x.com"
+      ],
+      "sourceArticleIds": [
+        "user-x-elonmusk-28cf95d19b3bbbf8"
+      ],
+      "sourceUrls": [
+        "https://x.com/elonmusk/status/2083353705504469233"
+      ],
+      "eventTypes": [
+        "人物观点"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": ""
+    },
+    {
+      "id": "candidate-company-14b09e53",
+      "decisionKey": "搜狐网",
+      "name": "搜狐网",
+      "aliases": [
+        "搜狐网"
+      ],
+      "region": "中国",
+      "sector": "商业航天",
+      "score": 40,
+      "status": "pending",
+      "reasons": [
+        "存在官方、原始或监管来源",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-01T00:00:00+00:00",
+      "lastSeenAt": "2026-08-01T00:00:00+00:00",
+      "articleCount": 1,
+      "sourceCount": 1,
+      "sourceHosts": [
+        "sohu.com"
+      ],
+      "sourceArticleIds": [
+        "user-source-source-auto-item-ca1e1423-033aa3f67387509e"
+      ],
+      "sourceUrls": [
+        "https://www.sohu.com/a/1057353761_161795?edtcode=LPEGkn04C3vvNUzzNAOT4ga2oN2%2BAMpMDyHU9tYktFw%3D&edtsign=EA42681E5F133136982DCFF2436D01182B98F734&scm=thor.280_14-200000.0.0-0-0-0-0."
+      ],
+      "eventTypes": [
+        "公司动态"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": ""
+    }
+  ]
 }
