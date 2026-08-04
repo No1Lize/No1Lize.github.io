@@ -42,8 +42,13 @@ export type StarMarketInvestor = {
     | "prospectus-public"
     | "not-disclosed-in-prospectus"
     | "withheld-pending-review";
+  reviewKey?: string;
   reviewStatus?: StarInvestorReviewStatus;
   reviewReasons?: string[];
+  reviewedBy?: string;
+  reviewedAt?: string;
+  reviewNote?: string;
+  reviewSource?: "manifest";
 };
 
 export type ReviewedStarMarketInvestor = StarMarketInvestor & {
@@ -88,6 +93,7 @@ type StarMarketInvestorSnapshot = {
   verifiedInvestorCount?: number;
   needsReviewInvestorCount?: number;
   rejectedInvestorCount?: number;
+  reviewManifestDecisionCount?: number;
   scope: {
     market: string;
     listingRule: string;
@@ -104,6 +110,7 @@ type StarMarketInvestorSnapshot = {
     pdfExtraction: string;
     holdingBinding?: string;
     reviewGate?: string;
+    humanReview?: string;
     contactPublication?: string;
     retention: string;
   };
@@ -169,6 +176,8 @@ export const starMarketInvestorGeneratedAt = snapshot.generatedAt || "";
 export const starMarketInvestorScope = snapshot.scope;
 export const starMarketInvestorPrivacy = snapshot.privacy;
 export const starMarketInvestorMethodology = snapshot.methodology;
+export const starMarketInvestorReviewManifestDecisionCount =
+  snapshot.reviewManifestDecisionCount ?? 0;
 
 export const starMarketInvestorCompanies = Object.values(snapshot.companies ?? {}).sort(
   (left, right) =>
@@ -192,6 +201,7 @@ export const starMarketInvestorAllRecords: StarMarketInvestorRecord[] =
         });
         const contactVerified =
           review.reviewStatus === "verified" &&
+          rawInvestor.reviewSource === "manifest" &&
           rawInvestor.contactStatus === "prospectus-public" &&
           Boolean(rawInvestor.publicContact);
         const investor: ReviewedStarMarketInvestor = {
@@ -249,6 +259,7 @@ export const starMarketInvestorStats = {
   prospectusContacts: starMarketInvestorRecords.filter(
     (record) =>
       record.investor.reviewStatus === "verified" &&
+      record.investor.reviewSource === "manifest" &&
       record.investor.contactStatus === "prospectus-public",
   ).length,
   sectors: new Set(starMarketInvestorCompanies.map((company) => company.sector)).size,
