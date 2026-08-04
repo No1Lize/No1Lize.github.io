@@ -7,25 +7,10 @@ name: Tracking entity discovery
 # tombstoned and are never silently restored.
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - config/user_tracking.json
-      - lib/catalog-data.ts
-      - lib/institution-ranking-data.ts
-      - scripts/sync-tracking-institution-directory.ts
-      - tools/expand_tracking_entities.py
-      - tools/enrich_tracking_institutions.py
-      - tools/enrich_tracking_people_from_sample_companies.py
-      - tools/enrich_tracking_person_channels.py
-      - tests/test_tracking_institution_people.py
-      - tests/test_tracking_sample_company_people.py
-      - tests/test_tracking_person_channels.py
-      - .github/workflows/tracking-discovery.yml
   schedule:
-  # Discover entities before the next daily full refresh consumes them.
-  - cron: "0 3 * * 0"
-    timezone: "Asia/Taipei"
+    # Discover entities before the next daily full refresh consumes them.
+    - cron: "0 3 * * 0"
+      timezone: "Asia/Taipei"
   workflow_dispatch:
     inputs:
       mode:
@@ -36,7 +21,6 @@ on:
 
 permissions:
   contents: write
-  actions: write
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
@@ -44,11 +28,8 @@ concurrency:
 
 jobs:
   discover:
-    # A push made by this workflow's own commit must not restart it.
-    if: >-
-      github.event_name != 'push' ||
-      !contains(github.event.head_commit.message, '[auto-discovery]')
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -60,8 +41,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
+
       - name: Install locked project dependencies
         run: npm ci
+
       - name: Validate institution, sample-company and public-channel discovery
         run: |
           node --import tsx scripts/sync-tracking-institution-directory.ts --dry-run
@@ -72,26 +55,14 @@ jobs:
             tests.test_tracking_institution_people \
             tests.test_tracking_sample_company_people \
             tests.test_tracking_person_channels
+
       - name: Expand tracking entities from public web sources
         id: expand
+        shell: bash
         run: |
           set -euo pipefail
           MODE="full"
-          if [ "${{ github.event_name }}" = "push" ]; then
-            # Admin config pushes only seed brand-new tracks. Source/tool changes
-            # and scheduled runs use the full rotating expansion pass.
-            if python - <<'PYEOF'
-          import json, os, sys
-          event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
-          files = []
-          for commit in event.get("commits", []):
-              files += commit.get("modified", []) + commit.get("added", [])
-          sys.exit(0 if "config/user_tracking.json" in files else 1)
-          PYEOF
-            then
-              MODE="seed-only"
-            fi
-          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             MODE="${{ inputs.mode }}"
           fi
           echo "mode=$MODE"
@@ -99,45 +70,57 @@ jobs:
           if [ "$MODE" = "seed-only" ]; then
             python tools/expand_tracking_entities.py --seed-new-only | tee /tmp/discovery.json
           else
-            python tools/expand_tracking_entities.py --max-tracks 12 --max-requests 420 | tee /tmp/discovery.json
+            python tools/expand_tracking_entities.py \
+              --max-tracks 12 \
+              --max-requests 240 | tee /tmp/discovery.json
           fi
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
       - name: Reference the complete investment-institution directory
         id: directory
+        shell: bash
         run: |
           set -euo pipefail
           node --import tsx scripts/sync-tracking-institution-directory.ts \
             | tee /tmp/institution-directory-sync.json
           CHANGED=$(node -e "const fs=require('fs');console.log(String(JSON.parse(fs.readFileSync('/tmp/institution-directory-sync.json','utf8')).changed))")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
       - name: Reuse verified institution teams and public accounts
         id: institutions
+        shell: bash
         run: |
           set -euo pipefail
           python -m tools.enrich_tracking_institutions \
-            --max-requests 80 | tee /tmp/institution-discovery.json
+            --max-requests 50 | tee /tmp/institution-discovery.json
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/institution-discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
       - name: Discover founders, core team and public social accounts
         id: team
+        shell: bash
         run: |
           set -euo pipefail
           python tools/enrich_tracking_people_from_sample_companies.py \
-            --max-tracks 30 \
-            --max-requests 120 | tee /tmp/team-discovery.json
+            --max-tracks 20 \
+            --max-requests 70 | tee /tmp/team-discovery.json
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/team-discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
       - name: Register public communities and media columns
         id: channels
+        shell: bash
         run: |
           set -euo pipefail
           python tools/enrich_tracking_person_channels.py \
-            --max-tracks 30 | tee /tmp/channel-discovery.json
+            --max-tracks 20 | tee /tmp/channel-discovery.json
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/channel-discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
       - name: Consolidate discovery changes
         id: changes
+        shell: bash
         run: |
           if [ "${{ steps.expand.outputs.changed }}" = "true" ] || \
              [ "${{ steps.directory.outputs.changed }}" = "true" ] || \
@@ -148,16 +131,18 @@ jobs:
           else
             echo "changed=false" >> "$GITHUB_OUTPUT"
           fi
+
       - name: Validate the expanded config before committing
         if: steps.changes.outputs.changed == 'true'
         run: |
           npm run validate:tracking
           npm run validate:taxonomy
-      - name: Commit expanded config and trigger a full refresh
+
+      - name: Commit expanded tracking config
         if: steps.changes.outputs.changed == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
           DISCOVERY_MODE: ${{ steps.expand.outputs.mode }}
+        shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
@@ -176,21 +161,22 @@ jobs:
             git reset --hard origin/main
 
             if [ "$DISCOVERY_MODE" = "seed-only" ]; then
-              python tools/expand_tracking_entities.py --seed-new-only | tee /tmp/discovery-replay.json
+              python tools/expand_tracking_entities.py --seed-new-only \
+                | tee /tmp/discovery-replay.json
             else
               python tools/expand_tracking_entities.py \
                 --max-tracks 12 \
-                --max-requests 420 | tee /tmp/discovery-replay.json
+                --max-requests 240 | tee /tmp/discovery-replay.json
             fi
             node --import tsx scripts/sync-tracking-institution-directory.ts \
               | tee /tmp/institution-directory-sync-replay.json
             python -m tools.enrich_tracking_institutions \
-              --max-requests 80 | tee /tmp/institution-discovery-replay.json
+              --max-requests 50 | tee /tmp/institution-discovery-replay.json
             python tools/enrich_tracking_people_from_sample_companies.py \
-              --max-tracks 30 \
-              --max-requests 120 | tee /tmp/team-discovery-replay.json
+              --max-tracks 20 \
+              --max-requests 70 | tee /tmp/team-discovery-replay.json
             python tools/enrich_tracking_person_channels.py \
-              --max-tracks 30 | tee /tmp/channel-discovery-replay.json
+              --max-tracks 20 | tee /tmp/channel-discovery-replay.json
 
             npm run validate:tracking
             npm run validate:taxonomy

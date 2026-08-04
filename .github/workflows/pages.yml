@@ -24,10 +24,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Reconcile tracking metadata with the latest config
+      - name: Reconcile derived public data with the latest config
         run: |
           python tools/migrate_article_entities.py
           python tools/build_company_candidates.py
+          python tools/company_profile_refresh_queue.py --select-limit 10 --force-write
+          python tools/company_profile_refresh_queue.py --check
           python tools/refine_eastmoney_snapshot.py
           python tools/enrich_tracking_snapshot.py
           python tools/crawl_articles.py --validate-only
