@@ -160,6 +160,10 @@ def _apply_candidate_review(
     if status != "verified":
         investor.pop("publicContact", None)
         investor["contactStatus"] = "withheld-pending-review"
+    elif investor.get("publicContact"):
+        investor["contactStatus"] = "prospectus-public"
+    else:
+        investor["contactStatus"] = "not-disclosed-in-prospectus"
 
 
 def review_snapshot(

@@ -150,5 +150,23 @@ class ConservativeStarParserTests(unittest.TestCase):
         self.assertFalse(any("测试投资中心" in item["name"] for item in investors))
 
 
+    def test_inline_basic_information_fields_do_not_pollute_legal_names(self):
+        pages = [
+            Page(18, "Intel Capital 指 Intel Capital Corporation\n上海临理 指 上海理能资产管理有限公司"),
+            Page(90, "45、Intel Capital\n名称 Intel Capital Corporation 成立时间 1998 年 4 月 6 日 统一社会信用代码 2880872 经营范围/主营业务 投资\n企业类型 Corporation\n46、上海临理\n名称 上海理能资产管理有限公司 成立时间 2013 年 7 月 16 日 统一社会信用代码 91310000TEST 经营范围/主营业务 资产管理；投资管理\n企业类型 有限责任公司"),
+            Page(95, "本次发行前 本次发行后 股东名称 持股数\n序号 股东名称 本次发行前 本次发行后\n45 Intel Capital 101,683,250 10.000 101,683,250 9.000\n46 上海临理 53,506,750 5.262 53,506,750 4.736"),
+        ]
+        investors = parser.extract_institutional_investors(pages, "澜起科技", max_investors=10)
+        by_alias = {item.get("disclosedName"): item for item in investors}
+        self.assertEqual(by_alias["Intel Capital"]["name"], "Intel Capital Corporation")
+        self.assertEqual(by_alias["上海临理"]["name"], "上海理能资产管理有限公司")
+        self.assertFalse(any(marker in item["name"] for item in investors for marker in ("成立时间", "统一社会信用代码", "经营范围")))
+
+    def test_definition_names_normalize_lp_spacing(self):
+        self.assertEqual(
+            parser._definition_full_name("Xinyun Capital Fund I, L.P ."),
+            "Xinyun Capital Fund I, L.P.",
+        )
+
 if __name__ == "__main__":
     unittest.main()

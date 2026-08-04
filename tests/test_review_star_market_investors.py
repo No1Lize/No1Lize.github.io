@@ -248,5 +248,31 @@ class StarMarketInvestorReviewGateTests(unittest.TestCase):
         )
 
 
+    def test_verified_record_without_contact_is_marked_not_disclosed(self):
+        snapshot = self._snapshot(
+            [
+                {
+                    "name": "北京示例投资有限公司",
+                    "evidence": "北京示例投资有限公司 100万股 1.00%",
+                    "preIpoShares": 1_000_000,
+                    "preIpoOwnershipPct": 1.0,
+                }
+            ]
+        )
+        manifest = {
+            "sample:star-investor-1": {
+                "status": "verified",
+                "reviewer": "research-editor",
+                "reviewedAt": "2026-08-04T08:00:00+08:00",
+                "note": "名称及持股证据已核对，未披露机构联系方式。",
+                "reasons": [],
+            }
+        }
+        result = review.review_snapshot(snapshot, manifest)
+        investor = result["companies"]["sample"]["investors"][0]
+        self.assertEqual(investor["reviewStatus"], "verified")
+        self.assertEqual(investor["contactStatus"], "not-disclosed-in-prospectus")
+        self.assertNotIn("publicContact", investor)
+
 if __name__ == "__main__":
     unittest.main()

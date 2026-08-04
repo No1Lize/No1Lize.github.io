@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T10:38:04+00:00",
-  "eventCount": 71,
-  "institutionEventCount": 35,
-  "capitalEventCount": 36,
+  "generatedAt": "2026-08-04T12:11:17+00:00",
+  "eventCount": 83,
+  "institutionEventCount": 43,
+  "capitalEventCount": 40,
   "attributedInstitutionCount": 27,
   "methodology": {
     "structuredField": "article.institutions exact reviewed alias match",
@@ -12,6 +12,35 @@
     "genericCapitalEvents": "financing, industrial investment, M&A and IPO records without a resolved institution remain separate unattributed capital events"
   },
   "events": [
+    {
+      "id": "user-track-space-google-us-d84e2cd475875987",
+      "articleId": "user-track-space-google-us-d84e2cd475875987",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "并购",
+      "title": "Tesla's China footprint complicates path to possible SpaceX merger - Reuters",
+      "summary": "Tesla's China footprint complicates path to possible SpaceX merger Reuters",
+      "region": "美国",
+      "sector": "商业航天",
+      "company": "科技产业",
+      "publishedAt": "2026-08-04",
+      "firstSeenAt": "2026-08-04T11:36:30+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "user-track-space-google-us",
+      "source": {
+        "name": "商业航天 · Google News 英文",
+        "platform": "Google News",
+        "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxORi1DRjNPSDg1UmFoYnJYQ0VWamF2QmdLVXNrdzk2c0FUS3RkQWU0WkhIUHdCNGlNckMyRlM5SEs4S2hQWlhLUFNGcjU3OXM4bTlxckRGRDRQZUZydldJMnJXVUprczJFU0dGbUVIeWVCdjMya0dVa0RBREJJSDNiUVRSYUg3NGEtbTk3VTljcTVfNTJoRmJEdWxXLXJJTjA5dnNVV3RyTTZOT0hoa3JRS29aV2syOExfcVE?oc=5",
+        "evidenceGrade": "D",
+        "evidenceLabel": "待交叉验证线索",
+        "evidencePolicy": "仅用于发现线索，不应单独表述为确定事实"
+      }
+    },
     {
       "id": "user-source-source-track-rcvvao-b552a4acea704321",
       "articleId": "user-source-source-track-rcvvao-b552a4acea704321",
@@ -56,7 +85,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -87,6 +116,51 @@
       }
     },
     {
+      "id": "professional-media-dev-community-fdf3c969da09a228",
+      "articleId": "professional-media-dev-community-fdf3c969da09a228",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "技术突破",
+      "title": "Qwen3.8-Max Beat Claude on Three Benchmarks. The Full Story Is Less Convenient",
+      "summary": "Alibaba has released Qwen3.8-Max, its largest and most capable AI model to date. The headline specifications are absurd: 2.4 trillion total parameters, 95 billion activated per token, multimodal input, and a one-million-token context window. But the specification sheet is not the most interesting part. Alibaba says Qwen3.8-Max operated autonomously for roughly 16 days, starting with an empty repository and building a working software project through issues, code changes, testing, pull requests,",
+      "region": "全球",
+      "sector": "半导体",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-08-04",
+      "firstSeenAt": "2026-08-04T11:36:30+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [
+        "profile:benchmark"
+      ],
+      "institutionNames": [
+        "Benchmark"
+      ],
+      "attributions": [
+        {
+          "institutionId": "profile:benchmark",
+          "institutionName": "Benchmark",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "Benchmark"
+          ]
+        }
+      ],
+      "sourceId": "professional-media-dev-community",
+      "source": {
+        "name": "DEV Community",
+        "platform": "DEV Community",
+        "url": "https://dev.to/aditi_gupta_8d81622a592aa/qwen38-max-vs-claude-what-the-16-day-coding-run-and-benchmarks-really-show-3bje",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
       "id": "user-source-source-track-rcvvao-2-3d1c9745ccc688ed",
       "articleId": "user-source-source-track-rcvvao-2-3d1c9745ccc688ed",
       "scope": "capital-event",
@@ -111,6 +185,116 @@
         "name": "投资界",
         "platform": "投资界",
         "url": "https://news.pedaily.cn/202608/567201.shtml",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
+      "id": "official-user-东方财富-半导体信源-485545c9cc3933be",
+      "articleId": "official-user-东方财富-半导体信源-485545c9cc3933be",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "产业投资",
+      "title": "新型电力系统建设蓝图浮现 电网等领域投资机会释放",
+      "summary": "记者8月3日获悉，国家发展改革委、国家能源局日前印发《新型 电力 系统建设“十五五”规划》（简称《规划》），提出到2030年初步建成新型 电力 系统，部署 电力 行业发展的主要目标、重大工程、重点任务，其中包括非化石能源发电量占比达到50%，实现28亿千瓦以上 新能源 高水平消纳，建成可支撑超过1.1亿辆电动 汽车 出行的充电基础设施网络等。 业内人士指出，“十五五”期间，电网、储能、充换电基础设施等“硬基建”投资空间将进一步打开，产业链相关企业将迎来长期确定性的成长红利。 “十四五”以来，我国已构建起全球最大、发展最快的可再生能源体系，形成了全球最大、最完整的 新能源 产业链。2026年上半年，全国可再生能源发电量占总发电量的比重首次超四成，煤电发电量占比则首次低于50%。",
+      "region": "全球",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-08-04",
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "official-user-东方财富-半导体信源",
+      "source": {
+        "name": "东方财富",
+        "platform": "东方财富",
+        "url": "https://finance.eastmoney.com/a/202608043830170028.html"
+      }
+    },
+    {
+      "id": "leiphone-7966748d9c7a086a",
+      "articleId": "leiphone-7966748d9c7a086a",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "产品发布",
+      "title": "发布当日，海外主流AI平台纷纷接入阿里Qwen3.8",
+      "summary": "8月3日，阿里巴巴正式发布新一代基座大模型Qwen3.8，编程与Agent能力大幅提升，整体性能位居全球大模型第一梯队。发布当日，OpenRouter、OpenCode、Hermes Agent、Command Code、Vercel、Novita、Charm、DeepInfra等多家海外主流API聚合、Agent工具及开发者平台纷纷拥抱Qwen3.8-Max，形成了一股“接入潮”。 Hermes Agent、OpenCode、Command Code是当下最热门的AI Agent/Coding Agent工具，在发布当日就官宣支持，意味着开发者可以直接通过成熟的三方工具平台调用Qwen3.8，将极大放大中国模型在AI落地中的全球影响力。同时，OpenRouter、Novita、Vercel等主流模型调用平台同步上线Qwen3.8-Max，全球开发者和企业都能更方便、高效地调用，推动千问走入更多真实的企业级复杂场景中去。 据了解，最新发布的Qwen3.8模型总参数达2.4万亿、激活95B，支持1M Tokens长上下文与视觉理解，并在自主编程与长程任务执行方面具备端到端交付能力。在考察",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-08-04",
+      "firstSeenAt": "2026-08-04T11:36:30+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [
+        "institution:阿里巴巴"
+      ],
+      "institutionNames": [
+        "阿里巴巴"
+      ],
+      "attributions": [
+        {
+          "institutionId": "institution:阿里巴巴",
+          "institutionName": "阿里巴巴",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "阿里巴巴"
+          ]
+        }
+      ],
+      "sourceId": "leiphone",
+      "source": {
+        "name": "雷峰网",
+        "platform": "专业媒体",
+        "url": "https://www.leiphone.com/category/industrynews/Ufuyq9sSvBlkp2Ix.html",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
+      "id": "user-source-source-yahoo-ba4b61bdecf3f706",
+      "articleId": "user-source-source-yahoo-ba4b61bdecf3f706",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "公司动态",
+      "title": "AI人才戰升溫 中國科技巨頭提前鎖定2027畢業生",
+      "summary": "圖／示意圖商傳媒｜責任編輯／綜合外電報導全球人工智慧（AI）人才競爭持續升溫，各大科技企業紛紛加碼布局，除了祭出高薪與股票獎勵外，更將招募時程提前至學生尚未畢業前。中國科技業者近年更積極布局校園人才，甚至鎖定2027年畢業生，希望提前建立人才庫，鞏固AI競爭優勢。根據《南華早報》報導，字節跳動、阿里巴巴集團及騰訊等中國科技企業，每年均透過頂尖人才計畫招募優秀學生，今年更將招募對象提前至2027年畢業生。Tripo AI營運長Lisa Wu表示，部分企業甚至從高中階段便開始與學生建立聯繫，反映AI人才爭奪已朝長期培育方向發展。韋萊韜悅（WTW）國際獎勵數據情報主管Edward Hsu指出，目前AI相關職缺仍是全球最難招募的人才類型之一。受市場需求帶動，今年科技產業薪資預算平均調升4.6%，高於整體產業平均的4.3%。在中國，AI專業人才的年薪加計股票獎勵後，總薪酬方案普遍突破人民幣百萬元，平均月薪接近人民幣6萬元。不過，業界普遍認為，高薪已非吸引頂尖AI人才的唯一因素。Edward Hsu表示，許多研究員更重視是否有機會參與前沿技術研發、取得高品質資料、運用充足運算資源，以及對企業決策與",
+      "region": "全球",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-08-04",
+      "firstSeenAt": "2026-08-04T11:36:30+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [
+        "institution:阿里巴巴"
+      ],
+      "institutionNames": [
+        "阿里巴巴"
+      ],
+      "attributions": [
+        {
+          "institutionId": "institution:阿里巴巴",
+          "institutionName": "阿里巴巴",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "阿里巴巴"
+          ]
+        }
+      ],
+      "sourceId": "user-source-source-yahoo",
+      "source": {
+        "name": "Yahoo奇摩",
+        "platform": "Yahoo奇摩",
+        "url": "https://tw.stock.yahoo.com/news/ai%E4%BA%BA%E6%89%8D%E6%88%B0%E5%8D%87%E6%BA%AB-%E4%B8%AD%E5%9C%8B%E7%A7%91%E6%8A%80%E5%B7%A8%E9%A0%AD%E6%8F%90%E5%89%8D%E9%8E%96%E5%AE%9A2027%E7%95%A2%E6%A5%AD%E7%94%9F-105800651.html",
         "evidenceGrade": "C",
         "evidenceLabel": "专业媒体/数据库",
         "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
@@ -263,7 +447,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T02:38:45+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:sequoia-capital"
@@ -294,6 +478,50 @@
       }
     },
     {
+      "id": "professional-media-dev-community-6fec3a089ba6b5bc",
+      "articleId": "professional-media-dev-community-6fec3a089ba6b5bc",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "公司动态",
+      "title": "Voice Emotion Control Moves From SSML to Prompts",
+      "summary": "Voice emotion control is leaving the markup. Kakao's Kanana-o model, detailed on its tech blog on August 4, 2026, now takes plain-language instructions like \"read it in a sad voice\" or \"read it in a Gyeongsang dialect\" and reflects them in speed, volume, pitch, emotion, intonation, and intensity. On the Korean InstructTTSEval benchmark it scores 94.50, ahead of OpenAI's GPT-4o-mini-tts at 91.10 and just behind Google's Gemini 2.5 Flash Preview TTS at 95.38. I work at Speechify, on the SpeechifyA",
+      "region": "全球",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-08-04",
+      "firstSeenAt": "2026-08-04T11:36:30+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [
+        "profile:benchmark"
+      ],
+      "institutionNames": [
+        "Benchmark"
+      ],
+      "attributions": [
+        {
+          "institutionId": "profile:benchmark",
+          "institutionName": "Benchmark",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "Benchmark"
+          ]
+        }
+      ],
+      "sourceId": "professional-media-dev-community",
+      "source": {
+        "name": "DEV Community",
+        "platform": "DEV Community",
+        "url": "https://dev.to/lukeocodes/voice-emotion-control-moves-from-ssml-to-prompts-506b",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
       "id": "leiphone-b652d782ab06977d",
       "articleId": "leiphone-b652d782ab06977d",
       "scope": "institution-event",
@@ -307,7 +535,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T05:08:52+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:阿里巴巴"
@@ -779,7 +1007,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -824,7 +1052,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -957,7 +1185,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1015,7 +1243,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T05:08:52+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T08:04:30+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -1222,50 +1450,6 @@
       }
     },
     {
-      "id": "leiphone-e34e7770e44d8fba",
-      "articleId": "leiphone-e34e7770e44d8fba",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "公司动态",
-      "title": "阿里“千问办公”开启公测",
-      "summary": "8月3日，阿里巴巴旗下企业级Agent产品“千问办公”（QwenWork）开启公测。个人和企业用户均可通过“千问办公”官网（qwenwork.cn）体验，目前网页版和独立PC客户端已开放，钉钉PC端和手机端内置入口近期也将开放。用户可在“千问办公”体验阿里最新旗舰模型Qwen3.8。 新的“千问办公”由QoderWork、MuleRun、悟空三款产品全面整合而来，是业内首款同时支持桌面端Agent、云端Agent、企业协同Agent的产品，致力于帮助个人与企业提升办公生产力。 不同于市面上已有的Agent产品，“千问办公”除了可以帮助个人提效外，最重要的区别是全面瞄准企业级市场。“千问办公”已初步打通了钉钉IM，未来将全面连接企业真实的数据库和工作流，帮助企业提效。 比如，一家20人规模的律师事务所，资深律师用“千问办公”多次交互，完成首份并购尽调报告后，将全过程一键沉淀为“组织级Skill”，向全团队共享。新入职的员工接到同类案件，无需向资深律师逐项请教，调用该Skill并选定执行路径，即可产出报告。 未来，企业客户还可以将“千问办公”接入到真实繁杂的工作流中。比如在大型跨国企业，中",
-      "region": "中国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-08-03",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [
-        "institution:阿里巴巴"
-      ],
-      "institutionNames": [
-        "阿里巴巴"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:阿里巴巴",
-          "institutionName": "阿里巴巴",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "阿里巴巴"
-          ]
-        }
-      ],
-      "sourceId": "leiphone",
-      "source": {
-        "name": "雷峰网",
-        "platform": "专业媒体",
-        "url": "https://www.leiphone.com/category/industrynews/keVMfihBTyvo7FGk.html",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
       "id": "leiphone-9b5f480955736359",
       "articleId": "leiphone-9b5f480955736359",
       "scope": "institution-event",
@@ -1279,7 +1463,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T05:08:52+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:蚂蚁集团",
@@ -1335,7 +1519,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:商汤科技"
@@ -1642,7 +1826,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1671,7 +1855,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1700,7 +1884,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1729,7 +1913,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1787,7 +1971,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1816,7 +2000,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1837,7 +2021,7 @@
       "scope": "capital-event",
       "attributionStatus": "unattributed",
       "eventType": "并购",
-      "title": "IonQ Receives Regulatory Approval for SkyWater Acquisition",
+      "title": "IonQ | IonQ Receives Regulatory Approval for SkyWater Acquisition",
       "summary": "IonQ receives final regulatory approval to acquire SkyWater Technology, creating a vertically integrated U.S. quantum platform. Closing set for July 31, 2026.",
       "region": "美国",
       "sector": "量子计算",
@@ -1846,19 +2030,16 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
       "attributions": [],
-      "sourceId": "ionq",
+      "sourceId": "official-ionq",
       "source": {
         "name": "IonQ",
         "platform": "官方网站",
-        "url": "https://ionq.com/news/ionq-receives-regulatory-approval-to-complete-acquisition-of-skywater-technology",
-        "evidenceGrade": "B",
-        "evidenceLabel": "主体官方/原始材料",
-        "evidencePolicy": "可作为信息主体的正式公开声明"
+        "url": "https://ionq.com/news/ionq-receives-regulatory-approval-to-complete-acquisition-of-skywater-technology"
       }
     },
     {
@@ -1867,7 +2048,7 @@
       "scope": "capital-event",
       "attributionStatus": "unattributed",
       "eventType": "并购",
-      "title": "IonQ Completes Acquisition of SkyWater Technology",
+      "title": "IonQ | IonQ Completes Acquisition of SkyWater Technology",
       "summary": "IonQ completes its acquisition of SkyWater Technology, creating the only vertically integrated full-stack quantum platform to accelerate quantum computing.",
       "region": "美国",
       "sector": "量子计算",
@@ -1876,19 +2057,16 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
       "attributions": [],
-      "sourceId": "ionq",
+      "sourceId": "official-ionq",
       "source": {
         "name": "IonQ",
         "platform": "官方网站",
-        "url": "https://ionq.com/news/ionq-completes-acquisition-of-skywater-technology",
-        "evidenceGrade": "B",
-        "evidenceLabel": "主体官方/原始材料",
-        "evidencePolicy": "可作为信息主体的正式公开声明"
+        "url": "https://ionq.com/news/ionq-completes-acquisition-of-skywater-technology"
       }
     },
     {
@@ -1906,7 +2084,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -2285,7 +2463,7 @@
       "publishedAt": "2026-07-30",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T10:18:46+00:00",
+      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -2789,6 +2967,242 @@
         "evidenceGrade": "B",
         "evidenceLabel": "主体官方/原始材料",
         "evidencePolicy": "可作为信息主体的正式公开声明"
+      }
+    },
+    {
+      "id": "official-psiquantum-a553685b7f26d9f4",
+      "articleId": "official-psiquantum-a553685b7f26d9f4",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "商业进展",
+      "title": "PsiQuantum Signs $125 Million Agreement with DARPA",
+      "summary": "PsiQuantum today announced that the company has signed a new $125 million contract with the Defense Advanced Research Projects Agency (DARPA) under DARPA’s Quantum Benchmarking Initiative (QBI), the U.S. government’s most rigorous effort to evaluate commercial pathways to utility-scale quantum computing.",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "PsiQuantum",
+      "companySlug": "psiquantum",
+      "publishedAt": "2026-07-22",
+      "institutionIds": [
+        "profile:benchmark"
+      ],
+      "institutionNames": [
+        "Benchmark"
+      ],
+      "attributions": [
+        {
+          "institutionId": "profile:benchmark",
+          "institutionName": "Benchmark",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "Benchmark"
+          ]
+        }
+      ],
+      "sourceId": "official-psiquantum",
+      "source": {
+        "name": "PsiQuantum",
+        "platform": "官方网站",
+        "url": "https://www.psiquantum.com/news-import/psiquantum-signs-125-million-agreement-with-darpa"
+      }
+    },
+    {
+      "id": "official-catl-0c3a1e9ca68ead8a",
+      "articleId": "official-catl-0c3a1e9ca68ead8a",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "商业进展",
+      "title": "CATL and Solarpro Sign 2 GWh Sodium-ion Battery Storage Agreement for Eastern Europe",
+      "summary": "CATL and Solarpro Technology AD (Solarpro) announced the signing of a strategic cooperation agreement for 2 GWh sodium-ion systems. This marks a significant milestone in advancing the adoption of next-generation storage technologies and the transition toward more resilient and sustainable energy systems in Eastern Europe.Contemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative technologies, committed to providing premier solutions and services for new energ",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "companySlug": "catl",
+      "publishedAt": "2026-07-21",
+      "institutionIds": [
+        "institution:宁德时代"
+      ],
+      "institutionNames": [
+        "宁德时代"
+      ],
+      "attributions": [
+        {
+          "institutionId": "institution:宁德时代",
+          "institutionName": "宁德时代",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "宁德时代"
+          ]
+        }
+      ],
+      "sourceId": "official-catl",
+      "source": {
+        "name": "宁德时代",
+        "platform": "官方网站",
+        "url": "https://www.catl.com/en/news/6916.html"
+      }
+    },
+    {
+      "id": "official-catl-da49e430cb7409e3",
+      "articleId": "official-catl-da49e430cb7409e3",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "商业进展",
+      "title": "Alfen and CATL Reach 5 GWh Sodium-Ion Battery Storage Partnership in Europe",
+      "summary": "Alfen N.V., a leading European energy solutions provider, and Contemporary Amperex Technology Co., Limited (CATL), the world's largest battery manufacturer, today announced their collaboration to deploy 5 GWh of CATL's advanced sodium-ion battery energy storage systems across Europe. This brings the two companies' long-standing partnership to a new level, opening a new chapter of diversified, technology-driven development supporting EContemporary Amperex Technology Co., Limited (CATL) is a globa",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "companySlug": "catl",
+      "publishedAt": "2026-07-16",
+      "institutionIds": [
+        "institution:宁德时代"
+      ],
+      "institutionNames": [
+        "宁德时代"
+      ],
+      "attributions": [
+        {
+          "institutionId": "institution:宁德时代",
+          "institutionName": "宁德时代",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "宁德时代"
+          ]
+        }
+      ],
+      "sourceId": "official-catl",
+      "source": {
+        "name": "宁德时代",
+        "platform": "官方网站",
+        "url": "https://www.catl.com/en/news/6900.html"
+      }
+    },
+    {
+      "id": "official-catl-821ed428caa29f17",
+      "articleId": "official-catl-821ed428caa29f17",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "技术突破",
+      "title": "CATL Receives the 2026 Volkswagen Group Award",
+      "summary": "Recently, CATL was granted the 2026 Volkswagen Group Award . With outstanding overall performance in battery technology R&D, supply chain stability, and efficient global execution, CATL stands as the sole power battery manufacturer and the only enterprise from Chinese mainland to be recognized this year.CATL has been supplying NCM battery cells for Volkswagen's MEB platform since 2018. This yearContemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative techno",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "companySlug": "catl",
+      "publishedAt": "2026-07-12",
+      "institutionIds": [
+        "institution:宁德时代"
+      ],
+      "institutionNames": [
+        "宁德时代"
+      ],
+      "attributions": [
+        {
+          "institutionId": "institution:宁德时代",
+          "institutionName": "宁德时代",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "宁德时代"
+          ]
+        }
+      ],
+      "sourceId": "official-catl",
+      "source": {
+        "name": "宁德时代",
+        "platform": "官方网站",
+        "url": "https://www.catl.com/en/news/6896.html"
+      }
+    },
+    {
+      "id": "official-catl-257a5d62bbd36386",
+      "articleId": "official-catl-257a5d62bbd36386",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "产品发布",
+      "title": "CATL Launches 8C Superfast Charging Battery for Light-Duty Commercial Vehicles",
+      "summary": "For logistics operators, charging speed, battery durability, cold-weather performance and charging infrastructure remain key concerns.Recently, CATL launched the Tectrans II superfast charging battery for light-duty commercial vehicles, ushering the logistics industry into the era of 8C superfast charging with a refueling-like charging experience.01 Tectrans II Superfast Charging Battery: Ultra-Fast Charging, Longer Lifespan, and Reliable Cold-WeContemporary Amperex Technology Co., Limited (CATL",
+      "region": "中国",
+      "sector": "新能源",
+      "company": "宁德时代",
+      "companySlug": "catl",
+      "publishedAt": "2026-07-06",
+      "institutionIds": [
+        "institution:宁德时代"
+      ],
+      "institutionNames": [
+        "宁德时代"
+      ],
+      "attributions": [
+        {
+          "institutionId": "institution:宁德时代",
+          "institutionName": "宁德时代",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "宁德时代"
+          ]
+        }
+      ],
+      "sourceId": "official-catl",
+      "source": {
+        "name": "宁德时代",
+        "platform": "官方网站",
+        "url": "https://www.catl.com/en/news/6925.html"
+      }
+    },
+    {
+      "id": "official-shield-ai-9ce8918aad4f1d23",
+      "articleId": "official-shield-ai-9ce8918aad4f1d23",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "并购",
+      "title": "Shield AI completes acquisition of Aechelon Technology",
+      "summary": "SAN DIEGO (June 22, 2026) — Shield AI, the defense technology company building the world’s best AI pilots and next-generation aircraft, today announced the completion of its acquisition of Aechelon Technology, Inc, a leader in high-fidelity simulation, physics-based sensor modeling, and synthetic reality technologies. The transaction follows the successful close of Shield AI’s $2 billion strategic financing […]",
+      "region": "美国",
+      "sector": "机器人",
+      "company": "Shield AI",
+      "companySlug": "shield-ai",
+      "publishedAt": "2026-06-22",
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "official-shield-ai",
+      "source": {
+        "name": "Shield AI",
+        "platform": "官方网站",
+        "url": "https://shield.ai/shield-ai-completes-acquisition-of-aechelon-technology"
+      }
+    },
+    {
+      "id": "official-mobileye-9bd9dce1719f03a1",
+      "articleId": "official-mobileye-9bd9dce1719f03a1",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "并购",
+      "title": "Mobileye To Acquire Mentee Robotics to Accelerate Physical AI Leadership | Mobileye News",
+      "summary": "Combination brings world-class AI talent together to scale autonomous vehicles and humanoid robots globally",
+      "region": "美国",
+      "sector": "半导体",
+      "company": "Mobileye",
+      "companySlug": "mobileye",
+      "publishedAt": "2026-01-06",
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "official-mobileye",
+      "source": {
+        "name": "Mobileye",
+        "platform": "官方网站",
+        "url": "https://www.mobileye.com/news/mobileye-to-acquire-mentee-robotics-to-accelerate-physical-ai-leadership"
       }
     }
   ]
