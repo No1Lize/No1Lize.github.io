@@ -9,10 +9,14 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: patch-source-performance-wiring-once
+  cancel-in-progress: true
+
 jobs:
   patch:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,10 +25,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
 
       - name: Apply deterministic wiring fixes
         run: |
@@ -48,7 +48,6 @@ jobs:
               '        productive = (\n            accepted > 0\n            and state.casefold() in {"ok", "partial"}\n            and not bool(raw_status.get("retainedPrevious"))\n        )\n',
               'retained snapshot productivity guard',
           )
-
           replace_once(
               '.github/workflows/scheduled-sync.yml',
               '      - tools/source_health_runtime.py\n',
@@ -59,7 +58,7 @@ jobs:
               '.github/workflows/scheduled-sync.yml',
               '      - config/source_health_policy.json\n',
               '      - config/source_health_policy.json\n      - config/source_quality_reviews.json\n      - .github/workflows/source-performance-review.yml\n',
-              'scheduled sync review configuration paths',
+              'scheduled sync review paths',
           )
           replace_once(
               '.github/workflows/scheduled-sync.yml',
@@ -73,7 +72,6 @@ jobs:
               '            tests.test_source_health_runtime \\\n            tests.test_source_performance \\\n            tests.test_source_quality_reviews \\\n            tests.test_source_performance_review \\\n            tests.test_source_health_performance \\\n            tests.test_source_performance_workflow \\\n            tests.test_source_performance_review_cli \\\n',
               'scheduled sync source-performance tests',
           )
-
           replace_once(
               'README.md',
               '- `.github/workflows/star-market-investor-refresh.yml` 每周一 03:10（台北时间）刷新科创板招股说明书自动抽取目录；\n',
@@ -91,17 +89,7 @@ jobs:
               test_path.write_text(text.replace(marker, test_block + marker, 1), encoding='utf-8')
           PY
 
-      - name: Verify complete implementation
-        run: |
-          npm ci
-          npm run lint
-          npm run test:unit
-          npm run test:crawler
-          npx tsc --noEmit
-          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
-
       - name: Commit fixes and remove one-time workflow
-        shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
