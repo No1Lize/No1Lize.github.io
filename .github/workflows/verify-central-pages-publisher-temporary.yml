@@ -3,7 +3,7 @@ name: Verify central Pages publisher
 on:
   pull_request:
     branches: [main]
-    types: [opened]
+    types: [opened, synchronize]
     paths:
       - .github/workflows/verify-central-pages-publisher-temporary.yml
 
@@ -43,48 +43,64 @@ jobs:
           RUN_ID: ${{ steps.publisher.outputs.run_id }}
         run: gh run watch "$RUN_ID" --exit-status
 
-      - name: Find and wait for the dispatched Pages run
+      - name: Follow the latest main Pages deployment
         id: pages
         shell: bash
         run: |
           set -euo pipefail
-          run_id=""
-          for attempt in $(seq 1 90); do
+          selected_run=""
+          for attempt in $(seq 1 180); do
+            latest_sha=$(gh api "repos/${GH_REPO}/commits/main" --jq '.sha')
             gh run list \
               --workflow pages.yml \
               --branch main \
               --event workflow_dispatch \
-              --limit 20 \
+              --limit 50 \
               --json databaseId,createdAt,status,conclusion,headSha,event,url \
               > /tmp/pages-runs.json
-            run_id=$(python - <<'PY'
+
+            python - "$latest_sha" <<'PY' > /tmp/latest-pages.json
           import json
-          from datetime import datetime
+          import sys
           from pathlib import Path
 
-          publisher = json.loads(Path('/tmp/publisher-run.json').read_text(encoding='utf-8'))
-          started = datetime.fromisoformat(publisher['createdAt'].replace('Z', '+00:00'))
-          pages = json.loads(Path('/tmp/pages-runs.json').read_text(encoding='utf-8'))
-          eligible = [
-              row for row in pages
-              if datetime.fromisoformat(row['createdAt'].replace('Z', '+00:00')) >= started
-          ]
-          print(eligible[0]['databaseId'] if eligible else '')
+          latest_sha = sys.argv[1]
+          rows = json.loads(Path('/tmp/pages-runs.json').read_text(encoding='utf-8'))
+          matches = [row for row in rows if row.get('headSha') == latest_sha]
+          matches.sort(key=lambda row: row.get('createdAt', ''), reverse=True)
+          print(json.dumps(matches[0] if matches else {}, ensure_ascii=False))
+          PY
+            cat /tmp/latest-pages.json
+
+            selected_run=$(python - <<'PY'
+          import json
+          from pathlib import Path
+
+          row = json.loads(Path('/tmp/latest-pages.json').read_text(encoding='utf-8'))
+          if row.get('status') == 'completed' and row.get('conclusion') == 'success':
+              print(row.get('databaseId', ''))
+          else:
+              print('')
           PY
             )
-            if [ -n "$run_id" ]; then
+            if [ -n "$selected_run" ]; then
               break
             fi
             sleep 5
           done
-          if [ -z "$run_id" ]; then
-            echo "Central publisher did not create a Pages run." >&2
+
+          if [ -z "$selected_run" ]; then
+            echo "No successful Pages deployment was found for the latest main commit." >&2
+            gh run list \
+              --workflow pages.yml \
+              --branch main \
+              --limit 10 \
+              --json databaseId,createdAt,status,conclusion,headSha,event,url
             exit 1
           fi
-          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
-          gh run view "$run_id" \
+          echo "run_id=$selected_run" >> "$GITHUB_OUTPUT"
+          gh run view "$selected_run" \
             --json databaseId,createdAt,status,conclusion,headSha,event,url
-          gh run watch "$run_id" --exit-status
 
       - name: Verify the live page remains healthy
         shell: bash
