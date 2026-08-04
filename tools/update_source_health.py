@@ -80,6 +80,14 @@ def _integer(value: Any) -> int:
         return 0
 
 
+def _accepted_count(status: dict[str, Any]) -> int:
+    """Return this run's accepted count, excluding retained adaptive history."""
+
+    if status.get("newAccepted") is not None:
+        return _integer(status.get("newAccepted"))
+    return _integer(status.get("accepted"))
+
+
 def _source_id(status: dict[str, Any]) -> str:
     return str(status.get("id") or status.get("sourceId") or status.get("name") or "").strip()
 
@@ -104,7 +112,7 @@ def _classification(
     state = str(status.get("status") or "unknown").casefold()
     source_id = _source_id(status)
     platform = str(status.get("platform") or "").strip()
-    accepted = _integer(status.get("accepted"))
+    accepted = _accepted_count(status)
     retained_previous = bool(status.get("retainedPrevious"))
     critical = source_id in set(policy.get("criticalSourceIds", [])) or platform in set(
         policy.get("criticalPlatforms", [])
@@ -213,9 +221,13 @@ def update_health(
         previous_active = bool(previous.get("alertActive"))
         previous_collection_state = str(previous.get("collectionState") or "active")
         previous_recovery = _integer(previous.get("recoverySuccesses"))
-        accepted = _integer(raw_status.get("accepted"))
+        accepted = _accepted_count(raw_status)
         state = str(raw_status.get("status") or "unknown")
-        productive = accepted > 0 and state.casefold() in {"ok", "partial"}
+        productive = (
+            accepted > 0
+            and state.casefold() in {"ok", "partial"}
+            and not bool(raw_status.get("retainedPrevious"))
+        )
         grade = _evidence_grade(raw_status, previous, grade_index)
         pausable = grade in quarantine_grades
         first_observed_at = previous.get("firstObservedAt") or timestamp
