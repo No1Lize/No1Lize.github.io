@@ -7,7 +7,11 @@ import {
   normalizeChannelUpdateDate,
   type ChannelUpdateDatePrecision,
 } from "@/lib/channel-update-date";
-import { resolveArticleInstitutionEntities } from "@/lib/institution-entity-registry";
+import {
+  institutionDataLayerVersions,
+  institutionEventLayerRecords,
+  type InstitutionEventLayerRecord,
+} from "@/lib/institution-data-layer-data";
 import { trackedSectors } from "@/lib/tracked-sectors";
 
 export type ChannelUpdateKey =
@@ -220,6 +224,53 @@ function articleToUpdate(
   };
 }
 
+function institutionEventToUpdate(
+  event: InstitutionEventLayerRecord,
+): ChannelUpdateItem {
+  const normalizedDate = normalizeChannelUpdateDate(
+    event.publishedAt,
+    institutionDataLayerVersions.eventsGeneratedAt,
+  );
+  const sourceClassifications = event.source.evidenceGrade
+    ? [`${event.source.evidenceGrade}级来源`]
+    : [];
+  if (event.source.evidenceGrade === "D") {
+    sourceClassifications.push("待交叉验证");
+  }
+  const institutionNames = event.institutionNames.slice(0, 3);
+  const channelClassification =
+    event.scope === "institution-event" ? "机构动态" : "资本事件";
+
+  return {
+    id: event.id,
+    title: event.title,
+    summary: event.summary,
+    href: event.source.url,
+    source: event.source.platform || event.source.name,
+    label: event.eventType,
+    context:
+      event.scope === "institution-event"
+        ? `${institutionNames.join("、")} · ${event.sector}`
+        : `资本事件 · ${event.sector}`,
+    date: normalizedDate.displayDate,
+    dateOriginal: normalizedDate.originalDate,
+    datePrecision: normalizedDate.precision,
+    sortAt: normalizedDate.sortAt,
+    keywords: [event.eventType],
+    classifications: uniqueKeywords([
+      channelClassification,
+      ...sourceClassifications,
+    ]),
+    firstSeenAt: event.firstSeenAt,
+    firstSeenEstimated: event.firstSeenEstimated,
+    lastVerifiedAt: event.lastVerifiedAt,
+    lastVerifiedEstimated: event.lastVerifiedEstimated,
+    sourceGrade: event.source.evidenceGrade,
+    sourceGradeLabel: event.source.evidenceLabel,
+    sourceVerificationPolicy: event.source.evidencePolicy,
+  };
+}
+
 function technologyDirectory(): ChannelUpdateDirectory {
   const items = articlesPayload.articles
     .filter((article) => enabledSectorNames.has(article.sector))
@@ -257,33 +308,12 @@ function companiesDirectory(): ChannelUpdateDirectory {
 }
 
 function institutionsDirectory(): ChannelUpdateDirectory {
-  const items = articlesPayload.articles.flatMap((article) => {
-    const matchedInstitutions = resolveArticleInstitutionEntities(article);
-    const institutionNames = uniqueKeywords([
-      ...matchedInstitutions.map((institution) => institution.name),
-      ...(article.institutions ?? []),
-    ]).slice(0, 3);
-
-    if (institutionNames.length) {
-      return [
-        articleToUpdate(
-          article,
-          `${institutionNames.join("、")} · ${article.sector}`,
-          ["机构动态"],
-        ),
-      ];
-    }
-
-    if (!capitalEventTypes.has(article.type)) return [];
-    return [
-      articleToUpdate(article, `资本事件 · ${article.sector}`, ["资本事件"]),
-    ];
-  });
+  const items = institutionEventLayerRecords.map(institutionEventToUpdate);
   return {
     title: "机构与资本事件更新目录",
     description:
-      "已识别具体机构的记录归为“机构动态”；未识别机构的融资、并购与 IPO 归为“资本事件”。事件类型和来源/机构分类分别筛选；A/B 级为原始或官方来源，C 级为专业报道，D 级仅作待交叉验证线索。",
-    generatedAt: articlesPayload.generatedAt,
+      "读取独立机构事件数据层：已识别具体机构的记录归为“机构动态”；未识别机构的融资、并购与 IPO 归为“资本事件”。每条机构归属均保留结构化字段、官网域名或审核别名证据。",
+    generatedAt: institutionDataLayerVersions.eventsGeneratedAt,
     items: dedupeAndSort([
       ...getChannelDocumentUpdateItems("institutions"),
       ...items,
