@@ -16,21 +16,29 @@ class SourcePerformanceTest(unittest.TestCase):
             {
                 "id": "a-1",
                 "sourceId": "source-a",
+                "title": "Repeated event",
+                "publishedAt": "2026-08-04",
                 "source": {"url": "https://example.com/a?utm_source=one"},
             },
             {
                 "id": "a-2",
                 "sourceId": "source-a",
+                "title": "Repeated event",
+                "publishedAt": "2026-08-04",
                 "source": {"url": "https://example.com/a?utm_source=two"},
             },
             {
                 "id": "a-3",
                 "sourceId": "source-a",
+                "title": "Second event",
+                "publishedAt": "2026-08-04",
                 "source": {"url": "https://example.com/b"},
             },
             {
                 "id": "b-1",
                 "sourceId": "source-b",
+                "title": "Withheld event",
+                "publishedAt": "2026-08-04",
                 "source": {"url": "https://example.net/a"},
             },
         ]
@@ -48,9 +56,75 @@ class SourcePerformanceTest(unittest.TestCase):
         self.assertEqual(statuses[0]["uniqueCandidateCount"], 2)
         self.assertEqual(statuses[0]["publishedCount"], 2)
         self.assertEqual(statuses[0]["duplicateCount"], 1)
+        self.assertEqual(statuses[0]["droppedCount"], 0)
         self.assertEqual(statuses[0]["withheldCount"], 0)
         self.assertEqual(statuses[1]["withheldCount"], 1)
         self.assertEqual(statuses[1]["duplicateCount"], 0)
+
+    def test_unique_unpublished_candidate_is_dropped_not_duplicate(self) -> None:
+        statuses = [{"id": "source-a"}]
+        annotate_publication_metrics(
+            [
+                {
+                    "id": "unique",
+                    "sourceId": "source-a",
+                    "title": "Unique event",
+                    "publishedAt": "2026-08-04",
+                    "source": {"url": "https://example.com/unique"},
+                }
+            ],
+            [],
+            statuses,
+        )
+        self.assertEqual(statuses[0]["duplicateCount"], 0)
+        self.assertEqual(statuses[0]["droppedCount"], 1)
+        self.assertEqual(statuses[0]["dropRate"], 1.0)
+
+    def test_cross_source_identity_is_counted_as_duplicate(self) -> None:
+        candidate = {
+            "id": "candidate",
+            "sourceId": "source-a",
+            "title": "Same event",
+            "publishedAt": "2026-08-04",
+            "source": {"url": "https://example.com/same"},
+        }
+        published = {
+            **candidate,
+            "id": "winner",
+            "sourceId": "source-b",
+        }
+        statuses = [{"id": "source-a"}]
+        annotate_publication_metrics([candidate], [published], statuses)
+        self.assertEqual(statuses[0]["publishedCount"], 0)
+        self.assertEqual(statuses[0]["duplicateCount"], 1)
+        self.assertEqual(statuses[0]["droppedCount"], 0)
+
+    def test_adaptive_retained_history_is_not_counted_as_current_candidates(self) -> None:
+        current = {
+            "id": "current",
+            "sourceId": "adaptive",
+            "title": "Current event",
+            "publishedAt": "2026-08-04",
+            "lastVerifiedAt": "2026-08-04T01:00:00Z",
+            "source": {"url": "https://example.com/current"},
+        }
+        retained = {
+            "id": "retained",
+            "sourceId": "adaptive",
+            "title": "Retained event",
+            "publishedAt": "2026-07-01",
+            "lastVerifiedAt": "2026-07-01T01:00:00Z",
+            "source": {"url": "https://example.com/retained"},
+        }
+        statuses = [{"id": "adaptive", "newAccepted": 1, "accepted": 2}]
+        annotate_publication_metrics(
+            [current, retained],
+            [current, retained],
+            statuses,
+        )
+        self.assertEqual(statuses[0]["candidateCount"], 1)
+        self.assertEqual(statuses[0]["publishedCount"], 1)
+        self.assertFalse(statuses[0].get("candidateMetricEstimated", False))
 
     def test_new_article_metrics_only_count_exact_sightings_since_previous_run(self) -> None:
         payload = {
@@ -111,6 +185,7 @@ class SourcePerformanceTest(unittest.TestCase):
                     "candidateCount": 0,
                     "publishedCount": 0,
                     "duplicateCount": 0,
+                    "droppedCount": 0,
                 },
                 None,
                 evidence_grade="C",
@@ -165,6 +240,7 @@ class SourcePerformanceTest(unittest.TestCase):
                     "candidateCount": 5,
                     "publishedCount": 5,
                     "duplicateCount": 0,
+                    "droppedCount": 0,
                 },
                 None,
                 evidence_grade="C",
