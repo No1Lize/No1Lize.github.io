@@ -1,4 +1,5 @@
 name: Apply verified STAR review manifest once
+# One-time publication gate for the owner-authorized review manifest.
 
 on:
   pull_request:
