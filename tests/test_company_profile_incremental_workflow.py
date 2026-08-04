@@ -36,9 +36,9 @@ class CompanyProfileIncrementalWorkflowTests(unittest.TestCase):
             "python tools/stabilize_venture_publication_pipeline.py --check", text
         )
         self.assertIn("python tools/stabilize_venture_research_evidence.py --check", text)
-        self.assertIn("python tools/normalize_venture_profiles.py --check", text)
+        self.assertIn("python tools/normalize_venture_publication.py --check", text)
         self.assertIn("python tools/stabilize_venture_profiles.py --check", text)
-        self.assertNotIn("python tools/normalize_venture_profiles.py\n", text)
+        self.assertNotIn("python tools/normalize_venture_profiles.py --check", text)
         self.assertNotIn("python tools/stabilize_venture_profiles.py\n", text)
 
     def test_profiles_are_only_committed_after_shared_fixed_point_validation(self):
@@ -46,9 +46,13 @@ class CompanyProfileIncrementalWorkflowTests(unittest.TestCase):
         publication_check = text.index(
             "python tools/stabilize_venture_publication_pipeline.py --check"
         )
+        normalization_check = text.index(
+            "python tools/normalize_venture_publication.py --check"
+        )
         validation = text.index("python tools/crawl_venture_profiles.py --validate-only")
         commit = text.index('git commit -m "data: process queued company profile refreshes"')
         self.assertLess(publication_check, commit)
+        self.assertLess(normalization_check, commit)
         self.assertLess(validation, commit)
 
 
