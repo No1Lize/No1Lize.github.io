@@ -7,6 +7,7 @@ import {
   starMarketInvestorRecords,
   starMarketInvestorStats,
 } from "../lib/star-market-investor-data";
+import { extractStarInvestorHoldingFromEvidence } from "../lib/star-market-investor-review";
 
 test("strong automatic extraction remains pending instead of being auto-verified", () => {
   const review = deriveStarInvestorReview({
@@ -51,7 +52,7 @@ test("listed issuer legal name is rejected as its own investor candidate", () =>
   assert.ok(review.reviewReasons.includes("issuer-name"));
 });
 
-test("explicit human review status is preserved", () => {
+test("explicit human review status is preserved when evidence is consistent", () => {
   const review = deriveStarInvestorReview({
     name: "北京示例投资有限公司",
     companyName: "示例科技",
@@ -65,6 +66,41 @@ test("explicit human review status is preserved", () => {
   assert.deepEqual(review.reviewReasons, []);
 });
 
+test("same-line holding extraction ignores values before the candidate name", () => {
+  const holding = extractStarInvestorHoldingFromEvidence(
+    "其他主体 33.19% 北京示例投资有限公司 100万股 1.00%",
+    "北京示例投资有限公司",
+  );
+
+  assert.equal(holding.shares, 1_000_000);
+  assert.equal(holding.ownershipPct, 1);
+  assert.deepEqual(holding.reasons, []);
+});
+
+test("recorded holding value that conflicts with the evidence line is rejected", () => {
+  const review = deriveStarInvestorReview({
+    name: "北京示例投资有限公司",
+    companyName: "示例科技",
+    evidence: "北京示例投资有限公司 100万股 1.00%",
+    preIpoOwnershipPct: 33.19,
+  });
+
+  assert.equal(review.reviewStatus, "rejected");
+  assert.ok(review.reviewReasons.includes("holding-value-mismatch"));
+});
+
+test("multiple percentages after one candidate are treated as ambiguous", () => {
+  const review = deriveStarInvestorReview({
+    name: "北京示例投资有限公司",
+    companyName: "示例科技",
+    evidence: "北京示例投资有限公司 5.00% 10.00%",
+    preIpoOwnershipPct: 5,
+  });
+
+  assert.equal(review.reviewStatus, "rejected");
+  assert.ok(review.reviewReasons.includes("ambiguous-holding-row"));
+});
+
 test("public directory excludes rejected audit records and preserves count identity", () => {
   assert.ok(
     starMarketInvestorRecords.every(
@@ -75,5 +111,22 @@ test("public directory excludes rejected audit records and preserves count ident
   assert.equal(
     starMarketInvestorStats.extracted,
     starMarketInvestorStats.investors + starMarketInvestorStats.rejected,
+  );
+});
+
+test("unverified candidates never expose prospectus contact fields", () => {
+  assert.ok(
+    starMarketInvestorRecords.every(
+      (record) =>
+        record.investor.reviewStatus === "verified" ||
+        record.investor.publicContact === undefined,
+    ),
+  );
+  assert.ok(
+    starMarketInvestorRecords.every(
+      (record) =>
+        record.investor.contactStatus !== "prospectus-public" ||
+        record.investor.reviewStatus === "verified",
+    ),
   );
 });
