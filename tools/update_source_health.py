@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Persist cross-run source health and prepare one GitHub Issue alert summary."""
+"""Persist cross-run source health, quarantine state and one alert summary."""
 
 from __future__ import annotations
 
@@ -10,6 +10,19 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+try:
+    from .source_evidence import (
+        VALID_EVIDENCE_GRADES,
+        article_source_grade_index,
+        classify_source_evidence,
+    )
+except ImportError:
+    from source_evidence import (
+        VALID_EVIDENCE_GRADES,
+        article_source_grade_index,
+        classify_source_evidence,
+    )
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 DEFAULT_STATE_PATH = ROOT / "public" / "data" / "source_health.json"
@@ -17,8 +30,12 @@ DEFAULT_POLICY_PATH = ROOT / "config" / "source_health_policy.json"
 DEFAULT_SUMMARY_PATH = Path("/tmp/source-health-issue.md")
 
 DEFAULT_POLICY = {
-    "schemaVersion": 1,
+    "schemaVersion": 2,
     "failureThreshold": 3,
+    "quarantineThreshold": 7,
+    "recoverySuccessThreshold": 3,
+    "inactivityDays": 30,
+    "quarantineGrades": ["C", "D"],
     "criticalPlatforms": ["微信"],
     "criticalSourceIds": [],
     "countEmptyForCriticalSources": True,
@@ -43,6 +60,19 @@ def _integer(value: Any) -> int:
 
 def _source_id(status: dict[str, Any]) -> str:
     return str(status.get("id") or status.get("sourceId") or status.get("name") or "").strip()
+
+
+def _parse_time(value: Any) -> datetime | None:
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=UTC)
+    return parsed.astimezone(UTC)
 
 
 def _classification(
@@ -73,6 +103,35 @@ def _classification(
     return False, ""
 
 
+def _evidence_grade(
+    status: dict[str, Any],
+    previous: dict[str, Any],
+    grade_index: dict[str, str],
+) -> str:
+    source_id = _source_id(status)
+    candidates = (
+        str(status.get("evidenceGrade") or ""),
+        grade_index.get(source_id, ""),
+        str(previous.get("evidenceGrade") or ""),
+    )
+    for candidate in candidates:
+        if candidate in VALID_EVIDENCE_GRADES:
+            return candidate
+    return classify_source_evidence(
+        level=status.get("sourceLevel"),
+        platform=status.get("platform"),
+        source_name=status.get("name"),
+        url=status.get("url"),
+    )
+
+
+def _inactive_days(value: Any, current_time: datetime) -> int:
+    parsed = _parse_time(value)
+    if parsed is None:
+        return 0
+    return max(0, (current_time.date() - parsed.date()).days)
+
+
 def update_health(
     previous_payload: dict[str, Any],
     article_payload: dict[str, Any],
@@ -80,17 +139,36 @@ def update_health(
     *,
     now: datetime | None = None,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    current_time = (now or datetime.now(UTC)).replace(microsecond=0)
+    current_time = (now or datetime.now(UTC)).astimezone(UTC).replace(microsecond=0)
     timestamp = current_time.isoformat()
     threshold = max(1, _integer(policy.get("failureThreshold")) or 3)
+    quarantine_threshold = max(
+        threshold,
+        _integer(policy.get("quarantineThreshold")) or 7,
+    )
+    recovery_threshold = max(
+        1,
+        _integer(policy.get("recoverySuccessThreshold")) or 3,
+    )
+    inactivity_threshold = max(1, _integer(policy.get("inactivityDays")) or 30)
+    quarantine_grades = {
+        str(value)
+        for value in policy.get("quarantineGrades", ["C", "D"])
+        if str(value) in VALID_EVIDENCE_GRADES
+    }
+
     previous_sources = previous_payload.get("sources", {})
     previous_sources = previous_sources if isinstance(previous_sources, dict) else {}
     statuses = article_payload.get("sourceStatus", [])
     statuses = statuses if isinstance(statuses, list) else []
+    grade_index = article_source_grade_index(article_payload)
 
     next_sources: dict[str, dict[str, Any]] = {}
     new_alerts: list[str] = []
     recoveries: list[str] = []
+    quarantined_now: list[str] = []
+    resumed_now: list[str] = []
+    seen_ids: set[str] = set()
 
     for raw_status in statuses:
         if not isinstance(raw_status, dict):
@@ -98,28 +176,73 @@ def update_health(
         source_id = _source_id(raw_status)
         if not source_id:
             continue
+        seen_ids.add(source_id)
         previous = previous_sources.get(source_id, {})
         previous = previous if isinstance(previous, dict) else {}
-        unhealthy, reason = _classification(raw_status, policy)
+        unhealthy, failure_reason = _classification(raw_status, policy)
         previous_streak = _integer(previous.get("consecutiveFailures"))
         previous_active = bool(previous.get("alertActive"))
+        previous_collection_state = str(previous.get("collectionState") or "active")
+        previous_recovery = _integer(previous.get("recoverySuccesses"))
         accepted = _integer(raw_status.get("accepted"))
         state = str(raw_status.get("status") or "unknown")
+        productive = accepted > 0 and state.casefold() in {"ok", "partial"}
+        grade = _evidence_grade(raw_status, previous, grade_index)
+        pausable = grade in quarantine_grades
+        first_observed_at = previous.get("firstObservedAt") or timestamp
 
         if unhealthy:
             streak = previous_streak + 1
+            recovery_successes = 0
             last_success_at = previous.get("lastSuccessAt")
             last_failure_at = timestamp
+            if pausable and (
+                streak >= quarantine_threshold
+                or previous_collection_state in {"quarantined", "probation"}
+            ):
+                collection_state = "quarantined"
+            else:
+                collection_state = "active"
+            reason = failure_reason
         else:
             streak = 0
-            last_success_at = (
-                timestamp
-                if accepted > 0 or state.casefold() in {"ok", "partial"}
-                else previous.get("lastSuccessAt")
-            )
             last_failure_at = previous.get("lastFailureAt")
+            last_success_at = timestamp if productive else previous.get("lastSuccessAt")
+            if pausable and previous_collection_state in {"quarantined", "probation"}:
+                if productive:
+                    recovery_successes = previous_recovery + 1
+                    if recovery_successes >= recovery_threshold:
+                        collection_state = "active"
+                        recovery_successes = 0
+                        resumed_now.append(source_id)
+                        reason = ""
+                    else:
+                        collection_state = "probation"
+                        reason = (
+                            f"恢复探测 {recovery_successes}/{recovery_threshold}，"
+                            "新内容继续隔离"
+                        )
+                else:
+                    recovery_successes = previous_recovery
+                    collection_state = previous_collection_state
+                    reason = "恢复探测没有产生合格记录，新内容继续隔离"
+            else:
+                recovery_successes = 0
+                collection_state = "active"
+                reason = ""
 
-        alert_active = unhealthy and streak >= threshold
+        if collection_state == "quarantined" and previous_collection_state != "quarantined":
+            quarantined_now.append(source_id)
+
+        last_productive_at = timestamp if productive else previous.get("lastProductiveAt")
+        activity_anchor = last_productive_at or first_observed_at
+        inactive_days = _inactive_days(activity_anchor, current_time)
+        priority = "low" if inactive_days >= inactivity_threshold else "normal"
+        publication_eligible = collection_state == "active"
+        alert_active = (
+            unhealthy and streak >= threshold
+        ) or collection_state in {"quarantined", "probation"}
+
         if alert_active and not previous_active:
             new_alerts.append(source_id)
         if previous_active and not alert_active:
@@ -129,17 +252,37 @@ def update_health(
             "id": source_id,
             "name": str(raw_status.get("name") or previous.get("name") or source_id),
             "platform": str(raw_status.get("platform") or previous.get("platform") or ""),
+            "evidenceGrade": grade,
             "lastStatus": state,
             "accepted": accepted,
             "failed": _integer(raw_status.get("failed")),
             "consecutiveFailures": streak,
             "failureThreshold": threshold,
+            "quarantineThreshold": quarantine_threshold,
+            "recoverySuccessThreshold": recovery_threshold,
+            "recoverySuccesses": recovery_successes,
+            "collectionState": collection_state,
+            "publicationEligible": publication_eligible,
+            "priority": priority,
+            "inactiveDays": inactive_days,
             "alertActive": alert_active,
-            "reason": reason if unhealthy else "",
+            "reason": reason,
+            "publicationWithheld": bool(raw_status.get("publicationWithheld")),
+            "firstObservedAt": first_observed_at,
             "lastSeenAt": timestamp,
             "lastSuccessAt": last_success_at,
+            "lastProductiveAt": last_productive_at,
             "lastFailureAt": last_failure_at,
         }
+
+    # Preserve sources missing from the current ledger instead of silently deleting
+    # their cross-run streak, quarantine or historical timestamps.
+    for source_id, raw_previous in previous_sources.items():
+        if source_id in seen_ids or not isinstance(raw_previous, dict):
+            continue
+        preserved = dict(raw_previous)
+        preserved["missingFromCurrentRun"] = True
+        next_sources[source_id] = preserved
 
     active_alerts = sorted(
         source_id
@@ -151,19 +294,48 @@ def update_health(
         for source_id, entry in previous_sources.items()
         if isinstance(entry, dict) and bool(entry.get("alertActive"))
     )
+    quarantined_ids = sorted(
+        source_id
+        for source_id, entry in next_sources.items()
+        if str(entry.get("collectionState")) == "quarantined"
+    )
+    probation_ids = sorted(
+        source_id
+        for source_id, entry in next_sources.items()
+        if str(entry.get("collectionState")) == "probation"
+    )
+    low_priority_ids = sorted(
+        source_id
+        for source_id, entry in next_sources.items()
+        if str(entry.get("priority")) == "low"
+    )
     result = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "generatedAt": timestamp,
         "failureThreshold": threshold,
+        "quarantineThreshold": quarantine_threshold,
+        "recoverySuccessThreshold": recovery_threshold,
+        "inactivityDays": inactivity_threshold,
         "sourceCount": len(next_sources),
         "activeAlertCount": len(active_alerts),
         "activeAlerts": active_alerts,
+        "quarantinedSourceCount": len(quarantined_ids),
+        "quarantinedSources": quarantined_ids,
+        "probationSourceCount": len(probation_ids),
+        "probationSources": probation_ids,
+        "lowPrioritySourceCount": len(low_priority_ids),
+        "lowPrioritySources": low_priority_ids,
         "sources": dict(sorted(next_sources.items())),
     }
     summary = {
         "activeAlerts": active_alerts,
         "newAlerts": sorted(new_alerts),
         "recoveries": sorted(recoveries),
+        "quarantinedNow": sorted(quarantined_now),
+        "resumedNow": sorted(resumed_now),
+        "quarantinedSources": quarantined_ids,
+        "probationSources": probation_ids,
+        "lowPrioritySources": low_priority_ids,
         "alertChanged": active_alerts != previous_active_alerts,
         "generatedAt": timestamp,
     }
@@ -175,18 +347,18 @@ def render_issue_markdown(state: dict[str, Any], summary: dict[str, Any]) -> str
     lines = [
         "# 关键情报源连续异常",
         "",
-        "该 Issue 由定时刷新工作流维护。来源连续达到阈值后进入告警，恢复后自动关闭。",
+        "该 Issue 由定时刷新工作流维护。连续异常达到阈值后告警；C/D 级来源达到隔离阈值后仅继续恢复探测，不发布新内容。",
         "",
     ]
     if not active_ids:
-        lines.extend(["当前没有持续异常的关键来源。", ""])
+        lines.extend(["当前没有持续异常或恢复观察中的来源。", ""])
     else:
         lines.extend(
             [
-                f"当前共有 **{len(active_ids)}** 个来源处于持续异常状态。",
+                f"当前共有 **{len(active_ids)}** 个来源处于告警、隔离或恢复观察状态。",
                 "",
-                "| 来源 | 平台 | 连续异常 | 当前状态 | 原因 | 最后成功 |",
-                "|---|---|---:|---|---|---|",
+                "| 来源 | 等级 | 平台 | 状态 | 连续异常 | 恢复进度 | 原因 | 最后有效产出 |",
+                "|---|---|---|---|---:|---:|---|---|",
             ]
         )
         sources = state.get("sources", {})
@@ -194,21 +366,26 @@ def render_issue_markdown(state: dict[str, Any], summary: dict[str, Any]) -> str
             item = sources.get(source_id, {})
             reason = str(item.get("reason") or "未知").replace("|", "\\|")
             lines.append(
-                "| {name} | {platform} | {streak} | {status} | {reason} | {success} |".format(
+                "| {name} | {grade} | {platform} | {collection} | {streak} | {recovery}/{threshold} | {reason} | {productive} |".format(
                     name=str(item.get("name") or source_id).replace("|", "\\|"),
+                    grade=str(item.get("evidenceGrade") or "D"),
                     platform=str(item.get("platform") or "—").replace("|", "\\|"),
+                    collection=str(item.get("collectionState") or "active"),
                     streak=item.get("consecutiveFailures", 0),
-                    status=str(item.get("lastStatus") or "unknown").replace("|", "\\|"),
+                    recovery=item.get("recoverySuccesses", 0),
+                    threshold=item.get("recoverySuccessThreshold", 0),
                     reason=reason,
-                    success=item.get("lastSuccessAt") or "尚无成功记录",
+                    productive=item.get("lastProductiveAt") or "尚无有效产出",
                 )
             )
         lines.append("")
     lines.extend(
         [
+            f"隔离来源：**{state.get('quarantinedSourceCount', 0)}**；恢复观察：**{state.get('probationSourceCount', 0)}**；低优先级：**{state.get('lowPrioritySourceCount', 0)}**。",
+            "",
             f"最后检查：`{summary.get('generatedAt', '')}`",
             "",
-            "处理原则：不绕过验证码或访问限制；失败时保留上一版已验证快照。",
+            "处理原则：不绕过验证码或访问限制；隔离时保留上一版已验证快照，连续三次产生有效记录后恢复发布。",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -221,6 +398,8 @@ def _write_github_output(path: str | None, summary: dict[str, Any]) -> None:
         handle.write(f"active_count={len(summary.get('activeAlerts', []))}\n")
         handle.write(f"new_alert_count={len(summary.get('newAlerts', []))}\n")
         handle.write(f"recovery_count={len(summary.get('recoveries', []))}\n")
+        handle.write(f"quarantine_count={len(summary.get('quarantinedSources', []))}\n")
+        handle.write(f"probation_count={len(summary.get('probationSources', []))}\n")
         handle.write(f"alert_changed={str(bool(summary.get('alertChanged'))).lower()}\n")
 
 
