@@ -21,7 +21,6 @@ import rawDecisions from "@/config/company_candidate_decisions.json";
 import {
   companyCandidateSnapshot,
   normalizeCompanyCandidateSnapshot,
-  type CompanyCandidate,
   type CompanyCandidateSnapshot,
   type CompanyCandidateStatus,
 } from "@/lib/company-candidate-data";
@@ -139,6 +138,14 @@ function currentToken() {
   return window.sessionStorage.getItem(TOKEN_SESSION_KEY)?.trim() ?? "";
 }
 
+function sourceHost(url: string) {
+  try {
+    return new URL(url).hostname;
+  } catch {
+    return "公开来源";
+  }
+}
+
 function ensureShortcutHost() {
   const input = document.querySelector<HTMLInputElement>("#github-token");
   const row = input?.parentElement;
@@ -174,8 +181,9 @@ export function TrackingCompanyCandidateReview() {
   const [username, setUsername] = useState("");
   const [connected, setConnected] = useState(false);
   const [decisionSha, setDecisionSha] = useState("");
-  const [note, setNote] = useState("");
-  const [mergedSlug, setMergedSlug] = useState("");
+  const [drafts, setDrafts] = useState<
+    Record<string, { note: string; mergedSlug: string }>
+  >({});
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState(
     "登录后可在此审核、拒绝或合并候选；所有决定会写入版本化审核清单。",
@@ -194,18 +202,27 @@ export function TrackingCompanyCandidateReview() {
   );
   const selected = useMemo(
     () =>
-      candidates.find((candidate) => candidate.decisionKey === selectedKey) ??
-      filtered[0] ??
-      candidates[0],
-    [candidates, filtered, selectedKey],
+      filtered.find((candidate) => candidate.decisionKey === selectedKey) ??
+      filtered[0],
+    [filtered, selectedKey],
   );
+  const selectedDecision = selected
+    ? decisionForCompanyCandidate(selected, manifest)
+    : undefined;
+  const selectedDraft = selected ? drafts[selected.decisionKey] : undefined;
+  const note = selectedDraft?.note ?? selectedDecision?.note ?? selected?.note ?? "";
+  const mergedSlug =
+    selectedDraft?.mergedSlug ??
+    selectedDecision?.mergedSlug ??
+    selected?.mergedSlug ??
+    "";
 
   const loadReviewData = useCallback(async (providedToken?: string) => {
     const cleanToken = (providedToken ?? currentToken()).trim();
     if (!cleanToken) {
       setConnected(false);
       setUsername("");
-      setStatus("请先在页面上方完成管理员登录。 ");
+      setStatus("请先在页面上方完成管理员登录。");
       setStatusKind("error");
       return;
     }
@@ -272,7 +289,9 @@ export function TrackingCompanyCandidateReview() {
   useEffect(() => {
     if (!mounted) return;
     const saved = currentToken();
-    if (saved) void loadReviewData(saved);
+    if (saved) {
+      window.setTimeout(() => void loadReviewData(saved), 0);
+    }
 
     const onClick = (event: MouseEvent) => {
       const target = event.target;
@@ -318,24 +337,6 @@ export function TrackingCompanyCandidateReview() {
       observer.disconnect();
     };
   }, [mounted]);
-
-  useEffect(() => {
-    if (!filtered.length) return;
-    if (!filtered.some((candidate) => candidate.decisionKey === selectedKey)) {
-      setSelectedKey(filtered[0].decisionKey);
-    }
-  }, [filtered, selectedKey]);
-
-  useEffect(() => {
-    if (!selected) {
-      setNote("");
-      setMergedSlug("");
-      return;
-    }
-    const decision = decisionForCompanyCandidate(selected, manifest);
-    setNote(decision?.note ?? selected.note ?? "");
-    setMergedSlug(decision?.mergedSlug ?? selected.mergedSlug ?? "");
-  }, [manifest, selected]);
 
   async function saveDecision(nextStatus: CompanyCandidateStatus) {
     if (!selected) return;
@@ -537,8 +538,24 @@ export function TrackingCompanyCandidateReview() {
                 connected={connected}
                 mergedSlug={mergedSlug}
                 note={note}
-                onMergedSlugChange={setMergedSlug}
-                onNoteChange={setNote}
+                onMergedSlugChange={(value) =>
+                  setDrafts((current) => ({
+                    ...current,
+                    [selected.decisionKey]: {
+                      note,
+                      mergedSlug: value,
+                    },
+                  }))
+                }
+                onNoteChange={(value) =>
+                  setDrafts((current) => ({
+                    ...current,
+                    [selected.decisionKey]: {
+                      note: value,
+                      mergedSlug,
+                    },
+                  }))
+                }
                 onSave={saveDecision}
                 selected={selected}
                 username={username}
@@ -610,7 +627,7 @@ function CandidateReviewDetail({
           {selected.sourceUrls.map((url, index) => (
             <a href={url} key={url} rel="noreferrer" target="_blank">
               来源 {index + 1}
-              <span>{selected.sourceHosts[index] ?? new URL(url).hostname}</span>
+              <span>{sourceHost(url)}</span>
               <ArrowUpRight size={13} aria-hidden="true" />
             </a>
           ))}
