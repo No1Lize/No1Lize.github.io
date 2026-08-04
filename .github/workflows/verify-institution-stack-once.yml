@@ -1,0 +1,122 @@
+name: Verify institution improvement stack once
+
+on:
+  push:
+    branches: [feat/star-investor-human-review-manifest]
+    paths:
+      - .github/workflows/verify-institution-stack-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-institution-stack-once
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/star-investor-human-review-manifest
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Run complete verification
+        id: verify
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p /tmp/institution-stack
+          npm ci 2>&1 | tee /tmp/institution-stack/npm-ci.log
+          install=${PIPESTATUS[0]}
+          if [ "$install" -eq 0 ]; then
+            npm run lint 2>&1 | tee /tmp/institution-stack/lint.log
+            lint=${PIPESTATUS[0]}
+            npm run test:unit 2>&1 | tee /tmp/institution-stack/unit.log
+            unit=${PIPESTATUS[0]}
+            npm run test:crawler 2>&1 | tee /tmp/institution-stack/crawler.log
+            crawler=${PIPESTATUS[0]}
+            npx tsc --noEmit 2>&1 | tee /tmp/institution-stack/typescript.log
+            typescript=${PIPESTATUS[0]}
+            ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages 2>&1 | tee /tmp/institution-stack/build.log
+            build=${PIPESTATUS[0]}
+          else
+            lint=99
+            unit=99
+            crawler=99
+            typescript=99
+            build=99
+          fi
+          printf '%s\n' \
+            "install=$install" \
+            "lint=$lint" \
+            "unit=$unit" \
+            "crawler=$crawler" \
+            "typescript=$typescript" \
+            "build=$build" > /tmp/institution-stack/status.env
+          test "$install" -eq 0
+          test "$lint" -eq 0
+          test "$unit" -eq 0
+          test "$crawler" -eq 0
+          test "$typescript" -eq 0
+          test "$build" -eq 0
+
+      - name: Record verification result and remove one-time workflow
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          status = {}
+          status_path = Path('/tmp/institution-stack/status.env')
+          if status_path.exists():
+              for line in status_path.read_text().splitlines():
+                  key, value = line.split('=', 1)
+                  status[key] = int(value)
+
+          def tail(name: str) -> str:
+              path = Path('/tmp/institution-stack') / name
+              return path.read_text(errors='replace')[-16000:] if path.exists() else ''
+
+          result = {
+              'sourceCommit': os.environ.get('GITHUB_SHA', ''),
+              'runId': os.environ.get('GITHUB_RUN_ID', ''),
+              'outcome': '${{ steps.verify.outcome }}',
+              'status': status,
+              'logs': {
+                  'npmCi': tail('npm-ci.log'),
+                  'lint': tail('lint.log'),
+                  'unit': tail('unit.log'),
+                  'crawler': tail('crawler.log'),
+                  'typescript': tail('typescript.log'),
+                  'build': tail('build.log'),
+              },
+          }
+          path = Path('diagnostics/institution-stack-verification.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/institution-stack-verification.json
+          git rm -f .github/workflows/verify-institution-stack-once.yml
+          git commit -m "ci: record institution improvement stack verification"
+          git pull --rebase origin feat/star-investor-human-review-manifest
+          git push origin HEAD:feat/star-investor-human-review-manifest
+
+      - name: Fail when verification failed
+        if: always()
+        run: test '${{ steps.verify.outcome }}' = 'success'
