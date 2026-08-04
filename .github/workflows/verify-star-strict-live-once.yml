@@ -1,4 +1,5 @@
 name: Verify strict STAR parser live once
+# Reused workflow path so GitHub executes the owner-authorized review publication gate.
 
 on:
   pull_request:
