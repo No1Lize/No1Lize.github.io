@@ -22,6 +22,8 @@ on:
       - tools/http_policy_bridge.py
       - tools/semantic_data_diff.py
       - tools/update_source_health.py
+      - tools/source_evidence.py
+      - tools/source_health_runtime.py
       - tools/professional_media_progress.py
       - tools/professional_media_sources.py
       - tools/validate_professional_media_snapshot.py
@@ -108,6 +110,8 @@ jobs:
             tools/http_policy_bridge.py \
             tools/semantic_data_diff.py \
             tools/update_source_health.py \
+            tools/source_evidence.py \
+            tools/source_health_runtime.py \
             tools/professional_media_progress.py \
             tools/professional_media_sources.py \
             tools/validate_professional_media_snapshot.py \
@@ -125,6 +129,8 @@ jobs:
             tests.test_http_request_policy \
             tests.test_semantic_data_diff \
             tests.test_source_health \
+            tests.test_source_evidence \
+            tests.test_source_health_runtime \
             tests.test_professional_media_progress \
             tests.test_professional_media_sources \
             tests.test_listed_company_disclosures \
