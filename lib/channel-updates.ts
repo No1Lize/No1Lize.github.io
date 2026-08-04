@@ -32,6 +32,7 @@ export type ChannelUpdateItem = {
   datePrecision: ChannelUpdateDatePrecision;
   sortAt: string;
   keywords: string[];
+  classifications?: string[];
   firstSeenAt?: string;
   firstSeenEstimated?: boolean;
   lastVerifiedAt?: string;
@@ -179,16 +180,18 @@ function dedupeAndSort(items: ChannelUpdateItem[]) {
 function articleToUpdate(
   article: ArticleRecord,
   context: string,
-  additionalKeywords: string[] = [],
+  additionalClassifications: string[] = [],
 ): ChannelUpdateItem {
   const normalizedDate = normalizeChannelUpdateDate(
     article.publishedAt,
     articlesPayload.generatedAt,
   );
-  const gradeKeywords = article.source.evidenceGrade
+  const sourceClassifications = article.source.evidenceGrade
     ? [`${article.source.evidenceGrade}级来源`]
     : [];
-  if (article.source.evidenceGrade === "D") gradeKeywords.push("待交叉验证");
+  if (article.source.evidenceGrade === "D") {
+    sourceClassifications.push("待交叉验证");
+  }
 
   return {
     id: article.id,
@@ -202,7 +205,11 @@ function articleToUpdate(
     dateOriginal: normalizedDate.originalDate,
     datePrecision: normalizedDate.precision,
     sortAt: normalizedDate.sortAt,
-    keywords: uniqueKeywords([article.type, ...gradeKeywords, ...additionalKeywords]),
+    keywords: [article.type],
+    classifications: uniqueKeywords([
+      ...additionalClassifications,
+      ...sourceClassifications,
+    ]),
     firstSeenAt: article.firstSeenAt,
     firstSeenEstimated: article.firstSeenEstimated,
     lastVerifiedAt: article.lastVerifiedAt,
@@ -275,7 +282,7 @@ function institutionsDirectory(): ChannelUpdateDirectory {
   return {
     title: "机构与资本事件更新目录",
     description:
-      "已识别具体机构的记录标记为“机构动态”；未识别机构的融资、并购与 IPO 单独标记为“资本事件”。A/B 级为原始或官方来源，C 级为专业报道，D 级仅作待交叉验证线索。",
+      "已识别具体机构的记录归为“机构动态”；未识别机构的融资、并购与 IPO 归为“资本事件”。事件类型和来源/机构分类分别筛选；A/B 级为原始或官方来源，C 级为专业报道，D 级仅作待交叉验证线索。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort([
       ...getChannelDocumentUpdateItems("institutions"),
@@ -304,7 +311,7 @@ function reportsDirectory(): ChannelUpdateDirectory {
       dateOriginal: normalizedDate.originalDate,
       datePrecision: normalizedDate.precision,
       sortAt: normalizedDate.sortAt,
-      keywords: uniqueKeywords([report.reportType]),
+      keywords: [report.reportType],
     } satisfies ChannelUpdateItem;
   });
   return {
@@ -338,7 +345,7 @@ function peopleDirectory(): ChannelUpdateDirectory {
         dateOriginal: normalizedDate.originalDate,
         datePrecision: normalizedDate.precision,
         sortAt: normalizedDate.sortAt,
-        keywords: uniqueKeywords([materialLabel]),
+        keywords: [materialLabel],
       } satisfies ChannelUpdateItem;
     }),
   );
