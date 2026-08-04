@@ -1,0 +1,144 @@
+name: Fix STAR inline name fields once
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+    paths:
+      - .github/workflows/fix-star-inline-name-fields-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fix-star-inline-name-fields-once
+  cancel-in-progress: false
+
+jobs:
+  fix-and-verify:
+    if: github.head_ref == 'feat/star-market-coverage-batch-2-20260804' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/star-market-coverage-batch-2-20260804
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-star-investors.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-star-investors.txt
+          npm ci
+
+      - name: Patch inline field parsing and add regression coverage
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          parser_path = Path('tools/star_market_prospectus_parser.py')
+          text = parser_path.read_text(encoding='utf-8')
+
+          old_labels = '''    "实缴出资额",\n    "成立日期",\n    "主营业务",'''
+          new_labels = '''    "实缴出资额",\n    "统一社会信用代码",\n    "注册号",\n    "成立时间",\n    "成立日期",\n    "经营范围/主营业务",\n    "经营范围",\n    "主营业务",'''
+          if old_labels not in text:
+              raise SystemExit('FIELD_LABELS insertion point not found')
+          text = text.replace(old_labels, new_labels, 1)
+
+          old_field = '''def _field_value(block: list[tuple[int, str]], labels: tuple[str, ...], limit: int) -> tuple[str, int]:\n    labels_pattern = "|".join(re.escape(label) for label in labels)\n    all_labels_pattern = "|".join(re.escape(label) for label in FIELD_LABELS)\n    for index, (page, line) in enumerate(block):\n        match = re.match(rf"^(?:{labels_pattern})\\s*[：:]?\\s*(?P<value>.*)$", line)\n        if not match:\n            continue\n        parts = [match.group("value")]'''
+          new_field = '''def _truncate_inline_fields(value: str, current_labels: tuple[str, ...]) -> str:\n    text = clean_text(value, 600)\n    other_labels = sorted(\n        (label for label in FIELD_LABELS if label not in current_labels),\n        key=len,\n        reverse=True,\n    )\n    if not other_labels:\n        return text\n    marker = re.search(\n        r"\\s+(?:" + "|".join(re.escape(label) for label in other_labels) + r")\\s*[：:]?",\n        text,\n    )\n    if marker:\n        text = text[: marker.start()]\n    return clean_text(text, 300)\n\n\ndef _field_value(block: list[tuple[int, str]], labels: tuple[str, ...], limit: int) -> tuple[str, int]:\n    labels_pattern = "|".join(re.escape(label) for label in labels)\n    all_labels_pattern = "|".join(re.escape(label) for label in FIELD_LABELS)\n    for index, (page, line) in enumerate(block):\n        match = re.match(rf"^(?:{labels_pattern})\\s*[：:]?\\s*(?P<value>.*)$", line)\n        if not match:\n            continue\n        parts = [_truncate_inline_fields(match.group("value"), labels)]'''
+          if old_field not in text:
+              raise SystemExit('_field_value insertion point not found')
+          text = text.replace(old_field, new_field, 1)
+
+          old_institution = '''    if any(fragment in full_name or fragment in alias for fragment in NARRATIVE_NAME_FRAGMENTS):\n        return False\n    if resolved and any(hint in full_name for hint in INSTITUTION_HINTS):\n        return True\n    return any(hint in alias for hint in INSTITUTION_HINTS)'''
+          new_institution = '''    if any(fragment in full_name or fragment in alias for fragment in NARRATIVE_NAME_FRAGMENTS):\n        return False\n    if any(\n        marker in full_name\n        for marker in (\n            "成立时间",\n            "成立日期",\n            "统一社会信用代码",\n            "注册号",\n            "经营范围/主营业务",\n            "经营范围",\n        )\n    ):\n        return False\n    if resolved and any(hint in full_name for hint in INSTITUTION_HINTS):\n        return True\n    if resolved and re.search(\n        r"\\b(?:capital|corporation|inc\\.?|limited|ltd\\.?|llc|fund|partners?)\\b",\n        full_name,\n        flags=re.IGNORECASE,\n    ):\n        return True\n    return any(hint in alias for hint in INSTITUTION_HINTS)'''
+          if old_institution not in text:
+              raise SystemExit('_institutional_name replacement point not found')
+          text = text.replace(old_institution, new_institution, 1)
+          parser_path.write_text(text, encoding='utf-8')
+
+          test_path = Path('tests/test_star_market_prospectus_parser.py')
+          tests = test_path.read_text(encoding='utf-8')
+          insertion = '''    def test_inline_basic_information_fields_do_not_pollute_legal_names(self):\n        pages = [\n            Page(\n                18,\n                """\n                Intel Capital 指 Intel Capital Corporation\n                上海临理 指 上海理能资产管理有限公司\n                """,\n            ),\n            Page(\n                90,\n                """\n                45、Intel Capital\n                名称 Intel Capital Corporation 成立时间 1998 年 4 月 6 日 统一社会信用代码 2880872 经营范围/主营业务 投资\n                企业类型 Corporation\n                46、上海临理\n                名称 上海理能资产管理有限公司 成立时间 2013 年 7 月 16 日 统一社会信用代码 91310000TEST 经营范围/主营业务 资产管理；投资管理\n                企业类型 有限责任公司\n                """,\n            ),\n            Page(\n                95,\n                """\n                本次发行前 本次发行后 股东名称 持股数\n                序号 股东名称 本次发行前 本次发行后\n                45 Intel Capital 101,683,250 10.000 101,683,250 9.000\n                46 上海临理 53,506,750 5.262 53,506,750 4.736\n                """,\n            ),\n        ]\n        investors = parser.extract_institutional_investors(\n            pages,\n            "澜起科技",\n            max_investors=10,\n        )\n        by_alias = {item.get("disclosedName"): item for item in investors}\n        self.assertEqual(by_alias["Intel Capital"]["name"], "Intel Capital Corporation")\n        self.assertEqual(by_alias["上海临理"]["name"], "上海理能资产管理有限公司")\n        self.assertFalse(\n            any(\n                marker in item["name"]\n                for item in investors\n                for marker in ("成立时间", "统一社会信用代码", "经营范围")\n            )\n        )\n\n'''
+          marker = '\n\nif __name__ == "__main__":\n'
+          if marker not in tests:
+              raise SystemExit('test insertion point not found')
+          if 'test_inline_basic_information_fields_do_not_pollute_legal_names' not in tests:
+              tests = tests.replace(marker, '\n\n' + insertion + 'if __name__ == "__main__":\n', 1)
+          test_path.write_text(tests, encoding='utf-8')
+          PY
+
+      - name: Run focused parser tests
+        run: |
+          python -m py_compile tools/star_market_prospectus_parser.py
+          python -m unittest \
+            tests.test_star_market_prospectus_parser \
+            tests.test_star_market_strict_review
+
+      - name: Rebuild and validate three official prospectuses
+        run: |
+          python tools/crawl_star_market_investors.py --require-companies
+          python tools/review_star_market_investors.py
+          python tools/crawl_star_market_investors.py --check --require-companies
+          python tools/review_star_market_investors.py --check
+          node --import tsx scripts/build-institution-data-layers.ts
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          snapshot = json.loads(Path('public/data/star_market_investors.json').read_text())
+          assert snapshot['companyCount'] == 3
+          assert set(snapshot['companies']) == {'cambricon', 'montage-technology', 'amec'}
+          assert snapshot['verifiedInvestorCount'] == 31
+          assert snapshot['needsReviewInvestorCount'] > 0
+          forbidden = (\n              '成立时间',\n              '成立日期',\n              '统一社会信用代码',\n              '经营范围/主营业务',\n              '经营范围',\n          )
+          for slug, company in snapshot['companies'].items():
+              for investor in company['investors']:
+                  assert not any(marker in investor['name'] for marker in forbidden), (slug, investor['name'])
+                  assert investor.get('preIpoShares', 0) > 0
+                  assert 0 < investor.get('preIpoOwnershipPct', 0) <= 100
+          for slug in ('montage-technology', 'amec'):
+              assert snapshot['companies'][slug]['investors']
+              assert all(\n                  row['reviewStatus'] in {'needs_review', 'rejected'}\n                  for row in snapshot['companies'][slug]['investors']\n              )
+              assert not any(\n                  row.get('publicContact')\n                  for row in snapshot['companies'][slug]['investors']\n              )
+          equity = json.loads(Path('public/data/institution_equity_relationships.json').read_text())
+          assert equity['verifiedRelationshipCount'] == 31
+          assert equity['needsReviewCount'] == snapshot['needsReviewInvestorCount']
+          assert equity['rejectedCount'] == snapshot['rejectedInvestorCount']
+          PY
+
+      - name: Run full regression suite
+        run: |
+          npm run lint
+          npm run test:unit
+          npm run test:crawler
+          npx tsc --noEmit
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+
+      - name: Commit parser fix, candidate snapshots and remove workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            tools/star_market_prospectus_parser.py \
+            tests/test_star_market_prospectus_parser.py \
+            public/data/star_market_investors.json \
+            public/data/institution_entities.json \
+            public/data/institution_events.json \
+            public/data/institution_equity_relationships.json
+          git rm -f .github/workflows/fix-star-inline-name-fields-once.yml
+          git commit -m "fix: stop inline prospectus fields polluting institution names"
+          git pull --rebase origin feat/star-market-coverage-batch-2-20260804
+          git push origin HEAD:feat/star-market-coverage-batch-2-20260804
