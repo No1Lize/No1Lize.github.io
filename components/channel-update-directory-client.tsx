@@ -196,7 +196,7 @@ export function ChannelUpdateDirectoryClient({
               <Tags size={17} aria-hidden="true" />
               <div>
                 <strong>按事件类型筛选</strong>
-                <span>筛选项只使用每条记录前面的绿色标签，结果按标准化日期排序。</span>
+                <span>筛选项使用事件类型、机构/资本分类及 A—D 信源等级，结果按标准化日期排序。</span>
               </div>
             </div>
 
@@ -263,7 +263,8 @@ export function ChannelUpdateDirectoryClient({
                       item.datePrecision === "undated" ? undefined : item.sortAt
                     }
                     data-intelligence-source={item.source}
-                    data-intelligence-source-level={item.label}
+                    data-intelligence-source-level={item.sourceGrade}
+                    data-intelligence-source-grade={item.sourceGrade}
                     data-intelligence-context={item.context}
                     data-intelligence-keywords={item.keywords.join("|")}
                     data-intelligence-channel={channel}
@@ -275,6 +276,15 @@ export function ChannelUpdateDirectoryClient({
                     <div className={styles.content}>
                       <div className={styles.meta}>
                         <span>{item.label}</span>
+                        {item.sourceGrade && (
+                          <em
+                            className={styles.sourceGrade}
+                            data-source-grade={item.sourceGrade}
+                            title={item.sourceVerificationPolicy}
+                          >
+                            {item.sourceGrade}级 · {item.sourceGradeLabel}
+                          </em>
+                        )}
                         <time
                           dateTime={item.datePrecision === "undated" ? undefined : item.sortAt}
                           title={sourceDateTitle}
