@@ -242,6 +242,29 @@
   color: var(--green-bright);
 }
 
+.sourceGrade {
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  color: var(--muted);
+  font-style: normal;
+}
+
+.sourceGrade[data-source-grade="A"],
+.sourceGrade[data-source-grade="B"] {
+  border-color: color-mix(in srgb, var(--green) 55%, var(--border));
+  color: var(--green-bright);
+}
+
+.sourceGrade[data-source-grade="C"] {
+  border-color: color-mix(in srgb, var(--blue) 50%, var(--border));
+  color: var(--blue);
+}
+
+.sourceGrade[data-source-grade="D"] {
+  border-color: color-mix(in srgb, var(--faint) 70%, var(--border));
+  color: var(--faint);
+}
+
 .meta i {
   border: 1px solid color-mix(in srgb, var(--blue) 55%, var(--border));
   padding: 2px 7px;
