@@ -1,9 +1,9 @@
 """Conservative quality helpers for STAR Market prospectus investor extraction.
 
-The parser may discover candidate institution names from broad prospectus pages, but
-holding facts are only accepted when they are present on the same evidence line and
-unambiguously associated with that candidate. The helpers intentionally prefer a
-missing value or a review queue entry over publishing a plausible but mis-bound fact.
+Holding facts are accepted only when they are present on one explicit evidence
+row and unambiguously associated with the disclosed shareholder name. A resolved
+legal name may differ from the short name printed in the table; in that case the
+strict row structure is used without inventing evidence text.
 """
 
 from __future__ import annotations
@@ -15,6 +15,14 @@ ReviewStatus = str
 
 PERCENT_PATTERN = re.compile(r"(?<!\d)(\d{1,3}(?:\.\d{1,6})?)\s*%")
 SHARES_PATTERN = re.compile(r"(?<!\d)([\d,]+(?:\.\d+)?)\s*(万)?\s*股")
+STRICT_TABLE_ROW_PATTERN = re.compile(
+    r"^\s*(?P<rank>\d{1,3})\s+"
+    r"(?P<alias>.+?)\s+"
+    r"(?P<shares>\d[\d,]*(?:\.\d+)?)\s+"
+    r"(?P<pct>\d{1,3}(?:\.\d+)?)\s*%?"
+    r"(?:\s+\d[\d,]*(?:\.\d+)?\s+\d{1,3}(?:\.\d+)?\s*%?)?"
+    r"\s*$"
+)
 
 _GENERIC_LEGAL_FORMS = {
     "有限公司",
@@ -71,23 +79,34 @@ def _unique(values: list[str]) -> list[str]:
     return list(dict.fromkeys(value for value in values if value))
 
 
+def _strict_table_match(evidence: str) -> re.Match[str] | None:
+    return STRICT_TABLE_ROW_PATTERN.match(str(evidence or "").strip())
+
+
 def _tail_after_name(evidence: str, name: str, limit: int = 220) -> str:
     evidence = str(evidence or "")
     name = str(name or "")
     position = evidence.find(name)
-    start = position + len(name) if position >= 0 else 0
-    return evidence[start : start + limit]
+    if position >= 0:
+        return evidence[position + len(name) : position + len(name) + limit]
+    strict = _strict_table_match(evidence)
+    if strict:
+        return evidence[strict.start("shares") : strict.end()]
+    return evidence[:limit]
 
 
 def extract_same_line_holding(
     evidence: str,
     name: str,
 ) -> tuple[float | None, float | None, list[str]]:
-    """Extract at most one shares value and one percentage after the candidate name.
+    """Extract one pre-IPO share value and percentage from one evidence row."""
 
-    Multiple values on the same line are treated as ambiguous rather than guessed.
-    The caller should pass a single evidence line, not a page-sized context window.
-    """
+    strict = _strict_table_match(evidence)
+    if strict:
+        shares = float(strict.group("shares").replace(",", ""))
+        ownership = float(strict.group("pct"))
+        if shares > 0 and 0 < ownership <= 100:
+            return shares, ownership, []
 
     tail = _tail_after_name(evidence, name)
     reasons: list[str] = []
@@ -138,6 +157,7 @@ def derive_review(
     name_key = normalize_review_text(compact_name)
     company_key = normalize_review_text(company_name)
     evidence_key = normalize_review_text(evidence)
+    strict_row = _strict_table_match(evidence)
 
     if not name_key:
         return "rejected", ["invalid-name"]
@@ -163,7 +183,10 @@ def derive_review(
     if re.match(r"^(管理|投资管理|基金管理|资本管理)[（(]", compact_name):
         return "rejected", ["generic-legal-form"]
 
-    if not evidence_key or name_key not in evidence_key:
+    # Resolved legal names can differ from the alias printed in the shareholder
+    # table. A strict table row is accepted as name evidence because its alias is
+    # separately preserved as disclosedName by the parser.
+    if not evidence_key or (name_key not in evidence_key and strict_row is None):
         return "rejected", ["name-not-in-evidence"]
 
     extracted_shares, extracted_pct, holding_reasons = extract_same_line_holding(
