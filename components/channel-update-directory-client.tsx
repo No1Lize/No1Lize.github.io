@@ -11,7 +11,9 @@ import { useId, useMemo, useRef, useState } from "react";
 import type { DragEvent } from "react";
 import { ChannelDocumentImport } from "@/components/channel-document-import";
 import {
+  ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
   ALL_CHANNEL_UPDATE_KEYWORDS,
+  collectChannelUpdateClassifications,
   collectChannelUpdateKeywords,
   countChannelUpdatesFirstSeenForSnapshotDay,
   countChannelUpdatesForSnapshotDay,
@@ -47,8 +49,12 @@ export function ChannelUpdateDirectoryClient({
   layout?: "default" | "split";
 }) {
   const eventTypeSelectId = useId();
+  const classificationSelectId = useId();
   const sortSelectId = useId();
   const [keyword, setKeyword] = useState(ALL_CHANNEL_UPDATE_KEYWORDS);
+  const [classification, setClassification] = useState(
+    ALL_CHANNEL_UPDATE_CLASSIFICATIONS,
+  );
   const [sortOrder, setSortOrder] = useState<ChannelUpdateSortOrder>("newest");
   const [importOpen, setImportOpen] = useState(false);
   const [incomingFiles, setIncomingFiles] = useState<File[] | null>(null);
@@ -73,14 +79,19 @@ export function ChannelUpdateDirectoryClient({
     () => collectChannelUpdateKeywords(allItems),
     [allItems],
   );
+  const classificationOptions = useMemo(
+    () => collectChannelUpdateClassifications(allItems),
+    [allItems],
+  );
   const visibleItems = useMemo(
     () =>
       filterAndSortChannelUpdates({
         items: allItems,
         keyword,
+        classification,
         sortOrder,
       }),
-    [allItems, keyword, sortOrder],
+    [allItems, classification, keyword, sortOrder],
   );
   const firstSeenItemCount = useMemo(
     () => countChannelUpdatesFirstSeenForSnapshotDay(allItems, directory.generatedAt),
@@ -98,7 +109,9 @@ export function ChannelUpdateDirectoryClient({
     }
     return latest?.id ?? "";
   }, [visibleItems]);
-  const isFiltered = keyword !== ALL_CHANNEL_UPDATE_KEYWORDS;
+  const isFiltered =
+    keyword !== ALL_CHANNEL_UPDATE_KEYWORDS ||
+    classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS;
 
   function onDragEnter(event: DragEvent<HTMLElement>) {
     if (!hasDraggedFiles(event)) return;
@@ -195,8 +208,8 @@ export function ChannelUpdateDirectoryClient({
             <div className={styles.controlIntro}>
               <Tags size={17} aria-hidden="true" />
               <div>
-                <strong>按事件类型筛选</strong>
-                <span>筛选项只使用每条记录前面的绿色标签，结果按标准化日期排序。</span>
+                <strong>按事件和证据分类筛选</strong>
+                <span>绿色标签保持事件类型；机构/资本归类和 A—D 来源等级使用独立筛选。</span>
               </div>
             </div>
 
@@ -211,6 +224,24 @@ export function ChannelUpdateDirectoryClient({
                   全部事件（{allItems.length}）
                 </option>
                 {eventTypeOptions.map((option) => (
+                  <option key={option.keyword} value={option.keyword}>
+                    {option.keyword}（{option.count}）
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className={styles.control} htmlFor={classificationSelectId}>
+              <span>来源 / 频道分类</span>
+              <select
+                id={classificationSelectId}
+                value={classification}
+                onChange={(event) => setClassification(event.target.value)}
+              >
+                <option value={ALL_CHANNEL_UPDATE_CLASSIFICATIONS}>
+                  全部分类
+                </option>
+                {classificationOptions.map((option) => (
                   <option key={option.keyword} value={option.keyword}>
                     {option.keyword}（{option.count}）
                   </option>
@@ -235,7 +266,18 @@ export function ChannelUpdateDirectoryClient({
             <div className={styles.resultSummary} aria-live="polite">
               <ArrowDownUp size={14} aria-hidden="true" />
               <span>
-                {isFiltered ? `“${keyword}” · ` : ""}
+                {isFiltered
+                  ? `${keyword !== ALL_CHANNEL_UPDATE_KEYWORDS ? `“${keyword}”` : ""}${
+                      keyword !== ALL_CHANNEL_UPDATE_KEYWORDS &&
+                      classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS
+                        ? " + "
+                        : ""
+                    }${
+                      classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS
+                        ? `“${classification}”`
+                        : ""
+                    } · `
+                  : ""}
                 {visibleItems.length} 条
               </span>
             </div>
@@ -263,7 +305,8 @@ export function ChannelUpdateDirectoryClient({
                       item.datePrecision === "undated" ? undefined : item.sortAt
                     }
                     data-intelligence-source={item.source}
-                    data-intelligence-source-level={item.label}
+                    data-intelligence-source-level={item.sourceGrade}
+                    data-intelligence-source-grade={item.sourceGrade}
                     data-intelligence-context={item.context}
                     data-intelligence-keywords={item.keywords.join("|")}
                     data-intelligence-channel={channel}
@@ -275,6 +318,15 @@ export function ChannelUpdateDirectoryClient({
                     <div className={styles.content}>
                       <div className={styles.meta}>
                         <span>{item.label}</span>
+                        {item.sourceGrade && (
+                          <em
+                            className={styles.sourceGrade}
+                            data-source-grade={item.sourceGrade}
+                            title={item.sourceVerificationPolicy}
+                          >
+                            {item.sourceGrade}级 · {item.sourceGradeLabel}
+                          </em>
+                        )}
                         <time
                           dateTime={item.datePrecision === "undated" ? undefined : item.sortAt}
                           title={sourceDateTitle}
@@ -297,8 +349,8 @@ export function ChannelUpdateDirectoryClient({
             </div>
           ) : (
             <div className={styles.empty}>
-              <strong>该事件类型下暂无更新</strong>
-              <p>请选择其他事件类型，或切换回“全部事件”。</p>
+              <strong>当前筛选条件下暂无更新</strong>
+              <p>请选择其他事件类型或来源分类，或切换回全部。</p>
             </div>
           )}
         </>

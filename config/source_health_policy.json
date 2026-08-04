@@ -1,6 +1,10 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "failureThreshold": 3,
+  "quarantineThreshold": 7,
+  "recoverySuccessThreshold": 3,
+  "inactivityDays": 30,
+  "quarantineGrades": ["C", "D"],
   "criticalPlatforms": ["微信"],
   "criticalSourceIds": [],
   "countEmptyForCriticalSources": true,

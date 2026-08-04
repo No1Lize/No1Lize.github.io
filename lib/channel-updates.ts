@@ -17,6 +17,8 @@ export type ChannelUpdateKey =
   | "reports"
   | "people";
 
+export type SourceEvidenceGrade = "A" | "B" | "C" | "D";
+
 export type ChannelUpdateItem = {
   id: string;
   title: string;
@@ -30,10 +32,14 @@ export type ChannelUpdateItem = {
   datePrecision: ChannelUpdateDatePrecision;
   sortAt: string;
   keywords: string[];
+  classifications?: string[];
   firstSeenAt?: string;
   firstSeenEstimated?: boolean;
   lastVerifiedAt?: string;
   lastVerifiedEstimated?: boolean;
+  sourceGrade?: SourceEvidenceGrade;
+  sourceGradeLabel?: string;
+  sourceVerificationPolicy?: string;
 };
 
 export type ChannelUpdateDirectory = {
@@ -69,6 +75,9 @@ type ArticleRecord = {
     name: string;
     url: string;
     platform?: string;
+    evidenceGrade?: SourceEvidenceGrade;
+    evidenceLabel?: string;
+    evidencePolicy?: string;
   };
 };
 
@@ -171,12 +180,19 @@ function dedupeAndSort(items: ChannelUpdateItem[]) {
 function articleToUpdate(
   article: ArticleRecord,
   context: string,
-  additionalKeywords: string[] = [],
+  additionalClassifications: string[] = [],
 ): ChannelUpdateItem {
   const normalizedDate = normalizeChannelUpdateDate(
     article.publishedAt,
     articlesPayload.generatedAt,
   );
+  const sourceClassifications = article.source.evidenceGrade
+    ? [`${article.source.evidenceGrade}级来源`]
+    : [];
+  if (article.source.evidenceGrade === "D") {
+    sourceClassifications.push("待交叉验证");
+  }
+
   return {
     id: article.id,
     title: article.title,
@@ -189,11 +205,18 @@ function articleToUpdate(
     dateOriginal: normalizedDate.originalDate,
     datePrecision: normalizedDate.precision,
     sortAt: normalizedDate.sortAt,
-    keywords: uniqueKeywords([article.type, ...additionalKeywords]),
+    keywords: [article.type],
+    classifications: uniqueKeywords([
+      ...additionalClassifications,
+      ...sourceClassifications,
+    ]),
     firstSeenAt: article.firstSeenAt,
     firstSeenEstimated: article.firstSeenEstimated,
     lastVerifiedAt: article.lastVerifiedAt,
     lastVerifiedEstimated: article.lastVerifiedEstimated,
+    sourceGrade: article.source.evidenceGrade,
+    sourceGradeLabel: article.source.evidenceLabel,
+    sourceVerificationPolicy: article.source.evidencePolicy,
   };
 }
 
@@ -259,7 +282,7 @@ function institutionsDirectory(): ChannelUpdateDirectory {
   return {
     title: "机构与资本事件更新目录",
     description:
-      "已识别具体机构的记录标记为“机构动态”；未识别机构的融资、并购与 IPO 单独标记为“资本事件”，可通过绿色标签筛选。",
+      "已识别具体机构的记录归为“机构动态”；未识别机构的融资、并购与 IPO 归为“资本事件”。事件类型和来源/机构分类分别筛选；A/B 级为原始或官方来源，C 级为专业报道，D 级仅作待交叉验证线索。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort([
       ...getChannelDocumentUpdateItems("institutions"),
@@ -288,7 +311,7 @@ function reportsDirectory(): ChannelUpdateDirectory {
       dateOriginal: normalizedDate.originalDate,
       datePrecision: normalizedDate.precision,
       sortAt: normalizedDate.sortAt,
-      keywords: uniqueKeywords([report.reportType]),
+      keywords: [report.reportType],
     } satisfies ChannelUpdateItem;
   });
   return {
@@ -322,7 +345,7 @@ function peopleDirectory(): ChannelUpdateDirectory {
         dateOriginal: normalizedDate.originalDate,
         datePrecision: normalizedDate.precision,
         sortAt: normalizedDate.sortAt,
-        keywords: uniqueKeywords([materialLabel]),
+        keywords: [materialLabel],
       } satisfies ChannelUpdateItem;
     }),
   );

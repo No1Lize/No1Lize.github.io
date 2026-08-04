@@ -3,12 +3,16 @@
 
 from __future__ import annotations
 
+import json
+
 try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import crawl_with_source_categories as base
     from . import http_policy_bridge
     from . import professional_media_progress
     from . import professional_media_sources
     from . import search_index_feed_redirects
+    from . import source_evidence
+    from . import source_health_runtime
     from . import toutiao_public_feed
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
@@ -28,6 +32,8 @@ except ImportError:  # Executed directly with python tools/...
     import professional_media_progress
     import professional_media_sources
     import search_index_feed_redirects
+    import source_evidence
+    import source_health_runtime
     import toutiao_public_feed
     import wechat_fetch_compat
     import wechat_index_context_guard
@@ -117,6 +123,54 @@ def _install_professional_media() -> None:
         base.tracking.USER_SOURCE_PREFIXES = (*prefixes, "professional-media-")
 
 
+def _install_source_governance() -> None:
+    crawler = base.tracking.crawler
+    if getattr(crawler, "_source_governance_installed", False):
+        return
+
+    original_source = crawler._source
+    original_repair = crawler.repair_media_company_attribution
+    original_install_runtime = base.tracking._install_runtime_overrides
+
+    def source(name, url, level, platform):
+        return source_evidence.enrich_source_evidence(
+            original_source(name, url, level, platform)
+        )
+
+    def repair_media_company_attribution(articles):
+        return source_evidence.enrich_article_sources(original_repair(articles))
+
+    def install_runtime(merged, sec_specs, active_ids):
+        original_install_runtime(merged, sec_specs, active_ids)
+        original_replace = crawler.replace_source_batches
+        if getattr(original_replace, "_source_publication_quarantine", False):
+            return
+        quarantined_ids = source_health_runtime.load_publication_quarantine()
+
+        def replace_source_batches(existing, incoming, statuses):
+            publishable, replacement_statuses = (
+                source_health_runtime.withhold_quarantined_publication(
+                    incoming,
+                    statuses,
+                    quarantined_ids,
+                )
+            )
+            if quarantined_ids:
+                print(
+                    "Source publication quarantine: "
+                    + json.dumps(sorted(quarantined_ids), ensure_ascii=False)
+                )
+            return original_replace(existing, publishable, replacement_statuses)
+
+        setattr(replace_source_batches, "_source_publication_quarantine", True)
+        crawler.replace_source_batches = replace_source_batches
+
+    crawler._source = source
+    crawler.repair_media_company_attribution = repair_media_company_attribution
+    base.tracking._install_runtime_overrides = install_runtime
+    setattr(crawler, "_source_governance_installed", True)
+
+
 def main() -> int:
     http_policy_bridge.install(base.tracking.crawler)
     search_index_feed_redirects.install(base.tracking.crawler)
@@ -137,6 +191,7 @@ def main() -> int:
     wechat_sogou_bridge.install(wechat_public_sources)
     toutiao_public_feed.install(base.tracking)
     _install_professional_media()
+    _install_source_governance()
     _install_snapshot_quality()
     return base.main()
 
