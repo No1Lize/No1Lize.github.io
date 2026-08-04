@@ -14,8 +14,10 @@ class CompanyProfileIncrementalWorkflowTests(unittest.TestCase):
         self.assertIn('cron: "35 13,17,21 * * *"', text)
         self.assertIn('timezone: "Asia/Taipei"', text)
 
-    def test_article_updates_do_not_directly_trigger_profile_crawls(self):
+    def test_only_schedule_or_manual_dispatch_starts_a_profile_crawl(self):
         text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("workflow_dispatch:", text)
+        self.assertNotIn("\n  push:\n", text)
         self.assertNotIn("public/data/articles.json", text)
         self.assertNotIn("gh workflow run", text)
 
@@ -27,20 +29,26 @@ class CompanyProfileIncrementalWorkflowTests(unittest.TestCase):
         self.assertIn("--kind company", text)
         self.assertIn('--slug "$slug"', text)
 
-    def test_evidence_alignment_reaches_a_fixed_point(self):
+    def test_all_publication_gates_share_one_fixed_point(self):
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("python tools/stabilize_venture_research_evidence.py", text)
+        self.assertIn("python tools/stabilize_venture_publication_pipeline.py", text)
+        self.assertIn(
+            "python tools/stabilize_venture_publication_pipeline.py --check", text
+        )
         self.assertIn("python tools/stabilize_venture_research_evidence.py --check", text)
-        self.assertNotIn("python tools/refine_venture_research_evidence.py\n", text)
+        self.assertIn("python tools/normalize_venture_profiles.py --check", text)
+        self.assertIn("python tools/stabilize_venture_profiles.py --check", text)
+        self.assertNotIn("python tools/normalize_venture_profiles.py\n", text)
+        self.assertNotIn("python tools/stabilize_venture_profiles.py\n", text)
 
-    def test_profiles_are_only_committed_after_quality_validation(self):
+    def test_profiles_are_only_committed_after_shared_fixed_point_validation(self):
         text = WORKFLOW.read_text(encoding="utf-8")
-        evidence_check = text.index(
-            "python tools/stabilize_venture_research_evidence.py --check"
+        publication_check = text.index(
+            "python tools/stabilize_venture_publication_pipeline.py --check"
         )
         validation = text.index("python tools/crawl_venture_profiles.py --validate-only")
         commit = text.index('git commit -m "data: process queued company profile refreshes"')
-        self.assertLess(evidence_check, commit)
+        self.assertLess(publication_check, commit)
         self.assertLess(validation, commit)
 
 
