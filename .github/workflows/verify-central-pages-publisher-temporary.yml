@@ -1,0 +1,106 @@
+name: Verify central Pages publisher
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+    paths:
+      - .github/workflows/verify-central-pages-publisher-temporary.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  verify:
+    if: github.head_ref == 'ops/verify-central-pages-publisher-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SITE_URL: https://vciq.github.io/companies/
+    steps:
+      - name: Dispatch and capture the central publisher
+        id: publisher
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_url=$(gh workflow run publish-validated-data.yml --ref main)
+          echo "$run_url"
+          run_id="${run_url##*/}"
+          case "$run_id" in
+            ''|*[!0-9]*) exit 1 ;;
+          esac
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          gh run view "$run_id" \
+            --json databaseId,createdAt,status,conclusion,headSha,event,url \
+            > /tmp/publisher-run.json
+          cat /tmp/publisher-run.json
+
+      - name: Wait for the central publisher
+        env:
+          RUN_ID: ${{ steps.publisher.outputs.run_id }}
+        run: gh run watch "$RUN_ID" --exit-status
+
+      - name: Find and wait for the dispatched Pages run
+        id: pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          run_id=""
+          for attempt in $(seq 1 90); do
+            gh run list \
+              --workflow pages.yml \
+              --branch main \
+              --event workflow_dispatch \
+              --limit 20 \
+              --json databaseId,createdAt,status,conclusion,headSha,event,url \
+              > /tmp/pages-runs.json
+            run_id=$(python - <<'PY'
+          import json
+          from datetime import datetime
+          from pathlib import Path
+
+          publisher = json.loads(Path('/tmp/publisher-run.json').read_text(encoding='utf-8'))
+          started = datetime.fromisoformat(publisher['createdAt'].replace('Z', '+00:00'))
+          pages = json.loads(Path('/tmp/pages-runs.json').read_text(encoding='utf-8'))
+          eligible = [
+              row for row in pages
+              if datetime.fromisoformat(row['createdAt'].replace('Z', '+00:00')) >= started
+          ]
+          print(eligible[0]['databaseId'] if eligible else '')
+          PY
+            )
+            if [ -n "$run_id" ]; then
+              break
+            fi
+            sleep 5
+          done
+          if [ -z "$run_id" ]; then
+            echo "Central publisher did not create a Pages run." >&2
+            exit 1
+          fi
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+          gh run view "$run_id" \
+            --json databaseId,createdAt,status,conclusion,headSha,event,url
+          gh run watch "$run_id" --exit-status
+
+      - name: Verify the live page remains healthy
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 60); do
+            curl --fail --silent --show-error \
+              -H 'Cache-Control: no-cache' \
+              "${SITE_URL}?central_publisher_verify=${GITHUB_RUN_ID}-${attempt}" \
+              --output /tmp/companies.html
+            if grep -Fq '增量档案刷新' /tmp/companies.html && \
+               grep -Fq '待处理公司' /tmp/companies.html && \
+               grep -Fq '下一批' /tmp/companies.html && \
+               grep -Fq '最近处理' /tmp/companies.html; then
+              exit 0
+            fi
+            sleep 10
+          done
+          exit 1
