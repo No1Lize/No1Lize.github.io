@@ -19,7 +19,6 @@ class CompanyProfileIncrementalWorkflowTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", text)
         self.assertNotIn("\n  push:\n", text)
         self.assertNotIn("public/data/articles.json", text)
-        self.assertNotIn("gh workflow run", text)
 
     def test_writer_queue_and_hard_company_cap_are_preserved(self):
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -54,6 +53,17 @@ class CompanyProfileIncrementalWorkflowTests(unittest.TestCase):
         self.assertLess(publication_check, commit)
         self.assertLess(normalization_check, commit)
         self.assertLess(validation, commit)
+
+    def test_successful_data_push_dispatches_pages_exactly_once(self):
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("actions: write", text)
+        self.assertIn('GH_TOKEN: ${{ github.token }}', text)
+        self.assertEqual(text.count("gh workflow run pages.yml --ref main"), 1)
+        push = text.index("if git push origin HEAD:main; then")
+        dispatch = text.index("gh workflow run pages.yml --ref main")
+        success_exit = text.index("exit 0", dispatch)
+        self.assertLess(push, dispatch)
+        self.assertLess(dispatch, success_exit)
 
 
 if __name__ == "__main__":
