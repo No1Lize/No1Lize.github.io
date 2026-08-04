@@ -1,0 +1,53 @@
+name: Release final profile verification queue
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+    paths:
+      - .github/workflows/release-profile-verification-queue-temporary.yml
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  release:
+    if: github.head_ref == 'ops/release-profile-verification-queue-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Cancel only the redundant merge-triggered intelligence run
+        shell: bash
+        run: |
+          set -euo pipefail
+          blocker=30903799806
+          protected=30904018885
+
+          blocker_meta=$(gh run view "$blocker" --json databaseId,workflowName,headSha,event,status,conclusion,url)
+          echo "$blocker_meta"
+          python - "$blocker" <<'PY' <<< "$blocker_meta"
+          import json
+          import sys
+
+          row = json.load(sys.stdin)
+          assert int(row['databaseId']) == int(sys.argv[1])
+          assert row['workflowName'] == 'Refresh public intelligence'
+          assert row['headSha'] == 'a3f0b12642677473a6948645bf63b6fe3c8f2ad3'
+          assert row['event'] == 'push'
+          PY
+
+          status=$(gh run view "$blocker" --json status --jq .status)
+          if [ "$status" != "completed" ]; then
+            gh run cancel "$blocker"
+          fi
+
+          protected_status=$(gh run view "$protected" --json status --jq .status)
+          echo "protected run $protected status=$protected_status"
+          if [ "$protected_status" = "completed" ]; then
+            conclusion=$(gh run view "$protected" --json conclusion --jq .conclusion)
+            [ "$conclusion" = "success" ] || exit 1
+          fi
