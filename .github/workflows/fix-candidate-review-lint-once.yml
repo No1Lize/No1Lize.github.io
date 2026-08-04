@@ -83,7 +83,11 @@ jobs:
           npm run test:unit
           python -m unittest tests.test_company_candidates
           npx tsc --noEmit
-          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          npm run validate:tracking
+          npm run validate:taxonomy
+          node scripts/build-pages.mjs
+          npm run verify:tracking-pages
+          node scripts/validate-static-links.mjs
       - name: Commit fixes and remove one-time workflow
         run: |
           git config user.name "github-actions[bot]"
