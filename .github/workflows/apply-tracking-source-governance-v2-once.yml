@@ -77,10 +77,17 @@ jobs:
           npx tsc --noEmit
           ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
 
-      - name: Commit governance implementation and cleanup
+      - name: Commit governance implementation and export workflow patches
         shell: bash
         run: |
           set -euo pipefail
+          mkdir -p audit
+          cp .github/workflows/tracking-discovery.yml audit/tracking-discovery.patched.yml
+          cp .github/workflows/scheduled-sync.yml audit/scheduled-sync.patched.yml
+          git restore \
+            .github/workflows/tracking-discovery.yml \
+            .github/workflows/scheduled-sync.yml
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
@@ -89,17 +96,14 @@ jobs:
             tools/update_source_health.py \
             tests/test_tracking_source_governance.py \
             tests/test_source_health.py \
-            .github/workflows/tracking-discovery.yml \
-            .github/workflows/scheduled-sync.yml \
             config/user_tracking.json \
             config/tracking_auto_discovery.json \
-            public/data/source_health.json
+            public/data/source_health.json \
+            audit/tracking-discovery.patched.yml \
+            audit/scheduled-sync.patched.yml
           git rm -f \
             tools/apply_tracking_source_governance_v2_patch.py \
-            tools/apply_tracking_source_workflow_patch.py \
-            .github/workflows/apply-tracking-source-governance-once.yml \
-            .github/workflows/diagnose-tracking-source-recursion-once.yml \
-            .github/workflows/apply-tracking-source-governance-v2-once.yml
+            tools/apply_tracking_source_workflow_patch.py
           git commit -m "fix: govern and deduplicate automatic tracking sources"
           git pull --rebase origin fix/tracking-source-recursion-20260804
           git push origin HEAD:fix/tracking-source-recursion-20260804
