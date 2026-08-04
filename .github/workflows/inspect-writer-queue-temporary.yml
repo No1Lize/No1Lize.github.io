@@ -1,0 +1,39 @@
+name: Inspect repository writer queue
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened]
+    paths:
+      - .github/workflows/inspect-writer-queue-temporary.yml
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  inspect:
+    if: github.head_ref == 'ops/inspect-writer-queue-20260804'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: List active main-branch workflow runs
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh run list \
+            --branch main \
+            --limit 100 \
+            --json databaseId,workflowName,displayTitle,status,conclusion,createdAt,updatedAt,headSha,event,url \
+            > /tmp/main-runs.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          rows = json.loads(Path('/tmp/main-runs.json').read_text(encoding='utf-8'))
+          active = [row for row in rows if row.get('status') != 'completed']
+          print(json.dumps(active, ensure_ascii=False, indent=2))
+          PY
