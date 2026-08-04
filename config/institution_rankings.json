@@ -1,8 +1,1071 @@
 {
   "schemaVersion": 1,
-  "dataVersion": "migration-pending",
+  "dataVersion": "2025.1",
   "updatedAt": "2026-08-04",
-  "description": "Temporary migration placeholder. The one-time migration workflow replaces this with audited ranking records before merge.",
-  "sources": [],
-  "categories": []
+  "description": "Auditable institution ranking records. Qingke is the primary structured ranking source; ChinaVenture is retained as a classification reference and is not merged into Qingke ranks.",
+  "sources": [
+    {
+      "id": "qingke-2025-equity-investment",
+      "publisher": "清科研究中心 / 投资界",
+      "year": 2025,
+      "title": "清科2025中国股权投资年度排名总榜单",
+      "url": "https://news.pedaily.cn/202512/559270.shtml",
+      "role": "primary-ranking-source",
+      "categories": [
+        "早期投资30强",
+        "创业投资50强",
+        "私募股权50强",
+        "国资投资50强",
+        "战略投资者/CVC30强",
+        "并购投资10强"
+      ]
+    },
+    {
+      "id": "chinaventure-2025-rankings",
+      "publisher": "投中研究院 / 投中网",
+      "year": 2025,
+      "title": "投中2025年度榜单",
+      "url": "https://www.chinaventure.com.cn/rank/210/list.html",
+      "role": "classification-reference",
+      "categories": [
+        "创业投资TOP100",
+        "私募股权TOP100",
+        "早期投资TOP50",
+        "中资/外资VC",
+        "中资/外资PE",
+        "企业直投",
+        "人工智能与大数据",
+        "半导体与集成电路",
+        "先进制造与高科技",
+        "商业航天与军民融合",
+        "碳中和"
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "qingke-2025-early",
+      "publisher": "清科",
+      "year": 2025,
+      "category": "早期投资",
+      "title": "2025年中国早期投资机构30强",
+      "ordered": true,
+      "sourceId": "qingke-2025-equity-investment",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "entries": [
+        {
+          "name": "中科创星",
+          "rank": 1
+        },
+        {
+          "name": "联想之星",
+          "fullName": "北京联想之星投资管理有限公司",
+          "rank": 2
+        },
+        {
+          "name": "啓赋资本",
+          "fullName": "启赋私募基金管理有限公司",
+          "rank": 3
+        },
+        {
+          "name": "真格基金",
+          "rank": 4
+        },
+        {
+          "name": "英诺基金",
+          "rank": 5
+        },
+        {
+          "name": "创新工场",
+          "rank": 6
+        },
+        {
+          "name": "腾业创投",
+          "fullName": "北京腾业创业投资管理有限公司",
+          "rank": 7
+        },
+        {
+          "name": "蓝驰创投",
+          "rank": 8
+        },
+        {
+          "name": "线性资本",
+          "fullName": "上海线性投资管理有限公司",
+          "rank": 9
+        },
+        {
+          "name": "鼎峰科创",
+          "rank": 10
+        },
+        {
+          "name": "启迪之星创投",
+          "fullName": "启迪之星（北京）投资管理有限公司",
+          "rank": 11
+        },
+        {
+          "name": "梅花创投",
+          "fullName": "宁波梅花天使投资管理有限公司",
+          "rank": 12
+        },
+        {
+          "name": "九合创投",
+          "rank": 13
+        },
+        {
+          "name": "高捷资本",
+          "fullName": "深圳市高捷金台创业投资管理有限公司",
+          "rank": 14
+        },
+        {
+          "name": "银杏谷资本",
+          "fullName": "浙江银杏谷投资有限公司",
+          "rank": 15
+        },
+        {
+          "name": "险峰",
+          "rank": 16
+        },
+        {
+          "name": "云启资本",
+          "rank": 17
+        },
+        {
+          "name": "道生资本",
+          "fullName": "杭州道生投资管理有限公司",
+          "rank": 18
+        },
+        {
+          "name": "奇绩创坛",
+          "rank": 19
+        },
+        {
+          "name": "明势创投",
+          "rank": 20
+        },
+        {
+          "name": "力合创投",
+          "fullName": "深圳市力合创业投资有限公司",
+          "rank": 21
+        },
+        {
+          "name": "峰瑞资本",
+          "rank": 22
+        },
+        {
+          "name": "荷塘创投",
+          "fullName": "荷塘创业投资管理（北京）有限公司",
+          "rank": 23
+        },
+        {
+          "name": "小苗朗程",
+          "fullName": "上海小苗朗程投资管理有限公司",
+          "rank": 24
+        },
+        {
+          "name": "水木创投",
+          "fullName": "北京水木华鼎创业投资管理有限公司",
+          "rank": 25
+        },
+        {
+          "name": "元航资本",
+          "fullName": "北京元航投资管理有限公司",
+          "rank": 26
+        },
+        {
+          "name": "道彤投资",
+          "rank": 27
+        },
+        {
+          "name": "星连资本",
+          "fullName": "北京星连肇基私募基金管理有限责任公司",
+          "rank": 28
+        },
+        {
+          "name": "耀途资本",
+          "fullName": "上海曜途投资管理有限公司",
+          "rank": 29
+        },
+        {
+          "name": "初心资本",
+          "fullName": "北京勿忘初心投资管理有限公司",
+          "rank": 30
+        }
+      ]
+    },
+    {
+      "id": "qingke-2025-vc",
+      "publisher": "清科",
+      "year": 2025,
+      "category": "创业投资",
+      "title": "2025年中国创业投资机构50强",
+      "ordered": true,
+      "sourceId": "qingke-2025-equity-investment",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "entries": [
+        {
+          "name": "IDG资本",
+          "rank": 1
+        },
+        {
+          "name": "深创投集团",
+          "fullName": "深圳市创新投资集团有限公司",
+          "rank": 2
+        },
+        {
+          "name": "启明创投",
+          "rank": 3
+        },
+        {
+          "name": "元禾控股",
+          "fullName": "苏州元禾控股股份有限公司",
+          "rank": 4
+        },
+        {
+          "name": "君联资本",
+          "fullName": "君联资本管理股份有限公司",
+          "rank": 5
+        },
+        {
+          "name": "毅达资本",
+          "fullName": "江苏毅达股权投资基金管理有限公司",
+          "rank": 6
+        },
+        {
+          "name": "达晨财智",
+          "fullName": "深圳市达晨财智创业投资管理有限公司",
+          "rank": 7
+        },
+        {
+          "name": "高榕创投",
+          "rank": 8
+        },
+        {
+          "name": "五源资本",
+          "rank": 9
+        },
+        {
+          "name": "经纬创投",
+          "fullName": "经纬创投（北京）投资管理顾问有限公司",
+          "rank": 10
+        },
+        {
+          "name": "同创伟业",
+          "fullName": "深圳同创伟业资产管理股份有限公司",
+          "rank": 11
+        },
+        {
+          "name": "松禾资本",
+          "fullName": "深圳市松禾资本管理有限公司",
+          "rank": 12
+        },
+        {
+          "name": "美团龙珠",
+          "rank": 13
+        },
+        {
+          "name": "礼来亚洲基金",
+          "rank": 14
+        },
+        {
+          "name": "普华资本",
+          "fullName": "浙江普华天勤股权投资管理有限公司",
+          "rank": 15
+        },
+        {
+          "name": "朗玛峰创投",
+          "rank": 16
+        },
+        {
+          "name": "源码资本",
+          "fullName": "北京源码资本投资有限公司",
+          "rank": 17
+        },
+        {
+          "name": "东方富海",
+          "fullName": "深圳市东方富海投资管理股份有限公司",
+          "rank": 18
+        },
+        {
+          "name": "长江创投",
+          "fullName": "长江创业投资基金管理有限公司",
+          "rank": 19
+        },
+        {
+          "name": "钟鼎资本",
+          "rank": 20
+        },
+        {
+          "name": "弘晖基金",
+          "rank": 21
+        },
+        {
+          "name": "纪源资本",
+          "rank": 22
+        },
+        {
+          "name": "金雨茂物",
+          "fullName": "金雨茂物投资管理股份有限公司",
+          "rank": 23
+        },
+        {
+          "name": "华业天成资本",
+          "fullName": "深圳华业天成投资有限公司",
+          "rank": 24
+        },
+        {
+          "name": "国投创业",
+          "fullName": "国投创业投资管理有限公司",
+          "rank": 25
+        },
+        {
+          "name": "祥峰投资",
+          "rank": 26
+        },
+        {
+          "name": "顺为资本",
+          "rank": 27
+        },
+        {
+          "name": "鲁信创投",
+          "fullName": "鲁信创业投资集团股份有限公司",
+          "rank": 28
+        },
+        {
+          "name": "浙商创投",
+          "fullName": "浙商创投股份有限公司",
+          "rank": 29
+        },
+        {
+          "name": "洪泰基金",
+          "fullName": "北京洪泰同创投资管理有限公司",
+          "rank": 30
+        },
+        {
+          "name": "深高新投",
+          "fullName": "深圳市高新投集团有限公司",
+          "rank": 31
+        },
+        {
+          "name": "粤科金融集团",
+          "fullName": "广东省粤科金融集团有限公司",
+          "rank": 32
+        },
+        {
+          "name": "北极光创投",
+          "rank": 33
+        },
+        {
+          "name": "华盖资本",
+          "fullName": "华盖资本有限责任公司",
+          "rank": 34
+        },
+        {
+          "name": "光合创投",
+          "fullName": "光合创业投资基金",
+          "rank": 35
+        },
+        {
+          "name": "清控银杏创投",
+          "fullName": "清控银杏创业投资管理（北京）有限公司",
+          "rank": 36
+        },
+        {
+          "name": "联想创投",
+          "rank": 37
+        },
+        {
+          "name": "国中资本",
+          "rank": 38
+        },
+        {
+          "name": "XVC",
+          "rank": 39
+        },
+        {
+          "name": "天图投资",
+          "fullName": "深圳市天图投资管理股份有限公司",
+          "rank": 40
+        },
+        {
+          "name": "赛富投资基金",
+          "rank": 41
+        },
+        {
+          "name": "武岳峰",
+          "fullName": "武岳峰科创",
+          "rank": 42
+        },
+        {
+          "name": "蔚来资本",
+          "rank": 43
+        },
+        {
+          "name": "凯风创投",
+          "fullName": "宁波保税区凯风创业投资管理有限公司",
+          "rank": 44
+        },
+        {
+          "name": "元生创投",
+          "rank": 45
+        },
+        {
+          "name": "创东方投资",
+          "fullName": "深圳市创东方投资有限公司",
+          "rank": 46
+        },
+        {
+          "name": "天堂硅谷",
+          "fullName": "天堂硅谷创业投资集团有限公司",
+          "rank": 47
+        },
+        {
+          "name": "丰年资本",
+          "fullName": "丰年永泰（北京）投资管理有限公司",
+          "rank": 48
+        },
+        {
+          "name": "高特佳投资",
+          "fullName": "深圳市高特佳投资集团有限公司",
+          "rank": 49
+        },
+        {
+          "name": "华睿投资",
+          "rank": 50
+        }
+      ]
+    },
+    {
+      "id": "qingke-2025-pe",
+      "publisher": "清科",
+      "year": 2025,
+      "category": "私募股权",
+      "title": "2025年中国私募股权投资机构50强",
+      "ordered": true,
+      "sourceId": "qingke-2025-equity-investment",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "entries": [
+        {
+          "name": "红杉中国",
+          "rank": 1
+        },
+        {
+          "name": "高瓴投资",
+          "rank": 2
+        },
+        {
+          "name": "中金资本",
+          "fullName": "中金资本运营有限公司",
+          "rank": 3
+        },
+        {
+          "name": "CPE源峰",
+          "rank": 4
+        },
+        {
+          "name": "招银国际资本",
+          "fullName": "招银国际资本管理（深圳）有限公司",
+          "rank": 5
+        },
+        {
+          "name": "招商资本",
+          "fullName": "招商局资本投资有限责任公司",
+          "rank": 6
+        },
+        {
+          "name": "国新基金",
+          "fullName": "中国国新基金管理有限公司",
+          "rank": 7
+        },
+        {
+          "name": "基石资本",
+          "fullName": "基石资产管理股份有限公司",
+          "rank": 8
+        },
+        {
+          "name": "金浦投资",
+          "fullName": "金浦产业投资基金管理有限公司",
+          "rank": 9
+        },
+        {
+          "name": "国投创新",
+          "fullName": "国投创新投资管理有限公司",
+          "rank": 10
+        },
+        {
+          "name": "珠海科技集团",
+          "fullName": "珠海科技产业集团有限公司",
+          "rank": 11
+        },
+        {
+          "name": "海松资本",
+          "rank": 12
+        },
+        {
+          "name": "中信金石",
+          "fullName": "中信金石投资有限公司",
+          "rank": 13
+        },
+        {
+          "name": "鼎晖投资",
+          "fullName": "鼎晖股权投资管理（天津）有限公司",
+          "rank": 14
+        },
+        {
+          "name": "前海方舟",
+          "fullName": "前海方舟资产管理有限公司",
+          "rank": 15
+        },
+        {
+          "name": "国投创益",
+          "fullName": "国投创益产业基金管理有限公司",
+          "rank": 16
+        },
+        {
+          "name": "中芯聚源",
+          "fullName": "中芯聚源私募基金管理（上海）有限公司",
+          "rank": 17
+        },
+        {
+          "name": "中信资本",
+          "fullName": "中信资本控股有限公司",
+          "rank": 18
+        },
+        {
+          "name": "博裕投资",
+          "rank": 19
+        },
+        {
+          "name": "凯辉基金",
+          "rank": 20
+        },
+        {
+          "name": "腾讯投资",
+          "rank": 21
+        },
+        {
+          "name": "海通开元",
+          "fullName": "海通开元投资有限公司",
+          "rank": 22
+        },
+        {
+          "name": "平安资本",
+          "fullName": "平安资本有限责任公司",
+          "rank": 23
+        },
+        {
+          "name": "德弘资本",
+          "rank": 24
+        },
+        {
+          "name": "太盟投资",
+          "fullName": "太盟投资集团",
+          "rank": 25
+        },
+        {
+          "name": "华平投资",
+          "rank": 26
+        },
+        {
+          "name": "广发信德",
+          "fullName": "广发信德投资管理有限公司",
+          "rank": 27
+        },
+        {
+          "name": "复星投资",
+          "rank": 28
+        },
+        {
+          "name": "北汽产投",
+          "fullName": "北京汽车集团产业投资有限公司",
+          "rank": 29
+        },
+        {
+          "name": "云锋基金",
+          "rank": 30
+        },
+        {
+          "name": "恒旭资本",
+          "fullName": "上海恒旭创领私募基金管理有限公司",
+          "rank": 31
+        },
+        {
+          "name": "中信建投资本",
+          "fullName": "中信建投资本管理有限公司",
+          "rank": 32
+        },
+        {
+          "name": "尚颀资本",
+          "fullName": "上海尚颀投资管理合伙企业（有限合伙）",
+          "rank": 33
+        },
+        {
+          "name": "建信（北京）投资",
+          "fullName": "建信（北京）投资基金管理有限责任公司",
+          "rank": 34
+        },
+        {
+          "name": "上实资本",
+          "fullName": "上海上实资本管理有限公司",
+          "rank": 35
+        },
+        {
+          "name": "云晖资本",
+          "fullName": "北京云晖私募基金管理有限公司",
+          "rank": 36
+        },
+        {
+          "name": "力鼎资本",
+          "rank": 37
+        },
+        {
+          "name": "长江成长资本",
+          "fullName": "长江成长资本投资有限公司",
+          "rank": 38
+        },
+        {
+          "name": "博华资本",
+          "fullName": "北京博华资本有限公司",
+          "rank": 39
+        },
+        {
+          "name": "招商致远资本",
+          "fullName": "招商致远资本投资有限公司",
+          "rank": 40
+        },
+        {
+          "name": "正心谷资本",
+          "fullName": "上海正心谷投资管理有限公司",
+          "rank": 41
+        },
+        {
+          "name": "华控基金",
+          "fullName": "北京华控投资管理集团有限公司",
+          "rank": 42
+        },
+        {
+          "name": "方源资本",
+          "rank": 43
+        },
+        {
+          "name": "华泰紫金投资",
+          "fullName": "华泰紫金投资有限责任公司",
+          "rank": 44
+        },
+        {
+          "name": "东证资本",
+          "fullName": "上海东方证券资本投资有限公司",
+          "rank": 45
+        },
+        {
+          "name": "国科投资",
+          "fullName": "中国科技产业投资管理有限公司",
+          "rank": 46
+        },
+        {
+          "name": "沄柏资本",
+          "rank": 47
+        },
+        {
+          "name": "建投基金",
+          "fullName": "建信金投私募基金管理（北京）有限公司",
+          "rank": 48
+        },
+        {
+          "name": "嘉御资本",
+          "rank": 49
+        },
+        {
+          "name": "联新资本",
+          "fullName": "上海联新资本管理有限公司",
+          "rank": 50
+        }
+      ]
+    },
+    {
+      "id": "qingke-2025-state",
+      "publisher": "清科",
+      "year": 2025,
+      "category": "国资投资",
+      "title": "2025年中国国资投资机构50强",
+      "ordered": false,
+      "sourceId": "qingke-2025-equity-investment",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "entries": [
+        {
+          "name": "北京国管",
+          "fullName": "北京国有资本运营管理有限公司"
+        },
+        {
+          "name": "亦庄国投",
+          "fullName": "北京亦庄国际投资发展有限公司"
+        },
+        {
+          "name": "锡创投",
+          "fullName": "无锡市创新投资集团有限公司"
+        },
+        {
+          "name": "通商基金",
+          "fullName": "宁波通商基金管理有限公司"
+        },
+        {
+          "name": "广州产投资本",
+          "fullName": "广州产业投资资本管理有限公司"
+        },
+        {
+          "name": "成都产投集团",
+          "fullName": "成都产业投资集团有限公司"
+        },
+        {
+          "name": "上海国盛资本",
+          "fullName": "上海国盛资本管理有限公司"
+        },
+        {
+          "name": "广东恒健控股",
+          "fullName": "广东恒健投资控股有限公司"
+        },
+        {
+          "name": "南创投",
+          "fullName": "南京市创新投资集团有限责任公司"
+        },
+        {
+          "name": "四川产业基金",
+          "fullName": "四川产业振兴基金投资集团有限公司"
+        },
+        {
+          "name": "苏创投",
+          "fullName": "苏州创新投资集团有限公司"
+        },
+        {
+          "name": "中关村资本",
+          "fullName": "北京中关村资本基金管理有限公司"
+        },
+        {
+          "name": "浦东科创集团",
+          "fullName": "上海浦东科创集团有限公司"
+        },
+        {
+          "name": "深投控资本",
+          "fullName": "深圳市投控资本有限公司"
+        },
+        {
+          "name": "绿金投资",
+          "fullName": "绿色发展基金私募股权投资管理（上海）有限公司"
+        },
+        {
+          "name": "中车资本"
+        },
+        {
+          "name": "吴江创投",
+          "fullName": "苏州市吴江创业投资有限公司"
+        },
+        {
+          "name": "财信产业基金",
+          "fullName": "湖南省财信产业基金管理有限公司"
+        },
+        {
+          "name": "四川省科创投资集团",
+          "fullName": "四川省科技创新投资集团有限责任公司"
+        },
+        {
+          "name": "国泰君安创新投资",
+          "fullName": "国泰君安创新投资有限公司"
+        },
+        {
+          "name": "国投创合",
+          "fullName": "国投创合基金管理有限公司"
+        },
+        {
+          "name": "浦东创投",
+          "fullName": "上海浦东创新投资发展（集团）有限公司"
+        },
+        {
+          "name": "建发新兴投资",
+          "fullName": "厦门建发新兴产业股权投资有限责任公司"
+        },
+        {
+          "name": "临港科创投",
+          "fullName": "上海临港科创投资管理有限公司"
+        },
+        {
+          "name": "合肥建投资本",
+          "fullName": "合肥建投资本管理有限公司"
+        },
+        {
+          "name": "和达投资",
+          "fullName": "杭州和达投资管理有限公司"
+        },
+        {
+          "name": "中安资本",
+          "fullName": "安徽中安资本管理有限公司"
+        },
+        {
+          "name": "国舜投资",
+          "fullName": "杭州国舜股权投资有限公司"
+        },
+        {
+          "name": "重庆渝富高质基金公司",
+          "fullName": "重庆渝富高质产业母基金私募股权投资基金管理有限公司"
+        },
+        {
+          "name": "兴湘资本",
+          "fullName": "湖南兴湘资本管理有限公司"
+        },
+        {
+          "name": "投控东海",
+          "fullName": "深圳市投控东海投资有限公司"
+        },
+        {
+          "name": "上海科创集团",
+          "fullName": "上海科技创业投资（集团）有限公司"
+        },
+        {
+          "name": "湘投基金",
+          "fullName": "湖南能源集团湘投私募基金管理有限公司"
+        },
+        {
+          "name": "两江资本",
+          "fullName": "重庆两江股权投资基金管理有限公司"
+        },
+        {
+          "name": "广州基金",
+          "fullName": "广州产业投资基金管理有限公司"
+        },
+        {
+          "name": "浙江产投",
+          "fullName": "浙江省产投集团有限公司"
+        },
+        {
+          "name": "山东财金资本公司",
+          "fullName": "山东省财金资本管理有限公司"
+        },
+        {
+          "name": "中建材新材料基金",
+          "fullName": "中建材（安徽）新材料产业投资基金合伙企业（有限合伙）"
+        },
+        {
+          "name": "合肥产投资本",
+          "fullName": "合肥产投资本创业投资管理有限公司"
+        },
+        {
+          "name": "中国石油昆仑资本",
+          "fullName": "中国石油集团昆仑资本有限公司"
+        },
+        {
+          "name": "富浙基金",
+          "fullName": "浙江富浙私募基金管理有限公司"
+        },
+        {
+          "name": "光谷产投",
+          "fullName": "武汉光谷产业投资有限公司"
+        },
+        {
+          "name": "孚腾资本",
+          "fullName": "上海孚腾私募基金管理有限公司"
+        },
+        {
+          "name": "北工投资",
+          "fullName": "北京工业发展投资管理有限公司"
+        },
+        {
+          "name": "广东粤财基金",
+          "fullName": "广东粤财基金管理有限公司"
+        },
+        {
+          "name": "广汽资本",
+          "fullName": "广汽资本有限公司"
+        },
+        {
+          "name": "广州金控基金",
+          "fullName": "广州金控基金管理有限公司"
+        },
+        {
+          "name": "浙江省创新产业私募基金管理有限公司"
+        },
+        {
+          "name": "策源资本"
+        },
+        {
+          "name": "南山战新投",
+          "fullName": "深圳市南山战略新兴产业投资有限公司"
+        }
+      ]
+    },
+    {
+      "id": "qingke-2025-cvc",
+      "publisher": "清科",
+      "year": 2025,
+      "category": "战略投资者/CVC",
+      "title": "2025年中国战略投资者/CVC30强",
+      "ordered": false,
+      "sourceId": "qingke-2025-equity-investment",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "entries": [
+        {
+          "name": "中建材新材料基金"
+        },
+        {
+          "name": "中国石油昆仑资本"
+        },
+        {
+          "name": "联想创投"
+        },
+        {
+          "name": "腾讯投资"
+        },
+        {
+          "name": "中国移动链长基金"
+        },
+        {
+          "name": "蚂蚁集团"
+        },
+        {
+          "name": "中车资本"
+        },
+        {
+          "name": "阿里巴巴"
+        },
+        {
+          "name": "TCL创投"
+        },
+        {
+          "name": "泰格医药"
+        },
+        {
+          "name": "中国石化资本"
+        },
+        {
+          "name": "宁德时代"
+        },
+        {
+          "name": "上汽集团"
+        },
+        {
+          "name": "博世集团"
+        },
+        {
+          "name": "小米"
+        },
+        {
+          "name": "科大讯飞"
+        },
+        {
+          "name": "美团"
+        },
+        {
+          "name": "复健资本"
+        },
+        {
+          "name": "国家电投创新投资"
+        },
+        {
+          "name": "吉利控股集团"
+        },
+        {
+          "name": "创维投资"
+        },
+        {
+          "name": "海尔集团"
+        },
+        {
+          "name": "比亚迪投资"
+        },
+        {
+          "name": "芯联集成"
+        },
+        {
+          "name": "普洛斯"
+        },
+        {
+          "name": "商汤科技"
+        },
+        {
+          "name": "百洋医药集团"
+        },
+        {
+          "name": "盈峰投资"
+        },
+        {
+          "name": "京东集团"
+        },
+        {
+          "name": "百度"
+        }
+      ]
+    },
+    {
+      "id": "qingke-2025-mna",
+      "publisher": "清科",
+      "year": 2025,
+      "category": "并购投资",
+      "title": "2025年中国并购投资机构10强",
+      "ordered": false,
+      "sourceId": "qingke-2025-equity-investment",
+      "stages": "并购/控股投资",
+      "sectors": [
+        "并购整合",
+        "科技",
+        "消费"
+      ],
+      "entries": [
+        {
+          "name": "太盟投资",
+          "fullName": "太盟投资集团"
+        },
+        {
+          "name": "鼎晖投资",
+          "fullName": "鼎晖股权投资管理（天津）有限公司"
+        },
+        {
+          "name": "高瓴投资"
+        },
+        {
+          "name": "方源资本"
+        },
+        {
+          "name": "德弘资本"
+        },
+        {
+          "name": "博裕投资"
+        },
+        {
+          "name": "中信资本",
+          "fullName": "中信资本控股有限公司"
+        },
+        {
+          "name": "红杉中国"
+        },
+        {
+          "name": "KKR"
+        },
+        {
+          "name": "CPE源峰"
+        }
+      ]
+    }
+  ]
 }

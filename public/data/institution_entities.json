@@ -1,13 +1,6833 @@
 {
   "schemaVersion": 1,
-  "dataVersion": "migration-pending",
-  "generatedAt": "",
-  "stats": {
-    "entities": 0,
-    "china": 0,
-    "us": 0,
-    "detailedProfiles": 0,
-    "rankingRecords": 0
+  "dataVersion": "2025.1",
+  "generatedAt": "2026-08-04T00:00:00+00:00",
+  "provenance": {
+    "rankingSchemaVersion": 1,
+    "rankingSourceIds": [
+      "qingke-2025-equity-investment",
+      "chinaventure-2025-rankings"
+    ],
+    "aliasManifest": "config/institution_entity_aliases.json",
+    "profileSource": "lib/catalog-data.ts#institutionCatalog"
   },
-  "entities": []
+  "stats": {
+    "entities": 216,
+    "aliases": 378,
+    "officialDomains": 20,
+    "china": 206,
+    "us": 10,
+    "detailedProfiles": 20,
+    "rankingRecords": 220
+  },
+  "entities": [
+    {
+      "id": "profile:hongshan",
+      "name": "红杉中国",
+      "aliases": [
+        "红杉中国",
+        "HongShan",
+        "红杉资本中国基金"
+      ],
+      "region": "中国",
+      "type": "风险投资",
+      "stages": "全阶段",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "profileSlug": "hongshan",
+      "officialUrl": "https://www.hongshan.com/",
+      "officialDomains": [
+        "hongshan.com"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 1,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 0
+    },
+    {
+      "id": "institution:中科创星",
+      "name": "中科创星",
+      "aliases": [
+        "中科创星",
+        "CASSTAR"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 1,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 1
+    },
+    {
+      "id": "profile:idg-capital",
+      "name": "IDG资本",
+      "aliases": [
+        "IDG资本",
+        "IDG Capital"
+      ],
+      "region": "中国",
+      "type": "风险投资",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "企业服务",
+        "消费"
+      ],
+      "profileSlug": "idg-capital",
+      "officialUrl": "https://www.idgcapital.com/",
+      "officialDomains": [
+        "idgcapital.com"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 1,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 2
+    },
+    {
+      "id": "profile:hillhouse",
+      "name": "高瓴投资",
+      "aliases": [
+        "高瓴投资",
+        "高瓴",
+        "Hillhouse",
+        "Hillhouse Investment"
+      ],
+      "region": "中国",
+      "type": "投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "profileSlug": "hillhouse",
+      "officialUrl": "https://www.hillhouseinvestment.com/",
+      "officialDomains": [
+        "hillhouseinvestment.com"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 2,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 3
+    },
+    {
+      "id": "institution:联想之星",
+      "name": "联想之星",
+      "fullName": "北京联想之星投资管理有限公司",
+      "aliases": [
+        "联想之星",
+        "北京联想之星投资管理有限公司",
+        "Legend Star"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 2,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 4
+    },
+    {
+      "id": "profile:scgc",
+      "name": "深创投集团",
+      "fullName": "深圳市创新投资集团有限公司",
+      "aliases": [
+        "深创投集团",
+        "深圳市创新投资集团有限公司",
+        "深创投",
+        "SCGC",
+        "深圳创新投资集团"
+      ],
+      "region": "中国",
+      "type": "国有创投",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "制造",
+        "医疗"
+      ],
+      "profileSlug": "scgc",
+      "officialUrl": "https://www.szvc.com.cn/",
+      "officialDomains": [
+        "szvc.com.cn"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 2,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 5
+    },
+    {
+      "id": "profile:qiming",
+      "name": "启明创投",
+      "aliases": [
+        "启明创投",
+        "Qiming",
+        "Qiming Venture Partners"
+      ],
+      "region": "中国",
+      "type": "风险投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "医疗",
+        "TMT"
+      ],
+      "profileSlug": "qiming",
+      "officialUrl": "https://www.qimingvc.com/",
+      "officialDomains": [
+        "qimingvc.com"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 3,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 6
+    },
+    {
+      "id": "institution:啓赋资本",
+      "name": "啓赋资本",
+      "fullName": "启赋私募基金管理有限公司",
+      "aliases": [
+        "啓赋资本",
+        "启赋私募基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 3,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 7
+    },
+    {
+      "id": "institution:中金资本",
+      "name": "中金资本",
+      "fullName": "中金资本运营有限公司",
+      "aliases": [
+        "中金资本",
+        "中金资本运营有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 3,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 8
+    },
+    {
+      "id": "institution:元禾控股",
+      "name": "元禾控股",
+      "fullName": "苏州元禾控股股份有限公司",
+      "aliases": [
+        "元禾控股",
+        "苏州元禾控股股份有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 4,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 9
+    },
+    {
+      "id": "profile:zhenfund",
+      "name": "真格基金",
+      "aliases": [
+        "真格基金",
+        "ZhenFund",
+        "真格"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "消费",
+        "企业服务"
+      ],
+      "profileSlug": "zhenfund",
+      "officialUrl": "https://www.zhenfund.com/",
+      "officialDomains": [
+        "zhenfund.com"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 4,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 10
+    },
+    {
+      "id": "institution:cpe源峰",
+      "name": "CPE源峰",
+      "aliases": [
+        "CPE源峰"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "并购整合"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 4,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 11
+    },
+    {
+      "id": "profile:legend-capital",
+      "name": "君联资本",
+      "fullName": "君联资本管理股份有限公司",
+      "aliases": [
+        "君联资本",
+        "君联资本管理股份有限公司",
+        "Legend Capital"
+      ],
+      "region": "中国",
+      "type": "风险投资",
+      "stages": "全阶段",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "profileSlug": "legend-capital",
+      "officialUrl": "https://www.legendcapital.com.cn/",
+      "officialDomains": [
+        "legendcapital.com.cn"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 5,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 12
+    },
+    {
+      "id": "institution:英诺基金",
+      "name": "英诺基金",
+      "aliases": [
+        "英诺基金"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 5,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 13
+    },
+    {
+      "id": "institution:招银国际资本",
+      "name": "招银国际资本",
+      "fullName": "招银国际资本管理（深圳）有限公司",
+      "aliases": [
+        "招银国际资本",
+        "招银国际资本管理（深圳）有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 5,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 14
+    },
+    {
+      "id": "institution:创新工场",
+      "name": "创新工场",
+      "aliases": [
+        "创新工场",
+        "Sinovation Ventures"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 6,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 15
+    },
+    {
+      "id": "institution:毅达资本",
+      "name": "毅达资本",
+      "fullName": "江苏毅达股权投资基金管理有限公司",
+      "aliases": [
+        "毅达资本",
+        "江苏毅达股权投资基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 6,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 16
+    },
+    {
+      "id": "institution:招商资本",
+      "name": "招商资本",
+      "fullName": "招商局资本投资有限责任公司",
+      "aliases": [
+        "招商资本",
+        "招商局资本投资有限责任公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 6,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 17
+    },
+    {
+      "id": "profile:fortune-capital",
+      "name": "达晨财智",
+      "fullName": "深圳市达晨财智创业投资管理有限公司",
+      "aliases": [
+        "达晨财智",
+        "深圳市达晨财智创业投资管理有限公司",
+        "达晨创投",
+        "Fortune Capital"
+      ],
+      "region": "中国",
+      "type": "风险投资",
+      "stages": "成长期",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "医疗"
+      ],
+      "profileSlug": "fortune-capital",
+      "officialUrl": "https://www.fortunevc.com/",
+      "officialDomains": [
+        "fortunevc.com"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 7,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 18
+    },
+    {
+      "id": "institution:国新基金",
+      "name": "国新基金",
+      "fullName": "中国国新基金管理有限公司",
+      "aliases": [
+        "国新基金",
+        "中国国新基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 7,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 19
+    },
+    {
+      "id": "institution:腾业创投",
+      "name": "腾业创投",
+      "fullName": "北京腾业创业投资管理有限公司",
+      "aliases": [
+        "腾业创投",
+        "北京腾业创业投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 7,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 20
+    },
+    {
+      "id": "profile:gaorong",
+      "name": "高榕创投",
+      "aliases": [
+        "高榕创投",
+        "Gaorong Ventures",
+        "高榕资本"
+      ],
+      "region": "中国",
+      "type": "风险投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "消费",
+        "企业服务"
+      ],
+      "profileSlug": "gaorong",
+      "officialUrl": "https://www.gaorongcapital.com/",
+      "officialDomains": [
+        "gaorongcapital.com"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 8,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 21
+    },
+    {
+      "id": "institution:基石资本",
+      "name": "基石资本",
+      "fullName": "基石资产管理股份有限公司",
+      "aliases": [
+        "基石资本",
+        "基石资产管理股份有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 8,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 22
+    },
+    {
+      "id": "institution:蓝驰创投",
+      "name": "蓝驰创投",
+      "aliases": [
+        "蓝驰创投"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 8,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 23
+    },
+    {
+      "id": "institution:金浦投资",
+      "name": "金浦投资",
+      "fullName": "金浦产业投资基金管理有限公司",
+      "aliases": [
+        "金浦投资",
+        "金浦产业投资基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 9,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 24
+    },
+    {
+      "id": "institution:五源资本",
+      "name": "五源资本",
+      "aliases": [
+        "五源资本",
+        "5Y Capital"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 9,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 25
+    },
+    {
+      "id": "institution:线性资本",
+      "name": "线性资本",
+      "fullName": "上海线性投资管理有限公司",
+      "aliases": [
+        "线性资本",
+        "上海线性投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 9,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 26
+    },
+    {
+      "id": "institution:鼎峰科创",
+      "name": "鼎峰科创",
+      "aliases": [
+        "鼎峰科创"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 10,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 27
+    },
+    {
+      "id": "institution:国投创新",
+      "name": "国投创新",
+      "fullName": "国投创新投资管理有限公司",
+      "aliases": [
+        "国投创新",
+        "国投创新投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 10,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 28
+    },
+    {
+      "id": "profile:matrix-china",
+      "name": "经纬创投",
+      "fullName": "经纬创投（北京）投资管理顾问有限公司",
+      "aliases": [
+        "经纬创投",
+        "经纬创投（北京）投资管理顾问有限公司",
+        "经纬中国",
+        "Matrix Partners China"
+      ],
+      "region": "中国",
+      "type": "风险投资",
+      "stages": "早期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "profileSlug": "matrix-china",
+      "officialUrl": "https://www.matrixpartners.com.cn/",
+      "officialDomains": [
+        "matrixpartners.com.cn"
+      ],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 10,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 29
+    },
+    {
+      "id": "institution:启迪之星创投",
+      "name": "启迪之星创投",
+      "fullName": "启迪之星（北京）投资管理有限公司",
+      "aliases": [
+        "启迪之星创投",
+        "启迪之星（北京）投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 11,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 30
+    },
+    {
+      "id": "institution:同创伟业",
+      "name": "同创伟业",
+      "fullName": "深圳同创伟业资产管理股份有限公司",
+      "aliases": [
+        "同创伟业",
+        "深圳同创伟业资产管理股份有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 11,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 31
+    },
+    {
+      "id": "institution:珠海科技集团",
+      "name": "珠海科技集团",
+      "fullName": "珠海科技产业集团有限公司",
+      "aliases": [
+        "珠海科技集团",
+        "珠海科技产业集团有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 11,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 32
+    },
+    {
+      "id": "institution:海松资本",
+      "name": "海松资本",
+      "aliases": [
+        "海松资本"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 12,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 33
+    },
+    {
+      "id": "institution:梅花创投",
+      "name": "梅花创投",
+      "fullName": "宁波梅花天使投资管理有限公司",
+      "aliases": [
+        "梅花创投",
+        "宁波梅花天使投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 12,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 34
+    },
+    {
+      "id": "institution:松禾资本",
+      "name": "松禾资本",
+      "fullName": "深圳市松禾资本管理有限公司",
+      "aliases": [
+        "松禾资本",
+        "深圳市松禾资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 12,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 35
+    },
+    {
+      "id": "institution:九合创投",
+      "name": "九合创投",
+      "aliases": [
+        "九合创投"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 13,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 36
+    },
+    {
+      "id": "institution:美团龙珠",
+      "name": "美团龙珠",
+      "aliases": [
+        "美团龙珠"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 13,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 37
+    },
+    {
+      "id": "institution:中信金石",
+      "name": "中信金石",
+      "fullName": "中信金石投资有限公司",
+      "aliases": [
+        "中信金石",
+        "中信金石投资有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 13,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 38
+    },
+    {
+      "id": "institution:鼎晖投资",
+      "name": "鼎晖投资",
+      "fullName": "鼎晖股权投资管理（天津）有限公司",
+      "aliases": [
+        "鼎晖投资",
+        "鼎晖股权投资管理（天津）有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "并购整合"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 14,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 39
+    },
+    {
+      "id": "institution:高捷资本",
+      "name": "高捷资本",
+      "fullName": "深圳市高捷金台创业投资管理有限公司",
+      "aliases": [
+        "高捷资本",
+        "深圳市高捷金台创业投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 14,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 40
+    },
+    {
+      "id": "institution:礼来亚洲基金",
+      "name": "礼来亚洲基金",
+      "aliases": [
+        "礼来亚洲基金"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 14,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 41
+    },
+    {
+      "id": "institution:普华资本",
+      "name": "普华资本",
+      "fullName": "浙江普华天勤股权投资管理有限公司",
+      "aliases": [
+        "普华资本",
+        "浙江普华天勤股权投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 15,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 42
+    },
+    {
+      "id": "institution:前海方舟",
+      "name": "前海方舟",
+      "fullName": "前海方舟资产管理有限公司",
+      "aliases": [
+        "前海方舟",
+        "前海方舟资产管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 15,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 43
+    },
+    {
+      "id": "institution:银杏谷资本",
+      "name": "银杏谷资本",
+      "fullName": "浙江银杏谷投资有限公司",
+      "aliases": [
+        "银杏谷资本",
+        "浙江银杏谷投资有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 15,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 44
+    },
+    {
+      "id": "institution:国投创益",
+      "name": "国投创益",
+      "fullName": "国投创益产业基金管理有限公司",
+      "aliases": [
+        "国投创益",
+        "国投创益产业基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 16,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 45
+    },
+    {
+      "id": "institution:朗玛峰创投",
+      "name": "朗玛峰创投",
+      "aliases": [
+        "朗玛峰创投"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 16,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 46
+    },
+    {
+      "id": "institution:险峰",
+      "name": "险峰",
+      "aliases": [
+        "险峰"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 16,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 47
+    },
+    {
+      "id": "institution:源码资本",
+      "name": "源码资本",
+      "fullName": "北京源码资本投资有限公司",
+      "aliases": [
+        "源码资本",
+        "北京源码资本投资有限公司",
+        "Source Code Capital"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 17,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 48
+    },
+    {
+      "id": "institution:云启资本",
+      "name": "云启资本",
+      "aliases": [
+        "云启资本"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 17,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 49
+    },
+    {
+      "id": "institution:中芯聚源",
+      "name": "中芯聚源",
+      "fullName": "中芯聚源私募基金管理（上海）有限公司",
+      "aliases": [
+        "中芯聚源",
+        "中芯聚源私募基金管理（上海）有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 17,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 50
+    },
+    {
+      "id": "institution:道生资本",
+      "name": "道生资本",
+      "fullName": "杭州道生投资管理有限公司",
+      "aliases": [
+        "道生资本",
+        "杭州道生投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 18,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 51
+    },
+    {
+      "id": "institution:东方富海",
+      "name": "东方富海",
+      "fullName": "深圳市东方富海投资管理股份有限公司",
+      "aliases": [
+        "东方富海",
+        "深圳市东方富海投资管理股份有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 18,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 52
+    },
+    {
+      "id": "institution:中信资本",
+      "name": "中信资本",
+      "fullName": "中信资本控股有限公司",
+      "aliases": [
+        "中信资本",
+        "中信资本控股有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "并购整合"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 18,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 53
+    },
+    {
+      "id": "institution:博裕投资",
+      "name": "博裕投资",
+      "aliases": [
+        "博裕投资"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "并购整合"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 19,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 54
+    },
+    {
+      "id": "institution:奇绩创坛",
+      "name": "奇绩创坛",
+      "aliases": [
+        "奇绩创坛"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 19,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 55
+    },
+    {
+      "id": "institution:长江创投",
+      "name": "长江创投",
+      "fullName": "长江创业投资基金管理有限公司",
+      "aliases": [
+        "长江创投",
+        "长江创业投资基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 19,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 56
+    },
+    {
+      "id": "institution:凯辉基金",
+      "name": "凯辉基金",
+      "aliases": [
+        "凯辉基金"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 20,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 57
+    },
+    {
+      "id": "institution:明势创投",
+      "name": "明势创投",
+      "aliases": [
+        "明势创投"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 20,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 58
+    },
+    {
+      "id": "institution:钟鼎资本",
+      "name": "钟鼎资本",
+      "aliases": [
+        "钟鼎资本"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 20,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 59
+    },
+    {
+      "id": "institution:弘晖基金",
+      "name": "弘晖基金",
+      "aliases": [
+        "弘晖基金"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 21,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 60
+    },
+    {
+      "id": "institution:力合创投",
+      "name": "力合创投",
+      "fullName": "深圳市力合创业投资有限公司",
+      "aliases": [
+        "力合创投",
+        "深圳市力合创业投资有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 21,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 61
+    },
+    {
+      "id": "institution:腾讯投资",
+      "name": "腾讯投资",
+      "aliases": [
+        "腾讯投资",
+        "Tencent Investment"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 21,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 62
+    },
+    {
+      "id": "institution:峰瑞资本",
+      "name": "峰瑞资本",
+      "aliases": [
+        "峰瑞资本"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 22,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 63
+    },
+    {
+      "id": "institution:海通开元",
+      "name": "海通开元",
+      "fullName": "海通开元投资有限公司",
+      "aliases": [
+        "海通开元",
+        "海通开元投资有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 22,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 64
+    },
+    {
+      "id": "institution:纪源资本",
+      "name": "纪源资本",
+      "aliases": [
+        "纪源资本",
+        "GGV Capital",
+        "GGV"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 22,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 65
+    },
+    {
+      "id": "institution:荷塘创投",
+      "name": "荷塘创投",
+      "fullName": "荷塘创业投资管理（北京）有限公司",
+      "aliases": [
+        "荷塘创投",
+        "荷塘创业投资管理（北京）有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 23,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 66
+    },
+    {
+      "id": "institution:金雨茂物",
+      "name": "金雨茂物",
+      "fullName": "金雨茂物投资管理股份有限公司",
+      "aliases": [
+        "金雨茂物",
+        "金雨茂物投资管理股份有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 23,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 67
+    },
+    {
+      "id": "institution:平安资本",
+      "name": "平安资本",
+      "fullName": "平安资本有限责任公司",
+      "aliases": [
+        "平安资本",
+        "平安资本有限责任公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 23,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 68
+    },
+    {
+      "id": "institution:德弘资本",
+      "name": "德弘资本",
+      "aliases": [
+        "德弘资本"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "并购整合"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 24,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 69
+    },
+    {
+      "id": "institution:华业天成资本",
+      "name": "华业天成资本",
+      "fullName": "深圳华业天成投资有限公司",
+      "aliases": [
+        "华业天成资本",
+        "深圳华业天成投资有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 24,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 70
+    },
+    {
+      "id": "institution:小苗朗程",
+      "name": "小苗朗程",
+      "fullName": "上海小苗朗程投资管理有限公司",
+      "aliases": [
+        "小苗朗程",
+        "上海小苗朗程投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 24,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 71
+    },
+    {
+      "id": "institution:国投创业",
+      "name": "国投创业",
+      "fullName": "国投创业投资管理有限公司",
+      "aliases": [
+        "国投创业",
+        "国投创业投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 25,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 72
+    },
+    {
+      "id": "institution:水木创投",
+      "name": "水木创投",
+      "fullName": "北京水木华鼎创业投资管理有限公司",
+      "aliases": [
+        "水木创投",
+        "北京水木华鼎创业投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 25,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 73
+    },
+    {
+      "id": "institution:太盟投资",
+      "name": "太盟投资",
+      "fullName": "太盟投资集团",
+      "aliases": [
+        "太盟投资",
+        "太盟投资集团"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "并购整合"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 25,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 74
+    },
+    {
+      "id": "institution:华平投资",
+      "name": "华平投资",
+      "aliases": [
+        "华平投资"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 26,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 75
+    },
+    {
+      "id": "institution:祥峰投资",
+      "name": "祥峰投资",
+      "aliases": [
+        "祥峰投资"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 26,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 76
+    },
+    {
+      "id": "institution:元航资本",
+      "name": "元航资本",
+      "fullName": "北京元航投资管理有限公司",
+      "aliases": [
+        "元航资本",
+        "北京元航投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 26,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 77
+    },
+    {
+      "id": "institution:道彤投资",
+      "name": "道彤投资",
+      "aliases": [
+        "道彤投资"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 27,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 78
+    },
+    {
+      "id": "institution:广发信德",
+      "name": "广发信德",
+      "fullName": "广发信德投资管理有限公司",
+      "aliases": [
+        "广发信德",
+        "广发信德投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 27,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 79
+    },
+    {
+      "id": "institution:顺为资本",
+      "name": "顺为资本",
+      "aliases": [
+        "顺为资本",
+        "Shunwei Capital"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 27,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 80
+    },
+    {
+      "id": "institution:复星投资",
+      "name": "复星投资",
+      "aliases": [
+        "复星投资"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 28,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 81
+    },
+    {
+      "id": "institution:鲁信创投",
+      "name": "鲁信创投",
+      "fullName": "鲁信创业投资集团股份有限公司",
+      "aliases": [
+        "鲁信创投",
+        "鲁信创业投资集团股份有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 28,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 82
+    },
+    {
+      "id": "institution:星连资本",
+      "name": "星连资本",
+      "fullName": "北京星连肇基私募基金管理有限责任公司",
+      "aliases": [
+        "星连资本",
+        "北京星连肇基私募基金管理有限责任公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 28,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 83
+    },
+    {
+      "id": "institution:北汽产投",
+      "name": "北汽产投",
+      "fullName": "北京汽车集团产业投资有限公司",
+      "aliases": [
+        "北汽产投",
+        "北京汽车集团产业投资有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 29,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 84
+    },
+    {
+      "id": "institution:耀途资本",
+      "name": "耀途资本",
+      "fullName": "上海曜途投资管理有限公司",
+      "aliases": [
+        "耀途资本",
+        "上海曜途投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 29,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 85
+    },
+    {
+      "id": "institution:浙商创投",
+      "name": "浙商创投",
+      "fullName": "浙商创投股份有限公司",
+      "aliases": [
+        "浙商创投",
+        "浙商创投股份有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 29,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 86
+    },
+    {
+      "id": "institution:初心资本",
+      "name": "初心资本",
+      "fullName": "北京勿忘初心投资管理有限公司",
+      "aliases": [
+        "初心资本",
+        "北京勿忘初心投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "早期投资",
+      "stages": "天使/种子",
+      "sectors": [
+        "科技创业",
+        "硬科技",
+        "企业服务"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "早期投资",
+          "title": "2025年中国早期投资机构30强",
+          "rank": 30,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 87
+    },
+    {
+      "id": "institution:洪泰基金",
+      "name": "洪泰基金",
+      "fullName": "北京洪泰同创投资管理有限公司",
+      "aliases": [
+        "洪泰基金",
+        "北京洪泰同创投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 30,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 88
+    },
+    {
+      "id": "institution:云锋基金",
+      "name": "云锋基金",
+      "aliases": [
+        "云锋基金"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 30,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 89
+    },
+    {
+      "id": "institution:恒旭资本",
+      "name": "恒旭资本",
+      "fullName": "上海恒旭创领私募基金管理有限公司",
+      "aliases": [
+        "恒旭资本",
+        "上海恒旭创领私募基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 31,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 90
+    },
+    {
+      "id": "institution:深高新投",
+      "name": "深高新投",
+      "fullName": "深圳市高新投集团有限公司",
+      "aliases": [
+        "深高新投",
+        "深圳市高新投集团有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 31,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 91
+    },
+    {
+      "id": "institution:粤科金融集团",
+      "name": "粤科金融集团",
+      "fullName": "广东省粤科金融集团有限公司",
+      "aliases": [
+        "粤科金融集团",
+        "广东省粤科金融集团有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 32,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 92
+    },
+    {
+      "id": "institution:中信建投资本",
+      "name": "中信建投资本",
+      "fullName": "中信建投资本管理有限公司",
+      "aliases": [
+        "中信建投资本",
+        "中信建投资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 32,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 93
+    },
+    {
+      "id": "institution:北极光创投",
+      "name": "北极光创投",
+      "aliases": [
+        "北极光创投",
+        "Northern Light Venture Capital",
+        "NLVC"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 33,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 94
+    },
+    {
+      "id": "institution:尚颀资本",
+      "name": "尚颀资本",
+      "fullName": "上海尚颀投资管理合伙企业（有限合伙）",
+      "aliases": [
+        "尚颀资本",
+        "上海尚颀投资管理合伙企业（有限合伙）"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 33,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 95
+    },
+    {
+      "id": "institution:华盖资本",
+      "name": "华盖资本",
+      "fullName": "华盖资本有限责任公司",
+      "aliases": [
+        "华盖资本",
+        "华盖资本有限责任公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 34,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 96
+    },
+    {
+      "id": "institution:建信北京投资",
+      "name": "建信（北京）投资",
+      "fullName": "建信（北京）投资基金管理有限责任公司",
+      "aliases": [
+        "建信（北京）投资",
+        "建信（北京）投资基金管理有限责任公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 34,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 97
+    },
+    {
+      "id": "institution:光合创投",
+      "name": "光合创投",
+      "fullName": "光合创业投资基金",
+      "aliases": [
+        "光合创投",
+        "光合创业投资基金"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 35,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 98
+    },
+    {
+      "id": "institution:上实资本",
+      "name": "上实资本",
+      "fullName": "上海上实资本管理有限公司",
+      "aliases": [
+        "上实资本",
+        "上海上实资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 35,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 99
+    },
+    {
+      "id": "institution:清控银杏创投",
+      "name": "清控银杏创投",
+      "fullName": "清控银杏创业投资管理（北京）有限公司",
+      "aliases": [
+        "清控银杏创投",
+        "清控银杏创业投资管理（北京）有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 36,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 100
+    },
+    {
+      "id": "institution:云晖资本",
+      "name": "云晖资本",
+      "fullName": "北京云晖私募基金管理有限公司",
+      "aliases": [
+        "云晖资本",
+        "北京云晖私募基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 36,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 101
+    },
+    {
+      "id": "institution:力鼎资本",
+      "name": "力鼎资本",
+      "aliases": [
+        "力鼎资本"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 37,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 102
+    },
+    {
+      "id": "institution:联想创投",
+      "name": "联想创投",
+      "aliases": [
+        "联想创投",
+        "Lenovo Capital",
+        "Lenovo Capital and Incubator Group"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造",
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 37,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 103
+    },
+    {
+      "id": "institution:国中资本",
+      "name": "国中资本",
+      "aliases": [
+        "国中资本"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 38,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 104
+    },
+    {
+      "id": "institution:长江成长资本",
+      "name": "长江成长资本",
+      "fullName": "长江成长资本投资有限公司",
+      "aliases": [
+        "长江成长资本",
+        "长江成长资本投资有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 38,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 105
+    },
+    {
+      "id": "institution:博华资本",
+      "name": "博华资本",
+      "fullName": "北京博华资本有限公司",
+      "aliases": [
+        "博华资本",
+        "北京博华资本有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 39,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 106
+    },
+    {
+      "id": "institution:xvc",
+      "name": "XVC",
+      "aliases": [
+        "XVC"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 39,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 107
+    },
+    {
+      "id": "institution:天图投资",
+      "name": "天图投资",
+      "fullName": "深圳市天图投资管理股份有限公司",
+      "aliases": [
+        "天图投资",
+        "深圳市天图投资管理股份有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 40,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 108
+    },
+    {
+      "id": "institution:招商致远资本",
+      "name": "招商致远资本",
+      "fullName": "招商致远资本投资有限公司",
+      "aliases": [
+        "招商致远资本",
+        "招商致远资本投资有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 40,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 109
+    },
+    {
+      "id": "institution:赛富投资基金",
+      "name": "赛富投资基金",
+      "aliases": [
+        "赛富投资基金"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 41,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 110
+    },
+    {
+      "id": "institution:正心谷资本",
+      "name": "正心谷资本",
+      "fullName": "上海正心谷投资管理有限公司",
+      "aliases": [
+        "正心谷资本",
+        "上海正心谷投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 41,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 111
+    },
+    {
+      "id": "institution:华控基金",
+      "name": "华控基金",
+      "fullName": "北京华控投资管理集团有限公司",
+      "aliases": [
+        "华控基金",
+        "北京华控投资管理集团有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 42,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 112
+    },
+    {
+      "id": "institution:武岳峰",
+      "name": "武岳峰",
+      "fullName": "武岳峰科创",
+      "aliases": [
+        "武岳峰",
+        "武岳峰科创"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 42,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 113
+    },
+    {
+      "id": "institution:方源资本",
+      "name": "方源资本",
+      "aliases": [
+        "方源资本"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费",
+        "并购整合"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 43,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 114
+    },
+    {
+      "id": "institution:蔚来资本",
+      "name": "蔚来资本",
+      "aliases": [
+        "蔚来资本"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 43,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 115
+    },
+    {
+      "id": "institution:华泰紫金投资",
+      "name": "华泰紫金投资",
+      "fullName": "华泰紫金投资有限责任公司",
+      "aliases": [
+        "华泰紫金投资",
+        "华泰紫金投资有限责任公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 44,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 116
+    },
+    {
+      "id": "institution:凯风创投",
+      "name": "凯风创投",
+      "fullName": "宁波保税区凯风创业投资管理有限公司",
+      "aliases": [
+        "凯风创投",
+        "宁波保税区凯风创业投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 44,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 117
+    },
+    {
+      "id": "institution:东证资本",
+      "name": "东证资本",
+      "fullName": "上海东方证券资本投资有限公司",
+      "aliases": [
+        "东证资本",
+        "上海东方证券资本投资有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 45,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 118
+    },
+    {
+      "id": "institution:元生创投",
+      "name": "元生创投",
+      "aliases": [
+        "元生创投"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 45,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 119
+    },
+    {
+      "id": "institution:创东方投资",
+      "name": "创东方投资",
+      "fullName": "深圳市创东方投资有限公司",
+      "aliases": [
+        "创东方投资",
+        "深圳市创东方投资有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 46,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 120
+    },
+    {
+      "id": "institution:国科投资",
+      "name": "国科投资",
+      "fullName": "中国科技产业投资管理有限公司",
+      "aliases": [
+        "国科投资",
+        "中国科技产业投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 46,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 121
+    },
+    {
+      "id": "institution:天堂硅谷",
+      "name": "天堂硅谷",
+      "fullName": "天堂硅谷创业投资集团有限公司",
+      "aliases": [
+        "天堂硅谷",
+        "天堂硅谷创业投资集团有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 47,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 122
+    },
+    {
+      "id": "institution:沄柏资本",
+      "name": "沄柏资本",
+      "aliases": [
+        "沄柏资本"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 47,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 123
+    },
+    {
+      "id": "institution:丰年资本",
+      "name": "丰年资本",
+      "fullName": "丰年永泰（北京）投资管理有限公司",
+      "aliases": [
+        "丰年资本",
+        "丰年永泰（北京）投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 48,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 124
+    },
+    {
+      "id": "institution:建投基金",
+      "name": "建投基金",
+      "fullName": "建信金投私募基金管理（北京）有限公司",
+      "aliases": [
+        "建投基金",
+        "建信金投私募基金管理（北京）有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 48,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 125
+    },
+    {
+      "id": "institution:高特佳投资",
+      "name": "高特佳投资",
+      "fullName": "深圳市高特佳投资集团有限公司",
+      "aliases": [
+        "高特佳投资",
+        "深圳市高特佳投资集团有限公司"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 49,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 126
+    },
+    {
+      "id": "institution:嘉御资本",
+      "name": "嘉御资本",
+      "aliases": [
+        "嘉御资本"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 49,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 127
+    },
+    {
+      "id": "institution:华睿投资",
+      "name": "华睿投资",
+      "aliases": [
+        "华睿投资"
+      ],
+      "region": "中国",
+      "type": "创业投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "科技",
+        "医疗",
+        "先进制造"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "创业投资",
+          "title": "2025年中国创业投资机构50强",
+          "rank": 50,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 128
+    },
+    {
+      "id": "institution:联新资本",
+      "name": "联新资本",
+      "fullName": "上海联新资本管理有限公司",
+      "aliases": [
+        "联新资本",
+        "上海联新资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "私募股权",
+      "stages": "成长期/Pre-IPO",
+      "sectors": [
+        "科技",
+        "医疗",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "私募股权",
+          "title": "2025年中国私募股权投资机构50强",
+          "rank": 50,
+          "ordered": true,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 129
+    },
+    {
+      "id": "institution:阿里巴巴",
+      "name": "阿里巴巴",
+      "aliases": [
+        "阿里巴巴"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 130
+    },
+    {
+      "id": "institution:百度",
+      "name": "百度",
+      "aliases": [
+        "百度"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 131
+    },
+    {
+      "id": "institution:百洋医药集团",
+      "name": "百洋医药集团",
+      "aliases": [
+        "百洋医药集团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 132
+    },
+    {
+      "id": "institution:北工投资",
+      "name": "北工投资",
+      "fullName": "北京工业发展投资管理有限公司",
+      "aliases": [
+        "北工投资",
+        "北京工业发展投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 133
+    },
+    {
+      "id": "institution:北京国管",
+      "name": "北京国管",
+      "fullName": "北京国有资本运营管理有限公司",
+      "aliases": [
+        "北京国管",
+        "北京国有资本运营管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 134
+    },
+    {
+      "id": "institution:比亚迪投资",
+      "name": "比亚迪投资",
+      "aliases": [
+        "比亚迪投资"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 135
+    },
+    {
+      "id": "institution:博世集团",
+      "name": "博世集团",
+      "aliases": [
+        "博世集团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 136
+    },
+    {
+      "id": "institution:财信产业基金",
+      "name": "财信产业基金",
+      "fullName": "湖南省财信产业基金管理有限公司",
+      "aliases": [
+        "财信产业基金",
+        "湖南省财信产业基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 137
+    },
+    {
+      "id": "institution:策源资本",
+      "name": "策源资本",
+      "aliases": [
+        "策源资本"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 138
+    },
+    {
+      "id": "institution:成都产投集团",
+      "name": "成都产投集团",
+      "fullName": "成都产业投资集团有限公司",
+      "aliases": [
+        "成都产投集团",
+        "成都产业投资集团有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 139
+    },
+    {
+      "id": "institution:重庆渝富高质基金公司",
+      "name": "重庆渝富高质基金公司",
+      "fullName": "重庆渝富高质产业母基金私募股权投资基金管理有限公司",
+      "aliases": [
+        "重庆渝富高质基金公司",
+        "重庆渝富高质产业母基金私募股权投资基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 140
+    },
+    {
+      "id": "institution:创维投资",
+      "name": "创维投资",
+      "aliases": [
+        "创维投资"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 141
+    },
+    {
+      "id": "institution:孚腾资本",
+      "name": "孚腾资本",
+      "fullName": "上海孚腾私募基金管理有限公司",
+      "aliases": [
+        "孚腾资本",
+        "上海孚腾私募基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 142
+    },
+    {
+      "id": "institution:复健资本",
+      "name": "复健资本",
+      "aliases": [
+        "复健资本"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 143
+    },
+    {
+      "id": "institution:富浙基金",
+      "name": "富浙基金",
+      "fullName": "浙江富浙私募基金管理有限公司",
+      "aliases": [
+        "富浙基金",
+        "浙江富浙私募基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 144
+    },
+    {
+      "id": "institution:光谷产投",
+      "name": "光谷产投",
+      "fullName": "武汉光谷产业投资有限公司",
+      "aliases": [
+        "光谷产投",
+        "武汉光谷产业投资有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 145
+    },
+    {
+      "id": "institution:广东恒健控股",
+      "name": "广东恒健控股",
+      "fullName": "广东恒健投资控股有限公司",
+      "aliases": [
+        "广东恒健控股",
+        "广东恒健投资控股有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 146
+    },
+    {
+      "id": "institution:广东粤财基金",
+      "name": "广东粤财基金",
+      "fullName": "广东粤财基金管理有限公司",
+      "aliases": [
+        "广东粤财基金",
+        "广东粤财基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 147
+    },
+    {
+      "id": "institution:广汽资本",
+      "name": "广汽资本",
+      "fullName": "广汽资本有限公司",
+      "aliases": [
+        "广汽资本",
+        "广汽资本有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 148
+    },
+    {
+      "id": "institution:广州产投资本",
+      "name": "广州产投资本",
+      "fullName": "广州产业投资资本管理有限公司",
+      "aliases": [
+        "广州产投资本",
+        "广州产业投资资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 149
+    },
+    {
+      "id": "institution:广州基金",
+      "name": "广州基金",
+      "fullName": "广州产业投资基金管理有限公司",
+      "aliases": [
+        "广州基金",
+        "广州产业投资基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 150
+    },
+    {
+      "id": "institution:广州金控基金",
+      "name": "广州金控基金",
+      "fullName": "广州金控基金管理有限公司",
+      "aliases": [
+        "广州金控基金",
+        "广州金控基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 151
+    },
+    {
+      "id": "institution:国家电投创新投资",
+      "name": "国家电投创新投资",
+      "aliases": [
+        "国家电投创新投资"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 152
+    },
+    {
+      "id": "institution:国舜投资",
+      "name": "国舜投资",
+      "fullName": "杭州国舜股权投资有限公司",
+      "aliases": [
+        "国舜投资",
+        "杭州国舜股权投资有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 153
+    },
+    {
+      "id": "institution:国泰君安创新投资",
+      "name": "国泰君安创新投资",
+      "fullName": "国泰君安创新投资有限公司",
+      "aliases": [
+        "国泰君安创新投资",
+        "国泰君安创新投资有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 154
+    },
+    {
+      "id": "institution:国投创合",
+      "name": "国投创合",
+      "fullName": "国投创合基金管理有限公司",
+      "aliases": [
+        "国投创合",
+        "国投创合基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 155
+    },
+    {
+      "id": "institution:海尔集团",
+      "name": "海尔集团",
+      "aliases": [
+        "海尔集团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 156
+    },
+    {
+      "id": "institution:合肥产投资本",
+      "name": "合肥产投资本",
+      "fullName": "合肥产投资本创业投资管理有限公司",
+      "aliases": [
+        "合肥产投资本",
+        "合肥产投资本创业投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 157
+    },
+    {
+      "id": "institution:合肥建投资本",
+      "name": "合肥建投资本",
+      "fullName": "合肥建投资本管理有限公司",
+      "aliases": [
+        "合肥建投资本",
+        "合肥建投资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 158
+    },
+    {
+      "id": "institution:和达投资",
+      "name": "和达投资",
+      "fullName": "杭州和达投资管理有限公司",
+      "aliases": [
+        "和达投资",
+        "杭州和达投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 159
+    },
+    {
+      "id": "institution:吉利控股集团",
+      "name": "吉利控股集团",
+      "aliases": [
+        "吉利控股集团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 160
+    },
+    {
+      "id": "institution:建发新兴投资",
+      "name": "建发新兴投资",
+      "fullName": "厦门建发新兴产业股权投资有限责任公司",
+      "aliases": [
+        "建发新兴投资",
+        "厦门建发新兴产业股权投资有限责任公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 161
+    },
+    {
+      "id": "institution:京东集团",
+      "name": "京东集团",
+      "aliases": [
+        "京东集团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 162
+    },
+    {
+      "id": "institution:科大讯飞",
+      "name": "科大讯飞",
+      "aliases": [
+        "科大讯飞"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 163
+    },
+    {
+      "id": "institution:两江资本",
+      "name": "两江资本",
+      "fullName": "重庆两江股权投资基金管理有限公司",
+      "aliases": [
+        "两江资本",
+        "重庆两江股权投资基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 164
+    },
+    {
+      "id": "institution:临港科创投",
+      "name": "临港科创投",
+      "fullName": "上海临港科创投资管理有限公司",
+      "aliases": [
+        "临港科创投",
+        "上海临港科创投资管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 165
+    },
+    {
+      "id": "institution:绿金投资",
+      "name": "绿金投资",
+      "fullName": "绿色发展基金私募股权投资管理（上海）有限公司",
+      "aliases": [
+        "绿金投资",
+        "绿色发展基金私募股权投资管理（上海）有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 166
+    },
+    {
+      "id": "institution:蚂蚁集团",
+      "name": "蚂蚁集团",
+      "aliases": [
+        "蚂蚁集团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 167
+    },
+    {
+      "id": "institution:美团",
+      "name": "美团",
+      "aliases": [
+        "美团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 168
+    },
+    {
+      "id": "institution:南创投",
+      "name": "南创投",
+      "fullName": "南京市创新投资集团有限责任公司",
+      "aliases": [
+        "南创投",
+        "南京市创新投资集团有限责任公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 169
+    },
+    {
+      "id": "institution:南山战新投",
+      "name": "南山战新投",
+      "fullName": "深圳市南山战略新兴产业投资有限公司",
+      "aliases": [
+        "南山战新投",
+        "深圳市南山战略新兴产业投资有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 170
+    },
+    {
+      "id": "institution:宁德时代",
+      "name": "宁德时代",
+      "aliases": [
+        "宁德时代"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 171
+    },
+    {
+      "id": "institution:浦东创投",
+      "name": "浦东创投",
+      "fullName": "上海浦东创新投资发展（集团）有限公司",
+      "aliases": [
+        "浦东创投",
+        "上海浦东创新投资发展（集团）有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 172
+    },
+    {
+      "id": "institution:浦东科创集团",
+      "name": "浦东科创集团",
+      "fullName": "上海浦东科创集团有限公司",
+      "aliases": [
+        "浦东科创集团",
+        "上海浦东科创集团有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 173
+    },
+    {
+      "id": "institution:普洛斯",
+      "name": "普洛斯",
+      "aliases": [
+        "普洛斯"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 174
+    },
+    {
+      "id": "institution:山东财金资本公司",
+      "name": "山东财金资本公司",
+      "fullName": "山东省财金资本管理有限公司",
+      "aliases": [
+        "山东财金资本公司",
+        "山东省财金资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 175
+    },
+    {
+      "id": "institution:商汤科技",
+      "name": "商汤科技",
+      "aliases": [
+        "商汤科技"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 176
+    },
+    {
+      "id": "institution:上海国盛资本",
+      "name": "上海国盛资本",
+      "fullName": "上海国盛资本管理有限公司",
+      "aliases": [
+        "上海国盛资本",
+        "上海国盛资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 177
+    },
+    {
+      "id": "institution:上海科创集团",
+      "name": "上海科创集团",
+      "fullName": "上海科技创业投资（集团）有限公司",
+      "aliases": [
+        "上海科创集团",
+        "上海科技创业投资（集团）有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 178
+    },
+    {
+      "id": "institution:上汽集团",
+      "name": "上汽集团",
+      "aliases": [
+        "上汽集团"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 179
+    },
+    {
+      "id": "institution:深投控资本",
+      "name": "深投控资本",
+      "fullName": "深圳市投控资本有限公司",
+      "aliases": [
+        "深投控资本",
+        "深圳市投控资本有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 180
+    },
+    {
+      "id": "institution:四川产业基金",
+      "name": "四川产业基金",
+      "fullName": "四川产业振兴基金投资集团有限公司",
+      "aliases": [
+        "四川产业基金",
+        "四川产业振兴基金投资集团有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 181
+    },
+    {
+      "id": "institution:四川省科创投资集团",
+      "name": "四川省科创投资集团",
+      "fullName": "四川省科技创新投资集团有限责任公司",
+      "aliases": [
+        "四川省科创投资集团",
+        "四川省科技创新投资集团有限责任公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 182
+    },
+    {
+      "id": "institution:苏创投",
+      "name": "苏创投",
+      "fullName": "苏州创新投资集团有限公司",
+      "aliases": [
+        "苏创投",
+        "苏州创新投资集团有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 183
+    },
+    {
+      "id": "institution:泰格医药",
+      "name": "泰格医药",
+      "aliases": [
+        "泰格医药"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 184
+    },
+    {
+      "id": "institution:通商基金",
+      "name": "通商基金",
+      "fullName": "宁波通商基金管理有限公司",
+      "aliases": [
+        "通商基金",
+        "宁波通商基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 185
+    },
+    {
+      "id": "institution:投控东海",
+      "name": "投控东海",
+      "fullName": "深圳市投控东海投资有限公司",
+      "aliases": [
+        "投控东海",
+        "深圳市投控东海投资有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 186
+    },
+    {
+      "id": "institution:吴江创投",
+      "name": "吴江创投",
+      "fullName": "苏州市吴江创业投资有限公司",
+      "aliases": [
+        "吴江创投",
+        "苏州市吴江创业投资有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 187
+    },
+    {
+      "id": "institution:锡创投",
+      "name": "锡创投",
+      "fullName": "无锡市创新投资集团有限公司",
+      "aliases": [
+        "锡创投",
+        "无锡市创新投资集团有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 188
+    },
+    {
+      "id": "institution:湘投基金",
+      "name": "湘投基金",
+      "fullName": "湖南能源集团湘投私募基金管理有限公司",
+      "aliases": [
+        "湘投基金",
+        "湖南能源集团湘投私募基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 189
+    },
+    {
+      "id": "institution:小米",
+      "name": "小米",
+      "aliases": [
+        "小米"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 190
+    },
+    {
+      "id": "institution:芯联集成",
+      "name": "芯联集成",
+      "aliases": [
+        "芯联集成"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 191
+    },
+    {
+      "id": "institution:兴湘资本",
+      "name": "兴湘资本",
+      "fullName": "湖南兴湘资本管理有限公司",
+      "aliases": [
+        "兴湘资本",
+        "湖南兴湘资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 192
+    },
+    {
+      "id": "institution:亦庄国投",
+      "name": "亦庄国投",
+      "fullName": "北京亦庄国际投资发展有限公司",
+      "aliases": [
+        "亦庄国投",
+        "北京亦庄国际投资发展有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 193
+    },
+    {
+      "id": "institution:盈峰投资",
+      "name": "盈峰投资",
+      "aliases": [
+        "盈峰投资"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 194
+    },
+    {
+      "id": "institution:浙江产投",
+      "name": "浙江产投",
+      "fullName": "浙江省产投集团有限公司",
+      "aliases": [
+        "浙江产投",
+        "浙江省产投集团有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 195
+    },
+    {
+      "id": "institution:浙江省创新产业私募基金管理有限公司",
+      "name": "浙江省创新产业私募基金管理有限公司",
+      "aliases": [
+        "浙江省创新产业私募基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 196
+    },
+    {
+      "id": "institution:中安资本",
+      "name": "中安资本",
+      "fullName": "安徽中安资本管理有限公司",
+      "aliases": [
+        "中安资本",
+        "安徽中安资本管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 197
+    },
+    {
+      "id": "institution:中车资本",
+      "name": "中车资本",
+      "aliases": [
+        "中车资本"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业",
+        "产业协同",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 198
+    },
+    {
+      "id": "institution:中关村资本",
+      "name": "中关村资本",
+      "fullName": "北京中关村资本基金管理有限公司",
+      "aliases": [
+        "中关村资本",
+        "北京中关村资本基金管理有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 199
+    },
+    {
+      "id": "institution:中国石化资本",
+      "name": "中国石化资本",
+      "aliases": [
+        "中国石化资本"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 200
+    },
+    {
+      "id": "institution:中国石油昆仑资本",
+      "name": "中国石油昆仑资本",
+      "fullName": "中国石油集团昆仑资本有限公司",
+      "aliases": [
+        "中国石油昆仑资本",
+        "中国石油集团昆仑资本有限公司"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业",
+        "产业协同",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 201
+    },
+    {
+      "id": "institution:中国移动链长基金",
+      "name": "中国移动链长基金",
+      "aliases": [
+        "中国移动链长基金"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 202
+    },
+    {
+      "id": "institution:中建材新材料基金",
+      "name": "中建材新材料基金",
+      "fullName": "中建材（安徽）新材料产业投资基金合伙企业（有限合伙）",
+      "aliases": [
+        "中建材新材料基金",
+        "中建材（安徽）新材料产业投资基金合伙企业（有限合伙）"
+      ],
+      "region": "中国",
+      "type": "国资投资机构",
+      "stages": "全阶段",
+      "sectors": [
+        "硬科技",
+        "先进制造",
+        "区域产业",
+        "产业协同",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "国资投资",
+          "title": "2025年中国国资投资机构50强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        },
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 203
+    },
+    {
+      "id": "institution:kkr",
+      "name": "KKR",
+      "aliases": [
+        "KKR"
+      ],
+      "region": "中国",
+      "type": "并购投资机构",
+      "stages": "并购/控股投资",
+      "sectors": [
+        "并购整合",
+        "科技",
+        "消费"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "并购投资",
+          "title": "2025年中国并购投资机构10强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 204
+    },
+    {
+      "id": "institution:tcl创投",
+      "name": "TCL创投",
+      "aliases": [
+        "TCL创投"
+      ],
+      "region": "中国",
+      "type": "产业资本/CVC",
+      "stages": "战略投资",
+      "sectors": [
+        "产业协同",
+        "硬科技",
+        "数字化"
+      ],
+      "officialDomains": [],
+      "rankings": [
+        {
+          "publisher": "清科",
+          "year": 2025,
+          "category": "战略投资者/CVC",
+          "title": "2025年中国战略投资者/CVC30强",
+          "ordered": false,
+          "sourceId": "qingke-2025-equity-investment",
+          "sourceUrl": "https://news.pedaily.cn/202512/559270.shtml"
+        }
+      ],
+      "reviewStatus": "reviewed",
+      "order": 205
+    },
+    {
+      "id": "profile:a16z",
+      "name": "Andreessen Horowitz",
+      "aliases": [
+        "Andreessen Horowitz"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "种子至成长期",
+      "sectors": [
+        "AI",
+        "企业科技",
+        "生物科技",
+        "Web3"
+      ],
+      "profileSlug": "a16z",
+      "officialUrl": "https://a16z.com/",
+      "officialDomains": [
+        "a16z.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 206
+    },
+    {
+      "id": "profile:benchmark",
+      "name": "Benchmark",
+      "aliases": [
+        "Benchmark"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "早期",
+      "sectors": [
+        "软件",
+        "AI",
+        "互联网"
+      ],
+      "profileSlug": "benchmark",
+      "officialUrl": "https://www.benchmark.com/",
+      "officialDomains": [
+        "benchmark.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 207
+    },
+    {
+      "id": "profile:founders-fund",
+      "name": "Founders Fund",
+      "aliases": [
+        "Founders Fund"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "AI",
+        "国防科技",
+        "商业航天"
+      ],
+      "profileSlug": "founders-fund",
+      "officialUrl": "https://foundersfund.com/",
+      "officialDomains": [
+        "foundersfund.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 208
+    },
+    {
+      "id": "profile:general-catalyst",
+      "name": "General Catalyst",
+      "aliases": [
+        "General Catalyst"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "全阶段",
+      "sectors": [
+        "AI",
+        "医疗",
+        "工业"
+      ],
+      "profileSlug": "general-catalyst",
+      "officialUrl": "https://www.generalcatalyst.com/",
+      "officialDomains": [
+        "generalcatalyst.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 209
+    },
+    {
+      "id": "profile:greylock",
+      "name": "Greylock Partners",
+      "aliases": [
+        "Greylock Partners"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "早期",
+      "sectors": [
+        "AI",
+        "企业软件",
+        "消费"
+      ],
+      "profileSlug": "greylock",
+      "officialUrl": "https://greylock.com/",
+      "officialDomains": [
+        "greylock.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 210
+    },
+    {
+      "id": "profile:khosla",
+      "name": "Khosla Ventures",
+      "aliases": [
+        "Khosla Ventures"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "AI",
+        "气候科技",
+        "医疗"
+      ],
+      "profileSlug": "khosla",
+      "officialUrl": "https://www.khoslaventures.com/",
+      "officialDomains": [
+        "khoslaventures.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 211
+    },
+    {
+      "id": "profile:kleiner-perkins",
+      "name": "Kleiner Perkins",
+      "aliases": [
+        "Kleiner Perkins"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "早期至成长期",
+      "sectors": [
+        "企业科技",
+        "消费",
+        "医疗"
+      ],
+      "profileSlug": "kleiner-perkins",
+      "officialUrl": "https://www.kleinerperkins.com/",
+      "officialDomains": [
+        "kleinerperkins.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 212
+    },
+    {
+      "id": "profile:lightspeed",
+      "name": "Lightspeed Venture Partners",
+      "aliases": [
+        "Lightspeed Venture Partners"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "全阶段",
+      "sectors": [
+        "企业科技",
+        "消费",
+        "医疗"
+      ],
+      "profileSlug": "lightspeed",
+      "officialUrl": "https://lsvp.com/",
+      "officialDomains": [
+        "lsvp.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 213
+    },
+    {
+      "id": "profile:sequoia-capital",
+      "name": "Sequoia Capital",
+      "aliases": [
+        "Sequoia Capital"
+      ],
+      "region": "美国",
+      "type": "风险投资",
+      "stages": "全阶段",
+      "sectors": [
+        "AI",
+        "企业科技",
+        "消费"
+      ],
+      "profileSlug": "sequoia-capital",
+      "officialUrl": "https://www.sequoiacap.com/",
+      "officialDomains": [
+        "sequoiacap.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 214
+    },
+    {
+      "id": "profile:yc",
+      "name": "Y Combinator",
+      "aliases": [
+        "Y Combinator"
+      ],
+      "region": "美国",
+      "type": "加速器/投资机构",
+      "stages": "种子期",
+      "sectors": [
+        "科技创业"
+      ],
+      "profileSlug": "yc",
+      "officialUrl": "https://www.ycombinator.com/companies",
+      "officialDomains": [
+        "ycombinator.com"
+      ],
+      "rankings": [],
+      "reviewStatus": "reviewed",
+      "order": 215
+    }
+  ]
 }
