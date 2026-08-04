@@ -1,0 +1,110 @@
+name: Verify strict STAR parser live once
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/verify-star-strict-live-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-star-strict-live-once
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/star-market-strict-table-manual-review
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-star-investors.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --disable-pip-version-check -r requirements-star-investors.txt
+          npm ci
+
+      - name: Validate strict parser before network access
+        run: |
+          python -m py_compile \
+            tools/crawl_star_market_investors.py \
+            tools/crawl_star_market_investors_legacy.py \
+            tools/star_market_prospectus_parser.py \
+            tools/star_investor_quality.py \
+            tools/review_star_market_investors.py
+          python -m unittest \
+            tests.test_star_market_investors \
+            tests.test_star_market_prospectus_parser \
+            tests.test_star_market_strict_review \
+            tests.test_review_star_market_investors
+
+      - name: Rebuild Cambricon candidates from official CNINFO prospectus
+        run: |
+          python tools/crawl_star_market_investors.py \
+            --listing cambricon \
+            --require-companies
+          python tools/review_star_market_investors.py
+          python tools/crawl_star_market_investors.py --check --require-companies
+          python tools/review_star_market_investors.py --check
+          node --import tsx scripts/build-institution-data-layers.ts
+
+      - name: Verify candidate accuracy boundary
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          snapshot = json.loads(Path('public/data/star_market_investors.json').read_text())
+          company = snapshot['companies']['cambricon']
+          investors = company['investors']
+          assert len(investors) == 31, len(investors)
+          assert snapshot['reviewCandidateCount'] == 31
+          assert snapshot['verifiedInvestorCount'] == 0
+          assert snapshot['rejectedInvestorCount'] == 0
+          assert all(item['reviewStatus'] == 'needs_review' for item in investors)
+          assert all(item.get('preIpoShares', 0) > 0 for item in investors)
+          assert all(0 < item.get('preIpoOwnershipPct', 0) <= 100 for item in investors)
+          assert all(item.get('nameResolution') in {'definitions', 'basic-information'} for item in investors)
+          assert all(item.get('disclosedName') for item in investors)
+          assert not any(item.get('publicContact') for item in investors)
+          assert '<' not in company['prospectus']['title']
+
+          equity = json.loads(Path('public/data/institution_equity_relationships.json').read_text())
+          assert equity['verifiedRelationshipCount'] == 0
+          assert equity['needsReviewCount'] == 31
+          assert equity['rejectedCount'] == 0
+          PY
+          npm run lint
+          npm run test:unit
+          npm run test:crawler
+          npx tsc --noEmit
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+
+      - name: Commit verified candidate snapshot and remove one-time workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            public/data/star_market_investors.json \
+            public/data/institution_entities.json \
+            public/data/institution_events.json \
+            public/data/institution_equity_relationships.json
+          git rm -f .github/workflows/verify-star-strict-live-once.yml
+          git commit -m "data: rebuild STAR shareholders from strict prospectus tables"
+          git pull --rebase origin fix/star-market-strict-table-manual-review
+          git push origin HEAD:fix/star-market-strict-table-manual-review
