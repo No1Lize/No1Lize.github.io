@@ -1,13 +1,13 @@
 import rawArticles from "@/public/data/articles.json";
 import rawPeople from "@/public/data/people.json";
 import rawResearchReports from "@/public/data/research_reports.json";
-import { institutionCatalog } from "@/lib/catalog-data";
 import { getChannelDocumentUpdateItems } from "@/lib/channel-documents";
 import { resolveArticleCompanyEntities } from "@/lib/company-entity-registry";
 import {
   normalizeChannelUpdateDate,
   type ChannelUpdateDatePrecision,
 } from "@/lib/channel-update-date";
+import { resolveArticleInstitutionEntities } from "@/lib/institution-entity-registry";
 import { trackedSectors } from "@/lib/tracked-sectors";
 
 export type ChannelUpdateKey =
@@ -130,12 +130,6 @@ const enabledSectorNames = new Set(
   trackedSectors.flatMap((sector) => [sector.name, ...(sector.aliases ?? [])]),
 );
 
-const institutionTerms = institutionCatalog.flatMap((institution) =>
-  [institution.name, institution.englishName]
-    .filter((value): value is string => Boolean(value))
-    .map((value) => ({ value, normalized: normalize(value) })),
-);
-
 function normalize(value: string) {
   return value.toLocaleLowerCase("zh-CN").replace(/[^a-z0-9\u3400-\u9fff]+/gu, "");
 }
@@ -149,28 +143,6 @@ function uniqueKeywords(values: string[]) {
     seen.add(normalized);
     return true;
   });
-}
-
-function searchableArticleText(article: ArticleRecord) {
-  return normalize(
-    [
-      article.title,
-      article.summary,
-      article.company ?? "",
-      ...(article.institutions ?? []),
-      ...(article.mentionedCompanies ?? []),
-      ...(article.mentionedPeople ?? []),
-    ].join(" "),
-  );
-}
-
-function firstMatchedTerm(
-  article: ArticleRecord,
-  terms: { value: string; normalized: string }[],
-) {
-  const haystack = searchableArticleText(article);
-  return terms.find((term) => term.normalized.length >= 2 && haystack.includes(term.normalized))
-    ?.value;
 }
 
 function dedupeAndSort(items: ChannelUpdateItem[]) {
@@ -188,7 +160,11 @@ function dedupeAndSort(items: ChannelUpdateItem[]) {
     );
 }
 
-function articleToUpdate(article: ArticleRecord, context: string): ChannelUpdateItem {
+function articleToUpdate(
+  article: ArticleRecord,
+  context: string,
+  additionalKeywords: string[] = [],
+): ChannelUpdateItem {
   const normalizedDate = normalizeChannelUpdateDate(
     article.publishedAt,
     articlesPayload.generatedAt,
@@ -205,7 +181,7 @@ function articleToUpdate(article: ArticleRecord, context: string): ChannelUpdate
     dateOriginal: normalizedDate.originalDate,
     datePrecision: normalizedDate.precision,
     sortAt: normalizedDate.sortAt,
-    keywords: uniqueKeywords([article.type]),
+    keywords: uniqueKeywords([article.type, ...additionalKeywords]),
   };
 }
 
@@ -247,15 +223,31 @@ function companiesDirectory(): ChannelUpdateDirectory {
 
 function institutionsDirectory(): ChannelUpdateDirectory {
   const items = articlesPayload.articles.flatMap((article) => {
-    const matchedInstitution = firstMatchedTerm(article, institutionTerms);
-    const explicitInstitution = article.institutions?.[0] ?? "";
-    if (!matchedInstitution && !explicitInstitution && !capitalEventTypes.has(article.type)) return [];
-    const institution = explicitInstitution || matchedInstitution || "资本动态";
-    return [articleToUpdate(article, `${institution} · ${article.sector}`)];
+    const matchedInstitutions = resolveArticleInstitutionEntities(article);
+    const institutionNames = uniqueKeywords([
+      ...matchedInstitutions.map((institution) => institution.name),
+      ...(article.institutions ?? []),
+    ]).slice(0, 3);
+
+    if (institutionNames.length) {
+      return [
+        articleToUpdate(
+          article,
+          `${institutionNames.join("、")} · ${article.sector}`,
+          ["机构动态"],
+        ),
+      ];
+    }
+
+    if (!capitalEventTypes.has(article.type)) return [];
+    return [
+      articleToUpdate(article, `资本事件 · ${article.sector}`, ["资本事件"]),
+    ];
   });
   return {
-    title: "资本与机构更新目录",
-    description: "投资机构、融资、并购与 IPO 相关公开进展，仅按记录前的绿色事件标签筛选。",
+    title: "机构与资本事件更新目录",
+    description:
+      "已识别具体机构的记录标记为“机构动态”；未识别机构的融资、并购与 IPO 单独标记为“资本事件”，可通过绿色标签筛选。",
     generatedAt: articlesPayload.generatedAt,
     items: dedupeAndSort([
       ...getChannelDocumentUpdateItems("institutions"),
