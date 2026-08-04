@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T03:11:10+00:00",
+  "generatedAt": "2026-08-04T05:05:55+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-04T03:10:20+00:00",
+      "updatedAt": "2026-08-04T05:05:20+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -974,42 +974,42 @@
         {
           "date": "2026-08-04",
           "open": 1041.0,
-          "close": 1035.18,
+          "close": 1054.83,
           "high": 1067.38,
           "low": 1019.0,
-          "volume": 8954376.0
+          "volume": 10037171.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥6503.33亿"
+          "value": "¥6628.49亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥6503.33亿"
+          "value": "¥6628.49亿"
         },
         {
           "id": "pe",
           "label": "市盈率",
-          "value": "160.46"
+          "value": "163.55"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "53.14"
+          "value": "54.16"
         },
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "1.43%"
+          "value": "1.60%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "¥92.95亿"
+          "value": "¥104.30亿"
         },
         {
           "id": "totalShares",
@@ -1060,18 +1060,24 @@
         "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml"
       },
       "quote": {
-        "price": 1041.0,
+        "price": 1055.0,
         "currency": "CNY",
         "previousClose": 1028.0,
-        "change": 13.0,
-        "changePercent": 1.26,
-        "asOf": "2026-08-04T09:27:45+08:00",
+        "change": 27.0,
+        "changePercent": 2.63,
+        "asOf": "2026-08-04T13:05:20+08:00",
         "source": {
           "name": "新浪财经",
           "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml"
         }
       },
       "news": [
+        {
+          "title": "智元首度完整披露创新合伙人团队",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcpir5402811.shtml",
+          "publishedAt": "2026-08-04T12:42:00+08:00",
+          "source": "新浪财经"
+        },
         {
           "title": "海外云厂商订单积压验证AI盈利正循环，国产算力订单传导路径渐明",
           "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimchzv2209896.shtml",
@@ -1125,17 +1131,7 @@
           "url": "https://finance.sina.com.cn/jjxw/2026-08-03/doc-inikzuyp2774114.shtml",
           "publishedAt": "2026-08-03T19:41:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "半导体大跌解读！全球芯片“过山车”，机构：去杠杆最陡峭的阶段或已过去",
-          "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002sk5o",
-          "publishedAt": "2026-08-03T18:44:00+08:00",
-          "source": "新浪财经"
         }
-      ],
-      "warnings": [
-        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "catl": {
@@ -1143,7 +1139,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-04T03:10:38+00:00",
+      "updatedAt": "2026-08-04T05:05:20+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2106,17 +2102,17 @@
         {
           "date": "2026-08-04",
           "open": 395.0,
-          "close": 396.74,
+          "close": 396.35,
           "high": 397.5,
           "low": 391.22,
-          "volume": 125991.0
+          "volume": 144699.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥1.84万亿"
+          "value": "¥1.83万亿"
         },
         {
           "id": "floatMarketCap",
@@ -2126,7 +2122,7 @@
         {
           "id": "pe",
           "label": "市盈率",
-          "value": "21.21"
+          "value": "21.18"
         },
         {
           "id": "pb",
@@ -2136,12 +2132,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "0.30%"
+          "value": "0.34%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "¥49.76亿"
+          "value": "¥57.17亿"
         },
         {
           "id": "totalShares",
@@ -2192,18 +2188,48 @@
         "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml"
       },
       "quote": {
-        "price": 396.77,
+        "price": 396.35,
         "currency": "CNY",
         "previousClose": 394.4,
-        "change": 2.37,
-        "changePercent": 0.6,
-        "asOf": "2026-08-04T11:10:39+08:00",
+        "change": 1.95,
+        "changePercent": 0.49,
+        "asOf": "2026-08-04T13:05:18+08:00",
         "source": {
           "name": "新浪财经",
           "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml"
         }
       },
       "news": [
+        {
+          "title": "600712，盘中直线拉升！新型储能装机规模将达到3亿千瓦，低PE+业绩爆发概念股揭晓",
+          "url": "https://finance.sina.com.cn/stock/zqgd/2026-08-04/doc-inimcpii4121472.shtml",
+          "publishedAt": "2026-08-04T12:14:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "公司向宁德时代和比亚迪批量供货吗？东方锆业回应",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcpii4121788.shtml",
+          "publishedAt": "2026-08-04T12:12:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "合规约束叠加海外壁垒 “新三样”ESG竞争力加速兑现",
+          "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001ikqu",
+          "publishedAt": "2026-08-04T12:00:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "10万内新能源SUV服务网点多吗？长安启源Q05怎么样",
+          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimcpim5723386.shtml",
+          "publishedAt": "2026-08-04T11:48:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "7万级长安启源全新Q05续航快充测评",
+          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimcpim5723404.shtml",
+          "publishedAt": "2026-08-04T11:47:00+08:00",
+          "source": "新浪财经"
+        },
         {
           "title": "券商8月金股热捧宁德时代、药明康德，中际旭创被推荐次数减少8家",
           "url": "https://cj.sina.cn/articles/view/1644119190/61ff449600102mg2w",
@@ -2212,8 +2238,8 @@
         },
         {
           "title": "嘉立创敲钟，深圳千亿IPO诞生",
-          "url": "https://cj.sina.cn/articles/view/1774800467/69c94e5302701d7h4",
-          "publishedAt": "2026-08-04T10:55:00+08:00",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimchzp5806727.shtml",
+          "publishedAt": "2026-08-04T10:39:00+08:00",
           "source": "新浪财经"
         },
         {
@@ -2233,36 +2259,6 @@
           "url": "https://finance.sina.com.cn/stock/t/2026-08-04/doc-inimchzm4154117.shtml",
           "publishedAt": "2026-08-04T09:58:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "国内首家ESG人力资源专业智库落地天津滨海新区",
-          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimchzt5433238.shtml",
-          "publishedAt": "2026-08-04T09:53:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "硬件创新基础设施龙头嘉立创登陆深市主板 申购倍数超4500倍",
-          "url": "https://finance.sina.com.cn/7x24/2026-08-04/doc-inimchzp5723679.shtml",
-          "publishedAt": "2026-08-04T09:38:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "宁德时代：8月3日获融资买入4.98亿元，融资余额223.25亿元占流通市值比例1.28%，超过近一年60%分位水平",
-          "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-04/doc-inimcatx2302760.shtml",
-          "publishedAt": "2026-08-04T09:23:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "券商8月份金股聚焦绩优龙头品种",
-          "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcatx2295898.shtml",
-          "publishedAt": "2026-08-04T08:59:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "宁德时代的“金牌搭档”，为啥是它？",
-          "url": "https://finance.sina.com.cn/roll/2026-08-04/doc-inimcatx2273704.shtml",
-          "publishedAt": "2026-08-04T08:32:00+08:00",
-          "source": "新浪财经"
         }
       ]
     },
@@ -2271,7 +2267,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-04T03:10:18+00:00",
+      "updatedAt": "2026-08-04T05:05:20+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3235,22 +3231,22 @@
         {
           "date": "2026-08-04",
           "open": 38.25,
-          "close": 38.45,
+          "close": 38.51,
           "high": 38.93,
           "low": 38.15,
-          "volume": 38244.0
+          "volume": 41079.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥160.80亿"
+          "value": "¥161.09亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥159.92亿"
+          "value": "¥160.22亿"
         },
         {
           "id": "pb",
@@ -3260,12 +3256,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "0.92%"
+          "value": "0.99%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "¥1.47亿"
+          "value": "¥1.58亿"
         },
         {
           "id": "totalShares",
@@ -3316,12 +3312,12 @@
         "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml"
       },
       "quote": {
-        "price": 38.25,
+        "price": 38.51,
         "currency": "CNY",
         "previousClose": 38.0,
-        "change": 0.25,
-        "changePercent": 0.66,
-        "asOf": "2026-08-04T09:25:00+08:00",
+        "change": 0.51,
+        "changePercent": 1.34,
+        "asOf": "2026-08-04T13:05:18+08:00",
         "source": {
           "name": "新浪财经",
           "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml"
@@ -3388,10 +3384,6 @@
           "publishedAt": "2026-08-03T17:50:00+08:00",
           "source": "新浪财经"
         }
-      ],
-      "warnings": [
-        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>",
-        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "horizon-robotics": {
@@ -3399,7 +3391,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-04T03:10:37+00:00",
+      "updatedAt": "2026-08-04T05:05:18+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4366,22 +4358,22 @@
         {
           "date": "2026-08-04",
           "open": 5.1,
-          "close": 5.14,
+          "close": 5.135,
           "high": 5.21,
           "low": 5.065,
-          "volume": 44517300.0
+          "volume": 50960256.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "HK$748.26亿"
+          "value": "HK$815.10亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "HK$639.77亿"
+          "value": "HK$706.61亿"
         },
         {
           "id": "pb",
@@ -4391,22 +4383,22 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "0.36%"
+          "value": "0.37%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "HK$2.29亿"
+          "value": "HK$2.62亿"
         },
         {
           "id": "totalShares",
           "label": "总股本",
-          "value": "145.72亿股"
+          "value": "158.73亿股"
         },
         {
           "id": "floatShares",
           "label": "流通股",
-          "value": "124.59亿股"
+          "value": "137.61亿股"
         },
         {
           "id": "eps",
@@ -4449,14 +4441,14 @@
       },
       "quote": {
         "price": 5.135,
-        "previousClose": 5.0,
-        "change": 0.135,
-        "changePercent": 2.7,
         "currency": "HKD",
-        "asOf": "2026-08-04T02:55:50+00:00",
+        "previousClose": 5.135,
+        "change": 0.0,
+        "changePercent": 0.0,
+        "asOf": "2026-08-04T13:05:20+08:00",
         "source": {
-          "name": "Yahoo财经",
-          "url": "https://sg.finance.yahoo.com/quote/9660.HK/"
+          "name": "新浪财经",
+          "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html"
         }
       },
       "news": [
@@ -4520,9 +4512,6 @@
           "publishedAt": "2026-07-28T11:01:00+08:00",
           "source": "新浪财经"
         }
-      ],
-      "warnings": [
-        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>"
       ]
     },
     "xtalpi": {
@@ -4530,7 +4519,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-04T03:10:37+00:00",
+      "updatedAt": "2026-08-04T05:05:18+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5497,37 +5486,37 @@
         {
           "date": "2026-08-04",
           "open": 6.91,
-          "close": 6.99,
+          "close": 7.005,
           "high": 7.17,
           "low": 6.91,
-          "volume": 18981365.0
+          "volume": 22524365.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "HK$300.17亿"
+          "value": "HK$301.46亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "HK$300.17亿"
+          "value": "HK$301.46亿"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "2.89"
+          "value": "2.90"
         },
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "0.44%"
+          "value": "0.52%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "HK$1.33亿"
+          "value": "HK$1.58亿"
         },
         {
           "id": "totalShares",
@@ -5579,15 +5568,15 @@
         "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html"
       },
       "quote": {
-        "price": 6.965,
-        "previousClose": 7.12,
-        "change": -0.155,
-        "changePercent": -2.18,
+        "price": 7.0,
         "currency": "HKD",
-        "asOf": "2026-08-04T02:55:37+00:00",
+        "previousClose": 6.87,
+        "change": 0.13,
+        "changePercent": 1.89,
+        "asOf": "2026-08-04T13:05:08+08:00",
         "source": {
-          "name": "Yahoo财经",
-          "url": "https://sg.finance.yahoo.com/quote/2228.HK/"
+          "name": "新浪财经",
+          "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html"
         }
       },
       "news": [
@@ -5651,9 +5640,6 @@
           "publishedAt": "2026-07-31T00:50:00+08:00",
           "source": "新浪财经"
         }
-      ],
-      "warnings": [
-        "新浪财经行情：URLError: <urlopen error [Errno 101] Network is unreachable>"
       ]
     },
     "pony-ai": {
@@ -5661,7 +5647,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-04T03:10:46+00:00",
+      "updatedAt": "2026-08-04T05:05:31+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -5677,6 +5663,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 14.069999694824219,
+          "close": 14.8100004196167,
+          "high": 15.270000457763672,
+          "low": 14.039999961853027,
+          "volume": 3296700.0
+        },
         {
           "date": "2026-02-10",
           "open": 14.819999694824219,
@@ -6628,14 +6622,6 @@
           "high": 7.989999771118164,
           "low": 7.690000057220459,
           "volume": 6900500.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 7.849999904632568,
-          "close": 8.050000190734863,
-          "high": 8.130000114440918,
-          "low": 7.730000019073486,
-          "volume": 2292473.0
         }
       ],
       "metrics": [
@@ -6768,7 +6754,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-04T03:10:46+00:00",
+      "updatedAt": "2026-08-04T05:05:31+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -6784,6 +6770,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 7.75,
+          "close": 8.0600004196167,
+          "high": 8.164999961853027,
+          "low": 7.75,
+          "volume": 3040100.0
+        },
         {
           "date": "2026-02-10",
           "open": 8.09000015258789,
@@ -7735,14 +7729,6 @@
           "high": 5.960000038146973,
           "low": 5.735000133514404,
           "volume": 1072800.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 5.800000190734863,
-          "close": 5.900000095367432,
-          "high": 5.954999923706055,
-          "low": 5.71999979019165,
-          "volume": 1213547.0
         }
       ],
       "metrics": [
@@ -7870,7 +7856,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-04T03:10:51+00:00",
+      "updatedAt": "2026-08-04T05:05:31+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -7886,6 +7872,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 17.139999389648438,
+          "close": 17.59000015258789,
+          "high": 17.969999313354492,
+          "low": 16.790000915527344,
+          "volume": 24971400.0
+        },
         {
           "date": "2026-02-10",
           "open": 17.219999313354492,
@@ -8837,50 +8831,17 @@
           "high": 15.625,
           "low": 14.765000343322754,
           "volume": 16067400.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 14.930000305175781,
-          "close": 16.020000457763672,
-          "high": 16.299999237060547,
-          "low": 14.710000038146973,
-          "volume": 22201946.0
         }
       ],
       "metrics": [
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "US$53.25亿"
-        },
-        {
-          "id": "floatMarketCap",
-          "label": "流通市值",
-          "value": "US$53.25亿"
-        },
-        {
-          "id": "pb",
-          "label": "市净率",
-          "value": "9.12"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "6.98%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "US$3.69亿"
+          "value": "US$49.63亿"
         },
         {
           "id": "totalShares",
           "label": "总股本",
-          "value": "3.32亿股"
-        },
-        {
-          "id": "floatShares",
-          "label": "流通股",
           "value": "3.32亿股"
         },
         {
@@ -8923,7 +8884,6 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/RGTI/",
         "price": "https://query1.finance.yahoo.com/v8/finance/chart/RGTI?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-        "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.RGTI&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
         "yahooFinance": "https://sg.finance.yahoo.com/quote/RGTI/"
       },
       "quote": {
@@ -8982,7 +8942,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-04T03:10:57+00:00",
+      "updatedAt": "2026-08-04T05:05:31+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -8998,6 +8958,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 34.67499923706055,
+          "close": 35.47999954223633,
+          "high": 35.63999938964844,
+          "low": 33.65999984741211,
+          "volume": 16620800.0
+        },
         {
           "date": "2026-02-10",
           "open": 35.099998474121094,
@@ -9949,14 +9917,6 @@
           "high": 37.64500045776367,
           "low": 35.58399963378906,
           "volume": 18149700.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 35.83000183105469,
-          "close": 38.849998474121094,
-          "high": 40.15999984741211,
-          "low": 35.426300048828125,
-          "volume": 23138654.0
         }
       ],
       "metrics": [
@@ -10094,7 +10054,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-04T03:10:57+00:00",
+      "updatedAt": "2026-08-04T05:05:33+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -10110,6 +10070,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 72.0250015258789,
+          "close": 75.83999633789062,
+          "high": 76.80000305175781,
+          "low": 70.75,
+          "volume": 16394400.0
+        },
         {
           "date": "2026-02-10",
           "open": 74.59500122070312,
@@ -11061,14 +11029,6 @@
           "high": 67.83999633789062,
           "low": 62.65999984741211,
           "volume": 13486300.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 63.34000015258789,
-          "close": 70.43000030517578,
-          "high": 70.5999984741211,
-          "low": 62.16999816894531,
-          "volume": 16498338.0
         }
       ],
       "metrics": [
@@ -11206,7 +11166,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-04T03:11:01+00:00",
+      "updatedAt": "2026-08-04T05:05:40+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -11222,6 +11182,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 55.470001220703125,
+          "close": 57.119998931884766,
+          "high": 57.599998474121094,
+          "low": 53.91600036621094,
+          "volume": 4725500.0
+        },
         {
           "date": "2026-02-10",
           "open": 57.974998474121094,
@@ -12173,14 +12141,6 @@
           "high": 46.29800033569336,
           "low": 42.29999923706055,
           "volume": 7299900.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 43.470001220703125,
-          "close": 46.04999923706055,
-          "high": 47.20869827270508,
-          "low": 42.4005012512207,
-          "volume": 5520969.0
         }
       ],
       "metrics": [
@@ -12311,9 +12271,6 @@
           "publishedAt": "2026-07-30T20:01:00+00:00",
           "source": "Yahoo财经"
         }
-      ],
-      "warnings": [
-        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "recursion": {
@@ -12321,7 +12278,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-04T03:11:03+00:00",
+      "updatedAt": "2026-08-04T05:05:40+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -12337,6 +12294,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 3.950000047683716,
+          "close": 3.9800000190734863,
+          "high": 4.0,
+          "low": 3.8499999046325684,
+          "volume": 14183600.0
+        },
         {
           "date": "2026-02-10",
           "open": 4.005000114440918,
@@ -13288,14 +13253,6 @@
           "high": 3.1050000190734863,
           "low": 2.950000047683716,
           "volume": 15293000.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 3.0299999713897705,
-          "close": 3.180000066757202,
-          "high": 3.200000047683716,
-          "low": 3.0,
-          "volume": 14524083.0
         }
       ],
       "metrics": [
@@ -13433,7 +13390,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-04T03:11:04+00:00",
+      "updatedAt": "2026-08-04T05:05:41+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -13449,6 +13406,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 8.699999809265137,
+          "close": 9.069999694824219,
+          "high": 9.119999885559082,
+          "low": 8.539999961853027,
+          "volume": 6302800.0
+        },
         {
           "date": "2026-02-10",
           "open": 9.09000015258789,
@@ -14400,14 +14365,6 @@
           "high": 8.079999923706055,
           "low": 7.610000133514404,
           "volume": 7543400.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 7.960000038146973,
-          "close": 8.079999923706055,
-          "high": 8.180000305175781,
-          "low": 7.860000133514404,
-          "volume": 5562643.0
         }
       ],
       "metrics": [
@@ -14545,7 +14502,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-04T03:11:07+00:00",
+      "updatedAt": "2026-08-04T05:05:43+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -14560,6 +14517,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 4.25,
+          "close": 4.400000095367432,
+          "high": 4.429999828338623,
+          "low": 4.181000232696533,
+          "volume": 13511600.0
+        },
         {
           "date": "2026-02-10",
           "open": 4.420000076293945,
@@ -15511,14 +15476,6 @@
           "high": 6.599999904632568,
           "low": 6.239999771118164,
           "volume": 27717700.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 6.505000114440918,
-          "close": 6.789999961853027,
-          "high": 6.889900207519531,
-          "low": 6.355000019073486,
-          "volume": 28129007.0
         }
       ],
       "metrics": [
@@ -15656,7 +15613,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-04T03:11:08+00:00",
+      "updatedAt": "2026-08-04T05:05:49+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
@@ -15671,6 +15628,14 @@
         "region": "美国"
       },
       "priceHistory": [
+        {
+          "date": "2026-02-09",
+          "open": 10.449999809265137,
+          "close": 10.6899995803833,
+          "high": 10.75,
+          "low": 10.300000190734863,
+          "volume": 24813200.0
+        },
         {
           "date": "2026-02-10",
           "open": 10.710000038146973,
@@ -16622,14 +16587,6 @@
           "high": 7.429999828338623,
           "low": 6.932000160217285,
           "volume": 33519800.0
-        },
-        {
-          "date": "2026-08-03",
-          "open": 7.179999828338623,
-          "close": 7.380000114440918,
-          "high": 7.519899845123291,
-          "low": 7.065000057220459,
-          "volume": 27615235.0
         }
       ],
       "metrics": [
