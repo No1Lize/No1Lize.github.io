@@ -1,0 +1,106 @@
+name: Verify final institution stack once
+
+on:
+  push:
+    branches: [feat/institution-entity-registry]
+    paths:
+      - .github/workflows/verify-institution-final-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-institution-final-once
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/institution-entity-registry
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Run bounded verification
+        id: verify
+        continue-on-error: true
+        shell: bash
+        run: |
+          set +e
+          mkdir -p /tmp/institution-final
+          : > /tmp/institution-final/status.env
+          run_check() {
+            name="$1"
+            shift
+            "$@" > "/tmp/institution-final/${name}.log" 2>&1
+            code=$?
+            echo "${name}=${code}" >> /tmp/institution-final/status.env
+          }
+          run_check install timeout 8m npm ci
+          run_check lint timeout 8m npm run lint
+          run_check ts_tests timeout 8m node --import tsx --test \
+            tests/star-market-investor-data.test.ts \
+            tests/star-market-investor-review.test.ts \
+            tests/institution-entity-registry.test.ts
+          run_check py_tests timeout 8m python -m unittest \
+            tests.test_star_market_investors \
+            tests.test_review_star_market_investors
+          run_check typescript timeout 8m npx tsc --noEmit
+          run_check build timeout 20m env ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          python - <<'PY'
+          from pathlib import Path
+          status = {}
+          for line in Path('/tmp/institution-final/status.env').read_text().splitlines():
+              key, value = line.split('=', 1)
+              status[key] = int(value)
+          raise SystemExit(0 if status and all(value == 0 for value in status.values()) else 1)
+          PY
+
+      - name: Record verification result and remove one-time workflow
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          status = {}
+          status_path = Path('/tmp/institution-final/status.env')
+          if status_path.exists():
+              for line in status_path.read_text().splitlines():
+                  key, value = line.split('=', 1)
+                  status[key] = int(value)
+          logs = {}
+          for path in Path('/tmp/institution-final').glob('*.log'):
+              logs[path.stem] = path.read_text(errors='replace')[-12000:]
+          result = {
+              'sourceCommit': os.environ.get('GITHUB_SHA', ''),
+              'runId': os.environ.get('GITHUB_RUN_ID', ''),
+              'outcome': '${{ steps.verify.outcome }}',
+              'status': status,
+              'logs': logs,
+          }
+          path = Path('diagnostics/institution-final-verification.json')
+          path.parent.mkdir(parents=True, exist_ok=True)
+          path.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n')
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add diagnostics/institution-final-verification.json
+          git rm -f .github/workflows/verify-institution-final-once.yml
+          git commit -m "ci: record final institution stack verification"
+          git pull --rebase origin feat/institution-entity-registry
+          git push origin HEAD:feat/institution-entity-registry
+
+      - name: Fail when verification failed
+        if: always()
+        run: test '${{ steps.verify.outcome }}' = 'success'
