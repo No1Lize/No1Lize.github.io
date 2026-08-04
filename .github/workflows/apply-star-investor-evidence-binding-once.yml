@@ -1,0 +1,436 @@
+name: Apply STAR investor evidence binding once
+
+on:
+  push:
+    branches: [fix/star-investor-parser-evidence-binding-20260804]
+    paths:
+      - .github/workflows/apply-star-investor-evidence-binding-once.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: star-investor-evidence-binding-once
+  cancel-in-progress: false
+
+jobs:
+  patch-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/star-investor-parser-evidence-binding-20260804
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Patch prospectus parser and regression tests
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          parser_path = Path("tools/crawl_star_market_investors.py")
+          text = parser_path.read_text(encoding="utf-8")
+
+          def replace_once(old: str, new: str, label: str) -> None:
+              global text
+              if new in text:
+                  print(f"{label}: already applied")
+                  return
+              if old not in text:
+                  raise SystemExit(f"{label}: patch target not found")
+              text = text.replace(old, new, 1)
+              print(f"{label}: applied")
+
+          replace_once(
+              '''except ImportError:
+              import cninfo_structured_disclosures as cninfo
+              import crawl_listed_company_disclosures as listed
+          ''',
+              '''except ImportError:
+              import cninfo_structured_disclosures as cninfo
+              import crawl_listed_company_disclosures as listed
+
+          try:
+              from .star_investor_quality import derive_review, extract_same_line_holding
+          except ImportError:
+              from star_investor_quality import derive_review, extract_same_line_holding
+          ''',
+              "quality-helper-import",
+          )
+
+          replace_once(
+              '''def extract_investor_contact(pages: list[PdfPage], name: str) -> dict[str, Any]:
+              for page in pages:
+                  position = page.text.find(name)
+                  if position < 0:
+                      continue
+                  block = _context(page.text, position, 700)
+                  if not any(label in block for label in CONTACT_LABELS):
+                      continue
+                  address = _extract_labeled_value(
+                      block,
+                      ("注册地址", "住所", "主要经营场所", "办公地址"),
+                      180,
+                  )
+                  phone = _safe_landline(block)
+                  email = _safe_email(block)
+                  website = _safe_website(block)
+                  contact = {
+                      key: value
+                      for key, value in {
+                          "officeAddress": address,
+                          "phone": phone,
+                          "email": email,
+                          "website": website,
+                      }.items()
+                      if value
+                  }
+                  if contact:
+                      contact["sourcePage"] = page.number
+                      contact["scope"] = "招股说明书公开的机构级联系方式"
+                      return contact
+              return {}
+          ''',
+              '''def _candidate_contact_block(text: str, name: str, position: int, limit: int = 700) -> str:
+              block = text[position : min(len(text), position + limit)]
+              next_candidate = INSTITUTION_PATTERN.search(block, max(1, len(name)))
+              if next_candidate and next_candidate.start() > len(name):
+                  block = block[: next_candidate.start()]
+              return clean_text(block, limit)
+
+
+          def _safe_labeled_landline(value: str) -> str:
+              match = re.search(
+                  r"(?:联系电话|电话)\\s*[：:]?\\s*((?:\\+?86[-\\s]?)?0\\d{2,3}[-—－\\s]?\\d{7,8})",
+                  value,
+              )
+              return _safe_landline(match.group(1)) if match else ""
+
+
+          def _safe_labeled_email(value: str) -> str:
+              match = re.search(r"(?:电子邮箱|邮箱)\\s*[：:]?\\s*([^\\s，。；;]+)", value)
+              return _safe_email(match.group(1)) if match else ""
+
+
+          def _safe_labeled_website(value: str) -> str:
+              match = re.search(
+                  r"(?:互联网网址|公司网址|网站)\\s*[：:]?\\s*((?:https?://|www\\.)[^\\s，。；;）)]+)",
+                  value,
+                  re.IGNORECASE,
+              )
+              return _safe_website(match.group(1)) if match else ""
+
+
+          def extract_investor_contact(pages: list[PdfPage], name: str) -> dict[str, Any]:
+              for page in pages:
+                  for occurrence in re.finditer(re.escape(name), page.text):
+                      block = _candidate_contact_block(page.text, name, occurrence.start())
+                      if not any(label in block for label in CONTACT_LABELS):
+                          continue
+                      address = _extract_labeled_value(
+                          block,
+                          ("注册地址", "住所", "主要经营场所", "办公地址"),
+                          180,
+                      )
+                      phone = _safe_labeled_landline(block)
+                      email = _safe_labeled_email(block)
+                      website = _safe_labeled_website(block)
+                      contact = {
+                          key: value
+                          for key, value in {
+                              "officeAddress": address,
+                              "phone": phone,
+                              "email": email,
+                              "website": website,
+                          }.items()
+                          if value
+                      }
+                      if contact:
+                          contact["sourcePage"] = page.number
+                          contact["scope"] = "招股说明书中紧邻机构名称的公开联系字段"
+                          return contact
+              return {}
+          ''',
+              "local-contact-binding",
+          )
+
+          replace_once(
+              '''            shares, ownership = extract_holding(context)
+              item = {
+                  "id": "star-investor-" + hashlib.sha256(key.encode("utf-8")).hexdigest()[:18],
+                  "name": name,
+                  "normalizedName": key,
+                  "institutional": True,
+                  "investorType": classify_investor(name, context),
+                  "sourcePage": page.number,
+                  "sourceSection": next(
+                      (term for term in SHAREHOLDER_PAGE_TERMS if term in page.text),
+                      "股东情况",
+                  ),
+                  "evidence": evidence_for_match(page.text, match.start(), match.end(), 220),
+              }
+              if shares is not None:
+                  item["preIpoShares"] = round(shares, 4)
+              if ownership is not None:
+                  item["preIpoOwnershipPct"] = round(ownership, 6)
+              current = candidates.get(key)
+              current_quality = int(current is not None) + int(bool(current and "preIpoOwnershipPct" in current))
+              next_quality = 1 + int("preIpoOwnershipPct" in item)
+              if current is None or next_quality > current_quality:
+                  candidates[key] = item
+          ''',
+              '''            evidence = evidence_for_match(page.text, match.start(), match.end(), 220)
+              shares, ownership, _ = extract_same_line_holding(evidence, name)
+              review_status, review_reasons = derive_review(
+                  name=name,
+                  company_name=company_name,
+                  evidence=evidence,
+                  pre_ipo_shares=shares,
+                  pre_ipo_ownership_pct=ownership,
+              )
+              item = {
+                  "id": "star-investor-" + hashlib.sha256(key.encode("utf-8")).hexdigest()[:18],
+                  "name": name,
+                  "normalizedName": key,
+                  "institutional": True,
+                  "investorType": classify_investor(name, context),
+                  "sourcePage": page.number,
+                  "sourceSection": next(
+                      (term for term in SHAREHOLDER_PAGE_TERMS if term in page.text),
+                      "股东情况",
+                  ),
+                  "evidence": evidence,
+                  "reviewStatus": review_status,
+                  "reviewReasons": review_reasons,
+              }
+              if shares is not None:
+                  item["preIpoShares"] = round(shares, 4)
+              if ownership is not None:
+                  item["preIpoOwnershipPct"] = round(ownership, 6)
+              current = candidates.get(key)
+              current_quality = (
+                  -1
+                  if current is None
+                  else (4 if current.get("reviewStatus") != "rejected" else 0)
+                  + int("preIpoOwnershipPct" in current)
+                  + int("preIpoShares" in current)
+              )
+              next_quality = (
+                  (4 if item["reviewStatus"] != "rejected" else 0)
+                  + int("preIpoOwnershipPct" in item)
+                  + int("preIpoShares" in item)
+              )
+              if current is None or next_quality > current_quality:
+                  candidates[key] = item
+          ''',
+              "same-line-holding-binding",
+          )
+
+          replace_once(
+              '''    result: list[dict[str, Any]] = []
+              for item in candidates.values():
+                  contact = extract_investor_contact(pages, item["name"])
+                  if contact:
+                      item["publicContact"] = contact
+                      item["contactStatus"] = "prospectus-public"
+                  else:
+                      item["contactStatus"] = "not-disclosed-in-prospectus"
+                  result.append(item)
+          ''',
+              '''    result: list[dict[str, Any]] = []
+              for item in candidates.values():
+                  contact = (
+                      {}
+                      if item.get("reviewStatus") == "rejected"
+                      else extract_investor_contact(pages, item["name"])
+                  )
+                  if contact:
+                      item["publicContact"] = contact
+                      item["contactStatus"] = "prospectus-public"
+                  else:
+                      item["contactStatus"] = "not-disclosed-in-prospectus"
+                  result.append(item)
+          ''',
+              "rejected-contact-quarantine",
+          )
+
+          replace_once(
+              '''            if int(investor.get("sourcePage", 0)) <= 0:
+                  errors.append(f"{slug}: investor {name} missing source page")
+              investor_count += 1
+          ''',
+              '''            if int(investor.get("sourcePage", 0)) <= 0:
+                  errors.append(f"{slug}: investor {name} missing source page")
+              explicit_status = str(investor.get("reviewStatus", ""))
+              if explicit_status and explicit_status not in {"verified", "needs_review", "rejected"}:
+                  errors.append(f"{slug}: investor {name} has invalid review status")
+              if "reviewReasons" in investor and not isinstance(investor.get("reviewReasons"), list):
+                  errors.append(f"{slug}: investor {name} reviewReasons must be an array")
+              derived_status, derived_reasons = derive_review(
+                  name=name,
+                  company_name=str(company.get("name", "")),
+                  evidence=str(investor.get("evidence", "")),
+                  pre_ipo_shares=investor.get("preIpoShares"),
+                  pre_ipo_ownership_pct=investor.get("preIpoOwnershipPct"),
+              )
+              if explicit_status in {"verified", "needs_review"} and derived_status == "rejected":
+                  errors.append(
+                      f"{slug}: investor {name} bypasses evidence quality gate: {','.join(derived_reasons)}"
+                  )
+              investor_count += 1
+          ''',
+              "snapshot-review-validation",
+          )
+
+          replace_once(
+              '''        "methodology": {
+                  "prospectusProvider": "CNINFO structured announcements with official PDF URLs",
+                  "pdfExtraction": "pypdf text extraction; OCR and access-control bypass are not used",
+                  "retention": "previous verified company record retained on source failure",
+              },
+          ''',
+              '''        "methodology": {
+                  "prospectusProvider": "CNINFO structured announcements with official PDF URLs",
+                  "pdfExtraction": "pypdf text extraction; OCR and access-control bypass are not used",
+                  "holdingBinding": "shares and ownership are accepted only from the same evidence line after the candidate name",
+                  "contactBinding": "contact fields require explicit labels in a local block anchored at the institution name",
+                  "retention": "previous verified company record retained on source failure",
+              },
+          ''',
+              "methodology-binding-notes",
+          )
+
+          parser_path.write_text(text, encoding="utf-8")
+
+          tests_path = Path("tests/test_star_market_investors.py")
+          tests = tests_path.read_text(encoding="utf-8")
+          anchor = '''    def test_snapshot_validation_rejects_personal_mobile_in_contact_fields(self):
+          '''
+          additions = '''    def test_holding_values_are_bound_to_each_candidate_evidence_line(self):
+              pages = [
+                  star.PdfPage(
+                      50,
+                      """
+                      发行前股本结构
+                      1 北京甲方创业投资有限公司 100万股 1.25%
+                      2 上海乙方股权投资有限公司 200万股 2.50%
+                      """,
+                  )
+              ]
+              investors = star.extract_institutional_investors(pages, "示例科技", max_investors=20)
+              by_name = {item["name"]: item for item in investors}
+              self.assertEqual(by_name["北京甲方创业投资有限公司"]["preIpoOwnershipPct"], 1.25)
+              self.assertEqual(by_name["上海乙方股权投资有限公司"]["preIpoOwnershipPct"], 2.5)
+
+          def test_nearby_narrative_percentage_is_not_attached_across_lines(self):
+              pages = [
+                  star.PdfPage(
+                      51,
+                      """
+                      发行前股本结构
+                      某自然人持有其他企业33.19%的出资额
+                      北京示例创业投资有限公司
+                      """,
+                  )
+              ]
+              investors = star.extract_institutional_investors(pages, "示例科技", max_investors=20)
+              item = next(row for row in investors if row["name"] == "北京示例创业投资有限公司")
+              self.assertNotIn("preIpoOwnershipPct", item)
+              self.assertEqual(item["reviewStatus"], "needs_review")
+
+          def test_ambiguous_same_line_holding_values_are_quarantined(self):
+              pages = [
+                  star.PdfPage(
+                      52,
+                      "发行前股本结构 北京示例投资有限公司 5.00% 10.00%",
+                  )
+              ]
+              investors = star.extract_institutional_investors(pages, "示例科技", max_investors=20)
+              item = next(row for row in investors if row["name"] == "北京示例投资有限公司")
+              self.assertEqual(item["reviewStatus"], "rejected")
+              self.assertIn("ambiguous-holding-row", item["reviewReasons"])
+
+          def test_contact_requires_explicit_labels_after_the_candidate_name(self):
+              pages = [
+                  star.PdfPage(
+                      53,
+                      """
+                      发行前股本结构
+                      发行人联系电话：021-11112222 电子邮箱：issuer@example.com
+                      北京示例投资有限公司 100万股 1.00%
+                      北京示例投资有限公司办公地址：上海市浦东新区示例路8号
+                      联系电话：021-87654321 电子邮箱：fund@example.com
+                      """,
+                  )
+              ]
+              investors = star.extract_institutional_investors(pages, "示例科技", max_investors=20)
+              item = next(row for row in investors if row["name"] == "北京示例投资有限公司")
+              self.assertEqual(item["publicContact"]["phone"], "021-87654321")
+              self.assertEqual(item["publicContact"]["email"], "fund@example.com")
+              self.assertNotEqual(item["publicContact"]["phone"], "021-11112222")
+
+          def test_verified_record_cannot_bypass_same_line_value_validation(self):
+              snapshot = {
+                  "schemaVersion": 1,
+                  "companyCount": 1,
+                  "investorCount": 1,
+                  "companies": {
+                      "sample": {
+                          "name": "示例科技",
+                          "ticker": "688001",
+                          "prospectus": {"url": "https://static.cninfo.com.cn/sample.pdf"},
+                          "investors": [
+                              {
+                                  "name": "北京示例投资有限公司",
+                                  "normalizedName": "北京示例投资有限公司",
+                                  "institutional": True,
+                                  "sourcePage": 1,
+                                  "evidence": "北京示例投资有限公司 100万股 1.00%",
+                                  "preIpoOwnershipPct": 33.19,
+                                  "reviewStatus": "verified",
+                                  "reviewReasons": [],
+                              }
+                          ],
+                      }
+                  },
+              }
+              errors = star.validate_snapshot(snapshot, require_companies=True)
+              self.assertTrue(any("bypasses evidence quality gate" in error for error in errors))
+
+          '''
+          if "test_holding_values_are_bound_to_each_candidate_evidence_line" not in tests:
+              if anchor not in tests:
+                  raise SystemExit("test insertion anchor not found")
+              tests = tests.replace(anchor, additions + anchor, 1)
+              tests_path.write_text(tests, encoding="utf-8")
+          PY
+
+      - name: Verify Python quality gates
+        run: |
+          python -m py_compile tools/star_investor_quality.py tools/crawl_star_market_investors.py
+          python -m unittest tests.test_star_market_investors
+
+      - name: Verify TypeScript quality gates
+        run: |
+          npm ci
+          npm run test:unit
+          npx tsc --noEmit
+
+      - name: Commit verified parser changes and remove this workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/crawl_star_market_investors.py tools/star_investor_quality.py tests/test_star_market_investors.py
+          git rm .github/workflows/apply-star-investor-evidence-binding-once.yml
+          git commit -m "fix: bind STAR investor facts to local prospectus evidence"
+          git pull --rebase origin fix/star-investor-parser-evidence-binding-20260804
+          git push origin HEAD:fix/star-investor-parser-evidence-binding-20260804
