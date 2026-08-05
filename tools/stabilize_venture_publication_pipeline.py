@@ -51,7 +51,7 @@ CROSS_GATE_FINANCING_ACTION_RE = re.compile(
     r"(?:"
     r"\brais(?:e|ed|es|ing)\b(?!\s+(?:full[- ]year\s+)?guidance\b)|"
     r"\bfunding round\b|\bfinancing round\b|\binvestment round\b|"
-    r"\bseries\s+[a-z0-9]+(?:\s+(?:funding|financing|round))?\b|"
+    r"\bseries\s+(?:[a-z]\d*|\d+)(?:\s+(?:funding|financing|round))?\b|"
     r"\bseed round\b|\bpre-seed\b|"
     r"\bfirst close.{0,80}(?:funding|financing)\b|"
     r"\bcomplet(?:e|ed|es|ing).{0,80}(?:funding|financing)\b|"
@@ -319,7 +319,7 @@ def main() -> int:
     stabilized, diagnostics = stabilize_publication_snapshot(
         snapshot,
         articles,
-        args.catalog.read_text(encodeng="utf-8"),
+        args.catalog.read_text(encoding="utf-8"),
         max_passes=args.max_passes,
     )
     rendered = json.dumps(stabilized, ensure_ascii=False, indent=2) + "\n"
