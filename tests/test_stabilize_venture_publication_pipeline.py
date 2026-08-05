@@ -5,6 +5,7 @@ import json
 import unittest
 
 from tools import enforce_venture_entity_semantics as entity_semantics
+from tools import normalize_venture_profiles as base_normalization
 from tools import refine_venture_research_evidence as research_evidence
 from tools.crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, load_snapshot
 from tools.ensure_venture_profile_coverage import ensure_catalog_coverage
@@ -95,18 +96,39 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
         }
 
         self.assertIsNotNone(research_evidence.CAPITAL_MARKET_RE.search(title))
+        self.assertIsNotNone(base_normalization.CAPITAL_MARKET_ACTION_PATTERN.search(title))
         self.assertIsNotNone(entity_semantics.CAPITAL_ACTION_RE.search(title))
 
         financing, capital = research_evidence._route_capital_events({}, [article])
         self.assertEqual(financing, [])
         self.assertEqual(len(capital), 1)
-        retained = entity_semantics._sanitize_events(
+        retained_by_normalization = base_normalization.normalize_capital_events(
+            capital, capital_market=True
+        )
+        self.assertEqual(retained_by_normalization, capital)
+        retained_by_terminal = entity_semantics._sanitize_events(
             capital,
             ("Aurora",),
             "aurora.tech",
             entity_semantics.CAPITAL_ACTION_RE,
         )
-        self.assertEqual(retained, capital)
+        self.assertEqual(retained_by_terminal, capital)
+
+    def test_context_without_transaction_action_is_not_a_capital_event(self) -> None:
+        align_capital_event_patterns()
+        false_positives = (
+            "ByteDance restructures AI business, merging Doubao and Feishu product teams",
+            "IonQ (NYSE: IONQ) will release its Q2 2026 financial results after market close",
+            "Recursion (Nasdaq: RXRX) to participate in upcoming investor conferences",
+            "Aurora (Nasdaq: AUR) is delivering the benefits of self-driving technology",
+        )
+        for text in false_positives:
+            with self.subTest(text=text):
+                self.assertIsNone(research_evidence.CAPITAL_MARKET_RE.search(text))
+                self.assertIsNone(
+                    base_normalization.CAPITAL_MARKET_ACTION_PATTERN.search(text)
+                )
+                self.assertIsNone(entity_semantics.CAPITAL_ACTION_RE.search(text))
 
     def test_production_snapshot_reaches_all_publication_gates_together(self) -> None:
         catalog_text = CATALOG_PATH.read_text(encoding="utf-8")
