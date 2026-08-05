@@ -22,6 +22,15 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         self.assertIn("queue: max", text)
         self.assertNotIn("cancel-in-progress:", text)
 
+    def test_due_check_reads_main_after_the_writer_lock_is_acquired(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        checkout = text.index("- uses: actions/checkout@v4")
+        due_check = text.index("- name: Skip refresh when the current snapshot is still recent")
+        self.assertLess(checkout, due_check)
+        checkout_block = text[checkout:due_check]
+        self.assertIn("ref: main", checkout_block)
+        self.assertIn("fetch-depth: 0", checkout_block)
+
     def test_lightweight_refresh_only_crawls_news_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("python tools/crawl_with_wechat_registry.py --source news", text)
