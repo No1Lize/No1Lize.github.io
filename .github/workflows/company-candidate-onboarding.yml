@@ -165,7 +165,9 @@ jobs:
           npm run lint
           npm run test:unit
           npx tsc --noEmit
+          python tools/enrich_tracking_snapshot.py
           ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          git restore public/data/articles.json
 
       - name: Commit published profiles and onboarding state
         shell: bash
