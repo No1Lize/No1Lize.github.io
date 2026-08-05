@@ -1,7 +1,41 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-05T13:24:59.889Z",
+  "generatedAt": "2026-08-05T13:26:02.487Z",
   "records": [
+    {
+      "id": "capture-1f37yx2",
+      "entityType": "company",
+      "canonicalName": "砺思资本",
+      "rawSelection": "砺思资本",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-1ccjq49"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "风险投资"
+      ],
+      "source": {
+        "articleId": "article-zq7iu7",
+        "title": "月之暗面投资者砺思资本据悉寻求募集5亿美元新基金",
+        "url": "https://finance.sina.com.cn/tech/2026-08-05/doc-inimhawp1434376.shtml",
+        "summary": "",
+        "sourceName": "产业投资新浪财经 · 新浪",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "产业投资"
+      },
+      "capturedAt": "2026-08-05T13:26:02.487Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies",
+        "track-1ccjq49:sampleCompanies"
+      ],
+      "reasons": [],
+      "note": ""
+    },
     {
       "id": "capture-faicf7",
       "entityType": "company",
