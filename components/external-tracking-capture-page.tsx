@@ -129,22 +129,25 @@ export function ExternalTrackingCapturePage() {
   const [copyStatus, setCopyStatus] = useState("");
 
   useEffect(() => {
-    const prefill = parseExternalTrackingCaptureParams(
-      new URLSearchParams(window.location.search),
-    );
-    setSource(prefill.source);
-    setSelectedText(prefill.selectedText);
-    setEntities(
-      prefill.entities.length
-        ? prefill.entities.map((entity) =>
-            makeEntityRow(entity.entityType, entity.name),
-          )
-        : [makeEntityRow("company")],
-    );
-    setSelectedTrackSlugs(
-      recommendExternalTrackingCaptureTracks(prefill, userTrackingConfig),
-    );
-    setReady(true);
+    const timer = window.setTimeout(() => {
+      const prefill = parseExternalTrackingCaptureParams(
+        new URLSearchParams(window.location.search),
+      );
+      setSource(prefill.source);
+      setSelectedText(prefill.selectedText);
+      setEntities(
+        prefill.entities.length
+          ? prefill.entities.map((entity) =>
+              makeEntityRow(entity.entityType, entity.name),
+            )
+          : [makeEntityRow("company")],
+      );
+      setSelectedTrackSlugs(
+        recommendExternalTrackingCaptureTracks(prefill, userTrackingConfig),
+      );
+      setReady(true);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const usableEntities = useMemo(
