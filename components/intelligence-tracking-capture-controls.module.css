@@ -467,3 +467,56 @@
     grid-template-columns: 1fr;
   }
 }
+
+.attentionControl {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.attentionControl > strong {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.attentionControl > div {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.attentionControl button {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  min-height: 48px;
+  padding: 7px 4px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  color: var(--muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.attentionControl button[data-selected="true"] {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 10%, var(--surface));
+  color: var(--green-bright);
+}
+
+.attentionControl button span {
+  display: flex;
+  justify-content: center;
+  gap: 1px;
+}
+
+.attentionControl button small {
+  font-size: 10px;
+}
+
+@media (max-width: 760px) {
+  .attentionControl > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

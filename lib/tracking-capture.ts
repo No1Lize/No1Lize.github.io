@@ -12,6 +12,7 @@ export const TRACKING_CAPTURE_CHANGED_EVENT = "vciq:tracking-capture-changed";
 
 export type TrackingCaptureEntityType = "company" | "person" | "topic";
 export type TrackingCaptureStatus = "queued" | "applied" | "dismissed";
+export type TrackingAttentionLevel = 1 | 2 | 3 | 4 | 5;
 
 export type TrackingCaptureSource = {
   articleId: string;
@@ -37,6 +38,7 @@ export type TrackingCaptureRecord = {
   capturedBy: string;
   status: TrackingCaptureStatus;
   appliedTo: string[];
+  attentionLevel: TrackingAttentionLevel;
   reasons: string[];
   note: string;
 };
@@ -58,6 +60,7 @@ export type ApplyTrackingCaptureInput = {
   entities: TrackingCaptureEntityDraft[];
   selectedTrackSlugs: string[];
   newTrackName?: string;
+  attentionLevel?: TrackingAttentionLevel;
   reasons?: string[];
   note?: string;
   source: TrackingCaptureSource;
@@ -101,6 +104,11 @@ function uniqueStrings(value: unknown, maxItems = 40): string[] {
     if (result.length >= maxItems) break;
   }
   return result;
+}
+
+export function normalizeTrackingAttentionLevel(value: unknown): TrackingAttentionLevel {
+  const level = Math.round(Number(value));
+  return level >= 1 && level <= 5 ? (level as TrackingAttentionLevel) : 3;
 }
 
 export function stableTrackingCaptureHash(value: string): string {
@@ -160,6 +168,7 @@ function normalizeRecord(value: unknown): TrackingCaptureRecord | null {
     capturedBy: cleanText(raw.capturedBy, 120),
     status,
     appliedTo: uniqueStrings(raw.appliedTo, 40),
+    attentionLevel: normalizeTrackingAttentionLevel(raw.attentionLevel),
     reasons: uniqueStrings(raw.reasons, 12),
     note: cleanText(raw.note, 800),
   };
@@ -341,6 +350,7 @@ export function applyTrackingCapture(input: ApplyTrackingCaptureInput): ApplyTra
       capturedBy: cleanText(input.capturedBy, 120),
       status: "applied",
       appliedTo,
+      attentionLevel: normalizeTrackingAttentionLevel(input.attentionLevel),
       reasons: uniqueStrings(input.reasons ?? [], 12),
       note: cleanText(input.note, 800),
     });

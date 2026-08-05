@@ -19,6 +19,7 @@ test("tracked entity research routes are unique and resolvable", () => {
   );
   assert.equal(new Set(routes).size, routes.length);
   for (const entity of trackingResearchEntities) {
+    assert.ok(entity.attentionLevel >= 1 && entity.attentionLevel <= 5);
     assert.equal(
       trackingResearchEntity(entity.entityType, entity.slug)?.id,
       entity.id,

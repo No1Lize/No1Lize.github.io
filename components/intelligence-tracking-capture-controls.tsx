@@ -6,6 +6,7 @@ import {
   ExternalLink,
   LoaderCircle,
   Plus,
+  Star,
   UserRound,
   X,
 } from "lucide-react";
@@ -16,6 +17,7 @@ import {
   TRACKING_ADMIN_TOKEN_SESSION_KEY,
   applyTrackingCapture,
   stableTrackingCaptureHash,
+  type TrackingAttentionLevel,
   type TrackingCaptureEntityDraft,
   type TrackingCaptureEntityType,
   type TrackingCaptureSource,
@@ -70,6 +72,14 @@ const RESEARCH_REASON_OPTIONS = [
   "监管变化",
   "个人研究兴趣",
 ] as const;
+
+const ATTENTION_OPTIONS: Array<{ level: TrackingAttentionLevel; label: string }> = [
+  { level: 1, label: "仅记录" },
+  { level: 2, label: "新闻提醒" },
+  { level: 3, label: "一般跟踪" },
+  { level: 4, label: "重点观察" },
+  { level: 5, label: "核心研究" },
+];
 
 const LATIN_STOPWORDS = new Set([
   "AI",
@@ -306,6 +316,7 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
   const [newTrackName, setNewTrackName] = useState("");
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [researchNote, setResearchNote] = useState("");
+  const [attentionLevel, setAttentionLevel] = useState<TrackingAttentionLevel>(3);
   const [token, setToken] = useState(() =>
     typeof window === "undefined"
       ? ""
@@ -396,6 +407,7 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
           entities: usableEntities.map(({ entityType, name }) => ({ entityType, name })),
           selectedTrackSlugs,
           newTrackName,
+          attentionLevel,
           reasons: selectedReasons,
           note: researchNote,
           source: item,
@@ -557,6 +569,25 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
               <h3>为什么关注</h3>
             </div>
             <span>{selectedReasons.length} 个原因</span>
+          </div>
+          <div className={styles.attentionControl}>
+            <strong>关注等级</strong>
+            <div>
+              {ATTENTION_OPTIONS.map((option) => (
+                <button
+                  type="button"
+                  key={option.level}
+                  data-selected={attentionLevel === option.level}
+                  onClick={() => setAttentionLevel(option.level)}
+                  aria-label={`关注等级 ${option.level}：${option.label}`}
+                >
+                  <span>{Array.from({ length: option.level }, (_, index) => (
+                    <Star key={index} size={11} fill="currentColor" />
+                  ))}</span>
+                  <small>{option.label}</small>
+                </button>
+              ))}
+            </div>
           </div>
           <div className={styles.reasonGrid}>
             {RESEARCH_REASON_OPTIONS.map((reason) => (

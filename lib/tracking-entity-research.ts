@@ -56,6 +56,7 @@ export type TrackingResearchEntity = {
   lastActivityAt: string;
   captureCount: number;
   articleCount: number;
+  attentionLevel: 1 | 2 | 3 | 4 | 5;
   reasons: string[];
   notes: string[];
   timeline: TrackingResearchTimelineItem[];
@@ -104,6 +105,7 @@ type MutableEntity = {
   formalSummary: string;
   candidateStatus: string;
   captures: TrackingCaptureRecord[];
+  attentionLevels: number[];
   reasons: Set<string>;
   notes: Set<string>;
   configured: boolean;
@@ -298,6 +300,7 @@ function buildMutableEntities() {
         formalSummary: descriptor.formalSummary,
         candidateStatus: candidate?.status ?? "",
         captures: [],
+        attentionLevels: [],
         reasons: new Set(),
         notes: new Set(),
         configured: false,
@@ -310,6 +313,7 @@ function buildMutableEntities() {
     entity.configured ||= Boolean(options.configured);
     if (options.capture) {
       entity.captures.push(options.capture);
+      entity.attentionLevels.push(options.capture.attentionLevel);
       options.capture.aliases.forEach((alias) => entity?.aliases.add(alias));
       options.capture.trackSlugs.forEach((slug) => entity?.trackSlugs.add(slug));
       options.capture.trackNames.forEach((trackName) => entity?.trackNames.add(trackName));
@@ -517,6 +521,10 @@ export const trackingResearchEntities: TrackingResearchEntity[] = buildMutableEn
     const firstTrackedAt = captureDates[0] ?? "";
     const lastActivityAt = timeline[0]?.sortAt ?? firstTrackedAt;
     const articleCount = timeline.filter((item) => item.origin === "intelligence").length;
+    const attentionValue = entity.attentionLevels.length
+      ? Math.max(...entity.attentionLevels)
+      : 2;
+    const attentionLevel = Math.max(1, Math.min(5, attentionValue)) as 1 | 2 | 3 | 4 | 5;
     return {
       id: entity.id,
       entityType: entity.entityType,
@@ -534,6 +542,7 @@ export const trackingResearchEntities: TrackingResearchEntity[] = buildMutableEn
       lastActivityAt,
       captureCount: entity.captures.length,
       articleCount,
+      attentionLevel,
       reasons: unique(entity.reasons),
       notes: unique(entity.notes),
       timeline,

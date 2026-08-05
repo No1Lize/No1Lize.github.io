@@ -51,6 +51,7 @@ test("article capture applies companies, people and topics to selected tracks", 
     ],
     selectedTrackSlugs: ["ai-agi"],
     newTrackName: "预测市场",
+    attentionLevel: 5,
     source,
     capturedAt: "2026-08-05T04:00:00Z",
     capturedBy: "VCIQ",
@@ -68,6 +69,7 @@ test("article capture applies companies, people and topics to selected tracks", 
   assert.equal(result.records[0].capturedBy, "VCIQ");
   assert.equal(result.records[0].source.url, source.url);
   assert.equal(result.records[0].status, "applied");
+  assert.equal(result.records[0].attentionLevel, 5);
   assert.deepEqual(result.records[0].reasons, ["商业模式创新", "监管变化"]);
   assert.equal(result.records[0].note, "重点观察牌照、融资和市场竞争。");
 });
@@ -145,6 +147,7 @@ test("legacy inbox records receive empty research intent fields", () => {
       },
     ],
   });
+  assert.equal(inbox.records[0].attentionLevel, 3);
   assert.deepEqual(inbox.records[0].reasons, []);
   assert.equal(inbox.records[0].note, "");
 });

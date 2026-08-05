@@ -34,6 +34,14 @@ const STATUS_LABELS: Record<TrackingCaptureStatus, string> = {
   dismissed: "已忽略",
 };
 
+const ATTENTION_LABELS = {
+  1: "仅记录",
+  2: "新闻提醒",
+  3: "一般跟踪",
+  4: "重点观察",
+  5: "核心研究",
+} as const;
+
 function formatTime(value: string): string {
   if (!value) return "时间未记录";
   const date = new Date(value);
@@ -176,6 +184,10 @@ export function TrackingCaptureInbox() {
               <div>
                 <dt>应用位置</dt>
                 <dd>{record.appliedTo.join("、") || "等待下一次同步"}</dd>
+              </div>
+              <div>
+                <dt>关注等级</dt>
+                <dd>{record.attentionLevel} 星 · {ATTENTION_LABELS[record.attentionLevel]}</dd>
               </div>
               <div>
                 <dt>操作审计</dt>

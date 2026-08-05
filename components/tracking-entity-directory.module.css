@@ -198,3 +198,31 @@
     justify-self: start;
   }
 }
+
+.attention {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.attention span {
+  display: inline-flex;
+  gap: 1px;
+  color: var(--ochre);
+}
+
+.attention[data-level="4"],
+.attention[data-level="5"] {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.attention strong {
+  font-size: 11px;
+}

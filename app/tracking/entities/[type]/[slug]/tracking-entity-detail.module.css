@@ -480,3 +480,274 @@
     grid-template-columns: 1fr;
   }
 }
+
+.brief {
+  margin: 24px 0 0;
+  border: 1px solid var(--line);
+  padding: 22px;
+  background: color-mix(in srgb, var(--green) 3%, var(--paper));
+}
+
+.brief > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brief > header h2,
+.relations h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.attentionBadge,
+.sidebarAttention {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.attentionBadge {
+  border: 1px solid var(--green);
+  padding: 9px 11px;
+  color: var(--green);
+  white-space: nowrap;
+}
+
+.stars {
+  display: inline-flex;
+  gap: 2px;
+  color: var(--ochre);
+}
+
+.briefLead {
+  padding: 18px 0 4px;
+}
+
+.briefLead h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(25px, 3vw, 36px);
+  font-weight: 500;
+}
+
+.briefLead p {
+  max-width: 900px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.signalGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.signalGrid article {
+  display: grid;
+  gap: 8px;
+  min-height: 116px;
+  border: 1px solid var(--line);
+  padding: 13px;
+  background: var(--paper);
+}
+
+.signalGrid span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.signalGrid strong {
+  font-size: 22px;
+}
+
+.signalGrid small {
+  overflow: hidden;
+  color: var(--muted);
+  line-height: 1.45;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.briefColumns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.briefColumns section {
+  border: 1px solid var(--line);
+  padding: 15px;
+  background: var(--paper);
+}
+
+.briefColumns h3 {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.briefColumns ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.briefColumns p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.methodology {
+  margin: 15px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.sidebarAttention {
+  margin: 0 0 13px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.relations {
+  margin-top: 34px;
+}
+
+.relationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.relationGrid > article {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  padding: 15px;
+}
+
+.relationTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.relationTop span,
+.relationTop em {
+  border: 1px solid var(--line);
+  padding: 4px 7px;
+  color: var(--muted);
+  font-size: 10px;
+  font-style: normal;
+}
+
+.relationTop span[data-kind="competition"] {
+  border-color: #a84b42;
+  color: #a84b42;
+}
+
+.relationTop span[data-kind="partnership"],
+.relationTop span[data-kind="leadership"] {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.relationTop em[data-confidence="contextual"] {
+  border-style: dashed;
+}
+
+.relationGrid > article > a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.relationGrid > article > a:hover {
+  color: var(--green);
+}
+
+.relationGrid > article > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.relationEvidence {
+  display: grid;
+  gap: 7px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.relationEvidence a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 8px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.relationEvidence a span {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.relationEvidence a strong {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.contextOnly {
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+
+@media (max-width: 1000px) {
+  .signalGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .brief > header,
+  .relationTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .signalGrid,
+  .briefColumns,
+  .relationGrid {
+    grid-template-columns: 1fr;
+  }
+}
