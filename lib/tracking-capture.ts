@@ -210,8 +210,9 @@ function normalizeEntityDraft(draft: TrackingCaptureEntityDraft): TrackingCaptur
     if (!parsed.valid) throw new Error(`技术／主题无效：${parsed.message}`);
     return { entityType: "topic", name: parsed.normalized };
   }
-  if (rawName.length < 2) throw new Error("公司名称至少需要两个有效字符。");
-  return { entityType: "company", name: rawName.replace(/\s*公司$/u, "").trim() };
+  const companyName = rawName.replace(/\s*公司$/u, "").trim();
+  if (companyName.length < 2) throw new Error("公司名称至少需要两个有效字符。");
+  return { entityType: "company", name: companyName };
 }
 
 function appendUnique(values: string[], value: string): { values: string[]; added: boolean } {
