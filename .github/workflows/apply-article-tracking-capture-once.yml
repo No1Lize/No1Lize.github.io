@@ -36,8 +36,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Link article capture records to company candidates
-        run: python tools/patch_tracking_capture_candidate_link.py
+      - name: Apply article capture integration
+        run: |
+          python tools/patch_tracking_capture_candidate_link.py
+          python tools/patch_tracking_capture_frontend.py
 
       - name: Verify capture model and candidate linkage
         run: |
@@ -58,13 +60,14 @@ jobs:
           ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
           git restore public/data/articles.json
 
-      - name: Commit candidate linkage
+      - name: Commit verified integration
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
+            components/intelligence-tracking-capture-controls.tsx \
             tools/build_company_candidates.py \
             tests/test_company_candidates.py \
             public/data/company_candidates.json
