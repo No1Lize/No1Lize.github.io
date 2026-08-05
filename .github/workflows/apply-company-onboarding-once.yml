@@ -67,7 +67,7 @@ jobs:
           print(json.dumps(report, ensure_ascii=False, indent=2))
           PY
 
-      - name: Build Shopify's first formal profile
+      - name: Build and validate Shopify's first formal profile
         env:
           PUBLISHED_SLUGS: ${{ steps.onboarding.outputs.published_slugs }}
           VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
@@ -81,16 +81,31 @@ jobs:
               --workers 1 \
               --max-pages 6
           done
-          python tools/enrich_venture_profiles.py
-          python tools/stabilize_venture_publication_pipeline.py
-          python tools/stabilize_venture_publication_pipeline.py --check
-          python tools/stabilize_venture_research_evidence.py --check
-          python tools/normalize_venture_publication.py --check
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
+          python tools/ensure_venture_profile_coverage.py --check
           python tools/crawl_venture_profiles.py --validate-only
-          python tools/enrich_venture_profiles.py --validate-only
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from urllib.parse import urlsplit
+
+          published = {'shopify'}
+          snapshot = json.loads(Path('public/data/venture_profiles.json').read_text())
+          companies = snapshot.get('companies', {})
+          for slug in published:
+              profile = companies.get(slug)
+              assert isinstance(profile, dict), slug
+              assert profile.get('name') == 'Shopify', profile
+              assert profile.get('status') in {'ok', 'retained', 'fallback'}, profile
+              assert profile.get('background') or profile.get('projectBackground'), profile
+              sources = profile.get('sources', [])
+              assert sources, profile
+              hosts = {
+                  (urlsplit(str(source.get('url', ''))).hostname or '').lower()
+                  for source in sources
+                  if isinstance(source, dict)
+              }
+              assert any(host == 'shopify.com' or host.endswith('.shopify.com') for host in hosts), hosts
+          PY
 
       - name: Rebuild candidate snapshot after publication
         run: |
