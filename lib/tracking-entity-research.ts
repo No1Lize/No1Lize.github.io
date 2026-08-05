@@ -1,5 +1,6 @@
 import rawArticles from "@/public/data/articles.json";
 import rawInbox from "@/config/tracking_capture_inbox.json";
+import rawEntityRecords from "@/config/tracking_entity_records.json";
 import { people } from "@/lib/catalog-data";
 import { companyCandidateSnapshot } from "@/lib/company-candidate-data";
 import {
@@ -14,11 +15,18 @@ import {
   type TrackingCaptureEntityType,
   type TrackingCaptureRecord,
 } from "@/lib/tracking-capture";
+import {
+  normalizeTrackingEntityRecordManifest,
+  trackingEntityPriorityLabel,
+  trackingEntityPriorityStars,
+  type TrackingEntityAnalystNote,
+  type TrackingEntityResearchRecord,
+} from "@/lib/tracking-entity-records";
 import { slugifyTrack, userTrackingConfig } from "@/lib/user-tracking";
 
 export type TrackingResearchEntityType = TrackingCaptureEntityType;
 export type TrackingResearchEntityState = "formal" | "candidate" | "tracked";
-export type TrackingResearchTimelineOrigin = "manual-capture" | "intelligence";
+export type TrackingResearchTimelineOrigin = "manual-capture" | "intelligence" | "analyst-note";
 
 export type TrackingResearchTimelineItem = {
   id: string;
@@ -58,6 +66,12 @@ export type TrackingResearchEntity = {
   articleCount: number;
   reasons: string[];
   notes: string[];
+  priority: number;
+  priorityLabel: string;
+  priorityStars: string;
+  researchThesis: string;
+  analystNotes: TrackingEntityAnalystNote[];
+  researchRecord?: TrackingEntityResearchRecord;
   timeline: TrackingResearchTimelineItem[];
 };
 
@@ -106,10 +120,12 @@ type MutableEntity = {
   captures: TrackingCaptureRecord[];
   reasons: Set<string>;
   notes: Set<string>;
+  researchRecord?: TrackingEntityResearchRecord;
   configured: boolean;
 };
 
 const captureInbox = normalizeTrackingCaptureInbox(rawInbox);
+const entityRecordManifest = normalizeTrackingEntityRecordManifest(rawEntityRecords);
 const articlesPayload = rawArticles as RawArticlePayload;
 const articles = articlesPayload.articles ?? [];
 
@@ -276,6 +292,7 @@ function buildMutableEntities() {
       trackName?: string;
       configured?: boolean;
       capture?: TrackingCaptureRecord;
+      record?: TrackingEntityResearchRecord;
     } = {},
   ) => {
     const descriptor = entityDescriptor(entityType, name);
@@ -300,6 +317,7 @@ function buildMutableEntities() {
         captures: [],
         reasons: new Set(),
         notes: new Set(),
+        researchRecord: undefined,
         configured: false,
       };
       map.set(descriptor.id, entity);
@@ -315,6 +333,10 @@ function buildMutableEntities() {
       options.capture.trackNames.forEach((trackName) => entity?.trackNames.add(trackName));
       (options.capture.reasons ?? []).forEach((reason) => entity?.reasons.add(reason));
       if (options.capture.note) entity.notes.add(options.capture.note);
+    }
+    if (options.record) {
+      entity.researchRecord = options.record;
+      options.record.reasons.forEach((reason) => entity?.reasons.add(reason));
     }
     return entity;
   };
@@ -344,6 +366,10 @@ function buildMutableEntities() {
   for (const capture of captureInbox.records) {
     if (capture.status === "dismissed") continue;
     ensure(capture.entityType, capture.canonicalName, { capture });
+  }
+
+  for (const record of Object.values(entityRecordManifest.records)) {
+    ensure(record.entityType, record.canonicalName, { record });
   }
 
   return [...map.values()];
@@ -448,6 +474,30 @@ function captureTimelineItem(capture: TrackingCaptureRecord): TrackingResearchTi
   };
 }
 
+function analystNoteTimelineItem(
+  entity: MutableEntity,
+  note: TrackingEntityAnalystNote,
+): TrackingResearchTimelineItem {
+  return {
+    id: note.id,
+    origin: "analyst-note",
+    title: `${entity.name} 研究笔记`,
+    summary: note.body,
+    url: "",
+    sourceName: "VCIQ 研究记录",
+    eventType: "研究笔记",
+    channel: "research",
+    channelLabel: "人工研究",
+    eventDate: dateOnly(note.createdAt),
+    observedAt: note.createdAt,
+    sortAt: note.createdAt,
+    capturedBy: note.createdBy,
+    captureIds: [],
+    reasons: [],
+    note: "",
+  };
+}
+
 function buildTimeline(entity: MutableEntity) {
   const byUrl = new Map<string, TrackingResearchTimelineItem>();
   for (const article of articles) {
@@ -481,6 +531,10 @@ function buildTimeline(entity: MutableEntity) {
     }
   }
 
+  for (const note of entity.researchRecord?.notes ?? []) {
+    byUrl.set(`analyst:${note.id}`, analystNoteTimelineItem(entity, note));
+  }
+
   return [...byUrl.values()]
     .sort((left, right) =>
       right.sortAt.localeCompare(left.sortAt) ||
@@ -502,6 +556,7 @@ function stateFor(entity: MutableEntity): TrackingResearchEntityState {
 }
 
 function entitySummary(entity: MutableEntity) {
+  if (entity.researchRecord?.thesis) return entity.researchRecord.thesis;
   if (entity.formalSummary) return entity.formalSummary;
   const tracks = [...entity.trackNames];
   if (entity.entityType === "topic") {
@@ -513,8 +568,12 @@ function entitySummary(entity: MutableEntity) {
 export const trackingResearchEntities: TrackingResearchEntity[] = buildMutableEntities()
   .map((entity) => {
     const timeline = buildTimeline(entity);
-    const captureDates = entity.captures.map((capture) => capture.capturedAt).filter(Boolean).sort();
-    const firstTrackedAt = captureDates[0] ?? "";
+    const captureDates = entity.captures.map((capture) => capture.capturedAt).filter(Boolean);
+    const recordDates = [
+      entity.researchRecord?.createdAt ?? "",
+      ...(entity.researchRecord?.notes ?? []).map((note) => note.createdAt),
+    ].filter(Boolean);
+    const firstTrackedAt = [...captureDates, ...recordDates].sort()[0] ?? "";
     const lastActivityAt = timeline[0]?.sortAt ?? firstTrackedAt;
     const articleCount = timeline.filter((item) => item.origin === "intelligence").length;
     return {
@@ -536,6 +595,12 @@ export const trackingResearchEntities: TrackingResearchEntity[] = buildMutableEn
       articleCount,
       reasons: unique(entity.reasons),
       notes: unique(entity.notes),
+      priority: entity.researchRecord?.priority ?? 0,
+      priorityLabel: trackingEntityPriorityLabel(entity.researchRecord?.priority ?? 0),
+      priorityStars: trackingEntityPriorityStars(entity.researchRecord?.priority ?? 0),
+      researchThesis: entity.researchRecord?.thesis ?? "",
+      analystNotes: entity.researchRecord?.notes ?? [],
+      researchRecord: entity.researchRecord,
       timeline,
     } satisfies TrackingResearchEntity;
   })
@@ -590,6 +655,8 @@ export const trackingResearchStats = {
   formalCount: trackingResearchEntities.filter((entity) => entity.state === "formal").length,
   candidateCount: trackingResearchEntities.filter((entity) => entity.state === "candidate").length,
   capturedCount: trackingResearchEntities.filter((entity) => entity.captureCount > 0).length,
+  priorityCount: trackingResearchEntities.filter((entity) => entity.priority >= 4).length,
+  noteCount: trackingResearchEntities.reduce((total, entity) => total + entity.analystNotes.length, 0),
 };
 
 export const trackingResearchGeneratedAt = text(articlesPayload.generatedAt, 80);

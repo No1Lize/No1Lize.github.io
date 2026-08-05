@@ -71,7 +71,7 @@ test("research timelines are reverse chronological and deduplicate URLs", () => 
         `${entity.name} timeline is not reverse chronological`,
       );
     }
-    const urls = entity.timeline.map((item) => item.url);
+    const urls = entity.timeline.map((item) => item.url).filter(Boolean);
     assert.equal(
       new Set(urls).size,
       urls.length,
