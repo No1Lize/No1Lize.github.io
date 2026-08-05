@@ -44,11 +44,25 @@ EvidenceStabilizer = Callable[..., tuple[dict[str, Any], dict[str, Any]]]
 Normalizer = Callable[[dict[str, Any], str], tuple[dict[str, Any], dict[str, Any]]]
 TerminalStabilizer = Callable[..., tuple[dict[str, Any], dict[str, Any]]]
 
-# All publication gates must use the same *transaction-action* vocabulary.
+# All publication gates must use the same explicit transaction-action vocabulary.
 # Exchange names, ticker labels, earnings announcements, investor conferences,
 # and internal team reorganizations are context, not capital-market events.
-# Requiring an explicit action prevents the evidence gate from reintroducing
-# rows that normalization or terminal validation correctly removed.
+CROSS_GATE_FINANCING_ACTION_RE = re.compile(
+    r"(?:"
+    r"\brais(?:e|ed|es|ing)\b(?!\s+(?:full[- ]year\s+)?guidance\b)|"
+    r"\bfunding round\b|\bfinancing round\b|\binvestment round\b|"
+    r"\bseries\s+(?:[a-z]\d*|\d+)(?:\s+(?:funding|financing|round))?\b|"
+    r"\bseed round\b|\bpre-seed\b|"
+    r"\bfirst close.{0,80}(?:funding|financing)\b|"
+    r"\bcomplet(?:e|ed|es|ing).{0,80}(?:funding|financing)\b|"
+    r"\bsecured .{0,40} funding\b|\bcloses? .{0,40} round\b|"
+    r"\bbacked by\b|\bled by\b|\binvestment from\b|"
+    r"\binvest(?:ed|s|ing)?\s+(?:in|into)\b|\bvaluation\b|"
+    r"(?:完成|获得|宣布|获).{0,30}(?:融资|投资)|"
+    r"融资|募资|领投|跟投|战略投资|估值"
+    r")",
+    re.IGNORECASE,
+)
 CROSS_GATE_CAPITAL_ACTION_RE = re.compile(
     r"(?:"
     r"\binitial public offering\b|"
@@ -69,7 +83,13 @@ CROSS_GATE_CAPITAL_ACTION_RE = re.compile(
 
 
 def align_capital_event_patterns() -> None:
-    """Install one explicit-action pattern across all mutable publication gates."""
+    """Install one explicit-action pattern across every mutable publication gate."""
+
+    research_evidence.FINANCING_RE = CROSS_GATE_FINANCING_ACTION_RE
+    base_normalization.FINANCING_ACTION_PATTERN = CROSS_GATE_FINANCING_ACTION_RE
+    low_level_sanitization.FINANCING_ACTION_RE = CROSS_GATE_FINANCING_ACTION_RE
+    structural_finalization.STRONG_FINANCING_RE = CROSS_GATE_FINANCING_ACTION_RE
+    entity_semantics.FINANCING_ACTION_RE = CROSS_GATE_FINANCING_ACTION_RE
 
     research_evidence.CAPITAL_MARKET_RE = CROSS_GATE_CAPITAL_ACTION_RE
     base_normalization.CAPITAL_MARKET_ACTION_PATTERN = CROSS_GATE_CAPITAL_ACTION_RE
@@ -166,13 +186,13 @@ def stabilize_publication_snapshot(
     normalizer: Normalizer = normalize_publication_payload,
     terminal_stabilizer: TerminalStabilizer = stabilize_terminal_snapshot,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
-    """Return a snapshot unchanged by every deterministic publication gate.
+    """Return the conservative shared fixed point of all publication gates.
 
-    Evidence alignment, publication-aware normalization, and terminal structural /
-    entity-semantic cleanup are deterministic in isolation. One layer can still
-    expose fields that another layer subsequently rewrites, so the full sequence
-    is repeated until every layer individually leaves the same candidate
-    unchanged. A repeated non-stable state is treated as a real cross-gate cycle.
+    Evidence alignment can propose a raw representation that downstream
+    normalization rewrites without rejecting the underlying fact. Therefore an
+    evidence proposal is considered stable after it passes through the same
+    normalization and terminal gates used for publication. A repeated state is
+    still rejected when the complete ordered pipeline itself is not idempotent.
     """
     if max_passes < 1:
         raise ValueError("max_passes must be positive")
@@ -204,6 +224,14 @@ def stabilize_publication_snapshot(
             catalog_text,
             max_passes=max_passes,
         )
+        evidence_check_normalized, evidence_check_normalization_diagnostics = normalizer(
+            copy.deepcopy(evidence_check), catalog_text
+        )
+        evidence_check_terminal, evidence_check_terminal_diagnostics = terminal_stabilizer(
+            evidence_check_normalized,
+            catalog_text,
+            max_passes=max_passes,
+        )
         normalized_check, normalization_check_diagnostics = normalizer(
             copy.deepcopy(candidate), catalog_text
         )
@@ -213,12 +241,14 @@ def stabilize_publication_snapshot(
             max_passes=max_passes,
         )
 
-        evidence_stable = evidence_check == candidate
+        raw_evidence_stable = evidence_check == candidate
+        evidence_stable = evidence_check_terminal == candidate
         normalization_stable = normalized_check == candidate
         terminal_stable = terminal_check == candidate
         changed = candidate != current
         gate_diffs = {
-            "evidence": _diff_paths(candidate, evidence_check),
+            "evidence": _diff_paths(candidate, evidence_check_terminal),
+            "evidenceRaw": _diff_paths(candidate, evidence_check),
             "normalization": _diff_paths(candidate, normalized_check),
             "terminal": _diff_paths(candidate, terminal_check),
         }
@@ -226,6 +256,7 @@ def stabilize_publication_snapshot(
             {
                 "pass": pass_index,
                 "changed": changed,
+                "rawEvidenceStable": raw_evidence_stable,
                 "evidenceStable": evidence_stable,
                 "normalizationStable": normalization_stable,
                 "terminalStable": terminal_stable,
@@ -233,6 +264,8 @@ def stabilize_publication_snapshot(
                 "normalization": normalization_diagnostics,
                 "terminal": terminal_diagnostics,
                 "evidenceCheck": evidence_check_diagnostics,
+                "evidenceCheckNormalization": evidence_check_normalization_diagnostics,
+                "evidenceCheckTerminal": evidence_check_terminal_diagnostics,
                 "normalizationCheck": normalization_check_diagnostics,
                 "terminalCheck": terminal_check_diagnostics,
                 "gateDiffs": gate_diffs,
@@ -252,6 +285,7 @@ def stabilize_publication_snapshot(
             cycle = {
                 "repeatedFromPass": seen[state_key],
                 "repeatedAtPass": pass_index,
+                "rawEvidenceStable": raw_evidence_stable,
                 "evidenceStable": evidence_stable,
                 "normalizationStable": normalization_stable,
                 "terminalStable": terminal_stable,
