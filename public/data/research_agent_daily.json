@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "",
-  "asOfDate": "",
-  "runStatus": "awaiting-first-run",
-  "baselineSource": "not-initialized",
+  "generatedAt": "2026-08-05T13:44:34+00:00",
+  "asOfDate": "2026-08-05",
+  "runStatus": "no-material-change",
+  "baselineSource": "git:HEAD^",
   "model": {
     "provider": "SiliconFlow",
     "name": "deepseek-ai/DeepSeek-V4-Flash",
@@ -19,12 +19,12 @@
     "highestImportance": 0
   },
   "analysis": {
-    "executiveSummary": "Research Agent v1 已完成接入，首次自动任务运行后将在此生成实体变化检测与投资研究摘要。",
+    "executiveSummary": "本期未检测到进入研究阈值的结构化实体变化。",
     "keyDevelopments": [],
     "thesisUpdates": [],
     "watchlist": [],
     "risks": [],
-    "methodologyNote": "等待首次生成。"
+    "methodologyNote": "规则引擎输出；本期无材料变化。未使用生成式判断。"
   },
   "changes": [],
   "evidence": [],
@@ -40,5 +40,13 @@
     "fallbackReason": "",
     "disclaimer": "信息仅供研究，不构成投资建议；关键事实应回溯原始信源。"
   },
-  "history": []
+  "history": [
+    {
+      "date": "2026-08-05",
+      "generatedAt": "2026-08-05T13:44:34+00:00",
+      "runStatus": "no-material-change",
+      "changeCount": 0,
+      "executiveSummary": "本期未检测到进入研究阈值的结构化实体变化。"
+    }
+  ]
 }
