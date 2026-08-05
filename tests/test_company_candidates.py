@@ -221,5 +221,41 @@ class CompanyCandidateTests(unittest.TestCase):
             self.assertEqual(current["generatedAt"], first["generatedAt"])
 
 
+    def test_manual_article_capture_enters_company_candidate_pool(self):
+        snapshot = build_candidate_snapshot(
+            {
+                "generatedAt": "2026-08-05T04:00:00Z",
+                "articles": [],
+            },
+            REGISTRY,
+            {"decisions": {}},
+            {
+                "records": [
+                    {
+                        "id": "capture-polymarket",
+                        "entityType": "company",
+                        "canonicalName": "Polymarket",
+                        "status": "applied",
+                        "capturedAt": "2026-08-05T03:30:00Z",
+                        "trackNames": ["预测市场"],
+                        "source": {
+                            "url": "https://finance.example/polymarket",
+                            "sourceName": "财经媒体",
+                            "eventType": "融资",
+                        },
+                    }
+                ]
+            },
+        )
+        self.assertEqual(snapshot["candidateCount"], 1)
+        candidate = snapshot["candidates"][0]
+        self.assertEqual(candidate["name"], "Polymarket")
+        self.assertEqual(candidate["captureCount"], 1)
+        self.assertEqual(candidate["captureIds"], ["capture-polymarket"])
+        self.assertGreaterEqual(candidate["score"], 35)
+        self.assertIn("1 条管理员文章采集", candidate["reasons"])
+        self.assertEqual(candidate["sector"], "预测市场")
+        self.assertEqual(candidate["sourceUrls"], ["https://finance.example/polymarket"])
+
 if __name__ == "__main__":
     unittest.main()

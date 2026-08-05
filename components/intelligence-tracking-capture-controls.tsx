@@ -61,12 +61,6 @@ const CHANNEL_LABELS: Record<string, string> = {
   people: "人物研究",
 };
 
-const ENTITY_LABELS: Record<TrackingCaptureEntityType, string> = {
-  company: "公司",
-  person: "人物",
-  topic: "技术／主题",
-};
-
 const LATIN_STOPWORDS = new Set([
   "AI",
   "IPO",
@@ -308,14 +302,6 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("选择对象类型和目标赛道后，即可一次写入追踪配置与文章采集箱。");
   const [statusKind, setStatusKind] = useState<StatusKind>("neutral");
-
-  useEffect(() => {
-    setEntities(defaultEntityRows(item));
-    setSelectedTrackSlugs(defaultTrackSlugs(item, userTrackingConfig));
-    setNewTrackName("");
-    setStatus("选择对象类型和目标赛道后，即可一次写入追踪配置与文章采集箱。");
-    setStatusKind("neutral");
-  }, [item]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
