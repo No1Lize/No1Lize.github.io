@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Database, History, Network } from "lucide-react";
+import { ArrowLeft, Database, History, Network, Star } from "lucide-react";
 import {
   TrackingEntityDirectory,
   type TrackingEntityDirectoryItem,
@@ -32,8 +32,11 @@ const directoryItems: TrackingEntityDirectoryItem[] = trackingResearchEntities.m
   lastActivityAt: entity.lastActivityAt,
   captureCount: entity.captureCount,
   articleCount: entity.articleCount,
+  attentionLevel: entity.attentionLevel,
   reasons: entity.reasons,
 }));
+
+const priorityCount = trackingResearchEntities.filter((entity) => entity.attentionLevel >= 4).length;
 
 export default function TrackingEntitiesPage() {
   return (
@@ -46,12 +49,13 @@ export default function TrackingEntitiesPage() {
           <p className="eyebrow">TRACKED ENTITY RESEARCH</p>
           <h1>追踪对象研究库</h1>
           <p>
-            将赛道配置、人工文章采集、公司候选和公开情报整合到同一研究入口。每个对象保留为什么开始关注、首次来源和后续公开活动，不把普通关键词误当成正式公司档案。
+            将赛道配置、人工文章采集、公司候选和公开情报整合到同一研究入口。每个对象保留为什么开始关注、关注等级、首次来源和后续公开活动，不把普通关键词误当成正式公司档案。
           </p>
           <div className={styles.chips}>
             <span><Database size={14} />数据快照 {trackingResearchGeneratedAt.slice(0, 10) || "当前构建"}</span>
             <span><History size={14} />人工发现与公开事件统一排序</span>
-            <span><Network size={14} />按共同赛道关联研究对象</span>
+            <span><Network size={14} />关系必须区分原文证据和共同赛道</span>
+            <span><Star size={14} />重点观察 {priorityCount} 个</span>
           </div>
         </div>
         <dl className={styles.metrics}>
@@ -60,7 +64,7 @@ export default function TrackingEntitiesPage() {
           <div><dt>人物</dt><dd>{trackingResearchStats.personCount}</dd></div>
           <div><dt>技术／主题</dt><dd>{trackingResearchStats.topicCount}</dd></div>
           <div><dt>正式档案</dt><dd>{trackingResearchStats.formalCount}</dd></div>
-          <div><dt>人工采集</dt><dd>{trackingResearchStats.capturedCount}</dd></div>
+          <div><dt>重点观察</dt><dd>{priorityCount}</dd></div>
         </dl>
       </header>
 
@@ -70,7 +74,7 @@ export default function TrackingEntitiesPage() {
             <p className="section-index">RESEARCH DIRECTORY</p>
             <h2>公司、人物和技术主题</h2>
           </div>
-          <p>点击任一对象查看研究原因、原始发现文章、后续公开动态和相关对象。</p>
+          <p>点击任一对象查看自动研究摘要、关注等级、原始发现文章、后续公开动态和证据关系。</p>
         </div>
         <TrackingEntityDirectory items={directoryItems} />
       </section>
