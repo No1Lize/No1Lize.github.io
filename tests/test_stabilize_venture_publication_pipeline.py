@@ -8,6 +8,7 @@ from tools import enforce_venture_entity_semantics as entity_semantics
 from tools import finalize_venture_profiles as structural_finalization
 from tools import normalize_venture_profiles as base_normalization
 from tools import refine_venture_research_evidence as research_evidence
+from tools import sanitize_venture_profiles as low_level_sanitization
 from tools.crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, load_snapshot
 from tools.ensure_venture_profile_coverage import ensure_catalog_coverage
 from tools.enrich_venture_profiles import ARTICLE_PATH, enrich_snapshot
@@ -76,6 +77,36 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
                 terminal_stabilizer=identity_terminal,
             )
 
+    def test_evidence_representation_is_checked_after_downstream_canonicalization(self) -> None:
+        def evidence(snapshot, _articles, _catalog, *, max_passes=8):
+            result = copy.deepcopy(snapshot)
+            result["description"] = "raw evidence sentence"
+            return result, {"maxPasses": max_passes}
+
+        def normalize(snapshot, _catalog):
+            result = copy.deepcopy(snapshot)
+            result["description"] = "canonical sentence."
+            return result, {"normalized": 1}
+
+        def terminal(snapshot, _catalog, *, max_passes=8):
+            return copy.deepcopy(snapshot), {"maxPasses": max_passes}
+
+        stabilized, diagnostics = stabilize_publication_snapshot(
+            {"description": "canonical sentence."},
+            {},
+            "",
+            evidence_stabilizer=evidence,
+            normalizer=normalize,
+            terminal_stabilizer=terminal,
+        )
+
+        self.assertEqual(stabilized, {"description": "canonical sentence."})
+        self.assertTrue(diagnostics["converged"])
+        self.assertFalse(diagnostics["history"][-1]["rawEvidenceStable"])
+        self.assertTrue(diagnostics["history"][-1]["evidenceStable"])
+        self.assertTrue(diagnostics["history"][-1]["gateDiffs"]["evidenceRaw"])
+        self.assertEqual(diagnostics["history"][-1]["gateDiffs"]["evidence"], [])
+
     def test_public_company_merger_uses_one_cross_gate_classification(self) -> None:
         align_capital_event_patterns()
         title = (
@@ -117,6 +148,61 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
             entity_semantics.CAPITAL_ACTION_RE,
         )
         self.assertEqual(retained_by_terminal, capital)
+
+    def test_present_tense_funding_action_uses_one_cross_gate_classification(self) -> None:
+        align_capital_event_patterns()
+        title = "Groq Raises $650M to Scale Its AI Inference Cloud Business"
+        article = {
+            "publishedAt": "2026-06-22",
+            "title": title,
+            "summary": "Groq raises $650M to expand its AI inference cloud platform.",
+            "company": "Groq",
+            "companySlug": "groq",
+            "source": {
+                "url": (
+                    "https://groq.com/newsroom/"
+                    "groq-raises-usd650m-to-scale-its-ai-inference-cloud-business"
+                )
+            },
+        }
+
+        self.assertIsNotNone(research_evidence.FINANCING_RE.search(title))
+        self.assertIsNotNone(base_normalization.FINANCING_ACTION_PATTERN.search(title))
+        self.assertIsNotNone(low_level_sanitization.FINANCING_ACTION_RE.search(title))
+        self.assertIsNotNone(structural_finalization.STRONG_FINANCING_RE.search(title))
+        self.assertIsNotNone(entity_semantics.FINANCING_ACTION_RE.search(title))
+
+        financing, capital = research_evidence._route_capital_events({}, [article])
+        self.assertEqual(len(financing), 1)
+        self.assertEqual(capital, [])
+        self.assertEqual(
+            len(
+                base_normalization.normalize_capital_events(
+                    financing, capital_market=False
+                )
+            ),
+            1,
+        )
+        self.assertEqual(
+            len(
+                low_level_sanitization.sanitize_capital_events(
+                    financing, capital_market=False
+                )
+            ),
+            1,
+        )
+        self.assertEqual(len(structural_finalization.finalize_financing(financing)), 1)
+        self.assertEqual(
+            len(
+                entity_semantics._sanitize_events(
+                    financing,
+                    ("Groq",),
+                    "groq.com",
+                    entity_semantics.FINANCING_ACTION_RE,
+                )
+            ),
+            1,
+        )
 
     def test_context_without_transaction_action_is_not_a_capital_event(self) -> None:
         align_capital_event_patterns()
