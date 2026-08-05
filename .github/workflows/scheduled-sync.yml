@@ -96,7 +96,8 @@ permissions:
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
-  queue: max
+  # Preserve the active writer but let the newest full refresh replace stale pending runs.
+  queue: single
 
 jobs:
   crawl:
