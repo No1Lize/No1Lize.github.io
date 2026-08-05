@@ -140,6 +140,37 @@ test("automatic brief uses the persisted analyst priority and thesis", () => {
   assert.match(brief.methodology, /可追溯/u);
 });
 
+test("analyst notes are excluded from evidence signals and latest evidence", () => {
+  const item = entity({
+    timeline: [
+      timeline({
+        id: "note-new",
+        origin: "analyst-note",
+        title: "Sample 研究笔记",
+        summary: "内部假设认为公司可能面临监管风险。",
+        url: "",
+        sourceName: "VCIQ 研究记录",
+        eventType: "研究笔记",
+        sortAt: "2026-08-07T12:00:00Z",
+      }),
+      timeline({
+        id: "funding-old",
+        title: "Sample 完成融资",
+        summary: "公司公布新一轮融资。",
+        eventType: "融资",
+        sortAt: "2026-08-06T23:59:59Z",
+      }),
+    ],
+  });
+  const signals = trackingResearchSignals(item);
+  const brief = trackingResearchBrief(item);
+  assert.equal(signals.length, 1);
+  assert.equal(signals[0].category, "financing");
+  assert.doesNotMatch(brief.summary, /研究笔记/u);
+  assert.match(brief.summary, /Sample 完成融资/u);
+  assert.match(brief.methodology, /人工笔记不参与事实信号/u);
+});
+
 test("shared original evidence creates a competition relation", () => {
   const sourceUrl = "https://finance.example/prediction-market";
   const polymarket = entity({
