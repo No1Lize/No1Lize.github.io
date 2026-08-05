@@ -27,6 +27,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 DECISIONS_PATH = ROOT / "config" / "company_candidate_decisions.json"
+CAPTURE_INBOX_PATH = ROOT / "config" / "tracking_capture_inbox.json"
 OUTPUT_PATH = ROOT / "public" / "data" / "company_candidates.json"
 MINIMUM_SCORE = 35
 GENERIC_NAMES = {
@@ -169,6 +170,11 @@ def _score_candidate(row: dict[str, Any], reference: datetime) -> tuple[int, lis
     event_types = set(row["eventTypes"])
     score = min(20, article_count * 5)
     reasons: list[str] = []
+    manual_capture_count = len(row.get("manualCaptureIds", []))
+
+    if manual_capture_count:
+        score += 35
+        reasons.append(f"{manual_capture_count} 条管理员文章采集")
 
     if article_count >= 2:
         reasons.append(f"{article_count} 条结构化公司记录")
@@ -206,6 +212,7 @@ def build_candidate_snapshot(
     articles_payload: dict[str, Any],
     registry: CompanyRegistry,
     decisions_payload: dict[str, Any] | None = None,
+    captures_payload: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     known = known_aliases(registry)
     decisions = decision_map(decisions_payload or {})
@@ -243,6 +250,7 @@ def build_candidate_snapshot(
                     "regions": Counter(),
                     "publishedTimes": [],
                     "primaryEvidence": False,
+                    "manualCaptureIds": set(),
                 },
             )
             row["names"][name] += 1
@@ -263,6 +271,58 @@ def build_candidate_snapshot(
                 row["publishedTimes"].append(parsed_time)
             if source_level in PRIMARY_SOURCE_LEVELS:
                 row["primaryEvidence"] = True
+
+    for capture in (captures_payload or {}).get("records", []):
+        if not isinstance(capture, dict):
+            continue
+        if clean(capture.get("status"), 20) not in {"queued", "applied"}:
+            continue
+        if clean(capture.get("entityType"), 20) != "company":
+            continue
+        name = safe_candidate_name(capture.get("canonicalName"))
+        key = normalize_identity(name)
+        if not name or not key or (key in known and key not in decisions):
+            continue
+
+        source = capture.get("source") if isinstance(capture.get("source"), dict) else {}
+        source_url = clean(source.get("url"), 1200)
+        source_host = normalized_host(source_url) or clean(source.get("sourceName"), 200)
+        capture_id = clean(capture.get("id"), 200) or candidate_id(f"capture-{key}")
+        captured_at = clean(capture.get("capturedAt"), 60)
+        event_type = clean(source.get("eventType"), 80) or "人工关注"
+        track_names = capture.get("trackNames") if isinstance(capture.get("trackNames"), list) else []
+
+        row = groups.setdefault(
+            key,
+            {
+                "names": Counter(),
+                "articleIds": set(),
+                "sourceHosts": set(),
+                "sourceUrls": [],
+                "eventTypes": set(),
+                "sectors": Counter(),
+                "regions": Counter(),
+                "publishedTimes": [],
+                "primaryEvidence": False,
+                "manualCaptureIds": set(),
+            },
+        )
+        row["names"][name] += 1
+        row["articleIds"].add(capture_id)
+        row["manualCaptureIds"].add(capture_id)
+        if source_host:
+            row["sourceHosts"].add(source_host)
+        if source_url:
+            row["sourceUrls"].append(source_url)
+        if event_type:
+            row["eventTypes"].add(event_type)
+        for track_name in track_names:
+            sector = clean(track_name, 100)
+            if sector:
+                row["sectors"][sector] += 1
+        parsed_time = parse_time(captured_at)
+        if parsed_time:
+            row["publishedTimes"].append(parsed_time)
 
     candidates: list[dict[str, Any]] = []
     for key, raw in groups.items():
@@ -302,6 +362,8 @@ def build_candidate_snapshot(
                 "firstSeenAt": first_seen,
                 "lastSeenAt": last_seen,
                 "articleCount": len(raw["articleIds"]),
+                "captureCount": len(raw["manualCaptureIds"]),
+                "captureIds": sorted(raw["manualCaptureIds"])[:20],
                 "sourceCount": len(raw["sourceHosts"]),
                 "sourceHosts": sorted(raw["sourceHosts"])[:10],
                 "sourceArticleIds": sorted(raw["articleIds"])[:20],
@@ -358,12 +420,14 @@ def main() -> int:
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--articles", type=Path, default=ARTICLES_PATH)
     parser.add_argument("--decisions", type=Path, default=DECISIONS_PATH)
+    parser.add_argument("--captures", type=Path, default=CAPTURE_INBOX_PATH)
     parser.add_argument("--output", type=Path, default=OUTPUT_PATH)
     args = parser.parse_args()
 
     articles = load_json(args.articles, {"articles": []})
     decisions = load_json(args.decisions, {"decisions": {}})
-    snapshot = build_candidate_snapshot(articles, load_registry(), decisions)
+    captures = load_json(args.captures, {"records": []})
+    snapshot = build_candidate_snapshot(articles, load_registry(), decisions, captures)
     if args.check:
         current = load_json(args.output, {})
         if semantic_payload(current) != semantic_payload(snapshot):

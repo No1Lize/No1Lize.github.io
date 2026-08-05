@@ -12,6 +12,7 @@ on:
       - tools/resolve_company_entities.py
       - config/company_candidate_decisions.json
       - config/official_company_sources.json
+      - config/tracking_capture_inbox.json
       - tests/test_company_candidates.py
       - .github/workflows/company-candidate-discovery.yml
 
