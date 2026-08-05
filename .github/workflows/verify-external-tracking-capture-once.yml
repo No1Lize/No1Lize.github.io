@@ -1,4 +1,4 @@
-# Retry after aligning Unicode normalization and bookmarklet security assertions.
+# Retry after aligning tests and deferring query-prefill initialization.
 name: Verify external article capture once
 
 on:
@@ -42,6 +42,7 @@ jobs:
         run: |
           set -euo pipefail
           python tools/patch_external_capture_link.py
+          python tools/patch_external_capture_effect.py
           node --check browser-extension/vciq-tracking-capture/background.js
           python - <<'PY'
           import json
@@ -96,10 +97,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
+            components/external-tracking-capture-page.tsx \
             components/tracking-capture-inbox.tsx \
             public/downloads/vciq-tracking-capture-extension.zip
           git rm -f \
             tools/patch_external_capture_link.py \
+            tools/patch_external_capture_effect.py \
             .github/workflows/verify-external-tracking-capture-once.yml
           git commit -m "feat: expose external article capture tools"
           git pull --rebase origin feat/external-article-capture-20260805
