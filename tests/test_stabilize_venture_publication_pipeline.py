@@ -5,6 +5,7 @@ import json
 import unittest
 
 from tools import enforce_venture_entity_semantics as entity_semantics
+from tools import finalize_venture_profiles as structural_finalization
 from tools import normalize_venture_profiles as base_normalization
 from tools import refine_venture_research_evidence as research_evidence
 from tools.crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, load_snapshot
@@ -97,6 +98,7 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
 
         self.assertIsNotNone(research_evidence.CAPITAL_MARKET_RE.search(title))
         self.assertIsNotNone(base_normalization.CAPITAL_MARKET_ACTION_PATTERN.search(title))
+        self.assertIsNotNone(structural_finalization.CAPITAL_EVIDENCE_RE.search(title))
         self.assertIsNotNone(entity_semantics.CAPITAL_ACTION_RE.search(title))
 
         financing, capital = research_evidence._route_capital_events({}, [article])
@@ -106,6 +108,8 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
             capital, capital_market=True
         )
         self.assertEqual(retained_by_normalization, capital)
+        retained_by_structure = structural_finalization.finalize_capital_markets(capital)
+        self.assertEqual(retained_by_structure, capital)
         retained_by_terminal = entity_semantics._sanitize_events(
             capital,
             ("Aurora",),
@@ -128,6 +132,7 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
                 self.assertIsNone(
                     base_normalization.CAPITAL_MARKET_ACTION_PATTERN.search(text)
                 )
+                self.assertIsNone(structural_finalization.CAPITAL_EVIDENCE_RE.search(text))
                 self.assertIsNone(entity_semantics.CAPITAL_ACTION_RE.search(text))
 
     def test_production_snapshot_reaches_all_publication_gates_together(self) -> None:
