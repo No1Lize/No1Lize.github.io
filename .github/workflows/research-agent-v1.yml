@@ -6,6 +6,7 @@ on:
     paths:
       - tools/research_agent.py
       - tests/test_research_agent.py
+      - tests/test_research_agent_workflow.py
       - app/research-agent/**
       - lib/research-agent-data.ts
       - .github/workflows/research-agent-v1.yml
@@ -19,7 +20,8 @@ permissions:
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
-  queue: max
+  # Preserve the active writer while replacing stale pending research runs.
+  queue: single
 
 jobs:
   research-agent:
@@ -38,7 +40,7 @@ jobs:
       - name: Validate Research Agent implementation
         run: |
           python -m py_compile tools/research_agent.py
-          python -m unittest tests.test_research_agent
+          python -m unittest tests.test_research_agent tests.test_research_agent_workflow
 
       - name: Generate evidence-linked daily research
         env:
