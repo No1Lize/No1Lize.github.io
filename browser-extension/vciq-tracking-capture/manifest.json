@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "VCIQ 研究采集",
+  "version": "0.1.0",
+  "description": "将当前公开网页或选中文字发送到 VCIQ 追踪采集页。",
+  "permissions": [
+    "activeTab",
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "采集当前网页到 VCIQ"
+  }
+}

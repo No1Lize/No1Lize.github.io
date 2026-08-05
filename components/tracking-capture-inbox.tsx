@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, ExternalLink, Inbox, RefreshCw } from "lucide-react";
+import { BookOpen, ExternalLink, Globe2, Inbox, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import rawInbox from "@/config/tracking_capture_inbox.json";
@@ -119,6 +119,9 @@ export function TrackingCaptureInbox() {
           </p>
         </div>
         <div className={styles.headerActions}>
+          <Link href="/tracking/capture" className={styles.libraryLink}>
+            <Globe2 size={15} />外部网页采集
+          </Link>
           <Link href="/tracking/entities" className={styles.libraryLink}>
             <BookOpen size={15} />追踪对象研究库
           </Link>
