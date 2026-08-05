@@ -126,3 +126,19 @@ test("capture requires a target track and rejects generic topic keywords", () =>
     /目标赛道/,
   );
 });
+
+test("company suffix normalization cannot create an empty entity", () => {
+  assert.throws(
+    () =>
+      applyTrackingCapture({
+        config: config(),
+        inbox: normalizeTrackingCaptureInbox({}),
+        entities: [{ entityType: "company", name: "公司" }],
+        selectedTrackSlugs: ["ai-agi"],
+        source,
+        capturedAt: "2026-08-05T04:00:00Z",
+        capturedBy: "VCIQ",
+      }),
+    /公司名称至少需要两个有效字符/,
+  );
+});
