@@ -1,4 +1,4 @@
-# Retry after aligning the registry migration test with the production type layout.
+# Retry after aligning registry, candidate history and client lint checks.
 name: Apply automatic company onboarding once
 
 on:
@@ -41,6 +41,7 @@ jobs:
         run: |
           python tools/install_company_onboarding.py
           python tools/patch_candidate_history_retention.py
+          python tools/patch_company_onboarding_lint.py
           python tools/company_registry.py --migrate-catalog
           python tools/company_registry.py --check
 
@@ -168,6 +169,7 @@ jobs:
             tools/build_company_candidates.py \
             components/tracking-company-candidate-review.tsx \
             components/tracking-company-candidate-review.module.css \
+            components/tracking-company-onboarding.tsx \
             components/company-candidate-directory.tsx \
             config/company_registry.json \
             config/company_candidate_decisions.json \
@@ -177,7 +179,8 @@ jobs:
             public/data/venture_profiles.json
           git rm -f \
             tools/install_company_onboarding.py \
-            tools/patch_candidate_history_retention.py
+            tools/patch_candidate_history_retention.py \
+            tools/patch_company_onboarding_lint.py
           git commit -m "feat: publish reviewed companies through automatic onboarding"
           git pull --rebase origin feat/automatic-company-onboarding-20260805
           git push origin HEAD:feat/automatic-company-onboarding-20260805
