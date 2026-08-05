@@ -1,4 +1,4 @@
-# Retry after aligning tests and deferring query-prefill initialization.
+# Retry after validating client-rendered capture controls from source and the static route from output.
 name: Verify external article capture once
 
 on:
@@ -79,16 +79,16 @@ jobs:
           ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
           git restore public/data/articles.json
 
-      - name: Inspect generated capture page and extension download
+      - name: Inspect generated capture route and client controls
         shell: bash
         run: |
           set -euo pipefail
           test -f out/tracking/capture/index.html
           test -f out/downloads/vciq-tracking-capture-extension.zip
           grep -q "外部文章采集" out/tracking/capture/index.html
-          grep -q "Chrome / Edge 扩展" out/tracking/capture/index.html
-          grep -q "外部网页采集" out/tracking/index.html
-          echo "External article capture route and extension package verified."
+          grep -q "Chrome / Edge 扩展" components/external-tracking-capture-page.tsx
+          grep -q "外部网页采集" components/tracking-capture-inbox.tsx
+          echo "External article capture route, client controls and extension package verified."
 
       - name: Commit packaged extension and remove temporary verification files
         shell: bash
