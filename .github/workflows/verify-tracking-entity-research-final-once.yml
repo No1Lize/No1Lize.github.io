@@ -1,0 +1,76 @@
+name: Verify tracked entity research final once
+
+on:
+  push:
+    branches: [feat/tracking-entity-research-timeline-20260805]
+    paths:
+      - .github/workflows/verify-tracking-entity-research-final-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-tracking-entity-research-final-once
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/tracking-entity-research-timeline-20260805
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify research model and capture intent
+        run: |
+          node --import tsx --test \
+            tests/tracking-capture.test.ts \
+            tests/tracking-entity-research.test.ts
+          npm run lint
+          npm run test:unit
+          npx tsc --noEmit
+          npm run validate:tracking
+          npm run validate:taxonomy
+          python tools/enrich_tracking_snapshot.py
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          git restore public/data/articles.json
+
+      - name: Verify static research library and detail pages
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          root = Path('out/tracking/entities')
+          directory = root / 'index.html'
+          pages = list(root.glob('*/*/index.html'))
+          assert directory.exists(), directory
+          assert len(pages) >= 200, len(pages)
+          rendered = directory.read_text(encoding='utf-8', errors='replace')
+          assert '追踪对象研究库' in rendered
+          assert '公司、人物和技术主题' in rendered
+          print({'trackedEntityPages': len(pages), 'directory': str(directory)})
+          PY
+
+      - name: Remove one-time verification workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -f .github/workflows/verify-tracking-entity-research-final-once.yml
+          git commit -m "ci: complete tracked entity research verification"
+          git pull --rebase origin feat/tracking-entity-research-timeline-20260805
+          git push origin HEAD:feat/tracking-entity-research-timeline-20260805
