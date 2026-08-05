@@ -10,8 +10,10 @@ import {
   ExternalLink,
   FileText,
   GitBranch,
+  Star,
   UserRound,
 } from "lucide-react";
+import { TrackingEntityResearchEditor } from "@/components/tracking-entity-research-editor";
 import {
   relatedTrackingResearchEntities,
   trackingResearchEntities,
@@ -108,6 +110,7 @@ export default async function TrackingEntityDetailPage({
           <p className={styles.summary}>{entity.summary}</p>
           <div className={styles.chips}>
             {entity.trackNames.map((track) => <span key={track}>{track}</span>)}
+            {entity.priority ? <span>{entity.priorityStars} · {entity.priorityLabel}</span> : null}
             {entity.candidateStatus ? <span>候选状态：{entity.candidateStatus}</span> : null}
           </div>
         </div>
@@ -132,6 +135,7 @@ export default async function TrackingEntityDetailPage({
         <div><span><FileText size={16} />公开动态</span><strong>{entity.articleCount}</strong></div>
         <div><span><Clock3 size={16} />首次追踪</span><strong>{displayDate(entity.firstTrackedAt)}</strong></div>
         <div><span><GitBranch size={16} />最近活动</span><strong>{displayDate(entity.lastActivityAt)}</strong></div>
+        <div><span><Star size={16} />关注等级</span><strong>{entity.priority || "未设置"}</strong></div>
       </section>
 
       <div className={styles.layout}>
@@ -146,12 +150,25 @@ export default async function TrackingEntityDetailPage({
             ) : (
               <p className={styles.muted}>尚未记录结构化关注原因。下次从文章点击“＋追踪”时可补充。</p>
             )}
+            {entity.researchThesis ? (
+              <div className={styles.notes}>
+                <strong>当前研究判断</strong>
+                <p>{entity.researchThesis}</p>
+              </div>
+            ) : null}
             {entity.notes.length ? (
               <div className={styles.notes}>
                 {entity.notes.map((note) => <p key={note}>{note}</p>)}
               </div>
             ) : null}
           </section>
+
+          <TrackingEntityResearchEditor
+            entityId={entity.id}
+            entityType={entity.entityType}
+            entityName={entity.name}
+            initialRecord={entity.researchRecord}
+          />
 
           <section>
             <p className="section-index">IDENTITY</p>
@@ -197,7 +214,13 @@ export default async function TrackingEntityDetailPage({
               <article className={styles.timelineItem} key={item.id}>
                 <div className={styles.timelineDate}>
                   <strong>{displayDate(item.eventDate || item.observedAt)}</strong>
-                  <span>{item.origin === "manual-capture" ? "人工发现" : "公开动态"}</span>
+                  <span>{
+                    item.origin === "manual-capture"
+                      ? "人工发现"
+                      : item.origin === "analyst-note"
+                        ? "研究笔记"
+                        : "公开动态"
+                  }</span>
                 </div>
                 <div className={styles.timelineBody}>
                   <div className={styles.timelineMeta}>
@@ -215,9 +238,11 @@ export default async function TrackingEntityDetailPage({
                   {item.note ? <blockquote>{item.note}</blockquote> : null}
                   <div className={styles.timelineFooter}>
                     {item.capturedBy ? <span>采集人：{item.capturedBy}</span> : <span>公开情报系统</span>}
-                    <a href={item.url} target="_blank" rel="noreferrer">
-                      查看原文<ExternalLink size={13} aria-hidden="true" />
-                    </a>
+                    {item.url ? (
+                      <a href={item.url} target="_blank" rel="noreferrer">
+                        查看原文<ExternalLink size={13} aria-hidden="true" />
+                      </a>
+                    ) : null}
                   </div>
                 </div>
               </article>

@@ -33,6 +33,9 @@ const directoryItems: TrackingEntityDirectoryItem[] = trackingResearchEntities.m
   captureCount: entity.captureCount,
   articleCount: entity.articleCount,
   reasons: entity.reasons,
+  priority: entity.priority,
+  priorityLabel: entity.priorityLabel,
+  priorityStars: entity.priorityStars,
 }));
 
 export default function TrackingEntitiesPage() {
@@ -61,6 +64,7 @@ export default function TrackingEntitiesPage() {
           <div><dt>技术／主题</dt><dd>{trackingResearchStats.topicCount}</dd></div>
           <div><dt>正式档案</dt><dd>{trackingResearchStats.formalCount}</dd></div>
           <div><dt>人工采集</dt><dd>{trackingResearchStats.capturedCount}</dd></div>
+          <div><dt>重点研究</dt><dd>{trackingResearchStats.priorityCount}</dd></div>
         </dl>
       </header>
 

@@ -25,11 +25,14 @@ export type TrackingEntityDirectoryItem = {
   captureCount: number;
   articleCount: number;
   reasons: string[];
+  priority: number;
+  priorityLabel: string;
+  priorityStars: string;
 };
 
 type TypeFilter = "all" | TrackingResearchEntityType;
 type StateFilter = "all" | TrackingResearchEntityState;
-type SortOrder = "activity" | "name" | "evidence";
+type SortOrder = "activity" | "name" | "evidence" | "priority";
 
 const TYPE_LABELS: Record<TrackingResearchEntityType, string> = {
   company: "公司",
@@ -86,6 +89,12 @@ export function TrackingEntityDirectory({
       })
       .sort((left, right) => {
         if (sortOrder === "name") return left.name.localeCompare(right.name, "zh-CN");
+        if (sortOrder === "priority") {
+          return (
+            right.priority - left.priority ||
+            right.lastActivityAt.localeCompare(left.lastActivityAt)
+          );
+        }
         if (sortOrder === "evidence") {
           return (
             right.captureCount + right.articleCount - (left.captureCount + left.articleCount) ||
@@ -137,6 +146,7 @@ export function TrackingEntityDirectory({
           aria-label="排序方式"
         >
           <option value="activity">最近活动优先</option>
+          <option value="priority">关注等级优先</option>
           <option value="evidence">证据数量优先</option>
           <option value="name">名称排序</option>
         </select>
@@ -155,7 +165,12 @@ export function TrackingEntityDirectory({
                 <TypeIcon type={item.entityType} />
                 {TYPE_LABELS[item.entityType]}
               </span>
-              <em data-state={item.state}>{STATE_LABELS[item.state]}</em>
+              <div className={styles.cardStatus}>
+                <em data-state={item.state}>{STATE_LABELS[item.state]}</em>
+                {item.priority ? (
+                  <small title={item.priorityLabel}>{item.priorityStars}</small>
+                ) : null}
+              </div>
             </div>
             <h2>{item.name}</h2>
             {item.aliases.length > 1 ? (

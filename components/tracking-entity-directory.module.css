@@ -70,7 +70,7 @@
 }
 
 .cardTop > span,
-.cardTop > em {
+.cardStatus > em {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -91,17 +91,29 @@
   color: #49648f;
 }
 
-.cardTop > em {
+.cardStatus {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.cardStatus > em {
   border: 1px solid var(--line);
   padding: 4px 7px;
 }
 
-.cardTop > em[data-state="formal"] {
+.cardStatus > small {
+  color: var(--ochre);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+
+.cardStatus > em[data-state="formal"] {
   border-color: var(--green);
   color: var(--green);
 }
 
-.cardTop > em[data-state="candidate"] {
+.cardStatus > em[data-state="candidate"] {
   border-color: var(--ochre);
   color: var(--ochre);
 }
