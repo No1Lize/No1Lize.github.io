@@ -59,9 +59,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -f dist/tracking/entities/index.html
-          page_count=$(find dist/tracking/entities -name index.html | wc -l | tr -d ' ')
+          test -f out/tracking/entities/index.html
+          page_count=$(find out/tracking/entities -name index.html | wc -l | tr -d ' ')
           test "$page_count" -ge 200
-          grep -R -l "自动研究摘要" dist/tracking/entities/*/*/index.html | head -n 1
-          grep -R -l "关系与共同赛道" dist/tracking/entities/*/*/index.html | head -n 1
+          test -n "$(grep -R -l -m 1 '自动研究摘要' out/tracking/entities/*/*/index.html)"
+          test -n "$(grep -R -l -m 1 '关系与共同赛道' out/tracking/entities/*/*/index.html)"
           echo "Verified $page_count tracked entity research pages."
