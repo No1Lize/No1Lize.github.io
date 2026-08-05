@@ -148,7 +148,6 @@ export function TrackingCompanyOnboarding() {
   );
   const [token, setToken] = useState("");
   const [connected, setConnected] = useState(false);
-  const [username, setUsername] = useState("");
   const [selectedKey, setSelectedKey] = useState("");
   const [profiles, setProfiles] = useState<Record<string, CompanyOnboardingProfile>>({});
   const [busy, setBusy] = useState(false);
@@ -229,7 +228,6 @@ export function TrackingCompanyOnboarding() {
       );
       setToken(cleanToken);
       setConnected(true);
-      setUsername(user.login);
       setSnapshot(nextSnapshot);
       setManifest(nextManifest);
       setProfiles(
@@ -249,7 +247,6 @@ export function TrackingCompanyOnboarding() {
       setStatusKind("success");
     } catch (error) {
       setConnected(false);
-      setUsername("");
       setStatus(`载入失败：${error instanceof Error ? error.message : String(error)}`);
       setStatusKind("error");
     } finally {
@@ -259,7 +256,11 @@ export function TrackingCompanyOnboarding() {
 
   useEffect(() => {
     const saved = currentToken();
-    if (saved) void load(saved);
+    if (!saved) return;
+    const timer = window.setTimeout(() => {
+      void load(saved);
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [load]);
 
   function updateProfile<K extends keyof CompanyOnboardingProfile>(
@@ -344,7 +345,6 @@ export function TrackingCompanyOnboarding() {
         }),
       });
       setToken(cleanToken);
-      setUsername(user.login);
       setManifest(nextManifest);
       const commit = result.commit?.sha?.slice(0, 8) ?? "已创建";
       setStatus(

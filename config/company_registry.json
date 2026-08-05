@@ -1,5 +1,1491 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "",
-  "companies": []
+  "generatedAt": "2026-08-05T01:21:16+00:00",
+  "companies": [
+    {
+      "slug": "agibot",
+      "name": "智元机器人",
+      "englishName": "AgiBot",
+      "region": "中国",
+      "sector": "机器人",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "上海",
+      "summary": "研发具身智能机器人本体、数据和模型体系。",
+      "product": "远征、灵犀等机器人系列。",
+      "source": {
+        "name": "智元机器人",
+        "url": "https://www.zhiyuan-robot.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.94,
+      "aliases": [
+        "智元机器人",
+        "AgiBot"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "anduril",
+      "name": "Anduril Industries",
+      "englishName": "",
+      "region": "美国",
+      "sector": "智能制造",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2017",
+      "headquarters": "California",
+      "summary": "开发自主系统、传感器和国防软件平台。",
+      "product": "Lattice 平台与多类自主飞行器。",
+      "source": {
+        "name": "Anduril",
+        "url": "https://www.anduril.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Anduril Industries"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "anthropic",
+      "name": "Anthropic",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "Series F",
+      "status": "运营中",
+      "founded": "2021",
+      "headquarters": "San Francisco",
+      "summary": "以可靠性、可解释性与安全研究为重点的前沿 AI 公司。",
+      "product": "Claude 模型、企业 API 与安全研究。",
+      "source": {
+        "name": "Anthropic",
+        "url": "https://www.anthropic.com/company",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "Anthropic"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "aurora",
+      "name": "Aurora Innovation",
+      "englishName": "",
+      "region": "美国",
+      "sector": "机器人",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2017",
+      "headquarters": "Pennsylvania",
+      "summary": "开发面向卡车运输和出行服务的自动驾驶系统。",
+      "product": "Aurora Driver 自动驾驶软硬件系统。",
+      "source": {
+        "name": "Aurora",
+        "url": "https://aurora.tech/company",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "Aurora Innovation"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "axiom-space",
+      "name": "Axiom Space",
+      "englishName": "",
+      "region": "美国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2016",
+      "headquarters": "Texas",
+      "summary": "开展商业载人航天任务并建设商业空间站模块。",
+      "product": "Axiom Station 与私人宇航任务。",
+      "source": {
+        "name": "Axiom Space",
+        "url": "https://www.axiomspace.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Axiom Space"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "baichuan-ai",
+      "name": "百川智能",
+      "englishName": "Baichuan AI",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "北京",
+      "summary": "研发通用基础模型并探索医疗等垂直应用。",
+      "product": "Baichuan 系列模型与行业解决方案。",
+      "source": {
+        "name": "百川智能",
+        "url": "https://www.baichuan-ai.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "百川智能",
+        "Baichuan AI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "bgi-genomics",
+      "name": "华大基因",
+      "englishName": "BGI Genomics",
+      "region": "中国",
+      "sector": "生物科技",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "1999",
+      "headquarters": "深圳",
+      "summary": "提供基因检测、科研服务与多组学解决方案。",
+      "product": "生育健康、肿瘤防控和感染防控检测。",
+      "source": {
+        "name": "华大基因",
+        "url": "https://www.bgi.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "华大基因",
+        "BGI Genomics"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "biren",
+      "name": "壁仞科技",
+      "englishName": "Biren Technology",
+      "region": "中国",
+      "sector": "半导体",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2019",
+      "headquarters": "上海",
+      "summary": "研发面向通用计算和 AI 的高性能 GPU。",
+      "product": "BR 系列通用 GPU 与软件平台。",
+      "source": {
+        "name": "壁仞科技",
+        "url": "https://www.birentech.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "壁仞科技",
+        "Biren Technology"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "bytedance",
+      "name": "字节跳动",
+      "englishName": "ByteDance",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2012",
+      "headquarters": "北京",
+      "summary": "运营全球内容平台、企业协作工具、人工智能产品与技术服务。",
+      "product": "抖音、今日头条、飞书、豆包、火山引擎及相关技术平台。",
+      "source": {
+        "name": "字节跳动",
+        "url": "https://www.bytedance.com/zh/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "字节跳动",
+        "ByteDance"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "cambricon",
+      "name": "寒武纪",
+      "englishName": "Cambricon",
+      "region": "中国",
+      "sector": "半导体",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2016",
+      "headquarters": "北京",
+      "summary": "研发云端、边缘端 AI 芯片和基础系统软件。",
+      "product": "思元系列智能芯片与软件栈。",
+      "source": {
+        "name": "寒武纪",
+        "url": "https://www.cambricon.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "寒武纪",
+        "Cambricon"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "catl",
+      "name": "宁德时代",
+      "englishName": "CATL",
+      "region": "中国",
+      "sector": "新能源",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2011",
+      "headquarters": "宁德",
+      "summary": "研发动力电池、储能电池和相关电池材料体系。",
+      "product": "动力电池、储能系统与电池服务。",
+      "source": {
+        "name": "CATL",
+        "url": "https://www.catl.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "宁德时代",
+        "CATL"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "cerebras",
+      "name": "Cerebras Systems",
+      "englishName": "",
+      "region": "美国",
+      "sector": "半导体",
+      "stage": "Pre-IPO",
+      "status": "运营中",
+      "founded": "2016",
+      "headquarters": "California",
+      "summary": "研发面向 AI 训练和推理的晶圆级计算系统。",
+      "product": "Wafer Scale Engine 与 AI 超算系统。",
+      "source": {
+        "name": "Cerebras",
+        "url": "https://www.cerebras.ai/company",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "Cerebras Systems"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "commonwealth-fusion",
+      "name": "Commonwealth Fusion Systems",
+      "englishName": "",
+      "region": "美国",
+      "sector": "新能源",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2018",
+      "headquarters": "Massachusetts",
+      "summary": "开发高温超导磁体和紧凑型托卡马克聚变装置。",
+      "product": "SPARC 与 ARC 聚变系统。",
+      "source": {
+        "name": "CFS",
+        "url": "https://cfs.energy/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Commonwealth Fusion Systems"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "databricks",
+      "name": "Databricks",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2013",
+      "headquarters": "San Francisco",
+      "summary": "提供统一数据、分析与 AI 平台。",
+      "product": "Lakehouse、数据治理与机器学习工具。",
+      "source": {
+        "name": "Databricks",
+        "url": "https://www.databricks.com/company/about-us",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "Databricks"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "deepseek",
+      "name": "DeepSeek",
+      "englishName": "",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "杭州",
+      "summary": "研发通用基础模型、代码模型和推理模型，并开放多项模型权重。",
+      "product": "DeepSeek 系列大语言模型与 API。",
+      "source": {
+        "name": "DeepSeek",
+        "url": "https://www.deepseek.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "DeepSeek"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "doubao",
+      "name": "豆包",
+      "englishName": "Doubao",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "",
+      "headquarters": "",
+      "summary": "字节跳动旗下人工智能品牌，面向个人与开发者提供多模态模型和智能应用。",
+      "product": "豆包智能助手、Doubao Seed 基础模型及相关多模态能力。",
+      "source": {
+        "name": "豆包",
+        "url": "https://www.doubao.com/about",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "豆包",
+        "Doubao"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "envision-energy",
+      "name": "远景能源",
+      "englishName": "Envision Energy",
+      "region": "中国",
+      "sector": "新能源",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2007",
+      "headquarters": "上海",
+      "summary": "提供风电、储能和零碳能源解决方案。",
+      "product": "智能风机、储能系统与能源管理。",
+      "source": {
+        "name": "远景能源",
+        "url": "https://www.envision-group.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "远景能源",
+        "Envision Energy"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "figure-ai",
+      "name": "Figure AI",
+      "englishName": "",
+      "region": "美国",
+      "sector": "机器人",
+      "stage": "Series C",
+      "status": "运营中",
+      "founded": "2022",
+      "headquarters": "California",
+      "summary": "研发面向真实工作和生活环境的通用人形机器人。",
+      "product": "Figure 人形机器人与 Helix 视觉—语言—行动模型。",
+      "source": {
+        "name": "Figure AI",
+        "url": "https://www.figure.ai/",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "Figure AI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "form-energy",
+      "name": "Form Energy",
+      "englishName": "",
+      "region": "美国",
+      "sector": "新能源",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2017",
+      "headquarters": "Massachusetts",
+      "summary": "开发面向电网长时储能的铁空气电池。",
+      "product": "多日储能系统。",
+      "source": {
+        "name": "Form Energy",
+        "url": "https://formenergy.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Form Energy"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "fourier-intelligence",
+      "name": "傅利叶智能",
+      "englishName": "Fourier Intelligence",
+      "region": "中国",
+      "sector": "机器人",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2015",
+      "headquarters": "上海",
+      "summary": "研发康复机器人和通用人形机器人平台。",
+      "product": "康复机器人、GR 系列人形机器人。",
+      "source": {
+        "name": "傅利叶智能",
+        "url": "https://www.fftai.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "傅利叶智能",
+        "Fourier Intelligence"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "galactic-energy",
+      "name": "星河动力",
+      "englishName": "Galactic Energy",
+      "region": "中国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2018",
+      "headquarters": "北京",
+      "summary": "研发固体与液体商业运载火箭。",
+      "product": "谷神星与智神星系列运载火箭。",
+      "source": {
+        "name": "星河动力",
+        "url": "http://www.galactic-energy.cn/",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "星河动力",
+        "Galactic Energy"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "galbot",
+      "name": "银河通用",
+      "englishName": "Galbot",
+      "region": "中国",
+      "sector": "机器人",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "北京",
+      "summary": "研发面向零售、工业和服务场景的具身智能机器人。",
+      "product": "通用机器人本体与具身模型。",
+      "source": {
+        "name": "银河通用",
+        "url": "https://www.galbot.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.92,
+      "aliases": [
+        "银河通用",
+        "Galbot"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "glean",
+      "name": "Glean",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2019",
+      "headquarters": "California",
+      "summary": "构建企业搜索、知识发现与 AI 助手平台。",
+      "product": "企业搜索与工作场景智能体。",
+      "source": {
+        "name": "Glean",
+        "url": "https://www.glean.com/about",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "Glean"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "google",
+      "name": "Google",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "1998",
+      "headquarters": "Mountain View",
+      "summary": "开发搜索、云计算、人工智能与面向消费者和企业的软件服务。",
+      "product": "Google Search、Google Cloud、Gemini 与相关 AI 产品。",
+      "source": {
+        "name": "Google",
+        "url": "https://about.google/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "Google"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "groq",
+      "name": "Groq",
+      "englishName": "",
+      "region": "美国",
+      "sector": "半导体",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2016",
+      "headquarters": "California",
+      "summary": "研发面向低延迟 AI 推理的 LPU 架构和云服务。",
+      "product": "LPU 推理芯片与 GroqCloud。",
+      "source": {
+        "name": "Groq",
+        "url": "https://groq.com/about-us",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Groq"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "harvey",
+      "name": "Harvey",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2022",
+      "headquarters": "San Francisco",
+      "summary": "面向律师事务所和企业法务提供生成式 AI 工作平台。",
+      "product": "法律研究、文档分析与工作流自动化。",
+      "source": {
+        "name": "Harvey",
+        "url": "https://www.harvey.ai/",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "Harvey"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "helion",
+      "name": "Helion Energy",
+      "englishName": "",
+      "region": "美国",
+      "sector": "新能源",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2013",
+      "headquarters": "Washington",
+      "summary": "研发基于脉冲磁约束路线的聚变发电系统。",
+      "product": "聚变原型机与发电系统。",
+      "source": {
+        "name": "Helion",
+        "url": "https://www.helionenergy.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.94,
+      "aliases": [
+        "Helion Energy"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "horizon-robotics",
+      "name": "地平线机器人",
+      "englishName": "Horizon Robotics",
+      "region": "中国",
+      "sector": "半导体",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2015",
+      "headquarters": "北京",
+      "summary": "提供乘用车高级辅助驾驶计算方案。",
+      "product": "征程系列芯片与驾驶软件。",
+      "source": {
+        "name": "地平线",
+        "url": "https://www.horizon.auto/",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "地平线机器人",
+        "Horizon Robotics"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "insilico-medicine",
+      "name": "英矽智能",
+      "englishName": "Insilico Medicine",
+      "region": "中国",
+      "sector": "生物科技",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2014",
+      "headquarters": "香港",
+      "summary": "利用生成式 AI 进行靶点发现与小分子药物设计。",
+      "product": "Pharma.AI 平台与自研药物管线。",
+      "source": {
+        "name": "Insilico Medicine",
+        "url": "https://insilico.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "英矽智能",
+        "Insilico Medicine"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "ionq",
+      "name": "IonQ",
+      "englishName": "",
+      "region": "美国",
+      "sector": "量子计算",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2015",
+      "headquarters": "Maryland",
+      "summary": "开发离子阱量子计算系统，并通过云平台和直接系统访问提供服务。",
+      "product": "离子阱量子计算机、云访问与量子网络技术。",
+      "source": {
+        "name": "IonQ",
+        "url": "https://ionq.com/company",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "IonQ"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "joby",
+      "name": "Joby Aviation",
+      "englishName": "",
+      "region": "美国",
+      "sector": "商业航天",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2009",
+      "headquarters": "California",
+      "summary": "研发电动垂直起降飞行器并筹备商业空中出行服务。",
+      "product": "eVTOL 飞行器、认证与空中出行运营体系。",
+      "source": {
+        "name": "Joby Aviation",
+        "url": "https://www.jobyaviation.com/about/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "Joby Aviation"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "landspace",
+      "name": "蓝箭航天",
+      "englishName": "LandSpace",
+      "region": "中国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2015",
+      "headquarters": "北京",
+      "summary": "研发液体燃料商业运载火箭及发动机。",
+      "product": "朱雀系列运载火箭。",
+      "source": {
+        "name": "蓝箭航天",
+        "url": "https://www.landspace.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "蓝箭航天",
+        "LandSpace"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "minimax",
+      "name": "MiniMax",
+      "englishName": "",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2021",
+      "headquarters": "上海",
+      "summary": "研发文本、语音和视频等多模态基础模型。",
+      "product": "多模态模型、开放平台与 AI 原生应用。",
+      "source": {
+        "name": "MiniMax",
+        "url": "https://www.minimaxi.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "MiniMax"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "mobileye",
+      "name": "Mobileye",
+      "englishName": "",
+      "region": "美国",
+      "sector": "半导体",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "1999",
+      "headquarters": "Jerusalem",
+      "summary": "提供高级辅助驾驶芯片、感知软件、地图和自动驾驶方案。",
+      "product": "EyeQ 芯片、SuperVision、REM 地图与 Chauffeur。",
+      "source": {
+        "name": "Mobileye",
+        "url": "https://www.mobileye.com/about/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "Mobileye"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "moonshot-ai",
+      "name": "月之暗面",
+      "englishName": "Moonshot AI",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "北京",
+      "summary": "研发长上下文基础模型和面向个人的 AI 助手。",
+      "product": "Kimi 智能助手与开放平台。",
+      "source": {
+        "name": "Moonshot AI",
+        "url": "https://www.moonshot.cn/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "月之暗面",
+        "Moonshot AI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "moore-threads",
+      "name": "摩尔线程",
+      "englishName": "Moore Threads",
+      "region": "中国",
+      "sector": "半导体",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2020",
+      "headquarters": "北京",
+      "summary": "研发全功能 GPU 芯片及软硬件平台。",
+      "product": "MTT GPU、驱动与计算平台。",
+      "source": {
+        "name": "摩尔线程",
+        "url": "https://www.mthreads.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "摩尔线程",
+        "Moore Threads"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "openai",
+      "name": "OpenAI",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2015",
+      "headquarters": "San Francisco",
+      "summary": "开发通用人工智能模型、开发者平台与面向个人和企业的 AI 产品。",
+      "product": "基础模型、ChatGPT、API 与智能体开发工具。",
+      "source": {
+        "name": "OpenAI",
+        "url": "https://openai.com/about/",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "OpenAI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "origin-space",
+      "name": "起源太空",
+      "englishName": "Origin Space",
+      "region": "中国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2017",
+      "headquarters": "深圳",
+      "summary": "研发空间资源探测与在轨服务相关技术。",
+      "product": "空间望远镜、机器人和任务服务。",
+      "source": {
+        "name": "起源太空",
+        "url": "https://www.origin.space/",
+        "level": "官方披露"
+      },
+      "confidence": 0.91,
+      "aliases": [
+        "起源太空",
+        "Origin Space"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "perplexity",
+      "name": "Perplexity",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2022",
+      "headquarters": "San Francisco",
+      "summary": "提供带来源引用的 AI 搜索与研究产品。",
+      "product": "AI 搜索、研究与企业知识检索。",
+      "source": {
+        "name": "Perplexity",
+        "url": "https://www.perplexity.ai/about",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "Perplexity"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "pony-ai",
+      "name": "小马智行",
+      "englishName": "Pony.ai",
+      "region": "中国",
+      "sector": "机器人",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2016",
+      "headquarters": "广州",
+      "summary": "研发自动驾驶系统并运营 Robotaxi 与 Robotruck 业务。",
+      "product": "自动驾驶软硬件系统与运营平台。",
+      "source": {
+        "name": "Pony.ai",
+        "url": "https://www.pony.ai/",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "小马智行",
+        "Pony.ai"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "psiquantum",
+      "name": "PsiQuantum",
+      "englishName": "",
+      "region": "美国",
+      "sector": "量子计算",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2016",
+      "headquarters": "California",
+      "summary": "以光子路线开发容错量子计算系统。",
+      "product": "硅光子量子计算架构。",
+      "source": {
+        "name": "PsiQuantum",
+        "url": "https://www.psiquantum.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "PsiQuantum"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "recursion",
+      "name": "Recursion Pharmaceuticals",
+      "englishName": "",
+      "region": "美国",
+      "sector": "生物科技",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2013",
+      "headquarters": "Salt Lake City",
+      "summary": "结合自动化实验、计算生物学和机器学习推进药物发现。",
+      "product": "Recursion OS 研发平台与自有药物管线。",
+      "source": {
+        "name": "Recursion",
+        "url": "https://www.recursion.com/about",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "Recursion Pharmaceuticals"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "redwood-materials",
+      "name": "Redwood Materials",
+      "englishName": "",
+      "region": "美国",
+      "sector": "新能源",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2017",
+      "headquarters": "Nevada",
+      "summary": "建设电池材料回收与闭环供应链。",
+      "product": "电池回收、正极材料与铜箔。",
+      "source": {
+        "name": "Redwood Materials",
+        "url": "https://www.redwoodmaterials.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Redwood Materials"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "relativity-space",
+      "name": "Relativity Space",
+      "englishName": "",
+      "region": "美国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2015",
+      "headquarters": "California",
+      "summary": "开发面向商业发射的可重复使用运载火箭。",
+      "product": "Terran R 运载系统。",
+      "source": {
+        "name": "Relativity Space",
+        "url": "https://www.relativityspace.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "Relativity Space"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "rigetti",
+      "name": "Rigetti Computing",
+      "englishName": "",
+      "region": "美国",
+      "sector": "量子计算",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2013",
+      "headquarters": "California",
+      "summary": "研发超导量子处理器并提供云端量子计算服务。",
+      "product": "超导量子芯片与 Quantum Cloud Services。",
+      "source": {
+        "name": "Rigetti",
+        "url": "https://www.rigetti.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "Rigetti Computing"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "rocket-lab",
+      "name": "Rocket Lab",
+      "englishName": "",
+      "region": "美国",
+      "sector": "商业航天",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2006",
+      "headquarters": "California",
+      "summary": "提供小型运载发射、卫星平台、航天器部件和任务服务。",
+      "product": "Electron、HASTE、Photon 航天器与 Neutron 运载系统。",
+      "source": {
+        "name": "Rocket Lab",
+        "url": "https://www.rocketlabusa.com/about/about-us/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "Rocket Lab"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "sambanova",
+      "name": "SambaNova Systems",
+      "englishName": "SambaNova",
+      "region": "美国",
+      "sector": "半导体",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2017",
+      "headquarters": "California",
+      "summary": "提供企业级 AI 芯片、系统和模型服务。",
+      "product": "DataScale 系统与企业 AI 云。",
+      "source": {
+        "name": "SambaNova",
+        "url": "https://sambanova.ai/about",
+        "level": "官方披露"
+      },
+      "confidence": 0.94,
+      "aliases": [
+        "SambaNova Systems",
+        "SambaNova"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "scale-ai",
+      "name": "Scale AI",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2016",
+      "headquarters": "San Francisco",
+      "summary": "为 AI 模型开发提供数据、评测与企业应用基础设施。",
+      "product": "数据标注、模型评测和企业生成式 AI 平台。",
+      "source": {
+        "name": "Scale AI",
+        "url": "https://scale.com/about",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Scale AI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "shield-ai",
+      "name": "Shield AI",
+      "englishName": "",
+      "region": "美国",
+      "sector": "机器人",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2015",
+      "headquarters": "San Diego",
+      "summary": "开发面向航空器的自主驾驶软件和无人系统。",
+      "product": "Hivemind 自主系统与 V-BAT 飞行器。",
+      "source": {
+        "name": "Shield AI",
+        "url": "https://shield.ai/",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "Shield AI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "shopify",
+      "name": "Shopify",
+      "englishName": "Shopify",
+      "region": "加拿大",
+      "sector": "新消费",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2006",
+      "headquarters": "Ottawa, Canada",
+      "summary": "为全球商家提供电商建站、支付、营销、线下零售和企业级商业基础设施。",
+      "product": "Shopify 商业平台、在线商店、Shopify Payments、Shop Pay、POS 与企业级商业工具。",
+      "source": {
+        "name": "Shopify",
+        "url": "https://www.shopify.com/news/about-us",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "Shopify",
+        "Shopify Inc."
+      ],
+      "registrySource": "reviewed-candidate-onboarding",
+      "onboarding": {
+        "candidateKey": "shopify",
+        "reviewedBy": "VCIQ",
+        "decidedAt": "2026-08-04T23:01:46.990Z",
+        "publishedAt": "2026-08-05T01:21:16+00:00",
+        "evidenceFingerprint": "{\"decisionKey\":\"shopify\",\"score\":70,\"articleCount\":6,\"sourceCount\":2,\"sourceArticleIds\":[\"official-user-shopify-23e3e463dc8eaad1\",\"official-user-shopify-97ea8784c7dfd921\",\"official-user-shopify-cf0fa6cfe8a41107\",\"official-user-shopify-daa260464549b1d1\",\"official-user-shopify-f8bf13b91565337b\",\"user-source-source-auto-shopify-cb8e5b9d50117d8b\"],\"sourceUrls\":[\"https://help.shopify.com/en\",\"https://www.shopify.com/blog/latest\",\"https://www.shopify.com/blog/what-is-shopify\",\"https://www.shopify.com/editions/spring2026\",\"https://www.shopify.com/enterprise/blog/latest\",\"https://www.shopify.com/partners/blog/latest\"]}"
+      }
+    },
+    {
+      "slug": "sierra",
+      "name": "Sierra",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "San Francisco",
+      "summary": "为企业客户服务场景构建 AI 智能体平台。",
+      "product": "企业级客户体验智能体。",
+      "source": {
+        "name": "Sierra",
+        "url": "https://sierra.ai/",
+        "level": "官方披露"
+      },
+      "confidence": 0.93,
+      "aliases": [
+        "Sierra"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "spacex",
+      "name": "SpaceX",
+      "englishName": "",
+      "region": "美国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2002",
+      "headquarters": "Texas",
+      "summary": "研发可复用运载系统、载人航天器与卫星互联网。",
+      "product": "Falcon、Dragon、Starship 与 Starlink。",
+      "source": {
+        "name": "SpaceX",
+        "url": "https://www.spacex.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "SpaceX"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "stepfun",
+      "name": "阶跃星辰",
+      "englishName": "StepFun",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "上海",
+      "summary": "研发语言、语音、图像和视频多模态模型。",
+      "product": "Step 系列基础模型与开放平台。",
+      "source": {
+        "name": "阶跃星辰",
+        "url": "https://www.stepfun.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.94,
+      "aliases": [
+        "阶跃星辰",
+        "StepFun"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "svlot",
+      "name": "蜂巢能源",
+      "englishName": "SVOLT",
+      "region": "中国",
+      "sector": "新能源",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2018",
+      "headquarters": "常州",
+      "summary": "研发动力电池和储能电池产品。",
+      "product": "电芯、模组、电池包与储能系统。",
+      "source": {
+        "name": "蜂巢能源",
+        "url": "https://www.svolt.cn/",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "蜂巢能源",
+        "SVOLT"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "tempus-ai",
+      "name": "Tempus AI",
+      "englishName": "",
+      "region": "美国",
+      "sector": "生物科技",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2015",
+      "headquarters": "Chicago",
+      "summary": "将临床与分子数据用于精准医疗、诊断和 AI 辅助决策。",
+      "product": "基因检测、临床数据平台与医疗 AI 应用。",
+      "source": {
+        "name": "Tempus",
+        "url": "https://www.tempus.com/about-us/",
+        "level": "官方披露"
+      },
+      "confidence": 0.99,
+      "aliases": [
+        "Tempus AI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "unitree",
+      "name": "宇树科技",
+      "englishName": "Unitree Robotics",
+      "region": "中国",
+      "sector": "机器人",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2016",
+      "headquarters": "杭州",
+      "summary": "研发四足机器人、人形机器人及其运动控制系统。",
+      "product": "Go、B2、H1 与 G1 系列机器人。",
+      "source": {
+        "name": "宇树科技",
+        "url": "https://www.unitree.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "宇树科技",
+        "Unitree Robotics"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "varda",
+      "name": "Varda Space Industries",
+      "englishName": "",
+      "region": "美国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2020",
+      "headquarters": "California",
+      "summary": "利用在轨环境开展材料与药物制造并回收产品。",
+      "product": "在轨制造卫星与返回舱。",
+      "source": {
+        "name": "Varda",
+        "url": "https://www.varda.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.94,
+      "aliases": [
+        "Varda Space Industries"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "volcengine",
+      "name": "火山引擎",
+      "englishName": "Volcengine",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "",
+      "headquarters": "",
+      "summary": "字节跳动旗下企业级云与人工智能服务平台。",
+      "product": "火山方舟、云基础设施、数据智能与多媒体技术服务。",
+      "source": {
+        "name": "火山引擎",
+        "url": "https://www.volcengine.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "火山引擎",
+        "Volcengine"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "weride",
+      "name": "文远知行",
+      "englishName": "WeRide",
+      "region": "中国",
+      "sector": "机器人",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2017",
+      "headquarters": "广州",
+      "summary": "开发多场景 L4 自动驾驶产品和运营服务。",
+      "product": "Robotaxi、Robobus、Robosweeper 与 Robovan。",
+      "source": {
+        "name": "WeRide",
+        "url": "https://www.weride.ai/",
+        "level": "官方披露"
+      },
+      "confidence": 0.98,
+      "aliases": [
+        "文远知行",
+        "WeRide"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "xai",
+      "name": "xAI",
+      "englishName": "",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2023",
+      "headquarters": "United States",
+      "summary": "开发基础模型、算力基础设施与面向消费者的 AI 产品。",
+      "product": "Grok 模型及相关开发者服务。",
+      "source": {
+        "name": "xAI",
+        "url": "https://x.ai/company",
+        "level": "官方披露"
+      },
+      "confidence": 0.96,
+      "aliases": [
+        "xAI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "xpeng-aeroht",
+      "name": "小鹏汇天",
+      "englishName": "XPENG AEROHT",
+      "region": "中国",
+      "sector": "商业航天",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2013",
+      "headquarters": "广州",
+      "summary": "研发面向低空出行的飞行汽车产品。",
+      "product": "分体式飞行汽车与电动垂直起降飞行器。",
+      "source": {
+        "name": "小鹏汇天",
+        "url": "https://www.aeroht.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.95,
+      "aliases": [
+        "小鹏汇天",
+        "XPENG AEROHT"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "xtalpi",
+      "name": "晶泰科技",
+      "englishName": "XtalPi",
+      "region": "中国",
+      "sector": "生物科技",
+      "stage": "已上市",
+      "status": "已上市",
+      "founded": "2015",
+      "headquarters": "深圳",
+      "summary": "使用 AI、量子物理与自动化实验推动药物和材料研发。",
+      "product": "智能药物研发平台与自动化实验室。",
+      "source": {
+        "name": "晶泰科技",
+        "url": "https://www.xtalpi.com/",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "晶泰科技",
+        "XtalPi"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    },
+    {
+      "slug": "zhipu-ai",
+      "name": "智谱AI",
+      "englishName": "Zhipu AI",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "stage": "成长期",
+      "status": "运营中",
+      "founded": "2019",
+      "headquarters": "北京",
+      "summary": "研发 GLM 系列基础模型与企业级大模型平台。",
+      "product": "GLM 模型、智谱清言与开放平台。",
+      "source": {
+        "name": "智谱AI",
+        "url": "https://www.zhipuai.cn/",
+        "level": "官方披露"
+      },
+      "confidence": 0.97,
+      "aliases": [
+        "智谱AI",
+        "Zhipu AI"
+      ],
+      "registrySource": "legacy-catalog-migration"
+    }
+  ]
 }

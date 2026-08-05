@@ -25,7 +25,7 @@ export type TrackingSourceRecommendation = TrackingRecommendation & {
     url: string;
     sourceType: "listing-search";
     sourceCategory: "company" | "media" | "person";
-    region: "中国" | "美国" | "全球";
+    region: string;
     sector: string;
     company: string;
     ticker: string;

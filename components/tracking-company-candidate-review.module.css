@@ -51,9 +51,9 @@
 
 .summary {
   display: grid;
-  grid-template-columns: repeat(4, minmax(70px, 1fr));
+  grid-template-columns: repeat(5, minmax(70px, 1fr));
   border: 1px solid var(--border-soft);
-  min-width: min(100%, 360px);
+  min-width: min(100%, 450px);
 }
 
 .summary span {

@@ -26,7 +26,7 @@ export type FavoriteInput = {
   keywords?: string[];
   sectors?: string[];
   sources?: FavoriteSource[];
-  region?: "中国" | "美国" | "全球";
+  region?: string;
   company?: string;
   publishedAt?: string;
   importance?: number;
@@ -170,10 +170,7 @@ export function normalizeFavorite(
   const savedAt = Number.isNaN(Date.parse(savedAtRaw))
     ? fallbackSavedAt
     : savedAtRaw;
-  const region =
-    raw.region === "中国" || raw.region === "美国" || raw.region === "全球"
-      ? raw.region
-      : undefined;
+  const region = cleanText(raw.region, 80) || undefined;
   const publishedAt = normalizePublishedAt(raw.publishedAt);
   const importance = normalizeImportance(raw.importance);
   const eventType = cleanText(raw.eventType, 40);
