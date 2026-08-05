@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-05T22:56:09+00:00",
+  "generatedAt": "2026-08-05T23:38:15+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-05T22:55:45+00:00",
+      "updatedAt": "2026-08-05T23:37:46+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -1139,7 +1139,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-05T22:55:45+00:00",
+      "updatedAt": "2026-08-05T23:37:46+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2207,6 +2207,12 @@
           "source": "新浪财经"
         },
         {
+          "title": "锂电企业 上半年业绩高速增长 下半年排产预期强劲",
+          "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimieit4848862.shtml",
+          "publishedAt": "2026-08-06T02:46:00+08:00",
+          "source": "新浪财经"
+        },
+        {
           "title": "享界硬派SUV预售！43.98万元起",
           "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimhxzz4303476.shtml",
           "publishedAt": "2026-08-06T01:02:00+08:00",
@@ -2253,12 +2259,6 @@
           "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-05/doc-inimhiem1363659.shtml",
           "publishedAt": "2026-08-05T19:16:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "【昭晟机电·关注】亿纬锂能增速高达51.7%！松下重回前六！SK On逆势下跌！2026年1-6月全球动力电池装机量TOP10出炉！",
-          "url": "https://finance.sina.com.cn/roll/2026-08-05/doc-inimhiec5163385.shtml",
-          "publishedAt": "2026-08-05T18:16:00+08:00",
-          "source": "新浪财经"
         }
       ]
     },
@@ -2267,7 +2267,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-05T22:55:45+00:00",
+      "updatedAt": "2026-08-05T23:37:46+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3391,7 +3391,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-05T22:55:43+00:00",
+      "updatedAt": "2026-08-05T23:37:45+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4519,7 +4519,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-05T22:55:43+00:00",
+      "updatedAt": "2026-08-05T23:37:45+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5647,7 +5647,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-05T22:55:56+00:00",
+      "updatedAt": "2026-08-05T23:37:54+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6648,7 +6648,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$2955.40万"
+          "value": "US$2955.46万"
         },
         {
           "id": "totalShares",
@@ -6754,7 +6754,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-05T22:55:56+00:00",
+      "updatedAt": "2026-08-05T23:37:53+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7738,34 +7738,9 @@
           "value": "US$19.28亿"
         },
         {
-          "id": "floatMarketCap",
-          "label": "流通市值",
-          "value": "US$18.21亿"
-        },
-        {
-          "id": "pb",
-          "label": "市净率",
-          "value": "1.87"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "0.66%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "US$1210.85万"
-        },
-        {
           "id": "totalShares",
           "label": "总股本",
           "value": "3.29亿股"
-        },
-        {
-          "id": "floatShares",
-          "label": "流通股",
-          "value": "3.11亿股"
         },
         {
           "id": "eps",
@@ -7797,7 +7772,6 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/WRD/",
         "price": "https://query1.finance.yahoo.com/v8/finance/chart/WRD?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
-        "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.WRD&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
         "yahooFinance": "https://sg.finance.yahoo.com/quote/WRD/"
       },
       "quote": {
@@ -7813,6 +7787,12 @@
         }
       },
       "news": [
+        {
+          "title": "WeRide (WRD) Partners In Denmark, Is The Stock A Bargain?",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/weride-wrd-partners-denmark-stock-231437255.html?.tsrc=rss",
+          "publishedAt": "2026-08-05T23:14:37+00:00",
+          "source": "Yahoo财经"
+        },
         {
           "title": "How Investors Are Reacting To WeRide (WRD) Expanding Level 4 Robotaxis Into Denmark With GreenMobility",
           "url": "https://finance.yahoo.com/markets/stocks/articles/investors-reacting-weride-wrd-expanding-101115139.html?.tsrc=rss",
@@ -7842,12 +7822,6 @@
           "url": "https://finance.yahoo.com/technology/articles/weride-report-second-quarter-first-114000663.html?.tsrc=rss",
           "publishedAt": "2026-07-22T11:40:00+00:00",
           "source": "Yahoo财经"
-        },
-        {
-          "title": "WeRide Named Among China's Top 10 AI Case Studies for UAE Autonomous Driving Deployment, the Only Autonomous Driving Company Recognized",
-          "url": "https://finance.yahoo.com/technology/ai/articles/weride-named-among-chinas-top-021800480.html?.tsrc=rss",
-          "publishedAt": "2026-07-18T02:18:00+00:00",
-          "source": "Yahoo财经"
         }
       ]
     },
@@ -7856,7 +7830,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-05T22:55:57+00:00",
+      "updatedAt": "2026-08-05T23:37:54+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8928,7 +8902,7 @@
         {
           "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
           "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss",
-          "publishedAt": "2026-08-05T21:00:00+00:00",
+          "publishedAt": "2026-08-05T21:52:00+00:00",
           "source": "Yahoo财经"
         },
         {
@@ -8968,7 +8942,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-05T22:55:57+00:00",
+      "updatedAt": "2026-08-05T23:37:54+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -9964,12 +9938,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "6.50%"
+          "value": "6.52%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$9.84亿"
+          "value": "US$9.86亿"
         },
         {
           "id": "totalShares",
@@ -10038,6 +10012,12 @@
       },
       "news": [
         {
+          "title": "IonQ (IONQ) Stock Gets Fair Value Trim As Analysts Weigh Quantum Growth And Risk",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-ionq-stock-gets-fair-231636838.html?.tsrc=rss",
+          "publishedAt": "2026-08-05T23:16:36+00:00",
+          "source": "Yahoo财经"
+        },
+        {
           "title": "IonQ (IONQ) Lands Sandia And EPB Deals To Expand Quantum Networking And Security",
           "url": "https://finance.yahoo.com/technology/ai/articles/ionq-ionq-lands-sandia-epb-221330624.html?.tsrc=rss",
           "publishedAt": "2026-08-05T22:13:30+00:00",
@@ -10046,7 +10026,7 @@
         {
           "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
           "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss",
-          "publishedAt": "2026-08-05T21:00:00+00:00",
+          "publishedAt": "2026-08-05T21:52:00+00:00",
           "source": "Yahoo财经"
         },
         {
@@ -10066,12 +10046,6 @@
           "url": "https://finance.yahoo.com/technology/articles/rigetti-expands-hybrid-quantum-hpc-174400386.html?.tsrc=rss",
           "publishedAt": "2026-08-05T17:44:00+00:00",
           "source": "Yahoo财经"
-        },
-        {
-          "title": "Advanced Micro Devices (AMD) Surpasses Q2 Earnings and Revenue Estimates",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/advanced-micro-devices-amd-surpasses-214003111.html?.tsrc=rss",
-          "publishedAt": "2026-08-04T21:40:03+00:00",
-          "source": "Yahoo财经"
         }
       ]
     },
@@ -10080,7 +10054,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-05T22:55:57+00:00",
+      "updatedAt": "2026-08-05T23:37:54+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -11076,12 +11050,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "2.79%"
+          "value": "2.80%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$12.56亿"
+          "value": "US$12.57亿"
         },
         {
           "id": "totalShares",
@@ -11192,7 +11166,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-05T22:56:06+00:00",
+      "updatedAt": "2026-08-05T23:38:00+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -12304,7 +12278,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-05T22:56:07+00:00",
+      "updatedAt": "2026-08-05T23:38:00+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -13300,12 +13274,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "3.32%"
+          "value": "3.33%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$5482.82万"
+          "value": "US$5489.88万"
         },
         {
           "id": "totalShares",
@@ -13396,7 +13370,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-05T22:56:06+00:00",
+      "updatedAt": "2026-08-05T23:38:01+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -14397,7 +14371,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$3648.44万"
+          "value": "US$3648.69万"
         },
         {
           "id": "totalShares",
@@ -14508,7 +14482,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-05T22:56:06+00:00",
+      "updatedAt": "2026-08-05T23:38:01+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -15619,7 +15593,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-05T22:56:07+00:00",
+      "updatedAt": "2026-08-05T23:38:07+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
