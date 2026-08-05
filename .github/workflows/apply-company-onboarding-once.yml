@@ -1,4 +1,4 @@
-# Retry after aligning registry, candidate history, client lint and region metadata.
+# Retry after aligning registry, candidate history, client lint, region metadata and derived tracking data.
 name: Apply automatic company onboarding once
 
 on:
@@ -156,7 +156,9 @@ jobs:
           npx tsc --noEmit
           npm run validate:tracking
           npm run validate:taxonomy
+          python tools/enrich_tracking_snapshot.py
           ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          git restore public/data/articles.json
 
       - name: Commit migrated registry and published company
         shell: bash
