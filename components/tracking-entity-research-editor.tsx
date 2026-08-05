@@ -193,7 +193,7 @@ export function TrackingEntityResearchEditor({
       <div className={styles.priority}>
         <strong>关注等级</strong>
         <div role="radiogroup" aria-label="关注等级">
-          {[1, 2, 3, 4, 5].map((value) => (
+          {([1, 2, 3, 4, 5] as const).map((value) => (
             <button
               aria-checked={priority === value}
               data-active={priority === value}
