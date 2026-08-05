@@ -1,0 +1,170 @@
+name: Publish reviewed company candidates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - config/company_candidate_decisions.json
+      - config/company_registry.json
+      - config/official_company_sources.json
+      - tools/onboard_company_candidates.py
+      - tools/company_registry.py
+      - tools/build_company_candidates.py
+      - lib/company-registry.ts
+      - lib/company-candidate-onboarding.ts
+      - .github/workflows/company-candidate-onboarding.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
+
+jobs:
+  onboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate onboarding modules
+        run: |
+          python -m py_compile \
+            tools/company_registry.py \
+            tools/onboard_company_candidates.py \
+            tools/build_company_candidates.py \
+            tools/ensure_venture_profile_coverage.py
+          python -m unittest \
+            tests.test_company_registry \
+            tests.test_onboard_company_candidates \
+            tests.test_company_candidates \
+            tests.test_ensure_venture_profile_coverage
+          node --import tsx --test \
+            tests/company-candidate-onboarding.test.ts \
+            tests/company-candidate-review.test.ts
+          python tools/company_registry.py --check
+
+      - name: Apply reviewed onboarding and merge decisions
+        id: onboarding
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/onboard_company_candidates.py \
+            | tee /tmp/company-onboarding-report.json
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(
+              Path('/tmp/company-onboarding-report.json')
+              .read_text(encoding='utf-8')
+              .splitlines()[-1]
+          )
+          if report.get('failedCount'):
+              raise SystemExit(json.dumps(report, ensure_ascii=False))
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write(
+                  'published_slugs=' + ' '.join(report.get('publishedSlugs', [])) + '\n'
+              )
+              output.write(
+                  'published_count=' + str(int(report.get('publishedCount', 0))) + '\n'
+              )
+              output.write(
+                  'merged_count=' + str(int(report.get('mergedCount', 0))) + '\n'
+              )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Crawl newly published company profiles
+        if: steps.onboarding.outputs.published_count != '0'
+        env:
+          PUBLISHED_SLUGS: ${{ steps.onboarding.outputs.published_slugs }}
+          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for slug in $PUBLISHED_SLUGS; do
+            echo "Building first formal profile for $slug"
+            python tools/crawl_venture_profiles.py \
+              --kind company \
+              --slug "$slug" \
+              --workers 1 \
+              --max-pages 6
+          done
+          python tools/enrich_venture_profiles.py
+          python tools/stabilize_venture_publication_pipeline.py
+          python tools/stabilize_venture_publication_pipeline.py --check
+          python tools/stabilize_venture_research_evidence.py --check
+          python tools/normalize_venture_publication.py --check
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+
+      - name: Rebuild candidate status snapshot
+        run: |
+          python tools/build_company_candidates.py
+          python tools/build_company_candidates.py --check
+          python tools/company_registry.py --check
+          python tools/onboard_company_candidates.py --check
+
+      - name: Validate application and static routes
+        run: |
+          npm run lint
+          npm run test:unit
+          npx tsc --noEmit
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+
+      - name: Commit published profiles and onboarding state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            config/company_registry.json \
+            config/company_candidate_decisions.json \
+            config/official_company_sources.json \
+            public/data/company_candidate_onboarding.json \
+            public/data/company_candidates.json \
+            public/data/venture_profiles.json
+          if git diff --cached --quiet; then
+            echo "No candidate onboarding changes."
+            exit 0
+          fi
+          git commit -m "data: publish reviewed company candidates"
+          for attempt in 1 2 3; do
+            git pull --rebase -X theirs origin main
+            python tools/company_registry.py --check
+            python tools/build_company_candidates.py --check
+            python tools/onboard_company_candidates.py --check
+            npx tsc --noEmit
+            if git push origin HEAD:main; then
+              gh workflow run pages.yml --ref main
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+          done
