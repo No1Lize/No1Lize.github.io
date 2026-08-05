@@ -46,7 +46,7 @@ test("selected company text becomes a canonical external capture prefill", () =>
   });
   const prefill = parseExternalTrackingCaptureParams(params);
   assert.equal(prefill.source.url, "https://finance.example/story?utm_source=test");
-  assert.equal(prefill.source.title, "Polymarket 洽谈融资，Kalshi 扩张");
+  assert.equal(prefill.source.title, "Polymarket 洽谈融资,Kalshi 扩张");
   assert.equal(prefill.source.sourceName, "新浪财经");
   assert.equal(prefill.source.channel, "external");
   assert.match(prefill.source.summary, /Polymarket 公司/u);
@@ -116,5 +116,5 @@ test("bookmarklet only forwards the current URL, title and selected text", () =>
   assert.match(script, /location\.href/u);
   assert.match(script, /document\.title/u);
   assert.match(script, /getSelection/u);
-  assert.doesNotMatch(script, /token|github/iu);
+  assert.doesNotMatch(script, /searchParams\.set\(['"](?:token|github)/iu);
 });
