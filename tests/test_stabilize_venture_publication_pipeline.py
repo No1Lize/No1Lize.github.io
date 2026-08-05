@@ -4,10 +4,17 @@ import copy
 import json
 import unittest
 
+from tools import enforce_venture_entity_semantics as entity_semantics
+from tools import finalize_venture_profiles as structural_finalization
+from tools import normalize_venture_profiles as base_normalization
+from tools import refine_venture_research_evidence as research_evidence
 from tools.crawl_venture_profiles import CATALOG_PATH, OUTPUT_PATH, load_snapshot
 from tools.ensure_venture_profile_coverage import ensure_catalog_coverage
 from tools.enrich_venture_profiles import ARTICLE_PATH, enrich_snapshot
-from tools.stabilize_venture_publication_pipeline import stabilize_publication_snapshot
+from tools.stabilize_venture_publication_pipeline import (
+    align_capital_event_patterns,
+    stabilize_publication_snapshot,
+)
 from tools.venture_profile_extraction import parse_catalog
 
 
@@ -68,6 +75,65 @@ class VenturePublicationFixedPointTests(unittest.TestCase):
                 normalizer=toggle,
                 terminal_stabilizer=identity_terminal,
             )
+
+    def test_public_company_merger_uses_one_cross_gate_classification(self) -> None:
+        align_capital_event_patterns()
+        title = (
+            "In Major Step Toward Commercializing Self-Driving Technology, "
+            "Aurora to Become a Public Company by Merging with Reinvent Technology Partners Y"
+        )
+        article = {
+            "publishedAt": "2026-08-04",
+            "title": title,
+            "summary": (
+                "Aurora announced a business combination that will take the company public."
+            ),
+            "source": {
+                "url": (
+                    "https://aurora.tech/newsroom/"
+                    "in-major-step-toward-commercializing-self-driving-technology"
+                )
+            },
+        }
+
+        self.assertIsNotNone(research_evidence.CAPITAL_MARKET_RE.search(title))
+        self.assertIsNotNone(base_normalization.CAPITAL_MARKET_ACTION_PATTERN.search(title))
+        self.assertIsNotNone(structural_finalization.CAPITAL_EVIDENCE_RE.search(title))
+        self.assertIsNotNone(entity_semantics.CAPITAL_ACTION_RE.search(title))
+
+        financing, capital = research_evidence._route_capital_events({}, [article])
+        self.assertEqual(financing, [])
+        self.assertEqual(len(capital), 1)
+        retained_by_normalization = base_normalization.normalize_capital_events(
+            capital, capital_market=True
+        )
+        self.assertEqual(retained_by_normalization, capital)
+        retained_by_structure = structural_finalization.finalize_capital_markets(capital)
+        self.assertEqual(retained_by_structure, capital)
+        retained_by_terminal = entity_semantics._sanitize_events(
+            capital,
+            ("Aurora",),
+            "aurora.tech",
+            entity_semantics.CAPITAL_ACTION_RE,
+        )
+        self.assertEqual(retained_by_terminal, capital)
+
+    def test_context_without_transaction_action_is_not_a_capital_event(self) -> None:
+        align_capital_event_patterns()
+        false_positives = (
+            "ByteDance restructures AI business, merging Doubao and Feishu product teams",
+            "IonQ (NYSE: IONQ) will release its Q2 2026 financial results after market close",
+            "Recursion (Nasdaq: RXRX) to participate in upcoming investor conferences",
+            "Aurora (Nasdaq: AUR) is delivering the benefits of self-driving technology",
+        )
+        for text in false_positives:
+            with self.subTest(text=text):
+                self.assertIsNone(research_evidence.CAPITAL_MARKET_RE.search(text))
+                self.assertIsNone(
+                    base_normalization.CAPITAL_MARKET_ACTION_PATTERN.search(text)
+                )
+                self.assertIsNone(structural_finalization.CAPITAL_EVIDENCE_RE.search(text))
+                self.assertIsNone(entity_semantics.CAPITAL_ACTION_RE.search(text))
 
     def test_production_snapshot_reaches_all_publication_gates_together(self) -> None:
         catalog_text = CATALOG_PATH.read_text(encoding="utf-8")
