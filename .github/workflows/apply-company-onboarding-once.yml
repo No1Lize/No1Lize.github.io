@@ -1,0 +1,164 @@
+name: Apply automatic company onboarding once
+
+on:
+  push:
+    branches: [feat/automatic-company-onboarding-20260805]
+    paths:
+      - .github/workflows/apply-company-onboarding-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-company-onboarding-once
+  cancel-in-progress: false
+
+jobs:
+  migrate-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/automatic-company-onboarding-20260805
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install registry and onboarding integration
+        run: |
+          python tools/install_company_onboarding.py
+          python tools/company_registry.py --migrate-catalog
+          python tools/company_registry.py --check
+
+      - name: Publish the reviewed Shopify candidate
+        id: onboarding
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/onboard_company_candidates.py --seed-shopify \
+            | tee /tmp/company-onboarding-report.json
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          report = json.loads(
+              Path('/tmp/company-onboarding-report.json')
+              .read_text(encoding='utf-8')
+              .splitlines()[-1]
+          )
+          assert report['failedCount'] == 0, report
+          assert report['publishedSlugs'] == ['shopify'], report
+          assert report['awaitingProfileCount'] == 2, report
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
+              output.write('published_slugs=' + ' '.join(report['publishedSlugs']) + '\n')
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          PY
+
+      - name: Build Shopify's first formal profile
+        env:
+          PUBLISHED_SLUGS: ${{ steps.onboarding.outputs.published_slugs }}
+          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for slug in $PUBLISHED_SLUGS; do
+            python tools/crawl_venture_profiles.py \
+              --kind company \
+              --slug "$slug" \
+              --workers 1 \
+              --max-pages 6
+          done
+          python tools/enrich_venture_profiles.py
+          python tools/stabilize_venture_publication_pipeline.py
+          python tools/stabilize_venture_publication_pipeline.py --check
+          python tools/stabilize_venture_research_evidence.py --check
+          python tools/normalize_venture_publication.py --check
+          python tools/stabilize_venture_profiles.py --check
+          python tools/finalize_venture_profiles.py --check
+          python tools/enforce_venture_entity_semantics.py --check
+          python tools/crawl_venture_profiles.py --validate-only
+          python tools/enrich_venture_profiles.py --validate-only
+
+      - name: Rebuild candidate snapshot after publication
+        run: |
+          python tools/build_company_candidates.py
+          python tools/build_company_candidates.py --check
+          python tools/company_registry.py --check
+          python tools/onboard_company_candidates.py --check
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          registry = json.loads(Path('config/company_registry.json').read_text())
+          decisions = json.loads(Path('config/company_candidate_decisions.json').read_text())
+          candidates = json.loads(Path('public/data/company_candidates.json').read_text())
+          profiles = json.loads(Path('public/data/venture_profiles.json').read_text())
+          company = next(row for row in registry['companies'] if row['slug'] == 'shopify')
+          assert company['region'] == '加拿大'
+          assert company['status'] == '已上市'
+          assert company['source']['url'].startswith('https://www.shopify.com/')
+          assert decisions['decisions']['shopify']['status'] == 'published'
+          assert decisions['decisions']['shopify']['mergedSlug'] == 'shopify'
+          assert candidates['publishedCount'] == 1
+          assert candidates['acceptedCount'] == 2
+          assert 'shopify' in profiles['companies']
+          PY
+
+      - name: Run focused and application verification
+        run: |
+          python -m py_compile \
+            tools/company_registry.py \
+            tools/onboard_company_candidates.py \
+            tools/build_company_candidates.py \
+            tools/venture_profile_extraction.py
+          python -m unittest \
+            tests.test_company_registry \
+            tests.test_onboard_company_candidates \
+            tests.test_company_candidates \
+            tests.test_ensure_venture_profile_coverage \
+            tests.test_venture_profile_extraction
+          node --import tsx --test \
+            tests/company-candidate-onboarding.test.ts \
+            tests/company-candidate-review.test.ts
+          npm run lint
+          npm run test:unit
+          npx tsc --noEmit
+          npm run validate:tracking
+          npm run validate:taxonomy
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+
+      - name: Commit migrated registry and published company
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            lib/catalog-data.ts \
+            tools/venture_profile_extraction.py \
+            tools/build_company_candidates.py \
+            components/tracking-company-candidate-review.tsx \
+            components/tracking-company-candidate-review.module.css \
+            components/company-candidate-directory.tsx \
+            config/company_registry.json \
+            config/company_candidate_decisions.json \
+            config/official_company_sources.json \
+            public/data/company_candidate_onboarding.json \
+            public/data/company_candidates.json \
+            public/data/venture_profiles.json
+          git rm -f tools/install_company_onboarding.py
+          git commit -m "feat: publish reviewed companies through automatic onboarding"
+          git pull --rebase origin feat/automatic-company-onboarding-20260805
+          git push origin HEAD:feat/automatic-company-onboarding-20260805
