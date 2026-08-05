@@ -5,21 +5,29 @@ import {
   ArrowLeft,
   BookmarkPlus,
   Building2,
+  CircleHelp,
   Clock3,
   Cpu,
   ExternalLink,
   FileText,
   GitBranch,
+  Link2,
+  Network,
+  ShieldCheck,
+  Sparkles,
   Star,
+  TrendingUp,
   UserRound,
 } from "lucide-react";
 import { TrackingEntityResearchEditor } from "@/components/tracking-entity-research-editor";
 import {
-  relatedTrackingResearchEntities,
+  trackingResearchBrief,
+  trackingResearchRelations,
+} from "@/lib/tracking-entity-insights";
+import {
   trackingResearchEntities,
   trackingResearchEntity,
   trackingResearchGeneratedAt,
-  trackingResearchHref,
   type TrackingResearchEntityType,
 } from "@/lib/tracking-entity-research";
 import styles from "./tracking-entity-detail.module.css";
@@ -34,6 +42,12 @@ const STATE_LABELS = {
   formal: "已有正式档案",
   candidate: "候选审核中",
   tracked: "追踪中",
+} as const;
+
+const CONFIDENCE_LABELS = {
+  high: "直接证据",
+  medium: "共同原文",
+  contextual: "赛道上下文",
 } as const;
 
 function isEntityType(value: string): value is TrackingResearchEntityType {
@@ -69,7 +83,7 @@ export async function generateMetadata({
   const { type, slug } = await params;
   const entity = isEntityType(type) ? trackingResearchEntity(type, slug) : undefined;
   return {
-    title: entity ? `${entity.name} · 追踪研究` : "追踪对象研究",
+    title: entity ? `Research | ${entity.name} | VCIQ` : "追踪对象研究",
     description: entity?.summary ?? "公司、人物和技术主题的可追溯研究时间线。",
   };
 }
@@ -84,7 +98,10 @@ export default async function TrackingEntityDetailPage({
   const entity = trackingResearchEntity(type, slug);
   if (!entity) notFound();
 
-  const related = relatedTrackingResearchEntities(entity, 8);
+  const brief = trackingResearchBrief(entity);
+  const relations = trackingResearchRelations(entity, 12);
+  const evidenceRelations = relations.filter((relation) => relation.evidenceCount > 0);
+  const contextualRelations = relations.filter((relation) => relation.evidenceCount === 0);
   const timeline = entity.timeline.slice(0, 60);
   const firstCapture = timeline
     .filter((item) => item.origin === "manual-capture")
@@ -148,7 +165,7 @@ export default async function TrackingEntityDetailPage({
                 {entity.reasons.map((reason) => <span key={reason}>{reason}</span>)}
               </div>
             ) : (
-              <p className={styles.muted}>尚未记录结构化关注原因。下次从文章点击“＋追踪”时可补充。</p>
+              <p className={styles.muted}>尚未记录结构化关注原因。可在下方“研究维护”中补充。</p>
             )}
             {entity.researchThesis ? (
               <div className={styles.notes}>
@@ -201,6 +218,53 @@ export default async function TrackingEntityDetailPage({
         </aside>
 
         <article className={styles.mainColumn}>
+          <section className={styles.brief}>
+            <header className={styles.sectionHeader}>
+              <div>
+                <p className="section-index">EVIDENCE-BACKED BRIEF</p>
+                <h2>自动研究摘要</h2>
+              </div>
+              <span className={styles.briefPriority}>
+                {entity.priorityStars || "☆☆☆☆☆"} · {brief.priorityLabel}
+              </span>
+            </header>
+            <div className={styles.briefLead}>
+              <span><Sparkles size={17} aria-hidden="true" />规则汇总</span>
+              <h3>{brief.headline}</h3>
+              <p>{brief.summary}</p>
+            </div>
+            {brief.signals.length ? (
+              <div className={styles.signalGrid}>
+                {brief.signals.map((signal) => (
+                  <div key={signal.category}>
+                    <span><TrendingUp size={14} aria-hidden="true" />{signal.label}</span>
+                    <strong>{signal.count}</strong>
+                    <small>{displayDate(signal.latestAt)} · {signal.latestTitle}</small>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+            <div className={styles.briefColumns}>
+              <section>
+                <h3><ShieldCheck size={16} aria-hidden="true" />重点观察</h3>
+                {brief.watchItems.length ? (
+                  <ul>{brief.watchItems.map((item) => <li key={item}>{item}</li>)}</ul>
+                ) : (
+                  <p>尚未形成结构化观察项。</p>
+                )}
+              </section>
+              <section>
+                <h3><CircleHelp size={16} aria-hidden="true" />待核问题</h3>
+                {brief.openQuestions.length ? (
+                  <ul>{brief.openQuestions.map((item) => <li key={item}>{item}</li>)}</ul>
+                ) : (
+                  <p>当前没有规则识别出的待核问题。</p>
+                )}
+              </section>
+            </div>
+            <p className={styles.methodology}>{brief.methodology}</p>
+          </section>
+
           <header className={styles.sectionHeader}>
             <div>
               <p className="section-index">RESEARCH TIMELINE</p>
@@ -256,23 +320,58 @@ export default async function TrackingEntityDetailPage({
             ) : null}
           </div>
 
-          {related.length ? (
-            <section className={styles.related}>
+          {relations.length ? (
+            <section className={styles.relationships}>
               <header className={styles.sectionHeader}>
                 <div>
-                  <p className="section-index">RELATED ENTITIES</p>
-                  <h2>共同赛道对象</h2>
+                  <p className="section-index">RELATIONS & CONTEXT</p>
+                  <h2>关系与共同赛道</h2>
                 </div>
+                <p>竞争、合作、人物和共同出现必须绑定共同原文；共同赛道只表示研究上下文。</p>
               </header>
-              <div className={styles.relatedGrid}>
-                {related.map((item) => (
-                  <Link href={trackingResearchHref(item)} key={item.id}>
-                    <span><TypeIcon type={item.entityType} size={15} />{TYPE_LABELS[item.entityType]}</span>
-                    <strong>{item.name}</strong>
-                    <small>{item.trackNames.join(" · ")}</small>
-                  </Link>
-                ))}
-              </div>
+
+              {evidenceRelations.length ? (
+                <div className={styles.relationGrid}>
+                  {evidenceRelations.map((relation) => (
+                    <article className={styles.relationCard} data-confidence={relation.confidence} key={relation.entity.id}>
+                      <header>
+                        <div>
+                          <span><TypeIcon type={relation.entity.entityType} size={14} />{TYPE_LABELS[relation.entity.entityType]}</span>
+                          <em>{relation.label} · {CONFIDENCE_LABELS[relation.confidence]}</em>
+                        </div>
+                        <Link href={relation.href}>
+                          {relation.entity.name}<ExternalLink size={13} aria-hidden="true" />
+                        </Link>
+                      </header>
+                      {relation.sharedTracks.length ? <p>共同赛道：{relation.sharedTracks.join("、")}</p> : null}
+                      <div className={styles.relationEvidence}>
+                        {relation.evidence.map((evidence) => (
+                          <a href={evidence.url} target="_blank" rel="noreferrer" key={`${relation.entity.id}-${evidence.url}`}>
+                            <span>{displayDate(evidence.eventDate)} · {evidence.sourceName} · {evidence.eventType}</span>
+                            <strong>{evidence.title}</strong>
+                            <Link2 size={13} aria-hidden="true" />
+                          </a>
+                        ))}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              ) : null}
+
+              {contextualRelations.length ? (
+                <div className={styles.contextualRelations}>
+                  <h3><Network size={16} aria-hidden="true" />赛道上下文</h3>
+                  <div>
+                    {contextualRelations.map((relation) => (
+                      <Link href={relation.href} key={relation.entity.id}>
+                        <span><TypeIcon type={relation.entity.entityType} size={14} />{relation.label}</span>
+                        <strong>{relation.entity.name}</strong>
+                        <small>{relation.sharedTracks.join(" · ")}</small>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </section>
           ) : null}
         </article>
