@@ -15,6 +15,7 @@ try:
     from . import finalize_venture_profiles as structural_finalization
     from . import normalize_venture_profiles as base_normalization
     from . import refine_venture_research_evidence as research_evidence
+    from . import sanitize_venture_profiles as low_level_sanitization
     from .normalize_venture_publication import normalize_publication_payload
     from .stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
     from .stabilize_venture_research_evidence import (
@@ -28,6 +29,7 @@ except ImportError:
     import finalize_venture_profiles as structural_finalization
     import normalize_venture_profiles as base_normalization
     import refine_venture_research_evidence as research_evidence
+    import sanitize_venture_profiles as low_level_sanitization
     from normalize_venture_publication import normalize_publication_payload
     from stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
     from stabilize_venture_research_evidence import (
@@ -71,6 +73,7 @@ def align_capital_event_patterns() -> None:
 
     research_evidence.CAPITAL_MARKET_RE = CROSS_GATE_CAPITAL_ACTION_RE
     base_normalization.CAPITAL_MARKET_ACTION_PATTERN = CROSS_GATE_CAPITAL_ACTION_RE
+    low_level_sanitization.CAPITAL_ACTION_RE = CROSS_GATE_CAPITAL_ACTION_RE
     structural_finalization.CAPITAL_EVIDENCE_RE = CROSS_GATE_CAPITAL_ACTION_RE
     entity_semantics.CAPITAL_ACTION_RE = CROSS_GATE_CAPITAL_ACTION_RE
 
