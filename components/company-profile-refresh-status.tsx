@@ -18,7 +18,7 @@ export function CompanyProfileRefreshStatus() {
           <p>PROFILE REFRESH QUEUE</p>
           <h2 id="company-profile-refresh-title">增量档案刷新</h2>
           <span>
-            重大融资、并购、IPO、监管、技术和产品事件进入限量队列；每天 13:35、17:35、21:35（UTC+8）处理。
+            仅更新已存在的正式公司档案，无需逐条人工审核，也不会创建新公司。重大融资、并购、IPO、监管、技术和产品事件进入限量队列；每天 13:35、17:35、21:35（UTC+8）自动处理并合并到现有档案。
           </span>
         </div>
       </div>
