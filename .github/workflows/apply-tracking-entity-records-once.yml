@@ -1,0 +1,94 @@
+name: Apply tracked entity research records once
+
+on:
+  push:
+    branches: [feat/tracking-entity-research-hub-20260805]
+    paths:
+      - .github/workflows/apply-tracking-entity-records-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-tracking-entity-records-once
+  cancel-in-progress: false
+
+jobs:
+  apply-and-verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/tracking-entity-research-hub-20260805
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Apply research record integration
+        run: |
+          python tools/patch_tracking_entity_record_integration.py
+          python tools/patch_tracking_entity_record_followup.py
+
+      - name: Verify focused research record behavior
+        run: |
+          node --import tsx --test \
+            tests/tracking-entity-records.test.ts \
+            tests/tracking-entity-research.test.ts \
+            tests/tracking-capture.test.ts
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          payload = json.loads(Path('config/tracking_entity_records.json').read_text())
+          assert payload == {"schemaVersion": 1, "generatedAt": "", "records": {}}
+          PY
+
+      - name: Verify application and static research routes
+        run: |
+          npm run lint
+          npm run test:unit
+          npx tsc --noEmit
+          npm run validate:tracking
+          npm run validate:taxonomy
+          python tools/enrich_tracking_snapshot.py
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          git restore public/data/articles.json
+          test -f out/tracking/entities/index.html
+          count=$(find out/tracking/entities -name index.html | wc -l)
+          echo "Generated tracking entity pages: $count"
+          test "$count" -ge 200
+
+      - name: Commit verified integration
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            app/tracking/entities/page.tsx \
+            'app/tracking/entities/[type]/[slug]/page.tsx' \
+            components/tracking-entity-directory.tsx \
+            components/tracking-entity-directory.module.css \
+            lib/tracking-entity-research.ts \
+            tests/tracking-entity-research.test.ts
+          git rm -f \
+            tools/patch_tracking_entity_record_integration.py \
+            tools/patch_tracking_entity_record_followup.py
+          if git diff --cached --quiet; then
+            echo "No integration changes to commit."
+            exit 0
+          fi
+          git commit -m "feat: add priority and analyst notes to tracked entities"
+          git pull --rebase origin feat/tracking-entity-research-hub-20260805
+          git push origin HEAD:feat/tracking-entity-research-hub-20260805
