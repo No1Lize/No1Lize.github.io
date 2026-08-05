@@ -6,10 +6,13 @@ from __future__ import annotations
 import argparse
 import copy
 import json
+import re
 from pathlib import Path
 from typing import Any, Callable
 
 try:
+    from . import enforce_venture_entity_semantics as entity_semantics
+    from . import refine_venture_research_evidence as research_evidence
     from .normalize_venture_publication import normalize_publication_payload
     from .stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
     from .stabilize_venture_research_evidence import (
@@ -19,6 +22,8 @@ try:
         stabilize_evidence_snapshot,
     )
 except ImportError:
+    import enforce_venture_entity_semantics as entity_semantics
+    import refine_venture_research_evidence as research_evidence
     from normalize_venture_publication import normalize_publication_payload
     from stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
     from stabilize_venture_research_evidence import (
@@ -32,6 +37,29 @@ except ImportError:
 EvidenceStabilizer = Callable[..., tuple[dict[str, Any], dict[str, Any]]]
 Normalizer = Callable[[dict[str, Any], str], tuple[dict[str, Any], dict[str, Any]]]
 TerminalStabilizer = Callable[..., tuple[dict[str, Any], dict[str, Any]]]
+
+# Evidence routing and terminal subject validation must recognize the same
+# capital-market actions. If one gate treats an article as financing while the
+# other treats it as a merger/listing, the shared publication pipeline can
+# oscillate forever. Keep this pattern in the orchestrator and install the same
+# compiled object into both modules before every fixed-point run.
+CROSS_GATE_CAPITAL_ACTION_RE = re.compile(
+    r"(?:\bipo\b|\binitial public offering\b|\blisted\b|\blisted on\b|"
+    r"\blisting\b|\blisting on\b|\bwent public\b|\bgo(?:es|ing)? public\b|"
+    r"\bbecom(?:e|es|ing) (?:a )?public company\b|\bpublic market\b|"
+    r"\bnasdaq\b|\bnyse\b|\bhkex\b|\bstock exchange\b|"
+    r"\bacquired\b|\bacquired by\b|\bacquisition\b|"
+    r"\bmerg(?:e|ed|er|ers|ing)\b|\bbusiness combination\b|\bdelisted\b|"
+    r"上市|挂牌|港股上市|美股上市|交易所|公开市场|并购|收购|退出|退市)",
+    re.IGNORECASE,
+)
+
+
+def align_capital_event_patterns() -> None:
+    """Install one capital-event vocabulary across the two mutable gates."""
+
+    research_evidence.CAPITAL_MARKET_RE = CROSS_GATE_CAPITAL_ACTION_RE
+    entity_semantics.CAPITAL_ACTION_RE = CROSS_GATE_CAPITAL_ACTION_RE
 
 
 def _state_key(payload: dict[str, Any]) -> str:
@@ -133,6 +161,7 @@ def stabilize_publication_snapshot(
     if max_passes < 1:
         raise ValueError("max_passes must be positive")
 
+    align_capital_event_patterns()
     current = copy.deepcopy(snapshot)
     seen: dict[str, int] = {_state_key(current): 0}
     history: list[dict[str, Any]] = []
