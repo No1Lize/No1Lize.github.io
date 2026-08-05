@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   # Failed or cancelled refresh completions must skip without entering the writer queue.
@@ -48,6 +49,7 @@ jobs:
         run: python tools/research_agent.py --check
 
       - name: Commit generated research data
+        id: publish
         shell: bash
         run: |
           set -euo pipefail
@@ -56,6 +58,7 @@ jobs:
             public/data/research_agent_snapshot.json
           if git diff --cached --quiet; then
             echo "Research Agent produced no repository changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
@@ -64,6 +67,7 @@ jobs:
           git commit -m "data: publish daily research agent brief"
           for attempt in 1 2 3; do
             if git push origin HEAD:main; then
+              echo "changed=true" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             if [ "$attempt" -eq 3 ]; then
@@ -71,3 +75,9 @@ jobs:
             fi
             git pull --rebase -X theirs origin main
           done
+
+      - name: Deploy published research data
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
