@@ -10,6 +10,7 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
   const [region, setRegion] = useState("全部");
   const [sector, setSector] = useState("全部");
   const [page, setPage] = useState(1);
+  const regions = ["全部", ...Array.from(new Set(companies.map((item) => item.region)))];
   const sectors = ["全部", ...Array.from(new Set(companies.map((item) => item.sector)))];
   const filtered = useMemo(
     () => companies.filter((item) =>
@@ -31,7 +32,7 @@ export function CompanyDirectory({ pageSize = 12 }: { pageSize?: number }) {
     <>
       <div className="directory-filters">
         <label className="directory-search"><Search size={16} /><input value={query} onChange={(e) => resetPage(() => setQuery(e.target.value))} placeholder="公司名称、产品或关键词" aria-label="搜索创业公司" /></label>
-        <select value={region} onChange={(e) => resetPage(() => setRegion(e.target.value))} aria-label="地区"><option>全部</option><option>中国</option><option>美国</option></select>
+        <select value={region} onChange={(e) => resetPage(() => setRegion(e.target.value))} aria-label="地区">{regions.map((item) => <option key={item}>{item}</option>)}</select>
         <select value={sector} onChange={(e) => resetPage(() => setSector(e.target.value))} aria-label="赛道">{sectors.map((item) => <option key={item}>{item}</option>)}</select>
         <span>共 {filtered.length} 家真实公司档案</span>
       </div>

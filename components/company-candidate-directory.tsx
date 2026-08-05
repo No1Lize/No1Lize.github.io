@@ -18,7 +18,7 @@ export function CompanyCandidateDirectory() {
             <h2 id="company-candidates-title">候选新公司</h2>
           </div>
           <p>
-            仅使用结构化公司字段和可追溯来源生成。候选需人工审核，系统不会自动加入正式公司档案。
+            仅使用结构化公司字段和可追溯来源生成。候选需先人工确认公司实体；审核通过后还需补齐规范名称、slug 与官方来源，质量门通过后才会自动创建正式公司档案。
           </p>
         </div>
         <div className={styles.summary}>

@@ -16,11 +16,44 @@
       "reviewedBy": "VCIQ"
     },
     "shopify": {
-      "status": "accepted",
+      "status": "published",
       "note": "符合筛选创业公司审核条件",
-      "mergedSlug": "",
+      "mergedSlug": "shopify",
       "decidedAt": "2026-08-04T23:01:46.990Z",
-      "reviewedBy": "VCIQ"
+      "reviewedBy": "VCIQ",
+      "onboarding": {
+        "status": "published",
+        "mode": "create",
+        "profile": {
+          "slug": "shopify",
+          "name": "Shopify",
+          "englishName": "Shopify",
+          "region": "加拿大",
+          "sector": "新消费",
+          "stage": "已上市",
+          "status": "已上市",
+          "founded": "2006",
+          "headquarters": "Ottawa, Canada",
+          "summary": "为全球商家提供电商建站、支付、营销、线下零售和企业级商业基础设施。",
+          "product": "Shopify 商业平台、在线商店、Shopify Payments、Shop Pay、POS 与企业级商业工具。",
+          "homepage": "https://www.shopify.com/news/about-us",
+          "newsUrls": [
+            "https://www.shopify.com/news",
+            "https://www.shopify.com/news/category/product-news",
+            "https://www.shopify.com/investors"
+          ],
+          "aliases": [
+            "Shopify Inc."
+          ],
+          "confidence": 0.98
+        },
+        "evidenceFingerprint": "{\"decisionKey\":\"shopify\",\"score\":70,\"articleCount\":6,\"sourceCount\":2,\"sourceArticleIds\":[\"official-user-shopify-23e3e463dc8eaad1\",\"official-user-shopify-97ea8784c7dfd921\",\"official-user-shopify-cf0fa6cfe8a41107\",\"official-user-shopify-daa260464549b1d1\",\"official-user-shopify-f8bf13b91565337b\",\"user-source-source-auto-shopify-cb8e5b9d50117d8b\"],\"sourceUrls\":[\"https://help.shopify.com/en\",\"https://www.shopify.com/blog/latest\",\"https://www.shopify.com/blog/what-is-shopify\",\"https://www.shopify.com/editions/spring2026\",\"https://www.shopify.com/enterprise/blog/latest\",\"https://www.shopify.com/partners/blog/latest\"]}",
+        "requestedAt": "2026-08-05T01:21:16+00:00",
+        "requestedBy": "VCIQ",
+        "publishedAt": "2026-08-05T01:21:16+00:00",
+        "publishedSlug": "shopify",
+        "error": ""
+      }
     }
   }
 }

@@ -2,6 +2,7 @@ import type {
   CompanyCandidate,
   CompanyCandidateStatus,
 } from "@/lib/company-candidate-data";
+import type { CompanyCandidateOnboarding } from "@/lib/company-candidate-onboarding";
 
 export type CompanyCandidateDecision = {
   status: CompanyCandidateStatus;
@@ -9,6 +10,7 @@ export type CompanyCandidateDecision = {
   mergedSlug: string;
   decidedAt: string;
   reviewedBy: string;
+  onboarding?: CompanyCandidateOnboarding;
 };
 
 export type CompanyCandidateDecisionManifest = {
@@ -18,6 +20,7 @@ export type CompanyCandidateDecisionManifest = {
 
 export type ReviewedCompanyCandidate = CompanyCandidate & {
   reviewedBy: string;
+  onboarding?: CompanyCandidateOnboarding;
 };
 
 export type CompanyCandidateReviewCounts = Record<CompanyCandidateStatus, number>;
@@ -27,14 +30,73 @@ const VALID_STATUSES = new Set<CompanyCandidateStatus>([
   "accepted",
   "rejected",
   "merged",
+  "published",
 ]);
 
 function text(value: unknown, limit: number) {
   return String(value ?? "").replace(/\s+/gu, " ").trim().slice(0, limit);
 }
 
+function list(value: unknown, limit: number) {
+  if (!Array.isArray(value)) return [];
+  const result: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of value) {
+    const item = text(raw, 500);
+    const key = item.toLocaleLowerCase("zh-CN");
+    if (!item || seen.has(key)) continue;
+    result.push(item);
+    seen.add(key);
+    if (result.length >= limit) break;
+  }
+  return result;
+}
+
 function decisionKey(value: unknown) {
   return text(value, 160).normalize("NFKC").toLocaleLowerCase("zh-CN");
+}
+
+function onboarding(value: unknown): CompanyCandidateOnboarding | undefined {
+  if (!value || typeof value !== "object") return undefined;
+  const row = value as Record<string, unknown>;
+  const profile = row.profile && typeof row.profile === "object"
+    ? (row.profile as Record<string, unknown>)
+    : {};
+  const rawStatus = text(row.status, 40) as CompanyCandidateOnboarding["status"];
+  const statuses = new Set<CompanyCandidateOnboarding["status"]>([
+    "awaiting_profile",
+    "requested",
+    "published",
+    "failed",
+    "merged",
+  ]);
+  return {
+    status: statuses.has(rawStatus) ? rawStatus : "awaiting_profile",
+    mode: row.mode === "merge" ? "merge" : "create",
+    profile: {
+      slug: text(profile.slug, 120).toLocaleLowerCase("en-US"),
+      name: text(profile.name, 240),
+      englishName: text(profile.englishName, 240),
+      region: text(profile.region, 80),
+      sector: text(profile.sector, 120),
+      stage: text(profile.stage, 80),
+      status: profile.status === "已上市" ? "已上市" : "运营中",
+      founded: text(profile.founded, 40),
+      headquarters: text(profile.headquarters, 160),
+      summary: text(profile.summary, 1_200),
+      product: text(profile.product, 1_200),
+      homepage: text(profile.homepage, 2_000),
+      newsUrls: list(profile.newsUrls, 20),
+      aliases: list(profile.aliases, 30),
+      confidence: Math.max(0.5, Math.min(1, Number(profile.confidence) || 0.9)),
+    },
+    evidenceFingerprint: text(row.evidenceFingerprint, 10_000),
+    requestedAt: text(row.requestedAt, 80),
+    requestedBy: text(row.requestedBy, 120),
+    publishedAt: text(row.publishedAt, 80),
+    publishedSlug: text(row.publishedSlug, 120),
+    error: text(row.error, 1_000),
+  };
 }
 
 export function normalizeCompanyCandidateDecisionManifest(
@@ -54,12 +116,14 @@ export function normalizeCompanyCandidateDecisionManifest(
     const key = decisionKey(rawKey);
     const status = text(row.status, 20) as CompanyCandidateStatus;
     if (!key || !VALID_STATUSES.has(status) || status === "pending") continue;
+    const normalizedOnboarding = onboarding(row.onboarding);
     decisions[key] = {
       status,
       note: text(row.note, 500),
       mergedSlug: text(row.mergedSlug, 100),
       decidedAt: text(row.decidedAt, 60),
       reviewedBy: text(row.reviewedBy, 100),
+      onboarding: normalizedOnboarding,
     };
   }
 
@@ -90,6 +154,7 @@ export function applyCompanyCandidateDecisions(
       mergedSlug: decision.mergedSlug,
       decidedAt: decision.decidedAt,
       reviewedBy: decision.reviewedBy,
+      onboarding: decision.onboarding,
     };
   });
 }
@@ -102,6 +167,7 @@ export function countCompanyCandidateReviews(
     accepted: 0,
     rejected: 0,
     merged: 0,
+    published: 0,
   };
   for (const candidate of candidates) counts[candidate.status] += 1;
   return counts;
@@ -123,6 +189,7 @@ export function setCompanyCandidateDecision(
       mergedSlug: text(decision.mergedSlug, 100),
       decidedAt: text(decision.decidedAt, 60),
       reviewedBy: text(decision.reviewedBy, 100),
+      onboarding: onboarding(decision.onboarding),
     };
   }
   return {
@@ -136,8 +203,8 @@ export function validateCompanyCandidateDecision({
   note,
   mergedSlug,
 }: Pick<CompanyCandidateDecision, "status" | "note" | "mergedSlug">) {
-  if (!VALID_STATUSES.has(status)) {
-    return { valid: false, message: "未知审核状态。" };
+  if (!VALID_STATUSES.has(status) || status === "published") {
+    return { valid: false, message: "未知或不可手工设置的审核状态。" };
   }
   if (status === "pending") return { valid: true, message: "" };
 

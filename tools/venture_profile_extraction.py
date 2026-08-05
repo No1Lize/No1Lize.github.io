@@ -14,6 +14,7 @@ import re
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from html.parser import HTMLParser
+from pathlib import Path
 from typing import Any, Iterable, Sequence
 from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
@@ -545,6 +546,41 @@ def parse_catalog(text: str) -> tuple[list[CatalogCompany], list[CatalogInstitut
                 source_url=source_url,
             )
         )
+
+    if not companies:
+        registry_path = (
+            Path(__file__).resolve().parents[1]
+            / "config"
+            / "company_registry.json"
+        )
+        try:
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            registry = {}
+        for raw in registry.get("companies", []):
+            if not isinstance(raw, dict):
+                continue
+            source = raw.get("source") if isinstance(raw.get("source"), dict) else {}
+            slug = clean_text(raw.get("slug"), 100)
+            name = clean_text(raw.get("name"), 200)
+            source_url = normalize_url(source.get("url"))
+            if not slug or not name or not source_url:
+                continue
+            companies.append(
+                CatalogCompany(
+                    slug=slug,
+                    name=name,
+                    english_name=clean_text(raw.get("englishName"), 200),
+                    region=clean_text(raw.get("region"), 80),
+                    sector=clean_text(raw.get("sector"), 120),
+                    stage=clean_text(raw.get("stage"), 80),
+                    status=clean_text(raw.get("status"), 80),
+                    summary=clean_text(raw.get("summary"), 1200),
+                    product=clean_text(raw.get("product"), 1200),
+                    source_name=clean_text(source.get("name"), 200) or name,
+                    source_url=source_url,
+                )
+            )
 
     for line in _catalog_lines(text, "export const institutionCatalog", "export type IpoCompany"):
         source_name, source_url = _source(line)

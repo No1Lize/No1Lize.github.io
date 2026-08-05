@@ -79,6 +79,7 @@ except ImportError:  # Executed directly with ``python tools/...``.
 
 REGISTRY_PATH = ROOT / "config" / "official_company_sources.json"
 CATALOG_PATH = ROOT / "lib" / "catalog-data.ts"
+COMPANY_REGISTRY_PATH = ROOT / "config" / "company_registry.json"
 NEWS_PATH_HINTS = (
     "/news",
     "/newsroom",
@@ -260,8 +261,48 @@ class FeedLinkParser:
         return links
 
 
-def _load_catalog_companies(path: Path = CATALOG_PATH) -> dict[str, dict[str, str]]:
-    """Read the canonical company catalog without maintaining a second slug list."""
+def _load_company_registry_json(
+    path: Path = COMPANY_REGISTRY_PATH,
+) -> dict[str, dict[str, str]]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"could not read company registry JSON: {path}") from exc
+    rows = payload.get("companies", [])
+    if not isinstance(rows, list):
+        raise ValueError("company registry JSON must contain a companies array")
+    companies: dict[str, dict[str, str]] = {}
+    for raw in rows:
+        if not isinstance(raw, dict):
+            continue
+        slug = clean_text(str(raw.get("slug", "")))
+        name = clean_text(str(raw.get("name", "")))
+        region = clean_text(str(raw.get("region", "")))
+        sector = clean_text(str(raw.get("sector", "")))
+        if not slug or not name or not region or not sector:
+            continue
+        if slug in companies:
+            raise ValueError(f"company registry JSON contains duplicate slug: {slug}")
+        companies[slug] = {
+            "name": name,
+            "region": region,
+            "sector": sector,
+        }
+    if not companies:
+        raise ValueError("company registry JSON parser returned no companies")
+    return companies
+
+
+def _load_catalog_companies(
+    path: Path = CATALOG_PATH,
+    company_registry_path: Path = COMPANY_REGISTRY_PATH,
+) -> dict[str, dict[str, str]]:
+    """Read the canonical company registry without a second slug list.
+
+    Legacy fixtures and older branches may still expose a TypeScript company array.
+    Production now exports companies from ``config/company_registry.json``; when the
+    array is absent, the crawler reads that versioned registry directly.
+    """
 
     body = path.read_text(encoding="utf-8")
     section = re.search(
@@ -269,27 +310,29 @@ def _load_catalog_companies(path: Path = CATALOG_PATH) -> dict[str, dict[str, st
         body,
         flags=re.DOTALL,
     )
-    if not section:
-        raise ValueError("could not locate the companies array in catalog-data.ts")
-    pattern = re.compile(
-        r'\{\s*slug:"([^"]+)",\s*name:"([^"]+)",'
-        r'(?:\s*englishName:"[^"]+",)?\s*region:"([^"]+)",\s*sector:"([^"]+)"'
-    )
-    companies = {
-        match.group(1): {
-            "name": match.group(2),
-            "region": match.group(3),
-            "sector": match.group(4),
+    if section:
+        pattern = re.compile(
+            r'\{\s*slug:"([^"]+)",\s*name:"([^"]+)",'
+            r'(?:\s*englishName:"[^"]+",)?\s*region:"([^"]+)",\s*sector:"([^"]+)"'
+        )
+        companies = {
+            match.group(1): {
+                "name": match.group(2),
+                "region": match.group(3),
+                "sector": match.group(4),
+            }
+            for match in pattern.finditer(section.group(1))
         }
-        for match in pattern.finditer(section.group(1))
-    }
-    if not companies:
+        if companies:
+            return companies
         raise ValueError("company catalog parser returned no companies")
-    return companies
+    return _load_company_registry_json(company_registry_path)
 
 
 def load_registry(
-    path: Path = REGISTRY_PATH, catalog_path: Path = CATALOG_PATH
+    path: Path = REGISTRY_PATH,
+    catalog_path: Path = CATALOG_PATH,
+    company_registry_path: Path = COMPANY_REGISTRY_PATH,
 ) -> list[CompanySpec]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     defaults = payload.get("defaults", {})
@@ -366,7 +409,7 @@ def load_registry(
         raise ValueError("official company registry contains duplicate slugs")
     # The catalog/registry slug-set comparison below is the canonical coverage
     # gate. A second hard-coded count becomes stale whenever a company is added.
-    catalog = _load_catalog_companies(catalog_path)
+    catalog = _load_catalog_companies(catalog_path, company_registry_path)
     registry_by_slug = {spec.slug: spec for spec in specs}
     missing = sorted(set(catalog) - set(registry_by_slug))
     extra = sorted(set(registry_by_slug) - set(catalog))

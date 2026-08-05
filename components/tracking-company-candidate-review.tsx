@@ -51,6 +51,7 @@ const FILTERS: CompanyCandidateStatus[] = [
   "accepted",
   "rejected",
   "merged",
+  "published",
 ];
 
 const STATUS_LABELS: Record<CompanyCandidateStatus, string> = {
@@ -58,6 +59,7 @@ const STATUS_LABELS: Record<CompanyCandidateStatus, string> = {
   accepted: "已通过",
   rejected: "已拒绝",
   merged: "已合并",
+  published: "已发布",
 };
 
 const emptyMountSubscribe = () => () => {};
@@ -340,6 +342,11 @@ export function TrackingCompanyCandidateReview() {
 
   async function saveDecision(nextStatus: CompanyCandidateStatus) {
     if (!selected) return;
+    if (selected.status === "published") {
+      setStatus("已发布公司必须通过正式公司注册表维护，不能在候选审核区回退或覆盖。");
+      setStatusKind("error");
+      return;
+    }
     const cleanToken = (token || currentToken()).trim();
     if (!cleanToken || !connected) {
       setStatus("请先在页面上方完成管理员登录，再执行审核操作。");
@@ -467,8 +474,8 @@ export function TrackingCompanyCandidateReview() {
             <p className="eyebrow">CANDIDATE COMPANY REVIEW</p>
             <h2 id="company-candidate-review-title">候选公司人工审核</h2>
             <p>
-              查看候选证据并执行通过、拒绝或合并操作。决定写入
-              <code> {DECISION_PATH}</code>，不会自动把候选加入正式公司档案。
+              查看候选证据并执行通过、拒绝或合并操作。审核通过后需在下方补齐规范实体资料；提交建档请求后，工作流会自动写入正式公司注册表、抓取档案并发布页面。决定写入
+              <code> {DECISION_PATH}</code>。
             </p>
           </div>
           <div className={styles.summary} aria-label="候选审核统计">
@@ -476,6 +483,7 @@ export function TrackingCompanyCandidateReview() {
             <span><small>已通过</small><strong>{counts.accepted}</strong></span>
             <span><small>已拒绝</small><strong>{counts.rejected}</strong></span>
             <span><small>已合并</small><strong>{counts.merged}</strong></span>
+            <span><small>已发布</small><strong>{counts.published}</strong></span>
           </div>
         </header>
 

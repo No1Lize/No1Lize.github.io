@@ -46,5 +46,33 @@ class DynamicOfficialCompanyRegistryTests(unittest.TestCase):
             load_registry(self.registry, self.catalog)
 
 
+    def test_json_registry_fallback_after_typescript_catalog_migration(self) -> None:
+        self.write_registry(self.rows)
+        migrated_catalog = Path(self.tmp.name) / "catalog-migrated.ts"
+        migrated_catalog.write_text(
+            'export { companies } from "./company-registry";\n',
+            encoding="utf-8",
+        )
+        company_registry = Path(self.tmp.name) / "company_registry.json"
+        company_registry.write_text(
+            json.dumps(
+                {
+                    "schemaVersion": 1,
+                    "companies": [
+                        {
+                            "slug": row["slug"],
+                            "name": row["name"],
+                            "region": row["region"],
+                            "sector": row["sector"],
+                        }
+                        for row in self.rows
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
+        specs = load_registry(self.registry, migrated_catalog, company_registry)
+        self.assertEqual([spec.slug for spec in specs], ["alpha", "beta"])
+
 if __name__ == "__main__":
     unittest.main()

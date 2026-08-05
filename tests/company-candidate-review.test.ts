@@ -77,6 +77,7 @@ test("manifest decisions override stale candidate snapshot status", () => {
     accepted: 0,
     rejected: 1,
     merged: 0,
+    published: 0,
   });
 });
 

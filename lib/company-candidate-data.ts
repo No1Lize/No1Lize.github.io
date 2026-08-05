@@ -1,6 +1,11 @@
 import rawCandidates from "@/public/data/company_candidates.json";
 
-export type CompanyCandidateStatus = "pending" | "accepted" | "rejected" | "merged";
+export type CompanyCandidateStatus =
+  | "pending"
+  | "accepted"
+  | "rejected"
+  | "merged"
+  | "published";
 
 export type CompanyCandidate = {
   id: string;
@@ -32,6 +37,8 @@ export type CompanyCandidateSnapshot = {
   pendingCount: number;
   acceptedCount: number;
   rejectedCount: number;
+  mergedCount: number;
+  publishedCount: number;
   candidates: CompanyCandidate[];
 };
 
@@ -40,6 +47,7 @@ const statuses = new Set<CompanyCandidateStatus>([
   "accepted",
   "rejected",
   "merged",
+  "published",
 ]);
 
 function text(value: unknown, limit = 500) {
@@ -97,6 +105,8 @@ export function normalizeCompanyCandidateSnapshot(value: unknown): CompanyCandid
     pendingCount: candidates.filter((item) => item.status === "pending").length,
     acceptedCount: candidates.filter((item) => item.status === "accepted").length,
     rejectedCount: candidates.filter((item) => item.status === "rejected").length,
+    mergedCount: candidates.filter((item) => item.status === "merged").length,
+    publishedCount: candidates.filter((item) => item.status === "published").length,
     candidates,
   };
 }

@@ -1,59 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T08:35:56+00:00",
+  "generatedAt": "2026-08-04T18:46:30+00:00",
   "candidateCount": 3,
-  "pendingCount": 3,
-  "acceptedCount": 0,
+  "pendingCount": 0,
+  "acceptedCount": 2,
   "rejectedCount": 0,
+  "mergedCount": 0,
+  "publishedCount": 1,
   "candidates": [
-    {
-      "id": "candidate-shopify-c3a45cb7",
-      "decisionKey": "shopify",
-      "name": "Shopify",
-      "aliases": [
-        "Shopify"
-      ],
-      "region": "全球",
-      "sector": "新消费",
-      "score": 70,
-      "status": "pending",
-      "reasons": [
-        "6 条结构化公司记录",
-        "至少两个独立公开来源",
-        "存在官方、原始或监管来源",
-        "最近 90 天仍有公开活动"
-      ],
-      "firstSeenAt": "2025-11-25T00:00:00+00:00",
-      "lastSeenAt": "2026-08-03T00:00:00+00:00",
-      "articleCount": 6,
-      "sourceCount": 2,
-      "sourceHosts": [
-        "help.shopify.com",
-        "shopify.com"
-      ],
-      "sourceArticleIds": [
-        "official-user-shopify-23e3e463dc8eaad1",
-        "official-user-shopify-97ea8784c7dfd921",
-        "official-user-shopify-cf0fa6cfe8a41107",
-        "official-user-shopify-daa260464549b1d1",
-        "official-user-shopify-f8bf13b91565337b",
-        "user-source-source-auto-shopify-cb8e5b9d50117d8b"
-      ],
-      "sourceUrls": [
-        "https://www.shopify.com/blog/latest",
-        "https://help.shopify.com/en",
-        "https://www.shopify.com/enterprise/blog/latest",
-        "https://www.shopify.com/partners/blog/latest",
-        "https://www.shopify.com/editions/spring2026",
-        "https://www.shopify.com/blog/what-is-shopify"
-      ],
-      "eventTypes": [
-        "公司动态"
-      ],
-      "note": "",
-      "mergedSlug": "",
-      "decidedAt": ""
-    },
     {
       "id": "candidate-company-f2a4dca8",
       "decisionKey": "埃隆马斯克",
@@ -64,7 +18,7 @@
       "region": "全球",
       "sector": "商业航天",
       "score": 40,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "存在官方、原始或监管来源",
         "最近 90 天仍有公开活动"
@@ -85,9 +39,11 @@
       "eventTypes": [
         "人物观点"
       ],
-      "note": "",
+      "note": "x.com是创业公司，埃隆·马斯克其实是创业人物，但x.com是他的主要创业公司，可以列入",
       "mergedSlug": "",
-      "decidedAt": ""
+      "decidedAt": "2026-08-04T23:04:23.470Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
     },
     {
       "id": "candidate-company-14b09e53",
@@ -99,7 +55,7 @@
       "region": "中国",
       "sector": "商业航天",
       "score": 40,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "存在官方、原始或监管来源",
         "最近 90 天仍有公开活动"
@@ -120,9 +76,89 @@
       "eventTypes": [
         "公司动态"
       ],
-      "note": "",
+      "note": "虽是老互联网公司，但也是属于老牌创业公司，这类互联网公司都算，可以推荐类似公司",
       "mergedSlug": "",
-      "decidedAt": ""
+      "decidedAt": "2026-08-04T23:05:36.570Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-shopify-c3a45cb7",
+      "decisionKey": "shopify",
+      "name": "Shopify",
+      "aliases": [
+        "Shopify"
+      ],
+      "region": "全球",
+      "sector": "新消费",
+      "score": 70,
+      "status": "published",
+      "reasons": [
+        "4 条结构化公司记录",
+        "至少两个独立公开来源",
+        "存在官方、原始或监管来源",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-07-29T00:00:00+00:00",
+      "lastSeenAt": "2026-08-03T00:00:00+00:00",
+      "articleCount": 4,
+      "sourceCount": 2,
+      "sourceHosts": [
+        "help.shopify.com",
+        "shopify.com"
+      ],
+      "sourceArticleIds": [
+        "official-user-shopify-cf0fa6cfe8a41107",
+        "official-user-shopify-daa260464549b1d1",
+        "user-source-source-auto-shopify-4036d55487265cc8",
+        "user-source-source-auto-shopify-cb8e5b9d50117d8b"
+      ],
+      "sourceUrls": [
+        "https://www.shopify.com/blog/latest",
+        "https://help.shopify.com/en",
+        "https://www.shopify.com/blog/topics/guides",
+        "https://www.shopify.com/enterprise/blog/latest"
+      ],
+      "eventTypes": [
+        "公司动态"
+      ],
+      "note": "符合筛选创业公司审核条件",
+      "mergedSlug": "shopify",
+      "decidedAt": "2026-08-04T23:01:46.990Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {
+        "status": "published",
+        "mode": "create",
+        "profile": {
+          "slug": "shopify",
+          "name": "Shopify",
+          "englishName": "Shopify",
+          "region": "加拿大",
+          "sector": "新消费",
+          "stage": "已上市",
+          "status": "已上市",
+          "founded": "2006",
+          "headquarters": "Ottawa, Canada",
+          "summary": "为全球商家提供电商建站、支付、营销、线下零售和企业级商业基础设施。",
+          "product": "Shopify 商业平台、在线商店、Shopify Payments、Shop Pay、POS 与企业级商业工具。",
+          "homepage": "https://www.shopify.com/news/about-us",
+          "newsUrls": [
+            "https://www.shopify.com/news",
+            "https://www.shopify.com/news/category/product-news",
+            "https://www.shopify.com/investors"
+          ],
+          "aliases": [
+            "Shopify Inc."
+          ],
+          "confidence": 0.98
+        },
+        "evidenceFingerprint": "{\"decisionKey\":\"shopify\",\"score\":70,\"articleCount\":6,\"sourceCount\":2,\"sourceArticleIds\":[\"official-user-shopify-23e3e463dc8eaad1\",\"official-user-shopify-97ea8784c7dfd921\",\"official-user-shopify-cf0fa6cfe8a41107\",\"official-user-shopify-daa260464549b1d1\",\"official-user-shopify-f8bf13b91565337b\",\"user-source-source-auto-shopify-cb8e5b9d50117d8b\"],\"sourceUrls\":[\"https://help.shopify.com/en\",\"https://www.shopify.com/blog/latest\",\"https://www.shopify.com/blog/what-is-shopify\",\"https://www.shopify.com/editions/spring2026\",\"https://www.shopify.com/enterprise/blog/latest\",\"https://www.shopify.com/partners/blog/latest\"]}",
+        "requestedAt": "2026-08-05T01:21:16+00:00",
+        "requestedBy": "VCIQ",
+        "publishedAt": "2026-08-05T01:21:16+00:00",
+        "publishedSlug": "shopify",
+        "error": ""
+      }
     }
   ]
 }

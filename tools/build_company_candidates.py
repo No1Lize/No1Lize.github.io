@@ -2,9 +2,9 @@
 """Build an evidence-backed review pool for previously unknown companies.
 
 Only structured company fields are considered. Titles and summaries never create
-new companies by themselves. The output is a review queue, not a production
-catalog: no candidate becomes a formal company route without an explicit
-operator decision and a separate catalog change.
+new companies by themselves. The output is a review queue. A reviewed
+candidate becomes a formal route only after a versioned onboarding request passes
+registry, official-source and profile publication gates.
 """
 
 from __future__ import annotations
@@ -43,7 +43,7 @@ GENERIC_NAMES = {
 }
 HIGH_SIGNAL_TYPES = {"融资", "产业投资", "并购", "IPO", "产品发布", "技术突破", "监管文件"}
 PRIMARY_SOURCE_LEVELS = {"官方披露", "原始材料", "监管文件", "交易所公告"}
-VALID_DECISIONS = {"pending", "accepted", "rejected", "merged"}
+VALID_DECISIONS = {"pending", "accepted", "rejected", "merged", "published"}
 
 
 def clean(value: Any, limit: int = 1000) -> str:
@@ -106,7 +106,11 @@ def decision_map(payload: dict[str, Any]) -> dict[str, dict[str, Any]]:
             "status": status,
             "note": clean(raw_value.get("note"), 300),
             "mergedSlug": clean(raw_value.get("mergedSlug"), 100),
-            "decidedAt": clean(raw_value.get("decidedAt"), 40),
+            "decidedAt": clean(raw_value.get("decidedAt"), 80),
+            "reviewedBy": clean(raw_value.get("reviewedBy"), 120),
+            "onboarding": raw_value.get("onboarding")
+            if isinstance(raw_value.get("onboarding"), dict)
+            else {},
         }
     return result
 
@@ -225,7 +229,7 @@ def build_candidate_snapshot(
 
         for name in structured_names(article):
             key = normalize_identity(name)
-            if not key or key in known:
+            if not key or (key in known and key not in decisions):
                 continue
             row = groups.setdefault(
                 key,
@@ -306,10 +310,12 @@ def build_candidate_snapshot(
                 "note": decision.get("note", ""),
                 "mergedSlug": decision.get("mergedSlug", ""),
                 "decidedAt": decision.get("decidedAt", ""),
+                "reviewedBy": decision.get("reviewedBy", ""),
+                "onboarding": decision.get("onboarding", {}),
             }
         )
 
-    status_order = {"pending": 0, "accepted": 1, "merged": 2, "rejected": 3}
+    status_order = {"pending": 0, "accepted": 1, "published": 2, "merged": 3, "rejected": 4}
     candidates.sort(
         key=lambda row: (
             status_order.get(row["status"], 9),
@@ -326,6 +332,8 @@ def build_candidate_snapshot(
         "pendingCount": counts["pending"],
         "acceptedCount": counts["accepted"],
         "rejectedCount": counts["rejected"],
+        "mergedCount": counts["merged"],
+        "publishedCount": counts["published"],
         "candidates": candidates,
     }
 
