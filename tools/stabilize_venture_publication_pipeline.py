@@ -12,6 +12,7 @@ from typing import Any, Callable
 
 try:
     from . import enforce_venture_entity_semantics as entity_semantics
+    from . import finalize_venture_profiles as structural_finalization
     from . import normalize_venture_profiles as base_normalization
     from . import refine_venture_research_evidence as research_evidence
     from .normalize_venture_publication import normalize_publication_payload
@@ -24,6 +25,7 @@ try:
     )
 except ImportError:
     import enforce_venture_entity_semantics as entity_semantics
+    import finalize_venture_profiles as structural_finalization
     import normalize_venture_profiles as base_normalization
     import refine_venture_research_evidence as research_evidence
     from normalize_venture_publication import normalize_publication_payload
@@ -69,6 +71,7 @@ def align_capital_event_patterns() -> None:
 
     research_evidence.CAPITAL_MARKET_RE = CROSS_GATE_CAPITAL_ACTION_RE
     base_normalization.CAPITAL_MARKET_ACTION_PATTERN = CROSS_GATE_CAPITAL_ACTION_RE
+    structural_finalization.CAPITAL_EVIDENCE_RE = CROSS_GATE_CAPITAL_ACTION_RE
     entity_semantics.CAPITAL_ACTION_RE = CROSS_GATE_CAPITAL_ACTION_RE
 
 
