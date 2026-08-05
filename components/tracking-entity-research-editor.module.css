@@ -1,0 +1,225 @@
+.editor {
+  display: grid;
+  gap: 16px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 94%, var(--green) 6%);
+  padding: 18px;
+}
+
+.editor > header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.editor h2 {
+  margin: 3px 0 0;
+  font-size: 20px;
+}
+
+.editor > header > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line);
+  padding: 6px 8px;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.editor > header > span[data-priority="4"],
+.editor > header > span[data-priority="5"] {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.priority {
+  display: grid;
+  gap: 8px;
+}
+
+.priority > strong,
+.field > span,
+.token > span,
+.reasons legend {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.priority > div {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.priority button {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: inherit;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+.priority button[data-active="true"] {
+  border-color: var(--ochre);
+  background: color-mix(in srgb, var(--ochre) 10%, var(--paper));
+  color: var(--ochre);
+  font-weight: 700;
+}
+
+.priority button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.priority small {
+  color: var(--muted);
+}
+
+.reasons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.reasons legend {
+  grid-column: 1 / -1;
+  margin-bottom: 2px;
+}
+
+.reasons label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.reasons input {
+  accent-color: var(--green);
+}
+
+.field,
+.token {
+  display: grid;
+  gap: 7px;
+}
+
+.field textarea,
+.token input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: inherit;
+  padding: 10px 11px;
+  font: inherit;
+}
+
+.field textarea {
+  min-height: 92px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  border: 1px solid var(--line-strong);
+  background: transparent;
+  color: inherit;
+  padding: 9px 10px;
+  cursor: pointer;
+}
+
+.actions .save {
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 700;
+}
+
+.actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.status {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.status[data-kind="success"] {
+  color: var(--green);
+}
+
+.status[data-kind="error"] {
+  color: var(--red);
+}
+
+.security {
+  display: flex;
+  gap: 7px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.history {
+  display: grid;
+  gap: 8px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+}
+
+.history h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.history article {
+  border-left: 2px solid var(--ochre);
+  padding: 7px 0 7px 10px;
+}
+
+.history p {
+  margin: 0 0 5px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.history span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+@media (max-width: 560px) {
+  .reasons {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+}
