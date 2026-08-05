@@ -148,6 +148,57 @@ class CompanyCandidateTests(unittest.TestCase):
         self.assertEqual(snapshot["candidates"][0]["status"], "rejected")
         self.assertEqual(snapshot["candidates"][0]["note"], "名称不是独立公司")
 
+    def test_published_decision_remains_visible_after_registry_publication(self):
+        registry = build_registry(
+            {
+                "companies": [
+                    {
+                        "slug": "shopify",
+                        "name": "Shopify",
+                        "homepage": "https://www.shopify.com/",
+                        "aliases": ["Shopify Inc."],
+                    }
+                ]
+            }
+        )
+        snapshot = build_candidate_snapshot(
+            {
+                "generatedAt": "2026-08-04T12:00:00Z",
+                "articles": [
+                    article(
+                        "shopify-1",
+                        company="Shopify",
+                        source_url="https://www.shopify.com/news",
+                        source_level="官方披露",
+                    )
+                ],
+            },
+            registry,
+            {
+                "decisions": {
+                    "shopify": {
+                        "status": "published",
+                        "note": "已完成正式建档",
+                        "mergedSlug": "shopify",
+                        "decidedAt": "2026-08-05T00:00:00Z",
+                        "reviewedBy": "VCIQ",
+                        "onboarding": {
+                            "status": "published",
+                            "publishedSlug": "shopify",
+                        },
+                    }
+                }
+            },
+        )
+        self.assertEqual(snapshot["candidateCount"], 1)
+        self.assertEqual(snapshot["publishedCount"], 1)
+        self.assertEqual(snapshot["candidates"][0]["status"], "published")
+        self.assertEqual(snapshot["candidates"][0]["mergedSlug"], "shopify")
+        self.assertEqual(
+            snapshot["candidates"][0]["onboarding"]["publishedSlug"],
+            "shopify",
+        )
+
     def test_snapshot_write_ignores_timestamp_only_changes(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "candidates.json"
@@ -158,6 +209,8 @@ class CompanyCandidateTests(unittest.TestCase):
                 "pendingCount": 0,
                 "acceptedCount": 0,
                 "rejectedCount": 0,
+                "mergedCount": 0,
+                "publishedCount": 0,
                 "candidates": [],
             }
             second = {**first, "generatedAt": "2026-08-04T00:00:00Z"}
