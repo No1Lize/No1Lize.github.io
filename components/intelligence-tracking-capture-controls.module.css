@@ -292,6 +292,55 @@
   padding: 9px 11px;
 }
 
+.reasonGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reasonGrid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.reasonGrid label[data-selected="true"] {
+  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 10%, var(--surface));
+  color: var(--green-bright);
+}
+
+.reasonGrid input {
+  accent-color: var(--green-bright);
+}
+
+.researchNote {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.researchNote textarea {
+  width: 100%;
+  min-height: 86px;
+  padding: 10px 11px;
+  resize: vertical;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  line-height: 1.55;
+}
+
 .securityNote {
   margin: 10px 0 0;
   padding-left: 10px;
@@ -413,7 +462,8 @@
     grid-template-columns: 96px minmax(0, 1fr) 34px;
   }
 
-  .trackGrid {
+  .trackGrid,
+  .reasonGrid {
     grid-template-columns: 1fr;
   }
 }
