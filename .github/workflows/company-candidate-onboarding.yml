@@ -95,7 +95,7 @@ jobs:
           print(json.dumps(report, ensure_ascii=False, indent=2))
           PY
 
-      - name: Crawl newly published company profiles
+      - name: Crawl and validate newly published company profiles
         if: steps.onboarding.outputs.published_count != '0'
         env:
           PUBLISHED_SLUGS: ${{ steps.onboarding.outputs.published_slugs }}
@@ -111,16 +111,47 @@ jobs:
               --workers 1 \
               --max-pages 6
           done
-          python tools/enrich_venture_profiles.py
-          python tools/stabilize_venture_publication_pipeline.py
-          python tools/stabilize_venture_publication_pipeline.py --check
-          python tools/stabilize_venture_research_evidence.py --check
-          python tools/normalize_venture_publication.py --check
-          python tools/stabilize_venture_profiles.py --check
-          python tools/finalize_venture_profiles.py --check
-          python tools/enforce_venture_entity_semantics.py --check
+          python tools/ensure_venture_profile_coverage.py --check
           python tools/crawl_venture_profiles.py --validate-only
-          python tools/enrich_venture_profiles.py --validate-only
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          from urllib.parse import urlsplit
+
+          slugs = [slug for slug in os.environ['PUBLISHED_SLUGS'].split() if slug]
+          snapshot = json.loads(Path('public/data/venture_profiles.json').read_text())
+          companies = snapshot.get('companies', {})
+          registry = json.loads(Path('config/company_registry.json').read_text())
+          registry_by_slug = {
+              row.get('slug'): row for row in registry.get('companies', []) if isinstance(row, dict)
+          }
+          for slug in slugs:
+              profile = companies.get(slug)
+              company = registry_by_slug.get(slug)
+              assert isinstance(profile, dict), slug
+              assert isinstance(company, dict), slug
+              assert profile.get('name') == company.get('name'), (slug, profile.get('name'), company.get('name'))
+              assert profile.get('status') in {'ok', 'retained', 'fallback'}, profile
+              assert profile.get('background') or profile.get('projectBackground'), profile
+              official_host = (
+                  urlsplit(str(company.get('source', {}).get('url', ''))).hostname or ''
+              ).lower()
+              sources = profile.get('sources', [])
+              assert sources, profile
+              profile_hosts = {
+                  (urlsplit(str(source.get('url', ''))).hostname or '').lower()
+                  for source in sources
+                  if isinstance(source, dict)
+              }
+              assert any(
+                  host == official_host
+                  or host.endswith('.' + official_host)
+                  or official_host.endswith('.' + host)
+                  for host in profile_hosts
+                  if host and official_host
+              ), (slug, official_host, profile_hosts)
+          PY
 
       - name: Rebuild candidate status snapshot
         run: |
