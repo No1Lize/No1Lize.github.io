@@ -19,7 +19,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: vciq-repository-writer-${{ github.ref }}
+  # Failed or cancelled refresh completions must skip without entering the writer queue.
+  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('vciq-research-agent-skip-{0}', github.run_id) || format('vciq-repository-writer-{0}', github.ref) }}
   # Preserve the active writer while replacing stale pending research runs.
   queue: single
 
