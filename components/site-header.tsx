@@ -12,6 +12,7 @@ const navItems = [
   ["投资机构", "/institutions"],
   ["上市跟踪", "/ipo"],
   ["研究报告", "/reports"],
+  ["研究助手", "/research-agent"],
   ["人物研究", "/people"],
   ["收藏", "/favorites"],
   ["热点", "/hot"],
