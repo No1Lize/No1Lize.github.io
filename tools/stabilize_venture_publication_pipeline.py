@@ -12,6 +12,7 @@ from typing import Any, Callable
 
 try:
     from . import enforce_venture_entity_semantics as entity_semantics
+    from . import normalize_venture_profiles as base_normalization
     from . import refine_venture_research_evidence as research_evidence
     from .normalize_venture_publication import normalize_publication_payload
     from .stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
@@ -23,6 +24,7 @@ try:
     )
 except ImportError:
     import enforce_venture_entity_semantics as entity_semantics
+    import normalize_venture_profiles as base_normalization
     import refine_venture_research_evidence as research_evidence
     from normalize_venture_publication import normalize_publication_payload
     from stabilize_venture_profiles import stabilize_snapshot as stabilize_terminal_snapshot
@@ -38,27 +40,35 @@ EvidenceStabilizer = Callable[..., tuple[dict[str, Any], dict[str, Any]]]
 Normalizer = Callable[[dict[str, Any], str], tuple[dict[str, Any], dict[str, Any]]]
 TerminalStabilizer = Callable[..., tuple[dict[str, Any], dict[str, Any]]]
 
-# Evidence routing and terminal subject validation must recognize the same
-# capital-market actions. If one gate treats an article as financing while the
-# other treats it as a merger/listing, the shared publication pipeline can
-# oscillate forever. Keep this pattern in the orchestrator and install the same
-# compiled object into both modules before every fixed-point run.
+# All publication gates must use the same *transaction-action* vocabulary.
+# Exchange names, ticker labels, earnings announcements, investor conferences,
+# and internal team reorganizations are context, not capital-market events.
+# Requiring an explicit action prevents the evidence gate from reintroducing
+# rows that normalization or terminal validation correctly removed.
 CROSS_GATE_CAPITAL_ACTION_RE = re.compile(
-    r"(?:\bipo\b|\binitial public offering\b|\blisted\b|\blisted on\b|"
-    r"\blisting\b|\blisting on\b|\bwent public\b|\bgo(?:es|ing)? public\b|"
-    r"\bbecom(?:e|es|ing) (?:a )?public company\b|\bpublic market\b|"
-    r"\bnasdaq\b|\bnyse\b|\bhkex\b|\bstock exchange\b|"
-    r"\bacquired\b|\bacquired by\b|\bacquisition\b|"
-    r"\bmerg(?:e|ed|er|ers|ing)\b|\bbusiness combination\b|\bdelisted\b|"
-    r"上市|挂牌|港股上市|美股上市|交易所|公开市场|并购|收购|退出|退市)",
+    r"(?:"
+    r"\binitial public offering\b|"
+    r"\b(?:files?|filed|plans?|planned|launch(?:es|ed)?|prices?|priced|"
+    r"completes?|completed|pursues?|pursued|seeks?|sought)\s+(?:an?\s+)?ipo\b|"
+    r"\bwent public\b|\bgo(?:es|ing)? public\b|"
+    r"\bbecom(?:e|es|ing) (?:a )?public company\b|"
+    r"\b(?:list(?:ed|ing)|debut(?:ed|s)?) on\b|"
+    r"\bacquir(?:e|es|ed)\b|\bacquired by\b|\bacquisition\b|"
+    r"\bmerger\b|\bmerg(?:e|ed|ing)\s+(?:with|into)\b|"
+    r"\bbusiness combination\b|\bdelist(?:ed|ing)?\b|"
+    r"完成上市|正式上市|申请上市|拟上市|启动上市|成为上市公司|已上市公司|"
+    r"借壳上市|合并上市|登陆.{0,16}交易所|赴.{0,16}上市|挂牌|"
+    r"并购|收购|完成退出|退市"
+    r")",
     re.IGNORECASE,
 )
 
 
 def align_capital_event_patterns() -> None:
-    """Install one capital-event vocabulary across the two mutable gates."""
+    """Install one explicit-action pattern across all mutable publication gates."""
 
     research_evidence.CAPITAL_MARKET_RE = CROSS_GATE_CAPITAL_ACTION_RE
+    base_normalization.CAPITAL_MARKET_ACTION_PATTERN = CROSS_GATE_CAPITAL_ACTION_RE
     entity_semantics.CAPITAL_ACTION_RE = CROSS_GATE_CAPITAL_ACTION_RE
 
 
