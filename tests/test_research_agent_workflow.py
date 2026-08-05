@@ -9,13 +9,19 @@ WORKFLOW = ROOT / ".github" / "workflows" / "research-agent-v1.yml"
 
 
 class ResearchAgentWorkflowTest(unittest.TestCase):
-    def test_only_latest_pending_research_writer_is_retained(self) -> None:
+    def test_research_runs_share_writer_lock_without_replacing_refreshes(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("vciq-repository-writer-{0}", text)
         self.assertIn("github.ref", text)
-        self.assertIn("queue: single", text)
-        self.assertNotIn("queue: max", text)
+        self.assertIn("queue: max", text)
+        self.assertNotIn("queue: single", text)
         self.assertNotIn("cancel-in-progress:", text)
+
+    def test_research_generation_follows_refresh_instead_of_direct_pushes(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn('workflows: ["Refresh public intelligence"]', text)
+        self.assertIn("types: [completed]", text)
+        self.assertNotIn("  push:\n", text)
 
     def test_unsuccessful_refresh_runs_use_an_isolated_skip_group(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
