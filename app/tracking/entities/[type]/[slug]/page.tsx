@@ -5,19 +5,26 @@ import {
   ArrowLeft,
   BookmarkPlus,
   Building2,
+  CircleAlert,
   Clock3,
   Cpu,
   ExternalLink,
   FileText,
   GitBranch,
+  Network,
+  Radar,
+  Sparkles,
+  Star,
   UserRound,
 } from "lucide-react";
 import {
-  relatedTrackingResearchEntities,
+  trackingResearchBrief,
+  trackingResearchRelations,
+} from "@/lib/tracking-entity-insights";
+import {
   trackingResearchEntities,
   trackingResearchEntity,
   trackingResearchGeneratedAt,
-  trackingResearchHref,
   type TrackingResearchEntityType,
 } from "@/lib/tracking-entity-research";
 import styles from "./tracking-entity-detail.module.css";
@@ -34,6 +41,12 @@ const STATE_LABELS = {
   tracked: "追踪中",
 } as const;
 
+const CONFIDENCE_LABELS = {
+  high: "高置信证据",
+  medium: "单条证据",
+  contextual: "赛道上下文",
+} as const;
+
 function isEntityType(value: string): value is TrackingResearchEntityType {
   return value === "company" || value === "person" || value === "topic";
 }
@@ -48,6 +61,21 @@ function TypeIcon({ type, size = 20 }: { type: TrackingResearchEntityType; size?
   if (type === "company") return <Building2 size={size} aria-hidden="true" />;
   if (type === "person") return <UserRound size={size} aria-hidden="true" />;
   return <Cpu size={size} aria-hidden="true" />;
+}
+
+function AttentionStars({ level }: { level: number }) {
+  return (
+    <span className={styles.stars} aria-label={`${level} 星关注等级`}>
+      {Array.from({ length: 5 }, (_, index) => (
+        <Star
+          aria-hidden="true"
+          fill={index < level ? "currentColor" : "none"}
+          key={index}
+          size={14}
+        />
+      ))}
+    </span>
+  );
 }
 
 export function generateStaticParams() {
@@ -67,7 +95,7 @@ export async function generateMetadata({
   const { type, slug } = await params;
   const entity = isEntityType(type) ? trackingResearchEntity(type, slug) : undefined;
   return {
-    title: entity ? `${entity.name} · 追踪研究` : "追踪对象研究",
+    title: entity ? `Research | ${entity.name} | VCIQ` : "追踪对象研究",
     description: entity?.summary ?? "公司、人物和技术主题的可追溯研究时间线。",
   };
 }
@@ -82,7 +110,8 @@ export default async function TrackingEntityDetailPage({
   const entity = trackingResearchEntity(type, slug);
   if (!entity) notFound();
 
-  const related = relatedTrackingResearchEntities(entity, 8);
+  const brief = trackingResearchBrief(entity);
+  const relations = trackingResearchRelations(entity, 10);
   const timeline = entity.timeline.slice(0, 60);
   const firstCapture = timeline
     .filter((item) => item.origin === "manual-capture")
@@ -134,11 +163,62 @@ export default async function TrackingEntityDetailPage({
         <div><span><GitBranch size={16} />最近活动</span><strong>{displayDate(entity.lastActivityAt)}</strong></div>
       </section>
 
+      <section className={styles.brief} aria-labelledby="automatic-research-brief">
+        <header>
+          <div>
+            <p className="section-index">AUTOMATIC RESEARCH BRIEF</p>
+            <h2 id="automatic-research-brief"><Sparkles size={19} />自动研究摘要</h2>
+          </div>
+          <div className={styles.attentionBadge}>
+            <AttentionStars level={brief.attentionLevel} />
+            <strong>{brief.attentionLabel}</strong>
+          </div>
+        </header>
+        <div className={styles.briefLead}>
+          <h3>{brief.headline}</h3>
+          <p>{brief.summary}</p>
+        </div>
+        {brief.signals.length ? (
+          <div className={styles.signalGrid}>
+            {brief.signals.map((signal) => (
+              <article key={signal.category}>
+                <span><Radar size={14} />{signal.label}</span>
+                <strong>{signal.count} 条</strong>
+                <small>{displayDate(signal.latestAt)} · {signal.latestTitle}</small>
+              </article>
+            ))}
+          </div>
+        ) : null}
+        <div className={styles.briefColumns}>
+          <section>
+            <h3><Radar size={16} />重点观察</h3>
+            {brief.watchItems.length ? (
+              <ul>{brief.watchItems.map((item) => <li key={item}>{item}</li>)}</ul>
+            ) : (
+              <p>尚未形成足够的人工原因或事件信号。</p>
+            )}
+          </section>
+          <section>
+            <h3><CircleAlert size={16} />待核问题</h3>
+            {brief.openQuestions.length ? (
+              <ul>{brief.openQuestions.map((item) => <li key={item}>{item}</li>)}</ul>
+            ) : (
+              <p>当前没有由数据缺口自动产生的待核问题。</p>
+            )}
+          </section>
+        </div>
+        <p className={styles.methodology}>{brief.methodology}</p>
+      </section>
+
       <div className={styles.layout}>
         <aside className={styles.sidebar}>
           <section>
             <p className="section-index">WHY TRACKED</p>
             <h2>为什么关注</h2>
+            <div className={styles.sidebarAttention}>
+              <AttentionStars level={brief.attentionLevel} />
+              <span>{brief.attentionLabel}</span>
+            </div>
             {entity.reasons.length ? (
               <div className={styles.reasonList}>
                 {entity.reasons.map((reason) => <span key={reason}>{reason}</span>)}
@@ -231,21 +311,45 @@ export default async function TrackingEntityDetailPage({
             ) : null}
           </div>
 
-          {related.length ? (
-            <section className={styles.related}>
+          {relations.length ? (
+            <section className={styles.relations}>
               <header className={styles.sectionHeader}>
                 <div>
-                  <p className="section-index">RELATED ENTITIES</p>
-                  <h2>共同赛道对象</h2>
+                  <p className="section-index">EVIDENCE RELATIONS</p>
+                  <h2><Network size={19} />关系与共同赛道</h2>
                 </div>
+                <p>竞争、合作和共同出现必须保留原文证据；共同赛道仅表示研究上下文，不等同于事实关系。</p>
               </header>
-              <div className={styles.relatedGrid}>
-                {related.map((item) => (
-                  <Link href={trackingResearchHref(item)} key={item.id}>
-                    <span><TypeIcon type={item.entityType} size={15} />{TYPE_LABELS[item.entityType]}</span>
-                    <strong>{item.name}</strong>
-                    <small>{item.trackNames.join(" · ")}</small>
-                  </Link>
+              <div className={styles.relationGrid}>
+                {relations.map((relation) => (
+                  <article key={`${relation.kind}:${relation.entity.id}`}>
+                    <div className={styles.relationTop}>
+                      <span data-kind={relation.kind}>{relation.label}</span>
+                      <em data-confidence={relation.confidence}>
+                        {CONFIDENCE_LABELS[relation.confidence]}
+                      </em>
+                    </div>
+                    <Link href={relation.href}>
+                      <TypeIcon type={relation.entity.entityType} size={16} />
+                      <strong>{relation.entity.name}</strong>
+                    </Link>
+                    {relation.sharedTracks.length ? (
+                      <p>共同赛道：{relation.sharedTracks.join("、")}</p>
+                    ) : null}
+                    {relation.evidence.length ? (
+                      <div className={styles.relationEvidence}>
+                        {relation.evidence.map((evidence) => (
+                          <a href={evidence.url} target="_blank" rel="noreferrer" key={evidence.url}>
+                            <span>{evidence.eventDate || "日期未记录"} · {evidence.sourceName}</span>
+                            <strong>{evidence.title}</strong>
+                            <ExternalLink size={12} />
+                          </a>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className={styles.contextOnly}>暂无共同原文证据，仅因配置在同一追踪赛道而关联。</p>
+                    )}
+                  </article>
                 ))}
               </div>
             </section>
