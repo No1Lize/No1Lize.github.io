@@ -93,9 +93,10 @@ test("entity relations distinguish evidence-backed links from shared-track conte
     for (const relation of relations) {
       assert.notEqual(relation.entity.id, entity.id);
       assert.ok(relation.href.startsWith("/tracking/entities/"));
-      assert.equal(relation.evidenceCount, relation.evidence.length <= 3
-        ? relation.evidenceCount
-        : relation.evidenceCount);
+      assert.ok(relation.evidence.length <= Math.min(3, relation.evidenceCount));
+      if (relation.evidenceCount <= 3) {
+        assert.equal(relation.evidence.length, relation.evidenceCount);
+      }
       if (relation.kind === "shared-track") {
         assert.equal(relation.evidenceCount, 0);
         assert.equal(relation.confidence, "contextual");
