@@ -1,5 +1,4 @@
-# Retry after aligning registry, candidate history, client lint, region metadata and derived tracking data.
-name: Apply automatic company onboarding once
+name: Verify idempotent company onboarding once
 
 on:
   push:
@@ -12,23 +11,21 @@ permissions:
   contents: write
 
 concurrency:
-  group: apply-company-onboarding-once
+  group: verify-company-onboarding-idempotency-once
   cancel-in-progress: false
 
 jobs:
-  migrate-and-verify:
+  verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 70
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
           ref: feat/automatic-company-onboarding-20260805
           fetch-depth: 0
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -37,156 +34,182 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install registry and onboarding integration
+      - name: Make merge decisions idempotent
         run: |
-          python tools/install_company_onboarding.py
-          python tools/patch_candidate_history_retention.py
-          python tools/patch_company_onboarding_lint.py
-          python tools/patch_company_onboarding_types.py
-          python tools/company_registry.py --migrate-catalog
-          python tools/company_registry.py --check
-
-      - name: Publish the reviewed Shopify candidate
-        id: onboarding
-        shell: bash
-        run: |
-          set -euo pipefail
-          python tools/onboard_company_candidates.py --seed-shopify \
-            | tee /tmp/company-onboarding-report.json
           python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-          report = json.loads(
-              Path('/tmp/company-onboarding-report.json')
-              .read_text(encoding='utf-8')
-              .splitlines()[-1]
-          )
-          assert report['failedCount'] == 0, report
-          assert report['publishedSlugs'] == ['shopify'], report
-          assert report['awaitingProfileCount'] == 2, report
-          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as output:
-              output.write('published_slugs=' + ' '.join(report['publishedSlugs']) + '\n')
-          print(json.dumps(report, ensure_ascii=False, indent=2))
-          PY
-
-      - name: Build and validate Shopify's first formal profile
-        env:
-          PUBLISHED_SLUGS: ${{ steps.onboarding.outputs.published_slugs }}
-          VENTURE_PROFILE_USER_AGENT: ${{ vars.VENTURE_PROFILE_USER_AGENT }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          for slug in $PUBLISHED_SLUGS; do
-            python tools/crawl_venture_profiles.py \
-              --kind company \
-              --slug "$slug" \
-              --workers 1 \
-              --max-pages 6
-          done
-          python tools/ensure_venture_profile_coverage.py --check
-          python tools/crawl_venture_profiles.py --validate-only
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          from urllib.parse import urlsplit
-
-          published = {'shopify'}
-          snapshot = json.loads(Path('public/data/venture_profiles.json').read_text())
-          companies = snapshot.get('companies', {})
-          for slug in published:
-              profile = companies.get(slug)
-              assert isinstance(profile, dict), slug
-              assert profile.get('name') == 'Shopify', profile
-              assert profile.get('status') in {'ok', 'retained', 'fallback'}, profile
-              assert profile.get('background') or profile.get('projectBackground'), profile
-              sources = profile.get('sources', [])
-              assert sources, profile
-              hosts = {
-                  (urlsplit(str(source.get('url', ''))).hostname or '').lower()
-                  for source in sources
-                  if isinstance(source, dict)
-              }
-              assert any(host == 'shopify.com' or host.endswith('.shopify.com') for host in hosts), hosts
-          PY
-
-      - name: Rebuild candidate snapshot after publication
-        run: |
-          python tools/build_company_candidates.py
-          python tools/build_company_candidates.py --check
-          python tools/company_registry.py --check
-          python tools/onboard_company_candidates.py --check
-          python - <<'PY'
-          import json
           from pathlib import Path
 
-          registry = json.loads(Path('config/company_registry.json').read_text())
-          decisions = json.loads(Path('config/company_candidate_decisions.json').read_text())
-          candidates = json.loads(Path('public/data/company_candidates.json').read_text())
-          profiles = json.loads(Path('public/data/venture_profiles.json').read_text())
-          company = next(row for row in registry['companies'] if row['slug'] == 'shopify')
-          assert company['region'] == '加拿大'
-          assert company['status'] == '已上市'
-          assert company['source']['url'].startswith('https://www.shopify.com/')
-          assert decisions['decisions']['shopify']['status'] == 'published'
-          assert decisions['decisions']['shopify']['mergedSlug'] == 'shopify'
-          assert candidates['publishedCount'] == 1
-          assert candidates['acceptedCount'] == 2
-          assert 'shopify' in profiles['companies']
+          path = Path('tools/onboard_company_candidates.py')
+          text = path.read_text(encoding='utf-8')
+          old = '''        if status == "merged":
+            if not candidate:
+                continue
+            slug = clean(decision.get("mergedSlug"), 120)
+            try:
+                add_aliases_to_existing(registry, official_sources, slug, candidate)
+            except ValueError as error:
+                failed.append({"candidateKey": key, "error": str(error)})
+                continue
+            decision["onboarding"] = {
+                "status": "merged",
+                "mode": "merge",
+                "profile": normalize_profile({}),
+                "evidenceFingerprint": evidence_fingerprint(candidate),
+                "requestedAt": decision.get("decidedAt", ""),
+                "requestedBy": decision.get("reviewedBy", ""),
+                "publishedAt": timestamp,
+                "publishedSlug": slug,
+                "error": "",
+            }
+            merged_slugs.append(slug)
+            continue
+'''
+          new = '''        if status == "merged":
+            if not candidate:
+                continue
+            slug = clean(decision.get("mergedSlug"), 120)
+            existing_onboarding = (
+                decision.get("onboarding")
+                if isinstance(decision.get("onboarding"), dict)
+                else {}
+            )
+            already_merged = (
+                existing_onboarding.get("status") == "merged"
+                and clean(existing_onboarding.get("publishedSlug"), 120) == slug
+            )
+            try:
+                aliases_changed = add_aliases_to_existing(
+                    registry, official_sources, slug, candidate
+                )
+            except ValueError as error:
+                failed.append({"candidateKey": key, "error": str(error)})
+                continue
+            if already_merged and not aliases_changed:
+                continue
+            decision["onboarding"] = {
+                "status": "merged",
+                "mode": "merge",
+                "profile": normalize_profile({}),
+                "evidenceFingerprint": evidence_fingerprint(candidate),
+                "requestedAt": (
+                    clean(existing_onboarding.get("requestedAt"), 80)
+                    or decision.get("decidedAt", "")
+                ),
+                "requestedBy": (
+                    clean(existing_onboarding.get("requestedBy"), 120)
+                    or decision.get("reviewedBy", "")
+                ),
+                "publishedAt": (
+                    clean(existing_onboarding.get("publishedAt"), 80)
+                    or timestamp
+                ),
+                "publishedSlug": slug,
+                "error": "",
+            }
+            merged_slugs.append(slug)
+            continue
+'''
+          if new not in text:
+              if old not in text:
+                  raise SystemExit('merge processing patch target not found')
+              path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+          test_path = Path('tests/test_onboard_company_candidates.py')
+          tests = test_path.read_text(encoding='utf-8')
+          method = '''    def test_repeated_merge_processing_is_idempotent(self):
+        candidate = self._candidate(name="Sample Brand")
+        key = onboarding.decision_key(candidate["decisionKey"])
+        registry = {
+            "companies": [
+                {
+                    **self._profile(),
+                    "source": {"name": "Sample", "url": "https://example.com/"},
+                    "aliases": ["Sample"],
+                }
+            ]
+        }
+        sources = {
+            "companies": [
+                {
+                    "slug": "sample",
+                    "name": "Sample",
+                    "homepage": "https://example.com/",
+                    "aliases": ["Sample"],
+                }
+            ]
+        }
+        decisions = {
+            "decisions": {
+                key: {
+                    "status": "merged",
+                    "note": "这是现有公司的品牌别名。",
+                    "mergedSlug": "sample",
+                    "decidedAt": "2026-08-05T00:00:00Z",
+                    "reviewedBy": "VCIQ",
+                }
+            }
+        }
+        first_decisions, first_registry, first_sources, first_report = (
+            onboarding.process_onboarding(
+                {"candidates": [candidate]},
+                decisions,
+                registry,
+                sources,
+                now=datetime(2026, 8, 5, 1, tzinfo=UTC),
+            )
+        )
+        second_decisions, second_registry, second_sources, second_report = (
+            onboarding.process_onboarding(
+                {"candidates": [candidate]},
+                first_decisions,
+                first_registry,
+                first_sources,
+                now=datetime(2026, 8, 5, 2, tzinfo=UTC),
+            )
+        )
+        self.assertEqual(first_report["mergedCount"], 1)
+        self.assertEqual(second_report["mergedCount"], 0)
+        self.assertEqual(second_decisions, first_decisions)
+        self.assertEqual(second_registry, first_registry)
+        self.assertEqual(second_sources, first_sources)
+
+'''
+          marker = '\n\nif __name__ == "__main__":\n'
+          if marker not in tests:
+              raise SystemExit('test insertion point not found')
+          if 'test_repeated_merge_processing_is_idempotent' not in tests:
+              test_path.write_text(
+                  tests.replace(marker, '\n\n' + method + 'if __name__ == "__main__":\n', 1),
+                  encoding='utf-8',
+              )
           PY
 
-      - name: Run focused and application verification
+      - name: Verify onboarding fixed point and application
         run: |
-          python -m py_compile \
-            tools/company_registry.py \
-            tools/onboard_company_candidates.py \
-            tools/build_company_candidates.py \
-            tools/venture_profile_extraction.py
+          python -m py_compile tools/onboard_company_candidates.py
           python -m unittest \
-            tests.test_company_registry \
             tests.test_onboard_company_candidates \
-            tests.test_company_candidates \
-            tests.test_ensure_venture_profile_coverage \
-            tests.test_venture_profile_extraction
+            tests.test_company_registry \
+            tests.test_company_candidates
           node --import tsx --test \
             tests/company-candidate-onboarding.test.ts \
             tests/company-candidate-review.test.ts
+          python tools/company_registry.py --check
+          python tools/onboard_company_candidates.py --check
           npm run lint
           npm run test:unit
           npx tsc --noEmit
-          npm run validate:tracking
-          npm run validate:taxonomy
           python tools/enrich_tracking_snapshot.py
           ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
           git restore public/data/articles.json
 
-      - name: Commit migrated registry and published company
-        shell: bash
+      - name: Commit idempotency fix
         run: |
-          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
-            lib/catalog-data.ts \
-            lib/favorites.ts \
-            lib/tracking-recommendations.ts \
-            tools/venture_profile_extraction.py \
-            tools/build_company_candidates.py \
-            components/tracking-company-candidate-review.tsx \
-            components/tracking-company-candidate-review.module.css \
-            components/tracking-company-onboarding.tsx \
-            components/company-candidate-directory.tsx \
-            config/company_registry.json \
-            config/company_candidate_decisions.json \
-            config/official_company_sources.json \
-            public/data/company_candidate_onboarding.json \
-            public/data/company_candidates.json \
-            public/data/venture_profiles.json
-          git rm -f \
-            tools/install_company_onboarding.py \
-            tools/patch_candidate_history_retention.py \
-            tools/patch_company_onboarding_lint.py \
-            tools/patch_company_onboarding_types.py
-          git commit -m "feat: publish reviewed companies through automatic onboarding"
+            tools/onboard_company_candidates.py \
+            tests/test_onboard_company_candidates.py
+          git commit -m "fix: make company candidate merges idempotent"
           git pull --rebase origin feat/automatic-company-onboarding-20260805
           git push origin HEAD:feat/automatic-company-onboarding-20260805
