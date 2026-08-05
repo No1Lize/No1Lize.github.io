@@ -1,0 +1,105 @@
+name: Verify external article capture once
+
+on:
+  push:
+    branches: [feat/external-article-capture-20260805]
+    paths:
+      - .github/workflows/verify-external-tracking-capture-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-external-article-capture-once
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/external-article-capture-20260805
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install tracking admin entry and package extension
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/patch_external_capture_link.py
+          node --check browser-extension/vciq-tracking-capture/background.js
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from zipfile import ZIP_DEFLATED, ZipFile
+
+          root = Path('browser-extension/vciq-tracking-capture')
+          manifest = json.loads((root / 'manifest.json').read_text(encoding='utf-8'))
+          assert manifest['manifest_version'] == 3
+          assert set(manifest['permissions']) == {'activeTab', 'contextMenus'}
+          assert 'host_permissions' not in manifest
+          output = Path('public/downloads/vciq-tracking-capture-extension.zip')
+          output.parent.mkdir(parents=True, exist_ok=True)
+          with ZipFile(output, 'w', compression=ZIP_DEFLATED) as archive:
+              for name in ('manifest.json', 'background.js', 'README.md'):
+                  archive.write(root / name, arcname=name)
+          assert output.stat().st_size > 500
+          PY
+
+      - name: Run focused external capture tests
+        run: |
+          node --import tsx --test \
+            tests/external-tracking-capture.test.ts \
+            tests/tracking-capture.test.ts
+
+      - name: Validate application and static capture route
+        run: |
+          npm run lint
+          npm run test:unit
+          npx tsc --noEmit
+          npm run validate:tracking
+          npm run validate:taxonomy
+          python tools/enrich_tracking_snapshot.py
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          git restore public/data/articles.json
+
+      - name: Inspect generated capture page and extension download
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f out/tracking/capture/index.html
+          test -f out/downloads/vciq-tracking-capture-extension.zip
+          grep -q "外部文章采集" out/tracking/capture/index.html
+          grep -q "Chrome / Edge 扩展" out/tracking/capture/index.html
+          grep -q "外部网页采集" out/tracking/index.html
+          echo "External article capture route and extension package verified."
+
+      - name: Commit packaged extension and remove temporary verification files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            components/tracking-capture-inbox.tsx \
+            public/downloads/vciq-tracking-capture-extension.zip
+          git rm -f \
+            tools/patch_external_capture_link.py \
+            .github/workflows/verify-external-tracking-capture-once.yml
+          git commit -m "feat: expose external article capture tools"
+          git pull --rebase origin feat/external-article-capture-20260805
+          git push origin HEAD:feat/external-article-capture-20260805
