@@ -1,0 +1,78 @@
+name: Generate Research Agent v1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/research_agent.py
+      - tests/test_research_agent.py
+      - app/research-agent/**
+      - lib/research-agent-data.ts
+      - .github/workflows/research-agent-v1.yml
+  workflow_run:
+    workflows: ["Refresh public intelligence"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vciq-repository-writer-${{ github.ref }}
+  queue: max
+
+jobs:
+  research-agent:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate Research Agent implementation
+        run: |
+          python -m py_compile tools/research_agent.py
+          python -m unittest tests.test_research_agent
+
+      - name: Generate evidence-linked daily research
+        env:
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          SILICONFLOW_BASE_URL: https://api.siliconflow.cn/v1
+          SILICONFLOW_MODEL: deepseek-ai/DeepSeek-V4-Flash
+          RESEARCH_AGENT_REASONING_EFFORT: high
+          RESEARCH_AGENT_TIMEZONE: Asia/Taipei
+        run: python tools/research_agent.py --bootstrap-git-ref HEAD^
+
+      - name: Validate published research contract
+        run: python tools/research_agent.py --check
+
+      - name: Commit generated research data
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add \
+            public/data/research_agent_daily.json \
+            public/data/research_agent_snapshot.json
+          if git diff --cached --quiet; then
+            echo "Research Agent produced no repository changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: publish daily research agent brief"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+            git pull --rebase -X theirs origin main
+          done
