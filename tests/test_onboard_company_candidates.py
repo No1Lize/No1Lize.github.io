@@ -182,5 +182,62 @@ class CompanyCandidateOnboardingTests(unittest.TestCase):
         self.assertEqual(request["evidenceFingerprint"], onboarding.evidence_fingerprint(candidate))
 
 
+    def test_repeated_merge_processing_is_idempotent(self):
+        candidate = self._candidate(name="Sample Brand")
+        key = onboarding.decision_key(candidate["decisionKey"])
+        registry = {
+            "companies": [
+                {
+                    **self._profile(),
+                    "source": {"name": "Sample", "url": "https://example.com/"},
+                    "aliases": ["Sample"],
+                }
+            ]
+        }
+        sources = {
+            "companies": [
+                {
+                    "slug": "sample",
+                    "name": "Sample",
+                    "homepage": "https://example.com/",
+                    "aliases": ["Sample"],
+                }
+            ]
+        }
+        decisions = {
+            "decisions": {
+                key: {
+                    "status": "merged",
+                    "note": "这是现有公司的品牌别名。",
+                    "mergedSlug": "sample",
+                    "decidedAt": "2026-08-05T00:00:00Z",
+                    "reviewedBy": "VCIQ",
+                }
+            }
+        }
+        first_decisions, first_registry, first_sources, first_report = (
+            onboarding.process_onboarding(
+                {"candidates": [candidate]},
+                decisions,
+                registry,
+                sources,
+                now=datetime(2026, 8, 5, 1, tzinfo=UTC),
+            )
+        )
+        second_decisions, second_registry, second_sources, second_report = (
+            onboarding.process_onboarding(
+                {"candidates": [candidate]},
+                first_decisions,
+                first_registry,
+                first_sources,
+                now=datetime(2026, 8, 5, 2, tzinfo=UTC),
+            )
+        )
+        self.assertEqual(first_report["mergedCount"], 1)
+        self.assertEqual(second_report["mergedCount"], 0)
+        self.assertEqual(second_decisions, first_decisions)
+        self.assertEqual(second_registry, first_registry)
+        self.assertEqual(second_sources, first_sources)
+
 if __name__ == "__main__":
     unittest.main()

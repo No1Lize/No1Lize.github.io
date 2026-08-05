@@ -345,19 +345,41 @@ def process_onboarding(
             if not candidate:
                 continue
             slug = clean(decision.get("mergedSlug"), 120)
+            existing_onboarding = (
+                decision.get("onboarding")
+                if isinstance(decision.get("onboarding"), dict)
+                else {}
+            )
+            already_merged = (
+                existing_onboarding.get("status") == "merged"
+                and clean(existing_onboarding.get("publishedSlug"), 120) == slug
+            )
             try:
-                add_aliases_to_existing(registry, official_sources, slug, candidate)
+                aliases_changed = add_aliases_to_existing(
+                    registry, official_sources, slug, candidate
+                )
             except ValueError as error:
                 failed.append({"candidateKey": key, "error": str(error)})
+                continue
+            if already_merged and not aliases_changed:
                 continue
             decision["onboarding"] = {
                 "status": "merged",
                 "mode": "merge",
                 "profile": normalize_profile({}),
                 "evidenceFingerprint": evidence_fingerprint(candidate),
-                "requestedAt": decision.get("decidedAt", ""),
-                "requestedBy": decision.get("reviewedBy", ""),
-                "publishedAt": timestamp,
+                "requestedAt": (
+                    clean(existing_onboarding.get("requestedAt"), 80)
+                    or decision.get("decidedAt", "")
+                ),
+                "requestedBy": (
+                    clean(existing_onboarding.get("requestedBy"), 120)
+                    or decision.get("reviewedBy", "")
+                ),
+                "publishedAt": (
+                    clean(existing_onboarding.get("publishedAt"), 80)
+                    or timestamp
+                ),
                 "publishedSlug": slug,
                 "error": "",
             }
