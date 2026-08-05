@@ -186,6 +186,7 @@ export function trackingResearchSignals(
     TrackingResearchTimelineItem[]
   >();
   for (const item of entity.timeline) {
+    if (item.origin === "analyst-note") continue;
     const category = classifyTrackingResearchTimelineItem(item);
     groups.set(category, [...(groups.get(category) ?? []), item]);
   }
@@ -380,7 +381,9 @@ export function trackingResearchBrief(
   const primarySignals = signals
     .filter((signal) => signal.category !== "other")
     .slice(0, 4);
-  const latest = entity.timeline[0];
+  const latestEvidence = entity.timeline.find(
+    (item) => item.origin !== "analyst-note",
+  );
   const relations = trackingResearchRelations(entity, 8);
   const evidenceCount = entity.timeline.filter(
     (item) => item.origin !== "analyst-note",
@@ -397,11 +400,11 @@ export function trackingResearchBrief(
       : entity.state === "candidate"
         ? "仍处于候选审核阶段"
         : "当前仅处于追踪状态";
-  const headline = latest
+  const headline = latestEvidence
     ? `${entity.name}近期以${signalText}信号为主`
     : `${entity.name}已纳入${entity.trackNames.join("、") || "当前赛道"}追踪`;
-  const evidenceSummary = latest
-    ? `系统基于 ${evidenceCount} 条可追溯公开记录汇总：最近一条动态为“${latest.title}”，${stateText}。`
+  const evidenceSummary = latestEvidence
+    ? `系统基于 ${evidenceCount} 条可追溯公开记录汇总：最近一条动态为“${latestEvidence.title}”，${stateText}。`
     : `该对象${stateText}，尚未形成可追溯公开事件时间线。`;
   const summary = entity.researchThesis
     ? `当前人工研究判断为“${text(entity.researchThesis, 260)}”。${evidenceSummary}`
@@ -451,6 +454,6 @@ export function trackingResearchBrief(
     watchItems,
     openQuestions,
     methodology:
-      "基于版本化追踪配置、人工研究记录、文章采集和可追溯公开时间线按规则生成；共同赛道仅作为上下文，不表述为事实关系。",
+      "基于版本化追踪配置、人工研究记录、文章采集和可追溯公开时间线按规则生成；人工笔记不参与事实信号或关系推断，共同赛道仅作为上下文。",
   };
 }
