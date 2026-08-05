@@ -1,4 +1,4 @@
-# Retry after aligning registry, candidate history and client lint checks.
+# Retry after aligning registry, candidate history, client lint and region metadata.
 name: Apply automatic company onboarding once
 
 on:
@@ -42,6 +42,7 @@ jobs:
           python tools/install_company_onboarding.py
           python tools/patch_candidate_history_retention.py
           python tools/patch_company_onboarding_lint.py
+          python tools/patch_company_onboarding_types.py
           python tools/company_registry.py --migrate-catalog
           python tools/company_registry.py --check
 
@@ -165,6 +166,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
             lib/catalog-data.ts \
+            lib/favorites.ts \
+            lib/tracking-recommendations.ts \
             tools/venture_profile_extraction.py \
             tools/build_company_candidates.py \
             components/tracking-company-candidate-review.tsx \
@@ -180,7 +183,8 @@ jobs:
           git rm -f \
             tools/install_company_onboarding.py \
             tools/patch_candidate_history_retention.py \
-            tools/patch_company_onboarding_lint.py
+            tools/patch_company_onboarding_lint.py \
+            tools/patch_company_onboarding_types.py
           git commit -m "feat: publish reviewed companies through automatic onboarding"
           git pull --rebase origin feat/automatic-company-onboarding-20260805
           git push origin HEAD:feat/automatic-company-onboarding-20260805
