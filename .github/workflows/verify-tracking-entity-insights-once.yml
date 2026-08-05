@@ -1,0 +1,67 @@
+name: Verify tracked entity insights once
+
+on:
+  push:
+    branches: [feat/evidence-research-brief-relations-20260805]
+    paths:
+      - .github/workflows/verify-tracking-entity-insights-once.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-tracking-entity-insights-once
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/evidence-research-brief-relations-20260805
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run focused research insight tests
+        run: |
+          node --import tsx --test \
+            tests/tracking-entity-insights.test.ts \
+            tests/tracking-entity-records.test.ts \
+            tests/tracking-entity-research.test.ts \
+            tests/tracking-capture.test.ts
+
+      - name: Validate application and static research routes
+        run: |
+          npm run lint
+          npm run test:unit
+          npx tsc --noEmit
+          npm run validate:tracking
+          npm run validate:taxonomy
+          python tools/enrich_tracking_snapshot.py
+          ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
+          git restore public/data/articles.json
+
+      - name: Inspect generated research pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f dist/tracking/entities/index.html
+          page_count=$(find dist/tracking/entities -name index.html | wc -l | tr -d ' ')
+          test "$page_count" -ge 200
+          grep -R -l "自动研究摘要" dist/tracking/entities/*/*/index.html | head -n 1
+          grep -R -l "关系与共同赛道" dist/tracking/entities/*/*/index.html | head -n 1
+          echo "Verified $page_count tracked entity research pages."
