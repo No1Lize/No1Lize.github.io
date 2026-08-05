@@ -42,7 +42,9 @@ export type Institution = {
 
     def test_migration_replaces_only_company_block(self):
         catalog = '''import type { Source } from "./intelligence-data";
-export type Company = { region: "中国" | "美国"; };
+export type Company = {
+  region: "中国" | "美国";
+};
 const official = (name: string, url: string): Source => ({ name, url, level: "官方披露" });
 export const companies: Company[] = [
   { slug:"sample", name:"示例公司", region:"中国", sector:"AI", stage:"成长期", status:"运营中", summary:"这是一家拥有足够长度简介的示例科技公司。", product:"企业软件平台", source:official("示例公司","https://example.com/"), confidence:0.9 },
