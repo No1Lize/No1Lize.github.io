@@ -1,0 +1,110 @@
+name: Research Agent API smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/research-agent-api-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Exercise production SiliconFlow client
+        env:
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          SILICONFLOW_BASE_URL: https://api.siliconflow.cn/v1
+          SILICONFLOW_MODEL: deepseek-ai/DeepSeek-V4-Flash
+          RESEARCH_AGENT_REASONING_EFFORT: high
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+
+          from tools.research_agent import call_siliconflow, sanitize_analysis
+
+          api_key = os.environ.get("SILICONFLOW_API_KEY", "").strip()
+          if not api_key:
+              raise SystemExit("SILICONFLOW_API_KEY is not configured")
+
+          prompt = json.dumps(
+              {
+                  "task": "Research Agent production API smoke test",
+                  "instructions": [
+                      "Return one valid JSON object only.",
+                      "Copy the sentinel values exactly.",
+                      "Do not add external facts.",
+                  ],
+                  "requiredOutput": {
+                      "executiveSummary": "research-agent-smoke-ok",
+                      "keyDevelopments": [
+                          {
+                              "title": "research-agent-smoke-ok",
+                              "assessment": "The production model client returned evidence-linked structured JSON.",
+                              "importance": 1,
+                              "confidence": "high",
+                              "entities": ["Research Agent"],
+                              "evidenceIds": ["E001"],
+                          }
+                      ],
+                      "thesisUpdates": [],
+                      "watchlist": [],
+                      "risks": [],
+                      "methodologyNote": "API connectivity smoke test only.",
+                  },
+                  "evidence": [
+                      {
+                          "id": "E001",
+                          "claim": "This is a non-public API connectivity test.",
+                          "sourceName": "VCIQ test harness",
+                      }
+                  ],
+              },
+              ensure_ascii=False,
+              separators=(",", ":"),
+          )
+
+          raw = call_siliconflow(
+              api_key=api_key,
+              base_url=os.environ["SILICONFLOW_BASE_URL"],
+              model=os.environ["SILICONFLOW_MODEL"],
+              reasoning_effort=os.environ.get("RESEARCH_AGENT_REASONING_EFFORT", "high"),
+              prompt=prompt,
+              timeout=95.0,
+              retries=1,
+          )
+          usage = raw.pop("_usage", {})
+          cleaned = sanitize_analysis(raw, {"E001"})
+          developments = cleaned["keyDevelopments"]
+          if cleaned["executiveSummary"] != "research-agent-smoke-ok":
+              raise SystemExit("model did not preserve the smoke-test summary sentinel")
+          if len(developments) != 1:
+              raise SystemExit("model did not return exactly one evidence-linked development")
+          if developments[0]["evidenceIds"] != ["E001"]:
+              raise SystemExit("model response failed evidence-ID validation")
+
+          print(
+              json.dumps(
+                  {
+                      "passed": True,
+                      "provider": "SiliconFlow",
+                      "model": os.environ["SILICONFLOW_MODEL"],
+                      "evidenceIds": developments[0]["evidenceIds"],
+                      "usageFields": sorted(usage) if isinstance(usage, dict) else [],
+                  },
+                  ensure_ascii=False,
+              )
+          )
+          PY
