@@ -72,8 +72,8 @@ type RawArticle = {
   companySlug?: string;
   companySlugs?: string[];
   companyCandidateSlugs?: string[];
-  companyMatch?: { slug?: string; confidence?: number };
-  companyMatches?: { slug?: string; confidence?: number }[];
+  companyMatch?: { slug: string; method: string; confidence: number };
+  companyMatches?: { slug: string; method: string; confidence: number }[];
   mentionedCompanies?: string[];
   mentionedPeople?: string[];
   publishedAt?: string;

@@ -54,6 +54,8 @@ test("article capture applies companies, people and topics to selected tracks", 
     source,
     capturedAt: "2026-08-05T04:00:00Z",
     capturedBy: "VCIQ",
+    reasons: ["商业模式创新", "监管变化"],
+    note: "重点观察牌照、融资和市场竞争。",
   });
 
   const predictionTrack = result.config.tracks.find((track) => track.name === "预测市场");
@@ -66,6 +68,8 @@ test("article capture applies companies, people and topics to selected tracks", 
   assert.equal(result.records[0].capturedBy, "VCIQ");
   assert.equal(result.records[0].source.url, source.url);
   assert.equal(result.records[0].status, "applied");
+  assert.deepEqual(result.records[0].reasons, ["商业模式创新", "监管变化"]);
+  assert.equal(result.records[0].note, "重点观察牌照、融资和市场竞争。");
 });
 
 test("repeated capture is deduplicated in config and audit inbox", () => {
@@ -125,6 +129,24 @@ test("capture requires a target track and rejects generic topic keywords", () =>
       }),
     /目标赛道/,
   );
+});
+
+test("legacy inbox records receive empty research intent fields", () => {
+  const inbox = normalizeTrackingCaptureInbox({
+    records: [
+      {
+        id: "legacy",
+        entityType: "company",
+        canonicalName: "Polymarket",
+        trackSlugs: ["ai-agi"],
+        source,
+        capturedAt: "2026-08-05T04:00:00Z",
+        status: "applied",
+      },
+    ],
+  });
+  assert.deepEqual(inbox.records[0].reasons, []);
+  assert.equal(inbox.records[0].note, "");
 });
 
 test("company suffix normalization cannot create an empty entity", () => {

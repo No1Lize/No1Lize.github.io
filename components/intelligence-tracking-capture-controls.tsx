@@ -61,6 +61,16 @@ const CHANNEL_LABELS: Record<string, string> = {
   people: "人物研究",
 };
 
+const RESEARCH_REASON_OPTIONS = [
+  "融资机会",
+  "技术突破",
+  "商业模式创新",
+  "市场竞争",
+  "IPO可能",
+  "监管变化",
+  "个人研究兴趣",
+] as const;
+
 const LATIN_STOPWORDS = new Set([
   "AI",
   "IPO",
@@ -294,6 +304,8 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
     defaultTrackSlugs(item, userTrackingConfig),
   );
   const [newTrackName, setNewTrackName] = useState("");
+  const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
+  const [researchNote, setResearchNote] = useState("");
   const [token, setToken] = useState(() =>
     typeof window === "undefined"
       ? ""
@@ -346,6 +358,14 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
     );
   }
 
+  function toggleReason(reason: string) {
+    setSelectedReasons((current) =>
+      current.includes(reason)
+        ? current.filter((candidate) => candidate !== reason)
+        : [...current, reason],
+    );
+  }
+
   async function submit() {
     const cleanToken = token.trim();
     if (!cleanToken) {
@@ -376,6 +396,8 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
           entities: usableEntities.map(({ entityType, name }) => ({ entityType, name })),
           selectedTrackSlugs,
           newTrackName,
+          reasons: selectedReasons,
+          note: researchNote,
           source: item,
           capturedAt,
           capturedBy: remote.username,
@@ -531,7 +553,37 @@ function CaptureDrawer({ item, onClose }: { item: CaptureItem; onClose: () => vo
         <section className={styles.section}>
           <div className={styles.sectionHeading}>
             <div>
-              <p>03 / ADMIN COMMIT</p>
+              <p>03 / RESEARCH INTENT</p>
+              <h3>为什么关注</h3>
+            </div>
+            <span>{selectedReasons.length} 个原因</span>
+          </div>
+          <div className={styles.reasonGrid}>
+            {RESEARCH_REASON_OPTIONS.map((reason) => (
+              <label key={reason} data-selected={selectedReasons.includes(reason)}>
+                <input
+                  type="checkbox"
+                  checked={selectedReasons.includes(reason)}
+                  onChange={() => toggleReason(reason)}
+                />
+                <span>{reason}</span>
+              </label>
+            ))}
+          </div>
+          <label className={styles.researchNote}>
+            研究备注（可选）
+            <textarea
+              value={researchNote}
+              onChange={(event) => setResearchNote(event.target.value)}
+              placeholder="例如：预测市场可能成为金融科技的新基础设施，重点观察融资、牌照和监管窗口。"
+            />
+          </label>
+        </section>
+
+        <section className={styles.section}>
+          <div className={styles.sectionHeading}>
+            <div>
+              <p>04 / ADMIN COMMIT</p>
               <h3>管理员同步</h3>
             </div>
           </div>

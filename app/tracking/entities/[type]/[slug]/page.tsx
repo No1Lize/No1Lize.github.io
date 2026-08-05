@@ -18,7 +18,6 @@ import {
   trackingResearchEntity,
   trackingResearchGeneratedAt,
   trackingResearchHref,
-  type TrackingResearchEntity,
   type TrackingResearchEntityType,
 } from "@/lib/tracking-entity-research";
 import styles from "./tracking-entity-detail.module.css";

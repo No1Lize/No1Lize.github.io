@@ -37,6 +37,8 @@ export type TrackingCaptureRecord = {
   capturedBy: string;
   status: TrackingCaptureStatus;
   appliedTo: string[];
+  reasons: string[];
+  note: string;
 };
 
 export type TrackingCaptureInbox = {
@@ -56,6 +58,8 @@ export type ApplyTrackingCaptureInput = {
   entities: TrackingCaptureEntityDraft[];
   selectedTrackSlugs: string[];
   newTrackName?: string;
+  reasons?: string[];
+  note?: string;
   source: TrackingCaptureSource;
   capturedAt: string;
   capturedBy: string;
@@ -156,6 +160,8 @@ function normalizeRecord(value: unknown): TrackingCaptureRecord | null {
     capturedBy: cleanText(raw.capturedBy, 120),
     status,
     appliedTo: uniqueStrings(raw.appliedTo, 40),
+    reasons: uniqueStrings(raw.reasons, 12),
+    note: cleanText(raw.note, 800),
   };
 }
 
@@ -335,6 +341,8 @@ export function applyTrackingCapture(input: ApplyTrackingCaptureInput): ApplyTra
       capturedBy: cleanText(input.capturedBy, 120),
       status: "applied",
       appliedTo,
+      reasons: uniqueStrings(input.reasons ?? [], 12),
+      note: cleanText(input.note, 800),
     });
   }
 

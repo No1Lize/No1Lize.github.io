@@ -1,9 +1,11 @@
 "use client";
 
-import { ExternalLink, Inbox, RefreshCw } from "lucide-react";
+import { BookOpen, ExternalLink, Inbox, RefreshCw } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import rawInbox from "@/config/tracking_capture_inbox.json";
 import { base64ToText } from "@/lib/github-commit";
+import { trackingEntityResearchHref } from "@/lib/tracking-entity-route";
 import {
   TRACKING_BRANCH,
   TRACKING_REPOSITORY,
@@ -116,10 +118,15 @@ export function TrackingCaptureInbox() {
             公司采集会进入候选审核，不会绕过正式建档质量门。
           </p>
         </div>
-        <button type="button" className={styles.reload} disabled={loading} onClick={reload}>
-          <RefreshCw className={loading ? styles.spinning : undefined} size={15} />
-          重新载入
-        </button>
+        <div className={styles.headerActions}>
+          <Link href="/tracking/entities" className={styles.libraryLink}>
+            <BookOpen size={15} />追踪对象研究库
+          </Link>
+          <button type="button" className={styles.reload} disabled={loading} onClick={reload}>
+            <RefreshCw className={loading ? styles.spinning : undefined} size={15} />
+            重新载入
+          </button>
+        </div>
       </header>
 
       <div className={styles.metrics}>
@@ -175,15 +182,28 @@ export function TrackingCaptureInbox() {
                 <dd>{record.capturedBy || "未知管理员"} · {formatTime(record.capturedAt)}</dd>
               </div>
             </dl>
+            {record.reasons.length || record.note ? (
+              <div className={styles.researchMeta}>
+                {record.reasons.length ? (
+                  <div>{record.reasons.map((reason) => <span key={reason}>{reason}</span>)}</div>
+                ) : null}
+                {record.note ? <p>{record.note}</p> : null}
+              </div>
+            ) : null}
             <div className={styles.source}>
               <div>
                 <span>{record.source.channelLabel || record.source.channel} · {record.source.eventType}</span>
                 <strong>{record.source.title}</strong>
                 <p>{record.source.summary || "未保存摘要。"}</p>
               </div>
-              <a href={record.source.url} target="_blank" rel="noreferrer">
-                原文 <ExternalLink size={13} />
-              </a>
+              <div className={styles.sourceActions}>
+                <Link href={trackingEntityResearchHref(record.entityType, record.canonicalName)}>
+                  研究页 <BookOpen size={13} />
+                </Link>
+                <a href={record.source.url} target="_blank" rel="noreferrer">
+                  原文 <ExternalLink size={13} />
+                </a>
+              </div>
             </div>
           </article>
         ))}
