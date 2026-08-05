@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-04T12:11:17+00:00",
-  "eventCount": 83,
-  "institutionEventCount": 43,
-  "capitalEventCount": 40,
-  "attributedInstitutionCount": 27,
+  "generatedAt": "2026-08-05T03:43:51+00:00",
+  "eventCount": 65,
+  "institutionEventCount": 30,
+  "capitalEventCount": 35,
+  "attributedInstitutionCount": 22,
   "methodology": {
     "structuredField": "article.institutions exact reviewed alias match",
     "officialDomain": "article source URL matches the institution official domain",
@@ -13,20 +13,183 @@
   },
   "events": [
     {
+      "id": "user-track-materials-google-cn-4df4de68f841285f",
+      "articleId": "user-track-materials-google-cn-4df4de68f841285f",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "融资",
+      "title": "宏德新材完成超亿元A+轮融资，推动全球复合材料工程化应用 - 投资界",
+      "summary": "宏德新材完成超亿元A+轮融资，推动全球复合材料工程化应用 投资界",
+      "region": "中国",
+      "sector": "新材料",
+      "company": "科技产业",
+      "publishedAt": "2026-08-05",
+      "firstSeenAt": "2026-08-05T03:20:13+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "user-track-materials-google-cn",
+      "source": {
+        "name": "新材料 · Google News 中文",
+        "platform": "Google News",
+        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBPOWNqMnViMEtyNFRRUG14SDVWOGRmSk5XV0c4OTN2S3ZEams3ZXktamd4SFpINENxX0FjYnBjYjZmVWRWZUMyejR2dXVuNzBoem1tb0F3?oc=5",
+        "evidenceGrade": "D",
+        "evidenceLabel": "待交叉验证线索",
+        "evidencePolicy": "仅用于发现线索，不应单独表述为确定事实"
+      }
+    },
+    {
+      "id": "sina-finance-391045168309f9fc",
+      "articleId": "sina-finance-391045168309f9fc",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "融资",
+      "title": "黑石据悉筹划新一轮巨额融资交易 以支持Anthropic芯片交易",
+      "summary": "据知情人士透露，黑石集团与投资者已进行初步磋商，以评估对第二轮巨额债务融资方案的兴趣，用于支持Anthropic使用Alphabet旗下谷歌的芯片。",
+      "region": "中国",
+      "sector": "半导体",
+      "company": "Anthropic",
+      "companySlug": "anthropic",
+      "publishedAt": "2026-08-05",
+      "firstSeenAt": "2026-08-05T03:20:13+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "sina-finance",
+      "source": {
+        "name": "新浪财经",
+        "platform": "新浪",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-05/doc-inimfmyt4777528.shtml",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
+      "id": "sina-finance-247b09034d5f62ae",
+      "articleId": "sina-finance-247b09034d5f62ae",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "融资",
+      "title": "淡马锡和摩根士丹利据悉有意参与深圳爱德泰IPO前融资",
+      "summary": "据知情人士透露，深圳爱德泰科技股份有限公司（Shenzhen Adtek Technology Co．）在计划于香港首次公开发行（IPO）前的一轮私募融资中，接近筹得最高20亿元人民币（约2...",
+      "region": "中国",
+      "sector": "AI / AGI",
+      "company": "科技产业",
+      "publishedAt": "2026-08-05",
+      "firstSeenAt": "2026-08-05T03:20:13+00:00",
+      "firstSeenEstimated": false,
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "sina-finance",
+      "source": {
+        "name": "新浪财经",
+        "platform": "新浪",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-05/doc-inimfshr4717506.shtml",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
+      "id": "ionq-53b35f6e7969e34f",
+      "articleId": "ionq-53b35f6e7969e34f",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "并购",
+      "title": "IonQ Receives Regulatory Approval for SkyWater Acquisition",
+      "summary": "IonQ receives final regulatory approval to acquire SkyWater Technology, creating a vertically integrated U.S. quantum platform. Closing set for July 31, 2026.",
+      "region": "美国",
+      "sector": "量子计算",
+      "company": "IonQ",
+      "companySlug": "ionq",
+      "publishedAt": "2026-08-05",
+      "firstSeenAt": "2026-08-04T01:28:38+00:00",
+      "firstSeenEstimated": true,
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "ionq",
+      "source": {
+        "name": "IonQ",
+        "platform": "官方网站",
+        "url": "https://ionq.com/news/ionq-receives-regulatory-approval-to-complete-acquisition-of-skywater-technology",
+        "evidenceGrade": "B",
+        "evidenceLabel": "主体官方/原始材料",
+        "evidencePolicy": "可作为信息主体的正式公开声明"
+      }
+    },
+    {
+      "id": "user-source-source-scale-ai-830511cf032b2562",
+      "articleId": "user-source-source-scale-ai-830511cf032b2562",
+      "scope": "institution-event",
+      "attributionStatus": "attributed",
+      "eventType": "技术突破",
+      "title": "AI Model Leaderboards & Benchmarks",
+      "summary": "Explore leaderboards with expert-driven LLM benchmarks and updated AI model rankings across coding, reasoning and more.",
+      "region": "美国",
+      "sector": "AI / AGI",
+      "company": "Scale AI",
+      "companySlug": "scale-ai",
+      "publishedAt": "2026-08-05",
+      "firstSeenAt": "2026-08-04T01:28:38+00:00",
+      "firstSeenEstimated": true,
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [
+        "profile:benchmark"
+      ],
+      "institutionNames": [
+        "Benchmark"
+      ],
+      "attributions": [
+        {
+          "institutionId": "profile:benchmark",
+          "institutionName": "Benchmark",
+          "methods": [
+            "reviewed-alias-text"
+          ],
+          "evidence": [
+            "Benchmark"
+          ]
+        }
+      ],
+      "sourceId": "user-source-source-scale-ai",
+      "source": {
+        "name": "Scale AI 官方来源",
+        "platform": "Scale AI 官方来源",
+        "url": "https://labs.scale.com/leaderboard",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
       "id": "user-track-space-google-us-d84e2cd475875987",
       "articleId": "user-track-space-google-us-d84e2cd475875987",
       "scope": "capital-event",
       "attributionStatus": "unattributed",
       "eventType": "并购",
-      "title": "Tesla's China footprint complicates path to possible SpaceX merger - Reuters",
-      "summary": "Tesla's China footprint complicates path to possible SpaceX merger Reuters",
+      "title": "A separation of Tesla’s China business ahead of a potential SpaceX merger could get tricky - Reuters",
+      "summary": "A separation of Tesla’s China business ahead of a potential SpaceX merger could get tricky Reuters",
       "region": "美国",
       "sector": "商业航天",
       "company": "科技产业",
       "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T11:36:30+00:00",
+      "firstSeenAt": "2026-08-05T03:20:13+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -71,21 +234,21 @@
       }
     },
     {
-      "id": "user-source-source-scale-ai-830511cf032b2562",
-      "articleId": "user-source-source-scale-ai-830511cf032b2562",
+      "id": "user-source-source-harvey-f76cdefa9f533d54",
+      "articleId": "user-source-source-harvey-f76cdefa9f533d54",
       "scope": "institution-event",
       "attributionStatus": "attributed",
       "eventType": "技术突破",
-      "title": "AI Model Leaderboards & Benchmarks",
-      "summary": "Explore leaderboards with expert-driven LLM benchmarks and updated AI model rankings across coding, reasoning and more.",
+      "title": "Harvey Research",
+      "summary": "Harvey is pushing the frontier of legal intelligence through open research. Our research agenda spans evaluation and benchmarking, post-training, harness optimization, verification, and agent behavior.",
       "region": "美国",
       "sector": "AI / AGI",
-      "company": "Scale AI",
-      "companySlug": "scale-ai",
+      "company": "Harvey",
+      "companySlug": "harvey",
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -105,56 +268,11 @@
           ]
         }
       ],
-      "sourceId": "user-source-source-scale-ai",
+      "sourceId": "user-source-source-harvey",
       "source": {
-        "name": "Scale AI 官方来源",
-        "platform": "Scale AI 官方来源",
-        "url": "https://labs.scale.com/leaderboard",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "professional-media-dev-community-fdf3c969da09a228",
-      "articleId": "professional-media-dev-community-fdf3c969da09a228",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "技术突破",
-      "title": "Qwen3.8-Max Beat Claude on Three Benchmarks. The Full Story Is Less Convenient",
-      "summary": "Alibaba has released Qwen3.8-Max, its largest and most capable AI model to date. The headline specifications are absurd: 2.4 trillion total parameters, 95 billion activated per token, multimodal input, and a one-million-token context window. But the specification sheet is not the most interesting part. Alibaba says Qwen3.8-Max operated autonomously for roughly 16 days, starting with an empty repository and building a working software project through issues, code changes, testing, pull requests,",
-      "region": "全球",
-      "sector": "半导体",
-      "company": "Anthropic",
-      "companySlug": "anthropic",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T11:36:30+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [
-        "profile:benchmark"
-      ],
-      "institutionNames": [
-        "Benchmark"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:benchmark",
-          "institutionName": "Benchmark",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "Benchmark"
-          ]
-        }
-      ],
-      "sourceId": "professional-media-dev-community",
-      "source": {
-        "name": "DEV Community",
-        "platform": "DEV Community",
-        "url": "https://dev.to/aditi_gupta_8d81622a592aa/qwen38-max-vs-claude-what-the-16-day-coding-run-and-benchmarks-really-show-3bje",
+        "name": "Harvey 官方来源",
+        "platform": "Harvey 官方来源",
+        "url": "https://harvey.ai/en-US/research",
         "evidenceGrade": "C",
         "evidenceLabel": "专业媒体/数据库",
         "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
@@ -202,6 +320,10 @@
       "sector": "新能源",
       "company": "科技产业",
       "publishedAt": "2026-08-04",
+      "firstSeenAt": "2026-08-04T12:11:17+00:00",
+      "firstSeenEstimated": true,
+      "lastVerifiedAt": "2026-08-04T12:11:17+00:00",
+      "lastVerifiedEstimated": true,
       "institutionIds": [],
       "institutionNames": [],
       "attributions": [],
@@ -209,7 +331,10 @@
       "source": {
         "name": "东方财富",
         "platform": "东方财富",
-        "url": "https://finance.eastmoney.com/a/202608043830170028.html"
+        "url": "https://finance.eastmoney.com/a/202608043830170028.html",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
       }
     },
     {
@@ -226,7 +351,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T11:36:30+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:阿里巴巴"
@@ -295,50 +420,6 @@
         "name": "Yahoo奇摩",
         "platform": "Yahoo奇摩",
         "url": "https://tw.stock.yahoo.com/news/ai%E4%BA%BA%E6%89%8D%E6%88%B0%E5%8D%87%E6%BA%AB-%E4%B8%AD%E5%9C%8B%E7%A7%91%E6%8A%80%E5%B7%A8%E9%A0%AD%E6%8F%90%E5%89%8D%E9%8E%96%E5%AE%9A2027%E7%95%A2%E6%A5%AD%E7%94%9F-105800651.html",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-yahoo-b710e82d9b81bc2a",
-      "articleId": "user-source-source-yahoo-b710e82d9b81bc2a",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "公司动态",
-      "title": "中國AI價格戰升溫 「AI六強」競逐市場 挑戰美國高成本生態系",
-      "summary": "圖／示意圖商傳媒｜吳承岳／台北報導中國人工智慧（AI）產業競爭持續升溫，各大科技公司透過推出新模型、降低使用成本及擴大開源布局，掀起新一波價格戰，也逐步改變全球AI市場競爭格局。市場分析認為，中國正以高性價比策略，加速挑戰由美國主導的高成本AI生態系。近期備受關注的是中國AI新創月之暗面（Moonshot AI）於7月17日發布的新一代大型語言模型 Kimi K3。該模型採用開放權重（Open Weights）架構，擁有約2.8兆個參數，開發者可存取模型權重並進一步部署、微調及應用，成為目前公開發布的大型開放權重模型之一。不過，Kimi K3只是中國AI市場快速發展的一環。根據《HackerNoon》7月23日分析，中國AI產業已從過去少數新創競逐的局面，演變為多家大型企業並進的競爭格局，目前市場主要由六家代表性業者領跑，包括DeepSeek、阿里巴巴（通義千問）、字節跳動（豆包）、百度（文心）、月之暗面（Kimi）以及智譜AI（GLM）。報導指出，這波競爭的重要轉折點來自2025年初DeepSeek推出高效能推理模型。由於其開發成本與推論成本遠低於部分西方同級產品，引發全球AI市場高",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T04:34:43+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T04:34:43+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [
-        "institution:阿里巴巴"
-      ],
-      "institutionNames": [
-        "阿里巴巴"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:阿里巴巴",
-          "institutionName": "阿里巴巴",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "阿里巴巴"
-          ]
-        }
-      ],
-      "sourceId": "user-source-source-yahoo",
-      "source": {
-        "name": "Yahoo奇摩",
-        "platform": "Yahoo奇摩",
-        "url": "https://tw.stock.yahoo.com/news/%E4%B8%AD%E5%9C%8Bai%E5%83%B9%E6%A0%BC%E6%88%B0%E5%8D%87%E6%BA%AB-ai%E5%85%AD%E5%BC%B7-%E7%AB%B6%E9%80%90%E5%B8%82%E5%A0%B4-%E6%8C%91%E6%88%B0%E7%BE%8E%E5%9C%8B%E9%AB%98%E6%88%90%E6%9C%AC%E7%94%9F%E6%85%8B%E7%B3%BB-033400543.html",
         "evidenceGrade": "C",
         "evidenceLabel": "专业媒体/数据库",
         "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
@@ -434,94 +515,6 @@
       }
     },
     {
-      "id": "professional-media-siliconangle-355566f6c356ad88",
-      "articleId": "professional-media-siliconangle-355566f6c356ad88",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "公司动态",
-      "title": "After raising $1B in funding, Valar Atomics plans to mass produce small nuclear reactors for the AI industry",
-      "summary": "Nuclear energy startup Valar Atomics Inc. said today it has raised a bumper $1 billion Series B funding round to help it move from building prototype small nuclear reactors to manufacturing them at scale on a production line. Today’s round was led by Sequoia Capital and saw participation from nine other venture capital firms, including […] The post After raising $1B in funding, Valar Atomics plans to mass produce small nuclear reactors for the AI industry appeared first on SiliconANGLE .",
-      "region": "美国",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T02:38:45+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [
-        "profile:sequoia-capital"
-      ],
-      "institutionNames": [
-        "Sequoia Capital"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:sequoia-capital",
-          "institutionName": "Sequoia Capital",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "Sequoia Capital"
-          ]
-        }
-      ],
-      "sourceId": "professional-media-siliconangle",
-      "source": {
-        "name": "SiliconANGLE",
-        "platform": "SiliconANGLE",
-        "url": "https://siliconangle.com/2026/08/03/raising-1b-funding-valar-atomics-plans-mass-produce-small-nuclear-reactors-ai-industry",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "professional-media-dev-community-6fec3a089ba6b5bc",
-      "articleId": "professional-media-dev-community-6fec3a089ba6b5bc",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "公司动态",
-      "title": "Voice Emotion Control Moves From SSML to Prompts",
-      "summary": "Voice emotion control is leaving the markup. Kakao's Kanana-o model, detailed on its tech blog on August 4, 2026, now takes plain-language instructions like \"read it in a sad voice\" or \"read it in a Gyeongsang dialect\" and reflects them in speed, volume, pitch, emotion, intonation, and intensity. On the Korean InstructTTSEval benchmark it scores 94.50, ahead of OpenAI's GPT-4o-mini-tts at 91.10 and just behind Google's Gemini 2.5 Flash Preview TTS at 95.38. I work at Speechify, on the SpeechifyA",
-      "region": "全球",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-08-04",
-      "firstSeenAt": "2026-08-04T11:36:30+00:00",
-      "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [
-        "profile:benchmark"
-      ],
-      "institutionNames": [
-        "Benchmark"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:benchmark",
-          "institutionName": "Benchmark",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "Benchmark"
-          ]
-        }
-      ],
-      "sourceId": "professional-media-dev-community",
-      "source": {
-        "name": "DEV Community",
-        "platform": "DEV Community",
-        "url": "https://dev.to/lukeocodes/voice-emotion-control-moves-from-ssml-to-prompts-506b",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
       "id": "leiphone-b652d782ab06977d",
       "articleId": "leiphone-b652d782ab06977d",
       "scope": "institution-event",
@@ -535,7 +528,7 @@
       "publishedAt": "2026-08-04",
       "firstSeenAt": "2026-08-04T05:08:52+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:阿里巴巴"
@@ -993,51 +986,6 @@
       }
     },
     {
-      "id": "user-source-source-harvey-f76cdefa9f533d54",
-      "articleId": "user-source-source-harvey-f76cdefa9f533d54",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "技术突破",
-      "title": "Harvey Research",
-      "summary": "Harvey is pushing the frontier of legal intelligence through open research. Our research agenda spans evaluation and benchmarking, post-training, harness optimization, verification, and agent behavior.",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Harvey",
-      "companySlug": "harvey",
-      "publishedAt": "2026-08-03",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [
-        "profile:benchmark"
-      ],
-      "institutionNames": [
-        "Benchmark"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:benchmark",
-          "institutionName": "Benchmark",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "Benchmark"
-          ]
-        }
-      ],
-      "sourceId": "user-source-source-harvey",
-      "source": {
-        "name": "Harvey 官方来源",
-        "platform": "Harvey 官方来源",
-        "url": "https://harvey.ai/en-US/research",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
       "id": "user-source-source-harvey-61495fd82bdab1d9",
       "articleId": "user-source-source-harvey-61495fd82bdab1d9",
       "scope": "institution-event",
@@ -1052,7 +1000,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-04T18:17:45+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "profile:benchmark"
@@ -1169,35 +1117,6 @@
         "evidenceGrade": "C",
         "evidenceLabel": "专业媒体/数据库",
         "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-track-quantum-google-cn-671f11d3a8242de6",
-      "articleId": "user-track-quantum-google-cn-671f11d3a8242de6",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "产业投资",
-      "title": "首程控股投资国内唯一QCCD离子阱量子计算公司幺正量子 - 观点网",
-      "summary": "首程控股投资国内唯一QCCD离子阱量子计算公司幺正量子 观点网",
-      "region": "中国",
-      "sector": "量子计算",
-      "company": "科技产业",
-      "publishedAt": "2026-08-03",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "user-track-quantum-google-cn",
-      "source": {
-        "name": "量子计算 · Google News 中文",
-        "platform": "Google News",
-        "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFA5NjJOLWNrWUxuWGpvT2ZWUGJIVnVJaUNxdHRra3hHaUdPejBmSjFHdmh1WHZwT09rVmNCbnFPR0xjdTNTczU0cW5waGVPZWRLMGJtRktNNEs3aEpzQnFrd0ZR?oc=5",
-        "evidenceGrade": "D",
-        "evidenceLabel": "待交叉验证线索",
-        "evidencePolicy": "仅用于发现线索，不应单独表述为确定事实"
       }
     },
     {
@@ -1463,7 +1382,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T05:08:52+00:00",
       "firstSeenEstimated": false,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:蚂蚁集团",
@@ -1519,7 +1438,7 @@
       "publishedAt": "2026-08-03",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [
         "institution:商汤科技"
@@ -1826,7 +1745,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1855,7 +1774,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1884,7 +1803,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1913,7 +1832,7 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -1923,6 +1842,35 @@
         "name": "CMSWire",
         "platform": "CMSWire",
         "url": "https://www.cmswire.com/customer-experience/smallestai-lands-13m-series-a-for-voice-ai",
+        "evidenceGrade": "C",
+        "evidenceLabel": "专业媒体/数据库",
+        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
+      }
+    },
+    {
+      "id": "user-source-source-electrek-74dac3871893b6ae",
+      "articleId": "user-source-source-electrek-74dac3871893b6ae",
+      "scope": "capital-event",
+      "attributionStatus": "unattributed",
+      "eventType": "并购",
+      "title": "Podcast: Tesla/SpaceX merger, Rivian R2 progress, new Mercedes GLA, and more",
+      "summary": "In the Electrek Podcast , we discuss the most popular news in the world of sustainable transport and energy. In this week’s episode, we discuss rumors of a Tesla/SpaceX merger, Rivian’s earnings, R2 progress, and efficiency test, new Mercedes GLA, and more.",
+      "region": "美国",
+      "sector": "新能源",
+      "company": "科技产业",
+      "publishedAt": "2026-07-31",
+      "firstSeenAt": "2026-08-04T01:28:38+00:00",
+      "firstSeenEstimated": true,
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
+      "lastVerifiedEstimated": false,
+      "institutionIds": [],
+      "institutionNames": [],
+      "attributions": [],
+      "sourceId": "user-source-source-electrek",
+      "source": {
+        "name": "Electrek",
+        "platform": "Electrek",
+        "url": "https://electrek.co/2026/07/31/podcast-tesla-spacex-merger-rivian-r2-progress-new-mercedes-gla-and-more",
         "evidenceGrade": "C",
         "evidenceLabel": "专业媒体/数据库",
         "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
@@ -1958,97 +1906,12 @@
       }
     },
     {
-      "id": "professional-media-techcrunch-2cf78121e65b585c",
-      "articleId": "professional-media-techcrunch-2cf78121e65b585c",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Tesla reportedly might sell its China business ahead of a SpaceX merger",
-      "summary": "Tesla had already reportedly prepped for the idea in the event that Beijing invades Taiwan.",
-      "region": "美国",
-      "sector": "商业航天",
-      "company": "科技产业",
-      "publishedAt": "2026-07-31",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "professional-media-techcrunch",
-      "source": {
-        "name": "TechCrunch",
-        "platform": "TechCrunch",
-        "url": "https://techcrunch.com/2026/07/31/tesla-reportedly-might-sell-its-china-business-ahead-of-a-spacex-merger",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "professional-media-electrek-74dac3871893b6ae",
-      "articleId": "professional-media-electrek-74dac3871893b6ae",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Podcast: Tesla/SpaceX merger, Rivian R2 progress, new Mercedes GLA, and more",
-      "summary": "In the Electrek Podcast , we discuss the most popular news in the world of sustainable transport and energy. In this week’s episode, we discuss rumors of a Tesla/SpaceX merger, Rivian’s earnings, R2 progress, and efficiency test, new Mercedes GLA, and more.",
-      "region": "美国",
-      "sector": "新能源",
-      "company": "科技产业",
-      "publishedAt": "2026-07-31",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "user-source-source-electrek",
-      "source": {
-        "name": "Electrek",
-        "platform": "Electrek",
-        "url": "https://electrek.co/2026/07/31/podcast-tesla-spacex-merger-rivian-r2-progress-new-mercedes-gla-and-more",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "ionq-53b35f6e7969e34f",
-      "articleId": "ionq-53b35f6e7969e34f",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "IonQ | IonQ Receives Regulatory Approval for SkyWater Acquisition",
-      "summary": "IonQ receives final regulatory approval to acquire SkyWater Technology, creating a vertically integrated U.S. quantum platform. Closing set for July 31, 2026.",
-      "region": "美国",
-      "sector": "量子计算",
-      "company": "IonQ",
-      "companySlug": "ionq",
-      "publishedAt": "2026-07-31",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
-      "lastVerifiedEstimated": false,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "official-ionq",
-      "source": {
-        "name": "IonQ",
-        "platform": "官方网站",
-        "url": "https://ionq.com/news/ionq-receives-regulatory-approval-to-complete-acquisition-of-skywater-technology"
-      }
-    },
-    {
       "id": "ionq-4c04c6fc43e7d969",
       "articleId": "ionq-4c04c6fc43e7d969",
       "scope": "capital-event",
       "attributionStatus": "unattributed",
       "eventType": "并购",
-      "title": "IonQ | IonQ Completes Acquisition of SkyWater Technology",
+      "title": "IonQ Completes Acquisition of SkyWater Technology",
       "summary": "IonQ completes its acquisition of SkyWater Technology, creating the only vertically integrated full-stack quantum platform to accelerate quantum computing.",
       "region": "美国",
       "sector": "量子计算",
@@ -2057,16 +1920,19 @@
       "publishedAt": "2026-07-31",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
       "attributions": [],
-      "sourceId": "official-ionq",
+      "sourceId": "ionq",
       "source": {
         "name": "IonQ",
         "platform": "官方网站",
-        "url": "https://ionq.com/news/ionq-completes-acquisition-of-skywater-technology"
+        "url": "https://ionq.com/news/ionq-completes-acquisition-of-skywater-technology",
+        "evidenceGrade": "B",
+        "evidenceLabel": "主体官方/原始材料",
+        "evidencePolicy": "可作为信息主体的正式公开声明"
       }
     },
     {
@@ -2463,7 +2329,7 @@
       "publishedAt": "2026-07-30",
       "firstSeenAt": "2026-08-04T01:28:38+00:00",
       "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T11:36:30+00:00",
+      "lastVerifiedAt": "2026-08-05T03:20:13+00:00",
       "lastVerifiedEstimated": false,
       "institutionIds": [],
       "institutionNames": [],
@@ -2626,583 +2492,6 @@
         "evidenceGrade": "C",
         "evidenceLabel": "专业媒体/数据库",
         "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-track-rcvvao-37e5713bfe4c5478",
-      "articleId": "user-source-source-track-rcvvao-37e5713bfe4c5478",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "融资",
-      "title": "玄言生物获复旦科创数千万元融资，加速泛癌病理AI基础模型研发与临床转化",
-      "summary": "玄言生物获复旦科创数千万元融资，加速泛癌病理AI基础模型研发与临床转化,7月28日消息，玄言生物获复旦科创数千万元融资，这是其半年内第二笔融资。本轮融资将用于技术迭代等，推进多模态配对数据建设及技术转化应用。",
-      "region": "全球",
-      "sector": "生物科技",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "user-source-source-track-rcvvao",
-      "source": {
-        "name": "投资界",
-        "platform": "投资界",
-        "url": "https://news.pedaily.cn/202607/566887.shtml",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-track-c6s6ma-a8c73553feead41c",
-      "articleId": "user-source-source-track-c6s6ma-a8c73553feead41c",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "融资",
-      "title": "励楷科技获近5亿元D轮融资",
-      "summary": "本轮融资由上海国投旗下上海科创集团与闵金投领投，太平股权（太平私募股权基金管理有限公司）、深创投、通商创投、华泰紫金、上海外高桥集团等多家知名投资机构共同参与，多家老股东继续追加投资。",
-      "region": "全球",
-      "sector": "风险投资",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [
-        "profile:scgc",
-        "institution:上海科创集团"
-      ],
-      "institutionNames": [
-        "深创投集团",
-        "上海科创集团"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:scgc",
-          "institutionName": "深创投集团",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "深创投"
-          ]
-        },
-        {
-          "institutionId": "institution:上海科创集团",
-          "institutionName": "上海科创集团",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "上海科创集团"
-          ]
-        }
-      ],
-      "sourceId": "user-source-source-track-c6s6ma",
-      "source": {
-        "name": "投中网",
-        "platform": "投中网",
-        "url": "https://www.chinaventure.com.cn/news/111-20260728-392483.html",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-track-c6s6ma-962fd4d7c8fd8e90",
-      "articleId": "user-source-source-track-c6s6ma-962fd4d7c8fd8e90",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "融资",
-      "title": "光信科技完成数千万Pre-A轮融资",
-      "summary": "本轮资金将主要用于多模态物理AI核心技术研发、产品平台化建设以及跨行业规模化落地。",
-      "region": "全球",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "user-source-source-track-c6s6ma",
-      "source": {
-        "name": "投中网",
-        "platform": "投中网",
-        "url": "https://www.chinaventure.com.cn/news/114-20260728-392486.html",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-track-c6s6ma-8f5a9611d0367eb6",
-      "articleId": "user-source-source-track-c6s6ma-8f5a9611d0367eb6",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "融资",
-      "title": "贝联珠贯完成超亿元融资",
-      "summary": "本轮融资由阿里云领投，老股东红杉中国、元璟资本超额跟投。",
-      "region": "全球",
-      "sector": "风险投资",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [
-        "profile:hongshan"
-      ],
-      "institutionNames": [
-        "红杉中国"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:hongshan",
-          "institutionName": "红杉中国",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "红杉中国"
-          ]
-        }
-      ],
-      "sourceId": "user-source-source-track-c6s6ma",
-      "source": {
-        "name": "投中网",
-        "platform": "投中网",
-        "url": "https://www.chinaventure.com.cn/news/113-20260728-392475.html",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-track-c6s6ma-5ba007e8407144c2",
-      "articleId": "user-source-source-track-c6s6ma-5ba007e8407144c2",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "融资",
-      "title": "英灵殿科技完成累计近 5000 万美元多轮融资",
-      "summary": "其中投资方包括五源资本、真格基金、中科创星、襄禾资本、国方创投、陆石投资、奇绩创坛、L2F 光源创业者基金及知名产业方等，光源资本担任独家财务顾问。",
-      "region": "全球",
-      "sector": "风险投资",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [
-        "institution:中科创星",
-        "profile:zhenfund",
-        "institution:五源资本",
-        "institution:奇绩创坛"
-      ],
-      "institutionNames": [
-        "中科创星",
-        "真格基金",
-        "五源资本",
-        "奇绩创坛"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:中科创星",
-          "institutionName": "中科创星",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "中科创星"
-          ]
-        },
-        {
-          "institutionId": "profile:zhenfund",
-          "institutionName": "真格基金",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "真格基金"
-          ]
-        },
-        {
-          "institutionId": "institution:五源资本",
-          "institutionName": "五源资本",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "五源资本"
-          ]
-        },
-        {
-          "institutionId": "institution:奇绩创坛",
-          "institutionName": "奇绩创坛",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "奇绩创坛"
-          ]
-        }
-      ],
-      "sourceId": "user-source-source-track-c6s6ma",
-      "source": {
-        "name": "投中网",
-        "platform": "投中网",
-        "url": "https://www.chinaventure.com.cn/news/113-20260728-392482.html",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-track-c6s6ma-14ed0555abebc107",
-      "articleId": "user-source-source-track-c6s6ma-14ed0555abebc107",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "融资",
-      "title": "树脑科技完成天使轮千万级融资",
-      "summary": "本轮融资由浙江火炬中心、君颐资本、磐安城建集团等机构联合投资。",
-      "region": "全球",
-      "sector": "风险投资",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "user-source-source-track-c6s6ma",
-      "source": {
-        "name": "投中网",
-        "platform": "投中网",
-        "url": "https://www.chinaventure.com.cn/news/111-20260728-392488.html",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "user-source-source-techdirt-8eca0bb9fe5e8f3b",
-      "articleId": "user-source-source-techdirt-8eca0bb9fe5e8f3b",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Comment on Paramount Merger Gets Further Delayed, And Things Could Get Expensive by Anonymous Coward",
-      "summary": "Yep, and Paramount is noted BB+ (known a \"junk\", where funds like pension funds are required to sell this stock), and Oracle is noted BBB (known as just on top of \"junk\", and will soon be degraded to BB+ or BB if it doesn't stop immediately its shopping spree for OpenAI). It means that there is no way for Paramount or Oracle to borrow money or raise bond. Also Paramount's stock price felt by 40% in a year, and Oracle by 52%. So if you're looking for one of the greatest economic failure of theses",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "科技产业",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "user-source-source-techdirt",
-      "source": {
-        "name": "Techdirt",
-        "platform": "Techdirt",
-        "url": "https://www.techdirt.com/2026/07/28/paramount-merger-gets-further-delayed-and-things-could-get-expensive",
-        "evidenceGrade": "C",
-        "evidenceLabel": "专业媒体/数据库",
-        "evidencePolicy": "作为媒体或数据库报道使用，重大资本事实宜交叉核验"
-      }
-    },
-    {
-      "id": "x-anthropic-fcb84327a34048f6",
-      "articleId": "x-anthropic-fcb84327a34048f6",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "技术突破",
-      "title": "Anthropic：We also worked with academics at ETH Zurich, Tel Aviv University, and the University of Haifa to build CryptanalysisBench, a benchmark for studying LL",
-      "summary": "We also worked with academics at ETH Zurich, Tel Aviv University, and the University of Haifa to build CryptanalysisBench, a benchmark for studying LLMs’ cryptanalysis abilities. https://t.co/OEYhGjH5Lj",
-      "region": "美国",
-      "sector": "AI / AGI",
-      "company": "Anthropic",
-      "companySlug": "anthropic",
-      "publishedAt": "2026-07-28",
-      "firstSeenAt": "2026-08-04T01:28:38+00:00",
-      "firstSeenEstimated": true,
-      "lastVerifiedAt": "2026-08-04T01:28:38+00:00",
-      "lastVerifiedEstimated": true,
-      "institutionIds": [
-        "profile:benchmark"
-      ],
-      "institutionNames": [
-        "Benchmark"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:benchmark",
-          "institutionName": "Benchmark",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "Benchmark"
-          ]
-        }
-      ],
-      "sourceId": "x-anthropic",
-      "source": {
-        "name": "Anthropic on X",
-        "platform": "X",
-        "url": "https://x.com/AnthropicAI/status/2082153311189225927",
-        "evidenceGrade": "B",
-        "evidenceLabel": "主体官方/原始材料",
-        "evidencePolicy": "可作为信息主体的正式公开声明"
-      }
-    },
-    {
-      "id": "official-psiquantum-a553685b7f26d9f4",
-      "articleId": "official-psiquantum-a553685b7f26d9f4",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "商业进展",
-      "title": "PsiQuantum Signs $125 Million Agreement with DARPA",
-      "summary": "PsiQuantum today announced that the company has signed a new $125 million contract with the Defense Advanced Research Projects Agency (DARPA) under DARPA’s Quantum Benchmarking Initiative (QBI), the U.S. government’s most rigorous effort to evaluate commercial pathways to utility-scale quantum computing.",
-      "region": "美国",
-      "sector": "量子计算",
-      "company": "PsiQuantum",
-      "companySlug": "psiquantum",
-      "publishedAt": "2026-07-22",
-      "institutionIds": [
-        "profile:benchmark"
-      ],
-      "institutionNames": [
-        "Benchmark"
-      ],
-      "attributions": [
-        {
-          "institutionId": "profile:benchmark",
-          "institutionName": "Benchmark",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "Benchmark"
-          ]
-        }
-      ],
-      "sourceId": "official-psiquantum",
-      "source": {
-        "name": "PsiQuantum",
-        "platform": "官方网站",
-        "url": "https://www.psiquantum.com/news-import/psiquantum-signs-125-million-agreement-with-darpa"
-      }
-    },
-    {
-      "id": "official-catl-0c3a1e9ca68ead8a",
-      "articleId": "official-catl-0c3a1e9ca68ead8a",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "商业进展",
-      "title": "CATL and Solarpro Sign 2 GWh Sodium-ion Battery Storage Agreement for Eastern Europe",
-      "summary": "CATL and Solarpro Technology AD (Solarpro) announced the signing of a strategic cooperation agreement for 2 GWh sodium-ion systems. This marks a significant milestone in advancing the adoption of next-generation storage technologies and the transition toward more resilient and sustainable energy systems in Eastern Europe.Contemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative technologies, committed to providing premier solutions and services for new energ",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-21",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6916.html"
-      }
-    },
-    {
-      "id": "official-catl-da49e430cb7409e3",
-      "articleId": "official-catl-da49e430cb7409e3",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "商业进展",
-      "title": "Alfen and CATL Reach 5 GWh Sodium-Ion Battery Storage Partnership in Europe",
-      "summary": "Alfen N.V., a leading European energy solutions provider, and Contemporary Amperex Technology Co., Limited (CATL), the world's largest battery manufacturer, today announced their collaboration to deploy 5 GWh of CATL's advanced sodium-ion battery energy storage systems across Europe. This brings the two companies' long-standing partnership to a new level, opening a new chapter of diversified, technology-driven development supporting EContemporary Amperex Technology Co., Limited (CATL) is a globa",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-16",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6900.html"
-      }
-    },
-    {
-      "id": "official-catl-821ed428caa29f17",
-      "articleId": "official-catl-821ed428caa29f17",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "技术突破",
-      "title": "CATL Receives the 2026 Volkswagen Group Award",
-      "summary": "Recently, CATL was granted the 2026 Volkswagen Group Award . With outstanding overall performance in battery technology R&D, supply chain stability, and efficient global execution, CATL stands as the sole power battery manufacturer and the only enterprise from Chinese mainland to be recognized this year.CATL has been supplying NCM battery cells for Volkswagen's MEB platform since 2018. This yearContemporary Amperex Technology Co., Limited (CATL) is a global leader in new energy innovative techno",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-12",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6896.html"
-      }
-    },
-    {
-      "id": "official-catl-257a5d62bbd36386",
-      "articleId": "official-catl-257a5d62bbd36386",
-      "scope": "institution-event",
-      "attributionStatus": "attributed",
-      "eventType": "产品发布",
-      "title": "CATL Launches 8C Superfast Charging Battery for Light-Duty Commercial Vehicles",
-      "summary": "For logistics operators, charging speed, battery durability, cold-weather performance and charging infrastructure remain key concerns.Recently, CATL launched the Tectrans II superfast charging battery for light-duty commercial vehicles, ushering the logistics industry into the era of 8C superfast charging with a refueling-like charging experience.01 Tectrans II Superfast Charging Battery: Ultra-Fast Charging, Longer Lifespan, and Reliable Cold-WeContemporary Amperex Technology Co., Limited (CATL",
-      "region": "中国",
-      "sector": "新能源",
-      "company": "宁德时代",
-      "companySlug": "catl",
-      "publishedAt": "2026-07-06",
-      "institutionIds": [
-        "institution:宁德时代"
-      ],
-      "institutionNames": [
-        "宁德时代"
-      ],
-      "attributions": [
-        {
-          "institutionId": "institution:宁德时代",
-          "institutionName": "宁德时代",
-          "methods": [
-            "reviewed-alias-text"
-          ],
-          "evidence": [
-            "宁德时代"
-          ]
-        }
-      ],
-      "sourceId": "official-catl",
-      "source": {
-        "name": "宁德时代",
-        "platform": "官方网站",
-        "url": "https://www.catl.com/en/news/6925.html"
-      }
-    },
-    {
-      "id": "official-shield-ai-9ce8918aad4f1d23",
-      "articleId": "official-shield-ai-9ce8918aad4f1d23",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Shield AI completes acquisition of Aechelon Technology",
-      "summary": "SAN DIEGO (June 22, 2026) — Shield AI, the defense technology company building the world’s best AI pilots and next-generation aircraft, today announced the completion of its acquisition of Aechelon Technology, Inc, a leader in high-fidelity simulation, physics-based sensor modeling, and synthetic reality technologies. The transaction follows the successful close of Shield AI’s $2 billion strategic financing […]",
-      "region": "美国",
-      "sector": "机器人",
-      "company": "Shield AI",
-      "companySlug": "shield-ai",
-      "publishedAt": "2026-06-22",
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "official-shield-ai",
-      "source": {
-        "name": "Shield AI",
-        "platform": "官方网站",
-        "url": "https://shield.ai/shield-ai-completes-acquisition-of-aechelon-technology"
-      }
-    },
-    {
-      "id": "official-mobileye-9bd9dce1719f03a1",
-      "articleId": "official-mobileye-9bd9dce1719f03a1",
-      "scope": "capital-event",
-      "attributionStatus": "unattributed",
-      "eventType": "并购",
-      "title": "Mobileye To Acquire Mentee Robotics to Accelerate Physical AI Leadership | Mobileye News",
-      "summary": "Combination brings world-class AI talent together to scale autonomous vehicles and humanoid robots globally",
-      "region": "美国",
-      "sector": "半导体",
-      "company": "Mobileye",
-      "companySlug": "mobileye",
-      "publishedAt": "2026-01-06",
-      "institutionIds": [],
-      "institutionNames": [],
-      "attributions": [],
-      "sourceId": "official-mobileye",
-      "source": {
-        "name": "Mobileye",
-        "platform": "官方网站",
-        "url": "https://www.mobileye.com/news/mobileye-to-acquire-mentee-robotics-to-accelerate-physical-ai-leadership"
       }
     }
   ]
