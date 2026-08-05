@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Building2, Cpu, Search, UserRound } from "lucide-react";
+import { Building2, Cpu, Search, Star, UserRound } from "lucide-react";
 import { useMemo, useState } from "react";
 import type {
   TrackingResearchEntityState,
@@ -24,12 +24,13 @@ export type TrackingEntityDirectoryItem = {
   lastActivityAt: string;
   captureCount: number;
   articleCount: number;
+  attentionLevel: 1 | 2 | 3 | 4 | 5;
   reasons: string[];
 };
 
 type TypeFilter = "all" | TrackingResearchEntityType;
 type StateFilter = "all" | TrackingResearchEntityState;
-type SortOrder = "activity" | "name" | "evidence";
+type SortOrder = "activity" | "attention" | "name" | "evidence";
 
 const TYPE_LABELS: Record<TrackingResearchEntityType, string> = {
   company: "公司",
@@ -42,6 +43,14 @@ const STATE_LABELS: Record<TrackingResearchEntityState, string> = {
   candidate: "候选审核中",
   tracked: "追踪中",
 };
+
+const ATTENTION_LABELS = {
+  1: "仅记录",
+  2: "新闻提醒",
+  3: "一般跟踪",
+  4: "重点观察",
+  5: "核心研究",
+} as const;
 
 function TypeIcon({ type }: { type: TrackingResearchEntityType }) {
   if (type === "company") return <Building2 size={17} aria-hidden="true" />;
@@ -78,6 +87,7 @@ export function TrackingEntityDirectory({
           ...item.trackNames,
           ...item.reasons,
           item.summary,
+          ATTENTION_LABELS[item.attentionLevel],
         ]
           .join(" ")
           .normalize("NFKC")
@@ -86,6 +96,13 @@ export function TrackingEntityDirectory({
       })
       .sort((left, right) => {
         if (sortOrder === "name") return left.name.localeCompare(right.name, "zh-CN");
+        if (sortOrder === "attention") {
+          return (
+            right.attentionLevel - left.attentionLevel ||
+            right.lastActivityAt.localeCompare(left.lastActivityAt) ||
+            left.name.localeCompare(right.name, "zh-CN")
+          );
+        }
         if (sortOrder === "evidence") {
           return (
             right.captureCount + right.articleCount - (left.captureCount + left.articleCount) ||
@@ -137,6 +154,7 @@ export function TrackingEntityDirectory({
           aria-label="排序方式"
         >
           <option value="activity">最近活动优先</option>
+          <option value="attention">关注等级优先</option>
           <option value="evidence">证据数量优先</option>
           <option value="name">名称排序</option>
         </select>
@@ -156,6 +174,19 @@ export function TrackingEntityDirectory({
                 {TYPE_LABELS[item.entityType]}
               </span>
               <em data-state={item.state}>{STATE_LABELS[item.state]}</em>
+            </div>
+            <div className={styles.attention} data-level={item.attentionLevel}>
+              <span>
+                {Array.from({ length: 5 }, (_, index) => (
+                  <Star
+                    aria-hidden="true"
+                    fill={index < item.attentionLevel ? "currentColor" : "none"}
+                    key={index}
+                    size={12}
+                  />
+                ))}
+              </span>
+              <strong>{ATTENTION_LABELS[item.attentionLevel]}</strong>
             </div>
             <h2>{item.name}</h2>
             {item.aliases.length > 1 ? (
