@@ -2,12 +2,20 @@ export const FAVORITES_STORAGE_KEY = "vciq:favorites:v1";
 export const FAVORITES_CHANGED_EVENT = "vciq:favorites-changed";
 export const FAVORITES_SCHEMA_VERSION = 1;
 
+/**
+ * `ipo` is retained only as an input compatibility alias for old DOM markers
+ * and browser storage. normalizeFavorite always converts it to `companies`, so
+ * persisted favorites and public groupings contain no independent IPO channel.
+ */
 export type FavoriteChannel =
   | "technology"
   | "companies"
   | "institutions"
+  | "ipo"
   | "reports"
   | "people";
+
+export type FavoriteStoredChannel = Exclude<FavoriteChannel, "ipo">;
 
 export type FavoriteSource = {
   name: string;
@@ -34,8 +42,9 @@ export type FavoriteInput = {
 
 export type FavoriteItem = Omit<
   FavoriteInput,
-  "keywords" | "sectors" | "sources"
+  "channel" | "keywords" | "sectors" | "sources"
 > & {
+  channel: FavoriteStoredChannel;
   keywords: string[];
   sectors: string[];
   sources: FavoriteSource[];
@@ -146,7 +155,7 @@ function normalizeImportance(value: unknown): number | undefined {
   return Math.max(0, Math.min(100, Math.round(number)));
 }
 
-const CHANNELS = new Set<FavoriteChannel>([
+const CHANNELS = new Set<FavoriteStoredChannel>([
   "technology",
   "companies",
   "institutions",
@@ -154,7 +163,7 @@ const CHANNELS = new Set<FavoriteChannel>([
   "people",
 ]);
 
-function normalizedChannelLabel(channel: FavoriteChannel, value: unknown) {
+function normalizedChannelLabel(channel: FavoriteStoredChannel, value: unknown) {
   const label = cleanText(value, 40);
   if (channel === "technology" && ["新兴科技", "赛道研究"].includes(label)) {
     return "核心赛道";
@@ -175,10 +184,10 @@ export function normalizeFavorite(
   if (!value || typeof value !== "object") return null;
   const raw = value as Record<string, unknown>;
   const legacyIpo = raw.channel === "ipo";
-  const channel = legacyIpo
+  const channel: FavoriteStoredChannel | null = legacyIpo
     ? "companies"
-    : typeof raw.channel === "string" && CHANNELS.has(raw.channel as FavoriteChannel)
-      ? (raw.channel as FavoriteChannel)
+    : typeof raw.channel === "string" && CHANNELS.has(raw.channel as FavoriteStoredChannel)
+      ? (raw.channel as FavoriteStoredChannel)
       : null;
   const id = cleanText(raw.id, 180);
   const normalizedHref = normalizeHref(raw.href);
