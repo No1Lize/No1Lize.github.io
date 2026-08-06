@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-06T02:31:40.244Z",
+  "generatedAt": "2026-08-06T04:13:56+00:00",
   "records": [
     {
       "id": "capture-p5b36t",
@@ -27,9 +27,118 @@
       "capturedAt": "2026-08-06T02:31:40.244Z",
       "capturedBy": "VCIQ",
       "status": "applied",
-      "appliedTo": [],
+      "appliedTo": [
+        "robotics:people"
+      ],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "王兴兴",
+        "targetId": "person:wang-xingxing",
+        "confidence": "high",
+        "source": "people-registry",
+        "reason": "名称唯一命中正式人物目录。",
+        "decisionKey": "王兴兴",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-1hp6p68",
+      "entityType": "topic",
+      "canonicalName": "TypeScript",
+      "rawSelection": "TypeScript",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1h43l07",
+        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
+        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
+        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
+        "sourceName": "专业媒体",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "公司动态"
+      },
+      "capturedAt": "2026-08-06T00:50:19.596Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "ai:keywords"
+      ],
+      "reasons": [
+        "技术突破",
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "TypeScript",
+        "targetId": "topic:typescript",
+        "confidence": "verified",
+        "source": "human-decision",
+        "reason": "人工确认 TypeScript 是编程语言／技术主题，不得进入公司候选池。",
+        "decisionKey": "typescript",
+        "reclassified": true
+      }
+    },
+    {
+      "id": "capture-mkkhpz",
+      "entityType": "company",
+      "canonicalName": "Matt",
+      "rawSelection": "Matt",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1h43l07",
+        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
+        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
+        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
+        "sourceName": "专业媒体",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "公司动态"
+      },
+      "capturedAt": "2026-08-06T00:50:19.596Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "技术突破",
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "person",
+        "canonicalName": "Matt",
+        "targetId": "",
+        "confidence": "low",
+        "source": "human-decision",
+        "reason": "单名 Matt 无法唯一解析；必须补充全名或由管理员明确绑定规范人物。",
+        "decisionKey": "matt",
+        "reclassified": true
+      }
     },
     {
       "id": "capture-1g43wss",
@@ -59,88 +168,26 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "ai:sampleCompanies",
-        "robotics:sampleCompanies"
+        "robotics:sampleCompanies",
+        "ai:sampleCompanies"
       ],
       "reasons": [
         "技术突破",
         "个人研究兴趣"
       ],
-      "note": ""
-    },
-    {
-      "id": "capture-mkkhpz",
-      "entityType": "company",
-      "canonicalName": "Matt",
-      "rawSelection": "Matt",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-1h43l07",
-        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
-        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
-        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
-        "sourceName": "专业媒体",
-        "channel": "technology",
-        "channelLabel": "新兴科技",
-        "eventType": "公司动态"
-      },
-      "capturedAt": "2026-08-06T00:50:19.596Z",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies",
-        "robotics:sampleCompanies"
-      ],
-      "reasons": [
-        "技术突破",
-        "个人研究兴趣"
-      ],
-      "note": ""
-    },
-    {
-      "id": "capture-1hp6p68",
-      "entityType": "company",
-      "canonicalName": "TypeScript",
-      "rawSelection": "TypeScript",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-1h43l07",
-        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
-        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
-        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
-        "sourceName": "专业媒体",
-        "channel": "technology",
-        "channelLabel": "新兴科技",
-        "eventType": "公司动态"
-      },
-      "capturedAt": "2026-08-06T00:50:19.596Z",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies",
-        "robotics:sampleCompanies"
-      ],
-      "reasons": [
-        "技术突破",
-        "个人研究兴趣"
-      ],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "GitHub",
+        "targetId": "company:github",
+        "confidence": "verified",
+        "source": "human-decision",
+        "reason": "人工确认 GitHub 是公司／平台实体；后续同名采集复用该结论。",
+        "decisionKey": "github",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-6bixqs",
@@ -170,10 +217,23 @@
       "capturedBy": "VCIQ",
       "status": "applied",
       "appliedTo": [
-        "robotics:sampleCompanies"
+        "robotics:sampleCompanies",
+        "ai:sampleCompanies"
       ],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "DeepSeek",
+        "targetId": "company:deepseek",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "deepseek",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-r54l8i",
@@ -199,12 +259,22 @@
       },
       "capturedAt": "2026-08-05T13:28:29.458Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "杭州联汇科技股份有限",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "杭州联汇科技股份有限",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-1ja5n1t",
@@ -235,7 +305,19 @@
         "ai:keywords"
       ],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "端侧物理AI",
+        "targetId": "topic:端侧物理ai",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "端侧物理ai",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-12qjr54",
@@ -266,7 +348,19 @@
         "ai:sampleCompanies"
       ],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "前海母基金",
+        "targetId": "company-candidate:前海母基金",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "前海母基金",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-n3t9g",
@@ -297,7 +391,19 @@
         "ai:sampleCompanies"
       ],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Om AI",
+        "targetId": "company-candidate:omai",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "omai",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-1f37yx2",
@@ -331,7 +437,19 @@
         "track-1ccjq49:sampleCompanies"
       ],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "砺思资本",
+        "targetId": "company-candidate:砺思资本",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "砺思资本",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-faicf7",
@@ -359,50 +477,22 @@
       },
       "capturedAt": "2026-08-05T13:24:59.889Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies",
-        "robotics:sampleCompanies"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [],
-      "note": ""
-    },
-    {
-      "id": "capture-wiuop1",
-      "entityType": "company",
-      "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
-      "rawSelection": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "风险投资",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-c0o8yq",
-        "title": "08-03",
-        "url": "https://news.pedaily.cn/202608/567178.shtml",
-        "summary": "破壳机器人完成亿美元级Pre-A轮融资,公司成立不到半年,已完成从基础模型、真机强化学习、数据采集硬件到复杂任务训练的全链路搭建;并组建起一支覆盖基础模型、强化学习、Agent、机器人本体、硬件系统、产品与商业化的团队。",
-        "sourceName": "媒体报道 · 投资界 · 投资界",
-        "channel": "institutions",
-        "channelLabel": "投资机构",
-        "eventType": "融资"
-      },
-      "capturedAt": "2026-08-05T05:24:45.821Z",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies",
-        "robotics:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
-      ],
-      "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "星海图",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "星海图",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-mb1puw",
@@ -432,14 +522,22 @@
       },
       "capturedAt": "2026-08-05T05:24:45.821Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies",
-        "robotics:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "破壳机器人",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
+        "decisionKey": "破壳机器人",
+        "reclassified": false
+      }
     },
     {
       "id": "capture-voza6s",
@@ -469,14 +567,67 @@
       },
       "capturedAt": "2026-08-05T05:24:45.821Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies",
-        "robotics:sampleCompanies",
-        "track-1ccjq49:sampleCompanies"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [],
-      "note": ""
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "破壳时刻(上海)智能科技有限责任",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "破壳时刻上海智能科技有限责任",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-wiuop1",
+      "entityType": "company",
+      "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+      "rawSelection": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "track-1ccjq49",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "风险投资",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-c0o8yq",
+        "title": "08-03",
+        "url": "https://news.pedaily.cn/202608/567178.shtml",
+        "summary": "破壳机器人完成亿美元级Pre-A轮融资,公司成立不到半年,已完成从基础模型、真机强化学习、数据采集硬件到复杂任务训练的全链路搭建;并组建起一支覆盖基础模型、强化学习、Agent、机器人本体、硬件系统、产品与商业化的团队。",
+        "sourceName": "媒体报道 · 投资界 · 投资界",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-05T05:24:45.821Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "本轮融资由顺为资本与经纬创投共同领投九坤创投钧山资本seefund猎聘投资元诺资本钟鼎资本等多家财务及产业投资机构参与云启资本小米战投弘晖基金英诺天使基金东方嘉富",
+        "reclassified": false
+      }
     }
   ]
 }
