@@ -52,9 +52,6 @@ def utc_now() -> datetime:
 
 
 def git_head(root: Path) -> str:
-    value = os.environ.get("GITHUB_SHA", "").strip()
-    if value:
-        return value
     result = subprocess.run(
         ["git", "rev-parse", "HEAD"],
         cwd=root,
@@ -63,7 +60,9 @@ def git_head(root: Path) -> str:
         check=False,
         encoding="utf-8",
     )
-    return result.stdout.strip() if result.returncode == 0 else "unknown"
+    if result.returncode == 0 and result.stdout.strip():
+        return result.stdout.strip()
+    return os.environ.get("GITHUB_SHA", "").strip() or "unknown"
 
 
 def git_ref() -> str:
