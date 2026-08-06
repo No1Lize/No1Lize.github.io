@@ -37,7 +37,7 @@ type SortOrder = "activity" | "name" | "evidence" | "priority";
 const TYPE_LABELS: Record<TrackingResearchEntityType, string> = {
   company: "公司",
   person: "人物",
-  topic: "技术／主题",
+  topic: "技术",
 };
 
 const STATE_LABELS: Record<TrackingResearchEntityState, string> = {
@@ -128,7 +128,7 @@ export function TrackingEntityDirectory({
           <option value="all">全部类型</option>
           <option value="company">公司</option>
           <option value="person">人物</option>
-          <option value="topic">技术／主题</option>
+          <option value="topic">技术</option>
         </select>
         <select
           value={stateFilter}
