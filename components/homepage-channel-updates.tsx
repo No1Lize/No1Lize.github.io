@@ -126,7 +126,10 @@ export function HomepageChannelUpdates() {
     id: item.id,
     title: item.title,
     href: item.href,
-    tag: item.channels.map((channel) => `${channel.number} ${channel.label}`).join(" / "),
+    // Use semantic labels instead of legacy numeric channel codes. The
+    // favorite compatibility layer still recognizes old 02-07 tags, but new
+    // items must classify directly as technology, track, person or company.
+    tag: item.channels.map((channel) => channel.label).join(" / "),
     context: item.context || "研究对象更新",
     date: item.date,
     time: updateTime(item),
