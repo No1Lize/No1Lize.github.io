@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteButton } from "@/components/favorite-button";
+import { companies } from "@/lib/catalog-data";
 import {
   formatReportFileSize,
   researchReportBySlug,
@@ -10,6 +11,8 @@ import {
 import styles from "./reader.module.css";
 
 export const dynamicParams = false;
+
+const coreCompanySlugs = new Set(companies.map((company) => company.slug));
 
 export function generateStaticParams() {
   return researchReports.map((report) => ({ slug: report.slug }));
@@ -37,13 +40,20 @@ export default async function ResearchReportPdfReader({
   const report = researchReportBySlug.get(slug);
   if (!report) notFound();
 
+  const companyHref =
+    report.companySlug && coreCompanySlugs.has(report.companySlug)
+      ? `/companies/${report.companySlug}`
+      : "";
+
   return (
     <main className={styles.page}>
       <header className={styles.header}>
         <div className={styles.breadcrumbs}>
-          <Link href="/reports">06 / 研究报告</Link>
-          {report.companySlug ? (
-            <Link href={`/ipo/${report.companySlug}`}>{report.companyName || report.ticker}</Link>
+          <Link href="/reports">辅助资料 / 研究报告</Link>
+          {companyHref ? (
+            <Link href={companyHref}>{report.companyName || report.ticker}</Link>
+          ) : report.companyName || report.ticker ? (
+            <span>{report.companyName || report.ticker}</span>
           ) : null}
         </div>
         <div className={styles.titleRow}>

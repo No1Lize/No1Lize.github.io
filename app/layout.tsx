@@ -3,19 +3,18 @@ import { Providers } from "@/components/providers";
 import { SiteClientControls } from "@/components/site-client-controls";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
-import "./ipo/[slug]/market-detail.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://vciq.github.io"),
   title: {
-    default: "丽泽路1号｜科技与创投情报",
+    default: "丽泽路1号｜一级市场科技研究",
     template: "%s｜丽泽路1号",
   },
-  description: "聚合中美新兴科技、创业公司、投资机构与 IPO 的可追溯公开信息。",
+  description: "围绕核心技术、核心赛道、核心人物与核心公司的可追溯一级市场研究。",
   icons: { icon: "/favicon.svg" },
   openGraph: {
     title: "丽泽路1号",
-    description: "公开、克制、可追溯的中美科技与创投情报。",
+    description: "以四类核心研究对象组织公开、克制、可追溯的一级市场科技研究。",
     type: "website",
     locale: "zh_CN",
   },

@@ -9,7 +9,8 @@ const read = (relativePath: string) =>
 
 test("public tracking landing is build-based and contains no admin loader", () => {
   const source = read("app/tracking/page.tsx");
-  assert.match(source, /publishedTrackingResearchStats/u);
+  assert.match(source, /coreResearchObjectStats/u);
+  assert.match(source, /FOUR RESEARCH OBJECTS/u);
   assert.match(source, /PRIVATE REVIEW BOUNDARY/u);
   assert.doesNotMatch(source, /UserTrackingLoader/u);
   assert.doesNotMatch(source, /fetch\s*\(/u);

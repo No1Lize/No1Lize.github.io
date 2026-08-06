@@ -9,13 +9,12 @@ import {
   type HomepageSortMode,
 } from "@/components/homepage-sort-toggle";
 import styles from "@/components/homepage-research-panels.module.css";
-import { institutionCatalog } from "@/lib/catalog-data";
+import { coreResearchObjectStats } from "@/lib/core-research-objects";
 import {
   focusCompanies,
   type EventType,
   type IntelligenceEvent,
 } from "@/lib/intelligence-data";
-import { getInstitutionProfile } from "@/lib/research-content";
 import { getSnapshotFreshness } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import { useArticles } from "@/lib/use-articles";
@@ -42,6 +41,37 @@ const KEY_EVENTS_LIMIT = 200;
 const enabledSectorNames = new Set(
   trackedSectors.flatMap((sector) => sector.aliases),
 );
+
+const researchObjects = [
+  {
+    href: "/technologies",
+    code: "TECH",
+    name: "核心技术",
+    description: "具体技术、技术系统与关键能力",
+    count: coreResearchObjectStats.technologyCount,
+  },
+  {
+    href: "/technology",
+    code: "TRACK",
+    name: "核心赛道",
+    description: "产业结构、关键变量与长期验证框架",
+    count: coreResearchObjectStats.trackCount,
+  },
+  {
+    href: "/people",
+    code: "PEOPLE",
+    name: "核心人物",
+    description: "创始人、科学家与关键决策者",
+    count: coreResearchObjectStats.personCount,
+  },
+  {
+    href: "/companies",
+    code: "CO",
+    name: "核心公司",
+    description: "一级市场科技公司与生命周期证据",
+    count: coreResearchObjectStats.companyCount,
+  },
+] as const;
 
 export function Dashboard({
   middle,
@@ -160,26 +190,21 @@ export function Dashboard({
       [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? "持续更新"
     );
   };
-  const institutions = institutionCatalog
-    .map((institution) => ({
-      ...institution,
-      portfolioCount: getInstitutionProfile(institution).portfolio.length,
-    }))
-    .sort((a, b) => b.portfolioCount - a.portfolioCount);
 
   return (
     <>
       <section className="dashboard-intro">
         <div>
-          <p className="eyebrow">DAILY INTELLIGENCE DESK · 中美双轨</p>
-          <h1>科技投资，每一天进步一点点！</h1>
+          <p className="eyebrow">PRIMARY MARKET RESEARCH DESK · 中美双轨</p>
+          <h1>围绕四类核心对象持续研究</h1>
           <p className="intro-copy">
-            持续读取公司与监管披露、金融创投媒体、新浪、X、微信公开索引及开放论文数据库，连接中美科技公司的产品、融资、经营、研究与资本市场进展。
+            以核心技术、核心赛道、核心人物和核心公司为主线，持续连接官方披露、专业创投媒体、
+            微信公开索引、开放论文与监管材料。上市和退出信息仅作为公司生命周期证据。
           </p>
         </div>
       </section>
 
-      <section className="market-strip" aria-label="中美科技投资概览">
+      <section className="market-strip" aria-label="中美一级市场科技研究概览">
         <MarketSummary
           market="中国"
           sources={marketSourceCount("中国")}
@@ -238,8 +263,8 @@ export function Dashboard({
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="搜索公司、事件或媒体"
-                aria-label="搜索公司、事件或媒体"
+                placeholder="搜索技术、赛道、人物、公司或事件"
+                aria-label="搜索技术、赛道、人物、公司或事件"
               />
             </label>
           </div>
@@ -279,7 +304,7 @@ export function Dashboard({
               <div className="empty-state">
                 <Search size={22} />
                 <strong>当前筛选没有结果</strong>
-                <p>搜索会同时受地区和事件类型限制；可切换为“全部”后再次搜索媒体、公司或事件。</p>
+                <p>搜索会同时受地区和事件类型限制；可切换为“全部”后再次搜索研究对象或事件。</p>
               </div>
             )}
           </div>
@@ -324,7 +349,7 @@ export function Dashboard({
                 <dd>{platformCount}</dd>
               </div>
               <div>
-                <dt>启用赛道</dt>
+                <dt>核心赛道</dt>
                 <dd>{sectorCount}</dd>
               </div>
               <div>
@@ -343,7 +368,7 @@ export function Dashboard({
 
             <div className={styles.qualityLedger}>
               <div className={styles.qualityHeader}>
-                <span>USER TRACKING QUALITY</span>
+                <span>RESEARCH OBJECT QUALITY</span>
                 <strong>{qualityGate?.passed === false ? "REVIEW" : "PASSED"}</strong>
               </div>
               {trackingQuality ? (
@@ -362,7 +387,7 @@ export function Dashboard({
                   </div>
                 </div>
               ) : (
-                <p className={styles.qualityEmpty}>等待用户追踪质量统计。</p>
+                <p className={styles.qualityEmpty}>等待研究对象质量统计。</p>
               )}
             </div>
           </div>
@@ -372,9 +397,9 @@ export function Dashboard({
           <header className={styles.panelHeader}>
             <div>
               <p>05 / FOCUS COMPANIES</p>
-              <h2>本周重点项目</h2>
+              <h2>本周重点公司</h2>
             </div>
-            <Link className={styles.panelLink} href="/companies">全部案例</Link>
+            <Link className={styles.panelLink} href="/companies">核心公司</Link>
           </header>
 
           <div className={styles.companyList}>
@@ -399,28 +424,26 @@ export function Dashboard({
         <article className={styles.panel}>
           <header className={styles.panelHeader}>
             <div>
-              <p>06 / INSTITUTIONS</p>
-              <h2>机构活跃度</h2>
+              <p>06 / RESEARCH OBJECTS</p>
+              <h2>四类研究对象</h2>
             </div>
-            <Link className={styles.panelLink} href="/institutions">机构库</Link>
+            <Link className={styles.panelLink} href="/tracking">发布规则</Link>
           </header>
 
-          <div className={styles.institutionList}>
-            {institutions.slice(0, 6).map((institution, index) => (
+          <div className={styles.companyList}>
+            {researchObjects.map((object, index) => (
               <Link
-                className={styles.institutionRow}
-                href={`/institutions/${institution.slug}`}
-                key={institution.name}
+                className={styles.companyCard}
+                href={object.href}
+                key={object.href}
               >
-                <span className={styles.institutionIndex}>
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div className={styles.institutionMain}>
-                  <strong>{institution.name}</strong>
-                  <small>{institution.region} · {institution.sectors.join(" / ")}</small>
+                <div className={styles.cardTop}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <i>{object.code}</i>
                 </div>
-                <span className={styles.institutionLabel}>公开组合</span>
-                <b>{institution.portfolioCount}</b>
+                <h3>{object.name}</h3>
+                <p>{object.description}</p>
+                <small>{object.count} 个公开对象</small>
               </Link>
             ))}
           </div>

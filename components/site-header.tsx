@@ -1,21 +1,16 @@
 "use client";
 
-import { Menu, Moon, Search, Settings, Sun, X } from "lucide-react";
+import { Bookmark, Bot, Menu, Moon, Search, Settings, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { LiveStatus } from "@/components/live-status";
 
 const navItems = [
-  ["情报首页", "/"],
-  ["新兴科技", "/technology"],
-  ["创业案例", "/companies"],
-  ["投资机构", "/institutions"],
-  ["上市跟踪", "/ipo"],
-  ["研究报告", "/reports"],
-  ["研究助手", "/research-agent"],
-  ["人物研究", "/people"],
-  ["收藏", "/favorites"],
-  ["热点", "/hot"],
+  ["研究首页", "/"],
+  ["核心技术", "/technologies"],
+  ["核心赛道", "/technology"],
+  ["核心人物", "/people"],
+  ["核心公司", "/companies"],
 ];
 
 // The persisted theme lives in localStorage; expose it as an external store
@@ -61,7 +56,7 @@ export function SiteHeader() {
           <span className="brand-mark">LZ</span>
           <span>
             <strong>丽泽路1号</strong>
-            <small>科技与创投情报</small>
+            <small>一级市场科技研究</small>
           </span>
         </Link>
 
@@ -76,7 +71,13 @@ export function SiteHeader() {
 
         <div className="header-actions">
           <LiveStatus />
-          <Link className="icon-button" href="/tracking" aria-label="追踪配置管理" title="追踪配置管理">
+          <Link className="icon-button" href="/research-agent" aria-label="研究助手" title="研究助手">
+            <Bot size={18} />
+          </Link>
+          <Link className="icon-button" href="/favorites" aria-label="收藏" title="收藏">
+            <Bookmark size={18} />
+          </Link>
+          <Link className="icon-button" href="/tracking" aria-label="公开追踪研究" title="公开追踪研究">
             <Settings size={18} />
           </Link>
           <Link className="icon-button" href="/search" aria-label="全局搜索">

@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { companies, institutionCatalog, reports } from "@/lib/catalog-data";
 import { snapshotDate } from "@/lib/intelligence-data";
-import { listedCompaniesForDisplay } from "@/lib/listed-companies";
 import { researchPeople } from "@/lib/people-data";
 import { researchReports } from "@/lib/research-report-data";
 import { trackedSectors } from "@/lib/tracked-sectors";
@@ -14,11 +13,20 @@ export const dynamic = "force-static";
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://vciq.github.io";
   const paths = [
-    "", "/technology", "/companies", "/institutions", "/ipo", "/reports", "/research-agent", "/people", "/favorites", "/search", "/tracking",
+    "",
+    "/technologies",
+    "/technology",
+    "/people",
+    "/companies",
+    "/institutions",
+    "/reports",
+    "/research-agent",
+    "/favorites",
+    "/search",
+    "/tracking",
     ...trackedSectors.map((item) => `/technology/${item.slug}`),
     ...companies.map((item) => `/companies/${item.slug}`),
     ...institutionCatalog.map((item) => `/institutions/${item.slug}`),
-    ...listedCompaniesForDisplay.map((item) => `/ipo/${item.slug}`),
     ...reports.map((item) => `/reports/${item.slug}`),
     ...researchReports.map((item) => `/reports/pdf/${item.slug}`),
     ...researchPeople.map((item) => `/people/${item.slug}`),
@@ -26,5 +34,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date(`${snapshotDate}T00:00:00Z`);
   // The exported site uses trailing slashes (next.config.ts trailingSlash),
   // so sitemap URLs must match the canonical exported locations.
-  return paths.map((path) => ({ url: `${base}${path}/`, lastModified, changeFrequency: path ? "weekly" : "daily" }));
+  return paths.map((path) => ({
+    url: `${base}${path}/`,
+    lastModified,
+    changeFrequency: path ? "weekly" : "daily",
+  }));
 }

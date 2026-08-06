@@ -37,7 +37,7 @@ import styles from "./tracking-entity-detail.module.css";
 const TYPE_LABELS: Record<TrackingResearchEntityType, string> = {
   company: "公司",
   person: "人物",
-  topic: "技术／主题",
+  topic: "技术",
 };
 
 const STATE_LABELS = {
@@ -51,6 +51,15 @@ const CONFIDENCE_LABELS = {
   medium: "共同原文",
   contextual: "赛道上下文",
 } as const;
+
+const DIRECTORY_LINKS: Record<
+  TrackingResearchEntityType,
+  { href: string; label: string }
+> = {
+  company: { href: "/companies", label: "核心公司" },
+  person: { href: "/people", label: "核心人物" },
+  topic: { href: "/technologies", label: "核心技术" },
+};
 
 function isEntityType(value: string): value is TrackingResearchEntityType {
   return value === "company" || value === "person" || value === "topic";
@@ -86,7 +95,7 @@ export async function generateMetadata({
   const entity = isEntityType(type) ? publishedTrackingResearchEntity(type, slug) : undefined;
   return {
     title: entity ? `Research | ${entity.name} | VCIQ` : "追踪对象研究",
-    description: entity?.summary ?? "公司、人物和技术主题的可追溯研究时间线。",
+    description: entity?.summary ?? "公司、人物和具体技术的可追溯研究时间线。",
   };
 }
 
@@ -108,15 +117,16 @@ export default async function TrackingEntityDetailPage({
   const firstCapture = timeline
     .filter((item) => item.origin === "manual-capture")
     .sort((left, right) => left.observedAt.localeCompare(right.observedAt))[0];
+  const directory = DIRECTORY_LINKS[entity.entityType];
 
   return (
     <main className="page-shell subpage">
       <header className={styles.hero}>
         <div>
-          <Link href="/tracking/entities" className={styles.back}>
-            <ArrowLeft size={15} aria-hidden="true" />追踪对象研究库
+          <Link href={directory.href} className={styles.back}>
+            <ArrowLeft size={15} aria-hidden="true" />{directory.label}
           </Link>
-          <p className="eyebrow">TRACKED ENTITY RESEARCH</p>
+          <p className="eyebrow">TRACKED RESEARCH OBJECT</p>
           <div className={styles.titleRow}>
             <span data-type={entity.entityType} className={styles.typeIcon}>
               <TypeIcon type={entity.entityType} size={24} />
@@ -138,13 +148,13 @@ export default async function TrackingEntityDetailPage({
             <Link href={entity.formalHref} className={styles.primaryAction}>
               {entity.formalLabel}<ExternalLink size={14} aria-hidden="true" />
             </Link>
-          ) : entity.entityType === "company" ? (
-            <Link href="/tracking#company-candidate-review" className={styles.primaryAction}>
-              进入候选审核<ExternalLink size={14} aria-hidden="true" />
+          ) : (
+            <Link href={directory.href} className={styles.primaryAction}>
+              返回{directory.label}<ExternalLink size={14} aria-hidden="true" />
             </Link>
-          ) : null}
-          <Link href="/tracking#tracking-capture-inbox" className={styles.secondaryAction}>
-            查看文章采集箱
+          )}
+          <Link href="/tracking" className={styles.secondaryAction}>
+            查看发布规则
           </Link>
         </div>
       </header>
@@ -167,7 +177,7 @@ export default async function TrackingEntityDetailPage({
                 {entity.reasons.map((reason) => <span key={reason}>{reason}</span>)}
               </div>
             ) : (
-              <p className={styles.muted}>尚未记录结构化关注原因。可在下方“研究维护”中补充。</p>
+              <p className={styles.muted}>尚未记录结构化关注原因，由仓库内研究流程继续补充。</p>
             )}
             {entity.researchThesis ? (
               <div className={styles.notes}>
@@ -272,7 +282,7 @@ export default async function TrackingEntityDetailPage({
               <p className="section-index">RESEARCH TIMELINE</p>
               <h2>研究时间线</h2>
             </div>
-            <p>按事件日期和首次发现时间倒序；“人工发现”表示该材料曾由管理员明确加入追踪。</p>
+            <p>按事件日期和首次发现时间倒序；“人工发现”表示该材料曾由受控流程明确加入追踪。</p>
           </header>
 
           <div className={styles.timeline}>
@@ -317,7 +327,7 @@ export default async function TrackingEntityDetailPage({
               <div className={styles.empty}>
                 <FileText size={24} aria-hidden="true" />
                 <strong>暂时没有可追溯公开动态</strong>
-                <p>继续从主频道文章中采集，或等待下一次情报刷新。</p>
+                <p>等待下一次情报刷新或仓库研究流程补充证据。</p>
               </div>
             ) : null}
           </div>
