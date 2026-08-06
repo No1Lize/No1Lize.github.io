@@ -1,4 +1,9 @@
 import {
+  normalizeTrackingEntityResolution,
+  resolveTrackingEntity,
+  type TrackingEntityResolution,
+} from "@/lib/entity-resolution";
+import {
   cloneTrackingConfig,
   slugifyTrack,
   validatePersonLabel,
@@ -39,6 +44,7 @@ export type TrackingCaptureRecord = {
   appliedTo: string[];
   reasons: string[];
   note: string;
+  resolution?: TrackingEntityResolution;
 };
 
 export type TrackingCaptureInbox = {
@@ -71,6 +77,9 @@ export type ApplyTrackingCaptureResult = {
   records: TrackingCaptureRecord[];
   addedCount: number;
   duplicateCount: number;
+  reviewCount: number;
+  rejectedCount: number;
+  reclassifiedCount: number;
   trackSlugs: string[];
 };
 
@@ -147,6 +156,7 @@ function normalizeRecord(value: unknown): TrackingCaptureRecord | null {
     sourceUrl: source.url,
     trackSlugs,
   });
+  const resolution = normalizeTrackingEntityResolution(raw.resolution);
   return {
     id,
     entityType,
@@ -162,6 +172,7 @@ function normalizeRecord(value: unknown): TrackingCaptureRecord | null {
     appliedTo: uniqueStrings(raw.appliedTo, 40),
     reasons: uniqueStrings(raw.reasons, 12),
     note: cleanText(raw.note, 800),
+    ...(resolution ? { resolution } : {}),
   };
 }
 
@@ -282,13 +293,35 @@ export function applyTrackingCapture(input: ApplyTrackingCaptureInput): ApplyTra
   if (!source.url || !source.title) throw new Error("来源文章标题和 URL 不完整，不能保存采集记录。");
   const entities = input.entities
     .map(normalizeEntityDraft)
+    .map((entity) => ({
+      entity,
+      resolution: resolveTrackingEntity({
+        requestedType: entity.entityType,
+        name: entity.name,
+        source,
+      }),
+    }))
     .filter(
-      (entity, index, rows) =>
-        rows.findIndex(
-          (candidate) =>
-            candidate.entityType === entity.entityType &&
-            candidate.name.toLocaleLowerCase("zh-CN") === entity.name.toLocaleLowerCase("zh-CN"),
-        ) === index,
+      (row, index, rows) =>
+        rows.findIndex((candidate) => {
+          const leftType = row.resolution.status === "resolved"
+            ? row.resolution.entityType
+            : row.entity.entityType;
+          const rightType = candidate.resolution.status === "resolved"
+            ? candidate.resolution.entityType
+            : candidate.entity.entityType;
+          const leftName = row.resolution.status === "resolved"
+            ? row.resolution.canonicalName
+            : row.entity.name;
+          const rightName = candidate.resolution.status === "resolved"
+            ? candidate.resolution.canonicalName
+            : candidate.entity.name;
+          return (
+            row.resolution.status === candidate.resolution.status &&
+            leftType === rightType &&
+            leftName.toLocaleLowerCase("zh-CN") === rightName.toLocaleLowerCase("zh-CN")
+          );
+        }) === index,
     );
   if (!entities.length) throw new Error("请至少添加一个公司、人物或技术／主题。");
 
@@ -298,29 +331,38 @@ export function applyTrackingCapture(input: ApplyTrackingCaptureInput): ApplyTra
   const records: TrackingCaptureRecord[] = [];
   let addedCount = 0;
   let duplicateCount = 0;
+  let reviewCount = 0;
+  let rejectedCount = 0;
+  let reclassifiedCount = 0;
 
-  for (const entity of entities) {
-    const field = entity.entityType === "company"
-      ? "sampleCompanies"
-      : entity.entityType === "person"
-        ? "people"
-        : "keywords";
+  for (const { entity, resolution } of entities) {
+    const resolved = resolution.status === "resolved";
+    const entityType = resolved ? resolution.entityType : entity.entityType;
+    const canonicalName = resolved ? resolution.canonicalName : entity.name;
     const appliedTo: string[] = [];
 
-    config = {
-      ...config,
-      tracks: config.tracks.map((track) => {
-        if (!selected.includes(track.slug)) return track;
-        const result = appendUnique(track[field], entity.name);
-        if (result.added) {
-          addedCount += 1;
+    if (resolution.status === "review") reviewCount += 1;
+    if (resolution.status === "rejected") rejectedCount += 1;
+    if (resolution.reclassified) reclassifiedCount += 1;
+
+    if (resolved) {
+      const field = entityType === "company"
+        ? "sampleCompanies"
+        : entityType === "person"
+          ? "people"
+          : "keywords";
+      config = {
+        ...config,
+        tracks: config.tracks.map((track) => {
+          if (!selected.includes(track.slug)) return track;
+          const append = appendUnique(track[field], canonicalName);
           appliedTo.push(`${track.slug}:${field}`);
-        } else {
-          duplicateCount += 1;
-        }
-        return result.added ? { ...track, [field]: result.values } : track;
-      }),
-    };
+          if (append.added) addedCount += 1;
+          else duplicateCount += 1;
+          return append.added ? { ...track, [field]: append.values } : track;
+        }),
+      };
+    }
 
     const id = trackingCaptureId({
       entityType: entity.entityType,
@@ -330,19 +372,28 @@ export function applyTrackingCapture(input: ApplyTrackingCaptureInput): ApplyTra
     });
     records.push({
       id,
-      entityType: entity.entityType,
-      canonicalName: entity.name,
+      entityType,
+      canonicalName,
       rawSelection: entity.name,
-      aliases: [],
+      aliases:
+        canonicalName.toLocaleLowerCase("zh-CN") === entity.name.toLocaleLowerCase("zh-CN")
+          ? []
+          : [entity.name],
       trackSlugs: selected,
       trackNames,
       source,
       capturedAt: cleanText(input.capturedAt, 80),
       capturedBy: cleanText(input.capturedBy, 120),
-      status: "applied",
+      status:
+        resolution.status === "resolved"
+          ? "applied"
+          : resolution.status === "review"
+            ? "queued"
+            : "dismissed",
       appliedTo,
       reasons: uniqueStrings(input.reasons ?? [], 12),
       note: cleanText(input.note, 800),
+      resolution,
     });
   }
 
@@ -364,6 +415,9 @@ export function applyTrackingCapture(input: ApplyTrackingCaptureInput): ApplyTra
     records,
     addedCount,
     duplicateCount,
+    reviewCount,
+    rejectedCount,
+    reclassifiedCount,
     trackSlugs: selected,
   };
 }
