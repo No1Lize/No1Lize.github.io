@@ -12,6 +12,8 @@ const forbiddenMarkers = [
   "ANALYST WORKSPACE",
   "保存后会触发 Pages 自动重建",
   "外部文章采集 | VCIQ",
+  "上市跟踪",
+  "PUBLIC MARKETS",
 ];
 
 function fail(messages) {
@@ -51,16 +53,24 @@ for (const filePath of files) {
     errors.push(`private capture route leaked into out/${relativePath}`);
   }
 
+  if (
+    relativePath === "ipo.html" ||
+    relativePath === "ipo/index.html" ||
+    relativePath.startsWith("ipo/")
+  ) {
+    errors.push(`retired listed-market route leaked into out/${relativePath}`);
+  }
+
   if (!textExtensions.has(path.extname(filePath))) continue;
   const content = fs.readFileSync(filePath, "utf8");
   for (const marker of forbiddenMarkers) {
     if (content.includes(marker)) {
-      errors.push(`write-only marker ${JSON.stringify(marker)} leaked into out/${relativePath}`);
+      errors.push(`forbidden marker ${JSON.stringify(marker)} leaked into out/${relativePath}`);
     }
   }
 }
 
 if (errors.length) fail(errors);
 console.log(
-  `Public artifact audit passed: ${files.length} files, ${(totalBytes / 1024 / 1024).toFixed(2)} MiB, no tracking-admin routes or write controls.`,
+  `Public artifact audit passed: ${files.length} files, ${(totalBytes / 1024 / 1024).toFixed(2)} MiB, no admin or retired listed-market routes.`,
 );
