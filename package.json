@@ -17,7 +17,8 @@
     "validate:taxonomy": "node --import tsx scripts/validate-tracking-taxonomy.ts",
     "validate:tracking-snapshot": "node scripts/validate-tracking-snapshot.mjs",
     "verify:tracking-pages": "node scripts/validate-tracking-pages.mjs --check-output",
-    "build:pages": "npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && node scripts/build-pages.mjs && npm run verify:tracking-pages && node scripts/validate-static-links.mjs",
+    "audit:public-artifact": "node scripts/audit-public-artifact.mjs",
+    "build:pages": "npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && node scripts/build-pages.mjs && npm run verify:tracking-pages && npm run audit:public-artifact && node scripts/validate-static-links.mjs",
     "crawl": "python3 tools/crawl_articles.py",
     "validate:artifact": "bash scripts/validate-artifact.sh",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next"
@@ -42,8 +43,6 @@
     "@vitejs/plugin-rsc": "0.5.26",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.12",
-    "react-server-dom-webpack": "19.2.8",
-    "tailwindcss": "4.2.1",
     "tsx": "^4.23.1",
     "typescript": "5.9.3",
     "vinext": "0.0.50",
