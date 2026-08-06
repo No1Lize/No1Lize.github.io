@@ -32,9 +32,27 @@ test("favorite payload normalization keeps safe structured recommendation signal
 
   assert.ok(favorite);
   assert.equal(favorite.href, "/companies/openai/");
+  assert.equal(favorite.channelLabel, "核心公司");
   assert.deepEqual(favorite.keywords, ["智能体", "推理"]);
   assert.equal(favorite.sources.length, 1);
   assert.equal(favorite.sources[0]?.name, "OpenAI");
+});
+
+test("legacy listed-market favorites migrate into core company routes", () => {
+  const favorite = normalizeFavorite({
+    id: "ipo:ionq",
+    href: "/ipo/ionq",
+    title: "IonQ",
+    summary: "旧上市跟踪收藏",
+    channel: "ipo",
+    channelLabel: "上市跟踪",
+    savedAt: "2026-07-27T00:00:00.000Z",
+  });
+
+  assert.ok(favorite);
+  assert.equal(favorite.channel, "companies");
+  assert.equal(favorite.channelLabel, "核心公司");
+  assert.equal(favorite.href, "/companies/ionq/");
 });
 
 test("intelligence favorites retain card metadata and direct source links", () => {
@@ -53,6 +71,7 @@ test("intelligence favorites retain card metadata and direct source links", () =
 
   assert.ok(favorite);
   assert.equal(favorite.href, "https://example.com/article");
+  assert.equal(favorite.channelLabel, "核心公司");
   assert.equal(favorite.publishedAt, "2026-07-27");
   assert.equal(favorite.importance, 91);
   assert.equal(favorite.eventType, "融资");
@@ -126,7 +145,9 @@ test("favorite toggle persists and removes an item in browser storage", () => {
     };
 
     assert.equal(toggleFavorite(input), true);
-    assert.equal(readFavoriteItems().length, 1);
+    const items = readFavoriteItems();
+    assert.equal(items.length, 1);
+    assert.equal(items[0]?.channelLabel, "核心赛道");
     assert.ok(values.has(FAVORITES_STORAGE_KEY));
     assert.equal(toggleFavorite(input), false);
     assert.equal(readFavoriteItems().length, 0);
