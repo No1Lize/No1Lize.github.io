@@ -21,20 +21,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Reconcile derived public data with the latest config
+      - name: Validate committed public data
         run: |
-          python tools/migrate_article_entities.py
-          python tools/reconcile_entity_resolution.py
-          python tools/build_resolved_company_candidates.py
           python tools/reconcile_entity_resolution.py --check
           python tools/build_resolved_company_candidates.py --check
-          python tools/company_profile_refresh_queue.py --select-limit 10 --force-write
           python tools/company_profile_refresh_queue.py --check
-          python tools/refine_eastmoney_snapshot.py
-          python tools/enrich_tracking_snapshot.py
           python tools/crawl_articles.py --validate-only
           python tools/validate_eastmoney_snapshot.py
       - uses: actions/setup-node@v4
@@ -43,11 +40,34 @@ jobs:
           cache: npm
       - name: Install locked project dependencies
         run: npm ci
-      - run: npm run test:unit
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Verify build inputs match the source commit
+        run: |
+          test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
+          git diff --exit-code -- config public/data
       - name: Build deployable Pages snapshot
-        env:
-          ALLOW_INCOMPLETE_TRACKING_COVERAGE: "true"
         run: npm run build:pages
+      - name: Verify the build stayed read-only
+        run: git diff --exit-code -- config public/data
+      - name: Record build provenance
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          payload = {
+              "schemaVersion": 1,
+              "repository": os.environ["GITHUB_REPOSITORY"],
+              "sourceSha": os.environ["GITHUB_SHA"],
+              "sourceRef": os.environ["GITHUB_REF"],
+          }
+          Path("out/build-provenance.json").write_text(
+              json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out
