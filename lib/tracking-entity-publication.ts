@@ -26,9 +26,12 @@ export function isPublishableTrackingCapture(capture: TrackingCaptureRecord) {
 export function publishedTrackingCaptureDescriptor(
   capture: TrackingCaptureRecord,
 ): PublishedTrackingCaptureDescriptor | undefined {
-  if (!isPublishableTrackingCapture(capture)) return undefined;
+  const resolution = capture.resolution;
+  if (!isPublishableTrackingCapture(capture) || resolution?.status !== "resolved") {
+    return undefined;
+  }
   return {
-    entityType: capture.resolution.entityType,
-    canonicalName: capture.resolution.canonicalName,
+    entityType: resolution.entityType,
+    canonicalName: resolution.canonicalName,
   };
 }
