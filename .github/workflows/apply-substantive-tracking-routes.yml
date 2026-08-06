@@ -1,0 +1,159 @@
+name: Apply substantive tracking routes
+
+on:
+  push:
+    branches: [optimize/publish-substantive-tracking-routes]
+    paths:
+      - .github/workflows/apply-substantive-tracking-routes.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: optimize/publish-substantive-tracking-routes
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Wire public routes to substantive entities
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_once(path_value: str, old: str, new: str) -> None:
+              path = Path(path_value)
+              content = path.read_text(encoding="utf-8")
+              if content.count(old) != 1:
+                  raise SystemExit(f"{path_value}: expected one match, found {content.count(old)}")
+              path.write_text(content.replace(old, new, 1), encoding="utf-8")
+
+          directory_path = "app/tracking/entities/page.tsx"
+          replace_once(
+              directory_path,
+              '''import {
+            trackingResearchEntities,
+            trackingResearchGeneratedAt,
+            trackingResearchStats,
+          } from "@/lib/tracking-entity-research";
+          ''',
+              '''import {
+            publishedTrackingResearchEntities,
+            publishedTrackingResearchStats,
+          } from "@/lib/published-tracking-entity-research";
+          import { trackingResearchGeneratedAt } from "@/lib/tracking-entity-research";
+          ''',
+          )
+          directory = Path(directory_path)
+          content = directory.read_text(encoding="utf-8")
+          if content.count("trackingResearchEntities.map") != 1:
+              raise SystemExit("directory entity map changed")
+          content = content.replace(
+              "trackingResearchEntities.map",
+              "publishedTrackingResearchEntities.map",
+              1,
+          )
+          if content.count("trackingResearchStats") != 7:
+              raise SystemExit(
+                  f"directory stats changed: {content.count('trackingResearchStats')}"
+              )
+          content = content.replace(
+              "trackingResearchStats",
+              "publishedTrackingResearchStats",
+          )
+          directory.write_text(content, encoding="utf-8")
+
+          detail_path = "app/tracking/entities/[type]/[slug]/page.tsx"
+          replace_once(
+              detail_path,
+              '''import {
+            trackingResearchEntities,
+            trackingResearchEntity,
+            trackingResearchGeneratedAt,
+            type TrackingResearchEntityType,
+          } from "@/lib/tracking-entity-research";
+          ''',
+              '''import {
+            publishedTrackingResearchEntities,
+            publishedTrackingResearchEntity,
+          } from "@/lib/published-tracking-entity-research";
+          import {
+            trackingResearchGeneratedAt,
+            type TrackingResearchEntityType,
+          } from "@/lib/tracking-entity-research";
+          ''',
+          )
+          detail = Path(detail_path)
+          content = detail.read_text(encoding="utf-8")
+          if content.count("trackingResearchEntities.map") != 1:
+              raise SystemExit("detail static params changed")
+          content = content.replace(
+              "trackingResearchEntities.map",
+              "publishedTrackingResearchEntities.map",
+              1,
+          )
+          if content.count("trackingResearchEntity(type, slug)") != 2:
+              raise SystemExit("detail route lookup changed")
+          content = content.replace(
+              "trackingResearchEntity(type, slug)",
+              "publishedTrackingResearchEntity(type, slug)",
+          )
+          detail.write_text(content, encoding="utf-8")
+
+          insights_path = "lib/tracking-entity-insights.ts"
+          replace_once(
+              insights_path,
+              '''import {
+            trackingResearchEntities,
+            trackingResearchHref,
+            type TrackingResearchEntity,
+            type TrackingResearchTimelineItem,
+          } from "@/lib/tracking-entity-research";
+          ''',
+              '''import { publishedTrackingResearchEntities } from "@/lib/published-tracking-entity-research";
+          import {
+            trackingResearchHref,
+            type TrackingResearchEntity,
+            type TrackingResearchTimelineItem,
+          } from "@/lib/tracking-entity-research";
+          ''',
+          )
+          insights = Path(insights_path)
+          content = insights.read_text(encoding="utf-8")
+          old_call = "buildTrackingResearchRelations(entity, trackingResearchEntities, limit)"
+          if content.count(old_call) != 1:
+              raise SystemExit("public relation collection changed")
+          content = content.replace(
+              old_call,
+              "buildTrackingResearchRelations(entity, publishedTrackingResearchEntities, limit)",
+              1,
+          )
+          insights.write_text(content, encoding="utf-8")
+          PY
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Build static site
+        run: npm run build:pages
+      - name: Verify route reduction
+        run: |
+          route_count=$(find out/tracking/entities -mindepth 3 -maxdepth 3 -name index.html | wc -l)
+          echo "Published tracking entity routes: ${route_count}"
+          test "${route_count}" -gt 0
+          test "${route_count}" -lt 150
+      - name: Commit public route optimization
+        run: |
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/tracking/entities/page.tsx \
+            'app/tracking/entities/[type]/[slug]/page.tsx' \
+            lib/tracking-entity-insights.ts
+          git commit -m "perf: publish only substantive tracking routes"
+          git push origin HEAD:optimize/publish-substantive-tracking-routes
