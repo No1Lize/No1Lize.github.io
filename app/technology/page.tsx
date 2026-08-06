@@ -1,38 +1,38 @@
 import type { Metadata } from "next";
-import { Cpu } from "lucide-react";
+import { Network } from "lucide-react";
 import Link from "next/link";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "新兴科技",
-  description: "按用户配置动态追踪新兴科技赛道的中美融资、事件、公司与研究进展。",
+  title: "核心赛道",
+  description: "按一级市场研究配置追踪核心赛道的公司、人物、技术、融资与产业变化。",
 };
 
 export default function TechnologyPage() {
   return (
     <main className="page-shell subpage">
       <header className="page-header">
-        <p className="eyebrow">02 / EMERGING TECHNOLOGY</p>
-        <h1>新兴科技</h1>
+        <p className="eyebrow">03 / CORE TRACKS</p>
+        <h1>核心赛道</h1>
         <p>
-          从当前启用的 {trackedSectors.length} 个赛道进入中美产业链、公司样本、投资机构、公开事件和关键研究变量。
-          新增、停用或删除赛道后，页面会随配置重新构建。
+          从当前启用的 {trackedSectors.length} 个核心赛道进入产业结构、关键技术、核心公司、
+          关键人物、资本事件和持续验证变量。具体技术对象独立收录在“核心技术”目录。
         </p>
         <Link className="text-link" href="/tracking">
-          管理赛道、关键词与信息源 →
+          查看公开追踪研究与发布规则 →
         </Link>
       </header>
 
       <ChannelSplitLayout
         channel="technology"
-        eyebrow="LATEST TECHNOLOGY TRACKS"
-        title="真实赛道目录"
-        description="按技术方向浏览产业结构、公司样本、关键变量、主要风险和最新公开事件。"
+        eyebrow="LATEST CORE TRACKS"
+        title="核心赛道目录"
+        description="按产业方向浏览结构、样本公司、关键变量、主要风险和最新公开事件。"
         count={trackedSectors.length}
         countLabel="公开赛道快照"
-        icon={<Cpu size={19} aria-hidden="true" />}
+        icon={<Network size={19} aria-hidden="true" />}
         bodyClassName={styles.body}
       >
         <section className="sector-card-grid">
@@ -69,10 +69,10 @@ export default function TechnologyPage() {
 
         {!trackedSectors.length && (
           <section className={`empty-state ${styles.empty}`}>
-            <strong>当前没有启用赛道</strong>
-            <p>进入追踪配置页面，添加或重新启用至少一个赛道。</p>
+            <strong>当前没有启用核心赛道</strong>
+            <p>赛道配置由仓库内受控流程维护，并在下一次构建中发布。</p>
             <Link className="text-link" href="/tracking">
-              打开追踪配置 →
+              查看公开追踪研究 →
             </Link>
           </section>
         )}
