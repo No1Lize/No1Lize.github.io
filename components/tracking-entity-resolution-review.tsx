@@ -2,7 +2,7 @@
 
 import rawInbox from "@/config/tracking_capture_inbox.json";
 import { Check, RefreshCw, ShieldAlert, ShieldCheck, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import {
   entityResolutionDecisionManifest,
   normalizeEntityResolutionIdentity,
@@ -33,6 +33,12 @@ const INBOX_PATH = "config/tracking_capture_inbox.json";
 type GithubFile = { sha: string; content: string };
 type ReviewItem = { record: TrackingCaptureRecord; resolution: TrackingEntityResolution };
 type StatusKind = "neutral" | "success" | "error";
+type ResolutionDraft = {
+  entityType: EntityResolutionEntityType;
+  canonicalName: string;
+  targetId: string;
+  note: string;
+};
 
 const TYPE_LABELS: Record<EntityResolutionEntityType, string> = {
   company: "公司",
@@ -128,14 +134,27 @@ function defaultTargetId(type: EntityResolutionEntityType, canonicalName: string
   return type === "company" ? `company-candidate:${key}` : `${type}:${key}`;
 }
 
+function defaultResolutionDraft(
+  item: ReviewItem,
+  manifest: EntityResolutionManifest,
+): ResolutionDraft {
+  const decision = manifest.decisions[item.resolution.decisionKey];
+  return {
+    entityType: decision?.entityType ?? item.resolution.entityType,
+    canonicalName:
+      decision?.canonicalName ??
+      item.record.rawSelection ??
+      item.record.canonicalName,
+    targetId: decision?.targetId ?? "",
+    note: decision?.note ?? item.resolution.reason,
+  };
+}
+
 export function TrackingEntityResolutionReview() {
   const [manifest, setManifest] = useState(() => entityResolutionDecisionManifest);
   const [inbox, setInbox] = useState<unknown>(rawInbox);
   const [selectedKey, setSelectedKey] = useState("");
-  const [entityType, setEntityType] = useState<EntityResolutionEntityType>("person");
-  const [canonicalName, setCanonicalName] = useState("");
-  const [targetId, setTargetId] = useState("");
-  const [note, setNote] = useState("");
+  const [drafts, setDrafts] = useState<Record<string, ResolutionDraft>>({});
   const [token, setToken] = useState(currentToken);
   const [busy, setBusy] = useState(false);
   const [statusKind, setStatusKind] = useState<StatusKind>("neutral");
@@ -144,20 +163,30 @@ export function TrackingEntityResolutionReview() {
   );
 
   const items = useMemo(() => buildReviewItems(inbox, manifest), [inbox, manifest]);
+  const activeKey = items.some(
+    (item) => item.resolution.decisionKey === selectedKey,
+  )
+    ? selectedKey
+    : items[0]?.resolution.decisionKey ?? "";
   const selected = useMemo(
-    () => items.find((item) => item.resolution.decisionKey === selectedKey) ?? items[0],
-    [items, selectedKey],
+    () => items.find((item) => item.resolution.decisionKey === activeKey),
+    [activeKey, items],
   );
+  const draft = selected
+    ? drafts[activeKey] ?? defaultResolutionDraft(selected, manifest)
+    : undefined;
 
-  useEffect(() => {
+  function updateDraft(patch: Partial<ResolutionDraft>) {
     if (!selected) return;
-    const decision = manifest.decisions[selected.resolution.decisionKey];
-    setSelectedKey(selected.resolution.decisionKey);
-    setEntityType(decision?.entityType ?? selected.resolution.entityType);
-    setCanonicalName(decision?.canonicalName ?? selected.record.rawSelection ?? selected.record.canonicalName);
-    setTargetId(decision?.targetId ?? "");
-    setNote(decision?.note ?? selected.resolution.reason);
-  }, [manifest.decisions, selected]);
+    const key = selected.resolution.decisionKey;
+    setDrafts((current) => ({
+      ...current,
+      [key]: {
+        ...(current[key] ?? defaultResolutionDraft(selected, manifest)),
+        ...patch,
+      },
+    }));
+  }
 
   async function loadLatest(providedToken?: string) {
     const cleanToken = (providedToken ?? token).trim();
@@ -191,6 +220,7 @@ export function TrackingEntityResolutionReview() {
       setToken(cleanToken);
       setManifest(nextManifest);
       setInbox(nextInbox);
+      setDrafts({});
       window.sessionStorage.setItem(TRACKING_ADMIN_TOKEN_SESSION_KEY, cleanToken);
       setStatusKind("success");
       setStatus(`已载入最新解析队列，共 ${buildReviewItems(nextInbox, nextManifest).length} 项待核。`);
@@ -203,7 +233,8 @@ export function TrackingEntityResolutionReview() {
   }
 
   async function saveDecision(nextStatus: EntityResolutionStatus) {
-    if (!selected) return;
+    if (!selected || !draft) return;
+    const { entityType, canonicalName, targetId, note } = draft;
     const cleanToken = token.trim();
     const cleanName = canonicalName.normalize("NFKC").replace(/\s+/gu, " ").trim();
     if (!cleanToken) {
@@ -298,6 +329,11 @@ export function TrackingEntityResolutionReview() {
       }
       if (!committed) throw new Error("解析决定提交未完成。");
       setManifest(nextManifest);
+      setDrafts((current) => {
+        const next = { ...current };
+        delete next[selected.resolution.decisionKey];
+        return next;
+      });
       window.sessionStorage.setItem(TRACKING_ADMIN_TOKEN_SESSION_KEY, cleanToken);
       setStatusKind("success");
       setStatus(
@@ -349,7 +385,7 @@ export function TrackingEntityResolutionReview() {
       </div>
       <p className={styles.status} data-kind={statusKind}>{status}</p>
 
-      {selected ? (
+      {selected && draft ? (
         <div className={styles.workspace}>
           <nav className={styles.list} aria-label="待核实体列表">
             {items.map((item) => (
@@ -384,8 +420,12 @@ export function TrackingEntityResolutionReview() {
                 <span>规范类型</span>
                 <select
                   disabled={busy}
-                  onChange={(event) => setEntityType(event.target.value as EntityResolutionEntityType)}
-                  value={entityType}
+                  onChange={(event) =>
+                    updateDraft({
+                      entityType: event.target.value as EntityResolutionEntityType,
+                    })
+                  }
+                  value={draft.entityType}
                 >
                   <option value="company">公司</option>
                   <option value="person">人物</option>
@@ -397,8 +437,10 @@ export function TrackingEntityResolutionReview() {
                 <input
                   disabled={busy}
                   maxLength={160}
-                  onChange={(event) => setCanonicalName(event.target.value)}
-                  value={canonicalName}
+                  onChange={(event) =>
+                    updateDraft({ canonicalName: event.target.value })
+                  }
+                  value={draft.canonicalName}
                 />
               </label>
               <label className={styles.wide}>
@@ -406,9 +448,14 @@ export function TrackingEntityResolutionReview() {
                 <input
                   disabled={busy}
                   maxLength={240}
-                  onChange={(event) => setTargetId(event.target.value)}
-                  placeholder={defaultTargetId(entityType, canonicalName)}
-                  value={targetId}
+                  onChange={(event) =>
+                    updateDraft({ targetId: event.target.value })
+                  }
+                  placeholder={defaultTargetId(
+                    draft.entityType,
+                    draft.canonicalName,
+                  )}
+                  value={draft.targetId}
                 />
               </label>
               <label className={styles.wide}>
@@ -416,8 +463,8 @@ export function TrackingEntityResolutionReview() {
                 <textarea
                   disabled={busy}
                   maxLength={600}
-                  onChange={(event) => setNote(event.target.value)}
-                  value={note}
+                  onChange={(event) => updateDraft({ note: event.target.value })}
+                  value={draft.note}
                 />
               </label>
             </div>
