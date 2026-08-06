@@ -172,7 +172,12 @@ def people_index(payload: Any) -> dict[str, list[dict[str, Any]]]:
     for person in people if isinstance(people, list) else []:
         if not isinstance(person, dict):
             continue
-        for alias in [person.get("name"), person.get("englishName"), person.get("slug")]:
+        for alias in [
+            person.get("name"),
+            person.get("englishName"),
+            person.get("slug"),
+            *(person.get("aliases", []) if isinstance(person.get("aliases"), list) else []),
+        ]:
             _add_index(index, alias, person)
     return index
 
