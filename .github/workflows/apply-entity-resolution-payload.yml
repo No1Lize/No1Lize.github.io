@@ -26,7 +26,8 @@ jobs:
         run: |
           set -euo pipefail
           cat .entity-resolution-payload.part00 \
-              .entity-resolution-payload.part01 \
+              .entity-resolution-payload.part01a \
+              .entity-resolution-payload.part01b \
               .entity-resolution-payload.part02 \
               .entity-resolution-payload.part03 \
             | base64 --decode > /tmp/entity-resolution-payload.tar.gz
@@ -36,6 +37,8 @@ jobs:
             .entity-resolution-apply-trigger \
             .entity-resolution-payload.part00 \
             .entity-resolution-payload.part01 \
+            .entity-resolution-payload.part01a \
+            .entity-resolution-payload.part01b \
             .entity-resolution-payload.part02 \
             .entity-resolution-payload.part03
           python -m py_compile \
