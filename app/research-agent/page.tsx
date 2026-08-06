@@ -18,7 +18,7 @@ import styles from "./research-agent.module.css";
 
 export const metadata: Metadata = {
   title: "Research Agent",
-  description: "基于结构化实体库的每日变化检测、证据归并与投资研究摘要。",
+  description: "围绕核心技术、核心赛道、核心人物与核心公司的每日变化检测和证据摘要。",
 };
 
 const statusLabels: Record<string, string> = {
@@ -89,11 +89,11 @@ export default function ResearchAgentPage() {
   return (
     <main className="page-shell subpage">
       <header className="page-header">
-        <p className="eyebrow">07 / RESEARCH AGENT</p>
-        <h1>每日变化检测与投资研究摘要</h1>
+        <p className="eyebrow">TOOL / RESEARCH AGENT</p>
+        <h1>四类研究对象的每日变化摘要</h1>
         <p>
-          从创业公司、投资机构、上市公司、人物与监管披露快照中识别结构化变化，
-          先形成证据包，再进行受约束的研究研判。模型不能添加证据包之外的事实。
+          以核心技术、核心赛道、核心人物和核心公司为结论归属，识别结构化变化并形成证据包。
+          投资机构、公开市场、资本事件和监管披露仅作为辅助证据；模型不能添加证据包之外的事实。
         </p>
       </header>
 
