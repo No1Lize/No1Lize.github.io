@@ -44,6 +44,19 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
             with self.subTest(command=command):
                 self.assertIn(command, text)
 
+    def test_rebase_rebuilds_quality_gate_before_full_refresh_validation(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]
+        retention = rebase_block.index("python tools/snapshot_retention.py")
+        rebuild = rebase_block.index("python tools/refresh_article_quality_gate.py")
+        finalize = rebase_block.index("python tools/finalize_full_refresh.py")
+        validate = rebase_block.index("python tools/validate_full_refresh.py")
+        self.assertLess(retention, rebuild)
+        self.assertLess(rebuild, finalize)
+        self.assertLess(finalize, validate)
+        self.assertIn("tools/refresh_article_quality_gate.py", text)
+        self.assertIn("tests.test_refresh_article_quality_gate", text)
+
 
 if __name__ == "__main__":
     unittest.main()
