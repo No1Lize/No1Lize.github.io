@@ -6,7 +6,6 @@ export type FavoriteChannel =
   | "technology"
   | "companies"
   | "institutions"
-  | "ipo"
   | "reports"
   | "people";
 
@@ -131,6 +130,11 @@ function normalizeHref(value: unknown): string {
   return validHttpUrl(href);
 }
 
+function migrateLegacyIpoHref(href: string) {
+  const match = href.match(/^\/ipo\/([^/?#]+)\/?(?:[?#].*)?$/u);
+  return match ? `/companies/${match[1]}/` : href === "/ipo/" ? "/companies/" : href;
+}
+
 function normalizePublishedAt(value: unknown): string | undefined {
   const date = cleanText(value, 20);
   return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : undefined;
@@ -146,10 +150,23 @@ const CHANNELS = new Set<FavoriteChannel>([
   "technology",
   "companies",
   "institutions",
-  "ipo",
   "reports",
   "people",
 ]);
+
+function normalizedChannelLabel(channel: FavoriteChannel, value: unknown) {
+  const label = cleanText(value, 40);
+  if (channel === "technology" && ["新兴科技", "赛道研究"].includes(label)) {
+    return "核心赛道";
+  }
+  if (channel === "companies" && ["创业案例", "上市跟踪"].includes(label)) {
+    return "核心公司";
+  }
+  if (channel === "people" && label === "人物研究") {
+    return "核心人物";
+  }
+  return label || channel;
+}
 
 export function normalizeFavorite(
   value: unknown,
@@ -157,12 +174,15 @@ export function normalizeFavorite(
 ): FavoriteItem | null {
   if (!value || typeof value !== "object") return null;
   const raw = value as Record<string, unknown>;
-  const channel =
-    typeof raw.channel === "string" && CHANNELS.has(raw.channel as FavoriteChannel)
+  const legacyIpo = raw.channel === "ipo";
+  const channel = legacyIpo
+    ? "companies"
+    : typeof raw.channel === "string" && CHANNELS.has(raw.channel as FavoriteChannel)
       ? (raw.channel as FavoriteChannel)
       : null;
   const id = cleanText(raw.id, 180);
-  const href = normalizeHref(raw.href);
+  const normalizedHref = normalizeHref(raw.href);
+  const href = legacyIpo ? migrateLegacyIpoHref(normalizedHref) : normalizedHref;
   const title = cleanText(raw.title, 240);
   if (!channel || !id || !href || !title) return null;
 
@@ -181,7 +201,9 @@ export function normalizeFavorite(
     title,
     summary: cleanText(raw.summary, 1200),
     channel,
-    channelLabel: cleanText(raw.channelLabel, 40) || channel,
+    channelLabel: legacyIpo
+      ? "核心公司"
+      : normalizedChannelLabel(channel, raw.channelLabel),
     keywords: uniqueStrings(raw.keywords, MAX_KEYWORDS),
     sectors: uniqueStrings(raw.sectors, 20),
     sources: normalizeSources(raw.sources),
