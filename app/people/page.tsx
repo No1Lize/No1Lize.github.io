@@ -6,8 +6,8 @@ import { peopleGeneratedAt, researchPeople } from "@/lib/people-data";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "人物研究",
-  description: "汇总所有赛道关注人物，并以统一资料管线整理其背景、公司、产品、作品、著作、演讲与公开材料。",
+  title: "核心人物",
+  description: "整理一级市场核心技术与赛道中的创始人、科学家、工程负责人和关键决策者。",
 };
 
 const statusLabels = {
@@ -21,13 +21,14 @@ export default function PeoplePage() {
   return (
     <main className="page-shell subpage">
       <header className="page-header">
-        <p className="eyebrow">07 / PEOPLE</p>
-        <h1>人物研究</h1>
+        <p className="eyebrow">04 / CORE PEOPLE</p>
+        <h1>核心人物</h1>
         <p>
-          汇总所有赛道配置中的真实人物，统一抓取 Wikipedia、Wikidata、个人主页、公司官网、论文、著作、演讲与站内情报；组织账号不会被误建成人物档案。
+          聚焦核心赛道中的创始人、科学家、工程负责人、产品领导者与关键资本决策者，
+          统一整理其背景、所属公司、技术观点、作品、论文、演讲与公开材料。
         </p>
         <div className="hero-chips">
-          <span>{trackedCount} 位赛道人物</span>
+          <span>{trackedCount} 位重点人物</span>
           <span>{researchPeople.length} 位人物总计</span>
           <span>资料更新 {peopleGeneratedAt.slice(0, 10)}</span>
         </div>
@@ -35,9 +36,9 @@ export default function PeoplePage() {
 
       <ChannelSplitLayout
         channel="people"
-        eyebrow="LATEST PEOPLE DIRECTORY"
-        title="关键人物档案"
-        description="按人物进入其背景、所属机构、核心观点、公开账号、演讲资料和可追溯原始来源。"
+        eyebrow="LATEST CORE PEOPLE DIRECTORY"
+        title="核心人物档案"
+        description="按人物进入其背景、所属公司、技术贡献、核心观点、公开账号和可追溯原始材料。"
         count={researchPeople.length}
         countLabel="公开人物快照"
         statusText={`更新 ${peopleGeneratedAt.slice(0, 10)}`}
