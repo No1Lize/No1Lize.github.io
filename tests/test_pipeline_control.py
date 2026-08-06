@@ -203,6 +203,48 @@ class PipelineControlPlaneTest(unittest.TestCase):
         self.assertTrue((self.root / "public/data/data_lineage.json").is_file())
         self.assertTrue((self.root / "public/data/pipeline_health.json").is_file())
 
+    def test_repeated_finalize_preserves_the_original_source_sha(self) -> None:
+        output = self.root / "public/data/source.json"
+        output.write_text(
+            json.dumps({"generatedAt": "2026-08-06T02:00:00Z", "rows": [1]}) + "\n",
+            encoding="utf-8",
+        )
+        registry = load_registry(self.root)
+        context = make_run_context(
+            self.root,
+            registry,
+            "source-refresh",
+            started_at=datetime(2026, 8, 6, 1, tzinfo=UTC),
+            run_id="test-run",
+        )
+        context["codeSha"] = "source-commit"
+        context["sourceRef"] = "refs/heads/main"
+        finalize_pipeline(
+            self.root,
+            registry,
+            "source-refresh",
+            context=context,
+            completed_at=datetime(2026, 8, 6, 2, tzinfo=UTC),
+        )
+
+        with patch.dict(
+            "os.environ",
+            {"GITHUB_SHA": "transient-rebased-data-commit"},
+            clear=False,
+        ):
+            current, lineage, _ = finalize_pipeline(
+                self.root,
+                registry,
+                "source-refresh",
+                run_id="test-run",
+                completed_at=datetime(2026, 8, 6, 3, tzinfo=UTC),
+            )
+
+        producer = lineage["artifacts"]["public/data/source.json"]["producer"]
+        self.assertEqual(current["codeSha"], "source-commit")
+        self.assertEqual(producer["codeSha"], "source-commit")
+        self.assertEqual(producer["sourceRef"], "refs/heads/main")
+
     def test_deployment_provenance_hashes_control_plane_inputs(self) -> None:
         output = self.root / "public/data/source.json"
         output.write_text(
