@@ -1,0 +1,344 @@
+{
+  "schemaVersion": 1,
+  "pipelineVersion": "automation-control-plane-v1",
+  "timezone": "Asia/Taipei",
+  "publicObjectTypes": [
+    {
+      "id": "technology",
+      "label": "核心技术",
+      "route": "/technologies"
+    },
+    {
+      "id": "track",
+      "label": "核心赛道",
+      "route": "/technology"
+    },
+    {
+      "id": "person",
+      "label": "核心人物",
+      "route": "/people"
+    },
+    {
+      "id": "company",
+      "label": "核心公司",
+      "route": "/companies"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "public-intelligence-frequent-refresh",
+      "name": "两小时公开情报刷新",
+      "owner": "intelligence",
+      "workflow": ".github/workflows/frequent-intelligence-refresh.yml",
+      "schedule": "17 0,2,4,8,10,12,14,16,18,20,22 * * * @ Asia/Taipei",
+      "trigger": "scheduled-and-manual",
+      "dependencies": [],
+      "inputs": [
+        "config/intelligence_sources.json",
+        "config/user_tracking.json",
+        "public/data/source_health.json"
+      ],
+      "outputs": [
+        {
+          "path": "public/data/articles.json",
+          "required": true,
+          "shared": true,
+          "public": true
+        }
+      ],
+      "freshnessSlaHours": 4,
+      "timeoutMinutes": 45,
+      "retry": 3,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "frequent-refresh-quality"
+    },
+    {
+      "id": "tracking-entity-discovery",
+      "name": "追踪实体与公开信源发现",
+      "owner": "tracking",
+      "workflow": ".github/workflows/tracking-discovery.yml",
+      "schedule": "0 3 * * 0 @ Asia/Taipei",
+      "trigger": "scheduled-and-manual",
+      "dependencies": [],
+      "inputs": [
+        "config/user_tracking.json",
+        "config/tracking_auto_discovery.json",
+        "public/data/articles.json",
+        "public/data/venture_profiles.json",
+        "public/data/institution_entities.json"
+      ],
+      "outputs": [
+        {
+          "path": "config/user_tracking.json",
+          "required": true,
+          "shared": false,
+          "public": false
+        },
+        {
+          "path": "config/tracking_auto_discovery.json",
+          "required": true,
+          "shared": false,
+          "public": false
+        },
+        {
+          "path": "public/data/source_health.json",
+          "required": true,
+          "shared": true,
+          "public": true
+        }
+      ],
+      "freshnessSlaHours": 192,
+      "timeoutMinutes": 45,
+      "retry": 3,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "tracking-discovery-quality"
+    },
+    {
+      "id": "public-intelligence-full-refresh",
+      "name": "完整公开情报刷新",
+      "owner": "intelligence",
+      "workflow": ".github/workflows/scheduled-sync.yml",
+      "schedule": "30 6 * * * @ Asia/Taipei",
+      "trigger": "scheduled-change-driven-and-manual",
+      "dependencies": [],
+      "inputs": [
+        "config/intelligence_sources.json",
+        "config/user_tracking.json",
+        "config/listed_company_disclosure_sources.json",
+        "config/source_health_policy.json"
+      ],
+      "outputs": [
+        {
+          "path": "public/data/articles.json",
+          "required": true,
+          "shared": true,
+          "public": true
+        },
+        {
+          "path": "public/data/listed_company_disclosures.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/market_profiles.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/people.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/source_health.json",
+          "required": true,
+          "shared": true,
+          "public": true
+        }
+      ],
+      "freshnessSlaHours": 30,
+      "timeoutMinutes": 65,
+      "retry": 3,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "full-refresh-quality"
+    },
+    {
+      "id": "venture-profile-refresh",
+      "name": "核心公司档案刷新",
+      "owner": "company-research",
+      "workflow": ".github/workflows/refresh-venture-profiles.yml",
+      "schedule": "15 9 * * * @ Asia/Taipei",
+      "trigger": "scheduled-change-driven-and-manual",
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "inputs": [
+        "lib/catalog-data.ts",
+        "public/data/articles.json",
+        "public/data/listed_company_disclosures.json"
+      ],
+      "outputs": [
+        {
+          "path": "public/data/venture_profiles.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        }
+      ],
+      "freshnessSlaHours": 30,
+      "timeoutMinutes": 40,
+      "retry": 3,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "venture-profile-quality"
+    },
+    {
+      "id": "institution-data-layers",
+      "name": "机构证据层重建",
+      "owner": "institution-evidence",
+      "workflow": ".github/workflows/institution-data-layers.yml",
+      "schedule": null,
+      "trigger": "change-driven-and-manual",
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "inputs": [
+        "public/data/articles.json",
+        "public/data/star_market_investors.json",
+        "config/institution_rankings.json",
+        "config/institution_entity_aliases.json"
+      ],
+      "outputs": [
+        {
+          "path": "public/data/institution_entities.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/institution_events.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/institution_equity_relationships.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        }
+      ],
+      "freshnessSlaHours": 168,
+      "timeoutMinutes": 30,
+      "retry": 3,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "institution-layer-quality"
+    },
+    {
+      "id": "star-market-investor-refresh",
+      "name": "科创板招股书投资者证据刷新",
+      "owner": "institution-evidence",
+      "workflow": ".github/workflows/star-market-investor-refresh.yml",
+      "schedule": "10 3 * * 1 @ Asia/Taipei",
+      "trigger": "scheduled-change-driven-and-manual",
+      "dependencies": [],
+      "inputs": [
+        "config/star_market_investor_sources.json",
+        "config/star_market_investor_reviews.json",
+        "lib/catalog-data.ts"
+      ],
+      "outputs": [
+        {
+          "path": "public/data/star_market_investors.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        }
+      ],
+      "freshnessSlaHours": 192,
+      "timeoutMinutes": 55,
+      "retry": 3,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "star-market-investor-quality"
+    },
+    {
+      "id": "source-performance-review",
+      "name": "月度信源效能审查",
+      "owner": "source-governance",
+      "workflow": ".github/workflows/source-performance-review.yml",
+      "schedule": "30 8 1 * * @ Asia/Taipei",
+      "trigger": "scheduled-and-manual",
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "inputs": [
+        "public/data/articles.json",
+        "public/data/source_health.json",
+        "config/source_health_policy.json",
+        "config/source_quality_reviews.json"
+      ],
+      "outputs": [
+        {
+          "path": "public/data/source_performance_review.json",
+          "required": false,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "docs/source-performance-review.md",
+          "required": true,
+          "shared": false,
+          "public": false
+        }
+      ],
+      "freshnessSlaHours": 840,
+      "timeoutMinutes": 20,
+      "retry": 3,
+      "failurePolicy": "advisory-only",
+      "qualityGate": "source-performance-review-quality"
+    },
+    {
+      "id": "research-agent-daily",
+      "name": "每日证据约束研究摘要",
+      "owner": "research",
+      "workflow": ".github/workflows/research-agent-v1.yml",
+      "schedule": null,
+      "trigger": "after-successful-full-refresh-and-manual",
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "inputs": [
+        "public/data/venture_profiles.json",
+        "public/data/institution_entities.json",
+        "public/data/market_profiles.json",
+        "public/data/people.json",
+        "public/data/institution_events.json",
+        "public/data/listed_company_disclosures.json"
+      ],
+      "outputs": [
+        {
+          "path": "public/data/research_agent_daily.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        },
+        {
+          "path": "public/data/research_agent_snapshot.json",
+          "required": true,
+          "shared": false,
+          "public": true
+        }
+      ],
+      "freshnessSlaHours": 36,
+      "timeoutMinutes": 18,
+      "retry": 3,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "research-agent-evidence-contract"
+    },
+    {
+      "id": "pages-deploy",
+      "name": "GitHub Pages 静态发布",
+      "owner": "publication",
+      "workflow": ".github/workflows/pages.yml",
+      "schedule": null,
+      "trigger": "commit-dispatch-and-manual",
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "inputs": [
+        "config/automation_jobs.json",
+        "public/data/data_lineage.json",
+        "public/data/pipeline_health.json"
+      ],
+      "outputs": [],
+      "healthMode": "dependencies",
+      "freshnessSlaHours": 30,
+      "timeoutMinutes": 30,
+      "retry": 1,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "pages-build-and-artifact-audit"
+    }
+  ]
+}
