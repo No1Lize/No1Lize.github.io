@@ -27,7 +27,10 @@ jobs:
       - name: Reconcile derived public data with the latest config
         run: |
           python tools/migrate_article_entities.py
-          python tools/build_company_candidates.py
+          python tools/reconcile_entity_resolution.py
+          python tools/build_resolved_company_candidates.py
+          python tools/reconcile_entity_resolution.py --check
+          python tools/build_resolved_company_candidates.py --check
           python tools/company_profile_refresh_queue.py --select-limit 10 --force-write
           python tools/company_profile_refresh_queue.py --check
           python tools/refine_eastmoney_snapshot.py
