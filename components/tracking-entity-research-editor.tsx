@@ -9,11 +9,12 @@ import type { TrackingEntityResearchRecord } from "@/lib/tracking-entity-records
  * The compatibility export remains temporarily so detail pages can drop the
  * former editor without a broad layout refactor.
  */
-export function TrackingEntityResearchEditor(_props: {
+export function TrackingEntityResearchEditor(props: {
   entityId: string;
   entityType: TrackingCaptureEntityType;
   entityName: string;
   initialRecord?: TrackingEntityResearchRecord;
 }) {
+  void props;
   return null;
 }
