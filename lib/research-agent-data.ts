@@ -106,10 +106,10 @@ export const researchAgentEvidenceById = new Map(
 );
 
 export const researchAgentDatasetLabels: Record<string, string> = {
-  ventureCompany: "创业公司",
-  institution: "投资机构",
-  marketCompany: "上市公司",
-  person: "人物",
-  institutionEvent: "机构/资本事件",
-  listedDisclosure: "上市公司公告",
+  ventureCompany: "核心公司",
+  person: "核心人物",
+  institution: "辅助证据·投资机构",
+  marketCompany: "辅助证据·公开市场",
+  institutionEvent: "辅助证据·资本事件",
+  listedDisclosure: "辅助证据·监管披露",
 };
