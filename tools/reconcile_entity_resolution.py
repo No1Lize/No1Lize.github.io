@@ -46,6 +46,7 @@ STATUS_FOR_RESOLUTION = {
     "review": "queued",
     "rejected": "dismissed",
 }
+MAX_RECONCILIATION_ROUNDS = 8
 
 
 def semantic(value: Any) -> Any:
@@ -126,6 +127,52 @@ def reconcile_payloads(
                 continue
             track[field] = remove_name(track.get(field), old_name)
 
+    # Resolution must not depend on capture order. Preload topic facts that are
+    # already explicit or versioned before resolving company-shaped records.
+    resolution_tracking = copy.deepcopy(config)
+    resolution_tracks = track_map(resolution_tracking)
+    raw_decisions = (
+        decisions_payload.get("decisions", {})
+        if isinstance(decisions_payload.get("decisions"), dict)
+        else {}
+    )
+    for record in records:
+        if not isinstance(record, dict):
+            continue
+        existing_resolution = (
+            record.get("resolution") if isinstance(record.get("resolution"), dict) else {}
+        )
+        requested_type = clean(existing_resolution.get("requestedType"), 20) or clean(
+            record.get("entityType"), 20
+        )
+        raw_name = clean(record.get("rawSelection"), 160) or clean(
+            record.get("canonicalName"), 160
+        )
+        decision = raw_decisions.get(normalize_identity(raw_name))
+        seed_name = ""
+        if (
+            isinstance(decision, dict)
+            and clean(decision.get("status"), 20) == "resolved"
+            and clean(decision.get("entityType"), 20) == "topic"
+        ):
+            seed_name = clean(decision.get("canonicalName"), 160) or raw_name
+        elif requested_type == "topic" or (
+            clean(existing_resolution.get("status"), 20) == "resolved"
+            and clean(existing_resolution.get("entityType"), 20) == "topic"
+        ):
+            seed_name = clean(existing_resolution.get("canonicalName"), 160) or raw_name
+        if not seed_name:
+            continue
+        for slug in unique(
+            record.get("trackSlugs", [])
+            if isinstance(record.get("trackSlugs"), list)
+            else [],
+            30,
+        ):
+            track = resolution_tracks.get(slug)
+            if track:
+                track["keywords"] = append_name(track.get("keywords"), seed_name)
+
     stats = {"resolved": 0, "review": 0, "rejected": 0, "reclassified": 0}
     next_records: list[dict[str, Any]] = []
     for record in records:
@@ -142,7 +189,7 @@ def reconcile_payloads(
             decisions_payload=decisions_payload,
             company_registry_payload=company_registry_payload,
             people_payload=people_payload,
-            tracking_payload=config,
+            tracking_payload=resolution_tracking,
         )
         stats[resolution.status] += 1
         if resolution.reclassified:
@@ -202,6 +249,56 @@ def reconcile_payloads(
     return config, inbox, stats
 
 
+def _state_fingerprint(config: dict[str, Any], inbox: dict[str, Any]) -> str:
+    return json.dumps(
+        [semantic(config), semantic(inbox)],
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    )
+
+
+def stabilize_payloads(
+    config_payload: dict[str, Any],
+    inbox_payload: dict[str, Any],
+    *,
+    decisions_payload: dict[str, Any],
+    company_registry_payload: dict[str, Any],
+    people_payload: dict[str, Any],
+    max_rounds: int = MAX_RECONCILIATION_ROUNDS,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, int]]:
+    """Run reconciliation until taxonomy-dependent resolutions reach one fixed point."""
+
+    current_config = copy.deepcopy(config_payload)
+    current_inbox = copy.deepcopy(inbox_payload)
+    seen = {_state_fingerprint(current_config, current_inbox)}
+
+    for round_number in range(1, max_rounds + 1):
+        next_config, next_inbox, stats = reconcile_payloads(
+            current_config,
+            current_inbox,
+            decisions_payload=decisions_payload,
+            company_registry_payload=company_registry_payload,
+            people_payload=people_payload,
+        )
+        if (
+            semantic(current_config) == semantic(next_config)
+            and semantic(current_inbox) == semantic(next_inbox)
+        ):
+            return next_config, next_inbox, {**stats, "rounds": round_number - 1}
+
+        fingerprint = _state_fingerprint(next_config, next_inbox)
+        if fingerprint in seen:
+            raise RuntimeError("entity resolution reconciliation entered a cycle")
+        seen.add(fingerprint)
+        current_config = next_config
+        current_inbox = next_inbox
+
+    raise RuntimeError(
+        f"entity resolution reconciliation did not converge within {max_rounds} rounds"
+    )
+
+
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
@@ -218,7 +315,7 @@ def main() -> int:
 
     original_config = load_json(args.config, {"schemaVersion": 1, "tracks": []})
     original_inbox = load_json(args.inbox, {"schemaVersion": 1, "generatedAt": "", "records": []})
-    next_config, next_inbox, stats = reconcile_payloads(
+    next_config, next_inbox, stats = stabilize_payloads(
         original_config,
         original_inbox,
         decisions_payload=load_json(args.decisions, {"decisions": {}}),

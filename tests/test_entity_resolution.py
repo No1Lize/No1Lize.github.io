@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 from tools.entity_resolution import resolve_entity
-from tools.reconcile_entity_resolution import reconcile_payloads
+from tools.reconcile_entity_resolution import reconcile_payloads, stabilize_payloads
 
 
 DECISIONS = {
@@ -200,6 +200,93 @@ class EntityResolutionTests(unittest.TestCase):
         )
         self.assertEqual(fixed_config, next_config)
         self.assertEqual(fixed_inbox, next_inbox)
+
+    def test_stabilizer_converges_after_a_later_capture_introduces_a_topic(self) -> None:
+        config = {
+            "schemaVersion": 1,
+            "tracks": [
+                {
+                    "slug": "ai",
+                    "name": "AI / AGI",
+                    "enabled": True,
+                    "custom": False,
+                    "keywords": [],
+                    "people": [],
+                    "sampleCompanies": ["NewTopic"],
+                }
+            ],
+            "listedCompanies": [],
+            "sources": [],
+        }
+        records = [
+            {
+                "id": "capture-company-first",
+                "entityType": "company",
+                "canonicalName": "NewTopic",
+                "rawSelection": "NewTopic",
+                "aliases": [],
+                "trackSlugs": ["ai"],
+                "trackNames": ["AI / AGI"],
+                "source": {"title": "NewTopic appears in a list"},
+                "capturedAt": "2026-08-06T00:00:00Z",
+                "capturedBy": "VCIQ",
+                "status": "applied",
+                "appliedTo": ["ai:sampleCompanies"],
+                "reasons": [],
+                "note": "",
+            },
+            {
+                "id": "capture-topic-later",
+                "entityType": "topic",
+                "canonicalName": "NewTopic",
+                "rawSelection": "NewTopic",
+                "aliases": [],
+                "trackSlugs": ["ai"],
+                "trackNames": ["AI / AGI"],
+                "source": {"title": "NewTopic technology"},
+                "capturedAt": "2026-08-06T00:00:00Z",
+                "capturedBy": "VCIQ",
+                "status": "applied",
+                "appliedTo": ["ai:keywords"],
+                "reasons": [],
+                "note": "",
+            },
+        ]
+        inbox = {"schemaVersion": 1, "generatedAt": "", "records": records}
+        empty_decisions = {"decisions": {}}
+
+        one_config, one_inbox, one_stats = reconcile_payloads(
+            config,
+            inbox,
+            decisions_payload=empty_decisions,
+            company_registry_payload={"companies": []},
+            people_payload={"people": []},
+        )
+        self.assertEqual(one_stats["review"], 0)
+
+        stable_config, stable_inbox, stable_stats = stabilize_payloads(
+            config,
+            inbox,
+            decisions_payload=empty_decisions,
+            company_registry_payload={"companies": []},
+            people_payload={"people": []},
+        )
+        self.assertGreaterEqual(stable_stats["rounds"], 1)
+        self.assertEqual(stable_stats["review"], 0)
+        self.assertEqual(stable_config["tracks"][0]["sampleCompanies"], [])
+        self.assertEqual(stable_config["tracks"][0]["keywords"], ["NewTopic"])
+        self.assertTrue(all(row["entityType"] == "topic" for row in stable_inbox["records"]))
+
+        final_config, final_inbox, final_stats = stabilize_payloads(
+            stable_config,
+            stable_inbox,
+            decisions_payload=empty_decisions,
+            company_registry_payload={"companies": []},
+            people_payload={"people": []},
+        )
+        self.assertEqual(final_stats["rounds"], 0)
+        self.assertEqual(final_config, stable_config)
+        self.assertEqual(final_inbox, stable_inbox)
 
 
 if __name__ == "__main__":
