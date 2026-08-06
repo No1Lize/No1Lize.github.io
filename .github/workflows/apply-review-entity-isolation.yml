@@ -28,32 +28,38 @@ jobs:
 
           path = Path("lib/tracking-entity-research.ts")
           content = path.read_text(encoding="utf-8")
-          old_import = '''import {
-            normalizeTrackingCaptureInbox,
-            stableTrackingCaptureHash,
-            type TrackingCaptureEntityType,
-            type TrackingCaptureRecord,
-          } from "@/lib/tracking-capture";
-          '''
-          new_import = old_import + '''import {
-            publishedTrackingCaptureDescriptor,
-          } from "@/lib/tracking-entity-publication";
-          '''
+          old_import = "\n".join([
+              'import {',
+              '  normalizeTrackingCaptureInbox,',
+              '  stableTrackingCaptureHash,',
+              '  type TrackingCaptureEntityType,',
+              '  type TrackingCaptureRecord,',
+              '} from "@/lib/tracking-capture";',
+              '',
+          ])
+          new_import = old_import + "\n".join([
+              'import {',
+              '  publishedTrackingCaptureDescriptor,',
+              '} from "@/lib/tracking-entity-publication";',
+              '',
+          ])
           if content.count(old_import) != 1:
               raise SystemExit("tracking capture import block changed")
           content = content.replace(old_import, new_import, 1)
 
-          old_loop = '''  for (const capture of captureInbox.records) {
-            if (capture.status === "dismissed") continue;
-            ensure(capture.entityType, capture.canonicalName, { capture });
-          }
-          '''
-          new_loop = '''  for (const capture of captureInbox.records) {
-            const descriptor = publishedTrackingCaptureDescriptor(capture);
-            if (!descriptor) continue;
-            ensure(descriptor.entityType, descriptor.canonicalName, { capture });
-          }
-          '''
+          old_loop = "\n".join([
+              '  for (const capture of captureInbox.records) {',
+              '    if (capture.status === "dismissed") continue;',
+              '    ensure(capture.entityType, capture.canonicalName, { capture });',
+              '  }',
+          ])
+          new_loop = "\n".join([
+              '  for (const capture of captureInbox.records) {',
+              '    const descriptor = publishedTrackingCaptureDescriptor(capture);',
+              '    if (!descriptor) continue;',
+              '    ensure(descriptor.entityType, descriptor.canonicalName, { capture });',
+              '  }',
+          ])
           if content.count(old_loop) != 1:
               raise SystemExit("tracking capture publication loop changed")
           content = content.replace(old_loop, new_loop, 1)
