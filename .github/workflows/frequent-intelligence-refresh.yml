@@ -68,12 +68,15 @@ jobs:
             tools/finalize_frequent_refresh.py \
             tools/migrate_article_entities.py \
             tools/enrich_tracking_snapshot.py \
-            tools/snapshot_retention.py
+            tools/snapshot_retention.py \
+            tools/run_pipeline.py \
+            tools/build_pipeline_health.py
           python -m unittest \
             tests.test_professional_media_sources \
             tests.test_snapshot_retention \
             tests.test_frequent_refresh_workflow \
-            tests.test_frequent_refresh_audit
+            tests.test_frequent_refresh_audit \
+            tests.test_pipeline_control
       - name: Record the pre-refresh article baseline
         if: steps.due.outputs.due == 'true'
         run: python tools/prepare_frequent_refresh.py
@@ -106,17 +109,26 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD public/data/articles.json)
+          DATA_PATHS=(public/data/articles.json)
+          CONTROL_PATHS=(
+            public/data/data_lineage.json
+            public/data/pipeline_health.json
+          )
+          SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD "${DATA_PATHS[@]}")
           echo "$SEMANTIC_JSON"
           SEMANTIC_CHANGED=$(printf '%s' "$SEMANTIC_JSON" | python -c 'import json,sys; print(str(json.load(sys.stdin)["changed"]).lower())')
           if [ "$SEMANTIC_CHANGED" != "true" ]; then
             echo "No semantic intelligence changes; skipping Git commit and Pages build."
-            git restore public/data/articles.json
+            git restore "${DATA_PATHS[@]}"
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          git add public/data/articles.json
+          python tools/run_pipeline.py finalize \
+            public-intelligence-frequent-refresh \
+            --quality-gate passed
+
+          git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
           git commit -m "data: refresh public intelligence (two-hour check)"
 
           for attempt in 1 2 3; do
@@ -128,7 +140,10 @@ jobs:
             python tools/snapshot_retention.py --check
             python tools/crawl_articles.py --validate-only
             python tools/validate_user_source_coverage.py
-            git add public/data/articles.json
+            python tools/run_pipeline.py finalize \
+              public-intelligence-frequent-refresh \
+              --quality-gate passed
+            git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi

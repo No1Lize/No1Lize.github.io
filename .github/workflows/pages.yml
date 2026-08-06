@@ -23,12 +23,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.sha }}
-          fetch-depth: 1
+          # Full history lets the lineage observer identify the exact commit
+          # that last changed every managed artifact.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate committed public data
+      - name: Validate committed public data and automation contract
         run: |
+          python tools/run_pipeline.py check
           python tools/reconcile_entity_resolution.py --check
           python tools/build_resolved_company_candidates.py --check
           python tools/company_profile_refresh_queue.py --check
@@ -50,24 +53,17 @@ jobs:
         run: npm run build:pages
       - name: Verify the build stayed read-only
         run: git diff --exit-code -- config public/data
+      - name: Build deploy-time lineage and health
+        run: |
+          python tools/run_pipeline.py refresh \
+            --lineage-output out/data/data_lineage.json \
+            --health-output out/data/pipeline_health.json
       - name: Record build provenance
         run: |
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-
-          payload = {
-              "schemaVersion": 1,
-              "repository": os.environ["GITHUB_REPOSITORY"],
-              "sourceSha": os.environ["GITHUB_SHA"],
-              "sourceRef": os.environ["GITHUB_REF"],
-          }
-          Path("out/build-provenance.json").write_text(
-              json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
-              encoding="utf-8",
-          )
-          PY
+          python tools/run_pipeline.py build-provenance \
+            --output out/build-provenance.json \
+            --lineage out/data/data_lineage.json \
+            --health out/data/pipeline_health.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

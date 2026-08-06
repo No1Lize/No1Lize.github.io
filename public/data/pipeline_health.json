@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "pipelineVersion": "automation-control-plane-v1",
+  "generatedAt": null,
+  "overallStatus": "unknown",
+  "bootstrap": true,
+  "summary": {
+    "jobCount": 9,
+    "healthyJobs": 0,
+    "staleJobs": 0,
+    "missingJobs": 0,
+    "degradedJobs": 0,
+    "unknownJobs": 9,
+    "artifactCount": 0
+  },
+  "jobs": [
+    {
+      "jobId": "public-intelligence-frequent-refresh",
+      "name": "两小时公开情报刷新",
+      "owner": "intelligence",
+      "workflow": ".github/workflows/frequent-intelligence-refresh.yml",
+      "trigger": "scheduled-and-manual",
+      "schedule": "17 0,2,4,8,10,12,14,16,18,20,22 * * * @ Asia/Taipei",
+      "dependencies": [],
+      "freshnessSlaHours": 4,
+      "timeoutMinutes": 45,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "frequent-refresh-quality",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "tracking-entity-discovery",
+      "name": "追踪实体与公开信源发现",
+      "owner": "tracking",
+      "workflow": ".github/workflows/tracking-discovery.yml",
+      "trigger": "scheduled-and-manual",
+      "schedule": "0 3 * * 0 @ Asia/Taipei",
+      "dependencies": [],
+      "freshnessSlaHours": 192,
+      "timeoutMinutes": 45,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "tracking-discovery-quality",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "public-intelligence-full-refresh",
+      "name": "完整公开情报刷新",
+      "owner": "intelligence",
+      "workflow": ".github/workflows/scheduled-sync.yml",
+      "trigger": "scheduled-change-driven-and-manual",
+      "schedule": "30 6 * * * @ Asia/Taipei",
+      "dependencies": [],
+      "freshnessSlaHours": 30,
+      "timeoutMinutes": 65,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "full-refresh-quality",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "venture-profile-refresh",
+      "name": "核心公司档案刷新",
+      "owner": "company-research",
+      "workflow": ".github/workflows/refresh-venture-profiles.yml",
+      "trigger": "scheduled-change-driven-and-manual",
+      "schedule": "15 9 * * * @ Asia/Taipei",
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "freshnessSlaHours": 30,
+      "timeoutMinutes": 40,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "venture-profile-quality",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "institution-data-layers",
+      "name": "机构证据层重建",
+      "owner": "institution-evidence",
+      "workflow": ".github/workflows/institution-data-layers.yml",
+      "trigger": "change-driven-and-manual",
+      "schedule": null,
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "freshnessSlaHours": 168,
+      "timeoutMinutes": 30,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "institution-layer-quality",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "star-market-investor-refresh",
+      "name": "科创板招股书投资者证据刷新",
+      "owner": "institution-evidence",
+      "workflow": ".github/workflows/star-market-investor-refresh.yml",
+      "trigger": "scheduled-change-driven-and-manual",
+      "schedule": "10 3 * * 1 @ Asia/Taipei",
+      "dependencies": [],
+      "freshnessSlaHours": 192,
+      "timeoutMinutes": 55,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "star-market-investor-quality",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "source-performance-review",
+      "name": "月度信源效能审查",
+      "owner": "source-governance",
+      "workflow": ".github/workflows/source-performance-review.yml",
+      "trigger": "scheduled-and-manual",
+      "schedule": "30 8 1 * * @ Asia/Taipei",
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "freshnessSlaHours": 840,
+      "timeoutMinutes": 20,
+      "failurePolicy": "advisory-only",
+      "qualityGate": "source-performance-review-quality",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "research-agent-daily",
+      "name": "每日证据约束研究摘要",
+      "owner": "research",
+      "workflow": ".github/workflows/research-agent-v1.yml",
+      "trigger": "after-successful-full-refresh-and-manual",
+      "schedule": null,
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "freshnessSlaHours": 36,
+      "timeoutMinutes": 18,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "research-agent-evidence-contract",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    },
+    {
+      "jobId": "pages-deploy",
+      "name": "GitHub Pages 静态发布",
+      "owner": "publication",
+      "workflow": ".github/workflows/pages.yml",
+      "trigger": "commit-dispatch-and-manual",
+      "schedule": null,
+      "dependencies": [
+        "public-intelligence-full-refresh"
+      ],
+      "freshnessSlaHours": 30,
+      "timeoutMinutes": 30,
+      "failurePolicy": "retain-last-good",
+      "qualityGate": "pages-build-and-artifact-audit",
+      "status": "unknown",
+      "lastCompletedAt": null,
+      "artifacts": []
+    }
+  ]
+}

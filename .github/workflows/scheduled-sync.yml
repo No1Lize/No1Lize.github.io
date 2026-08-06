@@ -68,10 +68,13 @@ on:
       - tools/refine_eastmoney_snapshot.py
       - tools/validate_eastmoney_snapshot.py
       - tools/migrate_article_entities.py
+      - tools/run_pipeline.py
+      - tools/build_pipeline_health.py
       - lib/listed-company-disclosure-data.ts
       - lib/venture-profile-data-with-disclosures.ts
       - tsconfig.json
       - tests/**/*.py
+      - config/automation_jobs.json
       - config/intelligence_sources.json
       - config/user_tracking.json
       - config/listed_company_disclosure_sources.json
@@ -111,7 +114,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate source, disclosure and retention plans
+      - name: Validate source, disclosure, retention and automation plans
         run: |
           python -m py_compile \
             tools/http_request_policy.py \
@@ -137,7 +140,9 @@ jobs:
             tools/publish_us_ir_baselines.py \
             tools/snapshot_retention.py \
             tools/refresh_article_quality_gate.py \
-            tools/crawl_with_wechat_registry.py
+            tools/crawl_with_wechat_registry.py \
+            tools/run_pipeline.py \
+            tools/build_pipeline_health.py
           python -m unittest \
             tests.test_http_request_policy \
             tests.test_semantic_data_diff \
@@ -162,7 +167,9 @@ jobs:
             tests.test_us_ir_baseline_disclosures \
             tests.test_refresh_article_quality_gate \
             tests.test_scheduled_sync_workflow \
-            tests.test_snapshot_retention
+            tests.test_snapshot_retention \
+            tests.test_pipeline_control
+          python tools/run_pipeline.py check
       - name: Require a normalized automatic source registry
         run: python tools/tracking_source_governance.py --check
       - name: Start a clean full-source status ledger
@@ -236,6 +243,10 @@ jobs:
             public/data/people.json
             public/data/source_health.json
           )
+          CONTROL_PATHS=(
+            public/data/data_lineage.json
+            public/data/pipeline_health.json
+          )
           SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD "${DATA_PATHS[@]}")
           echo "$SEMANTIC_JSON"
           SEMANTIC_CHANGED=$(printf '%s' "$SEMANTIC_JSON" | python -c 'import json,sys; print(str(json.load(sys.stdin)["changed"]).lower())')
@@ -245,9 +256,13 @@ jobs:
             exit 0
           fi
 
+          python tools/run_pipeline.py finalize \
+            public-intelligence-full-refresh \
+            --quality-gate passed
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "${DATA_PATHS[@]}"
+          git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
           git commit -m "data: refresh public intelligence with source health"
           for attempt in 1 2 3; do
             # Rebase swaps ours/theirs: "theirs" keeps this run's freshly
@@ -274,7 +289,10 @@ jobs:
             python tools/validate_market_profiles.py
             python tools/refresh_people_profiles_with_video.py --offline --validate-only
             python -m unittest discover -s tests -p "test_*.py"
-            git add "${DATA_PATHS[@]}"
+            python tools/run_pipeline.py finalize \
+              public-intelligence-full-refresh \
+              --quality-gate passed
+            git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
