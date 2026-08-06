@@ -1,0 +1,75 @@
+name: Apply review entity isolation
+
+on:
+  push:
+    branches: [fix/isolate-review-entities]
+    paths:
+      - .github/workflows/apply-review-entity-isolation.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/isolate-review-entities
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Apply central publication filter
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path("lib/tracking-entity-research.ts")
+          content = path.read_text(encoding="utf-8")
+          old_import = '''import {
+            normalizeTrackingCaptureInbox,
+            stableTrackingCaptureHash,
+            type TrackingCaptureEntityType,
+            type TrackingCaptureRecord,
+          } from "@/lib/tracking-capture";
+          '''
+          new_import = old_import + '''import {
+            publishedTrackingCaptureDescriptor,
+          } from "@/lib/tracking-entity-publication";
+          '''
+          if content.count(old_import) != 1:
+              raise SystemExit("tracking capture import block changed")
+          content = content.replace(old_import, new_import, 1)
+
+          old_loop = '''  for (const capture of captureInbox.records) {
+            if (capture.status === "dismissed") continue;
+            ensure(capture.entityType, capture.canonicalName, { capture });
+          }
+          '''
+          new_loop = '''  for (const capture of captureInbox.records) {
+            const descriptor = publishedTrackingCaptureDescriptor(capture);
+            if (!descriptor) continue;
+            ensure(descriptor.entityType, descriptor.canonicalName, { capture });
+          }
+          '''
+          if content.count(old_loop) != 1:
+              raise SystemExit("tracking capture publication loop changed")
+          content = content.replace(old_loop, new_loop, 1)
+          path.write_text(content, encoding="utf-8")
+          PY
+      - name: Install locked dependencies
+        run: npm ci
+      - name: Run focused publication tests
+        run: node --import tsx --test tests/tracking-entity-publication.test.ts tests/tracking-entity-research.test.ts
+      - name: Lint changed TypeScript
+        run: npx eslint lib/tracking-entity-publication.ts lib/tracking-entity-research.ts tests/tracking-entity-publication.test.ts
+      - name: Commit central filter
+        run: |
+          git diff --check
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lib/tracking-entity-research.ts
+          git commit -m "fix: isolate review entities from public research"
+          git push origin HEAD:fix/isolate-review-entities
