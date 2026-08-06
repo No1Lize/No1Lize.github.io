@@ -29,16 +29,22 @@ def _load_payload(path: Path) -> dict[str, Any]:
     return payload
 
 
-def rebuild_quality_gate(path: Path = ARTICLES_PATH) -> tuple[dict[str, Any], bool]:
-    """Recompute and persist the quality gate for the current snapshot state."""
+def evaluate_current_quality(payload: dict[str, Any]) -> dict[str, Any]:
+    """Evaluate quality for the supplied snapshot without mutating it."""
 
-    payload = _load_payload(path)
     config = crawl_articles.load_config()
-    quality = crawl_articles.evaluate_quality(
+    return crawl_articles.evaluate_quality(
         [row for row in payload.get("articles", []) if isinstance(row, dict)],
         [row for row in payload.get("sourceStatus", []) if isinstance(row, dict)],
         config.get("qualityGate", {}),
     )
+
+
+def rebuild_quality_gate(path: Path = ARTICLES_PATH) -> tuple[dict[str, Any], bool]:
+    """Recompute and persist the quality gate for the current snapshot state."""
+
+    payload = _load_payload(path)
+    quality = evaluate_current_quality(payload)
     if quality.get("passed") is not True:
         print(json.dumps(quality, ensure_ascii=False, sort_keys=True))
         raise SystemExit("article quality gate cannot be rebuilt because the snapshot fails")
@@ -60,10 +66,18 @@ def main() -> int:
     args = parser.parse_args()
 
     payload = _load_payload(args.articles)
-    current_gate = payload.get("qualityGate")
-    quality, changed = rebuild_quality_gate(args.articles)
-    if args.check and current_gate != quality:
-        raise SystemExit("article quality gate is not current")
+    quality = evaluate_current_quality(payload)
+    if quality.get("passed") is not True:
+        print(json.dumps(quality, ensure_ascii=False, sort_keys=True))
+        raise SystemExit("article snapshot fails the current quality gate")
+
+    if args.check:
+        changed = False
+        if payload.get("qualityGate") != quality:
+            raise SystemExit("article quality gate is not current")
+    else:
+        quality, changed = rebuild_quality_gate(args.articles)
+
     print(
         json.dumps(
             {
