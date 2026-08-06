@@ -8,8 +8,6 @@ import process from "node:process";
 const root = process.cwd();
 const configPath = path.join(root, "config", "user_tracking.json");
 const snapshotPath = path.join(root, "public", "data", "articles.json");
-const allowIncompleteCoverage =
-  process.env.ALLOW_INCOMPLETE_TRACKING_COVERAGE === "true";
 
 function fail(messages) {
   for (const message of messages) {
@@ -70,7 +68,6 @@ const expectedHash = crypto
   .digest("hex");
 const actualHash = clean(snapshot.trackingConfigHash, 80);
 const errors = [];
-const coverageWarnings = [];
 
 if (!actualHash) {
   errors.push("article snapshot has no trackingConfigHash; crawler enrichment has not run");
@@ -96,22 +93,13 @@ for (const track of tracks) {
     errors.push(`${track.name}: expectedSources=${expectedSources}; three discovery routes are required`);
   }
   if (completedSources < expectedSources) {
-    const message =
-      `${track.name}: only ${completedSources}/${expectedSources} discovery routes completed`;
-    if (allowIncompleteCoverage) {
-      coverageWarnings.push(message);
-    } else {
-      errors.push(message);
-    }
+    errors.push(
+      `${track.name}: only ${completedSources}/${expectedSources} discovery routes completed`,
+    );
   }
 }
 
 if (errors.length) fail(errors);
-for (const warning of coverageWarnings) {
-  console.warn(`TRACKING_SNAPSHOT_WARNING: ${warning}`);
-}
 console.log(
-  coverageWarnings.length
-    ? `Tracking snapshot deployable: ${tracks.length} tracks match ${actualHash.slice(0, 12)}; ${coverageWarnings.length} track(s) still need a full discovery refresh.`
-    : `Tracking snapshot valid: ${tracks.length} tracks match ${actualHash.slice(0, 12)} and all discovery routes were attempted.`,
+  `Tracking snapshot valid: ${tracks.length} tracks match ${actualHash.slice(0, 12)} and all discovery routes were attempted.`,
 );
