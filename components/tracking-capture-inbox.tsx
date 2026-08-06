@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import rawInbox from "@/config/tracking_capture_inbox.json";
 import { base64ToText } from "@/lib/github-commit";
+import { publishedTrackingCaptureDescriptor } from "@/lib/tracking-entity-publication";
 import { trackingEntityResearchHref } from "@/lib/tracking-entity-route";
 import {
   TRACKING_BRANCH,
@@ -162,54 +163,61 @@ export function TrackingCaptureInbox() {
       <p className={styles.status} aria-live="polite">{status}</p>
 
       <div className={styles.list}>
-        {visible.map((record) => (
-          <article className={styles.card} key={record.id}>
-            <div className={styles.cardTop}>
-              <div>
-                <span data-entity={record.entityType}>{ENTITY_LABELS[record.entityType]}</span>
-                <strong>{record.canonicalName}</strong>
+        {visible.map((record) => {
+          const published = publishedTrackingCaptureDescriptor(record);
+          return (
+            <article className={styles.card} key={record.id}>
+              <div className={styles.cardTop}>
+                <div>
+                  <span data-entity={record.entityType}>{ENTITY_LABELS[record.entityType]}</span>
+                  <strong>{record.canonicalName}</strong>
+                </div>
+                <em data-status={record.status}>{STATUS_LABELS[record.status]}</em>
               </div>
-              <em data-status={record.status}>{STATUS_LABELS[record.status]}</em>
-            </div>
-            <dl>
-              <div>
-                <dt>目标赛道</dt>
-                <dd>{record.trackNames.join(" / ") || record.trackSlugs.join(" / ") || "未记录"}</dd>
+              <dl>
+                <div>
+                  <dt>目标赛道</dt>
+                  <dd>{record.trackNames.join(" / ") || record.trackSlugs.join(" / ") || "未记录"}</dd>
+                </div>
+                <div>
+                  <dt>应用位置</dt>
+                  <dd>{record.appliedTo.join("、") || "等待下一次同步"}</dd>
+                </div>
+                <div>
+                  <dt>操作审计</dt>
+                  <dd>{record.capturedBy || "未知管理员"} · {formatTime(record.capturedAt)}</dd>
+                </div>
+              </dl>
+              {record.reasons.length || record.note ? (
+                <div className={styles.researchMeta}>
+                  {record.reasons.length ? (
+                    <div>{record.reasons.map((reason) => <span key={reason}>{reason}</span>)}</div>
+                  ) : null}
+                  {record.note ? <p>{record.note}</p> : null}
+                </div>
+              ) : null}
+              <div className={styles.source}>
+                <div>
+                  <span>{record.source.channelLabel || record.source.channel} · {record.source.eventType}</span>
+                  <strong>{record.source.title}</strong>
+                  <p>{record.source.summary || "未保存摘要。"}</p>
+                </div>
+                <div className={styles.sourceActions}>
+                  {published ? (
+                    <Link href={trackingEntityResearchHref(published.entityType, published.canonicalName)}>
+                      研究页 <BookOpen size={13} />
+                    </Link>
+                  ) : (
+                    <span title="实体仍在人工审核队列，尚未发布研究页">尚未发布</span>
+                  )}
+                  <a href={record.source.url} target="_blank" rel="noreferrer">
+                    原文 <ExternalLink size={13} />
+                  </a>
+                </div>
               </div>
-              <div>
-                <dt>应用位置</dt>
-                <dd>{record.appliedTo.join("、") || "等待下一次同步"}</dd>
-              </div>
-              <div>
-                <dt>操作审计</dt>
-                <dd>{record.capturedBy || "未知管理员"} · {formatTime(record.capturedAt)}</dd>
-              </div>
-            </dl>
-            {record.reasons.length || record.note ? (
-              <div className={styles.researchMeta}>
-                {record.reasons.length ? (
-                  <div>{record.reasons.map((reason) => <span key={reason}>{reason}</span>)}</div>
-                ) : null}
-                {record.note ? <p>{record.note}</p> : null}
-              </div>
-            ) : null}
-            <div className={styles.source}>
-              <div>
-                <span>{record.source.channelLabel || record.source.channel} · {record.source.eventType}</span>
-                <strong>{record.source.title}</strong>
-                <p>{record.source.summary || "未保存摘要。"}</p>
-              </div>
-              <div className={styles.sourceActions}>
-                <Link href={trackingEntityResearchHref(record.entityType, record.canonicalName)}>
-                  研究页 <BookOpen size={13} />
-                </Link>
-                <a href={record.source.url} target="_blank" rel="noreferrer">
-                  原文 <ExternalLink size={13} />
-                </a>
-              </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
         {!visible.length ? (
           <div className={styles.empty}>
             <Inbox size={22} />
