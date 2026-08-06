@@ -2,53 +2,12 @@
   "schemaVersion": 1,
   "generatedAt": "2026-08-06T01:21:28+00:00",
   "candidateCount": 15,
-  "pendingCount": 3,
-  "acceptedCount": 10,
+  "pendingCount": 2,
+  "acceptedCount": 11,
   "rejectedCount": 1,
   "mergedCount": 0,
   "publishedCount": 1,
   "candidates": [
-    {
-      "id": "candidate-github-64b2b6d1",
-      "decisionKey": "github",
-      "name": "GitHub",
-      "aliases": [
-        "GitHub"
-      ],
-      "region": "全球",
-      "sector": "AI / AGI",
-      "score": 55,
-      "status": "pending",
-      "reasons": [
-        "1 条管理员文章采集",
-        "最近 90 天仍有公开活动"
-      ],
-      "firstSeenAt": "2026-08-06T00:50:19.596000+00:00",
-      "lastSeenAt": "2026-08-06T00:50:19.596000+00:00",
-      "articleCount": 1,
-      "captureCount": 1,
-      "captureIds": [
-        "capture-1g43wss"
-      ],
-      "sourceCount": 1,
-      "sourceHosts": [
-        "leiphone.com"
-      ],
-      "sourceArticleIds": [
-        "capture-1g43wss"
-      ],
-      "sourceUrls": [
-        "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html"
-      ],
-      "eventTypes": [
-        "公司动态"
-      ],
-      "note": "",
-      "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
-      "onboarding": {}
-    },
     {
       "id": "candidate-typescript-fb9da861",
       "decisionKey": "typescript",
@@ -423,6 +382,47 @@
       "note": "跟踪的目标公司",
       "mergedSlug": "",
       "decidedAt": "2026-08-05T15:06:07.300Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-github-64b2b6d1",
+      "decisionKey": "github",
+      "name": "GitHub",
+      "aliases": [
+        "GitHub"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 55,
+      "status": "accepted",
+      "reasons": [
+        "1 条管理员文章采集",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "lastSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1g43wss"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "leiphone.com"
+      ],
+      "sourceArticleIds": [
+        "capture-1g43wss"
+      ],
+      "sourceUrls": [
+        "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html"
+      ],
+      "eventTypes": [
+        "公司动态"
+      ],
+      "note": "GitHub是重要的开源平台，且是微软最要的资产",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-06T02:36:33.679Z",
       "reviewedBy": "VCIQ",
       "onboarding": {}
     },
