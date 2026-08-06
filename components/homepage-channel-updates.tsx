@@ -79,7 +79,7 @@ function coreTechnologyUpdates(): ChannelUpdateItem[] {
           context: [entity.name, ...entity.trackNames.slice(0, 2)].join(" · "),
           date,
           dateOriginal,
-          datePrecision: "day" as const,
+          datePrecision: "exact" as const,
           sortAt: timeline.sortAt || dateOriginal,
           keywords: [entity.name, ...entity.trackNames],
           classifications: ["核心技术"],
