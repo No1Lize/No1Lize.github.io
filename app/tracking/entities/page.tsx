@@ -6,10 +6,10 @@ import {
   type TrackingEntityDirectoryItem,
 } from "@/components/tracking-entity-directory";
 import {
-  trackingResearchEntities,
-  trackingResearchGeneratedAt,
-  trackingResearchStats,
-} from "@/lib/tracking-entity-research";
+  publishedTrackingResearchEntities,
+  publishedTrackingResearchStats,
+} from "@/lib/published-tracking-entity-research";
+import { trackingResearchGeneratedAt } from "@/lib/tracking-entity-research";
 import styles from "./tracking-entities.module.css";
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "汇总人工追踪的公司、人物与技术主题，并按可追溯公开材料生成研究时间线。",
 };
 
-const directoryItems: TrackingEntityDirectoryItem[] = trackingResearchEntities.map((entity) => ({
+const directoryItems: TrackingEntityDirectoryItem[] = publishedTrackingResearchEntities.map((entity) => ({
   id: entity.id,
   entityType: entity.entityType,
   slug: entity.slug,
@@ -58,13 +58,13 @@ export default function TrackingEntitiesPage() {
           </div>
         </div>
         <dl className={styles.metrics}>
-          <div><dt>追踪对象</dt><dd>{trackingResearchStats.entityCount}</dd></div>
-          <div><dt>公司</dt><dd>{trackingResearchStats.companyCount}</dd></div>
-          <div><dt>人物</dt><dd>{trackingResearchStats.personCount}</dd></div>
-          <div><dt>技术／主题</dt><dd>{trackingResearchStats.topicCount}</dd></div>
-          <div><dt>正式档案</dt><dd>{trackingResearchStats.formalCount}</dd></div>
-          <div><dt>人工采集</dt><dd>{trackingResearchStats.capturedCount}</dd></div>
-          <div><dt>重点研究</dt><dd>{trackingResearchStats.priorityCount}</dd></div>
+          <div><dt>追踪对象</dt><dd>{publishedTrackingResearchStats.entityCount}</dd></div>
+          <div><dt>公司</dt><dd>{publishedTrackingResearchStats.companyCount}</dd></div>
+          <div><dt>人物</dt><dd>{publishedTrackingResearchStats.personCount}</dd></div>
+          <div><dt>技术／主题</dt><dd>{publishedTrackingResearchStats.topicCount}</dd></div>
+          <div><dt>正式档案</dt><dd>{publishedTrackingResearchStats.formalCount}</dd></div>
+          <div><dt>人工采集</dt><dd>{publishedTrackingResearchStats.capturedCount}</dd></div>
+          <div><dt>重点研究</dt><dd>{publishedTrackingResearchStats.priorityCount}</dd></div>
         </dl>
       </header>
 

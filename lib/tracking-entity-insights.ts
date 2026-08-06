@@ -1,5 +1,5 @@
+import { publishedTrackingResearchEntities } from "@/lib/published-tracking-entity-research";
 import {
-  trackingResearchEntities,
   trackingResearchHref,
   type TrackingResearchEntity,
   type TrackingResearchTimelineItem,
@@ -358,7 +358,7 @@ export function trackingResearchRelations(
   entity: TrackingResearchEntity,
   limit = 10,
 ): TrackingResearchRelation[] {
-  return buildTrackingResearchRelations(entity, trackingResearchEntities, limit);
+  return buildTrackingResearchRelations(entity, publishedTrackingResearchEntities, limit);
 }
 
 function normalizedPriority(

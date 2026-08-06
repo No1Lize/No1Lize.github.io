@@ -25,8 +25,10 @@ import {
   trackingResearchRelations,
 } from "@/lib/tracking-entity-insights";
 import {
-  trackingResearchEntities,
-  trackingResearchEntity,
+  publishedTrackingResearchEntities,
+  publishedTrackingResearchEntity,
+} from "@/lib/published-tracking-entity-research";
+import {
   trackingResearchGeneratedAt,
   type TrackingResearchEntityType,
 } from "@/lib/tracking-entity-research";
@@ -67,7 +69,7 @@ function TypeIcon({ type, size = 20 }: { type: TrackingResearchEntityType; size?
 }
 
 export function generateStaticParams() {
-  return trackingResearchEntities.map((entity) => ({
+  return publishedTrackingResearchEntities.map((entity) => ({
     type: entity.entityType,
     slug: entity.slug,
   }));
@@ -81,7 +83,7 @@ export async function generateMetadata({
   params: Promise<{ type: string; slug: string }>;
 }): Promise<Metadata> {
   const { type, slug } = await params;
-  const entity = isEntityType(type) ? trackingResearchEntity(type, slug) : undefined;
+  const entity = isEntityType(type) ? publishedTrackingResearchEntity(type, slug) : undefined;
   return {
     title: entity ? `Research | ${entity.name} | VCIQ` : "追踪对象研究",
     description: entity?.summary ?? "公司、人物和技术主题的可追溯研究时间线。",
@@ -95,7 +97,7 @@ export default async function TrackingEntityDetailPage({
 }) {
   const { type, slug } = await params;
   if (!isEntityType(type)) notFound();
-  const entity = trackingResearchEntity(type, slug);
+  const entity = publishedTrackingResearchEntity(type, slug);
   if (!entity) notFound();
 
   const brief = trackingResearchBrief(entity);
