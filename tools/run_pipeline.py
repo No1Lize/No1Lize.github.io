@@ -154,6 +154,42 @@ def required_outputs(root: Path, job: Mapping[str, Any]) -> list[str]:
     return missing
 
 
+def resume_run_metadata(
+    context: dict[str, Any],
+    job: Mapping[str, Any],
+    lineage_path: Path,
+) -> dict[str, Any]:
+    """Keep the original source commit when one workflow run rebases its data commit.
+
+    GitHub Actions keeps one run ID across push retries. The first successful
+    finalization records the code SHA used for collection. A later rebase must
+    not replace that SHA with the transient pre-amend data commit.
+    """
+
+    lineage = load_json(lineage_path, required=False)
+    artifacts = lineage.get("artifacts")
+    if not isinstance(artifacts, dict):
+        return context
+    for output in job.get("outputs", []):
+        if not isinstance(output, dict):
+            continue
+        record = artifacts.get(str(output.get("path") or ""))
+        if not isinstance(record, dict):
+            continue
+        producer = record.get("producer")
+        if not isinstance(producer, dict):
+            continue
+        if (
+            producer.get("jobId") == job.get("id")
+            and producer.get("runId") == context.get("runId")
+        ):
+            for field in ("codeSha", "sourceRef"):
+                if str(producer.get(field) or "").strip():
+                    context[field] = producer[field]
+            break
+    return context
+
+
 def finalize_pipeline(
     root: Path,
     registry: Mapping[str, Any],
@@ -179,11 +215,15 @@ def finalize_pipeline(
             f"job {job_id} cannot finalize; required outputs are missing: {missing}"
         )
 
+    lineage_path = lineage_output or (root / "public/data/data_lineage.json")
+    health_path = health_output or (root / "public/data/pipeline_health.json")
     current = (
         dict(context)
         if isinstance(context, Mapping)
         else make_run_context(root, registry, job_id, run_id=run_id)
     )
+    if not isinstance(context, Mapping):
+        current = resume_run_metadata(current, job, lineage_path)
     validate_run_context(current, registry, expected_job_id=job_id)
     if run_id:
         current["runId"] = run_id
@@ -194,8 +234,6 @@ def finalize_pipeline(
             "qualityGate": quality_gate,
         }
     )
-    lineage_path = lineage_output or (root / "public/data/data_lineage.json")
-    health_path = health_output or (root / "public/data/pipeline_health.json")
     lineage, health = write_snapshots(
         root,
         registry,
