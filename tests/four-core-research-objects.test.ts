@@ -35,6 +35,13 @@ test("dedicated listed-market routes are removed from source and sitemap", () =>
   assert.match(sitemap, /["']\/technologies["']/u);
 });
 
+test("research report evidence links to core company profiles, never retired IPO routes", () => {
+  const reader = read("app/reports/pdf/[slug]/page.tsx");
+  assert.match(reader, /coreCompanySlugs/u);
+  assert.match(reader, /`\/companies\/\$\{report\.companySlug\}`/u);
+  assert.doesNotMatch(reader, /`\/ipo\//u);
+});
+
 test("core technology directory publishes specific substantive topic entities", () => {
   const page = read("app/technologies/page.tsx");
   assert.match(page, /coreTechnologyEntities/u);
