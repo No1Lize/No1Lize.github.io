@@ -16,6 +16,9 @@ import {
   type TrackingCaptureRecord,
 } from "@/lib/tracking-capture";
 import {
+  publishedTrackingCaptureDescriptor,
+} from "@/lib/tracking-entity-publication";
+import {
   normalizeTrackingEntityRecordManifest,
   trackingEntityPriorityLabel,
   trackingEntityPriorityStars,
@@ -364,8 +367,9 @@ function buildMutableEntities() {
   }
 
   for (const capture of captureInbox.records) {
-    if (capture.status === "dismissed") continue;
-    ensure(capture.entityType, capture.canonicalName, { capture });
+    const descriptor = publishedTrackingCaptureDescriptor(capture);
+    if (!descriptor) continue;
+    ensure(descriptor.entityType, descriptor.canonicalName, { capture });
   }
 
   for (const record of Object.values(entityRecordManifest.records)) {
