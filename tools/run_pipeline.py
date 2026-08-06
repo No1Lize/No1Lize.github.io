@@ -23,6 +23,7 @@ try:
     from .build_pipeline_health import (
         ROOT,
         atomic_write_json,
+        build_snapshots,
         isoformat,
         load_json,
         load_registry,
@@ -36,6 +37,7 @@ except ImportError:
     from build_pipeline_health import (  # type: ignore
         ROOT,
         atomic_write_json,
+        build_snapshots,
         isoformat,
         load_json,
         load_registry,
@@ -387,13 +389,17 @@ def main() -> int:
         health_path = _path(
             root, args.health_output, root / "public/data/pipeline_health.json"
         )
-        lineage, health = write_snapshots(
+        committed_lineage = load_json(
+            root / "public/data/data_lineage.json", required=False
+        )
+        lineage, health = build_snapshots(
             root,
             registry,
-            lineage_output=lineage_path,
-            health_output=health_path,
             now=_datetime_argument(args.now),
+            previous_lineage=committed_lineage,
         )
+        atomic_write_json(lineage_path, lineage)
+        atomic_write_json(health_path, health)
         result = {
             "lineageOutput": str(lineage_path),
             "healthOutput": str(health_path),
