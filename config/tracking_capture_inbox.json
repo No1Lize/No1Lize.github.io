@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-06T15:00:01.535Z",
+  "generatedAt": "2026-08-06T15:01:56.206Z",
   "records": [
+    {
+      "id": "capture-67bd8v",
+      "entityType": "company",
+      "canonicalName": "Movida",
+      "rawSelection": "Movida",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-15shkgi"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "智能交通"
+      ],
+      "source": {
+        "articleId": "article-1jp67cq",
+        "title": "滴滴旗下99携手巴西领先租车企业Movida,共建绿色出行生态",
+        "url": "https://www.leiphone.com/category/industrynews/f2V1P6CeMXNjyvSG.html",
+        "summary": "",
+        "sourceName": "商业进展雷峰网 · 专业媒体",
+        "channel": "companies",
+        "channelLabel": "创业案例",
+        "eventType": "商业进展"
+      },
+      "capturedAt": "2026-08-06T15:01:56.206Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies",
+        "track-15shkgi:sampleCompanies"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Movida",
+        "targetId": "company-candidate:movida",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "decisionKey": "movida",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-1fo2o5k",
       "entityType": "company",
