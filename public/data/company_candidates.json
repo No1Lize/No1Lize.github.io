@@ -1,48 +1,129 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-05T10:42:07+00:00",
-  "candidateCount": 12,
-  "pendingCount": 9,
-  "acceptedCount": 2,
-  "rejectedCount": 0,
+  "generatedAt": "2026-08-05T23:38:18+00:00",
+  "candidateCount": 15,
+  "pendingCount": 3,
+  "acceptedCount": 10,
+  "rejectedCount": 1,
   "mergedCount": 0,
   "publishedCount": 1,
   "candidates": [
     {
-      "id": "candidate-seefund-254f953f",
-      "decisionKey": "本轮融资由顺为资本与经纬创投共同领投九坤创投钧山资本seefund猎聘投资元诺资本钟鼎资本等多家财务及产业投资机构参与云启资本小米战投弘晖基金英诺天使基金东方嘉富",
-      "name": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+      "id": "candidate-github-64b2b6d1",
+      "decisionKey": "github",
+      "name": "GitHub",
       "aliases": [
-        "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富"
+        "GitHub"
       ],
       "region": "全球",
       "sector": "AI / AGI",
-      "score": 75,
+      "score": 55,
       "status": "pending",
       "reasons": [
         "1 条管理员文章采集",
-        "出现融资等高信号事件",
         "最近 90 天仍有公开活动"
       ],
-      "firstSeenAt": "2026-08-05T05:24:45.821000+00:00",
-      "lastSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "firstSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "lastSeenAt": "2026-08-06T00:50:19.596000+00:00",
       "articleCount": 1,
       "captureCount": 1,
       "captureIds": [
-        "capture-wiuop1"
+        "capture-1g43wss"
       ],
       "sourceCount": 1,
       "sourceHosts": [
-        "news.pedaily.cn"
+        "leiphone.com"
       ],
       "sourceArticleIds": [
-        "capture-wiuop1"
+        "capture-1g43wss"
       ],
       "sourceUrls": [
-        "https://news.pedaily.cn/202608/567178.shtml"
+        "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html"
       ],
       "eventTypes": [
-        "融资"
+        "公司动态"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-typescript-fb9da861",
+      "decisionKey": "typescript",
+      "name": "TypeScript",
+      "aliases": [
+        "TypeScript"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 55,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "lastSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1hp6p68"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "leiphone.com"
+      ],
+      "sourceArticleIds": [
+        "capture-1hp6p68"
+      ],
+      "sourceUrls": [
+        "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html"
+      ],
+      "eventTypes": [
+        "公司动态"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-matt-1fa2ef47",
+      "decisionKey": "matt",
+      "name": "Matt",
+      "aliases": [
+        "Matt"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 50,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "lastSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-mkkhpz"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "leiphone.com"
+      ],
+      "sourceArticleIds": [
+        "capture-mkkhpz"
+      ],
+      "sourceUrls": [
+        "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html"
+      ],
+      "eventTypes": [
+        "公司动态"
       ],
       "note": "",
       "mergedSlug": "",
@@ -60,7 +141,7 @@
       "region": "全球",
       "sector": "AI / AGI",
       "score": 75,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "1 条管理员文章采集",
         "出现融资等高信号事件",
@@ -86,10 +167,10 @@
       "eventTypes": [
         "融资"
       ],
-      "note": "",
+      "note": "破壳时刻(上海)智能科技有限责任公司，简称破壳时刻",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
+      "decidedAt": "2026-08-05T15:03:14.266Z",
+      "reviewedBy": "VCIQ",
       "onboarding": {}
     },
     {
@@ -102,7 +183,7 @@
       "region": "全球",
       "sector": "AI / AGI",
       "score": 75,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "1 条管理员文章采集",
         "出现融资等高信号事件",
@@ -128,10 +209,10 @@
       "eventTypes": [
         "融资"
       ],
-      "note": "",
+      "note": "破壳时刻",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
+      "decidedAt": "2026-08-05T15:04:06.295Z",
+      "reviewedBy": "VCIQ",
       "onboarding": {}
     },
     {
@@ -144,7 +225,7 @@
       "region": "全球",
       "sector": "AI / AGI",
       "score": 75,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "1 条管理员文章采集",
         "出现产业投资等高信号事件",
@@ -170,10 +251,10 @@
       "eventTypes": [
         "产业投资"
       ],
-      "note": "",
+      "note": "跟踪的目标公司",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
+      "decidedAt": "2026-08-05T15:04:29.993Z",
+      "reviewedBy": "VCIQ",
       "onboarding": {}
     },
     {
@@ -186,7 +267,7 @@
       "region": "全球",
       "sector": "AI / AGI",
       "score": 75,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "1 条管理员文章采集",
         "出现产业投资等高信号事件",
@@ -212,10 +293,10 @@
       "eventTypes": [
         "产业投资"
       ],
-      "note": "",
+      "note": "跟踪的目标公司，新兴的创投基金",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
+      "decidedAt": "2026-08-05T15:05:10.890Z",
+      "reviewedBy": "VCIQ",
       "onboarding": {}
     },
     {
@@ -228,7 +309,7 @@
       "region": "中国",
       "sector": "AI / AGI",
       "score": 60,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "2 条结构化公司记录",
         "至少两个独立公开来源",
@@ -257,10 +338,10 @@
         "产品发布",
         "公司动态"
       ],
-      "note": "",
+      "note": "知名公司",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
+      "decidedAt": "2026-08-05T15:05:29.334Z",
+      "reviewedBy": "VCIQ",
       "onboarding": {}
     },
     {
@@ -273,7 +354,7 @@
       "region": "全球",
       "sector": "AI / AGI",
       "score": 55,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "1 条管理员文章采集",
         "最近 90 天仍有公开活动"
@@ -298,10 +379,10 @@
       "eventTypes": [
         "商业进展"
       ],
-      "note": "",
+      "note": "知名基金",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
+      "decidedAt": "2026-08-05T15:05:44.780Z",
+      "reviewedBy": "VCIQ",
       "onboarding": {}
     },
     {
@@ -314,7 +395,7 @@
       "region": "全球",
       "sector": "AI / AGI",
       "score": 55,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "1 条管理员文章采集",
         "最近 90 天仍有公开活动"
@@ -339,10 +420,10 @@
       "eventTypes": [
         "商业进展"
       ],
-      "note": "",
+      "note": "跟踪的目标公司",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
+      "decidedAt": "2026-08-05T15:06:07.300Z",
+      "reviewedBy": "VCIQ",
       "onboarding": {}
     },
     {
@@ -355,7 +436,7 @@
       "region": "全球",
       "sector": "AI / AGI",
       "score": 50,
-      "status": "pending",
+      "status": "accepted",
       "reasons": [
         "1 条管理员文章采集",
         "最近 90 天仍有公开活动"
@@ -380,48 +461,9 @@
       "eventTypes": [
         "商业进展"
       ],
-      "note": "",
+      "note": "跟踪知名公司",
       "mergedSlug": "",
-      "decidedAt": "",
-      "reviewedBy": "",
-      "onboarding": {}
-    },
-    {
-      "id": "candidate-company-f2a4dca8",
-      "decisionKey": "埃隆马斯克",
-      "name": "埃隆·马斯克",
-      "aliases": [
-        "埃隆·马斯克"
-      ],
-      "region": "全球",
-      "sector": "商业航天",
-      "score": 40,
-      "status": "accepted",
-      "reasons": [
-        "存在官方、原始或监管来源",
-        "最近 90 天仍有公开活动"
-      ],
-      "firstSeenAt": "2026-08-01T00:00:00+00:00",
-      "lastSeenAt": "2026-08-01T00:00:00+00:00",
-      "articleCount": 1,
-      "captureCount": 0,
-      "captureIds": [],
-      "sourceCount": 1,
-      "sourceHosts": [
-        "x.com"
-      ],
-      "sourceArticleIds": [
-        "user-x-elonmusk-28cf95d19b3bbbf8"
-      ],
-      "sourceUrls": [
-        "https://x.com/elonmusk/status/2083353705504469233"
-      ],
-      "eventTypes": [
-        "人物观点"
-      ],
-      "note": "x.com是创业公司，埃隆·马斯克其实是创业人物，但x.com是他的主要创业公司，可以列入",
-      "mergedSlug": "",
-      "decidedAt": "2026-08-04T23:04:23.470Z",
+      "decidedAt": "2026-08-05T15:06:30.032Z",
       "reviewedBy": "VCIQ",
       "onboarding": {}
     },
@@ -465,6 +507,45 @@
       "onboarding": {}
     },
     {
+      "id": "candidate-company-f2a4dca8",
+      "decisionKey": "埃隆马斯克",
+      "name": "埃隆·马斯克",
+      "aliases": [
+        "埃隆·马斯克"
+      ],
+      "region": "全球",
+      "sector": "商业航天",
+      "score": 40,
+      "status": "accepted",
+      "reasons": [
+        "存在官方、原始或监管来源",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-04T00:00:00+00:00",
+      "lastSeenAt": "2026-08-04T00:00:00+00:00",
+      "articleCount": 1,
+      "captureCount": 0,
+      "captureIds": [],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "x.com"
+      ],
+      "sourceArticleIds": [
+        "user-x-elonmusk-09518793bca2b8b3"
+      ],
+      "sourceUrls": [
+        "https://x.com/elonmusk/status/2084745539187273851"
+      ],
+      "eventTypes": [
+        "人物观点"
+      ],
+      "note": "x.com是创业公司，埃隆·马斯克其实是创业人物，但x.com是他的主要创业公司，可以列入",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-04T23:04:23.470Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
+    {
       "id": "candidate-shopify-c3a45cb7",
       "decisionKey": "shopify",
       "name": "Shopify",
@@ -473,17 +554,17 @@
       ],
       "region": "全球",
       "sector": "新消费",
-      "score": 65,
+      "score": 70,
       "status": "published",
       "reasons": [
-        "3 条结构化公司记录",
+        "11 条结构化公司记录",
         "至少两个独立公开来源",
         "存在官方、原始或监管来源",
         "最近 90 天仍有公开活动"
       ],
-      "firstSeenAt": "2026-07-29T00:00:00+00:00",
-      "lastSeenAt": "2026-08-03T00:00:00+00:00",
-      "articleCount": 3,
+      "firstSeenAt": "2025-11-25T00:00:00+00:00",
+      "lastSeenAt": "2026-08-04T00:00:00+00:00",
+      "articleCount": 11,
       "captureCount": 0,
       "captureIds": [],
       "sourceCount": 2,
@@ -492,14 +573,29 @@
         "shopify.com"
       ],
       "sourceArticleIds": [
-        "official-user-shopify-cf0fa6cfe8a41107",
+        "official-shopify-45a99c80b9590ce0",
+        "official-shopify-6d021a71bd96aed5",
+        "official-shopify-75c796ba2fd85d0b",
+        "official-shopify-7b22495b4fef395e",
+        "official-shopify-c989a52acdfcded9",
+        "official-shopify-c9c6e9e10de12b93",
+        "official-user-shopify-23e3e463dc8eaad1",
+        "official-user-shopify-97ea8784c7dfd921",
         "official-user-shopify-daa260464549b1d1",
+        "official-user-shopify-f8bf13b91565337b",
         "user-source-source-auto-shopify-cb8e5b9d50117d8b"
       ],
       "sourceUrls": [
-        "https://www.shopify.com/blog/latest",
+        "https://www.shopify.com/enterprise/blog/latest",
         "https://help.shopify.com/en",
-        "https://www.shopify.com/enterprise/blog/latest"
+        "https://www.shopify.com/news/a-world-with-more-builders",
+        "https://www.shopify.com/partners/blog/latest",
+        "https://www.shopify.com/news/preparedness-paradox",
+        "https://www.shopify.com/editions/spring2026",
+        "https://www.shopify.com/news/spring-26-edition-dev",
+        "https://www.shopify.com/news/spring-26-edition-design",
+        "https://www.shopify.com/news/spring-26-edition-merchant",
+        "https://www.shopify.com/news/jeanne-dewitt-grosser-board"
       ],
       "eventTypes": [
         "公司动态"
@@ -541,6 +637,48 @@
         "publishedSlug": "shopify",
         "error": ""
       }
+    },
+    {
+      "id": "candidate-seefund-254f953f",
+      "decisionKey": "本轮融资由顺为资本与经纬创投共同领投九坤创投钧山资本seefund猎聘投资元诺资本钟鼎资本等多家财务及产业投资机构参与云启资本小米战投弘晖基金英诺天使基金东方嘉富",
+      "name": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+      "aliases": [
+        "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "rejected",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "lastSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-wiuop1"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "news.pedaily.cn"
+      ],
+      "sourceArticleIds": [
+        "capture-wiuop1"
+      ],
+      "sourceUrls": [
+        "https://news.pedaily.cn/202608/567178.shtml"
+      ],
+      "eventTypes": [
+        "融资"
+      ],
+      "note": "几个公司集中在一起了，不符合单个公司列入公司档案标准",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-05T15:01:51.396Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
     }
   ]
 }
