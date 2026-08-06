@@ -1,0 +1,56 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+import test from "node:test";
+
+const root = path.resolve(import.meta.dirname, "..");
+const read = (relativePath: string) =>
+  fs.readFileSync(path.join(root, relativePath), "utf8");
+
+test("public tracking landing is build-based and contains no admin loader", () => {
+  const source = read("app/tracking/page.tsx");
+  assert.match(source, /publishedTrackingResearchStats/u);
+  assert.doesNotMatch(source, /UserTrackingLoader/u);
+  assert.doesNotMatch(source, /fetch\s*\(/u);
+  assert.doesNotMatch(source, /tracking-capture-inbox/u);
+});
+
+test("public source tree has no tracking capture route", () => {
+  assert.equal(
+    fs.existsSync(path.join(root, "app/tracking/capture/page.tsx")),
+    false,
+  );
+});
+
+test("public research detail compatibility component contains no write client", () => {
+  const source = read("components/tracking-entity-research-editor.tsx");
+  assert.doesNotMatch(source, /["']use client["']/u);
+  assert.doesNotMatch(source, /GitHub Token/u);
+  assert.doesNotMatch(source, /commitTrackingEntityRecordManifest/u);
+  assert.doesNotMatch(source, /sessionStorage/u);
+  assert.match(source, /return null/u);
+});
+
+test("tracking snapshot coverage has no environment bypass", () => {
+  const validator = read("scripts/validate-tracking-snapshot.mjs");
+  assert.doesNotMatch(validator, /ALLOW_INCOMPLETE_TRACKING_COVERAGE/u);
+  assert.doesNotMatch(validator, /TRACKING_SNAPSHOT_WARNING/u);
+  assert.match(validator, /completedSources < expectedSources/u);
+  assert.match(validator, /errors\.push/u);
+});
+
+test("Pages build audits the final public artifact", () => {
+  const packageJson = JSON.parse(read("package.json")) as {
+    scripts: Record<string, string>;
+  };
+  assert.equal(
+    packageJson.scripts["audit:public-artifact"],
+    "node scripts/audit-public-artifact.mjs",
+  );
+  assert.match(packageJson.scripts["build:pages"], /audit:public-artifact/u);
+
+  const audit = read("scripts/audit-public-artifact.mjs");
+  assert.match(audit, /tracking\/capture/u);
+  assert.match(audit, /GitHub Token/u);
+  assert.match(audit, /totalBytes/u);
+});
