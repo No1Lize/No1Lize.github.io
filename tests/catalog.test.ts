@@ -10,16 +10,19 @@ import {
 } from "../lib/catalog-data";
 import { intelligenceEvents, sectors } from "../lib/intelligence-data";
 
-test("production catalog meets the initial coverage floor", () => {
+test("production research and evidence catalogs meet coverage floors", () => {
   assert.ok(companies.length >= 50);
   assert.ok(institutionCatalog.length >= 20);
-  assert.ok(ipoCompanies.length >= 15);
+  assert.ok(
+    ipoCompanies.length >= 15,
+    "listed-company evidence remains available to core company lifecycle research",
+  );
   assert.equal(sectors.length, 10);
   assert.ok(people.length >= 6);
   assert.ok(reports.length >= 5);
 });
 
-test("every production entity has a real source URL", () => {
+test("every production entity and evidence record has a real source URL", () => {
   const urls = [
     ...companies.map((item) => item.source.url),
     ...institutionCatalog.map((item) => item.source.url),
@@ -36,11 +39,16 @@ test("person pages expose at least five traceable materials", () => {
   );
 });
 
-test("slugs are unique within each route collection", () => {
-  for (const collection of [companies, institutionCatalog, ipoCompanies, people, reports, sectors]) {
+test("slugs are unique within each public route collection", () => {
+  for (const collection of [companies, institutionCatalog, people, reports, sectors]) {
     const slugs = collection.map((item) => item.slug);
     assert.equal(new Set(slugs).size, slugs.length);
   }
+});
+
+test("listed-company evidence identities remain unique without public IPO routes", () => {
+  const slugs = ipoCompanies.map((item) => item.slug);
+  assert.equal(new Set(slugs).size, slugs.length);
 });
 
 test("every linked event company has a generated company route", () => {
