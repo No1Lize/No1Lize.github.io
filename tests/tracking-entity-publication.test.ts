@@ -61,8 +61,16 @@ function resolution(status: "resolved" | "review" | "rejected") {
   };
 }
 
-test("public capture eligibility excludes every unresolved state", () => {
-  assert.equal(isPublishableTrackingCapture(capture()), true, "legacy applied record");
+test("public capture eligibility requires a final resolved identity", () => {
+  assert.equal(
+    isPublishableTrackingCapture(capture()),
+    false,
+    "legacy applied records without a resolution must remain internal",
+  );
+  assert.equal(
+    isPublishableTrackingCapture(capture({ resolution: resolution("resolved") })),
+    true,
+  );
   assert.equal(isPublishableTrackingCapture(capture({ status: "queued" })), false);
   assert.equal(isPublishableTrackingCapture(capture({ status: "dismissed" })), false);
   assert.equal(
@@ -75,7 +83,7 @@ test("public capture eligibility excludes every unresolved state", () => {
   );
 });
 
-test("public capture descriptor uses the final resolved identity", () => {
+test("public capture descriptor uses only the final resolved identity", () => {
   assert.deepEqual(
     publishedTrackingCaptureDescriptor(
       capture({
@@ -86,12 +94,26 @@ test("public capture descriptor uses the final resolved identity", () => {
     ),
     { entityType: "topic", canonicalName: "TypeScript" },
   );
+  assert.equal(publishedTrackingCaptureDescriptor(capture()), undefined);
   assert.equal(
     publishedTrackingCaptureDescriptor(
       capture({ status: "queued", resolution: resolution("review") }),
     ),
     undefined,
   );
+});
+
+test("production applied records all carry a resolved canonical identity", () => {
+  const inbox = normalizeTrackingCaptureInbox(rawInbox);
+  const applied = inbox.records.filter((record) => record.status === "applied");
+  assert.ok(applied.length > 0, "expected at least one production applied record");
+  for (const record of applied) {
+    assert.equal(
+      record.resolution?.status,
+      "resolved",
+      `${record.id} (${record.canonicalName}) is applied without a final resolution`,
+    );
+  }
 });
 
 test("production review records never enter the public research entity graph", () => {
