@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-05T23:38:15+00:00",
+  "generatedAt": "2026-08-06T01:21:26+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-05T23:37:46+00:00",
+      "updatedAt": "2026-08-06T01:20:56+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -984,32 +984,22 @@
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥7143.06亿"
+          "value": "¥7036.94亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥7143.06亿"
+          "value": "¥7036.94亿"
         },
         {
           "id": "pe",
           "label": "市盈率",
-          "value": "176.25"
+          "value": "173.63"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "58.36"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "2.90%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "¥205.57亿"
+          "value": "57.50"
         },
         {
           "id": "totalShares",
@@ -1073,6 +1063,12 @@
       },
       "news": [
         {
+          "title": "寒武纪：8月5日获融资买入31.49亿元，融资余额198.46亿元占流通市值比例2.78%，超过近一年70%分位水平",
+          "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-06/doc-inimiqxv0817583.shtml",
+          "publishedAt": "2026-08-06T08:11:00+08:00",
+          "source": "新浪财经"
+        },
+        {
           "title": "存储芯片市场规模高速增长，如何抓住这波存储投资机会?",
           "url": "https://cj.sina.cn/articles/view/6024229012/16712709401903d94i",
           "publishedAt": "2026-08-05T18:16:00+08:00",
@@ -1125,13 +1121,11 @@
           "url": "https://finance.sina.com.cn/stock/zqgd/2026-08-05/doc-inimfshr4710703.shtml",
           "publishedAt": "2026-08-05T10:42:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "资金风向标 | 两融余额较上一日增加126.95亿元 中际旭创、寒武纪获融资净买入超10亿元",
-          "url": "https://finance.sina.com.cn/roll/2026-08-05/doc-inimfmyt4817068.shtml",
-          "publishedAt": "2026-08-05T10:12:00+08:00",
-          "source": "新浪财经"
         }
+      ],
+      "warnings": [
+        "新浪财经行情：公开报价暂无有效最新价",
+        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "catl": {
@@ -1139,7 +1133,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-05T23:37:46+00:00",
+      "updatedAt": "2026-08-06T01:20:51+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2112,32 +2106,22 @@
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥1.87万亿"
+          "value": "¥1.90万亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥1.73万亿"
+          "value": "¥1.75万亿"
         },
         {
           "id": "pe",
           "label": "市盈率",
-          "value": "21.66"
+          "value": "21.91"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "5.03"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "0.70%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "¥121.24亿"
+          "value": "5.09"
         },
         {
           "id": "totalShares",
@@ -2201,21 +2185,51 @@
       },
       "news": [
         {
-          "title": "QFII最新重仓股，名单来了",
-          "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimikrp3161040.shtml",
-          "publishedAt": "2026-08-06T05:07:00+08:00",
+          "title": "汽车早报｜尊界V800、V680两款MPV新车上市 上汽通用完成续约",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimiqxp4737350.shtml",
+          "publishedAt": "2026-08-06T08:33:00+08:00",
           "source": "新浪财经"
         },
         {
-          "title": "锂电企业 上半年业绩高速增长 下半年排产预期强劲",
-          "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimieit4848862.shtml",
-          "publishedAt": "2026-08-06T02:46:00+08:00",
+          "title": "QFII二季度新进持仓：百亿资金押注宁德时代，芯片、特种气体龙头受到青睐",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimiqxm3120732.shtml",
+          "publishedAt": "2026-08-06T08:16:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "上半年宁德时代每天净赚2.5亿元，中国锂电池行业交出中国制造全球答卷",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimiqxm3120745.shtml",
+          "publishedAt": "2026-08-06T08:04:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "QFII二季度新进持仓23股 合计持股134亿元",
+          "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimiqxm3111556.shtml",
+          "publishedAt": "2026-08-06T08:04:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "新建仓！这23股，外资最新潜伏，最强牛股在列",
+          "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimiqxp4701227.shtml",
+          "publishedAt": "2026-08-06T07:38:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "锂电企业上半年业绩高速增长 下半年排产预期强劲",
+          "url": "https://finance.sina.com.cn/stock/bxjj/2026-08-06/doc-inimieix4199397.shtml",
+          "publishedAt": "2026-08-06T02:39:00+08:00",
           "source": "新浪财经"
         },
         {
           "title": "享界硬派SUV预售！43.98万元起",
           "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimhxzz4303476.shtml",
           "publishedAt": "2026-08-06T01:02:00+08:00",
+          "source": "新浪财经"
+        },
+        {
+          "title": "QFII最新重仓股，名单来了",
+          "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimiqxp4698194.shtml",
+          "publishedAt": "2026-08-06T00:01:00+08:00",
           "source": "新浪财经"
         },
         {
@@ -2229,37 +2243,11 @@
           "url": "https://finance.sina.com.cn/roll/2026-08-05/doc-inimhttx4997518.shtml",
           "publishedAt": "2026-08-05T22:01:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "市占率超七成，中国动力电池军团再创新高 | 动力电池排名⑥",
-          "url": "https://finance.sina.com.cn/jjxw/2026-08-05/doc-inimhpni1268769.shtml",
-          "publishedAt": "2026-08-05T21:11:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "宁德时代，投了哈工大00后",
-          "url": "https://finance.sina.com.cn/stock/t/2026-08-05/doc-inimhpmx3497375.shtml",
-          "publishedAt": "2026-08-05T20:59:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "别克至境L7纯电版家轿预售发布，国补权益价16.99万元起",
-          "url": "https://t.cj.sina.cn/articles/view/1826017320/6cd6d02802001ujhs",
-          "publishedAt": "2026-08-05T19:46:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "2027款广汽埃安AION RT上市：标配宁德时代电池，9.98万元起",
-          "url": "https://t.cj.sina.cn/articles/view/1826017320/6cd6d02802001ujic",
-          "publishedAt": "2026-08-05T19:46:00+08:00",
-          "source": "新浪财经"
-        },
-        {
-          "title": "10年漫长发展，4年匆匆终结，电池“梯次利用”叫停后打开更大一扇窗",
-          "url": "https://finance.sina.com.cn/stock/relnews/cn/2026-08-05/doc-inimhiem1363659.shtml",
-          "publishedAt": "2026-08-05T19:16:00+08:00",
-          "source": "新浪财经"
         }
+      ],
+      "warnings": [
+        "新浪财经行情：公开报价暂无有效最新价",
+        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "bgi-genomics": {
@@ -2267,7 +2255,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-05T23:37:46+00:00",
+      "updatedAt": "2026-08-06T01:20:51+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3241,27 +3229,17 @@
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "¥164.98亿"
+          "value": "¥168.58亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "¥164.08亿"
+          "value": "¥167.66亿"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "1.96"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "2.66%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "¥4.40亿"
+          "value": "2.00"
         },
         {
           "id": "totalShares",
@@ -3384,6 +3362,10 @@
           "publishedAt": "2026-08-03T17:50:00+08:00",
           "source": "新浪财经"
         }
+      ],
+      "warnings": [
+        "新浪财经行情：公开报价暂无有效最新价",
+        "本轮公开行情快照抓取失败，保留上一轮报价"
       ]
     },
     "horizon-robotics": {
@@ -3391,7 +3373,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-05T23:37:45+00:00",
+      "updatedAt": "2026-08-06T01:20:46+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4368,27 +4350,22 @@
         {
           "id": "marketCap",
           "label": "总市值",
-          "value": "HK$819.87亿"
+          "value": "HK$823.04亿"
         },
         {
           "id": "floatMarketCap",
           "label": "流通市值",
-          "value": "HK$710.74亿"
+          "value": "HK$713.49亿"
         },
         {
           "id": "pb",
           "label": "市净率",
-          "value": "5.41"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "1.20%"
+          "value": "5.43"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "HK$8.59亿"
+          "value": "HK$184.48万"
         },
         {
           "id": "totalShares",
@@ -4440,12 +4417,12 @@
         "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html"
       },
       "quote": {
-        "price": 5.165,
+        "price": 5.185,
         "currency": "HKD",
-        "previousClose": 5.17,
-        "change": -0.005,
-        "changePercent": -0.1,
-        "asOf": "2026-08-05T16:09:02+08:00",
+        "previousClose": 5.165,
+        "change": 0.02,
+        "changePercent": 0.39,
+        "asOf": "2026-08-06T09:20:04+08:00",
         "source": {
           "name": "新浪财经",
           "url": "https://stock.finance.sina.com.cn/hkstock/quotes/09660.html"
@@ -4454,8 +4431,8 @@
       "news": [
         {
           "title": "华泰 | 汽车：从主题走向放量，宇树催化国产机器人 - 智驾&机器人系列",
-          "url": "https://finance.sina.com.cn/stock/stockzmt/2026-08-05/doc-inimffsp3691698.shtml",
-          "publishedAt": "2026-08-05T07:41:00+08:00",
+          "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimiqxp4749604.shtml",
+          "publishedAt": "2026-08-06T08:48:00+08:00",
           "source": "新浪财经"
         },
         {
@@ -4519,7 +4496,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-05T23:37:45+00:00",
+      "updatedAt": "2026-08-06T01:20:46+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5509,14 +5486,9 @@
           "value": "3.03"
         },
         {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "1.37%"
-        },
-        {
           "id": "amount",
           "label": "成交额",
-          "value": "HK$4.25亿"
+          "value": "HK$41.02万"
         },
         {
           "id": "totalShares",
@@ -5570,10 +5542,10 @@
       "quote": {
         "price": 7.325,
         "currency": "HKD",
-        "previousClose": 7.02,
-        "change": 0.305,
-        "changePercent": 4.34,
-        "asOf": "2026-08-05T16:09:12+08:00",
+        "previousClose": 7.325,
+        "change": 0.0,
+        "changePercent": 0.0,
+        "asOf": "2026-08-06T09:20:04+08:00",
         "source": {
           "name": "新浪财经",
           "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html"
@@ -5647,7 +5619,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-05T23:37:54+00:00",
+      "updatedAt": "2026-08-06T01:20:59+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6648,7 +6620,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$2955.46万"
+          "value": "US$2955.48万"
         },
         {
           "id": "totalShares",
@@ -6754,7 +6726,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-05T23:37:53+00:00",
+      "updatedAt": "2026-08-06T01:21:00+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7738,9 +7710,34 @@
           "value": "US$19.28亿"
         },
         {
+          "id": "floatMarketCap",
+          "label": "流通市值",
+          "value": "US$18.21亿"
+        },
+        {
+          "id": "pb",
+          "label": "市净率",
+          "value": "1.87"
+        },
+        {
+          "id": "turnover",
+          "label": "换手率",
+          "value": "0.66%"
+        },
+        {
+          "id": "amount",
+          "label": "成交额",
+          "value": "US$1212.22万"
+        },
+        {
           "id": "totalShares",
           "label": "总股本",
           "value": "3.29亿股"
+        },
+        {
+          "id": "floatShares",
+          "label": "流通股",
+          "value": "3.11亿股"
         },
         {
           "id": "eps",
@@ -7772,6 +7769,7 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/WRD/",
         "price": "https://query1.finance.yahoo.com/v8/finance/chart/WRD?range=6mo&interval=1d&events=history&includeAdjustedClose=true",
+        "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=105.WRD&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
         "yahooFinance": "https://sg.finance.yahoo.com/quote/WRD/"
       },
       "quote": {
@@ -7823,6 +7821,9 @@
           "publishedAt": "2026-07-22T11:40:00+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "rigetti": {
@@ -7830,7 +7831,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-05T23:37:54+00:00",
+      "updatedAt": "2026-08-06T01:21:06+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8826,12 +8827,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "5.78%"
+          "value": "5.79%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$3.25亿"
+          "value": "US$3.26亿"
         },
         {
           "id": "totalShares",
@@ -8902,7 +8903,7 @@
         {
           "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
           "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss",
-          "publishedAt": "2026-08-05T21:52:00+00:00",
+          "publishedAt": "2026-08-06T00:00:00+00:00",
           "source": "Yahoo财经"
         },
         {
@@ -8935,6 +8936,9 @@
           "publishedAt": "2026-08-01T06:15:06+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "ionq": {
@@ -8942,7 +8946,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-05T23:37:54+00:00",
+      "updatedAt": "2026-08-06T01:21:08+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -9938,12 +9942,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "6.52%"
+          "value": "6.53%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$9.86亿"
+          "value": "US$9.88亿"
         },
         {
           "id": "totalShares",
@@ -10012,6 +10016,12 @@
       },
       "news": [
         {
+          "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
+          "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss",
+          "publishedAt": "2026-08-06T00:00:00+00:00",
+          "source": "Yahoo财经"
+        },
+        {
           "title": "IonQ (IONQ) Stock Gets Fair Value Trim As Analysts Weigh Quantum Growth And Risk",
           "url": "https://finance.yahoo.com/markets/stocks/articles/ionq-ionq-stock-gets-fair-231636838.html?.tsrc=rss",
           "publishedAt": "2026-08-05T23:16:36+00:00",
@@ -10021,12 +10031,6 @@
           "title": "IonQ (IONQ) Lands Sandia And EPB Deals To Expand Quantum Networking And Security",
           "url": "https://finance.yahoo.com/technology/ai/articles/ionq-ionq-lands-sandia-epb-221330624.html?.tsrc=rss",
           "publishedAt": "2026-08-05T22:13:30+00:00",
-          "source": "Yahoo财经"
-        },
-        {
-          "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
-          "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss",
-          "publishedAt": "2026-08-05T21:52:00+00:00",
           "source": "Yahoo财经"
         },
         {
@@ -10054,7 +10058,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-05T23:37:54+00:00",
+      "updatedAt": "2026-08-06T01:21:11+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -11055,7 +11059,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$12.57亿"
+          "value": "US$12.59亿"
         },
         {
           "id": "totalShares",
@@ -11166,7 +11170,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-05T23:38:00+00:00",
+      "updatedAt": "2026-08-06T01:21:11+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -12167,7 +12171,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$1.65亿"
+          "value": "US$1.66亿"
         },
         {
           "id": "totalShares",
@@ -12278,7 +12282,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-05T23:38:00+00:00",
+      "updatedAt": "2026-08-06T01:21:13+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -13279,7 +13283,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$5489.88万"
+          "value": "US$5491.64万"
         },
         {
           "id": "totalShares",
@@ -13370,7 +13374,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-05T23:38:01+00:00",
+      "updatedAt": "2026-08-06T01:21:18+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -14371,7 +14375,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$3648.69万"
+          "value": "US$3648.77万"
         },
         {
           "id": "totalShares",
@@ -14482,7 +14486,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-05T23:38:01+00:00",
+      "updatedAt": "2026-08-06T01:21:19+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -15593,7 +15597,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-05T23:38:07+00:00",
+      "updatedAt": "2026-08-06T01:21:22+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
@@ -16588,12 +16592,12 @@
         {
           "id": "turnover",
           "label": "换手率",
-          "value": "3.11%"
+          "value": "3.12%"
         },
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$2.40亿"
+          "value": "US$2.41亿"
         },
         {
           "id": "totalShares",
