@@ -49,6 +49,30 @@ export default function TrackingPage() {
           <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </section>
+
+      <section
+        className="section-shell"
+        id="company-candidate-review"
+        aria-labelledby="private-review-boundary"
+      >
+        <span id="tracking-capture-inbox" />
+        <div className="section-heading">
+          <div>
+            <p className="section-index">PRIVATE REVIEW BOUNDARY</p>
+            <h2 id="private-review-boundary">审核与采集不在公开站点执行</h2>
+          </div>
+          <p>
+            候选审核、实体消歧、文章采集和研究记录写入由仓库内受控流程完成；
+            Pages 仅发布审核完成后的构建结果。
+          </p>
+        </div>
+        <Link className="source-card" href="/tracking/entities">
+          <span>公开结果</span>
+          <strong>返回已发布研究目录</strong>
+          <small>未解析或仍待人工判断的记录不会生成公开实体页面</small>
+          <ArrowRight size={16} aria-hidden="true" />
+        </Link>
+      </section>
     </main>
   );
 }
