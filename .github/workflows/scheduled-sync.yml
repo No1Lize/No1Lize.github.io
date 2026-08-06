@@ -14,6 +14,7 @@ on:
       - tools/us_ir_baseline_disclosures.py
       - tools/publish_us_ir_baselines.py
       - tools/snapshot_retention.py
+      - tools/refresh_article_quality_gate.py
       - tools/crawl_with_tracking.py
       - tools/crawl_tracked_articles.py
       - tools/crawl_with_source_categories.py
@@ -135,6 +136,7 @@ jobs:
             tools/us_ir_baseline_disclosures.py \
             tools/publish_us_ir_baselines.py \
             tools/snapshot_retention.py \
+            tools/refresh_article_quality_gate.py \
             tools/crawl_with_wechat_registry.py
           python -m unittest \
             tests.test_http_request_policy \
@@ -158,6 +160,7 @@ jobs:
             tests.test_us_ir_sec_disclosures \
             tests.test_us_ir_search_disclosures \
             tests.test_us_ir_baseline_disclosures \
+            tests.test_refresh_article_quality_gate \
             tests.test_scheduled_sync_workflow \
             tests.test_snapshot_retention
       - name: Require a normalized automatic source registry
@@ -259,6 +262,7 @@ jobs:
             python tools/enrich_tracking_snapshot.py
             python tools/refresh_people_profiles_with_video.py
             python tools/snapshot_retention.py
+            python tools/refresh_article_quality_gate.py
             python tools/finalize_full_refresh.py
             python tools/snapshot_retention.py --check
             python -m tools.us_ir_baseline_disclosures --check --require-events
