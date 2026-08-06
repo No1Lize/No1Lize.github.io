@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-06T06:18:01+00:00",
+  "generatedAt": "2026-08-06T08:38:52+00:00",
   "datasets": {
     "ventureCompany": {
       "agibot": {
@@ -10255,6 +10255,11 @@
         "market": "A股",
         "metrics": [
           {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥143.04亿"
+          },
+          {
             "id": "bookValuePerShare",
             "label": "每股净资产",
             "value": "30.52元"
@@ -10270,14 +10275,19 @@
             "value": "2.40元"
           },
           {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥7339.40亿"
+          },
+          {
             "id": "floatShares",
             "label": "流通股",
-            "value": "6.28亿"
+            "value": "6.28亿股"
           },
           {
             "id": "marketCap",
             "label": "总市值",
-            "value": "¥7182.88亿"
+            "value": "¥7339.40亿"
           },
           {
             "id": "netIncome",
@@ -10285,23 +10295,37 @@
             "value": "10.13亿元"
           },
           {
+            "id": "pb",
+            "label": "市净率",
+            "value": "59.97"
+          },
+          {
+            "id": "pe",
+            "label": "市盈率",
+            "value": "181.09"
+          },
+          {
             "id": "revenue",
             "label": "营业收入",
             "value": "28.85亿元"
           },
           {
+            "id": "roe",
+            "label": "净资产收益率",
+            "value": "7.87%"
+          },
+          {
             "id": "totalShares",
             "label": "总股本",
             "value": "6.28亿股"
+          },
+          {
+            "id": "turnover",
+            "label": "换手率",
+            "value": "1.99%"
           }
         ],
         "news": [
-          {
-            "publishedAt": "2026-08-05T17:17:00+08:00",
-            "source": "新浪财经",
-            "title": "汰弱留强",
-            "url": "https://cj.sina.cn/articles/view/2812319402/a7a096aa02703d8zi"
-          },
           {
             "publishedAt": "2026-08-06T10:52:00+08:00",
             "source": "新浪财经",
@@ -10339,6 +10363,12 @@
             "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimizpp3936645.shtml"
           },
           {
+            "publishedAt": "2026-08-06T14:33:00+08:00",
+            "source": "新浪财经",
+            "title": "科技风险偏好修复叠加模型-芯片协同，国产算力下半年需求闭环加速验证",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkfvf4610873.shtml"
+          },
+          {
             "publishedAt": "2026-08-06T13:24:00+08:00",
             "source": "新浪财经",
             "title": "知名基金经理，买入科技，高位站岗",
@@ -10367,21 +10397,21 @@
             "volume": 18193148.0
           },
           {
-            "close": 1143.77,
+            "close": 1168.15,
             "date": "2026-08-06",
             "high": 1185.0,
             "low": 1095.0,
             "open": 1103.0,
-            "volume": 10573452.0
+            "volume": 12478455.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-06T14:12:43+08:00",
-          "change": 8.74,
-          "changePercent": 0.77,
+          "asOf": "2026-08-06T15:34:59+08:00",
+          "change": 31.25,
+          "changePercent": 2.75,
           "currency": "CNY",
           "previousClose": 1136.9,
-          "price": 1145.64,
+          "price": 1168.15,
           "source": {
             "name": "新浪财经",
             "url": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml"
@@ -10390,6 +10420,7 @@
         "slug": "cambricon",
         "sources": {
           "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=1.688256&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
           "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
           "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
         },
@@ -10407,6 +10438,11 @@
         "market": "A股",
         "metrics": [
           {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥177.50亿"
+          },
+          {
             "id": "bookValuePerShare",
             "label": "每股净资产",
             "value": "81.99元"
@@ -10422,19 +10458,34 @@
             "value": "9.51元"
           },
           {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥1.65万亿"
+          },
+          {
             "id": "floatShares",
             "label": "流通股",
-            "value": "42.60亿"
+            "value": "42.60亿股"
           },
           {
             "id": "marketCap",
             "label": "总市值",
-            "value": "¥1.79万亿"
+            "value": "¥1.80万亿"
           },
           {
             "id": "netIncome",
             "label": "净利润",
             "value": "432.84亿元"
+          },
+          {
+            "id": "pb",
+            "label": "市净率",
+            "value": "4.81"
+          },
+          {
+            "id": "pe",
+            "label": "市盈率",
+            "value": "20.74"
           },
           {
             "id": "revenue",
@@ -10449,27 +10500,20 @@
           {
             "id": "totalShares",
             "label": "总股本",
-            "value": "46.27亿"
+            "value": "46.27亿股"
+          },
+          {
+            "id": "turnover",
+            "label": "换手率",
+            "value": "1.06%"
           }
         ],
         "news": [
           {
-            "publishedAt": "2026-08-06T09:56:00+08:00",
+            "publishedAt": "2026-08-06T14:51:00+08:00",
             "source": "新浪财经",
-            "title": "10年漫长发展，4年匆匆终结，电池“梯次利用”叫停后打开更大一扇窗",
-            "url": "https://cj.sina.cn/articles/view/3656659427/d9f431e3027019sc6"
-          },
-          {
-            "publishedAt": "2026-08-06T10:17:00+08:00",
-            "source": "新浪财经",
-            "title": "钠电龙头“维科技术”落子上海！",
-            "url": "https://cj.sina.cn/articles/view/6517029999/18471fc6f00101f5go"
-          },
-          {
-            "publishedAt": "2026-08-06T11:13:00+08:00",
-            "source": "新浪财经",
-            "title": "全系标配宁德时代电池，新款埃安RT最长续航710公里",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimizpi4638167.shtml"
+            "title": "斥资逾47亿元“押注”钠电 容百科技底气何在？",
+            "url": "https://cj.sina.cn/articles/view/6248544856/174713a5802003oczk"
           },
           {
             "publishedAt": "2026-08-06T13:25:00+08:00",
@@ -10484,34 +10528,46 @@
             "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkfvf4580151.shtml"
           },
           {
-            "publishedAt": "2026-08-06T10:58:00+08:00",
-            "source": "新浪财经",
-            "title": "每天净赚2.5亿元！巨头分红超64亿元",
-            "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimivfr4041214.shtml"
-          },
-          {
             "publishedAt": "2026-08-06T13:24:00+08:00",
             "source": "新浪财经",
             "title": "知名基金经理，买入科技，高位站岗",
             "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimizpi4698047.shtml"
           },
           {
-            "publishedAt": "2026-08-06T11:10:00+08:00",
+            "publishedAt": "2026-08-06T11:40:00+08:00",
             "source": "新浪财经",
-            "title": "港股异动 | 宁德时代(03750)转跌逾3% 机构指公司二季度毛利逊于预期触发市场新一轮忧虑",
-            "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-08-06/doc-inimivft0827718.shtml"
+            "title": "Deepseek公告：将涨价，预计涨幅较大！梁文锋旗下幻方量化，多只产品年内收益转负",
+            "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimkfvp0660774.shtml"
           },
           {
-            "publishedAt": "2026-08-06T10:28:00+08:00",
+            "publishedAt": "2026-08-06T15:33:00+08:00",
             "source": "新浪财经",
-            "title": "QFII二季度新进持仓23股",
-            "url": "https://finance.sina.com.cn/stock/zqgd/2026-08-06/doc-inimivft0790236.shtml"
+            "title": "理奇智能跌1.29%，成交额1.35亿元，今日主力净流入-796.38万",
+            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-06/doc-inimkfvm3923848.shtml"
           },
           {
-            "publishedAt": "2026-08-06T10:26:00+08:00",
+            "publishedAt": "2026-08-06T14:47:00+08:00",
             "source": "新浪财经",
-            "title": "全系宁德电池续航再加码：2027款埃安RT上市，9.98万元起",
-            "url": "https://t.cj.sina.cn/articles/view/1654203637/629924f5020016nx4"
+            "title": "港股异动 | 锂电池概念股跌幅居前 电池消费税即将恢复征收 已有企业陆续向客户下发调价函",
+            "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-08-06/doc-inimkfvp0658423.shtml"
+          },
+          {
+            "publishedAt": "2026-08-06T16:08:00+08:00",
+            "source": "新浪财经",
+            "title": "港股收评：恒指跌1.49% 科指跌2.28% 科网股、汽车股普跌 煤炭股逆势活跃 百度跌超4%",
+            "url": "https://finance.sina.com.cn/stock/hkstock/marketalerts/2026-08-06/doc-inimknaz2963127.shtml"
+          },
+          {
+            "publishedAt": "2026-08-06T15:40:00+08:00",
+            "source": "新浪财经",
+            "title": "“3个月融50亿，营收只有1个亿”：千寻智能的估值算得过来吗？",
+            "url": "https://t.cj.sina.cn/articles/view/1181714847/466f899f00101szpy"
+          },
+          {
+            "publishedAt": "2026-08-06T15:54:00+08:00",
+            "source": "新浪财经",
+            "title": "面向打磨抛光去毛刺场景，头部厂商蓝点触控的赛道卡位与壁垒分析",
+            "url": "https://t.cj.sina.cn/articles/view/3244012052/c15bb21400101lfvq"
           }
         ],
         "priceHistory": [
@@ -10524,21 +10580,21 @@
             "volume": 300112.0
           },
           {
-            "close": 386.75,
+            "close": 388.0,
             "date": "2026-08-06",
             "high": 410.0,
             "low": 384.16,
             "open": 410.0,
-            "volume": 405627.0
+            "volume": 453201.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-06T14:12:24+08:00",
-          "change": -18.22,
-          "changePercent": -4.5,
+          "asOf": "2026-08-06T16:28:30+08:00",
+          "change": -17.2,
+          "changePercent": -4.24,
           "currency": "CNY",
           "previousClose": 405.2,
-          "price": 386.98,
+          "price": 388.0,
           "source": {
             "name": "新浪财经",
             "url": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml"
@@ -10547,6 +10603,7 @@
         "slug": "catl",
         "sources": {
           "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300750&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
           "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml",
           "tonghuashun": "https://stockpage.10jqka.com.cn/300750/"
         },
@@ -10567,7 +10624,7 @@
           {
             "id": "amount",
             "label": "成交额",
-            "value": "¥2.88亿"
+            "value": "¥3.53亿"
           },
           {
             "id": "bookValuePerShare",
@@ -10587,7 +10644,7 @@
           {
             "id": "floatMarketCap",
             "label": "流通市值",
-            "value": "¥158.84亿"
+            "value": "¥158.34亿"
           },
           {
             "id": "floatShares",
@@ -10597,7 +10654,7 @@
           {
             "id": "marketCap",
             "label": "总市值",
-            "value": "¥159.71亿"
+            "value": "¥159.21亿"
           },
           {
             "id": "netIncome",
@@ -10607,7 +10664,7 @@
           {
             "id": "pb",
             "label": "市净率",
-            "value": "1.90"
+            "value": "1.89"
           },
           {
             "id": "revenue",
@@ -10627,7 +10684,7 @@
           {
             "id": "turnover",
             "label": "换手率",
-            "value": "1.78%"
+            "value": "2.19%"
           }
         ],
         "news": [
@@ -10702,21 +10759,21 @@
             "volume": 110785.0
           },
           {
-            "close": 38.16,
+            "close": 38.06,
             "date": "2026-08-06",
             "high": 40.2,
-            "low": 38.06,
+            "low": 37.97,
             "open": 39.99,
-            "volume": 73931.0
+            "volume": 90934.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-06T14:12:06+08:00",
-          "change": -1.26,
-          "changePercent": -3.19,
+          "asOf": "2026-08-06T16:28:30+08:00",
+          "change": -1.38,
+          "changePercent": -3.5,
           "currency": "CNY",
           "previousClose": 39.44,
-          "price": 38.18,
+          "price": 38.06,
           "source": {
             "name": "新浪财经",
             "url": "https://finance.sina.com.cn/realstock/company/sz300676/nc.shtml"
@@ -10749,7 +10806,7 @@
           {
             "id": "amount",
             "label": "成交额",
-            "value": "HK$6.29亿"
+            "value": "HK$7.82亿"
           },
           {
             "id": "bookValuePerShare",
@@ -10809,7 +10866,7 @@
           {
             "id": "turnover",
             "label": "换手率",
-            "value": "0.90%"
+            "value": "1.11%"
           }
         ],
         "news": [
@@ -10889,11 +10946,11 @@
             "high": 5.315,
             "low": 4.99,
             "open": 5.185,
-            "volume": 123262976.0
+            "volume": 152993809.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-06T14:12:28+08:00",
+          "asOf": "2026-08-06T16:08:40+08:00",
           "change": -0.015,
           "changePercent": -0.29,
           "currency": "HKD",
@@ -10932,7 +10989,7 @@
           {
             "id": "amount",
             "label": "成交额",
-            "value": "HK$2.17亿"
+            "value": "HK$2.68亿"
           },
           {
             "id": "bookValuePerShare",
@@ -10952,7 +11009,7 @@
           {
             "id": "floatMarketCap",
             "label": "流通市值",
-            "value": "HK$310.28亿"
+            "value": "HK$311.36亿"
           },
           {
             "id": "floatShares",
@@ -10962,7 +11019,7 @@
           {
             "id": "marketCap",
             "label": "总市值",
-            "value": "HK$310.28亿"
+            "value": "HK$311.36亿"
           },
           {
             "id": "netIncome",
@@ -10972,7 +11029,7 @@
           {
             "id": "pb",
             "label": "市净率",
-            "value": "2.99"
+            "value": "3.00"
           },
           {
             "id": "revenue",
@@ -10992,7 +11049,7 @@
           {
             "id": "turnover",
             "label": "换手率",
-            "value": "0.69%"
+            "value": "0.86%"
           }
         ],
         "news": [
@@ -11067,21 +11124,21 @@
             "volume": 58917613.0
           },
           {
-            "close": 7.21,
+            "close": 7.235,
             "date": "2026-08-06",
             "high": 7.415,
             "low": 7.14,
             "open": 7.325,
-            "volume": 29744229.0
+            "volume": 36913646.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-06T14:12:17+08:00",
-          "change": -0.115,
-          "changePercent": -1.57,
+          "asOf": "2026-08-06T16:08:38+08:00",
+          "change": -0.09,
+          "changePercent": -1.23,
           "currency": "HKD",
           "previousClose": 7.325,
-          "price": 7.21,
+          "price": 7.235,
           "source": {
             "name": "新浪财经",
             "url": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html"
@@ -11259,7 +11316,10 @@
         },
         "status": "ok",
         "thsCode": "PONY",
-        "ticker": "PONY"
+        "ticker": "PONY",
+        "warnings": [
+          "本轮公开新闻为空，保留上一轮新闻标题"
+        ]
       },
       "weride": {
         "company": {
@@ -11520,16 +11580,16 @@
             "url": "https://finance.yahoo.com/markets/stocks/articles/rigetti-computing-rgti-buy-wall-133003974.html?.tsrc=rss"
           },
           {
-            "publishedAt": "2026-08-01T06:15:06+00:00",
-            "source": "Yahoo财经",
-            "title": "Why Rigetti Computing (RGTI) Is Up 5.7% After Landing NSF-Funded TangleLab Quantum Testbed Deal",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/why-rigetti-computing-rgti-5-061506539.html?.tsrc=rss"
-          },
-          {
             "publishedAt": "2026-08-03T18:57:45+00:00",
             "source": "Yahoo财经",
             "title": "Why Rigetti Computing Stock Popped Today",
             "url": "https://finance.yahoo.com/markets/stocks/articles/why-rigetti-computing-stock-popped-185745052.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-08-06T07:14:03+00:00",
+            "source": "Yahoo财经",
+            "title": "Is HPE (HPE) Using Quantum Partnerships To Deepen Its AI Infrastructure Moat?",
+            "url": "https://finance.yahoo.com/technology/ai/articles/hpe-hpe-using-quantum-partnerships-071403278.html?.tsrc=rss"
           },
           {
             "publishedAt": "2026-08-05T17:44:00+00:00",
@@ -11842,40 +11902,10 @@
         ],
         "news": [
           {
-            "publishedAt": "2026-08-04T14:56:00+00:00",
+            "publishedAt": "2026-06-29T04:36:36+00:00",
             "source": "Yahoo财经",
-            "title": "IRDM Jumped 23% in Three Months. Is More Upside Ahead for Investors?",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/irdm-jumped-23-three-months-145600893.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-05T01:11:52+00:00",
-            "source": "Yahoo财经",
-            "title": "Rocket Lab (RKLB) Lands $397 Million Space Force Flatellite Contract",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-lands-397-011152529.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-05T12:45:16+00:00",
-            "source": "Yahoo财经",
-            "title": "Rocket Lab Shares Rise After $397 Million Space Force Contract",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-shares-rise-397-124516516.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-04T23:16:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Rocket Lab Awarded $397 Million Contract to Build and Launch Flatellites for U.S. Space Force’s Space-Based Airborne Moving Target Indicator Program",
-            "url": "https://finance.yahoo.com/technology/articles/rocket-lab-awarded-397-million-231600248.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-05T14:18:46+00:00",
-            "source": "Yahoo财经",
-            "title": "These Stocks Are Making Moves Today, Thanks to SpaceX",
-            "url": "https://sg.finance.yahoo.com/m/36ba11a7-9681-365a-a186-122553a1d192/these-stocks-are-making-moves.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-04T19:18:17+00:00",
-            "source": "Yahoo财经",
-            "title": "Rocket Lab, Voyager, and More Go Full Throttle",
-            "url": "https://sg.finance.yahoo.com/m/f4ff0e8e-a325-3494-8d95-b825871ae550/rocket-lab%2C-voyager%2C-and-more.html?.tsrc=rss"
+            "title": "Rocket Lab to buy Iridium for US$8 bil in challenge to SpaceX",
+            "url": "https://sg.finance.yahoo.com/news/rocket-lab-buy-iridium-us-043636623.html?.tsrc=rss"
           }
         ],
         "priceHistory": [
@@ -12231,7 +12261,10 @@
         },
         "status": "ok",
         "thsCode": "RXRX",
-        "ticker": "RXRX"
+        "ticker": "RXRX",
+        "warnings": [
+          "本轮公开新闻为空，保留上一轮新闻标题"
+        ]
       },
       "mobileye": {
         "company": {
@@ -12950,10 +12983,6 @@
         "sources": [
           "https://deepmind.google/about/",
           "https://en.wikipedia.org/wiki/Demis_Hassabis",
-          "https://www.bilibili.com/video/BV19EV26XELk",
-          "https://www.bilibili.com/video/BV1JXZ3YJEst",
-          "https://www.bilibili.com/video/BV1PT411G7As",
-          "https://www.bilibili.com/video/BV1iibSeYESF",
           "https://www.wikidata.org/wiki/Q3022141",
           "https://www.youtube.com/watch?v=D-eyJhJXXsE",
           "https://www.youtube.com/watch?v=DsewHeVbL-0",
@@ -13638,12 +13667,16 @@
         ],
         "slug": "elon-musk",
         "sources": [
+          "https://www.bilibili.com/video/BV1dbMy66Esk",
+          "https://www.bilibili.com/video/BV1e9M16GE7X",
+          "https://www.bilibili.com/video/BV1rR4y157LC",
+          "https://www.bilibili.com/video/BV1s43E6oEhe",
           "https://www.spacex.com/",
           "https://www.tesla.com/elon-musk",
           "https://www.wikidata.org/wiki/Q317521",
-          "https://www.youtube.com/watch?v=E-squeb0YJA",
-          "https://www.youtube.com/watch?v=HPV8Xp3pEpI",
+          "https://www.youtube.com/watch?v=DNFKa5P2Iyk",
           "https://www.youtube.com/watch?v=SVk1hb0ZOrE",
+          "https://www.youtube.com/watch?v=XuoqKYxDHVc",
           "https://www.youtube.com/watch?v=YRvf00NooN8",
           "https://x.com/elonmusk",
           "https://zh.wikipedia.org/wiki/%E5%9F%83%E9%9A%86%C2%B7%E9%A9%AC%E6%96%AF%E5%85%8B"
@@ -13945,6 +13978,13 @@
             "url": "https://www.eefocus.com/article/2061165.html"
           },
           {
+            "date": "2026-08-06",
+            "source": "雷峰网",
+            "title": "对话 IDEA 张磊：「不以动作为输入条件，就不叫世界模型」",
+            "type": "speech",
+            "url": "https://www.leiphone.com/category/academic/wQny8Cer4EJz0RAU.html"
+          },
+          {
             "date": "持续更新",
             "source": "Wikidata",
             "title": "Fei-Fei Li — Wikidata",
@@ -14030,17 +14070,21 @@
         "sources": [
           "https://en.wikipedia.org/wiki/Fei-Fei_Li",
           "https://profiles.stanford.edu/fei-fei-li",
-          "https://www.bilibili.com/video/BV11Q3k6oEra",
-          "https://www.bilibili.com/video/BV1Bp3k61EaJ",
-          "https://www.bilibili.com/video/BV1CU3B6VEc4",
-          "https://www.bilibili.com/video/BV1x83n6YEcE",
           "https://www.wikidata.org/wiki/Q18686107",
           "https://www.youtube.com/watch?v=ElDWanLOc4c",
+          "https://www.youtube.com/watch?v=HiSK7nv-i94",
           "https://www.youtube.com/watch?v=b9TfkgH0Xzw",
           "https://www.youtube.com/watch?v=xODWJzwGKb0",
           "https://x.com/drfeifei"
         ],
         "speeches": [
+          {
+            "date": "2026-07-29",
+            "source": "Bilibili · 财富自由充电站",
+            "title": "深度对谈：World Labs联合创始人 李飞飞 、李昀珠聊仿真与机器人未来",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV11Q3k6oEra"
+          },
           {
             "date": "2024-12-19",
             "source": "Bilibili · 演讲与口才训练营",
@@ -14133,11 +14177,11 @@
             "url": "https://www.bilibili.com/video/BV1z4qFBsEay"
           },
           {
-            "date": "直播时间：8年前",
-            "source": "YouTube · Kaggle",
-            "title": "Fireside Chat with Dr. Fei-Fei Li & Anthony Goldboom | Kaggle",
+            "date": "2026-08-06",
+            "source": "雷峰网",
+            "title": "对话 IDEA 张磊：「不以动作为输入条件，就不叫世界模型」",
             "type": "speech",
-            "url": "https://www.youtube.com/watch?v=ElDWanLOc4c"
+            "url": "https://www.leiphone.com/category/academic/wQny8Cer4EJz0RAU.html"
           },
           {
             "date": "2年前",
@@ -14152,13 +14196,6 @@
             "title": "Research Symposium 2017 - Morning Keynote Address - Dr. Fei-Fei Li",
             "type": "speech",
             "url": "https://www.youtube.com/watch?v=VBjqWogh6Gw"
-          },
-          {
-            "date": "7年前",
-            "source": "YouTube · Stanford",
-            "title": "Yuval Noah Harari in Conversation with Fei-Fei Li, Moderated by Nicholas Thompson",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=b9TfkgH0Xzw"
           },
           {
             "date": "4个月前",
@@ -14405,6 +14442,10 @@
           "https://en.wikipedia.org/wiki/Kaiming_He",
           "https://people.csail.mit.edu/kaiming/",
           "https://people.csail.mit.edu/kaiming/publications.html",
+          "https://www.bilibili.com/video/BV1TqRVYtEPP",
+          "https://www.bilibili.com/video/BV1bnfdBpEPs",
+          "https://www.bilibili.com/video/BV1hM4m1C7qi",
+          "https://www.bilibili.com/video/BV1q84y1d7Xm",
           "https://www.wikidata.org/wiki/Q94960976",
           "https://x.com/kaiminghe"
         ],
@@ -15150,13 +15191,6 @@
             "url": "https://www.bilibili.com/video/BV12p421Z7KG"
           },
           {
-            "date": "2025-02-12",
-            "source": "Bilibili · 赛尔达旧床传说",
-            "title": "OpenAI 希望与中国合作- Sam Altman 街头 采访",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV14uKjeYEaz"
-          },
-          {
             "date": "2026-07-28",
             "source": "Bilibili · 超音速海啸",
             "title": "【中字】 Sam Altman : “创业的最佳时机从未如此好”",
@@ -15274,6 +15308,13 @@
             "title": "Sam Altman in conversation with StrictlyVC",
             "type": "interview",
             "url": "https://www.youtube.com/watch?v=TzcJlKg2Rc0"
+          },
+          {
+            "date": "3年前",
+            "source": "YouTube · 慶應義塾 Keio University",
+            "title": "OpenAI CEO Sam Altman氏と塾生との対話／Open dialogue between OpenAI CEO and Keio students",
+            "type": "qa",
+            "url": "https://www.youtube.com/watch?v=lq-3T5t0p3U"
           }
         ],
         "status": "complete",
@@ -15403,9 +15444,6 @@
         ],
         "slug": "shunyu-yao",
         "sources": [
-          "https://www.bilibili.com/video/BV1eW7C6xEnV",
-          "https://www.bilibili.com/video/BV1pqwJz2EHs",
-          "https://www.bilibili.com/video/BV1qR7r6tEK7",
           "https://www.youtube.com/watch?v=NzcHWqJWE4M",
           "https://www.youtube.com/watch?v=Y4jRSIIdmB8",
           "https://www.youtube.com/watch?v=gQgKkUsx5q0",
@@ -16422,9 +16460,9 @@
         ],
         "slug": "bill-ford",
         "sources": [
-          "https://www.youtube.com/watch?v=-rNepLQ08sw",
-          "https://www.youtube.com/watch?v=2-274_4nEVc",
-          "https://www.youtube.com/watch?v=d77NOKDocCA",
+          "https://www.youtube.com/watch?v=-SJj7rXyqjw",
+          "https://www.youtube.com/watch?v=7p8RKb26K5k",
+          "https://www.youtube.com/watch?v=dEgfzmFikIs",
           "https://www.youtube.com/watch?v=ePS00kcx8oo"
         ],
         "speeches": [
@@ -16600,12 +16638,7 @@
           "新能源"
         ],
         "slug": "person-80d5a740b7",
-        "sources": [
-          "https://www.bilibili.com/video/BV1171HBJEvs",
-          "https://www.bilibili.com/video/BV1EAM167Epz",
-          "https://www.bilibili.com/video/BV1VuMC6vEGR",
-          "https://www.bilibili.com/video/BV1eMMC6KEoD"
-        ],
+        "sources": [],
         "speeches": [
           {
             "date": "2025-11-05",
@@ -16772,7 +16805,12 @@
           "机器人"
         ],
         "slug": "chris-urmson",
-        "sources": [],
+        "sources": [
+          "https://www.youtube.com/watch?v=8YT0hZGX2gs",
+          "https://www.youtube.com/watch?v=R0ZmicQcGEM",
+          "https://www.youtube.com/watch?v=Tj6NOfdfa4o",
+          "https://www.youtube.com/watch?v=v_9BluICGkI"
+        ],
         "speeches": [
           {
             "date": "2020-02-11",
@@ -16996,6 +17034,8 @@
         "slug": "li-zexiang",
         "sources": [
           "https://ece.hkust.edu.hk/",
+          "https://www.bilibili.com/video/BV1jB4y1i7Ge",
+          "https://www.bilibili.com/video/BV1jd4y1C7iQ",
           "https://www.xbotpark.com/"
         ],
         "speeches": [
@@ -17075,6 +17115,13 @@
             "title": "宇树科技王兴兴 ：别等长大再碰前沿 科技 越早入局 越容易成为顶尖人才",
             "type": "qa",
             "url": "https://www.bilibili.com/video/BV1LT3X6BExP"
+          },
+          {
+            "date": "2026-08-06",
+            "source": "Bilibili · 图灵的猫",
+            "title": "对话宇树 投资人李彦男： 王兴兴 有何特殊之处？UP主创业会更容易融资吗 | B站 x WAIC AI会客厅",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1P9My6WEjS"
           },
           {
             "date": "2026-06-11",
@@ -17263,6 +17310,10 @@
         "sources": [
           "https://www.unitree.com/",
           "https://www.wikidata.org/wiki/Q132794691",
+          "https://www.youtube.com/watch?v=Ct9iBIu6CL0",
+          "https://www.youtube.com/watch?v=KXt8oSVLswQ",
+          "https://www.youtube.com/watch?v=StYGZ3G_tds",
+          "https://www.youtube.com/watch?v=fDUq6FgVApU",
           "https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%85%B4%E5%85%B4"
         ],
         "speeches": [
@@ -17286,6 +17337,13 @@
             "title": "宇树科技王兴兴 ：别等长大再碰前沿 科技 越早入局 越容易成为顶尖人才",
             "type": "qa",
             "url": "https://www.bilibili.com/video/BV1LT3X6BExP"
+          },
+          {
+            "date": "2026-08-06",
+            "source": "Bilibili · 图灵的猫",
+            "title": "对话宇树 投资人李彦男： 王兴兴 有何特殊之处？UP主创业会更容易融资吗 | B站 x WAIC AI会客厅",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1P9My6WEjS"
           },
           {
             "date": "2026-06-11",
@@ -17625,7 +17683,11 @@
           "量子计算"
         ],
         "slug": "pete-shadbolt",
-        "sources": [],
+        "sources": [
+          "https://www.youtube.com/watch?v=8a97jXLpBSo",
+          "https://www.youtube.com/watch?v=r8hb53AYr7I",
+          "https://www.youtube.com/watch?v=rITo8nWU4TM"
+        ],
         "speeches": [
           {
             "date": "11个月前",
@@ -23223,5 +23285,5 @@
     "institutionEvent": 65,
     "listedDisclosure": 149
   },
-  "contentHash": "a287ccf95e1386ea5034"
+  "contentHash": "5ef802ce2947338dd485"
 }
