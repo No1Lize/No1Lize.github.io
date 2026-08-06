@@ -1,5 +1,6 @@
 import { HomepageSortableFeed } from "@/components/homepage-sortable-feed";
 import styles from "@/components/homepage-columns.module.css";
+import { coreTechnologyEntities } from "@/lib/core-research-objects";
 import { HOMEPAGE_CHANNEL_UPDATE_LIMIT } from "@/lib/homepage-channel-update-config";
 import {
   getChannelUpdateDirectory,
@@ -9,13 +10,12 @@ import {
 import rawArticles from "@/public/data/articles.json";
 
 const homepageChannels = [
-  { key: "technology", number: "02", label: "新兴科技", href: "/technology" },
-  { key: "companies", number: "03", label: "创业案例", href: "/companies" },
-  { key: "institutions", number: "04", label: "投资机构", href: "/institutions" },
-  { key: "reports", number: "06", label: "研究报告", href: "/reports" },
-  { key: "people", number: "07", label: "人物研究", href: "/people" },
+  { key: "technologies", number: "02", label: "核心技术", href: "/technologies" },
+  { key: "technology", number: "03", label: "核心赛道", href: "/technology" },
+  { key: "people", number: "04", label: "核心人物", href: "/people" },
+  { key: "companies", number: "05", label: "核心公司", href: "/companies" },
 ] as const satisfies ReadonlyArray<{
-  key: ChannelUpdateKey;
+  key: "technologies" | ChannelUpdateKey;
   number: string;
   label: string;
   href: string;
@@ -61,11 +61,45 @@ function updateTime(item: ChannelUpdateItem): string {
   }).format(parsed);
 }
 
+function coreTechnologyUpdates(): ChannelUpdateItem[] {
+  return coreTechnologyEntities.flatMap((entity) =>
+    entity.timeline.flatMap((timeline) => {
+      const href = timeline.url.trim();
+      if (!href) return [];
+      const dateOriginal = timeline.eventDate || timeline.observedAt;
+      const date = dateOriginal.slice(0, 10);
+      return [
+        {
+          id: `technology:${entity.id}:${timeline.id}`,
+          title: timeline.title,
+          summary: timeline.summary,
+          href,
+          source: timeline.sourceName || "VCIQ",
+          label: timeline.eventType || "技术动态",
+          context: [entity.name, ...entity.trackNames.slice(0, 2)].join(" · "),
+          date,
+          dateOriginal,
+          datePrecision: "day" as const,
+          sortAt: timeline.sortAt || dateOriginal,
+          keywords: [entity.name, ...entity.trackNames],
+          classifications: ["核心技术"],
+        },
+      ];
+    }),
+  );
+}
+
+function updatesForChannel(channel: HomepageChannel) {
+  return channel.key === "technologies"
+    ? coreTechnologyUpdates()
+    : getChannelUpdateDirectory(channel.key).items;
+}
+
 function getChannelUpdates() {
   const updates = new Map<string, HomepageChannelUpdate>();
 
   homepageChannels.forEach((channel) => {
-    getChannelUpdateDirectory(channel.key).items.forEach((item) => {
+    updatesForChannel(channel).forEach((item) => {
       const key = updateKey(item.href, item.title);
       const existing = updates.get(key);
 
@@ -93,7 +127,7 @@ export function HomepageChannelUpdates() {
     title: item.title,
     href: item.href,
     tag: item.channels.map((channel) => `${channel.number} ${channel.label}`).join(" / "),
-    context: item.context || "频道内容更新",
+    context: item.context || "研究对象更新",
     date: item.date,
     time: updateTime(item),
     asideLabel: item.label,
@@ -102,11 +136,11 @@ export function HomepageChannelUpdates() {
   }));
 
   return (
-    <aside className={`side-column ${styles.column}`} aria-label="频道最新更新">
+    <aside className={`side-column ${styles.column}`} aria-label="核心研究对象最新更新">
       <div className="section-heading compact">
         <div>
-          <p className="section-index">03 / CHANNEL UPDATES</p>
-          <h2>频道最新更新</h2>
+          <p className="section-index">03 / OBJECT UPDATES</p>
+          <h2>研究对象最新更新</h2>
         </div>
         <span>{Math.min(items.length, HOMEPAGE_CHANNEL_UPDATE_LIMIT)} 条</span>
       </div>
@@ -114,9 +148,9 @@ export function HomepageChannelUpdates() {
       <HomepageSortableFeed
         items={items}
         limit={HOMEPAGE_CHANNEL_UPDATE_LIMIT}
-        ariaLabel="频道最新更新目录"
+        ariaLabel="核心研究对象最新更新目录"
         initialSort="latest"
-        description={`聚合频道 02、03、04、06、07，合并跨频道重复条目并展示前 ${HOMEPAGE_CHANNEL_UPDATE_LIMIT} 条；可切换按最新时间或重要性排序。`}
+        description={`聚合核心技术、核心赛道、核心人物与核心公司，合并跨对象重复条目并展示前 ${HOMEPAGE_CHANNEL_UPDATE_LIMIT} 条；可切换按最新时间或重要性排序。`}
       />
     </aside>
   );
