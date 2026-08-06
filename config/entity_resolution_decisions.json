@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-06T02:00:00Z",
+  "decisions": {
+    "github": {
+      "status": "resolved",
+      "requestedType": "company",
+      "entityType": "company",
+      "canonicalName": "GitHub",
+      "targetId": "company:github",
+      "aliases": [
+        "GitHub"
+      ],
+      "confidence": "verified",
+      "note": "人工确认 GitHub 是公司／平台实体；后续同名采集复用该结论。",
+      "reviewedBy": "VCIQ",
+      "reviewedAt": "2026-08-06T02:00:00Z"
+    },
+    "typescript": {
+      "status": "resolved",
+      "requestedType": "company",
+      "entityType": "topic",
+      "canonicalName": "TypeScript",
+      "targetId": "topic:typescript",
+      "aliases": [
+        "TypeScript"
+      ],
+      "confidence": "verified",
+      "note": "人工确认 TypeScript 是编程语言／技术主题，不得进入公司候选池。",
+      "reviewedBy": "VCIQ",
+      "reviewedAt": "2026-08-06T02:00:00Z"
+    },
+    "matt": {
+      "status": "review",
+      "requestedType": "company",
+      "entityType": "person",
+      "canonicalName": "Matt",
+      "targetId": "",
+      "aliases": [
+        "Matt"
+      ],
+      "confidence": "low",
+      "note": "单名 Matt 无法唯一解析；必须补充全名或由管理员明确绑定规范人物。",
+      "reviewedBy": "VCIQ",
+      "reviewedAt": "2026-08-06T02:00:00Z"
+    }
+  }
+}

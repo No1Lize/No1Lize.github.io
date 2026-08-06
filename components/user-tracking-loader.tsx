@@ -7,6 +7,7 @@ import { TrackingAdminSessionGuard } from "@/components/tracking-admin-session-g
 import { TrackingCaptureInbox } from "@/components/tracking-capture-inbox";
 import { TrackingCompanyCandidateReview } from "@/components/tracking-company-candidate-review";
 import { TrackingCompanyOnboarding } from "@/components/tracking-company-onboarding";
+import { TrackingEntityResolutionReview } from "@/components/tracking-entity-resolution-review";
 import { TrackingPeopleScopeEnhancer } from "@/components/tracking-people-scope-enhancer";
 import { TrackingRecommendationsBridge } from "@/components/tracking-recommendations-bridge";
 import { UserTrackingPanel } from "@/components/user-tracking-panel";
@@ -65,6 +66,7 @@ export function UserTrackingLoader({ initial }: { initial: UserTrackingConfig })
       <TrackingAdminConflictGuard />
       <UserTrackingPanel key={sourceKey} initial={config} />
       <TrackingCaptureInbox />
+      <TrackingEntityResolutionReview />
       <TrackingCompanyCandidateReview />
       <TrackingCompanyOnboarding />
       <TrackingPeopleScopeEnhancer />
