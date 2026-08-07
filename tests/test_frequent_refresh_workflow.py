@@ -38,11 +38,12 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         self.assertIn("No semantic article changes; publishing the completed source-crawl audit.", text)
         self.assertNotIn("git restore \"${DATA_PATHS[@]}\"", text)
 
-    def test_bot_authored_refresh_explicitly_dispatches_pages(self) -> None:
+    def test_bot_authored_refresh_reconciles_derived_entities_before_pages(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("Deploy refreshed snapshot", text)
+        self.assertIn("Reconcile derived entity state before publication", text)
         self.assertIn("steps.data-update.outputs.changed == 'true'", text)
-        self.assertIn("gh workflow run pages.yml --ref main", text)
+        self.assertIn("gh workflow run company-candidate-discovery.yml --ref main", text)
+        self.assertNotIn("gh workflow run pages.yml --ref main", text)
         self.assertIn("actions: write", text)
 
 
