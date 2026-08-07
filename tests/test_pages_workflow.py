@@ -5,6 +5,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_PATH = ROOT / ".github" / "workflows" / "pages.yml"
 CONTROL_PLANE_PATH = ROOT / "tools" / "run_pipeline.py"
+PRIVATE_CANDIDATE_QUEUE = "config/company_candidate_review_queue.json"
 
 
 class PagesWorkflowTests(unittest.TestCase):
@@ -23,7 +24,7 @@ class PagesWorkflowTests(unittest.TestCase):
             [
                 "python tools/run_pipeline.py check",
                 "python tools/reconcile_entity_resolution.py --check",
-                "python tools/build_resolved_company_candidates.py --check",
+                "python tools/build_resolved_company_candidates.py \\",
                 "python tools/company_profile_refresh_queue.py --check",
                 "python tools/crawl_articles.py --validate-only",
                 "python tools/validate_eastmoney_snapshot.py",
@@ -31,6 +32,8 @@ class PagesWorkflowTests(unittest.TestCase):
                 "python tools/run_pipeline.py build-provenance \\",
             ],
         )
+        self.assertIn(f"--output {PRIVATE_CANDIDATE_QUEUE} \\", self.lines)
+        self.assertNotIn("public/data/company_candidates.json", self.workflow)
         self.assertNotIn("Reconcile derived public data", self.workflow)
         self.assertNotIn("tools/run_pipeline.py finalize", self.workflow)
 
