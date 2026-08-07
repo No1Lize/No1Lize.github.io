@@ -45,7 +45,13 @@ def tracking(
     }
 
 
-def capture(capture_id: str, name: str, *, title: str | None = None) -> dict:
+def capture(
+    capture_id: str,
+    name: str,
+    *,
+    title: str | None = None,
+    captured_by: str = "VCIQ",
+) -> dict:
     return {
         "id": capture_id,
         "entityType": "company",
@@ -53,7 +59,7 @@ def capture(capture_id: str, name: str, *, title: str | None = None) -> dict:
         "rawSelection": name,
         "status": "applied",
         "capturedAt": "2026-08-07T09:30:00Z",
-        "capturedBy": "VCIQ",
+        "capturedBy": captured_by,
         "source": {
             "title": title or f"{name} 公司完成新一轮融资",
             "url": f"https://example.com/{capture_id}",
@@ -102,6 +108,37 @@ class ManualCompanyTrustTests(unittest.TestCase):
         self.assertEqual(decision["note"], TRUST_NOTE)
         self.assertEqual(report["captureTrustedKeys"], ["firmus"])
         self.assertEqual(report["manualExceptionCount"], 0)
+
+    def test_automated_capture_cannot_inherit_manual_trust_through_tracking(self) -> None:
+        next_decisions, report = self.apply(
+            [candidate("Crawler Labs", capture_ids=["capture-crawler"])],
+            # Reconciliation may already have placed the capture in sampleCompanies.
+            # The capture provenance must still be authoritative.
+            tracking_payload=tracking(["Crawler Labs"]),
+            captures=[
+                capture(
+                    "capture-crawler",
+                    "Crawler Labs",
+                    captured_by="github-actions[bot]",
+                )
+            ],
+        )
+
+        self.assertEqual(next_decisions["decisions"], {})
+        self.assertEqual(report["trustedCount"], 0)
+        self.assertEqual(report["manualExceptionCount"], 1)
+        self.assertIn("人工操作者", report["manualExceptions"][0]["reason"])
+
+    def test_capture_without_actor_cannot_inherit_manual_trust(self) -> None:
+        next_decisions, report = self.apply(
+            [candidate("Anonymous Labs", capture_ids=["capture-anonymous"])],
+            tracking_payload=tracking(["Anonymous Labs"]),
+            captures=[capture("capture-anonymous", "Anonymous Labs", captured_by="")],
+        )
+
+        self.assertEqual(next_decisions["decisions"], {})
+        self.assertEqual(report["trustedCount"], 0)
+        self.assertEqual(report["manualExceptionCount"], 1)
 
     def test_direct_manual_tracking_company_is_auto_accepted_without_second_review(self) -> None:
         next_decisions, report = self.apply(
