@@ -10,18 +10,23 @@ const page = read("app/page.tsx");
 const hotPage = read("app/hot/page.tsx");
 const layout = read("app/layout.tsx");
 const searchPage = read("app/search/page.tsx");
+const channelDirectory = read("components/channel-update-directory.tsx");
+const channelDirectoryClient = read("components/channel-update-directory-client.tsx");
 const dashboard = read("components/dashboard-client.tsx");
 const favoriteButton = read("components/favorite-button.tsx");
 const favoriteControls = read("components/homepage-favorite-controls.tsx");
 const favoritesPage = read("components/favorites-page.tsx");
 const favoritesHook = read("components/use-favorites.ts");
 const globalSearch = read("components/global-search.tsx");
+const homepageUpdates = read("components/homepage-channel-updates.tsx");
+const homepageFeed = read("components/homepage-sortable-feed.tsx");
 const hotClient = read("components/hot-page.tsx");
 const liveStatus = read("components/live-status.tsx");
 const siteHeader = read("components/site-header.tsx");
 const articles = read("lib/use-articles.ts");
 const favorites = read("lib/favorites.ts");
 const domRuntime = read("lib/intelligence-dom-runtime.ts");
+const channelArchiveBuilder = read("scripts/build-channel-update-archives.ts");
 const searchIndexBuilder = read("scripts/build-article-search-index.mjs");
 const routeBudget = read("scripts/check-route-performance-budget.mjs");
 const packageJson = read("package.json");
@@ -80,6 +85,24 @@ test("global search does not bundle research datasets or load the full article a
   assert.match(packageJson, /build:search-index/);
   assert.match(packageJson, /build-article-search-index\.mjs/);
   assert.match(searchIndexBuilder, /cleanText\([\s\S]*420/);
+});
+
+test("channel update directories hydrate only a bounded latest window", () => {
+  assert.match(channelDirectory, /INITIAL_CHANNEL_UPDATE_LIMIT = 120/);
+  assert.match(channelDirectory, /fullDirectory\.items\.slice\(0, INITIAL_CHANNEL_UPDATE_LIMIT\)/);
+  assert.match(channelDirectory, /totalItemCount={fullDirectory\.items\.length}/);
+  assert.match(channelDirectoryClient, /channel_update_directories\.json/);
+  assert.match(channelDirectoryClient, /loadFullArchive/);
+  assert.match(channelDirectoryClient, /加载完整更新目录/);
+  assert.match(channelArchiveBuilder, /getChannelUpdateDirectory/);
+  assert.match(packageJson, /build:channel-update-archives/);
+});
+
+test("homepage update stream keeps 200 candidates but mounts only 60 initially", () => {
+  assert.match(homepageUpdates, /slice\(0, HOMEPAGE_CHANNEL_UPDATE_LIMIT\)/);
+  assert.match(homepageFeed, /INITIAL_FEED_RENDER_LIMIT = 60/);
+  assert.match(homepageFeed, /sortedItems\.slice\(0, renderLimit\)/);
+  assert.match(homepageFeed, /显示更多/);
 });
 
 test("hot ranking starts from a bounded build-time pool and only loads the full archive explicitly", () => {
