@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "@/components/homepage-favorite-controls.module.css";
 import {
+  isIntelligenceDomRow,
+  subscribeIntelligenceDom,
+} from "@/lib/intelligence-dom-runtime";
+import {
   FAVORITES_CHANGED_EVENT,
   FAVORITES_STORAGE_KEY,
   isFavorite,
@@ -333,32 +337,6 @@ function InlineFavoriteButton({ item }: { item: FavoriteInput }) {
   );
 }
 
-function collectCandidateRows(): HTMLElement[] {
-  const rows = new Set<HTMLElement>();
-  const add = (selector: string) => {
-    document.querySelectorAll<HTMLElement>(selector).forEach((row) => rows.add(row));
-  };
-
-  add(".event-row");
-  add(".headlines-column a[class*='feedRow']");
-  add(".side-column a[class*='feedRow']");
-  add("[data-intelligence-item]");
-  add(".material-list > a");
-  add("a.source-card[href]");
-  add("a[class*='eventCard'][href]");
-  add(".market-news-item[href]");
-  add("[class*='eventList'] > a[href]");
-  add("[class*='newsList'] > a[href]");
-  add(".entity-list > a[target='_blank'][href]");
-  add(".analysis-grid > a[target='_blank'][href]");
-
-  document.querySelectorAll<HTMLElement>(".timeline > div").forEach((row) => {
-    if (hrefFromRow(row)) rows.add(row);
-  });
-
-  return [...rows];
-}
-
 function placementFor(row: HTMLElement): FavoritePlacement {
   if (row.matches(".event-row")) return "event";
   if (row.matches(".headlines-column a[class*='feedRow'], .side-column a[class*='feedRow']")) {
@@ -383,7 +361,6 @@ export function IntelligenceFavoriteControls() {
 
   useEffect(() => {
     const registry = new Map<HTMLElement, FavoriteMount>();
-    let frame = 0;
     let sequence = 0;
 
     const removeMount = (mount: FavoriteMount) => {
@@ -429,8 +406,7 @@ export function IntelligenceFavoriteControls() {
       return { host, element, item, key, placement };
     };
 
-    const scan = () => {
-      frame = 0;
+    const scan = (rows: readonly HTMLElement[]) => {
       let changed = false;
 
       for (const [host, mount] of registry) {
@@ -441,7 +417,8 @@ export function IntelligenceFavoriteControls() {
         }
       }
 
-      for (const row of collectCandidateRows()) {
+      for (const row of rows) {
+        if (!isIntelligenceDomRow(row, "favorite")) continue;
         const item = itemFor(row);
         if (!item) continue;
         const placement = placementFor(row);
@@ -467,18 +444,10 @@ export function IntelligenceFavoriteControls() {
       if (changed) publish();
     };
 
-    const scheduleScan = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(scan);
-    };
-
-    scan();
-    const observer = new MutationObserver(scheduleScan);
-    observer.observe(document.body, { childList: true, subtree: true });
+    const unsubscribe = subscribeIntelligenceDom(scan, { priority: 10 });
 
     return () => {
-      observer.disconnect();
-      if (frame) window.cancelAnimationFrame(frame);
+      unsubscribe();
       registry.forEach(removeMount);
       registry.clear();
     };
