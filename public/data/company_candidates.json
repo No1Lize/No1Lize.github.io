@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T03:11:34+00:00",
-  "candidateCount": 11,
-  "pendingCount": 3,
+  "generatedAt": "2026-08-07T05:40:11+00:00",
+  "candidateCount": 12,
+  "pendingCount": 4,
   "acceptedCount": 7,
   "rejectedCount": 0,
   "mergedCount": 0,
@@ -85,6 +85,48 @@
       ],
       "eventTypes": [
         "并购"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-firmus-15dcfbde",
+      "decisionKey": "firmus",
+      "name": "Firmus",
+      "aliases": [
+        "Firmus"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-07T05:13:33.075000+00:00",
+      "lastSeenAt": "2026-08-07T05:13:33.075000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1x58yu6"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "finance.sina.com.cn"
+      ],
+      "sourceArticleIds": [
+        "capture-1x58yu6"
+      ],
+      "sourceUrls": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-08-07/doc-inimneni4145971.shtml"
+      ],
+      "eventTypes": [
+        "融资"
       ],
       "note": "",
       "mergedSlug": "",
@@ -463,9 +505,9 @@
       ],
       "sourceUrls": [
         "https://www.shopify.com/blog/latest",
+        "https://www.shopify.com/blog/topics/guides",
         "https://www.shopify.com/enterprise/blog/latest",
         "https://help.shopify.com/en",
-        "https://www.shopify.com/blog/topics/guides",
         "https://www.shopify.com/news/a-world-with-more-builders",
         "https://www.shopify.com/partners/blog/latest",
         "https://www.shopify.com/news/preparedness-paradox",
@@ -516,8 +558,8 @@
     }
   ],
   "entityResolution": {
-    "captureCount": 24,
-    "companyCount": 10,
+    "captureCount": 27,
+    "companyCount": 11,
     "reviewCount": 9,
     "reclassifiedCount": 3,
     "rejectedCount": 0
