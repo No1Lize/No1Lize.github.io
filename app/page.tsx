@@ -9,7 +9,7 @@ import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
 
-const KEY_EVENTS_LIMIT = 200;
+const INITIAL_KEY_EVENTS_LIMIT = 80;
 const snapshot = rawArticles as unknown as ArticlePayload;
 const trackedSectorAliases = [
   ...new Set(trackedSectors.flatMap((sector) => sector.aliases)),
@@ -22,7 +22,7 @@ const initialArticles: LiveIntelligenceEvent[] = [...activeArticles]
       right.importance - left.importance ||
       right.publishedAt.localeCompare(left.publishedAt),
   )
-  .slice(0, KEY_EVENTS_LIMIT);
+  .slice(0, INITIAL_KEY_EVENTS_LIMIT);
 
 function marketSourceCount(market: "中国" | "美国") {
   return new Set(
