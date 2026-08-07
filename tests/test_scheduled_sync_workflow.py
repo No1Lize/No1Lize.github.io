@@ -56,6 +56,23 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("No semantic public-data changes; publishing the completed full-crawl audit.", text)
         self.assertNotIn("No semantic public data changes; skipping Git commit and Pages build.", text)
 
+    def test_full_refresh_validates_shared_source_health_summary(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("tools/source_health_summary.py", text)
+        self.assertIn("tests.test_source_health_summary", text)
+        self.assertIn("Require canonical source health summary", text)
+        self.assertIn("python tools/source_health_summary.py --check", text)
+
+    def test_rebase_recanonicalizes_source_health_without_double_counting_streaks(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]
+        normalize = rebase_block.index("python tools/source_health_summary.py")
+        governance = rebase_block.index("python tools/tracking_source_governance.py --check")
+        validate = rebase_block.index("python tools/validate_full_refresh.py")
+        self.assertLess(normalize, governance)
+        self.assertLess(governance, validate)
+        self.assertNotIn("python tools/update_source_health.py", rebase_block)
+
     def test_rebase_rebuilds_quality_gate_before_full_refresh_validation(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]
