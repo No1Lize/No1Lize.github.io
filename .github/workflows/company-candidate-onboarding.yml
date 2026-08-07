@@ -7,11 +7,16 @@ on:
       - config/company_candidate_decisions.json
       - config/company_registry.json
       - config/official_company_sources.json
+      - config/tracking_capture_inbox.json
+      - public/data/company_candidates.json
+      - tools/prepare_company_candidate_onboarding.py
       - tools/onboard_company_candidates.py
       - tools/company_registry.py
       - tools/build_company_candidates.py
+      - tools/research_agent.py
       - lib/company-registry.ts
       - lib/company-candidate-onboarding.ts
+      - tests/test_prepare_company_candidate_onboarding.py
       - .github/workflows/company-candidate-onboarding.yml
   workflow_dispatch:
 
@@ -32,6 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
@@ -50,11 +56,14 @@ jobs:
         run: |
           python -m py_compile \
             tools/company_registry.py \
+            tools/prepare_company_candidate_onboarding.py \
             tools/onboard_company_candidates.py \
             tools/build_company_candidates.py \
-            tools/ensure_venture_profile_coverage.py
+            tools/ensure_venture_profile_coverage.py \
+            tools/research_agent.py
           python -m unittest \
             tests.test_company_registry \
+            tests.test_prepare_company_candidate_onboarding \
             tests.test_onboard_company_candidates \
             tests.test_company_candidates \
             tests.test_ensure_venture_profile_coverage
@@ -62,6 +71,36 @@ jobs:
             tests/company-candidate-onboarding.test.ts \
             tests/company-candidate-review.test.ts
           python tools/company_registry.py --check
+
+      - name: Prepare verified automatic company profiles
+        env:
+          SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
+          SILICONFLOW_BASE_URL: https://api.siliconflow.cn/v1
+          SILICONFLOW_MODEL: deepseek-ai/DeepSeek-V4-Flash
+          AUTO_COMPANY_PROFILE_REASONING_EFFORT: medium
+          AUTO_COMPANY_PROFILE_API_TIMEOUT: "120"
+          AUTO_COMPANY_PROFILE_API_RETRIES: "1"
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/prepare_company_candidate_onboarding.py --limit 6 \
+            | tee /tmp/company-auto-profile-report.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path('/tmp/company-auto-profile-report.json')
+              .read_text(encoding='utf-8')
+              .splitlines()[-1]
+          )
+          print(json.dumps(report, ensure_ascii=False, indent=2))
+          for hold in report.get('holds', []):
+              print(
+                  f"::notice title=Company auto-onboarding held::"
+                  f"{hold.get('candidateKey', '?')}: {hold.get('reason', 'unknown reason')}"
+              )
+          PY
 
       - name: Apply reviewed onboarding and merge decisions
         id: onboarding

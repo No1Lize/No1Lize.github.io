@@ -12,6 +12,7 @@ Flow:
 human capture (capturedBy recorded)
   -> entity/type conflict check
   -> accepted automatically
+  -> verified automatic onboarding
   -> onboarding/profile quality gate
   -> formal company publication
 ```
@@ -31,15 +32,40 @@ automatic discovery
   -> evidence/materiality threshold
   -> pending review
   -> accepted / rejected / merged
+  -> verified automatic onboarding
   -> onboarding/profile quality gate
   -> formal company publication
 ```
 
 Automatic discovery must never inherit manual trust merely because it has a high score, a primary source, or appears in `sampleCompanies`.
 
+## Verified automatic onboarding
+
+An `accepted` company should not require the administrator to retype a profile when public primary evidence can establish it safely. The automatic profile preparation path is therefore deliberately evidence-first:
+
+```text
+accepted
+  -> exact existing-registry check
+  -> exact official-source or Wikidata identity
+  -> fetch official homepage
+  -> verify name on official page
+  -> verify tracked sector on official page
+  -> synthesize summary/product from official page only
+  -> verify model support quotes exist verbatim on that page
+  -> requested
+  -> existing publication quality gate
+  -> published
+```
+
+The language model is a **bounded extractor/summarizer**, not an identity or source authority. It cannot invent or select a homepage. It only runs after deterministic public-source verification, and its factual output is rejected unless it supplies support snippets found on the fetched official page.
+
+Automatic onboarding fails closed. The company remains `accepted` and waits for exception handling when the public identity is ambiguous, the official site cannot be established, the official page does not support the tracked sector, the model cannot ground its output, or the resulting slug conflicts with another formal entity.
+
+Investment institutions are also held out of the company-profile path rather than being silently published as startup companies. Existing formal company identities are merged instead of duplicated.
+
 ## Precedence
 
-Final versioned decisions always win. `accepted`, `rejected`, `merged`, and `published` decisions are not overwritten by the manual-trust automation.
+Final versioned decisions always win. `accepted`, `rejected`, `merged`, and `published` decisions are not overwritten by the manual-trust automation. Existing `requested`, `failed`, `merged`, and `published` onboarding state is not overwritten by automatic profile preparation.
 
 The resulting invariant is:
 
@@ -48,5 +74,6 @@ audited human intent is not reviewed twice;
 automation is reviewed before promotion;
 ambiguous provenance is reviewed before promotion;
 identity ambiguity is reviewed before publication;
+models summarize verified evidence but do not establish identity;
 quality gates apply to every formal profile.
 ```
