@@ -11,6 +11,13 @@ type IdleHandle =
   | { kind: "timer"; id: number }
   | null;
 
+type OptionalIdleApi = {
+  requestIdleCallback?: (callback: () => void, options?: { timeout?: number }) => number;
+  cancelIdleCallback?: (id: number) => void;
+  setTimeout: (callback: () => void, delay?: number) => number;
+  clearTimeout: (id: number) => void;
+};
+
 const FAVORITE_ROW_SELECTOR = [
   ".event-row",
   ".headlines-column a[class*='feedRow']",
@@ -60,6 +67,10 @@ let mutationObserver: MutationObserver | null = null;
 let intersectionObserver: IntersectionObserver | null = null;
 let publishFrame = 0;
 let refreshHandle: IdleHandle = null;
+
+function idleApi(): OptionalIdleApi {
+  return window as unknown as OptionalIdleApi;
+}
 
 function collectRows(): HTMLElement[] {
   const rows = new Set<HTMLElement>();
@@ -120,8 +131,6 @@ function ensureIntersectionObserver() {
       if (entered) schedulePublish();
     },
     {
-      // Pre-mount controls before the user reaches the row, without paying the
-      // React Portal cost for the entire document during hydration.
       rootMargin: "1200px 0px",
       threshold: 0,
     },
@@ -157,26 +166,28 @@ function refreshCandidates() {
 
 function cancelRefresh() {
   if (!refreshHandle) return;
-  if (refreshHandle.kind === "idle" && "cancelIdleCallback" in window) {
-    window.cancelIdleCallback(refreshHandle.id);
+  const api = idleApi();
+  if (refreshHandle.kind === "idle" && typeof api.cancelIdleCallback === "function") {
+    api.cancelIdleCallback(refreshHandle.id);
   } else {
-    window.clearTimeout(refreshHandle.id);
+    api.clearTimeout(refreshHandle.id);
   }
   refreshHandle = null;
 }
 
 function scheduleCandidateRefresh() {
   if (refreshHandle || !listeners.size) return;
-  if ("requestIdleCallback" in window) {
+  const api = idleApi();
+  if (typeof api.requestIdleCallback === "function") {
     refreshHandle = {
       kind: "idle",
-      id: window.requestIdleCallback(refreshCandidates, { timeout: 700 }),
+      id: api.requestIdleCallback(refreshCandidates, { timeout: 700 }),
     };
     return;
   }
   refreshHandle = {
     kind: "timer",
-    id: window.setTimeout(refreshCandidates, 0),
+    id: api.setTimeout(refreshCandidates, 0),
   };
 }
 
