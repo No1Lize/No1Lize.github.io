@@ -47,14 +47,20 @@ jobs:
           npm ci
           npm run lint
           npm run test:unit
-      - name: Commit repaired chain
+      - name: Commit non-workflow repair files
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          rm .github/workflows/apply-refresh-audit-patch-once.yml
-          rm tools/apply_refresh_audit_patch_once.py
-          git add -A
-          git commit -m 'fix: make intelligence refresh audit and publication reliable'
+          git restore \
+            .github/workflows/frequent-intelligence-refresh.yml \
+            .github/workflows/scheduled-sync.yml \
+            .github/workflows/company-candidate-discovery.yml
+          git add app components lib tools tests
+          if git diff --cached --quiet; then
+            echo 'No non-workflow changes to persist.'
+            exit 0
+          fi
+          git commit -m 'fix: preserve refresh audits and prioritize trusted homepage evidence'
           git push origin HEAD:fix/intelligence-refresh-audit-quality
