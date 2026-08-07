@@ -59,6 +59,14 @@ type FavoritePayload = {
 const MAX_FAVORITES = 300;
 const MAX_KEYWORDS = 40;
 const MAX_SOURCES = 20;
+const EMPTY_FAVORITES: FavoriteItem[] = [];
+const EMPTY_FAVORITE_IDS = new Set<string>();
+
+let cachedStorageRaw: string | null | undefined;
+let cachedFavoriteItems: FavoriteItem[] = EMPTY_FAVORITES;
+let cachedFavoriteIds = EMPTY_FAVORITE_IDS;
+const favoriteSubscribers = new Set<() => void>();
+let browserListenersAttached = false;
 
 function cleanText(value: unknown, maxLength: number): string {
   if (typeof value !== "string") return "";
@@ -262,29 +270,110 @@ function browserStorage(): Storage | null {
   }
 }
 
+function setFavoriteCache(raw: string | null, items: FavoriteItem[]) {
+  cachedStorageRaw = raw;
+  cachedFavoriteItems = items;
+  cachedFavoriteIds = new Set(items.map((item) => item.id));
+}
+
+function syncFavoriteCache(): boolean {
+  const storage = browserStorage();
+  if (!storage) return false;
+  const raw = storage.getItem(FAVORITES_STORAGE_KEY);
+  if (raw === cachedStorageRaw) return false;
+  setFavoriteCache(raw, parseFavoriteItems(raw));
+  return true;
+}
+
+function notifyFavoriteSubscribers() {
+  for (const subscriber of favoriteSubscribers) subscriber();
+}
+
+function onFavoritesChanged() {
+  if (syncFavoriteCache()) notifyFavoriteSubscribers();
+}
+
+function onFavoriteStorage(event: StorageEvent) {
+  if (event.key !== FAVORITES_STORAGE_KEY) return;
+  if (syncFavoriteCache()) notifyFavoriteSubscribers();
+}
+
+function ensureFavoriteBrowserListeners() {
+  if (
+    browserListenersAttached ||
+    typeof window === "undefined" ||
+    typeof window.addEventListener !== "function"
+  ) {
+    return;
+  }
+  window.addEventListener(FAVORITES_CHANGED_EVENT, onFavoritesChanged);
+  window.addEventListener("storage", onFavoriteStorage);
+  browserListenersAttached = true;
+}
+
+function releaseFavoriteBrowserListeners() {
+  if (
+    !browserListenersAttached ||
+    typeof window === "undefined" ||
+    typeof window.removeEventListener !== "function"
+  ) {
+    return;
+  }
+  window.removeEventListener(FAVORITES_CHANGED_EVENT, onFavoritesChanged);
+  window.removeEventListener("storage", onFavoriteStorage);
+  browserListenersAttached = false;
+}
+
+export function subscribeFavorites(subscriber: () => void): () => void {
+  ensureFavoriteBrowserListeners();
+  favoriteSubscribers.add(subscriber);
+  return () => {
+    favoriteSubscribers.delete(subscriber);
+    if (!favoriteSubscribers.size) releaseFavoriteBrowserListeners();
+  };
+}
+
 export function readFavoriteItems(): FavoriteItem[] {
   const storage = browserStorage();
-  return storage ? parseFavoriteItems(storage.getItem(FAVORITES_STORAGE_KEY)) : [];
+  if (!storage) return EMPTY_FAVORITES;
+  syncFavoriteCache();
+  return cachedFavoriteItems;
+}
+
+export function getFavoriteSnapshot(): FavoriteItem[] {
+  return readFavoriteItems();
+}
+
+export function getFavoriteIdSnapshot(): Set<string> {
+  const storage = browserStorage();
+  if (!storage) return EMPTY_FAVORITE_IDS;
+  syncFavoriteCache();
+  return cachedFavoriteIds;
 }
 
 function writeFavoriteItems(items: FavoriteItem[]): void {
   const storage = browserStorage();
   if (!storage) return;
+  const nextItems = items.slice(0, MAX_FAVORITES);
   const payload: FavoritePayload = {
     schemaVersion: FAVORITES_SCHEMA_VERSION,
-    items: items.slice(0, MAX_FAVORITES),
+    items: nextItems,
   };
-  storage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(payload));
+  const serialized = JSON.stringify(payload);
+  storage.setItem(FAVORITES_STORAGE_KEY, serialized);
+  setFavoriteCache(serialized, nextItems);
+  notifyFavoriteSubscribers();
   window.dispatchEvent(new CustomEvent(FAVORITES_CHANGED_EVENT));
 }
 
 export function isFavorite(id: string): boolean {
-  return readFavoriteItems().some((item) => item.id === id);
+  getFavoriteIdSnapshot();
+  return cachedFavoriteIds.has(id);
 }
 
 export function toggleFavorite(input: FavoriteInput): boolean {
   const current = readFavoriteItems();
-  const existing = current.find((item) => item.id === input.id);
+  const existing = cachedFavoriteIds.has(input.id);
   if (existing) {
     writeFavoriteItems(current.filter((item) => item.id !== input.id));
     return false;
