@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 """Run automatic company onboarding with evidence-linked official-site discovery.
 
-The core onboarding preparer keeps source authority narrow. This wrapper expands the
-source-discovery layer without changing that contract: it pre-verifies candidate
-homepages from traceable source-article links or exact brand-domain probes, then
-passes only verified identities into the existing preparer. Wikidata remains the
-fallback resolver.
+Resolution order stays authority-first:
+
+1. existing formal official-source registry (handled by the core preparer);
+2. exact Wikidata identity with one official website;
+3. evidence-linked outbound site or exact brand-domain probe, with deterministic
+   homepage identity + sector checks;
+4. hold for exception handling.
+
+Only already-verified metadata is passed into the existing onboarding preparer.
 """
 
 from __future__ import annotations
@@ -29,12 +33,14 @@ def discover_candidate_identities(
     candidates_payload: dict[str, Any],
     decisions_payload: dict[str, Any],
     official_sources_payload: dict[str, Any],
+    registry_payload: dict[str, Any],
     *,
     limit: int,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
     candidates = onboarding.candidate_index(candidates_payload)
     decisions = onboarding.normalize_decisions(decisions_payload)
     verified: dict[str, dict[str, Any]] = {}
+    verified_sources: dict[str, str] = {}
     holds: list[dict[str, str]] = []
     checked = 0
 
@@ -43,7 +49,11 @@ def discover_candidate_identities(
             break
         if decision.get("status") != "accepted":
             continue
-        state = decision.get("onboarding") if isinstance(decision.get("onboarding"), dict) else {}
+        state = (
+            decision.get("onboarding")
+            if isinstance(decision.get("onboarding"), dict)
+            else {}
+        )
         if state.get("status") in {"requested", "published", "failed", "merged"}:
             continue
         candidate = candidates.get(key)
@@ -51,30 +61,51 @@ def discover_candidate_identities(
             continue
         if preparation.candidate_is_institution_like(candidate):
             continue
+        if preparation._registry_match(registry_payload, candidate):
+            continue
         if preparation._official_source_match(official_sources_payload, candidate) is not None:
             continue
+
         checked += 1
-        metadata, reason = discovery.discover_verified_official_site(
+        name = preparation.clean(candidate.get("name"), 240)
+        name_key = preparation.identity_key(name)
+        if not name_key:
+            continue
+
+        metadata, wikidata_reason = preparation.resolve_wikidata_company(name)
+        if metadata is not None:
+            verified[name_key] = metadata
+            verified_sources[name_key] = "wikidata"
+            continue
+
+        metadata, discovery_reason = discovery.discover_verified_official_site(
             candidate,
             page_fetcher=preparation.fetch_official_page,
             identity_checker=preparation.page_supports_identity,
             sector_checker=preparation.page_supports_sector,
         )
-        name_key = preparation.identity_key(candidate.get("name"))
-        if metadata is not None and name_key:
+        if metadata is not None:
             verified[name_key] = metadata
-        else:
-            holds.append(
-                {
-                    "candidateKey": key,
-                    "reason": reason or "no verified evidence-linked official site",
-                }
-            )
+            verified_sources[name_key] = str(metadata.get("source") or "evidence-linked")
+            continue
+
+        holds.append(
+            {
+                "candidateKey": key,
+                "reason": (
+                    f"{wikidata_reason or 'Wikidata unresolved'}; "
+                    f"{discovery_reason or 'no verified evidence-linked official site'}"
+                ),
+            }
+        )
 
     return verified, {
         "checkedCount": checked,
         "verifiedCount": len(verified),
         "verifiedKeys": sorted(verified),
+        "verifiedSources": {
+            key: verified_sources[key] for key in sorted(verified_sources)
+        },
         "holdCount": len(holds),
         "holds": sorted(holds, key=lambda row: row["candidateKey"]),
     }
@@ -93,6 +124,7 @@ def run(
         candidates_payload,
         decisions_payload,
         official_sources_payload,
+        registry_payload,
         limit=limit,
     )
 
@@ -100,6 +132,8 @@ def run(
         key = preparation.identity_key(name)
         if key in discovered:
             return discovered[key], ""
+        # Candidates beyond the bounded pre-discovery window retain the core
+        # exact-Wikidata fallback instead of being silently disabled.
         return preparation.resolve_wikidata_company(name)
 
     next_decisions, onboarding_report = preparation.prepare_automatic_onboarding(
@@ -119,24 +153,32 @@ def run(
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--candidates", type=Path, default=preparation.CANDIDATES_PATH)
     parser.add_argument("--decisions", type=Path, default=preparation.DECISIONS_PATH)
-    parser.add_argument("--official-sources", type=Path, default=preparation.OFFICIAL_SOURCES_PATH)
+    parser.add_argument(
+        "--official-sources", type=Path, default=preparation.OFFICIAL_SOURCES_PATH
+    )
     parser.add_argument("--registry", type=Path, default=preparation.REGISTRY_PATH)
     parser.add_argument("--captures", type=Path, default=preparation.CAPTURES_PATH)
     parser.add_argument("--limit", type=int, default=preparation.MAX_AUTO_REQUESTS)
     args = parser.parse_args()
 
-    current = onboarding.load_json(args.decisions, {"schemaVersion": 1, "decisions": {}})
+    current = onboarding.load_json(
+        args.decisions, {"schemaVersion": 1, "decisions": {}}
+    )
     next_decisions, report = run(
         candidates_payload=onboarding.load_json(args.candidates, {"candidates": []}),
         decisions_payload=current,
-        official_sources_payload=onboarding.load_json(args.official_sources, {"companies": []}),
+        official_sources_payload=onboarding.load_json(
+            args.official_sources, {"companies": []}
+        ),
         registry_payload=onboarding.load_json(args.registry, {"companies": []}),
         captures_payload=onboarding.load_json(args.captures, {"records": []}),
         limit=max(1, args.limit),
