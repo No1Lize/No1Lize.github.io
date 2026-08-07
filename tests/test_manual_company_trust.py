@@ -112,8 +112,6 @@ class ManualCompanyTrustTests(unittest.TestCase):
     def test_automated_capture_cannot_inherit_manual_trust_through_tracking(self) -> None:
         next_decisions, report = self.apply(
             [candidate("Crawler Labs", capture_ids=["capture-crawler"])],
-            # Reconciliation may already have placed the capture in sampleCompanies.
-            # The capture provenance must still be authoritative.
             tracking_payload=tracking(["Crawler Labs"]),
             captures=[
                 capture(
@@ -140,18 +138,15 @@ class ManualCompanyTrustTests(unittest.TestCase):
         self.assertEqual(report["trustedCount"], 0)
         self.assertEqual(report["manualExceptionCount"], 1)
 
-    def test_direct_manual_tracking_company_is_auto_accepted_without_second_review(self) -> None:
+    def test_sample_companies_without_audit_provenance_stays_pending(self) -> None:
         next_decisions, report = self.apply(
             [candidate("Taalas")],
             tracking_payload=tracking(["Taalas"]),
         )
 
-        self.assertEqual(next_decisions["decisions"]["taalas"]["status"], "accepted")
-        self.assertEqual(
-            next_decisions["decisions"]["taalas"]["reviewedBy"],
-            "VCIQ/manual-trusted",
-        )
-        self.assertEqual(report["trackingTrustedKeys"], ["taalas"])
+        self.assertEqual(next_decisions["decisions"], {})
+        self.assertEqual(report["trackingTrustedCount"], 0)
+        self.assertEqual(report["provenancePendingKeys"], ["taalas"])
 
     def test_automatically_discovered_candidate_stays_pending(self) -> None:
         next_decisions, report = self.apply([candidate("Auto Discovery Labs")])
@@ -159,11 +154,13 @@ class ManualCompanyTrustTests(unittest.TestCase):
         self.assertEqual(next_decisions["decisions"], {})
         self.assertEqual(report["trustedCount"], 0)
         self.assertEqual(report["manualExceptionCount"], 0)
+        self.assertEqual(report["provenancePendingKeys"], ["autodiscoverylabs"])
 
     def test_cross_type_topic_conflict_remains_review_gated(self) -> None:
         next_decisions, report = self.apply(
-            [candidate("TypeScript")],
+            [candidate("TypeScript", capture_ids=["capture-typescript"])],
             tracking_payload=tracking(["TypeScript"], keywords=["TypeScript"]),
+            captures=[capture("capture-typescript", "TypeScript")],
         )
 
         self.assertEqual(next_decisions["decisions"], {})
@@ -173,8 +170,9 @@ class ManualCompanyTrustTests(unittest.TestCase):
 
     def test_cross_type_person_conflict_remains_review_gated(self) -> None:
         next_decisions, report = self.apply(
-            [candidate("Matt")],
+            [candidate("Matt", capture_ids=["capture-matt"])],
             tracking_payload=tracking(["Matt"]),
+            captures=[capture("capture-matt", "Matt")],
             people=[{"slug": "matt", "name": "Matt"}],
         )
 
@@ -207,8 +205,9 @@ class ManualCompanyTrustTests(unittest.TestCase):
 
     def test_versioned_entity_reclassification_blocks_company_auto_accept(self) -> None:
         next_decisions, report = self.apply(
-            [candidate("Kimi")],
+            [candidate("Kimi", capture_ids=["capture-kimi"])],
             tracking_payload=tracking(["Kimi"]),
+            captures=[capture("capture-kimi", "Kimi")],
             entity_decisions={
                 "decisions": {
                     "kimi": {
