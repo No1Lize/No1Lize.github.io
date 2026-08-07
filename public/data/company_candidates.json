@@ -1,13 +1,97 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T00:49:46+00:00",
-  "candidateCount": 9,
-  "pendingCount": 1,
+  "generatedAt": "2026-08-07T03:11:34+00:00",
+  "candidateCount": 11,
+  "pendingCount": 3,
   "acceptedCount": 7,
   "rejectedCount": 0,
   "mergedCount": 0,
   "publishedCount": 1,
   "candidates": [
+    {
+      "id": "candidate-expeditiongrowthcapital-7d922565",
+      "decisionKey": "expeditiongrowthcapital",
+      "name": "Expedition Growth Capital",
+      "aliases": [
+        "Expedition Growth Capital"
+      ],
+      "region": "全球",
+      "sector": "风险投资",
+      "score": 75,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-07T02:41:08.277000+00:00",
+      "lastSeenAt": "2026-08-07T02:41:08.277000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1ethjwr"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "cmswire.com"
+      ],
+      "sourceArticleIds": [
+        "capture-1ethjwr"
+      ],
+      "sourceUrls": [
+        "https://www.cmswire.com/customer-experience/omilia-raises-67m-series-b-for-voice-ai-push"
+      ],
+      "eventTypes": [
+        "融资"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-taalas-23cd8fd8",
+      "decisionKey": "taalas",
+      "name": "Taalas",
+      "aliases": [
+        "Taalas"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现并购等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-07T02:42:11.465000+00:00",
+      "lastSeenAt": "2026-08-07T02:42:11.465000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1jwloj2"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "finance.sina.com.cn"
+      ],
+      "sourceArticleIds": [
+        "capture-1jwloj2"
+      ],
+      "sourceUrls": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-08-07/doc-inimmyem4109720.shtml"
+      ],
+      "eventTypes": [
+        "并购"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
     {
       "id": "candidate-movida-e1c1f617",
       "decisionKey": "movida",
@@ -432,10 +516,10 @@
     }
   ],
   "entityResolution": {
-    "captureCount": 21,
-    "companyCount": 8,
+    "captureCount": 24,
+    "companyCount": 10,
     "reviewCount": 9,
-    "reclassifiedCount": 2,
+    "reclassifiedCount": 3,
     "rejectedCount": 0
   }
 }
