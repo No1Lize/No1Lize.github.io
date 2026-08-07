@@ -23,6 +23,15 @@
 - **静态发布可复核。** Pages 构建固定到触发它的 Git SHA，构建过程不得修改 `config/` 或 `public/data/`。
 - **模型不能绕过证据。** Research Agent 对模型输出执行证据 ID 校验；模型不可用时发布透明的确定性降级结果。
 
+## 前端性能约束
+
+公开站点按“静态优先、交互按需”组织浏览器工作量：
+
+- `/search/` 的四类研究对象由服务端静态生成；事件搜索使用构建期生成的轻量 `public/data/article_search_index.json`，不得因首次输入加载完整 `articles.json`。
+- 根布局不挂载全局 React Query Provider；需要完整文章快照的交互通过模块级缓存与请求去重按需加载。
+- Favorites 使用单例 external store 与 `useSyncExternalStore`；全站共享一组浏览器 storage/custom-event 监听器，并以缓存 `Set` 查询收藏 ID。
+- `tests/client-startup-performance.test.ts` 负责守住上述边界，Pages 构建同时执行首页客户端资源预算检查。
+
 ## 自动化控制面与数据溯源
 
 自动任务的统一契约位于：
