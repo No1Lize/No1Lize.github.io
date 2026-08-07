@@ -6,9 +6,10 @@ import {
   normalizeCompanyCandidateSnapshot,
 } from "../lib/company-candidate-data";
 
-test("current company candidate snapshot is safe at the frontend boundary", () => {
-  assert.equal(companyCandidateSnapshot.candidateCount, companyCandidateSnapshot.candidates.length);
-  assert.ok(companyCandidateSnapshot.candidates.every((candidate) => candidate.score >= 0 && candidate.score <= 100));
+test("public application ships no company review snapshot", () => {
+  assert.equal(companyCandidateSnapshot.candidateCount, 0);
+  assert.deepEqual(companyCandidateSnapshot.candidates, []);
+  assert.equal(companyCandidateSnapshot.pendingCount, 0);
 });
 
 test("candidate normalization rejects malformed records and unsafe urls", () => {
