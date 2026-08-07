@@ -20,20 +20,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Exercise production SiliconFlow client
+      - name: Exercise resilient production SiliconFlow client
         env:
           SILICONFLOW_API_KEY: ${{ secrets.SILICONFLOW_API_KEY }}
           SILICONFLOW_BASE_URL: https://api.siliconflow.cn/v1
           SILICONFLOW_MODEL: deepseek-ai/DeepSeek-V4-Flash
           RESEARCH_AGENT_REASONING_EFFORT: high
+          RESEARCH_AGENT_API_TIMEOUT: "120"
+          RESEARCH_AGENT_API_RETRIES: "0"
         shell: bash
         run: |
           set -euo pipefail
+          python -m py_compile tools/research_agent.py tools/research_agent_runtime.py
           python - <<'PY'
           import json
           import os
 
-          from tools.research_agent import call_siliconflow, sanitize_analysis
+          from tools.research_agent import sanitize_analysis
+          from tools.research_agent_runtime import call_siliconflow
 
           api_key = os.environ.get("SILICONFLOW_API_KEY", "").strip()
           if not api_key:
@@ -82,8 +86,6 @@ jobs:
               model=os.environ["SILICONFLOW_MODEL"],
               reasoning_effort=os.environ.get("RESEARCH_AGENT_REASONING_EFFORT", "high"),
               prompt=prompt,
-              timeout=95.0,
-              retries=1,
           )
           usage = raw.pop("_usage", {})
           cleaned = sanitize_analysis(raw, {"E001"})
