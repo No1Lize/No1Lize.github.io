@@ -24,6 +24,31 @@ test("public source tree has no tracking capture route", () => {
   );
 });
 
+test("public companies page contains no candidate review directory", () => {
+  const source = read("app/companies/page.tsx");
+  assert.doesNotMatch(source, /CompanyCandidateDirectory/u);
+  assert.doesNotMatch(source, /company-candidate-directory/u);
+});
+
+test("company review queues are not stored under public data", () => {
+  assert.equal(
+    fs.existsSync(path.join(root, "public/data/company_candidates.json")),
+    false,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, "public/data/company_candidate_onboarding.json")),
+    false,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, "config/company_candidate_review_queue.json")),
+    true,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, "config/company_candidate_onboarding_state.json")),
+    true,
+  );
+});
+
 test("public research detail compatibility component contains no write client", () => {
   const source = read("components/tracking-entity-research-editor.tsx");
   assert.doesNotMatch(source, /["']use client["']/u);
@@ -54,5 +79,9 @@ test("Pages build audits the final public artifact", () => {
   const audit = read("scripts/audit-public-artifact.mjs");
   assert.match(audit, /tracking\/capture/u);
   assert.match(audit, /GitHub Token/u);
+  assert.match(audit, /company_candidates\.json/u);
+  assert.match(audit, /company_candidate_onboarding\.json/u);
+  assert.match(audit, /company_candidate_review_queue\.json/u);
+  assert.match(audit, /company_candidate_onboarding_state\.json/u);
   assert.match(audit, /totalBytes/u);
 });
