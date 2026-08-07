@@ -6,6 +6,11 @@ type IntelligenceDomListener = {
   callback: (rows: readonly HTMLElement[]) => void;
 };
 
+type IdleHandle =
+  | { kind: "idle"; id: number }
+  | { kind: "timer"; id: number }
+  | null;
+
 const FAVORITE_ROW_SELECTOR = [
   ".event-row",
   ".headlines-column a[class*='feedRow']",
@@ -48,9 +53,13 @@ export const INTELLIGENCE_CONTROL_MOUNT_SELECTOR = [
 ].join(",");
 
 const listeners = new Map<number, IntelligenceDomListener>();
+const candidateRows = new Set<HTMLElement>();
+const activeRows = new Set<HTMLElement>();
 let nextListenerId = 1;
-let observer: MutationObserver | null = null;
-let frame = 0;
+let mutationObserver: MutationObserver | null = null;
+let intersectionObserver: IntersectionObserver | null = null;
+let publishFrame = 0;
+let refreshHandle: IdleHandle = null;
 
 function collectRows(): HTMLElement[] {
   const rows = new Set<HTMLElement>();
@@ -78,9 +87,9 @@ export function isControlOnlyMutation(record: MutationRecord): boolean {
 }
 
 function publishRows() {
-  frame = 0;
+  publishFrame = 0;
   if (!listeners.size) return;
-  const rows = collectRows();
+  const rows = [...activeRows];
   const ordered = [...listeners.values()].sort(
     (left, right) => left.priority - right.priority || left.id - right.id,
   );
@@ -88,17 +97,96 @@ function publishRows() {
 }
 
 function schedulePublish() {
-  if (frame || !listeners.size) return;
-  frame = window.requestAnimationFrame(publishRows);
+  if (publishFrame || !listeners.size) return;
+  publishFrame = window.requestAnimationFrame(publishRows);
 }
 
-function ensureObserver() {
-  if (observer || typeof document === "undefined" || !document.body) return;
-  observer = new MutationObserver((records) => {
+function ensureIntersectionObserver() {
+  if (intersectionObserver || typeof IntersectionObserver === "undefined") return;
+  intersectionObserver = new IntersectionObserver(
+    (entries) => {
+      let entered = false;
+      for (const entry of entries) {
+        const row = entry.target as HTMLElement;
+        if (entry.isIntersecting) {
+          if (!activeRows.has(row)) {
+            activeRows.add(row);
+            entered = true;
+          }
+        } else {
+          activeRows.delete(row);
+        }
+      }
+      if (entered) schedulePublish();
+    },
+    {
+      // Pre-mount controls before the user reaches the row, without paying the
+      // React Portal cost for the entire document during hydration.
+      rootMargin: "1200px 0px",
+      threshold: 0,
+    },
+  );
+}
+
+function refreshCandidates() {
+  refreshHandle = null;
+  if (!listeners.size) return;
+
+  const nextRows = new Set(collectRows());
+  const canObserveViewport = Boolean(intersectionObserver);
+
+  for (const row of candidateRows) {
+    if (nextRows.has(row) && row.isConnected) continue;
+    intersectionObserver?.unobserve(row);
+    candidateRows.delete(row);
+    activeRows.delete(row);
+  }
+
+  for (const row of nextRows) {
+    if (candidateRows.has(row)) continue;
+    candidateRows.add(row);
+    if (canObserveViewport) {
+      intersectionObserver?.observe(row);
+    } else {
+      activeRows.add(row);
+    }
+  }
+
+  if (!canObserveViewport) schedulePublish();
+}
+
+function cancelRefresh() {
+  if (!refreshHandle) return;
+  if (refreshHandle.kind === "idle" && "cancelIdleCallback" in window) {
+    window.cancelIdleCallback(refreshHandle.id);
+  } else {
+    window.clearTimeout(refreshHandle.id);
+  }
+  refreshHandle = null;
+}
+
+function scheduleCandidateRefresh() {
+  if (refreshHandle || !listeners.size) return;
+  if ("requestIdleCallback" in window) {
+    refreshHandle = {
+      kind: "idle",
+      id: window.requestIdleCallback(refreshCandidates, { timeout: 700 }),
+    };
+    return;
+  }
+  refreshHandle = {
+    kind: "timer",
+    id: window.setTimeout(refreshCandidates, 0),
+  };
+}
+
+function ensureMutationObserver() {
+  if (mutationObserver || typeof document === "undefined" || !document.body) return;
+  mutationObserver = new MutationObserver((records) => {
     if (records.length > 0 && records.every(isControlOnlyMutation)) return;
-    schedulePublish();
+    scheduleCandidateRefresh();
   });
-  observer.observe(document.body, { childList: true, subtree: true });
+  mutationObserver.observe(document.body, { childList: true, subtree: true });
 }
 
 export function subscribeIntelligenceDom(
@@ -108,16 +196,23 @@ export function subscribeIntelligenceDom(
   const id = nextListenerId;
   nextListenerId += 1;
   listeners.set(id, { id, priority: options.priority ?? 0, callback });
-  ensureObserver();
-  schedulePublish();
+  ensureIntersectionObserver();
+  ensureMutationObserver();
+  scheduleCandidateRefresh();
 
   return () => {
     listeners.delete(id);
     if (listeners.size) return;
-    observer?.disconnect();
-    observer = null;
-    if (frame) window.cancelAnimationFrame(frame);
-    frame = 0;
+
+    mutationObserver?.disconnect();
+    mutationObserver = null;
+    intersectionObserver?.disconnect();
+    intersectionObserver = null;
+    cancelRefresh();
+    if (publishFrame) window.cancelAnimationFrame(publishFrame);
+    publishFrame = 0;
+    candidateRows.clear();
+    activeRows.clear();
   };
 }
 
