@@ -24,6 +24,11 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+try:
+    from .source_health_summary import rebuild_source_health_summary
+except ImportError:
+    from source_health_summary import rebuild_source_health_summary
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG_PATH = ROOT / "config" / "user_tracking.json"
 DEFAULT_LEDGER_PATH = ROOT / "config" / "tracking_auto_discovery.json"
@@ -291,59 +296,7 @@ def _normalize_ledger(
 
 
 def _rebuild_health_summary(payload: dict[str, Any]) -> dict[str, Any]:
-    result = deepcopy(payload)
-    sources = result.get("sources") if isinstance(result.get("sources"), dict) else {}
-
-    def ids_for(predicate: Any) -> list[str]:
-        return sorted(
-            source_id
-            for source_id, item in sources.items()
-            if isinstance(item, dict) and predicate(item)
-        )
-
-    active = ids_for(lambda item: bool(item.get("alertActive")))
-    quarantined = ids_for(lambda item: item.get("collectionState") == "quarantined")
-    probation = ids_for(lambda item: item.get("collectionState") == "probation")
-    low_priority = ids_for(lambda item: item.get("priority") == "low")
-    performance_review = ids_for(
-        lambda item: isinstance(item.get("performance"), dict)
-        and bool(item["performance"].get("reviewRequired"))
-    )
-    downgrade = ids_for(
-        lambda item: isinstance(item.get("performance"), dict)
-        and item["performance"].get("reviewState") == "downgrade-candidate"
-    )
-    retirement = ids_for(
-        lambda item: isinstance(item.get("performance"), dict)
-        and item["performance"].get("reviewState") == "retire-candidate"
-    )
-    monitor = ids_for(
-        lambda item: isinstance(item.get("performance"), dict)
-        and item["performance"].get("reviewState") == "monitor"
-    )
-    result.update(
-        {
-            "sourceCount": len(sources),
-            "activeAlertCount": len(active),
-            "activeAlerts": active,
-            "quarantinedSourceCount": len(quarantined),
-            "quarantinedSources": quarantined,
-            "probationSourceCount": len(probation),
-            "probationSources": probation,
-            "lowPrioritySourceCount": len(low_priority),
-            "lowPrioritySources": low_priority,
-            "performanceReviewSourceCount": len(performance_review),
-            "performanceReviewSources": performance_review,
-            "downgradeCandidateCount": len(downgrade),
-            "downgradeCandidates": downgrade,
-            "retirementCandidateCount": len(retirement),
-            "retirementCandidates": retirement,
-            "monitorSourceCount": len(monitor),
-            "monitorSources": monitor,
-            "sources": dict(sorted(sources.items())),
-        }
-    )
-    return result
+    return rebuild_source_health_summary(payload)
 
 
 def normalize_tracking_sources(
@@ -465,6 +418,7 @@ def normalize_tracking_sources(
         for source_id in runtime_source_ids(config_id)
     }
     health_removed = 0
+    health_summary_changed = False
     if health_sources:
         for source_id in list(health_sources):
             if source_id in removed_ids or (
@@ -474,7 +428,9 @@ def normalize_tracking_sources(
                 health_sources.pop(source_id, None)
                 health_removed += 1
         next_health["sources"] = health_sources
-        next_health = _rebuild_health_summary(next_health)
+        normalized_health = _rebuild_health_summary(next_health)
+        health_summary_changed = normalized_health != next_health
+        next_health = normalized_health
 
     errors = validate_tracking_sources(next_config, next_health)
     stats = {
@@ -486,6 +442,7 @@ def normalize_tracking_sources(
         "recursiveDuplicatesRemoved": recursive_removed,
         "deadAutoSourcesRemoved": dead_removed,
         "healthRowsRemoved": health_removed,
+        "healthSummaryChanged": health_summary_changed,
         "removedSourceIds": sorted(removed_ids),
         "errors": errors,
         **ledger_stats,

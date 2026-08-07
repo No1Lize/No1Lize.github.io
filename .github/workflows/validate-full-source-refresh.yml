@@ -11,7 +11,14 @@ on:
       - tools/validate_professional_media_snapshot.py
       - tools/crawl_with_wechat_registry.py
       - tools/snapshot_retention.py
+      - tools/update_source_health.py
+      - tools/source_health_summary.py
+      - tools/tracking_source_governance.py
+      - public/data/source_health.json
       - tests/test_professional_media_sources.py
+      - tests/test_source_health_summary.py
+      - tests/test_scheduled_sync_workflow.py
+      - .github/workflows/scheduled-sync.yml
       - .github/workflows/validate-full-source-refresh.yml
   workflow_dispatch:
 
@@ -27,14 +34,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate source adapters
+      - name: Validate source adapters and health contracts
         run: |
           python -m py_compile \
             tools/professional_media_sources.py \
             tools/validate_professional_media_snapshot.py \
             tools/crawl_with_wechat_registry.py \
-            tools/validate_full_refresh.py
-          python -m unittest tests.test_professional_media_sources
+            tools/validate_full_refresh.py \
+            tools/update_source_health.py \
+            tools/source_health_summary.py \
+            tools/tracking_source_governance.py
+          python -m unittest \
+            tests.test_professional_media_sources \
+            tests.test_source_health_summary \
+            tests.test_scheduled_sync_workflow
+          python tools/source_health_summary.py --check
+          python tools/tracking_source_governance.py --check
       - name: Start clean source ledger
         run: python tools/prepare_full_refresh.py
       - name: Crawl every configured public source family
@@ -47,7 +62,7 @@ jobs:
         env:
           SEC_USER_AGENT: "LizeRoadOne/3.0 contact=No1Lize@users.noreply.github.com (+https://github.com/No1Lize/No1Lize.github.io)"
         run: python tools/eastmoney_transport.py
-      - name: Refresh dependent public datasets
+      - name: Refresh dependent public datasets and source health
         run: |
           python tools/refresh_market_profiles_enriched.py
           python tools/migrate_article_entities.py
@@ -56,8 +71,11 @@ jobs:
           python tools/refresh_people_profiles_with_video.py
           python tools/snapshot_retention.py
           python tools/finalize_full_refresh.py
+          python tools/update_source_health.py
       - name: Validate the complete refresh
         run: |
+          python tools/source_health_summary.py --check
+          python tools/tracking_source_governance.py --check
           python tools/snapshot_retention.py --check
           python tools/validate_professional_media_snapshot.py --require-articles
           python tools/crawl_articles.py --validate-only
