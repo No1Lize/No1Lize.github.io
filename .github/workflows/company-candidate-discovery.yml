@@ -82,6 +82,7 @@ jobs:
           if git diff --quiet -- "${changed_paths[@]}"; then
             echo "No semantic entity-resolution or candidate changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "tracking_changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
@@ -99,15 +100,32 @@ jobs:
               git commit --amend --no-edit
             fi
             if git push origin HEAD:main; then
+              tracking_changed=false
+              if git diff-tree --no-commit-id --name-only -r HEAD -- config/user_tracking.json \
+                | grep -qx 'config/user_tracking.json'; then
+                tracking_changed=true
+              fi
               echo "changed=true" >> "$GITHUB_OUTPUT"
+              echo "tracking_changed=$tracking_changed" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             if [ "$attempt" -eq 3 ]; then
               exit 1
             fi
           done
-      - name: Deploy reconciled entity data
-        if: steps.publish.outputs.changed == 'true'
+      - name: Continue refresh or deploy after reconciliation
+        if: steps.publish.outputs.changed == 'true' || github.event_name == 'workflow_run' || github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run pages.yml --ref main
+          EVENT_NAME: ${{ github.event_name }}
+          TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${TRACKING_CHANGED:-false}" = "true" ] || [ "$EVENT_NAME" = "push" ]; then
+            echo "Tracking inputs may have changed; rebuild the article snapshot before Pages."
+            gh workflow run scheduled-sync.yml --ref main
+          else
+            echo "Tracking scope is stable after a successful refresh; deploy the fixed-point snapshot."
+            gh workflow run pages.yml --ref main
+          fi
