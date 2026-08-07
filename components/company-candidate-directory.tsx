@@ -18,11 +18,11 @@ export function CompanyCandidateDirectory() {
             <h2 id="company-candidates-title">候选新公司</h2>
           </div>
           <p>
-            仅使用结构化公司字段和可追溯来源生成。候选需先人工确认公司实体；审核通过后还需补齐规范名称、slug 与官方来源，质量门通过后才会自动创建正式公司档案。
+            仅使用结构化公司字段和可追溯来源生成。管理员已显式添加、且实体解析无冲突的公司会自动免除二次人工复审；只有系统自动发现或存在类型、身份歧义的对象进入审核。正式公司档案仍须通过规范名称、slug、官方来源与质量门。
           </p>
         </div>
         <div className={styles.summary}>
-          <span>待审核</span>
+          <span>自动发现待审核</span>
           <strong>{companyCandidateSnapshot.pendingCount}</strong>
           <small><ShieldCheck size={12} aria-hidden="true" /> 证据阈值 ≥ 35</small>
         </div>
@@ -53,8 +53,8 @@ export function CompanyCandidateDirectory() {
         </div>
       ) : (
         <div className={styles.empty}>
-          <strong>当前没有达到审核阈值的新公司</strong>
-          <p>新的结构化公司证据会在每日候选发现任务后出现在这里。</p>
+          <strong>当前没有需要人工确认的自动发现公司</strong>
+          <p>管理员显式添加且无冲突的公司会自动进入建档质量流程；新的自动发现候选仍会在这里等待审核。</p>
         </div>
       )}
     </section>
