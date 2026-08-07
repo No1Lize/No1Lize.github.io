@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T03:11:34+00:00",
-  "candidateCount": 11,
-  "pendingCount": 3,
+  "generatedAt": "2026-08-07T06:25:29+00:00",
+  "candidateCount": 12,
+  "pendingCount": 4,
   "acceptedCount": 7,
   "rejectedCount": 0,
   "mergedCount": 0,
@@ -85,6 +85,48 @@
       ],
       "eventTypes": [
         "并购"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-firmus-15dcfbde",
+      "decisionKey": "firmus",
+      "name": "Firmus",
+      "aliases": [
+        "Firmus"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-07T05:13:33.075000+00:00",
+      "lastSeenAt": "2026-08-07T05:13:33.075000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1x58yu6"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "finance.sina.com.cn"
+      ],
+      "sourceArticleIds": [
+        "capture-1x58yu6"
+      ],
+      "sourceUrls": [
+        "https://finance.sina.com.cn/stock/usstock/c/2026-08-07/doc-inimneni4145971.shtml"
+      ],
+      "eventTypes": [
+        "融资"
       ],
       "note": "",
       "mergedSlug": "",
@@ -350,15 +392,15 @@
         "埃隆·马斯克"
       ],
       "region": "全球",
-      "sector": "商业航天",
+      "sector": "AI / AGI",
       "score": 40,
       "status": "accepted",
       "reasons": [
         "存在官方、原始或监管来源",
         "最近 90 天仍有公开活动"
       ],
-      "firstSeenAt": "2026-08-04T00:00:00+00:00",
-      "lastSeenAt": "2026-08-04T00:00:00+00:00",
+      "firstSeenAt": "2026-08-06T00:00:00+00:00",
+      "lastSeenAt": "2026-08-06T00:00:00+00:00",
       "articleCount": 1,
       "captureCount": 0,
       "captureIds": [],
@@ -367,10 +409,10 @@
         "x.com"
       ],
       "sourceArticleIds": [
-        "user-x-elonmusk-09518793bca2b8b3"
+        "user-x-elonmusk-875ed74b162cd5a8"
       ],
       "sourceUrls": [
-        "https://x.com/elonmusk/status/2084745539187273851"
+        "https://x.com/elonmusk/status/2085377974396752305"
       ],
       "eventTypes": [
         "人物观点"
@@ -463,9 +505,9 @@
       ],
       "sourceUrls": [
         "https://www.shopify.com/blog/latest",
+        "https://www.shopify.com/blog/topics/guides",
         "https://www.shopify.com/enterprise/blog/latest",
         "https://help.shopify.com/en",
-        "https://www.shopify.com/blog/topics/guides",
         "https://www.shopify.com/news/a-world-with-more-builders",
         "https://www.shopify.com/partners/blog/latest",
         "https://www.shopify.com/news/preparedness-paradox",
@@ -516,8 +558,8 @@
     }
   ],
   "entityResolution": {
-    "captureCount": 24,
-    "companyCount": 10,
+    "captureCount": 27,
+    "companyCount": 11,
     "reviewCount": 9,
     "reclassifiedCount": 3,
     "rejectedCount": 0
