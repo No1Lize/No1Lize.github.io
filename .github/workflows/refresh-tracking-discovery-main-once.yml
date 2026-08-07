@@ -23,11 +23,15 @@ jobs:
           python-version: '3.12'
       - name: Crawl only the four per-track discovery routes
         run: python tools/crawl_with_wechat_registry.py --source discovery
-      - name: Enrich and validate the current tracking snapshot
+      - name: Rebuild all data derived from the refreshed article snapshot
         run: |
           python tools/migrate_article_entities.py
           python tools/enrich_tracking_snapshot.py
           python tools/snapshot_retention.py
+          python tools/build_resolved_company_candidates.py
+          python tools/company_profile_refresh_queue.py
+      - name: Validate tracking and derived-data fixed points
+        run: |
           python tools/crawl_articles.py --validate-only
           python tools/validate_user_source_coverage.py
           node scripts/validate-tracking-snapshot.mjs
@@ -41,14 +45,18 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           rm .github/workflows/refresh-tracking-discovery-main-once.yml
+          rm -f .github/workflows/refresh-tracking-snapshot-main-once.yml
           python tools/run_pipeline.py finalize \
             public-intelligence-frequent-refresh \
             --quality-gate passed
           git add \
             public/data/articles.json \
+            public/data/company_candidates.json \
+            public/data/company_profile_refresh_queue.json \
             public/data/data_lineage.json \
             public/data/pipeline_health.json \
-            .github/workflows/refresh-tracking-discovery-main-once.yml
+            .github/workflows/refresh-tracking-discovery-main-once.yml \
+            .github/workflows/refresh-tracking-snapshot-main-once.yml
           git commit -m 'data: refresh tracking discovery after entity reconciliation'
 
           for attempt in 1 2 3; do
@@ -56,6 +64,8 @@ jobs:
             python tools/migrate_article_entities.py
             python tools/enrich_tracking_snapshot.py
             python tools/snapshot_retention.py
+            python tools/build_resolved_company_candidates.py
+            python tools/company_profile_refresh_queue.py
             python tools/crawl_articles.py --validate-only
             python tools/validate_user_source_coverage.py
             node scripts/validate-tracking-snapshot.mjs
@@ -67,6 +77,8 @@ jobs:
               --quality-gate passed
             git add \
               public/data/articles.json \
+              public/data/company_candidates.json \
+              public/data/company_profile_refresh_queue.json \
               public/data/data_lineage.json \
               public/data/pipeline_health.json
             if ! git diff --cached --quiet; then
