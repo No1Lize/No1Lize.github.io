@@ -9,7 +9,9 @@ This module implements the two-lane candidate policy:
 * formal company publication still requires the existing onboarding quality gate.
 
 The command is deliberately conservative. A manual assertion is trusted only when
-shared entity resolution still resolves the name to a company. Final review
+shared entity resolution still resolves the name to a company. Capture-backed
+trust additionally requires explicit human provenance, and a capture-backed
+candidate can never fall through to the direct-tracking trust path. Final review
 outcomes (accepted/rejected/merged/published) are never overwritten.
 """
 
@@ -53,6 +55,13 @@ FINAL_REVIEW_STATUSES = {"accepted", "rejected", "merged", "published"}
 TRUST_NOTE = (
     "管理员已显式添加该公司，且实体解析未发现类型或身份冲突；"
     "免二次人工复审。正式发布仍须通过自动建档、官方来源和质量门。"
+)
+AUTOMATION_ACTOR_MARKERS = (
+    "bot",
+    "github-actions",
+    "automation",
+    "crawler",
+    "system",
 )
 
 
@@ -102,6 +111,16 @@ def _decision_index(payload: Mapping[str, Any]) -> dict[str, tuple[str, dict[str
     return result
 
 
+def _is_manual_actor(value: Any) -> bool:
+    """Require an explicit non-automation actor before capture evidence is trusted."""
+
+    actor = clean(value, 120)
+    if not actor:
+        return False
+    lowered = actor.casefold()
+    return not any(marker in lowered for marker in AUTOMATION_ACTOR_MARKERS)
+
+
 def _candidate_capture_resolution(
     candidate: Mapping[str, Any],
     capture_rows: Mapping[str, dict[str, Any]],
@@ -123,6 +142,10 @@ def _candidate_capture_resolution(
         if not capture:
             continue
         saw_capture = True
+        actor = clean(capture.get("capturedBy"), 120)
+        if not _is_manual_actor(actor):
+            last_reason = "采集记录没有可验证的人工操作者，不能继承人工信任"
+            continue
         embedded = capture.get("resolution") if isinstance(capture.get("resolution"), dict) else {}
         requested_type = clean(embedded.get("requestedType"), 20) or clean(
             capture.get("entityType"), 20
@@ -148,7 +171,7 @@ def _candidate_capture_resolution(
         ):
             return (
                 True,
-                clean(capture.get("capturedBy"), 120) or "VCIQ/manual-trusted",
+                actor,
                 clean(capture.get("capturedAt"), 80),
                 "管理员文章采集已通过实体解析",
             )
@@ -246,6 +269,8 @@ def apply_manual_company_trust(
             preserved_final_keys.append(key)
             continue
 
+        raw_capture_ids = candidate.get("captureIds", [])
+        has_capture_evidence = isinstance(raw_capture_ids, list) and bool(raw_capture_ids)
         capture_trusted, actor, decided_at, capture_reason = _candidate_capture_resolution(
             candidate,
             capture_rows,
@@ -256,7 +281,10 @@ def apply_manual_company_trust(
         )
         tracking_trusted = False
         tracking_reason = ""
-        if not capture_trusted:
+        # Capture-backed candidates must prove human provenance on the capture
+        # itself. They may have been reconciled into sampleCompanies, but that
+        # derived placement must never become a second route around provenance.
+        if not capture_trusted and not has_capture_evidence:
             tracking_trusted, tracking_reason = _manual_tracking_resolution(
                 candidate,
                 tracked_names,
@@ -267,10 +295,7 @@ def apply_manual_company_trust(
             )
 
         if not capture_trusted and not tracking_trusted:
-            manually_asserted = (
-                bool(candidate.get("captureIds"))
-                or key in tracked_names
-            )
+            manually_asserted = has_capture_evidence or key in tracked_names
             if manually_asserted:
                 exception_rows.append(
                     {
