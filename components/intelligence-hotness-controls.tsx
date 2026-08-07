@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "@/components/intelligence-hotness-controls.module.css";
 import {
+  isIntelligenceDomRow,
+  subscribeIntelligenceDom,
+} from "@/lib/intelligence-dom-runtime";
+import {
   recordArticleOpen,
   recordArticleShare,
   setArticleFavorite,
@@ -98,34 +102,6 @@ function itemFromRow(row: HTMLElement): HotnessInput | null {
   };
 }
 
-function collectRows(): HTMLElement[] {
-  const rows = new Set<HTMLElement>();
-  const add = (selector: string) => {
-    document.querySelectorAll<HTMLElement>(selector).forEach((row) => rows.add(row));
-  };
-
-  add(".event-row");
-  add(".headlines-column a[class*='feedRow']");
-  add(".side-column a[class*='feedRow']");
-  add("[data-intelligence-item]");
-  add(".material-list > a");
-  add("a.source-card[href]");
-  add("a[class*='eventCard'][href]");
-  add(".market-news-item[href]");
-  add("[class*='eventList'] > a[href]");
-  add("[class*='newsList'] > a[href]");
-  add(".entity-list > a[target='_blank'][href]");
-  add(".analysis-grid > a[target='_blank'][href]");
-  add(".favorite-intelligence-card");
-  add(".favorite-card");
-
-  document.querySelectorAll<HTMLElement>(".timeline > div").forEach((row) => {
-    if (hrefFromRow(row)) rows.add(row);
-  });
-
-  return [...rows];
-}
-
 function rowFromTarget(target: EventTarget | null): HTMLElement | null {
   const element = target instanceof Element ? target : null;
   if (!element) return null;
@@ -185,7 +161,6 @@ export function IntelligenceHotnessControls() {
 
   useEffect(() => {
     const registry = new Map<HTMLElement, ShareMount>();
-    let frame = 0;
     let sequence = 0;
 
     const removeMount = (mount: ShareMount) => {
@@ -193,8 +168,7 @@ export function IntelligenceHotnessControls() {
       delete mount.host.dataset.intelligenceHotnessAttached;
     };
 
-    const scan = () => {
-      frame = 0;
+    const scan = (rows: readonly HTMLElement[]) => {
       let changed = false;
 
       for (const [host, mount] of registry) {
@@ -205,7 +179,8 @@ export function IntelligenceHotnessControls() {
         }
       }
 
-      for (const row of collectRows()) {
+      for (const row of rows) {
+        if (!isIntelligenceDomRow(row, "hotness")) continue;
         const item = itemFromRow(row);
         if (!item) continue;
         const favoriteMount = row.querySelector<HTMLElement>("[data-intelligence-favorite-mount]");
@@ -242,11 +217,6 @@ export function IntelligenceHotnessControls() {
       if (changed) setMounts([...registry.values()]);
     };
 
-    const scheduleScan = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(scan);
-    };
-
     const onClickCapture = (event: MouseEvent) => {
       const element = event.target instanceof Element ? event.target : null;
       if (!element) return;
@@ -280,15 +250,12 @@ export function IntelligenceHotnessControls() {
       }
     };
 
-    scan();
-    const observer = new MutationObserver(scheduleScan);
-    observer.observe(document.body, { childList: true, subtree: true });
+    const unsubscribe = subscribeIntelligenceDom(scan, { priority: 30 });
     document.addEventListener("click", onClickCapture, true);
 
     return () => {
-      observer.disconnect();
+      unsubscribe();
       document.removeEventListener("click", onClickCapture, true);
-      if (frame) window.cancelAnimationFrame(frame);
       registry.forEach(removeMount);
       registry.clear();
     };
