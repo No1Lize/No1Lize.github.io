@@ -1,29 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import {
-  FAVORITES_CHANGED_EVENT,
-  FAVORITES_STORAGE_KEY,
-  readFavoriteItems,
+  getFavoriteIdSnapshot,
+  getFavoriteSnapshot,
+  subscribeFavorites,
   type FavoriteItem,
 } from "@/lib/favorites";
 
+const EMPTY_FAVORITES: FavoriteItem[] = [];
+const EMPTY_FAVORITE_IDS = new Set<string>();
+
+function getServerFavorites(): FavoriteItem[] {
+  return EMPTY_FAVORITES;
+}
+
+function getServerFavoriteIds(): Set<string> {
+  return EMPTY_FAVORITE_IDS;
+}
+
 export function useFavorites(): FavoriteItem[] {
-  const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
+  return useSyncExternalStore(
+    subscribeFavorites,
+    getFavoriteSnapshot,
+    getServerFavorites,
+  );
+}
 
-  useEffect(() => {
-    const refresh = () => setFavorites(readFavoriteItems());
-    const onStorage = (event: StorageEvent) => {
-      if (event.key === FAVORITES_STORAGE_KEY) refresh();
-    };
-    refresh();
-    window.addEventListener(FAVORITES_CHANGED_EVENT, refresh);
-    window.addEventListener("storage", onStorage);
-    return () => {
-      window.removeEventListener(FAVORITES_CHANGED_EVENT, refresh);
-      window.removeEventListener("storage", onStorage);
-    };
-  }, []);
-
-  return favorites;
+export function useFavorite(id: string): boolean {
+  const ids = useSyncExternalStore(
+    subscribeFavorites,
+    getFavoriteIdSnapshot,
+    getServerFavoriteIds,
+  );
+  return ids.has(id);
 }

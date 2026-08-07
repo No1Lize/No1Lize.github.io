@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { LiveStatus } from "@/components/live-status";
-import { Providers } from "@/components/providers";
 import { SiteClientControls } from "@/components/site-client-controls";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
@@ -25,18 +24,16 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="zh-CN" data-theme="light">
       <body>
-        <Providers>
-          <SiteHeader status={<LiveStatus />} />
-          {children}
-          <SiteClientControls />
-          <footer className="site-footer">
-            <div>
-              <strong>丽泽路1号</strong>
-              <span>事实、计算与判断分层呈现</span>
-            </div>
-            <p>信息仅供研究，不构成投资建议。关键事实均应回溯原始信源。</p>
-          </footer>
-        </Providers>
+        <SiteHeader status={<LiveStatus />} />
+        {children}
+        <SiteClientControls />
+        <footer className="site-footer">
+          <div>
+            <strong>丽泽路1号</strong>
+            <span>事实、计算与判断分层呈现</span>
+          </div>
+          <p>信息仅供研究，不构成投资建议。关键事实均应回溯原始信源。</p>
+        </footer>
       </body>
     </html>
   );

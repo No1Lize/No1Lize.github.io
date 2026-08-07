@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useCallback, useEffect, useState } from "react";
 import type { RefreshAudit } from "@/lib/snapshot-freshness";
 
 export type Region = "中国" | "美国" | "全球";
@@ -116,6 +115,14 @@ const emptyPayload: ArticlePayload = {
   sourceStatus: [],
 };
 
+const ARTICLE_CACHE_TTL_MS = 20 * 60_000;
+const ARTICLE_REFRESH_INTERVAL_MS = 30 * 60_000;
+
+let cachedPayload: ArticlePayload | null = null;
+let cachedAt = 0;
+let inFlight: Promise<ArticlePayload> | null = null;
+const subscribers = new Set<(payload: ArticlePayload) => void>();
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
@@ -153,12 +160,46 @@ export function parseArticlePayload(value: unknown): ArticlePayload {
   return value as unknown as ArticlePayload;
 }
 
-async function fetchArticles(): Promise<ArticlePayload> {
-  const response = await fetch("/data/articles.json", { cache: "no-store" });
+function publishArticlePayload(payload: ArticlePayload) {
+  cachedPayload = payload;
+  cachedAt = Date.now();
+  for (const subscriber of subscribers) subscriber(payload);
+}
+
+async function fetchArticlesFromNetwork(): Promise<ArticlePayload> {
+  const response = await fetch("/data/articles.json", { cache: "default" });
   if (!response.ok) {
     throw new Error(`Public article data returned ${response.status}`);
   }
   return parseArticlePayload(await response.json());
+}
+
+async function loadArticles(force = false): Promise<ArticlePayload> {
+  if (
+    !force &&
+    cachedPayload &&
+    Date.now() - cachedAt < ARTICLE_CACHE_TTL_MS
+  ) {
+    return cachedPayload;
+  }
+  if (inFlight) return inFlight;
+
+  inFlight = fetchArticlesFromNetwork()
+    .then((payload) => {
+      publishArticlePayload(payload);
+      return payload;
+    })
+    .finally(() => {
+      inFlight = null;
+    });
+  return inFlight;
+}
+
+function subscribeArticles(subscriber: (payload: ArticlePayload) => void): () => void {
+  subscribers.add(subscriber);
+  return () => {
+    subscribers.delete(subscriber);
+  };
 }
 
 export function useArticles(
@@ -167,8 +208,11 @@ export function useArticles(
 ) {
   // With build-time bootstrap data available, wait until the first real user
   // interaction before loading the complete multi-megabyte event archive.
-  // Callers can still opt into immediate or fully disabled loading explicitly.
+  // Search no longer uses this hook; it consumes a compact event index instead.
   const [interactionEnabled, setInteractionEnabled] = useState(false);
+  const [payload, setPayload] = useState<ArticlePayload>(() => cachedPayload ?? initialPayload);
+  const [error, setError] = useState<Error | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
 
   useEffect(() => {
     if (options.enabled !== undefined || interactionEnabled) return;
@@ -182,24 +226,78 @@ export function useArticles(
   }, [interactionEnabled, options.enabled]);
 
   const enabled = options.enabled ?? interactionEnabled;
-  const query = useQuery({
-    queryKey: ["public-articles"],
-    queryFn: fetchArticles,
-    placeholderData: initialPayload,
-    enabled,
-    staleTime: 20 * 60_000,
-    refetchInterval: enabled ? 30 * 60_000 : false,
-    refetchIntervalInBackground: false,
-    refetchOnWindowFocus: false,
-  });
-  const payload = query.data ?? initialPayload;
+
+  useEffect(() => {
+    if (!enabled) return;
+    return subscribeArticles((nextPayload) => {
+      setPayload(nextPayload);
+      setError(null);
+    });
+  }, [enabled]);
+
+  useEffect(() => {
+    if (!enabled) return;
+    let active = true;
+
+    const refresh = async () => {
+      setIsFetching(true);
+      try {
+        const nextPayload = await loadArticles();
+        if (!active) return;
+        setPayload(nextPayload);
+        setError(null);
+      } catch (value) {
+        if (!active) return;
+        setError(value instanceof Error ? value : new Error(String(value)));
+      } finally {
+        if (active) setIsFetching(false);
+      }
+    };
+
+    void refresh();
+    const interval = window.setInterval(() => void refresh(), ARTICLE_REFRESH_INTERVAL_MS);
+    return () => {
+      active = false;
+      window.clearInterval(interval);
+    };
+  }, [enabled]);
+
+  const refetch = useCallback(async () => {
+    setIsFetching(true);
+    try {
+      const nextPayload = await loadArticles(true);
+      setPayload(nextPayload);
+      setError(null);
+      return nextPayload;
+    } catch (value) {
+      const nextError = value instanceof Error ? value : new Error(String(value));
+      setError(nextError);
+      throw nextError;
+    } finally {
+      setIsFetching(false);
+    }
+  }, []);
+
+  const isLive = Boolean(enabled && cachedPayload && payload === cachedPayload);
+  const hasData = payload.articles.length > 0 || Boolean(payload.generatedAt);
+
   return {
-    ...query,
+    data: payload,
+    error,
+    status: error ? "error" as const : hasData ? "success" as const : "pending" as const,
+    fetchStatus: isFetching ? "fetching" as const : "idle" as const,
+    isPending: !hasData && !error,
+    isLoading: isFetching && !hasData,
+    isFetching,
+    isSuccess: !error && hasData,
+    isError: Boolean(error),
+    isPlaceholderData: !isLive,
+    refetch,
     articles: payload.articles,
     generatedAt: payload.generatedAt,
     sourceStatus: payload.sourceStatus ?? [],
     qualityGate: payload.qualityGate,
     refreshAudit: payload.refreshAudit,
-    isLive: enabled && query.isSuccess && !query.isPlaceholderData,
+    isLive,
   };
 }

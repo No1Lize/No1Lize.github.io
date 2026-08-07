@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
@@ -8,10 +8,16 @@ const read = (relativePath: string) => readFileSync(path.join(ROOT, relativePath
 
 const page = read("app/page.tsx");
 const layout = read("app/layout.tsx");
+const searchPage = read("app/search/page.tsx");
 const dashboard = read("components/dashboard-client.tsx");
+const favoriteButton = read("components/favorite-button.tsx");
+const favoriteControls = read("components/homepage-favorite-controls.tsx");
+const favoritesHook = read("components/use-favorites.ts");
+const globalSearch = read("components/global-search.tsx");
 const liveStatus = read("components/live-status.tsx");
 const siteHeader = read("components/site-header.tsx");
 const articles = read("lib/use-articles.ts");
+const favorites = read("lib/favorites.ts");
 const domRuntime = read("lib/intelligence-dom-runtime.ts");
 const packageJson = read("package.json");
 
@@ -33,17 +39,55 @@ test("global header status is build-time and cannot trigger the article archive 
   assert.match(layout, /<SiteHeader status={<LiveStatus \/>} \/>/);
 });
 
-test("browser article archive avoids startup fetch and a second full validation walk", () => {
+test("browser article archive is lazy and no longer requires a global react-query provider", () => {
   assert.doesNotMatch(articles, /from "zod"/);
-  assert.doesNotMatch(articles, /@\/lib\/intelligence-data/);
-  assert.doesNotMatch(articles, /payloadSchema\.parse/);
-  assert.match(articles, /parseArticlePayload/);
+  assert.doesNotMatch(articles, /@tanstack\/react-query/);
+  assert.doesNotMatch(layout, /Providers/);
   assert.match(articles, /pointerdown/);
   assert.match(articles, /keydown/);
   assert.match(articles, /const enabled = options\.enabled \?\? interactionEnabled/);
-  assert.match(articles, /placeholderData: initialPayload,[\s\S]*?\benabled,/);
-  assert.match(articles, /refetchIntervalInBackground: false/);
-  assert.match(articles, /refetchOnWindowFocus: false/);
+  assert.match(articles, /cachedPayload/);
+  assert.match(articles, /inFlight/);
+  assert.match(articles, /cache: "default"/);
+  assert.match(articles, /ARTICLE_REFRESH_INTERVAL_MS/);
+});
+
+test("global client shell does not retain the dead react-query runtime", () => {
+  assert.doesNotMatch(packageJson, /@tanstack\/react-query/);
+  assert.equal(
+    existsSync(path.join(ROOT, "components", "providers.tsx")),
+    false,
+    "unused global QueryClient provider must stay removed",
+  );
+});
+
+test("global search does not bundle research datasets or load the full article archive", () => {
+  assert.doesNotMatch(globalSearch, /@\/lib\/catalog-data/);
+  assert.doesNotMatch(globalSearch, /@\/lib\/core-research-objects/);
+  assert.doesNotMatch(globalSearch, /@\/lib\/people-data/);
+  assert.doesNotMatch(globalSearch, /@\/lib\/tracked-sectors/);
+  assert.doesNotMatch(globalSearch, /useArticles/);
+  assert.match(searchPage, /staticRecords/);
+  assert.match(searchPage, /<GlobalSearch staticRecords={staticRecords} \/>/);
+  assert.match(globalSearch, /article_search_index\.json/);
+  assert.match(globalSearch, /EVENT_QUERY_MIN_LENGTH = 2/);
+  assert.match(globalSearch, /SEARCH_DEBOUNCE_MS = 120/);
+  assert.match(packageJson, /build:search-index/);
+  assert.match(packageJson, /build-article-search-index\.mjs/);
+});
+
+test("favorites use one external store instead of one browser listener set per button", () => {
+  assert.match(favoritesHook, /useSyncExternalStore/);
+  assert.match(favorites, /favoriteSubscribers/);
+  assert.match(favorites, /browserListenersAttached/);
+  assert.match(favorites, /window\.addEventListener\(FAVORITES_CHANGED_EVENT/);
+  assert.match(favorites, /cachedFavoriteIds/);
+  assert.doesNotMatch(favoriteButton, /addEventListener/);
+  assert.doesNotMatch(favoriteButton, /FAVORITES_STORAGE_KEY/);
+  assert.doesNotMatch(favoriteControls, /FAVORITES_CHANGED_EVENT/);
+  assert.doesNotMatch(favoriteControls, /FAVORITES_STORAGE_KEY/);
+  assert.doesNotMatch(favoriteControls, /isFavorite/);
+  assert.match(favoriteControls, /useFavorite\(item\.id\)/);
 });
 
 test("intelligence controls mount progressively after hydration", () => {
