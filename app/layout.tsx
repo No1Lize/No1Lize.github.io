@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { LiveStatus } from "@/components/live-status";
 import { Providers } from "@/components/providers";
 import { SiteClientControls } from "@/components/site-client-controls";
 import { SiteHeader } from "@/components/site-header";
@@ -25,7 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="zh-CN" data-theme="light">
       <body>
         <Providers>
-          <SiteHeader />
+          <SiteHeader status={<LiveStatus />} />
           {children}
           <SiteClientControls />
           <footer className="site-footer">

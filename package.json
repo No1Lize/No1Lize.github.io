@@ -19,7 +19,8 @@
     "validate:tracking-snapshot": "node scripts/validate-tracking-snapshot.mjs",
     "verify:tracking-pages": "node scripts/validate-tracking-pages.mjs --check-output",
     "audit:public-artifact": "node scripts/audit-public-artifact.mjs",
-    "build:pages": "npm run validate:pipeline && npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && node scripts/build-pages.mjs && npm run verify:tracking-pages && npm run audit:public-artifact && node scripts/validate-static-links.mjs",
+    "check:homepage-performance": "node scripts/check-homepage-performance-budget.mjs",
+    "build:pages": "npm run validate:pipeline && npm run validate:tracking && npm run validate:taxonomy && npm run validate:tracking-snapshot && node scripts/build-pages.mjs && npm run verify:tracking-pages && npm run audit:public-artifact && node scripts/validate-static-links.mjs && npm run check:homepage-performance",
     "crawl": "python3 tools/crawl_articles.py",
     "validate:artifact": "bash scripts/validate-artifact.sh",
     "lint": "bash scripts/sites-env.sh -- eslint . --ignore-pattern dist --ignore-pattern .next"
