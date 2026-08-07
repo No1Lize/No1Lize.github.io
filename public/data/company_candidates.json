@@ -1,13 +1,265 @@
 {
   "schemaVersion": 1,
   "generatedAt": "2026-08-07T21:11:38+00:00",
-  "candidateCount": 12,
-  "pendingCount": 0,
-  "acceptedCount": 11,
-  "rejectedCount": 0,
+  "candidateCount": 21,
+  "pendingCount": 3,
+  "acceptedCount": 16,
+  "rejectedCount": 1,
   "mergedCount": 0,
   "publishedCount": 1,
   "candidates": [
+    {
+      "id": "candidate-benchmarks-ac00a9df",
+      "decisionKey": "benchmarks",
+      "name": "Benchmarks",
+      "aliases": [
+        "Benchmarks"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现技术突破等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-06T14:56:33.813000+00:00",
+      "lastSeenAt": "2026-08-06T14:56:33.813000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1mgvy5u"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "labs.scale.com"
+      ],
+      "sourceArticleIds": [
+        "capture-1mgvy5u"
+      ],
+      "sourceUrls": [
+        "https://labs.scale.com/leaderboard"
+      ],
+      "eventTypes": [
+        "技术突破"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-leaderboards-eac16bf7",
+      "decisionKey": "leaderboards",
+      "name": "Leaderboards",
+      "aliases": [
+        "Leaderboards"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现技术突破等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-06T14:56:33.813000+00:00",
+      "lastSeenAt": "2026-08-06T14:56:33.813000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-f8tgaa"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "labs.scale.com"
+      ],
+      "sourceArticleIds": [
+        "capture-f8tgaa"
+      ],
+      "sourceUrls": [
+        "https://labs.scale.com/leaderboard"
+      ],
+      "eventTypes": [
+        "技术突破"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-omilia-c2572804",
+      "decisionKey": "omilia",
+      "name": "Omilia",
+      "aliases": [
+        "Omilia"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-07T02:39:50.426000+00:00",
+      "lastSeenAt": "2026-08-07T02:39:50.426000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-1g5jklq"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "cmswire.com"
+      ],
+      "sourceArticleIds": [
+        "capture-1g5jklq"
+      ],
+      "sourceUrls": [
+        "https://www.cmswire.com/customer-experience/omilia-raises-67m-series-b-for-voice-ai-push"
+      ],
+      "eventTypes": [
+        "融资"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-company-9ab9d0ef",
+      "decisionKey": "破壳时刻上海智能科技有限责任",
+      "name": "破壳时刻(上海)智能科技有限责任",
+      "aliases": [
+        "破壳时刻(上海)智能科技有限责任"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "accepted",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "lastSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-voza6s"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "news.pedaily.cn"
+      ],
+      "sourceArticleIds": [
+        "capture-voza6s"
+      ],
+      "sourceUrls": [
+        "https://news.pedaily.cn/202608/567178.shtml"
+      ],
+      "eventTypes": [
+        "融资"
+      ],
+      "note": "破壳时刻(上海)智能科技有限责任公司，简称破壳时刻",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-05T15:03:14.266Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-company-5a2cab0c",
+      "decisionKey": "破壳机器人",
+      "name": "破壳机器人",
+      "aliases": [
+        "破壳机器人"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "accepted",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "lastSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-mb1puw"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "news.pedaily.cn"
+      ],
+      "sourceArticleIds": [
+        "capture-mb1puw"
+      ],
+      "sourceUrls": [
+        "https://news.pedaily.cn/202608/567178.shtml"
+      ],
+      "eventTypes": [
+        "融资"
+      ],
+      "note": "破壳时刻",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-05T15:04:06.295Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-company-1d8add40",
+      "decisionKey": "星海图",
+      "name": "星海图",
+      "aliases": [
+        "星海图"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "accepted",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现产业投资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-05T13:24:59.889000+00:00",
+      "lastSeenAt": "2026-08-05T13:24:59.889000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-faicf7"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "tmtpost.com"
+      ],
+      "sourceArticleIds": [
+        "capture-faicf7"
+      ],
+      "sourceUrls": [
+        "https://www.tmtpost.com/8091178.html"
+      ],
+      "eventTypes": [
+        "产业投资"
+      ],
+      "note": "跟踪的目标公司",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-05T15:04:29.993Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
     {
       "id": "candidate-company-7c8a4a0a",
       "decisionKey": "砺思资本",
@@ -218,6 +470,47 @@
       "onboarding": {}
     },
     {
+      "id": "candidate-company-40c11634",
+      "decisionKey": "杭州联汇科技股份有限",
+      "name": "杭州联汇科技股份有限",
+      "aliases": [
+        "杭州联汇科技股份有限"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 55,
+      "status": "accepted",
+      "reasons": [
+        "1 条管理员文章采集",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-05T13:28:29.458000+00:00",
+      "lastSeenAt": "2026-08-05T13:28:29.458000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-r54l8i"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "leiphone.com"
+      ],
+      "sourceArticleIds": [
+        "capture-r54l8i"
+      ],
+      "sourceUrls": [
+        "https://www.leiphone.com/category/industrynews/tAlZoYMQpcDwWWi2.html"
+      ],
+      "eventTypes": [
+        "商业进展"
+      ],
+      "note": "跟踪的目标公司",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-05T15:06:07.300Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
+    {
       "id": "candidate-github-64b2b6d1",
       "decisionKey": "github",
       "name": "GitHub",
@@ -381,6 +674,47 @@
       "note": "虽是老互联网公司，但也是属于老牌创业公司，这类互联网公司都算，可以推荐类似公司",
       "mergedSlug": "",
       "decidedAt": "2026-08-04T23:05:36.570Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
+    },
+    {
+      "id": "candidate-matt-1fa2ef47",
+      "decisionKey": "matt",
+      "name": "Matt",
+      "aliases": [
+        "Matt"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 50,
+      "status": "accepted",
+      "reasons": [
+        "1 条管理员文章采集",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "lastSeenAt": "2026-08-06T00:50:19.596000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-mkkhpz"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "leiphone.com"
+      ],
+      "sourceArticleIds": [
+        "capture-mkkhpz"
+      ],
+      "sourceUrls": [
+        "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html"
+      ],
+      "eventTypes": [
+        "公司动态"
+      ],
+      "note": "Matt，AI图热门公司",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-06T02:39:14.292Z",
       "reviewedBy": "VCIQ",
       "onboarding": {}
     },
@@ -555,13 +889,48 @@
         "publishedSlug": "shopify",
         "error": ""
       }
+    },
+    {
+      "id": "candidate-seefund-254f953f",
+      "decisionKey": "本轮融资由顺为资本与经纬创投共同领投九坤创投钧山资本seefund猎聘投资元诺资本钟鼎资本等多家财务及产业投资机构参与云启资本小米战投弘晖基金英诺天使基金东方嘉富",
+      "name": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+      "aliases": [
+        "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 75,
+      "status": "rejected",
+      "reasons": [
+        "1 条管理员文章采集",
+        "出现融资等高信号事件",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "lastSeenAt": "2026-08-05T05:24:45.821000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-wiuop1"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "news.pedaily.cn"
+      ],
+      "sourceArticleIds": [
+        "capture-wiuop1"
+      ],
+      "sourceUrls": [
+        "https://news.pedaily.cn/202608/567178.shtml"
+      ],
+      "eventTypes": [
+        "融资"
+      ],
+      "note": "几个公司集中在一起了，不符合单个公司列入公司档案标准",
+      "mergedSlug": "",
+      "decidedAt": "2026-08-05T15:01:51.396Z",
+      "reviewedBy": "VCIQ",
+      "onboarding": {}
     }
-  ],
-  "entityResolution": {
-    "captureCount": 35,
-    "companyCount": 13,
-    "reviewCount": 10,
-    "reclassifiedCount": 3,
-    "rejectedCount": 0
-  }
+  ]
 }
