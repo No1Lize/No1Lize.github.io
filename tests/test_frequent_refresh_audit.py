@@ -62,6 +62,7 @@ class FrequentRefreshAuditTests(unittest.TestCase):
                 audit = result["refreshAudit"]
                 self.assertEqual(audit["mode"], "frequent")
                 self.assertTrue(audit["pipelineCompleted"])
+                self.assertEqual(audit["lastNewsCrawlAt"], audit["completedAt"])
                 self.assertEqual(audit["previousArticleCount"], 1)
                 self.assertEqual(audit["newArticleCount"], 1)
                 self.assertEqual(audit["todayArticleCount"], 2)

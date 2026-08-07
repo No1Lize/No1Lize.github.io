@@ -83,6 +83,7 @@ const focusCompanies = [
 
 export type DashboardBootstrap = {
   trackedSectorAliases: string[];
+  todayArticleCount: number;
   sectorCount: number;
   activeArticleCount: number;
   sourceCount: number;
@@ -122,6 +123,7 @@ export function DashboardClient({
   const [region, setRegion] = useState<(typeof regions)[number]>("全部");
   const [eventType, setEventType] = useState<(typeof eventTypes)[number]>("全部");
   const [eventSort, setEventSort] = useState<HomepageSortMode>("importance");
+  const [qualityScope, setQualityScope] = useState<"trusted" | "all">("trusted");
   const [query, setQuery] = useState("");
 
   const enabledSectorNames = useMemo(
@@ -156,6 +158,7 @@ export function DashboardClient({
   const visibleEvents = useMemo(
     () =>
       activeArticles
+        .filter((item) => qualityScope === "all" || item.qualityStatus !== "低可信")
         .filter((item) => region === "全部" || item.region === region)
         .filter((item) => eventType === "全部" || item.type === (eventType as EventType))
         .filter((item) => {
@@ -191,7 +194,7 @@ export function DashboardClient({
             ? b.importance - a.importance || b.publishedAt.localeCompare(a.publishedAt)
             : b.publishedAt.localeCompare(a.publishedAt) || b.importance - a.importance,
         ),
-    [activeArticles, eventSort, eventType, normalizedQuery, region],
+    [activeArticles, eventSort, eventType, normalizedQuery, qualityScope, region],
   );
   const displayedEvents = visibleEvents.slice(0, KEY_EVENTS_LIMIT);
 
@@ -209,8 +212,8 @@ export function DashboardClient({
       item.accepted > 0,
   ).length;
   const trackingQuality = qualityGate?.trackingQuality;
-  const todayArticleCount = refreshAudit?.todayArticleCount ?? 0;
-  const newArticleCount = refreshAudit?.newArticleCount ?? 0;
+  const todayArticleCount = refreshAudit?.todayArticleCount ?? bootstrap.todayArticleCount;
+  const newArticleCountLabel = refreshAudit?.newArticleCount ?? "待刷新";
   const activeArticleCount = isLive ? activeArticles.length : bootstrap.activeArticleCount;
   const chinaCount = isLive
     ? activeArticles.filter((item) => item.region === "中国").length
@@ -305,7 +308,7 @@ export function DashboardClient({
               <h2>关键事件</h2>
             </div>
             <span>
-              当前展示 {displayedEvents.length} 条；滚动总库 {activeArticleCount} 条；今日新增 {todayArticleCount} 条
+              当前展示 {displayedEvents.length} 条；滚动总库 {activeArticleCount} 条；今日事件 {todayArticleCount} 条
             </span>
           </div>
 
@@ -329,6 +332,14 @@ export function DashboardClient({
               aria-label="事件类型"
             >
               {eventTypes.map((item) => <option key={item}>{item}</option>)}
+            </select>
+            <select
+              value={qualityScope}
+              onChange={(event) => setQualityScope(event.target.value as "trusted" | "all")}
+              aria-label="线索质量"
+            >
+              <option value="trusted">可信优先</option>
+              <option value="all">全部线索</option>
             </select>
             <HomepageSortToggle
               value={eventSort}
@@ -419,7 +430,7 @@ export function DashboardClient({
               <div><dt>平台类型</dt><dd>{platformCount}</dd></div>
               <div><dt>核心赛道</dt><dd>{bootstrap.sectorCount}</dd></div>
               <div><dt>今日情报</dt><dd>{todayArticleCount}</dd></div>
-              <div><dt>本轮新增</dt><dd>{newArticleCount}</dd></div>
+              <div><dt>本轮新收录</dt><dd>{newArticleCountLabel}</dd></div>
               <div><dt>最后成功发布</dt><dd>{processedAt}</dd></div>
             </dl>
 

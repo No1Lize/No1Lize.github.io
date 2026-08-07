@@ -73,6 +73,14 @@ test("the per-source allowance resets for each publication day", () => {
   );
 });
 
+test("low-confidence records are excluded from headlines", () => {
+  const headlines = selectDailyHeadlines([
+    article({ qualityStatus: "低可信", title: "无关低可信线索" }),
+    article({ qualityStatus: "可用", title: "可信行业事件" }),
+  ]);
+  assert.deepEqual(headlines.map((item) => item.title), ["可信行业事件"]);
+});
+
 test("search proxies and regulators are excluded from headlines", () => {
   const headlines = selectDailyHeadlines([
     article({ source: { name: "Google News", platform: "Google News", url: "https://news.google.com/x" } }),

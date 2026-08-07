@@ -44,6 +44,18 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
             with self.subTest(command=command):
                 self.assertIn(command, text)
 
+    def test_successful_publication_gate_explicitly_dispatches_entity_reconciliation(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("Continue through entity reconciliation before publication", text)
+        self.assertIn("steps.data-update.outcome == 'success'", text)
+        self.assertIn("gh workflow run company-candidate-discovery.yml --ref main", text)
+        self.assertIn("actions: write", text)
+
+    def test_full_crawl_persists_audit_without_semantic_article_changes(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("No semantic public-data changes; publishing the completed full-crawl audit.", text)
+        self.assertNotIn("No semantic public data changes; skipping Git commit and Pages build.", text)
+
     def test_rebase_rebuilds_quality_gate_before_full_refresh_validation(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]

@@ -116,6 +116,7 @@ def main() -> int:
         "mode": "full",
         "pipelineCompleted": True,
         "completedAt": completed_at,
+        "lastNewsCrawlAt": completed_at,
         "localDate": local_date,
         "stages": PIPELINE_STAGES,
         "articleCount": len(articles),

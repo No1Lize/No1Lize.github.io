@@ -9,6 +9,11 @@ for records published on the same date.
 The retention pass also removes duplicate source URLs. This is intentionally
 run again after a workflow rebase so a concurrent data commit cannot introduce
 one duplicate URL and block publication of an otherwise valid refresh.
+
+Retention is also the final authority on Eastmoney detail-row accounting. If
+an old Eastmoney detail article falls off the tail during a rebase, the public
+source-status counters are reduced to the actually retained rows so the strict
+source accounting gate remains closed and deterministic.
 """
 
 from __future__ import annotations
@@ -30,6 +35,7 @@ ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 RETENTION_SCHEMA_VERSION = 2
 RETENTION_STRATEGY = "newest-published-first"
 OVERFLOW_ACTION = "discard-oldest"
+EASTMONEY_DETAIL_STATUS_PREFIX = "official-user-东方财富"
 TRACKING_QUERY_KEYS = {
     "fbclid",
     "gclid",
@@ -51,6 +57,13 @@ def _published_ordinal(article: dict[str, Any]) -> int:
     try:
         return date.fromisoformat(value).toordinal()
     except ValueError:
+        return 0
+
+
+def _nonnegative_int(value: Any) -> int:
+    try:
+        return max(0, int(value or 0))
+    except (TypeError, ValueError):
         return 0
 
 
@@ -124,6 +137,53 @@ def retain_latest_articles(
     return retained
 
 
+def _reconcile_eastmoney_retention_accounting(
+    payload: dict[str, Any], retained: list[dict[str, Any]]
+) -> list[dict[str, Any]] | None:
+    """Close Eastmoney status counters over the rows that survived retention."""
+
+    raw_statuses = payload.get("sourceStatus")
+    if not isinstance(raw_statuses, list):
+        return None
+
+    retained_by_source: dict[str, int] = {}
+    for article in retained:
+        source_id = str(article.get("sourceId") or "").strip()
+        if source_id.startswith(EASTMONEY_DETAIL_STATUS_PREFIX):
+            retained_by_source[source_id] = retained_by_source.get(source_id, 0) + 1
+
+    statuses: list[dict[str, Any]] = []
+    for raw in raw_statuses:
+        if not isinstance(raw, dict):
+            continue
+        status = dict(raw)
+        status_id = str(status.get("id") or "").strip()
+        if not status_id.startswith(EASTMONEY_DETAIL_STATUS_PREFIX):
+            statuses.append(status)
+            continue
+
+        kept = retained_by_source.get(status_id, 0)
+        status["accepted"] = kept
+        has_history_accounting = (
+            "newAccepted" in status
+            or "retainedPreviousCount" in status
+            or bool(status.get("retainedPrevious"))
+        )
+        if has_history_accounting:
+            current_new = min(_nonnegative_int(status.get("newAccepted")), kept)
+            current_retained = kept - current_new
+            status["newAccepted"] = current_new
+            status["retainedPreviousCount"] = current_retained
+            if current_retained:
+                status["retainedPrevious"] = True
+            else:
+                status.pop("retainedPrevious", None)
+        if kept == 0 and status.get("status") in {"ok", "partial"}:
+            status["status"] = "empty"
+        statuses.append(status)
+    return statuses
+
+
 def retention_metadata(capacity: int) -> dict[str, Any]:
     return {
         "schemaVersion": RETENTION_SCHEMA_VERSION,
@@ -148,6 +208,9 @@ def apply_retention(
     next_payload["articleCount"] = len(retained)
     next_payload["articles"] = retained
     next_payload["snapshotRetention"] = retention_metadata(capacity)
+    reconciled_statuses = _reconcile_eastmoney_retention_accounting(payload, retained)
+    if reconciled_statuses is not None:
+        next_payload["sourceStatus"] = reconciled_statuses
     return next_payload, removed
 
 

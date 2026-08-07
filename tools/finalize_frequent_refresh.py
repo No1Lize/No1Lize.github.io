@@ -74,6 +74,7 @@ def main() -> int:
         "mode": "frequent",
         "pipelineCompleted": True,
         "completedAt": completed_at,
+        "lastNewsCrawlAt": completed_at,
         "localDate": local_date,
         "stages": ["core-and-tracking-sources"],
         "articleCount": len(articles),

@@ -5,9 +5,6 @@ on:
     - cron: "45 7 * * *"
       timezone: "Asia/Taipei"
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Refresh public intelligence"]
-    types: [completed]
   push:
     branches: [main]
     paths:
@@ -33,13 +30,11 @@ permissions:
   actions: write
 
 concurrency:
-  # Failed or cancelled refresh completions skip outside the repository-writer queue.
-  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('vciq-company-candidate-skip-{0}', github.run_id) || format('vciq-repository-writer-{0}', github.ref) }}
+  group: vciq-repository-writer-${{ github.ref }}
   queue: max
 
 jobs:
   discover:
-    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -63,6 +58,24 @@ jobs:
             tests.test_entity_resolution \
             tests.test_entity_resolution_workflow \
             tests.test_resolved_company_candidates
+      - name: Detect pushed tracking inputs
+        id: push-inputs
+        if: github.event_name == 'push'
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tracking_inputs_changed=false
+          if git diff --name-only "$BEFORE_SHA" "$AFTER_SHA" -- \
+            config/user_tracking.json \
+            config/tracking_capture_inbox.json \
+            config/official_company_sources.json \
+            | grep -q .; then
+            tracking_inputs_changed=true
+          fi
+          echo "changed=$tracking_inputs_changed" >> "$GITHUB_OUTPUT"
       - name: Reconcile entity types and build candidate review snapshot
         run: |
           python tools/reconcile_entity_resolution.py
@@ -114,18 +127,18 @@ jobs:
             fi
           done
       - name: Continue refresh or deploy after reconciliation
-        if: steps.publish.outputs.changed == 'true' || github.event_name == 'workflow_run' || github.event_name == 'push'
+        if: steps.publish.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
-          EVENT_NAME: ${{ github.event_name }}
           TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}
+          PUSH_TRACKING_INPUTS_CHANGED: ${{ steps.push-inputs.outputs.changed }}
         shell: bash
         run: |
           set -euo pipefail
-          if [ "${TRACKING_CHANGED:-false}" = "true" ] || [ "$EVENT_NAME" = "push" ]; then
-            echo "Tracking inputs may have changed; rebuild the article snapshot before Pages."
+          if [ "${TRACKING_CHANGED:-false}" = "true" ] || [ "${PUSH_TRACKING_INPUTS_CHANGED:-false}" = "true" ]; then
+            echo "Tracking inputs changed; rebuild the article snapshot before Pages."
             gh workflow run scheduled-sync.yml --ref main
           else
-            echo "Tracking scope is stable after a successful refresh; deploy the fixed-point snapshot."
+            echo "Tracking scope is fixed after reconciliation; deploy the committed snapshot."
             gh workflow run pages.yml --ref main
           fi
