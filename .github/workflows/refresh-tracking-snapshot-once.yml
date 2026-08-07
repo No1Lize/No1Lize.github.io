@@ -1,0 +1,53 @@
+name: Refresh tracking snapshot once
+
+on:
+  push:
+    branches:
+      - fix/pages-entity-resolution-fixed-point
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/pages-entity-resolution-fixed-point
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Record pre-refresh article baseline
+        run: python tools/prepare_frequent_refresh.py
+      - name: Crawl current public intelligence routes
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: python tools/crawl_with_wechat_registry.py --source news
+      - name: Re-enrich snapshot against reconciled tracking config
+        run: |
+          python tools/migrate_article_entities.py
+          python tools/enrich_tracking_snapshot.py
+          python tools/snapshot_retention.py
+          python tools/finalize_frequent_refresh.py
+      - name: Verify refreshed snapshot and full derived-data consistency
+        run: |
+          python tools/validate_professional_media_snapshot.py --require-articles
+          python tools/snapshot_retention.py --check
+          python tools/crawl_articles.py --validate-only
+          python tools/validate_user_source_coverage.py
+          node scripts/validate-tracking-snapshot.mjs
+          python tools/reconcile_entity_resolution.py --check
+          python tools/build_resolved_company_candidates.py --check
+      - name: Commit refreshed article snapshot only
+        run: |
+          rm .github/workflows/refresh-tracking-snapshot-once.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/data/articles.json .github/workflows/refresh-tracking-snapshot-once.yml
+          git diff --cached --quiet && exit 0
+          git commit -m 'data: refresh tracking snapshot after entity reconciliation'
+          git push origin HEAD:fix/pages-entity-resolution-fixed-point
