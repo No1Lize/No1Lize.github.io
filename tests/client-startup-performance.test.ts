@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
@@ -50,6 +50,15 @@ test("browser article archive is lazy and no longer requires a global react-quer
   assert.match(articles, /inFlight/);
   assert.match(articles, /cache: "default"/);
   assert.match(articles, /ARTICLE_REFRESH_INTERVAL_MS/);
+});
+
+test("global client shell does not retain the dead react-query runtime", () => {
+  assert.doesNotMatch(packageJson, /@tanstack\/react-query/);
+  assert.equal(
+    existsSync(path.join(ROOT, "components", "providers.tsx")),
+    false,
+    "unused global QueryClient provider must stay removed",
+  );
 });
 
 test("global search does not bundle research datasets or load the full article archive", () => {
