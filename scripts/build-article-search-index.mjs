@@ -16,26 +16,31 @@ const payload = JSON.parse(readFileSync(INPUT, "utf8"));
 const articles = Array.isArray(payload?.articles) ? payload.articles : [];
 
 const records = articles.flatMap((article) => {
-  const title = cleanText(article?.title, 240);
-  const company = cleanText(article?.company, 120);
-  const sector = cleanText(article?.sector, 100);
-  const eventType = cleanText(article?.type, 60);
-  const region = cleanText(article?.region, 40) || "全球";
-  const sourceName = cleanText(article?.source?.name, 120);
-  const publishedAt = cleanText(article?.publishedAt, 20);
-  const summary = cleanText(article?.summary, 240);
+  const title = cleanText(article?.title, 220);
+  const company = cleanText(article?.company, 100);
+  const sector = cleanText(article?.sector, 80);
+  const eventType = cleanText(article?.type, 40);
+  const region = cleanText(article?.region, 24) || "全球";
+  const sourceName = cleanText(article?.source?.name, 90);
+  const publishedAt = cleanText(article?.publishedAt, 12);
+  const summary = cleanText(article?.summary, 180);
   const href = article?.companySlug
     ? `/companies/${cleanText(article.companySlug, 160)}`
     : cleanText(article?.source?.url, 1000);
 
   if (!title || !href) return [];
 
+  const text = cleanText(
+    [company, sector, eventType, region, sourceName, publishedAt, summary]
+      .filter(Boolean)
+      .join(" · "),
+    420,
+  );
+
   return [{
     type: "事件",
     title,
-    text: [summary, company, sector, eventType, region, sourceName, publishedAt]
-      .filter(Boolean)
-      .join(" · "),
+    text,
     href,
     region,
   }];
