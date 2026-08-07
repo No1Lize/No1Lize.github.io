@@ -76,6 +76,8 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertLess(reconcile, build)
         self.assertIn("python tools/reconcile_entity_resolution.py --check", text)
         self.assertIn("python tools/build_resolved_company_candidates.py", text)
+        self.assertIn(f"--output {PRIVATE_CANDIDATE_QUEUE}", text)
+        self.assertNotIn("public/data/company_candidates.json", text)
         self.assertIn("--check", text)
 
 
