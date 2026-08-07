@@ -9,13 +9,16 @@ on:
       - config/official_company_sources.json
       - config/tracking_capture_inbox.json
       - public/data/company_candidates.json
+      - tools/company_official_source_discovery.py
       - tools/prepare_company_candidate_onboarding.py
+      - tools/prepare_company_candidate_onboarding_v2.py
       - tools/onboard_company_candidates.py
       - tools/company_registry.py
       - tools/build_company_candidates.py
       - tools/research_agent.py
       - lib/company-registry.ts
       - lib/company-candidate-onboarding.ts
+      - tests/test_company_official_source_discovery.py
       - tests/test_prepare_company_candidate_onboarding.py
       - .github/workflows/company-candidate-onboarding.yml
   workflow_dispatch:
@@ -56,13 +59,16 @@ jobs:
         run: |
           python -m py_compile \
             tools/company_registry.py \
+            tools/company_official_source_discovery.py \
             tools/prepare_company_candidate_onboarding.py \
+            tools/prepare_company_candidate_onboarding_v2.py \
             tools/onboard_company_candidates.py \
             tools/build_company_candidates.py \
             tools/ensure_venture_profile_coverage.py \
             tools/research_agent.py
           python -m unittest \
             tests.test_company_registry \
+            tests.test_company_official_source_discovery \
             tests.test_prepare_company_candidate_onboarding \
             tests.test_onboard_company_candidates \
             tests.test_company_candidates \
@@ -83,7 +89,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python tools/prepare_company_candidate_onboarding.py --limit 6 \
+          python tools/prepare_company_candidate_onboarding_v2.py --limit 6 \
             | tee /tmp/company-auto-profile-report.json
           python - <<'PY'
           import json
@@ -95,6 +101,11 @@ jobs:
               .splitlines()[-1]
           )
           print(json.dumps(report, ensure_ascii=False, indent=2))
+          discovery = report.get('sourceDiscovery', {})
+          print(
+              'verified evidence-linked official sites:',
+              discovery.get('verifiedCount', 0),
+          )
           for hold in report.get('holds', []):
               print(
                   f"::notice title=Company auto-onboarding held::"
