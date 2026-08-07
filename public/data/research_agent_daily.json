@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T13:22:11+00:00",
+  "generatedAt": "2026-08-07T13:57:57+00:00",
   "asOfDate": "2026-08-07",
   "runStatus": "api-fallback",
   "baselineSource": "snapshot",
@@ -13,73 +13,45 @@
     "usage": {}
   },
   "changeSummary": {
-    "totalDetected": 24,
-    "total": 24,
+    "totalDetected": 20,
+    "total": 20,
     "byDataset": {
-      "listedDisclosure": 1,
-      "marketCompany": 11,
-      "person": 12
+      "person": 7,
+      "marketCompany": 13
     },
-    "highestImportance": 96
+    "highestImportance": 60
   },
   "analysis": {
-    "executiveSummary": "本期检测到 24 条结构化变化；以下内容为确定性规则摘要，不包含模型补充推断。",
+    "executiveSummary": "本期检测到 20 条结构化变化；以下内容为确定性规则摘要，不包含模型补充推断。",
     "keyDevelopments": [
       {
-        "title": "新增上市公司公告记录：宁德时代。",
+        "title": "李飞飞 的 sources、speeches 发生变化。",
         "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
-        "importance": 5,
-        "confidence": "medium",
+        "importance": 3,
+        "confidence": "low",
         "entities": [
-          "宁德时代"
+          "李飞飞"
         ],
         "evidenceIds": [
-          "E001"
-        ]
-      },
-      {
-        "title": "中科寒武纪科技股份有限公司 更新至 2026-08-07，最新收盘价为 1199.93；同时变更字段：company、metrics、news、priceHistory、quote。",
-        "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
-        "importance": 4,
-        "confidence": "medium",
-        "entities": [
-          "中科寒武纪科技股份有限公司"
-        ],
-        "evidenceIds": [
+          "E001",
           "E002",
           "E003",
-          "E004",
-          "E005"
+          "E004"
         ]
       },
       {
-        "title": "梁文峰 的 materials、sources、speeches 发生变化。",
+        "title": "Bill Ford 的 materials、speeches 发生变化。",
         "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
         "importance": 3,
         "confidence": "low",
         "entities": [
-          "梁文峰"
+          "Bill Ford"
         ],
         "evidenceIds": [
+          "E005",
           "E006",
           "E007",
-          "E008",
-          "E009"
-        ]
-      },
-      {
-        "title": "Chris Urmson 的 materials、speeches 发生变化。",
-        "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
-        "importance": 3,
-        "confidence": "low",
-        "entities": [
-          "Chris Urmson"
-        ],
-        "evidenceIds": [
-          "E010",
-          "E011",
-          "E012",
-          "E013"
+          "E008"
         ]
       },
       {
@@ -91,11 +63,11 @@
           "邓泰华"
         ],
         "evidenceIds": [
-          "E014"
+          "E009"
         ]
       },
       {
-        "title": "王兴兴 的 materials 发生变化。",
+        "title": "王兴兴 的 materials、sources 发生变化。",
         "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
         "importance": 2,
         "confidence": "low",
@@ -103,25 +75,10 @@
           "王兴兴"
         ],
         "evidenceIds": [
-          "E015",
-          "E016",
-          "E017",
-          "E018"
-        ]
-      },
-      {
-        "title": "李飞飞 的 sources 发生变化。",
-        "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
-        "importance": 2,
-        "confidence": "low",
-        "entities": [
-          "李飞飞"
-        ],
-        "evidenceIds": [
-          "E019",
-          "E020",
-          "E021",
-          "E022"
+          "E010",
+          "E011",
+          "E012",
+          "E013"
         ]
       },
       {
@@ -133,10 +90,55 @@
           "李泽湘"
         ],
         "evidenceIds": [
+          "E014",
+          "E015",
+          "E016",
+          "E017"
+        ]
+      },
+      {
+        "title": "埃隆·马斯克 的 materials、sources 发生变化。",
+        "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "埃隆·马斯克"
+        ],
+        "evidenceIds": [
+          "E018",
+          "E019",
+          "E020",
+          "E021"
+        ]
+      },
+      {
+        "title": "Kunle Olukotun 的 sources 发生变化。",
+        "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "Kunle Olukotun"
+        ],
+        "evidenceIds": [
+          "E022",
           "E023",
           "E024",
-          "E025",
-          "E026"
+          "E025"
+        ]
+      },
+      {
+        "title": "晶泰控股有限公司 的 metrics、sources 发生变化。",
+        "assessment": "该条目由结构化差异规则识别，尚未经过模型扩展研判；应优先查看所列原始证据，并结合后续披露确认影响。",
+        "importance": 2,
+        "confidence": "low",
+        "entities": [
+          "晶泰控股有限公司"
+        ],
+        "evidenceIds": [
+          "E026",
+          "E027",
+          "E028",
+          "E029"
         ]
       }
     ],
@@ -147,7 +149,10 @@
         "reason": "规则摘要只确认仓库字段发生变化，不替代对公告或官方页面的事实核验。",
         "nextEvidence": "监管文件、公司公告或至少一个独立高等级来源。",
         "evidenceIds": [
-          "E001"
+          "E001",
+          "E002",
+          "E003",
+          "E004"
         ]
       }
     ],
@@ -156,701 +161,343 @@
   },
   "changes": [
     {
-      "id": "chg-90f66e48210ad8ea62cf",
-      "dataset": "listedDisclosure",
-      "entityType": "上市公司公告",
-      "entityId": "disclosure-catl-2f47086b3d22373858",
-      "entityName": "宁德时代",
-      "action": "added",
-      "changedFields": [
-        "companyName",
-        "companySlug",
-        "discoveredVia",
-        "documentType",
-        "exchange",
-        "fallback",
-        "id",
-        "listingRole",
-        "market",
-        "publishedAt",
-        "source",
-        "summary"
-      ],
-      "summary": "新增上市公司公告记录：宁德时代。",
-      "importance": 96,
-      "before": null,
-      "after": {
-        "companyName": "宁德时代",
-        "companySlug": "catl",
-        "discoveredVia": "cninfo-structured-api",
-        "documentType": "股份回购",
-        "exchange": "深圳证券交易所",
-        "fallback": false,
-        "id": "disclosure-catl-2f47086b3d22373858",
-        "listingRole": "primary",
-        "market": "A股",
-        "publishedAt": "2026-08-07"
-      },
-      "evidenceIds": [
-        "E001"
-      ]
-    },
-    {
-      "id": "chg-5d0a2587e38027167cc3",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "cambricon",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "action": "updated",
-      "changedFields": [
-        "company",
-        "metrics",
-        "news",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "中科寒武纪科技股份有限公司 更新至 2026-08-07，最新收盘价为 1199.93；同时变更字段：company、metrics、news、priceHistory、quote。",
-      "importance": 72,
-      "before": {
-        "company": {
-          "name": "中科寒武纪科技股份有限公司"
-        },
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "¥157.66亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "30.52元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "1.98元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "2.40元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "¥7351.09亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "6.28亿股"
-          },
-          "…另 8 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-06T18:11:00+08:00",
-            "source": "新浪财经",
-            "title": "知名基金经理，买入科技，高位站岗",
-            "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001in50"
-          },
-          {
-            "publishedAt": "2026-08-07T10:23:00+08:00",
-            "source": "新浪财经",
-            "title": "科创50增强ETF鹏华(588460)涨超1.5%，高盛大幅上调AI服务器PCB和CCL预测，半导体产业链盘中表现火热",
-            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002hvt8"
-          },
-          {
-            "publishedAt": "2026-08-07T11:07:00+08:00",
-            "source": "新浪财经",
-            "title": "芯片需求持续高增，台积电3nm产能或提前扩张，半导体ETF博时(159582)盘中最高涨超2%，冲击4连涨",
-            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002sp7m"
-          },
-          {
-            "publishedAt": "2026-08-07T13:26:00+08:00",
-            "source": "新浪财经",
-            "title": "2026年Q2电子行业基金重仓及超配比例创近年新高，科创芯片ETF嘉实(588200)备受市场关注",
-            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002spes"
-          },
-          {
-            "publishedAt": "2026-08-07T09:13:00+08:00",
-            "source": "新浪财经",
-            "title": "430股获融资买入超亿元，中际旭创获买入59.52亿元居首",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-07/doc-inimmyem4162433.shtml"
-          },
-          {
-            "publishedAt": "2026-08-06T14:33:00+08:00",
-            "source": "新浪财经",
-            "title": "科技风险偏好修复叠加模型-芯片协同，国产算力下半年需求闭环加速验证",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkfvf4610873.shtml"
-          },
-          "…另 4 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 1168.15,
-            "date": "2026-08-06",
-            "high": 1185.0,
-            "low": 1095.0,
-            "open": 1103.0,
-            "volume": 12478455.0
-          },
-          {
-            "close": 1170.0,
-            "date": "2026-08-07",
-            "high": 1210.0,
-            "low": 1145.02,
-            "open": 1168.15,
-            "volume": 13435419.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-07T14:25:03+08:00",
-          "change": 1.86,
-          "changePercent": 0.16,
-          "currency": "CNY",
-          "previousClose": 1168.15
-        }
-      },
-      "after": {
-        "company": {
-          "name": "中科寒武纪科技股份有限公司"
-        },
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "¥187.53亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "21.57元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.50元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "3.68元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "¥7539.08亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "6.28亿股"
-          },
-          "…另 8 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-07T18:15:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪给员工发股权激励，根本不是白给的",
-            "url": "https://cj.sina.cn/articles/view/2598843835/9ae735bb001019rv0"
-          },
-          {
-            "publishedAt": "2026-08-07T20:01:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪：上半年归母净利润同比增长122.61%",
-            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002hwyw"
-          },
-          {
-            "publishedAt": "2026-08-07T11:07:00+08:00",
-            "source": "新浪财经",
-            "title": "芯片需求持续高增，台积电3nm产能或提前扩张，半导体ETF博时(159582)盘中最高涨超2%，冲击4连涨",
-            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002sp7m"
-          },
-          {
-            "publishedAt": "2026-08-07T13:26:00+08:00",
-            "source": "新浪财经",
-            "title": "2026年Q2电子行业基金重仓及超配比例创近年新高，科创芯片ETF嘉实(588200)备受市场关注",
-            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002spes"
-          },
-          {
-            "publishedAt": "2026-08-07T09:13:00+08:00",
-            "source": "新浪财经",
-            "title": "430股获融资买入超亿元，中际旭创获买入59.52亿元居首",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-07/doc-inimmyem4162433.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T20:00:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪：2026年上半年净利润23.11亿元，同比增122.61%",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-07/doc-inimnzsm4699178.shtml"
-          },
-          "…另 4 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 1168.15,
-            "date": "2026-08-06",
-            "high": 1185.0,
-            "low": 1095.0,
-            "open": 1103.0,
-            "volume": 12478455.0
-          },
-          {
-            "close": 1199.93,
-            "date": "2026-08-07",
-            "high": 1210.0,
-            "low": 1145.02,
-            "open": 1168.15,
-            "volume": 15948922.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-07T15:34:59+08:00",
-          "change": 31.78,
-          "changePercent": 2.72,
-          "currency": "CNY",
-          "previousClose": 1168.15
-        }
-      },
-      "evidenceIds": [
-        "E002",
-        "E003",
-        "E004",
-        "E005"
-      ]
-    },
-    {
-      "id": "chg-c0691d41def390a62696",
+      "id": "chg-2430044f3b060fc2128c",
       "dataset": "person",
       "entityType": "人物",
-      "entityId": "liang-wenfeng",
-      "entityName": "梁文峰",
+      "entityId": "fei-fei-li",
+      "entityName": "李飞飞",
       "action": "updated",
       "changedFields": [
-        "materials",
         "sources",
         "speeches"
       ],
-      "summary": "梁文峰 的 materials、sources、speeches 发生变化。",
+      "summary": "李飞飞 的 sources、speeches 发生变化。",
       "importance": 60,
       "before": {
-        "materials": [
-          {
-            "date": "持续更新",
-            "source": "Wikipedia (en)",
-            "title": "Liang Wenfeng — Wikipedia",
-            "type": "biography",
-            "url": "https://en.wikipedia.org/wiki/Liang_Wenfeng"
-          },
-          {
-            "date": "2026-07-23",
-            "source": "TechNode",
-            "title": "DeepSeek puts AGI research ahead of products and commercial growth",
-            "type": "article",
-            "url": "https://technode.com/2026/07/23/deepseek-puts-agi-research-ahead-of-products-and-commercial-growth"
-          },
-          {
-            "date": "2026-08-01",
-            "source": "TNW · 风险投资信源",
-            "title": "DeepSeek’s founder says his workers have no KPIs and no overtime, while Silicon Valley copies China’s 996 grind",
-            "type": "article",
-            "url": "https://thenextweb.com/news/deepseek-founder-liang-wenfeng-no-overtime-no-kpis-996-culture"
-          },
-          {
-            "date": "2026-07-26",
-            "source": "TNW",
-            "title": "DeepSeek pauses fundraising after founder's leaked comments go viral",
-            "type": "article",
-            "url": "https://thenextweb.com/news/deepseek-funding-pause-viral-posts-liang-wenfeng"
-          },
-          {
-            "date": "2025-01-31",
-            "source": "Bilibili · 外星人点看",
-            "title": "DeepSeek梁文峰采访 录音：大厂们没信心，那么我们来干吧",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV11kFUeBEcH"
-          },
-          {
-            "date": "2025-02-02",
-            "source": "Bilibili · 突击视线",
-            "title": "梁文峰 深度访谈：中国企业创新缺的不是资本而是信心",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV13zFretEm9"
-          },
-          "…另 12 项"
-        ],
         "sources": [
-          "https://en.wikipedia.org/wiki/Liang_Wenfeng",
-          "https://www.deepseek.com/",
-          "https://www.wikidata.org/wiki/Q131847088",
-          "https://www.youtube.com/watch?v=D65EhIwVGuw",
-          "https://www.youtube.com/watch?v=ElYPXwLOaqU",
-          "https://www.youtube.com/watch?v=YjIICrXvDTc",
+          "https://en.wikipedia.org/wiki/Fei-Fei_Li",
+          "https://profiles.stanford.edu/fei-fei-li",
+          "https://www.bilibili.com/video/BV1Bp3k61EaJ",
+          "https://www.bilibili.com/video/BV1CU3B6VEc4",
+          "https://www.bilibili.com/video/BV1hJ411F71K",
+          "https://www.bilibili.com/video/BV1ox411D7uY",
+          "…另 5 项"
+        ],
+        "speeches": [
+          {
+            "date": "2026-07-29",
+            "source": "Bilibili · 财富自由充电站",
+            "title": "深度对谈：World Labs联合创始人 李飞飞 、李昀珠聊仿真与机器人未来",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV11Q3k6oEra"
+          },
+          {
+            "date": "2024-12-19",
+            "source": "Bilibili · 演讲与口才训练营",
+            "title": "前谷歌首席科学家 李飞飞 中文公开课，比刷剧还爽",
+            "type": "speech",
+            "url": "https://www.bilibili.com/video/BV17UkgYuEna"
+          },
+          {
+            "date": "2026-07-29",
+            "source": "Bilibili · Web3天空之城",
+            "title": "[附文稿] 人工智能的下一个前沿是空间智能 | 李飞飞对话 a16z",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1Bp3k61EaJ"
+          },
+          {
+            "date": "2026-08-03",
+            "source": "Bilibili · 名校课程-顶级中配",
+            "title": "【中英双语】 李飞飞 正在攻克机器人领域最难的难题，探讨空间智能如何突破机器人学习的数据瓶颈 | a16z",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV1CYMR6mErJ"
+          },
+          {
+            "date": "2025-12-10",
+            "source": "Bilibili · michina21",
+            "title": "专访 李飞飞",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV1JwmhBuEDv"
+          },
+          {
+            "date": "2026-06-27",
+            "source": "Bilibili · 明文传输不",
+            "title": "李飞飞 访谈：未来10年或将只剩两种工（中文语音）",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV1dy7W63E5Q"
+          },
+          "…另 14 项"
+        ]
+      },
+      "after": {
+        "sources": [
+          "https://en.wikipedia.org/wiki/Fei-Fei_Li",
+          "https://profiles.stanford.edu/fei-fei-li",
+          "https://www.wikidata.org/wiki/Q18686107",
+          "https://www.youtube.com/watch?v=ElDWanLOc4c",
+          "https://www.youtube.com/watch?v=b9TfkgH0Xzw",
+          "https://www.youtube.com/watch?v=xODWJzwGKb0",
           "…另 1 项"
         ],
         "speeches": [
           {
-            "date": "2025-01-31",
-            "source": "Bilibili · 外星人点看",
-            "title": "DeepSeek梁文峰采访 录音：大厂们没信心，那么我们来干吧",
+            "date": "2026-07-29",
+            "source": "Bilibili · 财富自由充电站",
+            "title": "深度对谈：World Labs联合创始人 李飞飞 、李昀珠聊仿真与机器人未来",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV11kFUeBEcH"
+            "url": "https://www.bilibili.com/video/BV11Q3k6oEra"
           },
           {
-            "date": "2025-02-02",
-            "source": "Bilibili · 突击视线",
-            "title": "梁文峰 深度访谈：中国企业创新缺的不是资本而是信心",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV13zFretEm9"
-          },
-          {
-            "date": "2025-01-27",
-            "source": "Bilibili · 鱼C-小甲鱼",
-            "title": "「梁文锋」量化巨头幻方创始人参加总理座谈会并发言❗️ DeepSeek 引领未来❓",
+            "date": "2024-12-19",
+            "source": "Bilibili · 演讲与口才训练营",
+            "title": "前谷歌首席科学家 李飞飞 中文公开课，比刷剧还爽",
             "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1TKf2YaENa"
+            "url": "https://www.bilibili.com/video/BV17UkgYuEna"
           },
           {
-            "date": "2025-02-02",
-            "source": "Bilibili · 突击视线",
-            "title": "创始人 梁文峰 的这段深度访谈，全程没有一句废话",
+            "date": "2026-07-29",
+            "source": "Bilibili · Web3天空之城",
+            "title": "[附文稿] 人工智能的下一个前沿是空间智能 | 李飞飞对话 a16z",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1Bp3k61EaJ"
+          },
+          {
+            "date": "2026-07-28",
+            "source": "Bilibili · 历史的进城",
+            "title": "【双语】 李飞飞 最新访谈：机器人学了十年还是笨？因为我们连\"训练场\"都没建好",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1a9FBenE7H"
+            "url": "https://www.bilibili.com/video/BV1CU3B6VEc4"
           },
           {
-            "date": "2025-06-30",
-            "source": "Bilibili · 一本正经的小豪",
-            "title": "梁文峰演讲",
-            "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1oDgrzREoz"
-          },
-          {
-            "date": "2025-02-02",
-            "source": "Bilibili · 突击视线",
-            "title": "梁文峰 深度访谈，值得一看！ deepseek 创始人 梁文峰 的这段深度访谈，全程没有一句废话。 认知决定思想，思想决定行动，行动决定结果",
+            "date": "2026-08-03",
+            "source": "Bilibili · 名校课程-顶级中配",
+            "title": "【中英双语】 李飞飞 正在攻克机器人领域最难的难题，探讨空间智能如何突破机器人学习的数据瓶颈 | a16z",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1tcFze1ER6"
-          },
-          "…另 6 项"
-        ]
-      },
-      "after": {
-        "materials": [
-          {
-            "date": "持续更新",
-            "source": "Wikipedia (en)",
-            "title": "Liang Wenfeng — Wikipedia",
-            "type": "biography",
-            "url": "https://en.wikipedia.org/wiki/Liang_Wenfeng"
+            "url": "https://www.bilibili.com/video/BV1CYMR6mErJ"
           },
           {
-            "date": "2026-07-23",
-            "source": "TechNode",
-            "title": "DeepSeek puts AGI research ahead of products and commercial growth",
-            "type": "article",
-            "url": "https://technode.com/2026/07/23/deepseek-puts-agi-research-ahead-of-products-and-commercial-growth"
-          },
-          {
-            "date": "2026-08-01",
-            "source": "TNW · 风险投资信源",
-            "title": "DeepSeek’s founder says his workers have no KPIs and no overtime, while Silicon Valley copies China’s 996 grind",
-            "type": "article",
-            "url": "https://thenextweb.com/news/deepseek-founder-liang-wenfeng-no-overtime-no-kpis-996-culture"
-          },
-          {
-            "date": "2026-07-26",
-            "source": "TNW",
-            "title": "DeepSeek pauses fundraising after founder's leaked comments go viral",
-            "type": "article",
-            "url": "https://thenextweb.com/news/deepseek-funding-pause-viral-posts-liang-wenfeng"
-          },
-          {
-            "date": "2025-01-31",
-            "source": "Bilibili · 外星人点看",
-            "title": "DeepSeek梁文峰采访 录音：大厂们没信心，那么我们来干吧",
+            "date": "2025-12-10",
+            "source": "Bilibili · michina21",
+            "title": "专访 李飞飞",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV11kFUeBEcH"
-          },
-          {
-            "date": "2025-02-02",
-            "source": "Bilibili · 突击视线",
-            "title": "梁文峰 深度访谈：中国企业创新缺的不是资本而是信心",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV13zFretEm9"
+            "url": "https://www.bilibili.com/video/BV1JwmhBuEDv"
           },
           "…另 14 项"
-        ],
-        "sources": [
-          "https://en.wikipedia.org/wiki/Liang_Wenfeng",
-          "https://www.bilibili.com/video/BV11kFUeBEcH",
-          "https://www.bilibili.com/video/BV1nVFzeqEt7",
-          "https://www.bilibili.com/video/BV1tcFze1ER6",
-          "https://www.bilibili.com/video/BV1xAFzeLEZR",
-          "https://www.deepseek.com/",
-          "…另 5 项"
-        ],
-        "speeches": [
-          {
-            "date": "2025-01-31",
-            "source": "Bilibili · 外星人点看",
-            "title": "DeepSeek梁文峰采访 录音：大厂们没信心，那么我们来干吧",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV11kFUeBEcH"
-          },
-          {
-            "date": "2025-02-02",
-            "source": "Bilibili · 突击视线",
-            "title": "梁文峰 深度访谈：中国企业创新缺的不是资本而是信心",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV13zFretEm9"
-          },
-          {
-            "date": "2025-01-27",
-            "source": "Bilibili · 鱼C-小甲鱼",
-            "title": "「梁文锋」量化巨头幻方创始人参加总理座谈会并发言❗️ DeepSeek 引领未来❓",
-            "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1TKf2YaENa"
-          },
-          {
-            "date": "2025-02-02",
-            "source": "Bilibili · 突击视线",
-            "title": "创始人 梁文峰 的这段深度访谈，全程没有一句废话",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1a9FBenE7H"
-          },
-          {
-            "date": "2025-02-02",
-            "source": "Bilibili · 外星人点看",
-            "title": "DeepSeek梁文峰采访 录音：大厂们没信心，那么我们来干吧",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1nVFzeqEt7"
-          },
-          {
-            "date": "2025-06-30",
-            "source": "Bilibili · 一本正经的小豪",
-            "title": "梁文峰演讲",
-            "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1oDgrzREoz"
-          },
-          "…另 8 项"
         ]
       },
       "evidenceIds": [
-        "E006",
-        "E007",
-        "E008",
-        "E009"
+        "E001",
+        "E002",
+        "E003",
+        "E004"
       ]
     },
     {
-      "id": "chg-65daef354f1a62d6efd6",
+      "id": "chg-cac4d0daeaf123f5f691",
       "dataset": "person",
       "entityType": "人物",
-      "entityId": "chris-urmson",
-      "entityName": "Chris Urmson",
+      "entityId": "bill-ford",
+      "entityName": "Bill Ford",
       "action": "updated",
       "changedFields": [
         "materials",
         "speeches"
       ],
-      "summary": "Chris Urmson 的 materials、speeches 发生变化。",
+      "summary": "Bill Ford 的 materials、speeches 发生变化。",
       "importance": 60,
       "before": {
         "materials": [
           {
-            "date": "2026-08-04",
-            "source": "Aurora Innovation 官方来源",
-            "title": "Lessons Learned from Index OnAir: The Future of Robotics",
-            "type": "article",
-            "url": "https://aurora.tech/newsroom/lessons-learned-from-index-onair-the-future-of-robotics"
+            "date": "1年前",
+            "source": "YouTube · Detroit Regional Chamber",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-9CwKFTD7YI"
           },
           {
-            "date": "2020-02-11",
-            "source": "Bilibili · qshi6",
-            "title": "Chris Urmson How a driverless car sees the road Chris Urmson _2015-480p-en",
+            "date": "7年前",
+            "source": "YouTube · Bloomberg Live",
+            "title": "In Conversation: Bill Ford | Invest Summit",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-SJj7rXyqjw"
+          },
+          {
+            "date": "3年前",
+            "source": "YouTube · Click On Detroit | Local 4 | WDIV",
+            "title": "A Conversation With Ford Motor Co. Executive Chair Bill Ford Jr.",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-rNepLQ08sw"
+          },
+          {
+            "date": "1年前",
+            "source": "YouTube · One Detroit",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=2-274_4nEVc"
+          },
+          {
+            "date": "14年前",
+            "source": "YouTube · Irish America",
+            "title": "Bill Ford Irish America Business 100 Keynote",
             "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1D7411574R"
+            "url": "https://www.youtube.com/watch?v=7p8RKb26K5k"
           },
           {
-            "date": "2019-08-04",
-            "source": "Bilibili · 贝叶斯派对",
-            "title": "【 斯坦福大学人工智能播客： Chris Urmson :Aurora、Google、CMU和DARPA的自动驾驶 】 Chris Urmson : Self-Driv",
+            "date": "8个月前",
+            "source": "YouTube · WXYZ-TV Detroit | Channel 7",
+            "title": "Full interview with Bill Ford on the new headquarters being opened",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1Qt411L7Su"
+            "url": "https://www.youtube.com/watch?v=NfALfNjZjNQ"
           },
-          {
-            "date": "2019-08-18",
-            "source": "Bilibili · LucretiaAgi",
-            "title": "Chris Urmson ：Lidar是拐杖吗？ | AI播 Chris Urmson : Is Lidar a Crutch? | AI Podcast Clips",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1c4411o7eM"
-          },
-          {
-            "date": "6年前",
-            "source": "YouTube · Aurora",
-            "title": "Keynote Chris Urmson, Co-founder and CEO, Aurora Innovation | World Safety Summit 2019",
-            "type": "speech",
-            "url": "https://www.youtube.com/watch?v=8YT0hZGX2gs"
-          },
-          {
-            "date": "13天前",
-            "source": "YouTube · DRM News",
-            "title": "FULL INTERVIEW: Aurora CEO Chris Urmson Unveils Second-Generation Driverless Trucks & Future | AF1G",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=R0ZmicQcGEM"
-          },
-          "…另 6 项"
+          "…另 7 项"
         ],
         "speeches": [
           {
-            "date": "2020-02-11",
-            "source": "Bilibili · qshi6",
-            "title": "Chris Urmson How a driverless car sees the road Chris Urmson _2015-480p-en",
+            "date": "1年前",
+            "source": "YouTube · Detroit Regional Chamber",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-9CwKFTD7YI"
+          },
+          {
+            "date": "7年前",
+            "source": "YouTube · Bloomberg Live",
+            "title": "In Conversation: Bill Ford | Invest Summit",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-SJj7rXyqjw"
+          },
+          {
+            "date": "3年前",
+            "source": "YouTube · Click On Detroit | Local 4 | WDIV",
+            "title": "A Conversation With Ford Motor Co. Executive Chair Bill Ford Jr.",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-rNepLQ08sw"
+          },
+          {
+            "date": "1年前",
+            "source": "YouTube · One Detroit",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=2-274_4nEVc"
+          },
+          {
+            "date": "14年前",
+            "source": "YouTube · Irish America",
+            "title": "Bill Ford Irish America Business 100 Keynote",
             "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1D7411574R"
+            "url": "https://www.youtube.com/watch?v=7p8RKb26K5k"
           },
           {
-            "date": "2019-08-04",
-            "source": "Bilibili · 贝叶斯派对",
-            "title": "【 斯坦福大学人工智能播客： Chris Urmson :Aurora、Google、CMU和DARPA的自动驾驶 】 Chris Urmson : Self-Driv",
+            "date": "8个月前",
+            "source": "YouTube · WXYZ-TV Detroit | Channel 7",
+            "title": "Full interview with Bill Ford on the new headquarters being opened",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1Qt411L7Su"
+            "url": "https://www.youtube.com/watch?v=NfALfNjZjNQ"
           },
-          {
-            "date": "2019-08-18",
-            "source": "Bilibili · LucretiaAgi",
-            "title": "Chris Urmson ：Lidar是拐杖吗？ | AI播 Chris Urmson : Is Lidar a Crutch? | AI Podcast Clips",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1c4411o7eM"
-          },
-          {
-            "date": "6年前",
-            "source": "YouTube · Aurora",
-            "title": "Keynote Chris Urmson, Co-founder and CEO, Aurora Innovation | World Safety Summit 2019",
-            "type": "speech",
-            "url": "https://www.youtube.com/watch?v=8YT0hZGX2gs"
-          },
-          {
-            "date": "13天前",
-            "source": "YouTube · DRM News",
-            "title": "FULL INTERVIEW: Aurora CEO Chris Urmson Unveils Second-Generation Driverless Trucks & Future | AF1G",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=R0ZmicQcGEM"
-          },
-          {
-            "date": "2个月前",
-            "source": "YouTube · TechCrunch",
-            "title": "The long road to driverless with Aurora's Chris Urmson (Live at HumanX) | Equity Podcast",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=R4EkisFUBEU"
-          },
-          "…另 5 项"
+          "…另 7 项"
         ]
       },
       "after": {
         "materials": [
           {
-            "date": "2026-08-04",
-            "source": "Aurora Innovation 官方来源",
-            "title": "Lessons Learned from Index OnAir: The Future of Robotics",
-            "type": "article",
-            "url": "https://aurora.tech/newsroom/lessons-learned-from-index-onair-the-future-of-robotics"
+            "date": "1年前",
+            "source": "YouTube · Detroit Regional Chamber",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-9CwKFTD7YI"
           },
           {
-            "date": "2020-02-11",
-            "source": "Bilibili · qshi6",
-            "title": "Chris Urmson How a driverless car sees the road Chris Urmson _2015-480p-en",
+            "date": "7年前",
+            "source": "YouTube · Bloomberg Live",
+            "title": "In Conversation: Bill Ford | Invest Summit",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-SJj7rXyqjw"
+          },
+          {
+            "date": "3年前",
+            "source": "YouTube · Click On Detroit | Local 4 | WDIV",
+            "title": "A Conversation With Ford Motor Co. Executive Chair Bill Ford Jr.",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-rNepLQ08sw"
+          },
+          {
+            "date": "1年前",
+            "source": "YouTube · One Detroit",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=2-274_4nEVc"
+          },
+          {
+            "date": "14年前",
+            "source": "YouTube · Irish America",
+            "title": "Bill Ford Irish America Business 100 Keynote",
             "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1D7411574R"
+            "url": "https://www.youtube.com/watch?v=7p8RKb26K5k"
           },
           {
-            "date": "2019-08-04",
-            "source": "Bilibili · 贝叶斯派对",
-            "title": "【 斯坦福大学人工智能播客： Chris Urmson :Aurora、Google、CMU和DARPA的自动驾驶 】 Chris Urmson : Self-Driv",
+            "date": "8个月前",
+            "source": "YouTube · WXYZ-TV Detroit | Channel 7",
+            "title": "Full interview with Bill Ford on the new headquarters being opened",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1Qt411L7Su"
+            "url": "https://www.youtube.com/watch?v=NfALfNjZjNQ"
           },
-          {
-            "date": "2019-08-18",
-            "source": "Bilibili · LucretiaAgi",
-            "title": "Chris Urmson ：Lidar是拐杖吗？ | AI播 Chris Urmson : Is Lidar a Crutch? | AI Podcast Clips",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1c4411o7eM"
-          },
-          {
-            "date": "6年前",
-            "source": "YouTube · Aurora",
-            "title": "Keynote Chris Urmson, Co-founder and CEO, Aurora Innovation | World Safety Summit 2019",
-            "type": "speech",
-            "url": "https://www.youtube.com/watch?v=8YT0hZGX2gs"
-          },
-          {
-            "date": "2周前",
-            "source": "YouTube · DRM News",
-            "title": "FULL INTERVIEW: Aurora CEO Chris Urmson Unveils Second-Generation Driverless Trucks & Future | AF1G",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=R0ZmicQcGEM"
-          },
-          "…另 6 项"
+          "…另 8 项"
         ],
         "speeches": [
           {
-            "date": "2020-02-11",
-            "source": "Bilibili · qshi6",
-            "title": "Chris Urmson How a driverless car sees the road Chris Urmson _2015-480p-en",
+            "date": "1年前",
+            "source": "YouTube · Detroit Regional Chamber",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-9CwKFTD7YI"
+          },
+          {
+            "date": "7年前",
+            "source": "YouTube · Bloomberg Live",
+            "title": "In Conversation: Bill Ford | Invest Summit",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-SJj7rXyqjw"
+          },
+          {
+            "date": "3年前",
+            "source": "YouTube · Click On Detroit | Local 4 | WDIV",
+            "title": "A Conversation With Ford Motor Co. Executive Chair Bill Ford Jr.",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=-rNepLQ08sw"
+          },
+          {
+            "date": "1年前",
+            "source": "YouTube · One Detroit",
+            "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=2-274_4nEVc"
+          },
+          {
+            "date": "14年前",
+            "source": "YouTube · Irish America",
+            "title": "Bill Ford Irish America Business 100 Keynote",
             "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1D7411574R"
+            "url": "https://www.youtube.com/watch?v=7p8RKb26K5k"
           },
           {
-            "date": "2019-08-04",
-            "source": "Bilibili · 贝叶斯派对",
-            "title": "【 斯坦福大学人工智能播客： Chris Urmson :Aurora、Google、CMU和DARPA的自动驾驶 】 Chris Urmson : Self-Driv",
+            "date": "8个月前",
+            "source": "YouTube · WXYZ-TV Detroit | Channel 7",
+            "title": "Full interview with Bill Ford on the new headquarters being opened",
             "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1Qt411L7Su"
+            "url": "https://www.youtube.com/watch?v=NfALfNjZjNQ"
           },
-          {
-            "date": "2019-08-18",
-            "source": "Bilibili · LucretiaAgi",
-            "title": "Chris Urmson ：Lidar是拐杖吗？ | AI播 Chris Urmson : Is Lidar a Crutch? | AI Podcast Clips",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1c4411o7eM"
-          },
-          {
-            "date": "6年前",
-            "source": "YouTube · Aurora",
-            "title": "Keynote Chris Urmson, Co-founder and CEO, Aurora Innovation | World Safety Summit 2019",
-            "type": "speech",
-            "url": "https://www.youtube.com/watch?v=8YT0hZGX2gs"
-          },
-          {
-            "date": "2周前",
-            "source": "YouTube · DRM News",
-            "title": "FULL INTERVIEW: Aurora CEO Chris Urmson Unveils Second-Generation Driverless Trucks & Future | AF1G",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=R0ZmicQcGEM"
-          },
-          {
-            "date": "2个月前",
-            "source": "YouTube · TechCrunch",
-            "title": "The long road to driverless with Aurora's Chris Urmson (Live at HumanX) | Equity Podcast",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=R4EkisFUBEU"
-          },
-          "…另 5 项"
+          "…另 8 项"
         ]
       },
       "evidenceIds": [
-        "E010",
-        "E011",
-        "E012",
-        "E013"
+        "E005",
+        "E006",
+        "E007",
+        "E008"
       ]
     },
     {
-      "id": "chg-b6f3d60ba59d41746537",
+      "id": "chg-76ef6d058ed2e386d8fa",
       "dataset": "person",
       "entityType": "人物",
       "entityId": "person-a9e5a688d6",
@@ -862,77 +509,31 @@
       "summary": "邓泰华 的 sources 发生变化。",
       "importance": 48,
       "before": {
-        "sources": []
-      },
-      "after": {
         "sources": [
           "https://www.bilibili.com/video/BV1MU4y1A7g3"
         ]
       },
+      "after": {
+        "sources": []
+      },
       "evidenceIds": [
-        "E014"
+        "E009"
       ]
     },
     {
-      "id": "chg-70fffce08f37206b7abe",
+      "id": "chg-261a2ed38f670af4d370",
       "dataset": "person",
       "entityType": "人物",
       "entityId": "wang-xingxing",
       "entityName": "王兴兴",
       "action": "updated",
       "changedFields": [
-        "materials"
+        "materials",
+        "sources"
       ],
-      "summary": "王兴兴 的 materials 发生变化。",
+      "summary": "王兴兴 的 materials、sources 发生变化。",
       "importance": 48,
       "before": {
-        "materials": [
-          {
-            "date": "2025-05-04",
-            "source": "Bilibili · 共青团中央",
-            "title": "“你还想改变这个世界？我想试试！”【给青春的 演讲 x 王兴兴 】",
-            "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1G4GZzPEEk"
-          },
-          {
-            "date": "2025-03-10",
-            "source": "Bilibili · 人民日报",
-            "title": "“90后” 王兴兴 献给春天的 演讲 ：相信",
-            "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1KeRVY8E62"
-          },
-          {
-            "date": "2026-08-02",
-            "source": "Bilibili · 上海日报",
-            "title": "宇树科技王兴兴 ：别等长大再碰前沿 科技 越早入局 越容易成为顶尖人才",
-            "type": "qa",
-            "url": "https://www.bilibili.com/video/BV1LT3X6BExP"
-          },
-          {
-            "date": "2026-08-06",
-            "source": "Bilibili · 图灵的猫",
-            "title": "对话宇树 投资人李彦男： 王兴兴 有何特殊之处？UP主创业会更容易融资吗 | B站 x WAIC AI会客厅",
-            "type": "qa",
-            "url": "https://www.bilibili.com/video/BV1P9My6WEjS"
-          },
-          {
-            "date": "2026-06-11",
-            "source": "Bilibili · 司瑪超",
-            "title": "宇树科技王兴兴演讲 ：人形机器人发展方向 20260526",
-            "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1PBEi6ZEsK"
-          },
-          {
-            "date": "2025-03-04",
-            "source": "Bilibili · Lina老师6和8",
-            "title": "王兴兴 其母校发文公开他本科在校借阅书单历史，王总本人也亲自己转发受其启发我在朋友圈和小红书分享受到网友热赞，在此再次分享给网友借鉴和学习📚并从中得到启发。",
-            "type": "speech",
-            "url": "https://www.bilibili.com/video/BV1RD9WYeE6F"
-          },
-          "…另 23 项"
-        ]
-      },
-      "after": {
         "materials": [
           {
             "date": "2026-08-07",
@@ -977,58 +578,82 @@
             "url": "https://www.bilibili.com/video/BV1LT3X6BExP"
           },
           "…另 26 项"
-        ]
-      },
-      "evidenceIds": [
-        "E015",
-        "E016",
-        "E017",
-        "E018"
-      ]
-    },
-    {
-      "id": "chg-ffd57f709cd9215a2119",
-      "dataset": "person",
-      "entityType": "人物",
-      "entityId": "fei-fei-li",
-      "entityName": "李飞飞",
-      "action": "updated",
-      "changedFields": [
-        "sources"
-      ],
-      "summary": "李飞飞 的 sources 发生变化。",
-      "importance": 48,
-      "before": {
+        ],
         "sources": [
-          "https://en.wikipedia.org/wiki/Fei-Fei_Li",
-          "https://profiles.stanford.edu/fei-fei-li",
-          "https://www.bilibili.com/video/BV1Bp3k61EaJ",
-          "https://www.bilibili.com/video/BV1CU3B6VEc4",
-          "https://www.bilibili.com/video/BV1nJ411z7fe",
-          "https://www.bilibili.com/video/BV1ox411D7uY",
-          "…另 5 项"
+          "https://www.unitree.com/",
+          "https://www.wikidata.org/wiki/Q132794691",
+          "https://www.youtube.com/watch?v=Ct9iBIu6CL0",
+          "https://www.youtube.com/watch?v=KXt8oSVLswQ",
+          "https://www.youtube.com/watch?v=StYGZ3G_tds",
+          "https://www.youtube.com/watch?v=fDUq6FgVApU",
+          "…另 1 项"
         ]
       },
       "after": {
+        "materials": [
+          {
+            "date": "2026-08-07",
+            "source": "机器人 · Google News 中文",
+            "title": "宇树王兴兴：中国企业有望占据机器人产业发展先机，人形机器人尚待突破两方面瓶颈 - 华尔街见闻",
+            "type": "article",
+            "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFB6RTkxZ2VoZUpCeW9td2ZIcVoxR0ZwWXhDX0d6YU5JSWdPejRVRHA4NzdEeGFLSFdRTlUxbGt4a2dVOC1ETGFJeWFORE8yYmU2Wi1Z?oc=5"
+          },
+          {
+            "date": "2026-08-07",
+            "source": "机器人 · Google News 中文",
+            "title": "王兴兴：登陆资本市场是全新的起点，积极探索人形机器人、机甲等更多产品形态 - thepaper.cn",
+            "type": "research_paper",
+            "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE0yZ0pPZTZWaVhTa1g2aTlXZXd6ci1nVURCWkFKeUNPcEl5YU03S2VLcHd4c0FNY05RMkk4YUhJcGRtQVpGVXJUWXJkVlJGX2k5RGJSRU5JaG1jRDhPekUxUw?oc=5"
+          },
+          {
+            "date": "2026-08-07",
+            "source": "机器人 · Google News 中文",
+            "title": "宇树科技王兴兴：人形机器人毛利率回落系多重原因所致 - 新京报",
+            "type": "article",
+            "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBlVFhHY3ZnRDROQ3k2TEJISkZoRi1pNXdkVVNkZFE0N21CZDdfRU1JbGZoeEZUQUNrbk8tcFk0cGVqd1hOZ3RYaG5xVmJVSXJ5b2VvQ3RmUC0yREVTNE9Zd0ZjVFk?oc=5"
+          },
+          {
+            "date": "2025-05-04",
+            "source": "Bilibili · 共青团中央",
+            "title": "“你还想改变这个世界？我想试试！”【给青春的 演讲 x 王兴兴 】",
+            "type": "speech",
+            "url": "https://www.bilibili.com/video/BV1G4GZzPEEk"
+          },
+          {
+            "date": "2025-03-10",
+            "source": "Bilibili · 人民日报",
+            "title": "“90后” 王兴兴 献给春天的 演讲 ：相信",
+            "type": "speech",
+            "url": "https://www.bilibili.com/video/BV1KeRVY8E62"
+          },
+          {
+            "date": "2026-08-02",
+            "source": "Bilibili · 上海日报",
+            "title": "宇树科技王兴兴 ：别等长大再碰前沿 科技 越早入局 越容易成为顶尖人才",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1LT3X6BExP"
+          },
+          "…另 26 项"
+        ],
         "sources": [
-          "https://en.wikipedia.org/wiki/Fei-Fei_Li",
-          "https://profiles.stanford.edu/fei-fei-li",
-          "https://www.bilibili.com/video/BV1Bp3k61EaJ",
-          "https://www.bilibili.com/video/BV1CU3B6VEc4",
-          "https://www.bilibili.com/video/BV1hJ411F71K",
-          "https://www.bilibili.com/video/BV1ox411D7uY",
+          "https://www.bilibili.com/video/BV1KeRVY8E62",
+          "https://www.bilibili.com/video/BV1P9My6WEjS",
+          "https://www.bilibili.com/video/BV1fgPNeLErK",
+          "https://www.bilibili.com/video/BV1ivAhz6EFk",
+          "https://www.unitree.com/",
+          "https://www.wikidata.org/wiki/Q132794691",
           "…另 5 项"
         ]
       },
       "evidenceIds": [
-        "E019",
-        "E020",
-        "E021",
-        "E022"
+        "E010",
+        "E011",
+        "E012",
+        "E013"
       ]
     },
     {
-      "id": "chg-b2548d67c88c837b617a",
+      "id": "chg-1b1e6a5c98b5b456b189",
       "dataset": "person",
       "entityType": "人物",
       "entityId": "li-zexiang",
@@ -1042,64 +667,26 @@
       "before": {
         "sources": [
           "https://ece.hkust.edu.hk/",
+          "https://www.bilibili.com/video/BV1jB4y1i7Ge",
+          "https://www.bilibili.com/video/BV1jd4y1C7iQ",
           "https://www.xbotpark.com/"
         ]
       },
       "after": {
         "sources": [
           "https://ece.hkust.edu.hk/",
-          "https://www.bilibili.com/video/BV1jB4y1i7Ge",
-          "https://www.bilibili.com/video/BV1jd4y1C7iQ",
           "https://www.xbotpark.com/"
         ]
       },
       "evidenceIds": [
-        "E023",
-        "E024",
-        "E025",
-        "E026"
+        "E014",
+        "E015",
+        "E016",
+        "E017"
       ]
     },
     {
-      "id": "chg-26e56bbb5c31e9436798",
-      "dataset": "person",
-      "entityType": "人物",
-      "entityId": "shunyu-yao",
-      "entityName": "姚顺雨",
-      "action": "updated",
-      "changedFields": [
-        "sources"
-      ],
-      "summary": "姚顺雨 的 sources 发生变化。",
-      "importance": 48,
-      "before": {
-        "sources": [
-          "https://www.youtube.com/watch?v=NzcHWqJWE4M",
-          "https://www.youtube.com/watch?v=Y4jRSIIdmB8",
-          "https://www.youtube.com/watch?v=gQgKkUsx5q0",
-          "https://x.com/ShunyuYao12",
-          "https://ysymyth.github.io/"
-        ]
-      },
-      "after": {
-        "sources": [
-          "https://www.youtube.com/watch?v=-04XgcnLx2k",
-          "https://www.youtube.com/watch?v=NzcHWqJWE4M",
-          "https://www.youtube.com/watch?v=Y4jRSIIdmB8",
-          "https://www.youtube.com/watch?v=gQgKkUsx5q0",
-          "https://x.com/ShunyuYao12",
-          "https://ysymyth.github.io/"
-        ]
-      },
-      "evidenceIds": [
-        "E027",
-        "E028",
-        "E029",
-        "E030"
-      ]
-    },
-    {
-      "id": "chg-03d368739d29f4faa3e7",
+      "id": "chg-9a8f9344b6d09d9ff75b",
       "dataset": "person",
       "entityType": "人物",
       "entityId": "elon-musk",
@@ -1155,16 +742,16 @@
             "type": "article",
             "url": "https://mashable.com/entertainment/seth-meyers-elon-musk-ai-the-odyssey"
           },
-          "…另 71 项"
+          "…另 73 项"
         ],
         "sources": [
+          "https://www.bilibili.com/video/BV1e9M16GE7X",
+          "https://www.bilibili.com/video/BV1jR4y1f74B",
+          "https://www.bilibili.com/video/BV1rR4y157LC",
+          "https://www.bilibili.com/video/BV1s43E6oEhe",
           "https://www.spacex.com/",
           "https://www.tesla.com/elon-musk",
-          "https://www.wikidata.org/wiki/Q317521",
-          "https://www.youtube.com/watch?v=E-squeb0YJA",
-          "https://www.youtube.com/watch?v=SVk1hb0ZOrE",
-          "https://www.youtube.com/watch?v=YRvf00NooN8",
-          "…另 3 项"
+          "…另 7 项"
         ]
       },
       "after": {
@@ -1214,156 +801,24 @@
           "…另 73 项"
         ],
         "sources": [
-          "https://www.bilibili.com/video/BV1e9M16GE7X",
-          "https://www.bilibili.com/video/BV1jR4y1f74B",
-          "https://www.bilibili.com/video/BV1rR4y157LC",
-          "https://www.bilibili.com/video/BV1s43E6oEhe",
           "https://www.spacex.com/",
           "https://www.tesla.com/elon-musk",
-          "…另 7 项"
+          "https://www.wikidata.org/wiki/Q317521",
+          "https://www.youtube.com/watch?v=SVk1hb0ZOrE",
+          "https://www.youtube.com/watch?v=XuoqKYxDHVc",
+          "https://www.youtube.com/watch?v=YRvf00NooN8",
+          "…另 3 项"
         ]
       },
       "evidenceIds": [
-        "E031",
-        "E032",
-        "E033",
-        "E034"
+        "E018",
+        "E019",
+        "E020",
+        "E021"
       ]
     },
     {
-      "id": "chg-94015e0033caac8d9c58",
-      "dataset": "person",
-      "entityType": "人物",
-      "entityId": "sam-altman",
-      "entityName": "Sam Altman",
-      "action": "updated",
-      "changedFields": [
-        "materials",
-        "sources"
-      ],
-      "summary": "Sam Altman 的 materials、sources 发生变化。",
-      "importance": 48,
-      "before": {
-        "materials": [
-          {
-            "date": "2026-07-22",
-            "source": "机器之心",
-            "title": "GPT-6要来了？还没发布，就先「入侵」了Hugging Face",
-            "type": "article",
-            "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651046034&idx=2&sn=28d08b24db4deb725bd70d2f6b20d1da&chksm=84e604ecb3918dfadc39adae5f8cb3cb4431b758c2f61a80bf89cc4cbf4e284833df35ed6e3c#rd"
-          },
-          {
-            "date": "2026-07-30",
-            "source": "9to5Mac",
-            "title": "Jony Ive’s first OpenAI hardware device sounds rather like … a HomePad",
-            "type": "article",
-            "url": "https://9to5mac.com/2026/07/30/jony-ives-first-openai-hardware-device-sounds-rather-like-a-homepad"
-          },
-          {
-            "date": "持续更新",
-            "source": "Wikipedia (en)",
-            "title": "Sam Altman — Wikipedia",
-            "type": "biography",
-            "url": "https://en.wikipedia.org/wiki/Sam_Altman"
-          },
-          {
-            "date": "2026-07-28",
-            "source": "新浪财经",
-            "title": "OpenAI首席执行官山姆·奥特曼赴华盛顿就人工智能监管政策与美官员会谈",
-            "type": "article",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-28/doc-inikivui0457912.shtml"
-          },
-          {
-            "date": "2026-08-01",
-            "source": "Mashable",
-            "title": "Sam Altman suggests parents generate AI podcasts about their kids",
-            "type": "speech",
-            "url": "https://mashable.com/tech/sam-altman-suggests-parents-generate-ai-podcasts-about-kids"
-          },
-          {
-            "date": "2026-07-28",
-            "source": "谷歌新闻",
-            "title": "Sam Altman says the Hugging Face hack is a reminder that an AI power monopoly could lead to 'long-term disaster' - Business Insider",
-            "type": "article",
-            "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPQVAyZWpNYWNKZVQyUFNZRjdCc0xoaDRySjV2M2hnazM2SjZuaWc3WWdmb2toN0ZPRFUybGpfVmNXZFpobHdyb240alFuY2VaQng0TUhRR3NCR3ZSUVVTZ045eUliZjFBWkc1bjFwUHR1UTZEZUR5aUJvNkE0QVdZTEZPdDRUajE0eTZkUDZ1NDlkeGxLUUJfWjJKWmxVQ1psNlZB?oc=5"
-          },
-          "…另 48 项"
-        ],
-        "sources": [
-          "https://en.wikipedia.org/wiki/Sam_Altman",
-          "https://openai.com/",
-          "https://www.wikidata.org/wiki/Q7407093",
-          "https://www.youtube.com/watch?v=5MWT_doo68k",
-          "https://www.youtube.com/watch?v=5eouRdDYM2c",
-          "https://www.youtube.com/watch?v=FVRHTWWEIz4",
-          "…另 2 项"
-        ]
-      },
-      "after": {
-        "materials": [
-          {
-            "date": "2026-07-22",
-            "source": "机器之心",
-            "title": "GPT-6要来了？还没发布，就先「入侵」了Hugging Face",
-            "type": "article",
-            "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651046034&idx=2&sn=28d08b24db4deb725bd70d2f6b20d1da&chksm=84e604ecb3918dfadc39adae5f8cb3cb4431b758c2f61a80bf89cc4cbf4e284833df35ed6e3c#rd"
-          },
-          {
-            "date": "2026-07-30",
-            "source": "9to5Mac",
-            "title": "Jony Ive’s first OpenAI hardware device sounds rather like … a HomePad",
-            "type": "article",
-            "url": "https://9to5mac.com/2026/07/30/jony-ives-first-openai-hardware-device-sounds-rather-like-a-homepad"
-          },
-          {
-            "date": "持续更新",
-            "source": "Wikipedia (en)",
-            "title": "Sam Altman — Wikipedia",
-            "type": "biography",
-            "url": "https://en.wikipedia.org/wiki/Sam_Altman"
-          },
-          {
-            "date": "2026-07-28",
-            "source": "新浪财经",
-            "title": "OpenAI首席执行官山姆·奥特曼赴华盛顿就人工智能监管政策与美官员会谈",
-            "type": "article",
-            "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-28/doc-inikivui0457912.shtml"
-          },
-          {
-            "date": "2026-08-01",
-            "source": "Mashable",
-            "title": "Sam Altman suggests parents generate AI podcasts about their kids",
-            "type": "speech",
-            "url": "https://mashable.com/tech/sam-altman-suggests-parents-generate-ai-podcasts-about-kids"
-          },
-          {
-            "date": "2026-07-28",
-            "source": "谷歌新闻",
-            "title": "Sam Altman says the Hugging Face hack is a reminder that an AI power monopoly could lead to 'long-term disaster' - Business Insider",
-            "type": "article",
-            "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPQVAyZWpNYWNKZVQyUFNZRjdCc0xoaDRySjV2M2hnazM2SjZuaWc3WWdmb2toN0ZPRFUybGpfVmNXZFpobHdyb240alFuY2VaQng0TUhRR3NCR3ZSUVVTZ045eUliZjFBWkc1bjFwUHR1UTZEZUR5aUJvNkE0QVdZTEZPdDRUajE0eTZkUDZ1NDlkeGxLUUJfWjJKWmxVQ1psNlZB?oc=5"
-          },
-          "…另 49 项"
-        ],
-        "sources": [
-          "https://en.wikipedia.org/wiki/Sam_Altman",
-          "https://openai.com/",
-          "https://www.bilibili.com/video/BV18p3n6MEsN",
-          "https://www.bilibili.com/video/BV1Pc411N77b",
-          "https://www.bilibili.com/video/BV1b73z6WEmM",
-          "https://www.bilibili.com/video/BV1sK421y7bo",
-          "…另 6 项"
-        ]
-      },
-      "evidenceIds": [
-        "E035",
-        "E036",
-        "E037",
-        "E038"
-      ]
-    },
-    {
-      "id": "chg-b21cae2a5c644c6c563d",
+      "id": "chg-7c8d31422a06cc0ce093",
       "dataset": "person",
       "entityType": "人物",
       "entityId": "kunle-olukotun",
@@ -1376,175 +831,29 @@
       "importance": 48,
       "before": {
         "sources": [
-          "https://www.youtube.com/watch?v=UAugWwTNAV8",
-          "https://www.youtube.com/watch?v=jGmMChb9cbk",
-          "https://www.youtube.com/watch?v=jbGnqTR9F4Y",
-          "https://www.youtube.com/watch?v=rMWr3hXUqWw"
-        ]
-      },
-      "after": {
-        "sources": [
           "https://www.youtube.com/watch?v=MYA-n7kBnhQ",
           "https://www.youtube.com/watch?v=jGmMChb9cbk",
           "https://www.youtube.com/watch?v=jbGnqTR9F4Y",
           "https://www.youtube.com/watch?v=rMWr3hXUqWw"
         ]
       },
-      "evidenceIds": [
-        "E039",
-        "E040",
-        "E041",
-        "E042"
-      ]
-    },
-    {
-      "id": "chg-7ff8c1c92e7ccfe8c53b",
-      "dataset": "person",
-      "entityType": "人物",
-      "entityId": "demis-hassabis",
-      "entityName": "Demis Hassabis",
-      "action": "updated",
-      "changedFields": [
-        "materials"
-      ],
-      "summary": "Demis Hassabis 的 materials 发生变化。",
-      "importance": 48,
-      "before": {
-        "materials": [
-          {
-            "date": "持续更新",
-            "source": "Google DeepMind",
-            "title": "Google DeepMind leadership",
-            "type": "official_profile",
-            "url": "https://deepmind.google/about/"
-          },
-          {
-            "date": "持续更新",
-            "source": "Wikipedia (en)",
-            "title": "Demis Hassabis — Wikipedia",
-            "type": "biography",
-            "url": "https://en.wikipedia.org/wiki/Demis_Hassabis"
-          },
-          {
-            "date": "2026-08-05",
-            "source": "SiliconANGLE",
-            "title": "Google reveals big shakeup in its AI teams as Jeff Dean leaves and Demis Hassabis moves upstairs",
-            "type": "article",
-            "url": "https://siliconangle.com/2026/08/05/google-reveals-big-shake-ai-teams-jeff-dean-leaves-demis-hassabis-moves-upstairs"
-          },
-          {
-            "date": "2026-08-05",
-            "source": "Slashdot",
-            "title": "Google Overhauls AI Leadership As DeepMind CEO Steps Aside",
-            "type": "article",
-            "url": "https://tech.slashdot.org/story/26/08/05/1718218/google-overhauls-ai-leadership-as-deepmind-ceo-steps-aside"
-          },
-          {
-            "date": "2026-08-06",
-            "source": "Yahoo奇摩",
-            "title": "Google AI爆發「大地震」！DeepMind王牌出走、Gemini卡關 Alphabet股價崩4%",
-            "type": "article",
-            "url": "https://tw.stock.yahoo.com/news/google-ai%E7%88%86%E7%99%BC-%E5%A4%A7%E5%9C%B0%E9%9C%87-deepmind%E7%8E%8B%E7%89%8C%E5%87%BA%E8%B5%B0-gemini%E5%8D%A1%E9%97%9C-044500334.html"
-          },
-          {
-            "date": "2026-08-06",
-            "source": "Yahoo奇摩",
-            "title": "Google AI 領導層重組 德米斯·哈薩比斯轉任主席牽動策略",
-            "type": "article",
-            "url": "https://tw.stock.yahoo.com/news/google-ai-%E9%A0%98%E5%B0%8E%E5%B1%A4%E9%87%8D%E7%B5%84-%E5%BE%B7%E7%B1%B3%E6%96%AF-%E5%93%88%E8%96%A9%E6%AF%94%E6%96%AF%E8%BD%89%E4%BB%BB%E4%B8%BB%E5%B8%AD%E7%89%BD%E5%8B%95%E7%AD%96%E7%95%A5-043401133.html"
-          },
-          "…另 20 项"
-        ]
-      },
-      "after": {
-        "materials": [
-          {
-            "date": "持续更新",
-            "source": "Google DeepMind",
-            "title": "Google DeepMind leadership",
-            "type": "official_profile",
-            "url": "https://deepmind.google/about/"
-          },
-          {
-            "date": "持续更新",
-            "source": "Wikipedia (en)",
-            "title": "Demis Hassabis — Wikipedia",
-            "type": "biography",
-            "url": "https://en.wikipedia.org/wiki/Demis_Hassabis"
-          },
-          {
-            "date": "2026-08-05",
-            "source": "SiliconANGLE",
-            "title": "Google reveals big shakeup in its AI teams as Jeff Dean leaves and Demis Hassabis moves upstairs",
-            "type": "article",
-            "url": "https://siliconangle.com/2026/08/05/google-reveals-big-shake-ai-teams-jeff-dean-leaves-demis-hassabis-moves-upstairs"
-          },
-          {
-            "date": "2026-08-05",
-            "source": "Slashdot",
-            "title": "Google Overhauls AI Leadership As DeepMind CEO Steps Aside",
-            "type": "article",
-            "url": "https://tech.slashdot.org/story/26/08/05/1718218/google-overhauls-ai-leadership-as-deepmind-ceo-steps-aside"
-          },
-          {
-            "date": "2026-08-06",
-            "source": "Yahoo奇摩",
-            "title": "Google AI爆發「大地震」！DeepMind王牌出走、Gemini卡關 Alphabet股價崩4%",
-            "type": "article",
-            "url": "https://tw.stock.yahoo.com/news/google-ai%E7%88%86%E7%99%BC-%E5%A4%A7%E5%9C%B0%E9%9C%87-deepmind%E7%8E%8B%E7%89%8C%E5%87%BA%E8%B5%B0-gemini%E5%8D%A1%E9%97%9C-044500334.html"
-          },
-          {
-            "date": "2026-08-06",
-            "source": "Yahoo奇摩",
-            "title": "Google AI 領導層重組 德米斯·哈薩比斯轉任主席牽動策略",
-            "type": "article",
-            "url": "https://tw.stock.yahoo.com/news/google-ai-%E9%A0%98%E5%B0%8E%E5%B1%A4%E9%87%8D%E7%B5%84-%E5%BE%B7%E7%B1%B3%E6%96%AF-%E5%93%88%E8%96%A9%E6%AF%94%E6%96%AF%E8%BD%89%E4%BB%BB%E4%B8%BB%E5%B8%AD%E7%89%BD%E5%8B%95%E7%AD%96%E7%95%A5-043401133.html"
-          },
-          "…另 22 项"
-        ]
-      },
-      "evidenceIds": [
-        "E043",
-        "E044",
-        "E045",
-        "E046"
-      ]
-    },
-    {
-      "id": "chg-265d6544bb7fadf76915",
-      "dataset": "person",
-      "entityType": "人物",
-      "entityId": "david-kirtley",
-      "entityName": "David Kirtley",
-      "action": "updated",
-      "changedFields": [
-        "sources"
-      ],
-      "summary": "David Kirtley 的 sources 发生变化。",
-      "importance": 48,
-      "before": {
-        "sources": [
-          "https://www.bilibili.com/video/BV1dcy7BDEJM",
-          "https://www.bilibili.com/video/BV1i4roBxEL7",
-          "https://www.helionenergy.com/",
-          "https://www.youtube.com/watch?v=m_CFCyc2Shs"
-        ]
-      },
       "after": {
         "sources": [
-          "https://www.helionenergy.com/",
-          "https://www.youtube.com/watch?v=m_CFCyc2Shs"
+          "https://www.youtube.com/watch?v=UAugWwTNAV8",
+          "https://www.youtube.com/watch?v=jGmMChb9cbk",
+          "https://www.youtube.com/watch?v=jbGnqTR9F4Y",
+          "https://www.youtube.com/watch?v=rMWr3hXUqWw"
         ]
       },
       "evidenceIds": [
-        "E047",
-        "E048",
-        "E049",
-        "E050"
+        "E022",
+        "E023",
+        "E024",
+        "E025"
       ]
     },
     {
-      "id": "chg-ee4a292d910e551464fd",
+      "id": "chg-9216e88636b699e12ea3",
       "dataset": "marketCompany",
       "entityType": "上市公司",
       "entityId": "xtalpi",
@@ -1552,112 +861,11 @@
       "action": "updated",
       "changedFields": [
         "metrics",
-        "news",
-        "priceHistory",
-        "quote"
+        "sources"
       ],
-      "summary": "晶泰控股有限公司 更新至 2026-08-07，最新收盘价为 7.55；同时变更字段：metrics、news、priceHistory、quote。",
+      "summary": "晶泰控股有限公司 的 metrics、sources 发生变化。",
       "importance": 48,
       "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "HK$4.25亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "2.18元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.04元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.03元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "HK$318.67亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "43.03亿股"
-          },
-          "…另 7 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-04T13:51:00+08:00",
-            "source": "新浪财经",
-            "title": "“王的业绩”——药王回归：药明康德H1业绩炸裂",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimctrr2082072.shtml"
-          },
-          {
-            "publishedAt": "2026-08-06T13:24:00+08:00",
-            "source": "新浪财经",
-            "title": "北大校友的AI战事",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkfvm3864119.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T07:14:00+08:00",
-            "source": "新浪财经",
-            "title": "“APEC大会倒计时100天媒体采风活动”在深圳启动",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimmtwt3406792.shtml"
-          },
-          {
-            "publishedAt": "2026-08-04T15:07:00+08:00",
-            "source": "新浪财经",
-            "title": "从“卖水人”到“造浪者”：晶泰科技（02228）发布XtalPi Science，以Physical AI重构万亿科研基建",
-            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-04/doc-inimctrp5357879.shtml"
-          },
-          {
-            "publishedAt": "2026-08-03T16:54:00+08:00",
-            "source": "新浪财经",
-            "title": "【券商聚焦】浙商证券维持晶泰控股（02228）买入评级 指主业强劲增长",
-            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-03/doc-inikzuym5977425.shtml"
-          },
-          {
-            "publishedAt": "2026-08-06T20:52:00+08:00",
-            "source": "新浪财经",
-            "title": "全球首个AI4S操作系统发布，深圳企业共建科学智能生态",
-            "url": "https://finance.sina.com.cn/stock/t/2026-08-06/doc-inimkwtc3725270.shtml"
-          },
-          "…另 4 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 7.235,
-            "date": "2026-08-06",
-            "high": 7.415,
-            "low": 7.14,
-            "open": 7.325,
-            "volume": 36913646.0
-          },
-          {
-            "close": 7.405,
-            "date": "2026-08-07",
-            "high": 7.49,
-            "low": 7.055,
-            "open": 7.24,
-            "volume": 58100810.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-07T14:25:02+08:00",
-          "change": 0.175,
-          "changePercent": 2.42,
-          "currency": "HKD",
-          "previousClose": 7.235
-        }
-      },
-      "after": {
         "metrics": [
           {
             "id": "amount",
@@ -1691,217 +899,134 @@
           },
           "…另 7 项"
         ],
-        "news": [
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk02228%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=116.02228&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK2228/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/2228.HK/"
+        }
+      },
+      "after": {
+        "metrics": [
           {
-            "publishedAt": "2026-08-07T18:28:00+08:00",
-            "source": "新浪财经",
-            "title": "AI制药，10大核心玩家！",
-            "url": "https://cj.sina.cn/articles/view/7970234518/1db10209601902l0wk"
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.18元"
           },
           {
-            "publishedAt": "2026-08-06T13:24:00+08:00",
-            "source": "新浪财经",
-            "title": "北大校友的AI战事",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkfvm3864119.shtml"
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.04元"
           },
           {
-            "publishedAt": "2026-08-07T07:14:00+08:00",
-            "source": "新浪财经",
-            "title": "“APEC大会倒计时100天媒体采风活动”在深圳启动",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimmtwt3406792.shtml"
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.03元"
           },
           {
-            "publishedAt": "2026-08-04T15:07:00+08:00",
-            "source": "新浪财经",
-            "title": "从“卖水人”到“造浪者”：晶泰科技（02228）发布XtalPi Science，以Physical AI重构万亿科研基建",
-            "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-04/doc-inimctrp5357879.shtml"
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "HK$324.88亿"
           },
           {
-            "publishedAt": "2026-08-07T20:24:00+08:00",
-            "source": "新浪财经",
-            "title": "中资企业离岸可转债发行升温 科技企业融资热潮持续",
-            "url": "https://finance.sina.com.cn/stock/relnews/hk/2026-08-07/doc-inimnzsi3122037.shtml"
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "1.35亿元"
           },
           {
-            "publishedAt": "2026-08-06T20:52:00+08:00",
-            "source": "新浪财经",
-            "title": "全球首个AI4S操作系统发布，深圳企业共建科学智能生态",
-            "url": "https://finance.sina.com.cn/stock/t/2026-08-06/doc-inimkwtc3725270.shtml"
+            "id": "revenue",
+            "label": "营业收入",
+            "value": "8.03亿元"
           },
-          "…另 4 项"
+          "…另 2 项"
         ],
-        "priceHistory": [
-          {
-            "close": 7.235,
-            "date": "2026-08-06",
-            "high": 7.415,
-            "low": 7.14,
-            "open": 7.325,
-            "volume": 36913646.0
-          },
-          {
-            "close": 7.55,
-            "date": "2026-08-07",
-            "high": 7.63,
-            "low": 7.055,
-            "open": 7.24,
-            "volume": 84072459.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-07T16:08:20+08:00",
-          "change": 0.315,
-          "changePercent": 4.35,
-          "currency": "HKD",
-          "previousClose": 7.235
+        "sources": {
+          "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=hk02228%2Cday%2C%2C%2C120%2Cqfq",
+          "sinaFinance": "https://stock.finance.sina.com.cn/hkstock/quotes/02228.html",
+          "tonghuashun": "https://stockpage.10jqka.com.cn/HK2228/",
+          "yahooFinance": "https://sg.finance.yahoo.com/quote/2228.HK/"
         }
       },
       "evidenceIds": [
-        "E051",
-        "E052",
-        "E053",
-        "E054"
+        "E026",
+        "E027",
+        "E028",
+        "E029"
       ]
     },
     {
-      "id": "chg-52f03cea66b170b37c2d",
+      "id": "chg-c1d3b9d6281af4142260",
       "dataset": "marketCompany",
       "entityType": "上市公司",
       "entityId": "weride",
       "entityName": "文远知行",
       "action": "updated",
       "changedFields": [
-        "warnings"
-      ],
-      "summary": "文远知行 的 warnings 发生变化。",
-      "importance": 48,
-      "before": {
-        "warnings": null
-      },
-      "after": {
-        "warnings": [
-          "本轮公开新闻为空，保留上一轮新闻标题"
-        ]
-      },
-      "evidenceIds": [
-        "E055",
-        "E056",
-        "E057",
-        "E058"
-      ]
-    },
-    {
-      "id": "chg-0f6e4e5bf29473738d5d",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "catl",
-      "entityName": "宁德时代",
-      "action": "updated",
-      "changedFields": [
         "metrics",
-        "news",
         "priceHistory",
         "quote"
       ],
-      "summary": "宁德时代 更新至 2026-08-07，最新收盘价为 388.07；同时变更字段：metrics、news、priceHistory、quote。",
+      "summary": "文远知行 更新至 2026-08-07，最新收盘价为 6.11；同时变更字段：metrics、priceHistory、quote。",
       "importance": 48,
       "before": {
         "metrics": [
           {
             "id": "amount",
             "label": "成交额",
-            "value": "¥85.66亿"
+            "value": "US$741.23万"
           },
           {
             "id": "bookValuePerShare",
             "label": "每股净资产",
-            "value": "81.99元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "13.02元"
+            "value": "0.00元"
           },
           {
             "id": "eps",
             "label": "每股收益",
-            "value": "9.51元"
+            "value": "0.38元"
           },
           {
             "id": "floatMarketCap",
             "label": "流通市值",
-            "value": "¥1.65万亿"
+            "value": "US$18.33亿"
           },
           {
             "id": "floatShares",
             "label": "流通股",
-            "value": "42.60亿股"
-          },
-          "…另 8 项"
-        ],
-        "news": [
-          {
-            "publishedAt": "2026-08-07T13:48:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代宜春锂矿停产检修 官方回应并促办环评",
-            "url": "https://cj.sina.cn/articles/view/1644983660/620c756c02001u13s"
+            "value": "3.11亿股"
           },
           {
-            "publishedAt": "2026-08-07T12:26:00+08:00",
-            "source": "新浪财经",
-            "title": "宜春官方：宁德时代锂矿处于停产检修状态",
-            "url": "https://cj.sina.cn/articles/view/1905628462/7195952e01901q79a"
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$19.41亿"
           },
-          {
-            "publishedAt": "2026-08-07T09:23:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代上半年营收增长55%至2769亿元、日赚超2亿，中期分红近62亿元",
-            "url": "https://cj.sina.cn/articles/view/2587691232/9a3d08e002001sgyy"
-          },
-          {
-            "publishedAt": "2026-08-07T09:37:00+08:00",
-            "source": "新浪财经",
-            "title": "拿森科技登陆港交所开盘涨62%，宁德时代投的“港股线控底盘第一股”",
-            "url": "https://cj.sina.cn/articles/view/2587691232/9a3d08e002001sgz6"
-          },
-          {
-            "publishedAt": "2026-08-07T09:13:00+08:00",
-            "source": "新浪财经",
-            "title": "430股获融资买入超亿元，中际旭创获买入59.52亿元居首",
-            "url": "https://finance.sina.com.cn/7x24/2026-08-07/doc-inimmyem4162433.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T09:59:00+08:00",
-            "source": "新浪财经",
-            "title": "资金风向标 | 8月6日两融余额增加113.93亿元 宁德时代获融资净买入额居首",
-            "url": "https://finance.sina.com.cn/roll/2026-08-07/doc-inimmyet0150660.shtml"
-          },
-          "…另 4 项"
+          "…另 6 项"
         ],
         "priceHistory": [
           {
-            "close": 388.0,
-            "date": "2026-08-06",
-            "high": 410.0,
-            "low": 384.16,
-            "open": 410.0,
-            "volume": 453201.0
+            "close": 5.86,
+            "date": "2026-08-05",
+            "high": 6.079,
+            "low": 5.84,
+            "open": 6.01,
+            "volume": 2046100.0
           },
           {
-            "close": 388.37,
-            "date": "2026-08-07",
-            "high": 388.88,
-            "low": 384.02,
-            "open": 387.99,
-            "volume": 221376.0
+            "close": 5.9,
+            "date": "2026-08-06",
+            "high": 5.965,
+            "low": 5.74,
+            "open": 5.8,
+            "volume": 1256400.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-07T14:25:00+08:00",
-          "change": 0.36,
-          "changePercent": 0.09,
-          "currency": "CNY",
-          "previousClose": 388.0
+          "asOf": "2026-08-06T20:00:00+00:00",
+          "change": -0.05,
+          "changePercent": -0.84,
+          "currency": "USD",
+          "previousClose": 5.95
         }
       },
       "after": {
@@ -1909,35 +1034,227 @@
           {
             "id": "amount",
             "label": "成交额",
-            "value": "¥98.78亿"
+            "value": "US$207.60万"
           },
           {
             "id": "bookValuePerShare",
             "label": "每股净资产",
-            "value": "81.99元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "13.02元"
+            "value": "0.00元"
           },
           {
             "id": "eps",
             "label": "每股收益",
-            "value": "9.51元"
+            "value": "0.38元"
           },
           {
             "id": "floatMarketCap",
             "label": "流通市值",
-            "value": "¥1.65万亿"
+            "value": "US$18.98亿"
           },
           {
             "id": "floatShares",
             "label": "流通股",
-            "value": "42.60亿股"
+            "value": "3.11亿股"
           },
-          "…另 8 项"
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$20.10亿"
+          },
+          "…另 6 项"
         ],
+        "priceHistory": [
+          {
+            "close": 5.9,
+            "date": "2026-08-06",
+            "high": 5.965,
+            "low": 5.74,
+            "open": 5.8,
+            "volume": 1256400.0
+          },
+          {
+            "close": 6.11,
+            "date": "2026-08-07",
+            "high": 6.12,
+            "low": 5.975,
+            "open": 5.99,
+            "volume": 341908.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:06+00:00",
+          "change": 0.29,
+          "changePercent": 4.98,
+          "currency": "USD",
+          "previousClose": 5.82
+        }
+      },
+      "evidenceIds": [
+        "E030",
+        "E031",
+        "E032",
+        "E033"
+      ]
+    },
+    {
+      "id": "chg-7b658f6c495b7f7a245e",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "pony-ai",
+      "entityName": "小马智行",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "warnings"
+      ],
+      "summary": "小马智行 更新至 2026-08-07，最新收盘价为 7.89；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1472.54万"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.17美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.12美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$27.49亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.53亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$33.80亿"
+          },
+          "…另 7 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.81,
+            "date": "2026-08-05",
+            "high": 8.14,
+            "low": 7.76,
+            "open": 8.0,
+            "volume": 3756500.0
+          },
+          {
+            "close": 7.78,
+            "date": "2026-08-06",
+            "high": 7.825,
+            "low": 7.541,
+            "open": 7.64,
+            "volume": 1913100.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-06T20:00:01+00:00",
+          "change": -0.16,
+          "changePercent": -2.02,
+          "currency": "USD",
+          "previousClose": 7.94
+        },
+        "warnings": null
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$205.54万"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.17美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.12美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$27.93亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.53亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$34.34亿"
+          },
+          "…另 7 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.78,
+            "date": "2026-08-06",
+            "high": 7.825,
+            "low": 7.541,
+            "open": 7.64,
+            "volume": 1913100.0
+          },
+          {
+            "close": 7.89,
+            "date": "2026-08-07",
+            "high": 8.065,
+            "low": 7.88,
+            "open": 7.9899,
+            "volume": 256649.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:19+00:00",
+          "change": 0.035,
+          "changePercent": 0.44,
+          "currency": "USD",
+          "previousClose": 7.87
+        },
+        "warnings": [
+          "本轮公开新闻为空，保留上一轮新闻标题"
+        ]
+      },
+      "evidenceIds": [
+        "E034",
+        "E035",
+        "E036",
+        "E037"
+      ]
+    },
+    {
+      "id": "chg-3d3d9c15d314684915b3",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "catl",
+      "entityName": "宁德时代",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "宁德时代 的 news 发生变化。",
+      "importance": 48,
+      "before": {
         "news": [
           {
             "publishedAt": "2026-08-07T17:34:00+08:00",
@@ -1976,46 +1293,309 @@
             "url": "https://finance.sina.com.cn/stock/t/2026-08-07/doc-inimnrac4134704.shtml"
           },
           "…另 4 项"
-        ],
-        "priceHistory": [
+        ]
+      },
+      "after": {
+        "news": [
           {
-            "close": 388.0,
-            "date": "2026-08-06",
-            "high": 410.0,
-            "low": 384.16,
-            "open": 410.0,
-            "volume": 453201.0
+            "publishedAt": "2026-08-07T21:30:00+08:00",
+            "source": "新浪财经",
+            "title": "知名基金经理，买入科技，高位站岗",
+            "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b01901h2pw"
           },
           {
-            "close": 388.07,
-            "date": "2026-08-07",
-            "high": 388.88,
-            "low": 384.02,
-            "open": 387.99,
-            "volume": 255193.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-07T16:29:45+08:00",
-          "change": 0.07,
-          "changePercent": 0.02,
-          "currency": "CNY",
-          "previousClose": 388.0
-        }
+            "publishedAt": "2026-08-07T20:20:00+08:00",
+            "source": "新浪财经",
+            "title": "宁德时代：披露2026年第一次临时股东会前十名股东持股情况",
+            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002yteo"
+          },
+          {
+            "publishedAt": "2026-08-07T18:30:00+08:00",
+            "source": "新浪财经",
+            "title": "智通港股空仓持单统计|8月7日",
+            "url": "https://cj.sina.cn/articles/view/5835524730/15bd30a7a020028fdq"
+          },
+          {
+            "publishedAt": "2026-08-07T20:06:00+08:00",
+            "source": "新浪财经",
+            "title": "主力大调仓，超56亿元撤出中际旭创",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimnzsc3139869.shtml"
+          },
+          {
+            "publishedAt": "2026-08-07T18:44:00+08:00",
+            "source": "新浪财经",
+            "title": "从“建好”到“用好”昇腾算力 互联网行业如何加速AI规模化落地？",
+            "url": "https://finance.sina.com.cn/roll/2026-08-07/doc-inimnvkm3185829.shtml"
+          },
+          {
+            "publishedAt": "2026-08-07T20:43:00+08:00",
+            "source": "新浪财经",
+            "title": "比亚迪又一9系“揽胜”来了！奔驰宝马全新纯电亮相，工信部车展突袭上线",
+            "url": "https://finance.sina.com.cn/stock/t/2026-08-07/doc-inimnzse9932688.shtml"
+          },
+          "…另 4 项"
+        ]
       },
       "evidenceIds": [
-        "E059",
-        "E060",
-        "E061",
-        "E062"
+        "E038",
+        "E039",
+        "E040",
+        "E041"
       ]
     },
     {
-      "id": "chg-b992a2f5059dda065b50",
+      "id": "chg-7da51573f223e235740b",
       "dataset": "marketCompany",
       "entityType": "上市公司",
-      "entityId": "bgi-genomics",
-      "entityName": "华大基因",
+      "entityId": "cambricon",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "action": "updated",
+      "changedFields": [
+        "news"
+      ],
+      "summary": "中科寒武纪科技股份有限公司 的 news 发生变化。",
+      "importance": 48,
+      "before": {
+        "news": [
+          {
+            "publishedAt": "2026-08-07T18:15:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪给员工发股权激励，根本不是白给的",
+            "url": "https://cj.sina.cn/articles/view/2598843835/9ae735bb001019rv0"
+          },
+          {
+            "publishedAt": "2026-08-07T20:01:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪：上半年归母净利润同比增长122.61%",
+            "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002hwyw"
+          },
+          {
+            "publishedAt": "2026-08-07T11:07:00+08:00",
+            "source": "新浪财经",
+            "title": "芯片需求持续高增，台积电3nm产能或提前扩张，半导体ETF博时(159582)盘中最高涨超2%，冲击4连涨",
+            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002sp7m"
+          },
+          {
+            "publishedAt": "2026-08-07T13:26:00+08:00",
+            "source": "新浪财经",
+            "title": "2026年Q2电子行业基金重仓及超配比例创近年新高，科创芯片ETF嘉实(588200)备受市场关注",
+            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002spes"
+          },
+          {
+            "publishedAt": "2026-08-07T09:13:00+08:00",
+            "source": "新浪财经",
+            "title": "430股获融资买入超亿元，中际旭创获买入59.52亿元居首",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-07/doc-inimmyem4162433.shtml"
+          },
+          {
+            "publishedAt": "2026-08-07T20:00:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪：2026年上半年净利润23.11亿元，同比增122.61%",
+            "url": "https://finance.sina.com.cn/7x24/2026-08-07/doc-inimnzsm4699178.shtml"
+          },
+          "…另 4 项"
+        ]
+      },
+      "after": {
+        "news": [
+          {
+            "publishedAt": "2026-08-07T21:13:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪：上半年净利润23.11亿元，同比增长122%",
+            "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001io72"
+          },
+          {
+            "publishedAt": "2026-08-07T21:30:00+08:00",
+            "source": "新浪财经",
+            "title": "知名基金经理，买入科技，高位站岗",
+            "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b01901h2pw"
+          },
+          {
+            "publishedAt": "2026-08-07T21:09:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪公布“炸裂”业绩：营收、净利双双翻倍",
+            "url": "https://cj.sina.cn/articles/view/1905628462/7195952e01901q7em"
+          },
+          {
+            "publishedAt": "2026-08-07T21:15:00+08:00",
+            "source": "新浪财经",
+            "title": "8月7日晚间公告集锦|寒武纪上半年净利润23.11亿元同比增长123%，国泰君安国际拟私有化退市，蓝盾光电拟购买岚创科技股票复牌",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimnzsc3174175.shtml"
+          },
+          {
+            "publishedAt": "2026-08-07T21:14:00+08:00",
+            "source": "新浪财经",
+            "title": "国产算力龙头寒武纪：上半年营收60亿 净利同比大涨122%",
+            "url": "https://finance.sina.com.cn/roll/2026-08-07/doc-inimnzsc3173407.shtml"
+          },
+          {
+            "publishedAt": "2026-08-07T21:12:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪上半年业绩披露！净利23.11亿，同比增长122.61%！",
+            "url": "https://finance.sina.com.cn/roll/2026-08-07/doc-inimnzsc3175918.shtml"
+          },
+          "…另 4 项"
+        ]
+      },
+      "evidenceIds": [
+        "E042",
+        "E043",
+        "E044",
+        "E045"
+      ]
+    },
+    {
+      "id": "chg-4e39ce77124c49802ed4",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "tempus-ai",
+      "entityName": "Tempus AI, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "warnings"
+      ],
+      "summary": "Tempus AI, Inc. 更新至 2026-08-07，最新收盘价为 49.360001；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1.18亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.47美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.45美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.67美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$80.89亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "1.75亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 46.700001,
+            "date": "2026-08-05",
+            "high": 48.09,
+            "low": 46.02,
+            "open": 46.459999,
+            "volume": 3507400.0
+          },
+          {
+            "close": 46.119999,
+            "date": "2026-08-06",
+            "high": 46.75,
+            "low": 44.799999,
+            "open": 45.32,
+            "volume": 2449300.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-06T20:00:00+00:00",
+          "change": 1.83,
+          "changePercent": 4.13,
+          "currency": "USD",
+          "previousClose": 44.29
+        },
+        "warnings": null
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$3824.79万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "2.47美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.45美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.67美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$86.57亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "1.75亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 46.119999,
+            "date": "2026-08-06",
+            "high": 46.75,
+            "low": 44.799999,
+            "open": 45.32,
+            "volume": 2449300.0
+          },
+          {
+            "close": 49.360001,
+            "date": "2026-08-07",
+            "high": 49.66,
+            "low": 47.226299,
+            "open": 47.610001,
+            "volume": 786423.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:22+00:00",
+          "change": 5.49,
+          "changePercent": 12.51,
+          "currency": "USD",
+          "previousClose": 43.87
+        },
+        "warnings": [
+          "本轮公开新闻为空，保留上一轮新闻标题"
+        ]
+      },
+      "evidenceIds": [
+        "E046",
+        "E047",
+        "E048",
+        "E049"
+      ]
+    },
+    {
+      "id": "chg-e368799982812290c57a",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "rocket-lab",
+      "entityName": "Rocket Lab Corporation",
       "action": "updated",
       "changedFields": [
         "metrics",
@@ -2023,105 +1603,74 @@
         "priceHistory",
         "quote"
       ],
-      "summary": "华大基因 更新至 2026-08-07，最新收盘价为 39.96；同时变更字段：metrics、news、priceHistory、quote。",
+      "summary": "Rocket Lab Corporation 更新至 2026-08-07，最新收盘价为 80.764999；同时变更字段：metrics、news、priceHistory、quote。",
       "importance": 48,
       "before": {
         "metrics": [
           {
             "id": "amount",
             "label": "成交额",
-            "value": "¥3.30亿"
+            "value": "US$15.04亿"
           },
           {
             "id": "bookValuePerShare",
             "label": "每股净资产",
-            "value": "20.15元"
+            "value": "3.93美元"
           },
           {
             "id": "cashFlowPerShare",
             "label": "每股现金流",
-            "value": "0.43元"
+            "value": "0.09美元"
           },
           {
             "id": "eps",
             "label": "每股收益",
-            "value": "0.02元"
+            "value": "0.07美元"
           },
           {
             "id": "floatMarketCap",
             "label": "流通市值",
-            "value": "¥163.63亿"
+            "value": "US$452.64亿"
           },
           {
             "id": "floatShares",
             "label": "流通股",
-            "value": "4.16亿股"
+            "value": "5.98亿股"
           },
-          "…另 7 项"
+          "…另 8 项"
         ],
         "news": [
           {
-            "publishedAt": "2026-08-03T20:56:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因：累计回购公司股份4620102股",
-            "url": "https://cj.sina.cn/articles/view/2311077472/89c03e6002002mfdw"
-          },
-          {
-            "publishedAt": "2026-08-06T17:39:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因(300676.SZ)：累计回购1.6092%股份 回购方案已实施完毕",
-            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002yqzw"
-          },
-          {
-            "publishedAt": "2026-08-04T09:01:00+08:00",
-            "source": "新浪财经",
-            "title": "公司大模型发展的如何？华大基因回应",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcatx2283844.shtml"
-          },
-          {
-            "publishedAt": "2026-08-06T17:41:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因：回购方案已实施完毕，成交额2.5亿元",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkncc4640017.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T09:32:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因：8月6日获融资买入2688.15万元，融资余额8.07亿元占流通市值比例5.07%，低于近一年10%分位水平",
-            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-07/doc-inimmyev3239371.shtml"
-          },
-          {
-            "publishedAt": "2026-08-04T08:54:00+08:00",
-            "source": "新浪财经",
-            "title": "投资者提问：稳定人才队伍直接决定企业长期竞争力，翻看贵公司2024、202...",
-            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-04/doc-inimcatp4204166.shtml"
-          },
-          "…另 4 项"
+            "publishedAt": "2026-06-29T04:36:36+00:00",
+            "source": "Yahoo财经",
+            "title": "Rocket Lab to buy Iridium for US$8 bil in challenge to SpaceX",
+            "url": "https://sg.finance.yahoo.com/news/rocket-lab-buy-iridium-us-043636623.html?.tsrc=rss"
+          }
         ],
         "priceHistory": [
           {
-            "close": 38.06,
-            "date": "2026-08-06",
-            "high": 40.2,
-            "low": 37.97,
-            "open": 39.99,
-            "volume": 90934.0
+            "close": 74.82,
+            "date": "2026-08-05",
+            "high": 77.300003,
+            "low": 72.910004,
+            "open": 74.879997,
+            "volume": 16755300.0
           },
           {
-            "close": 39.34,
-            "date": "2026-08-07",
-            "high": 39.63,
-            "low": 37.48,
-            "open": 37.82,
-            "volume": 86008.0
+            "close": 75.669998,
+            "date": "2026-08-06",
+            "high": 80.192001,
+            "low": 72.300003,
+            "open": 72.309998,
+            "volume": 19420700.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-07T14:25:00+08:00",
-          "change": 1.27,
-          "changePercent": 3.34,
-          "currency": "CNY",
-          "previousClose": 38.06
+          "asOf": "2026-08-06T20:00:00+00:00",
+          "change": 10.99,
+          "changePercent": 16.99,
+          "currency": "USD",
+          "previousClose": 64.68
         }
       },
       "after": {
@@ -2129,147 +1678,35 @@
           {
             "id": "amount",
             "label": "成交额",
-            "value": "¥4.37亿"
+            "value": "US$4.04亿"
           },
           {
             "id": "bookValuePerShare",
             "label": "每股净资产",
-            "value": "20.15元"
+            "value": "3.93美元"
           },
           {
             "id": "cashFlowPerShare",
             "label": "每股现金流",
-            "value": "0.43元"
+            "value": "0.09美元"
           },
           {
             "id": "eps",
             "label": "每股收益",
-            "value": "0.02元"
+            "value": "0.07美元"
           },
           {
             "id": "floatMarketCap",
             "label": "流通市值",
-            "value": "¥166.25亿"
+            "value": "US$483.39亿"
           },
           {
             "id": "floatShares",
             "label": "流通股",
-            "value": "4.16亿股"
+            "value": "5.98亿股"
           },
-          "…另 7 项"
+          "…另 8 项"
         ],
-        "news": [
-          {
-            "publishedAt": "2026-08-06T17:39:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因(300676.SZ)：累计回购1.6092%股份 回购方案已实施完毕",
-            "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002yqzw"
-          },
-          {
-            "publishedAt": "2026-08-04T09:01:00+08:00",
-            "source": "新浪财经",
-            "title": "公司大模型发展的如何？华大基因回应",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcatx2283844.shtml"
-          },
-          {
-            "publishedAt": "2026-08-06T17:41:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因：回购方案已实施完毕，成交额2.5亿元",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkncc4640017.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T15:42:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因涨4.99%，成交额4.37亿元，今日主力净流入2407.33万",
-            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-07/doc-inimnrak9997062.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T09:32:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因：8月6日获融资买入2688.15万元，融资余额8.07亿元占流通市值比例5.07%，低于近一年10%分位水平",
-            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-07/doc-inimmyev3239371.shtml"
-          },
-          {
-            "publishedAt": "2026-08-04T08:54:00+08:00",
-            "source": "新浪财经",
-            "title": "投资者提问：稳定人才队伍直接决定企业长期竞争力，翻看贵公司2024、202...",
-            "url": "https://finance.sina.com.cn/stock/relnews/dongmiqa/2026-08-04/doc-inimcatp4204166.shtml"
-          },
-          "…另 4 项"
-        ],
-        "priceHistory": [
-          {
-            "close": 38.06,
-            "date": "2026-08-06",
-            "high": 40.2,
-            "low": 37.97,
-            "open": 39.99,
-            "volume": 90934.0
-          },
-          {
-            "close": 39.96,
-            "date": "2026-08-07",
-            "high": 39.97,
-            "low": 37.48,
-            "open": 37.82,
-            "volume": 112838.0
-          }
-        ],
-        "quote": {
-          "asOf": "2026-08-07T16:29:45+08:00",
-          "change": 1.9,
-          "changePercent": 4.99,
-          "currency": "CNY",
-          "previousClose": 38.06
-        }
-      },
-      "evidenceIds": [
-        "E063",
-        "E064",
-        "E065",
-        "E066"
-      ]
-    },
-    {
-      "id": "chg-2bcd293c003a7c7101dd",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "tempus-ai",
-      "entityName": "Tempus AI, Inc.",
-      "action": "updated",
-      "changedFields": [
-        "warnings"
-      ],
-      "summary": "Tempus AI, Inc. 的 warnings 发生变化。",
-      "importance": 48,
-      "before": {
-        "warnings": [
-          "本轮公开新闻为空，保留上一轮新闻标题"
-        ]
-      },
-      "after": {
-        "warnings": null
-      },
-      "evidenceIds": [
-        "E067",
-        "E068",
-        "E069",
-        "E070"
-      ]
-    },
-    {
-      "id": "chg-d8eac96a4d3424ce8c1c",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "rocket-lab",
-      "entityName": "Rocket Lab Corporation",
-      "action": "updated",
-      "changedFields": [
-        "news"
-      ],
-      "summary": "Rocket Lab Corporation 的 news 发生变化。",
-      "importance": 48,
-      "before": {
         "news": [
           {
             "publishedAt": "2026-08-06T22:15:03+00:00",
@@ -2307,207 +1744,668 @@
             "title": "These Stocks Are Making Moves Today, Thanks to SpaceX",
             "url": "https://sg.finance.yahoo.com/m/36ba11a7-9681-365a-a186-122553a1d192/these-stocks-are-making-moves.html?.tsrc=rss"
           }
-        ]
-      },
-      "after": {
-        "news": [
+        ],
+        "priceHistory": [
           {
-            "publishedAt": "2026-06-29T04:36:36+00:00",
-            "source": "Yahoo财经",
-            "title": "Rocket Lab to buy Iridium for US$8 bil in challenge to SpaceX",
-            "url": "https://sg.finance.yahoo.com/news/rocket-lab-buy-iridium-us-043636623.html?.tsrc=rss"
+            "close": 75.669998,
+            "date": "2026-08-06",
+            "high": 80.192001,
+            "low": 72.300003,
+            "open": 72.309998,
+            "volume": 19420700.0
+          },
+          {
+            "close": 80.764999,
+            "date": "2026-08-07",
+            "high": 81.550003,
+            "low": 77.379997,
+            "open": 78.970001,
+            "volume": 5072462.0
           }
-        ]
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:25+00:00",
+          "change": 15.815,
+          "changePercent": 24.35,
+          "currency": "USD",
+          "previousClose": 64.95
+        }
       },
       "evidenceIds": [
-        "E071",
-        "E072"
+        "E050",
+        "E051",
+        "E052",
+        "E053"
       ]
     },
     {
-      "id": "chg-75fb5df33de51430c771",
+      "id": "chg-266bfc4803ba131022cd",
       "dataset": "marketCompany",
       "entityType": "上市公司",
       "entityId": "rigetti",
       "entityName": "Rigetti Computing, Inc.",
       "action": "updated",
       "changedFields": [
-        "news",
+        "metrics",
+        "priceHistory",
+        "quote",
         "warnings"
       ],
-      "summary": "Rigetti Computing, Inc. 的 news、warnings 发生变化。",
+      "summary": "Rigetti Computing, Inc. 更新至 2026-08-07，最新收盘价为 17.09；同时变更字段：metrics、priceHistory、quote、warnings。",
       "importance": 48,
       "before": {
-        "news": [
+        "metrics": [
           {
-            "publishedAt": "2026-08-05T19:00:00+00:00",
-            "source": "Yahoo财经",
-            "title": "QBTS & RGTI Q2 Earnings Tomorrow: Which Quantum Stock Is a Better Buy?",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/qbts-rgti-q2-earnings-tomorrow-190000461.html?.tsrc=rss"
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$3.76亿"
           },
           {
-            "publishedAt": "2026-08-06T23:10:16+00:00",
-            "source": "Yahoo财经",
-            "title": "Rigetti Computing, Inc. (RGTI) Reports Q2 Loss, Tops Revenue Estimates",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/rigetti-computing-inc-rgti-reports-231016086.html?.tsrc=rss"
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.1美元"
           },
           {
-            "publishedAt": "2026-08-06T07:14:03+00:00",
-            "source": "Yahoo财经",
-            "title": "Is HPE (HPE) Using Quantum Partnerships To Deepen Its AI Infrastructure Moat?",
-            "url": "https://finance.yahoo.com/technology/ai/articles/hpe-hpe-using-quantum-partnerships-071403278.html?.tsrc=rss"
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$55.17亿"
           },
           {
-            "publishedAt": "2026-08-06T20:05:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Rigetti Computing Reports Second Quarter 2026 Financial Results",
-            "url": "https://finance.yahoo.com/technology/ai/articles/rigetti-computing-reports-second-quarter-200500437.html?.tsrc=rss"
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.34亿股"
           },
           {
-            "publishedAt": "2026-08-06T22:58:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Rigetti’s Quantum System Sales Are Accelerating and the Stock Is Tumbling",
-            "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/rigetti%E2%80%99s-quantum-system.html?.tsrc=rss"
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$55.17亿"
           },
           {
-            "publishedAt": "2026-08-06T20:59:00+00:00",
-            "source": "Yahoo财经",
-            "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
-            "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss"
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "3310.90万美元"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 16.780001,
+            "date": "2026-08-05",
+            "high": 17.459999,
+            "low": 16.690001,
+            "open": 17.24,
+            "volume": 19241400.0
+          },
+          {
+            "close": 16.530001,
+            "date": "2026-08-06",
+            "high": 17.139999,
+            "low": 16.059999,
+            "open": 16.15,
+            "volume": 22485400.0
           }
         ],
+        "quote": {
+          "asOf": "2026-08-06T20:00:00+00:00",
+          "change": 1.67,
+          "changePercent": 11.24,
+          "currency": "USD",
+          "previousClose": 14.86
+        },
+        "warnings": null
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$9959.59万"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.1美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$57.04亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.34亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$57.04亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "3310.90万美元"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 16.530001,
+            "date": "2026-08-06",
+            "high": 17.139999,
+            "low": 16.059999,
+            "open": 16.15,
+            "volume": 22485400.0
+          },
+          {
+            "close": 17.09,
+            "date": "2026-08-07",
+            "high": 17.440001,
+            "low": 16.405001,
+            "open": 16.784,
+            "volume": 5892426.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:20+00:00",
+          "change": 2.14,
+          "changePercent": 14.31,
+          "currency": "USD",
+          "previousClose": 14.95
+        },
         "warnings": [
           "本轮公开新闻为空，保留上一轮新闻标题"
         ]
       },
-      "after": {
-        "news": [
-          {
-            "publishedAt": "2026-08-05T19:00:00+00:00",
-            "source": "Yahoo财经",
-            "title": "QBTS & RGTI Q2 Earnings Tomorrow: Which Quantum Stock Is a Better Buy?",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/qbts-rgti-q2-earnings-tomorrow-190000461.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-06T23:10:16+00:00",
-            "source": "Yahoo财经",
-            "title": "Rigetti Computing, Inc. (RGTI) Reports Q2 Loss, Tops Revenue Estimates",
-            "url": "https://finance.yahoo.com/markets/stocks/articles/rigetti-computing-inc-rgti-reports-231016086.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-06T07:14:03+00:00",
-            "source": "Yahoo财经",
-            "title": "Is HPE (HPE) Using Quantum Partnerships To Deepen Its AI Infrastructure Moat?",
-            "url": "https://finance.yahoo.com/technology/ai/articles/hpe-hpe-using-quantum-partnerships-071403278.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-06T20:05:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Rigetti Computing Reports Second Quarter 2026 Financial Results",
-            "url": "https://finance.yahoo.com/technology/ai/articles/rigetti-computing-reports-second-quarter-200500437.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-07T12:50:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Why Rigetti Stock Isn’t Rallying After Its Quantum Sales Surged",
-            "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/why-rigetti-stock-isn%E2%80%99t.html?.tsrc=rss"
-          },
-          {
-            "publishedAt": "2026-08-06T20:59:00+00:00",
-            "source": "Yahoo财经",
-            "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
-            "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss"
-          }
-        ],
-        "warnings": null
-      },
       "evidenceIds": [
-        "E073",
-        "E074",
-        "E075",
-        "E076"
+        "E054",
+        "E055",
+        "E056",
+        "E057"
       ]
     },
     {
-      "id": "chg-bf88a3bd33d4e6e6efa2",
+      "id": "chg-d293deceac033d940e5c",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "recursion",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
+        "warnings"
+      ],
+      "summary": "Recursion Pharmaceuticals, Inc. 更新至 2026-08-07，最新收盘价为 3.2499；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$4687.51万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.71美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.35美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.47美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$17.02亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "5.35亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 3.17,
+            "date": "2026-08-05",
+            "high": 3.23,
+            "low": 3.01,
+            "open": 3.08,
+            "volume": 17458800.0
+          },
+          {
+            "close": 3.18,
+            "date": "2026-08-06",
+            "high": 3.26,
+            "low": 3.115,
+            "open": 3.13,
+            "volume": 14784100.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-06T20:00:00+00:00",
+          "change": 0.14,
+          "changePercent": 4.61,
+          "currency": "USD",
+          "previousClose": 3.04
+        },
+        "warnings": null
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$414.32万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "1.71美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.35美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.47美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$17.37亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "5.35亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 3.18,
+            "date": "2026-08-06",
+            "high": 3.26,
+            "low": 3.115,
+            "open": 3.13,
+            "volume": 14784100.0
+          },
+          {
+            "close": 3.2499,
+            "date": "2026-08-07",
+            "high": 3.265,
+            "low": 3.191,
+            "open": 3.2541,
+            "volume": 1278741.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:27+00:00",
+          "change": 0.245,
+          "changePercent": 8.17,
+          "currency": "USD",
+          "previousClose": 3.0
+        },
+        "warnings": [
+          "本轮公开新闻为空，保留上一轮新闻标题"
+        ]
+      },
+      "evidenceIds": [
+        "E058",
+        "E059",
+        "E060",
+        "E061"
+      ]
+    },
+    {
+      "id": "chg-f1552e8bdeed3b616e67",
       "dataset": "marketCompany",
       "entityType": "上市公司",
       "entityId": "mobileye",
       "entityName": "Mobileye Global Inc.",
       "action": "updated",
       "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote",
         "warnings"
       ],
-      "summary": "Mobileye Global Inc. 的 warnings 发生变化。",
+      "summary": "Mobileye Global Inc. 更新至 2026-08-07，最新收盘价为 8.62；同时变更字段：metrics、priceHistory、quote、warnings。",
       "importance": 48,
       "before": {
-        "warnings": null
-      },
-      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2663.68万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "9.77美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.25美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "4.7美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$21.25亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "2.52亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 8.45,
+            "date": "2026-08-05",
+            "high": 8.64,
+            "low": 8.38,
+            "open": 8.53,
+            "volume": 4306400.0
+          },
+          {
+            "close": 8.42,
+            "date": "2026-08-06",
+            "high": 8.52,
+            "low": 8.3,
+            "open": 8.41,
+            "volume": 3165800.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-06T20:00:01+00:00",
+          "change": 0.52,
+          "changePercent": 6.58,
+          "currency": "USD",
+          "previousClose": 7.9
+        },
         "warnings": [
           "本轮公开新闻为空，保留上一轮新闻标题"
         ]
       },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$505.74万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "9.77美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.25美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "4.7美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$21.76亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "2.52亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 8.42,
+            "date": "2026-08-06",
+            "high": 8.52,
+            "low": 8.3,
+            "open": 8.41,
+            "volume": 3165800.0
+          },
+          {
+            "close": 8.62,
+            "date": "2026-08-07",
+            "high": 8.78,
+            "low": 8.57,
+            "open": 8.58,
+            "volume": 583944.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:05+00:00",
+          "change": 0.68,
+          "changePercent": 8.56,
+          "currency": "USD",
+          "previousClose": 7.94
+        },
+        "warnings": null
+      },
       "evidenceIds": [
-        "E077",
-        "E078",
-        "E079",
-        "E080"
+        "E062",
+        "E063",
+        "E064",
+        "E065"
       ]
     },
     {
-      "id": "chg-962435387ef0b179d70d",
+      "id": "chg-a492a7eddc3e3d7ec872",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "joby",
+      "entityName": "Joby Aviation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Joby Aviation, Inc. 更新至 2026-08-07，最新收盘价为 8.5264；同时变更字段：metrics、priceHistory、quote。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$4.12亿"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.32美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$81.40亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "9.89亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$81.40亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "1.1亿美元"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 7.8,
+            "date": "2026-08-05",
+            "high": 8.01,
+            "low": 7.74,
+            "open": 7.94,
+            "volume": 30675100.0
+          },
+          {
+            "close": 8.23,
+            "date": "2026-08-06",
+            "high": 8.59,
+            "low": 7.92,
+            "open": 8.15,
+            "volume": 49357900.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-06T20:00:03+00:00",
+          "change": 0.99,
+          "changePercent": 13.67,
+          "currency": "USD",
+          "previousClose": 7.24
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$2398.21万"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.32美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$84.34亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "9.89亿股"
+          },
+          {
+            "id": "marketCap",
+            "label": "总市值",
+            "value": "US$84.34亿"
+          },
+          {
+            "id": "netIncome",
+            "label": "净利润",
+            "value": "1.1亿美元"
+          },
+          "…另 4 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 8.23,
+            "date": "2026-08-06",
+            "high": 8.59,
+            "low": 7.92,
+            "open": 8.15,
+            "volume": 49357900.0
+          },
+          {
+            "close": 8.5264,
+            "date": "2026-08-07",
+            "high": 8.62,
+            "low": 8.35,
+            "open": 8.4,
+            "volume": 2826175.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:29+00:00",
+          "change": 1.376,
+          "changePercent": 19.24,
+          "currency": "USD",
+          "previousClose": 7.15
+        }
+      },
+      "evidenceIds": [
+        "E066",
+        "E067",
+        "E068",
+        "E069"
+      ]
+    },
+    {
+      "id": "chg-d80aae57e7f4b5105219",
       "dataset": "marketCompany",
       "entityType": "上市公司",
       "entityId": "ionq",
       "entityName": "IonQ, Inc.",
       "action": "updated",
       "changedFields": [
-        "news"
+        "metrics",
+        "news",
+        "priceHistory",
+        "quote"
       ],
-      "summary": "IonQ, Inc. 的 news 发生变化。",
+      "summary": "IonQ, Inc. 更新至 2026-08-07，最新收盘价为 42.235001；同时变更字段：metrics、news、priceHistory、quote。",
       "importance": 48,
       "before": {
-        "news": [
+        "metrics": [
           {
-            "publishedAt": "2026-08-06T18:37:33+00:00",
-            "source": "Yahoo财经",
-            "title": "Will AT&T (T)’s Expanded Quantum Deal Turn D-Wave (QBTS) Into a Scalable Enterprise Player?",
-            "url": "https://finance.yahoo.com/technology/ai/articles/t-t-expanded-quantum-deal-183733580.html?.tsrc=rss"
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$10.77亿"
           },
           {
-            "publishedAt": "2026-08-07T03:34:00+00:00",
-            "source": "Yahoo财经",
-            "title": "UPDATED: DARPA Selects IonQ to Produce Next-Generation Atomic Clocks",
-            "url": "https://finance.yahoo.com/technology/ai/articles/updated-darpa-selects-ionq-produce-033400776.html?.tsrc=rss"
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "13.33美元"
           },
           {
-            "publishedAt": "2026-08-06T17:59:00+00:00",
-            "source": "Yahoo财经",
-            "title": "SpaceX, Honeywell Aerospace, Sandisk, D-Wave, Datadog, and More Stocks That Explain Today’s Market",
-            "url": "https://sg.finance.yahoo.com/m/5568b857-6a34-35d8-b75b-382bd81ef107/spacex%2C-honeywell-aerospace%2C.html?.tsrc=rss"
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.4美元"
           },
           {
-            "publishedAt": "2026-08-06T20:54:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Why D-Wave Quantum Stock Fell After Earnings Revealed a 1,120% Surge in Bookings",
-            "url": "https://sg.finance.yahoo.com/m/60cf5242-b372-3a07-9df2-13037e5d9644/why-d-wave-quantum-stock-fell.html?.tsrc=rss"
+            "id": "eps",
+            "label": "每股收益",
+            "value": "2.19美元"
           },
           {
-            "publishedAt": "2026-08-06T22:58:00+00:00",
-            "source": "Yahoo财经",
-            "title": "Rigetti’s Quantum System Sales Are Accelerating and the Stock Is Tumbling",
-            "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/rigetti%E2%80%99s-quantum-system.html?.tsrc=rss"
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$148.26亿"
           },
           {
-            "publishedAt": "2026-08-06T20:59:00+00:00",
-            "source": "Yahoo财经",
-            "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
-            "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss"
-          }
-        ]
-      },
-      "after": {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "3.73亿股"
+          },
+          "…另 8 项"
+        ],
         "news": [
           {
             "publishedAt": "2026-07-14T07:00:00+00:00",
@@ -2539,87 +2437,31 @@
             "title": "Space Cybersecurity Leaders Convene in Singapore to Address Escalating Threats in Inaugural Edition of CYSAT Asia",
             "url": "https://sg.finance.yahoo.com/news/space-cybersecurity-leaders-convene-singapore-083700197.html?.tsrc=rss"
           }
-        ]
-      },
-      "evidenceIds": [
-        "E081",
-        "E082",
-        "E083",
-        "E084"
-      ]
-    },
-    {
-      "id": "chg-2cec6a372b289ce60d67",
-      "dataset": "marketCompany",
-      "entityType": "上市公司",
-      "entityId": "horizon-robotics",
-      "entityName": "Horizon Robotics",
-      "action": "updated",
-      "changedFields": [
-        "metrics",
-        "priceHistory",
-        "quote"
-      ],
-      "summary": "Horizon Robotics 更新至 2026-08-07，最新收盘价为 5.0；同时变更字段：metrics、priceHistory、quote。",
-      "importance": 48,
-      "before": {
-        "metrics": [
-          {
-            "id": "amount",
-            "label": "成交额",
-            "value": "HK$6.17亿"
-          },
-          {
-            "id": "bookValuePerShare",
-            "label": "每股净资产",
-            "value": "0.86元"
-          },
-          {
-            "id": "cashFlowPerShare",
-            "label": "每股现金流",
-            "value": "0.14元"
-          },
-          {
-            "id": "eps",
-            "label": "每股收益",
-            "value": "0.81元"
-          },
-          {
-            "id": "floatMarketCap",
-            "label": "流通市值",
-            "value": "HK$687.35亿"
-          },
-          {
-            "id": "floatShares",
-            "label": "流通股",
-            "value": "137.61亿股"
-          },
-          "…另 7 项"
         ],
         "priceHistory": [
           {
-            "close": 5.15,
-            "date": "2026-08-06",
-            "high": 5.315,
-            "low": 4.99,
-            "open": 5.185,
-            "volume": 152993809.0
+            "close": 39.93,
+            "date": "2026-08-05",
+            "high": 41.900002,
+            "low": 39.700001,
+            "open": 40.950001,
+            "volume": 24378400.0
           },
           {
-            "close": 4.995,
-            "date": "2026-08-07",
-            "high": 5.17,
-            "low": 4.83,
-            "open": 5.145,
-            "volume": 124042264.0
+            "close": 39.720001,
+            "date": "2026-08-06",
+            "high": 41.880001,
+            "low": 39.654999,
+            "open": 41.369999,
+            "volume": 26168600.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-07T14:24:52+08:00",
-          "change": -0.155,
-          "changePercent": -3.01,
-          "currency": "HKD",
-          "previousClose": 5.15
+          "asOf": "2026-08-06T20:00:02+00:00",
+          "change": 3.95,
+          "changePercent": 11.04,
+          "currency": "USD",
+          "previousClose": 35.77
         }
       },
       "after": {
@@ -2627,216 +2469,340 @@
           {
             "id": "amount",
             "label": "成交额",
-            "value": "HK$7.91亿"
+            "value": "US$2.69亿"
           },
           {
             "id": "bookValuePerShare",
             "label": "每股净资产",
-            "value": "0.86元"
+            "value": "13.33美元"
           },
           {
             "id": "cashFlowPerShare",
             "label": "每股现金流",
-            "value": "0.14元"
+            "value": "0.4美元"
           },
           {
             "id": "eps",
             "label": "每股收益",
-            "value": "0.81元"
+            "value": "2.19美元"
           },
           {
             "id": "floatMarketCap",
             "label": "流通市值",
-            "value": "HK$688.04亿"
+            "value": "US$157.78亿"
           },
           {
             "id": "floatShares",
             "label": "流通股",
-            "value": "137.61亿股"
+            "value": "3.73亿股"
           },
-          "…另 7 项"
+          "…另 8 项"
+        ],
+        "news": [
+          {
+            "publishedAt": "2026-08-06T18:37:33+00:00",
+            "source": "Yahoo财经",
+            "title": "Will AT&T (T)’s Expanded Quantum Deal Turn D-Wave (QBTS) Into a Scalable Enterprise Player?",
+            "url": "https://finance.yahoo.com/technology/ai/articles/t-t-expanded-quantum-deal-183733580.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-08-07T03:34:00+00:00",
+            "source": "Yahoo财经",
+            "title": "UPDATED: DARPA Selects IonQ to Produce Next-Generation Atomic Clocks",
+            "url": "https://finance.yahoo.com/technology/ai/articles/updated-darpa-selects-ionq-produce-033400776.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-08-06T20:54:00+00:00",
+            "source": "Yahoo财经",
+            "title": "Why D-Wave Quantum Stock Fell After Earnings Revealed a 1,120% Surge in Bookings",
+            "url": "https://sg.finance.yahoo.com/m/60cf5242-b372-3a07-9df2-13037e5d9644/why-d-wave-quantum-stock-fell.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-08-07T12:50:00+00:00",
+            "source": "Yahoo财经",
+            "title": "Why Rigetti Stock Isn’t Rallying After Its Quantum Sales Surged",
+            "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/why-rigetti-stock-isn%E2%80%99t.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-08-07T07:00:00+00:00",
+            "source": "Yahoo财经",
+            "title": "Two Quantum IPOs Face Their First Big Earnings Tests",
+            "url": "https://sg.finance.yahoo.com/m/a9f6bf05-b0cc-36db-b51e-9cc6980de966/two-quantum-ipos-face-their.html?.tsrc=rss"
+          },
+          {
+            "publishedAt": "2026-08-06T20:59:00+00:00",
+            "source": "Yahoo财经",
+            "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
+            "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss"
+          }
         ],
         "priceHistory": [
           {
-            "close": 5.15,
+            "close": 39.720001,
             "date": "2026-08-06",
-            "high": 5.315,
-            "low": 4.99,
-            "open": 5.185,
-            "volume": 152993809.0
+            "high": 41.880001,
+            "low": 39.654999,
+            "open": 41.369999,
+            "volume": 26168600.0
           },
           {
-            "close": 5.0,
+            "close": 42.235001,
             "date": "2026-08-07",
-            "high": 5.17,
-            "low": 4.83,
-            "open": 5.145,
-            "volume": 158831591.0
+            "high": 43.16,
+            "low": 40.189999,
+            "open": 40.384998,
+            "volume": 6406530.0
           }
         ],
         "quote": {
-          "asOf": "2026-08-07T16:08:22+08:00",
-          "change": -0.15,
-          "changePercent": -2.91,
-          "currency": "HKD",
-          "previousClose": 5.15
+          "asOf": "2026-08-07T13:54:21+00:00",
+          "change": 5.83,
+          "changePercent": 16.0,
+          "currency": "USD",
+          "previousClose": 36.44
         }
       },
       "evidenceIds": [
-        "E085",
-        "E086",
-        "E087",
-        "E088"
+        "E070",
+        "E071",
+        "E072",
+        "E073"
+      ]
+    },
+    {
+      "id": "chg-9b14632206ae53b82902",
+      "dataset": "marketCompany",
+      "entityType": "上市公司",
+      "entityId": "aurora",
+      "entityName": "Aurora Innovation, Inc.",
+      "action": "updated",
+      "changedFields": [
+        "metrics",
+        "priceHistory",
+        "quote"
+      ],
+      "summary": "Aurora Innovation, Inc. 更新至 2026-08-07，最新收盘价为 7.025；同时变更字段：metrics、priceHistory、quote。",
+      "importance": 48,
+      "before": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$1.67亿"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.98美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.19美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$115.81亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "17.08亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 6.69,
+            "date": "2026-08-05",
+            "high": 7.25,
+            "low": 6.65,
+            "open": 7.24,
+            "volume": 23406100.0
+          },
+          {
+            "close": 6.78,
+            "date": "2026-08-06",
+            "high": 6.875,
+            "low": 6.56,
+            "open": 6.63,
+            "volume": 24721000.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-06T20:00:01+00:00",
+          "change": 0.54,
+          "changePercent": 8.65,
+          "currency": "USD",
+          "previousClose": 6.24
+        }
+      },
+      "after": {
+        "metrics": [
+          {
+            "id": "amount",
+            "label": "成交额",
+            "value": "US$802.87万"
+          },
+          {
+            "id": "bookValuePerShare",
+            "label": "每股净资产",
+            "value": "0.98美元"
+          },
+          {
+            "id": "cashFlowPerShare",
+            "label": "每股现金流",
+            "value": "0.19美元"
+          },
+          {
+            "id": "eps",
+            "label": "每股收益",
+            "value": "0.25美元"
+          },
+          {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "US$120.00亿"
+          },
+          {
+            "id": "floatShares",
+            "label": "流通股",
+            "value": "17.08亿股"
+          },
+          "…另 8 项"
+        ],
+        "priceHistory": [
+          {
+            "close": 6.78,
+            "date": "2026-08-06",
+            "high": 6.875,
+            "low": 6.56,
+            "open": 6.63,
+            "volume": 24721000.0
+          },
+          {
+            "close": 7.025,
+            "date": "2026-08-07",
+            "high": 7.055,
+            "low": 6.91,
+            "open": 6.91,
+            "volume": 1146141.0
+          }
+        ],
+        "quote": {
+          "asOf": "2026-08-07T13:54:27+00:00",
+          "change": 0.575,
+          "changePercent": 8.91,
+          "currency": "USD",
+          "previousClose": 6.45
+        }
+      },
+      "evidenceIds": [
+        "E074",
+        "E075",
+        "E076",
+        "E077"
       ]
     }
   ],
   "evidence": [
     {
       "id": "E001",
-      "changeId": "chg-90f66e48210ad8ea62cf",
-      "entityName": "宁德时代",
-      "claim": "新增上市公司公告记录：宁德时代。",
-      "sourceName": "巨潮资讯",
-      "title": "",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-08-07/1225464975.PDF",
-      "publishedAt": "",
-      "evidenceGrade": "监管文件"
+      "changeId": "chg-2430044f3b060fc2128c",
+      "entityName": "李飞飞",
+      "claim": "李飞飞 的 sources、speeches 发生变化。",
+      "sourceName": "AI科技评论",
+      "title": "李飞飞高徒黄文龙：具身智能需要一次「脑内搜索」革命 | RSS 2026",
+      "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2097a7eca981419e85a4bdbf0d77a05a1615fc34f1684a70f60e3a0bb70fe7fed2c2f97a&idx=2&mid=2247739652&sn=ab41bd2d7c5a1b85a79623af9710297e",
+      "publishedAt": "2026-07-21",
+      "evidenceGrade": "未分级"
     },
     {
       "id": "E002",
-      "changeId": "chg-5d0a2587e38027167cc3",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 更新至 2026-08-07，最新收盘价为 1199.93；同时变更字段：company、metrics、news、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "寒武纪给员工发股权激励，根本不是白给的",
-      "url": "https://cj.sina.cn/articles/view/2598843835/9ae735bb001019rv0",
-      "publishedAt": "2026-08-07T18:15:00+08:00",
+      "changeId": "chg-2430044f3b060fc2128c",
+      "entityName": "李飞飞",
+      "claim": "李飞飞 的 sources、speeches 发生变化。",
+      "sourceName": "AI科技评论",
+      "title": "李飞飞高徒黄文龙：具身智能需要一次「脑内搜索」革命 | RSS 2026",
+      "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247739652&idx=2&sn=ab41bd2d7c5a1b85a79623af9710297e&chksm=909b2097a7eca981419e85a4bdbf0d77a05a1615fc34f1684a70f60e3a0bb70fe7fed2c2f97a#rd",
+      "publishedAt": "2026-07-21",
       "evidenceGrade": "未分级"
     },
     {
       "id": "E003",
-      "changeId": "chg-5d0a2587e38027167cc3",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 更新至 2026-08-07，最新收盘价为 1199.93；同时变更字段：company、metrics、news、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "寒武纪：上半年归母净利润同比增长122.61%",
-      "url": "https://cj.sina.cn/articles/view/5182171545/134e1a99902002hwyw",
-      "publishedAt": "2026-08-07T20:01:00+08:00",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E004",
-      "changeId": "chg-5d0a2587e38027167cc3",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 更新至 2026-08-07，最新收盘价为 1199.93；同时变更字段：company、metrics、news、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "芯片需求持续高增，台积电3nm产能或提前扩张，半导体ETF博时(159582)盘中最高涨超2%，冲击4连涨",
-      "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002sp7m",
-      "publishedAt": "2026-08-07T11:07:00+08:00",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E005",
-      "changeId": "chg-5d0a2587e38027167cc3",
-      "entityName": "中科寒武纪科技股份有限公司",
-      "claim": "中科寒武纪科技股份有限公司 更新至 2026-08-07，最新收盘价为 1199.93；同时变更字段：company、metrics、news、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "2026年Q2电子行业基金重仓及超配比例创近年新高，科创芯片ETF嘉实(588200)备受市场关注",
-      "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002spes",
-      "publishedAt": "2026-08-07T13:26:00+08:00",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E006",
-      "changeId": "chg-c0691d41def390a62696",
-      "entityName": "梁文峰",
-      "claim": "梁文峰 的 materials、sources、speeches 发生变化。",
+      "changeId": "chg-2430044f3b060fc2128c",
+      "entityName": "李飞飞",
+      "claim": "李飞飞 的 sources、speeches 发生变化。",
       "sourceName": "Wikipedia (en)",
-      "title": "Liang Wenfeng — Wikipedia",
-      "url": "https://en.wikipedia.org/wiki/Liang_Wenfeng",
+      "title": "Fei-Fei Li — Wikipedia",
+      "url": "https://en.wikipedia.org/wiki/Fei-Fei_Li",
       "publishedAt": "持续更新",
       "evidenceGrade": "未分级"
     },
     {
+      "id": "E004",
+      "changeId": "chg-2430044f3b060fc2128c",
+      "entityName": "李飞飞",
+      "claim": "李飞飞 的 sources、speeches 发生变化。",
+      "sourceName": "Stanford University",
+      "title": "Fei-Fei Li at Stanford",
+      "url": "https://profiles.stanford.edu/fei-fei-li",
+      "publishedAt": "持续更新",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E005",
+      "changeId": "chg-cac4d0daeaf123f5f691",
+      "entityName": "Bill Ford",
+      "claim": "Bill Ford 的 materials、speeches 发生变化。",
+      "sourceName": "YouTube · Detroit Regional Chamber",
+      "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+      "url": "https://www.youtube.com/watch?v=-9CwKFTD7YI",
+      "publishedAt": "1年前",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E006",
+      "changeId": "chg-cac4d0daeaf123f5f691",
+      "entityName": "Bill Ford",
+      "claim": "Bill Ford 的 materials、speeches 发生变化。",
+      "sourceName": "YouTube · Bloomberg Live",
+      "title": "In Conversation: Bill Ford | Invest Summit",
+      "url": "https://www.youtube.com/watch?v=-SJj7rXyqjw",
+      "publishedAt": "7年前",
+      "evidenceGrade": "未分级"
+    },
+    {
       "id": "E007",
-      "changeId": "chg-c0691d41def390a62696",
-      "entityName": "梁文峰",
-      "claim": "梁文峰 的 materials、sources、speeches 发生变化。",
-      "sourceName": "TechNode",
-      "title": "DeepSeek puts AGI research ahead of products and commercial growth",
-      "url": "https://technode.com/2026/07/23/deepseek-puts-agi-research-ahead-of-products-and-commercial-growth",
-      "publishedAt": "2026-07-23",
+      "changeId": "chg-cac4d0daeaf123f5f691",
+      "entityName": "Bill Ford",
+      "claim": "Bill Ford 的 materials、speeches 发生变化。",
+      "sourceName": "YouTube · Click On Detroit | Local 4 | WDIV",
+      "title": "A Conversation With Ford Motor Co. Executive Chair Bill Ford Jr.",
+      "url": "https://www.youtube.com/watch?v=-rNepLQ08sw",
+      "publishedAt": "3年前",
       "evidenceGrade": "未分级"
     },
     {
       "id": "E008",
-      "changeId": "chg-c0691d41def390a62696",
-      "entityName": "梁文峰",
-      "claim": "梁文峰 的 materials、sources、speeches 发生变化。",
-      "sourceName": "TNW · 风险投资信源",
-      "title": "DeepSeek’s founder says his workers have no KPIs and no overtime, while Silicon Valley copies China’s 996 grind",
-      "url": "https://thenextweb.com/news/deepseek-founder-liang-wenfeng-no-overtime-no-kpis-996-culture",
-      "publishedAt": "2026-08-01",
+      "changeId": "chg-cac4d0daeaf123f5f691",
+      "entityName": "Bill Ford",
+      "claim": "Bill Ford 的 materials、speeches 发生变化。",
+      "sourceName": "YouTube · One Detroit",
+      "title": "A Conversation With Bill Ford and Alexandra Ford English | #MPC25",
+      "url": "https://www.youtube.com/watch?v=2-274_4nEVc",
+      "publishedAt": "1年前",
       "evidenceGrade": "未分级"
     },
     {
       "id": "E009",
-      "changeId": "chg-c0691d41def390a62696",
-      "entityName": "梁文峰",
-      "claim": "梁文峰 的 materials、sources、speeches 发生变化。",
-      "sourceName": "TNW",
-      "title": "DeepSeek pauses fundraising after founder's leaked comments go viral",
-      "url": "https://thenextweb.com/news/deepseek-funding-pause-viral-posts-liang-wenfeng",
-      "publishedAt": "2026-07-26",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E010",
-      "changeId": "chg-65daef354f1a62d6efd6",
-      "entityName": "Chris Urmson",
-      "claim": "Chris Urmson 的 materials、speeches 发生变化。",
-      "sourceName": "Aurora Innovation 官方来源",
-      "title": "Lessons Learned from Index OnAir: The Future of Robotics",
-      "url": "https://aurora.tech/newsroom/lessons-learned-from-index-onair-the-future-of-robotics",
-      "publishedAt": "2026-08-04",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E011",
-      "changeId": "chg-65daef354f1a62d6efd6",
-      "entityName": "Chris Urmson",
-      "claim": "Chris Urmson 的 materials、speeches 发生变化。",
-      "sourceName": "Bilibili · qshi6",
-      "title": "Chris Urmson How a driverless car sees the road Chris Urmson _2015-480p-en",
-      "url": "https://www.bilibili.com/video/BV1D7411574R",
-      "publishedAt": "2020-02-11",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E012",
-      "changeId": "chg-65daef354f1a62d6efd6",
-      "entityName": "Chris Urmson",
-      "claim": "Chris Urmson 的 materials、speeches 发生变化。",
-      "sourceName": "Bilibili · 贝叶斯派对",
-      "title": "【 斯坦福大学人工智能播客： Chris Urmson :Aurora、Google、CMU和DARPA的自动驾驶 】 Chris Urmson : Self-Driv",
-      "url": "https://www.bilibili.com/video/BV1Qt411L7Su",
-      "publishedAt": "2019-08-04",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E013",
-      "changeId": "chg-65daef354f1a62d6efd6",
-      "entityName": "Chris Urmson",
-      "claim": "Chris Urmson 的 materials、speeches 发生变化。",
-      "sourceName": "Bilibili · LucretiaAgi",
-      "title": "Chris Urmson ：Lidar是拐杖吗？ | AI播 Chris Urmson : Is Lidar a Crutch? | AI Podcast Clips",
-      "url": "https://www.bilibili.com/video/BV1c4411o7eM",
-      "publishedAt": "2019-08-18",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E014",
-      "changeId": "chg-b6f3d60ba59d41746537",
+      "changeId": "chg-76ef6d058ed2e386d8fa",
       "entityName": "邓泰华",
       "claim": "邓泰华 的 sources 发生变化。",
       "sourceName": "Bilibili · 华为计算",
@@ -2846,10 +2812,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E015",
-      "changeId": "chg-70fffce08f37206b7abe",
+      "id": "E010",
+      "changeId": "chg-261a2ed38f670af4d370",
       "entityName": "王兴兴",
-      "claim": "王兴兴 的 materials 发生变化。",
+      "claim": "王兴兴 的 materials、sources 发生变化。",
       "sourceName": "机器人 · Google News 中文",
       "title": "宇树王兴兴：中国企业有望占据机器人产业发展先机，人形机器人尚待突破两方面瓶颈 - 华尔街见闻",
       "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFB6RTkxZ2VoZUpCeW9td2ZIcVoxR0ZwWXhDX0d6YU5JSWdPejRVRHA4NzdEeGFLSFdRTlUxbGt4a2dVOC1ETGFJeWFORE8yYmU2Wi1Z?oc=5",
@@ -2857,10 +2823,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E016",
-      "changeId": "chg-70fffce08f37206b7abe",
+      "id": "E011",
+      "changeId": "chg-261a2ed38f670af4d370",
       "entityName": "王兴兴",
-      "claim": "王兴兴 的 materials 发生变化。",
+      "claim": "王兴兴 的 materials、sources 发生变化。",
       "sourceName": "机器人 · Google News 中文",
       "title": "王兴兴：登陆资本市场是全新的起点，积极探索人形机器人、机甲等更多产品形态 - thepaper.cn",
       "url": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE0yZ0pPZTZWaVhTa1g2aTlXZXd6ci1nVURCWkFKeUNPcEl5YU03S2VLcHd4c0FNY05RMkk4YUhJcGRtQVpGVXJUWXJkVlJGX2k5RGJSRU5JaG1jRDhPekUxUw?oc=5",
@@ -2868,21 +2834,21 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E017",
-      "changeId": "chg-70fffce08f37206b7abe",
+      "id": "E012",
+      "changeId": "chg-261a2ed38f670af4d370",
       "entityName": "王兴兴",
-      "claim": "王兴兴 的 materials 发生变化。",
+      "claim": "王兴兴 的 materials、sources 发生变化。",
       "sourceName": "机器人 · Google News 中文",
-      "title": "宇树科技王兴兴：人形机器人毛利率回落系多重原因所致 - bjnews.com.cn",
+      "title": "宇树科技王兴兴：人形机器人毛利率回落系多重原因所致 - 新京报",
       "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBlVFhHY3ZnRDROQ3k2TEJISkZoRi1pNXdkVVNkZFE0N21CZDdfRU1JbGZoeEZUQUNrbk8tcFk0cGVqd1hOZ3RYaG5xVmJVSXJ5b2VvQ3RmUC0yREVTNE9Zd0ZjVFk?oc=5",
       "publishedAt": "2026-08-07",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E018",
-      "changeId": "chg-70fffce08f37206b7abe",
+      "id": "E013",
+      "changeId": "chg-261a2ed38f670af4d370",
       "entityName": "王兴兴",
-      "claim": "王兴兴 的 materials 发生变化。",
+      "claim": "王兴兴 的 materials、sources 发生变化。",
       "sourceName": "Bilibili · 共青团中央",
       "title": "“你还想改变这个世界？我想试试！”【给青春的 演讲 x 王兴兴 】",
       "url": "https://www.bilibili.com/video/BV1G4GZzPEEk",
@@ -2890,52 +2856,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E019",
-      "changeId": "chg-ffd57f709cd9215a2119",
-      "entityName": "李飞飞",
-      "claim": "李飞飞 的 sources 发生变化。",
-      "sourceName": "AI科技评论",
-      "title": "李飞飞高徒黄文龙：具身智能需要一次「脑内搜索」革命 | RSS 2026",
-      "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA%3D%3D&chksm=909b2097a7eca981419e85a4bdbf0d77a05a1615fc34f1684a70f60e3a0bb70fe7fed2c2f97a&idx=2&mid=2247739652&sn=ab41bd2d7c5a1b85a79623af9710297e",
-      "publishedAt": "2026-07-21",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E020",
-      "changeId": "chg-ffd57f709cd9215a2119",
-      "entityName": "李飞飞",
-      "claim": "李飞飞 的 sources 发生变化。",
-      "sourceName": "AI科技评论",
-      "title": "李飞飞高徒黄文龙：具身智能需要一次「脑内搜索」革命 | RSS 2026",
-      "url": "http://mp.weixin.qq.com/s?__biz=MzA5ODEzMjIyMA==&mid=2247739652&idx=2&sn=ab41bd2d7c5a1b85a79623af9710297e&chksm=909b2097a7eca981419e85a4bdbf0d77a05a1615fc34f1684a70f60e3a0bb70fe7fed2c2f97a#rd",
-      "publishedAt": "2026-07-21",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E021",
-      "changeId": "chg-ffd57f709cd9215a2119",
-      "entityName": "李飞飞",
-      "claim": "李飞飞 的 sources 发生变化。",
-      "sourceName": "Wikipedia (en)",
-      "title": "Fei-Fei Li — Wikipedia",
-      "url": "https://en.wikipedia.org/wiki/Fei-Fei_Li",
-      "publishedAt": "持续更新",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E022",
-      "changeId": "chg-ffd57f709cd9215a2119",
-      "entityName": "李飞飞",
-      "claim": "李飞飞 的 sources 发生变化。",
-      "sourceName": "Stanford University",
-      "title": "Fei-Fei Li at Stanford",
-      "url": "https://profiles.stanford.edu/fei-fei-li",
-      "publishedAt": "持续更新",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E023",
-      "changeId": "chg-b2548d67c88c837b617a",
+      "id": "E014",
+      "changeId": "chg-1b1e6a5c98b5b456b189",
       "entityName": "李泽湘",
       "claim": "李泽湘 的 sources 发生变化。",
       "sourceName": "香港科技大学",
@@ -2945,8 +2867,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E024",
-      "changeId": "chg-b2548d67c88c837b617a",
+      "id": "E015",
+      "changeId": "chg-1b1e6a5c98b5b456b189",
       "entityName": "李泽湘",
       "claim": "李泽湘 的 sources 发生变化。",
       "sourceName": "Bilibili · XbotPark机器人基地",
@@ -2956,8 +2878,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E025",
-      "changeId": "chg-b2548d67c88c837b617a",
+      "id": "E016",
+      "changeId": "chg-1b1e6a5c98b5b456b189",
       "entityName": "李泽湘",
       "claim": "李泽湘 的 sources 发生变化。",
       "sourceName": "Bilibili · 第1眼新闻",
@@ -2967,8 +2889,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E026",
-      "changeId": "chg-b2548d67c88c837b617a",
+      "id": "E017",
+      "changeId": "chg-1b1e6a5c98b5b456b189",
       "entityName": "李泽湘",
       "claim": "李泽湘 的 sources 发生变化。",
       "sourceName": "Bilibili · 创新创意设计研究院",
@@ -2978,52 +2900,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E027",
-      "changeId": "chg-26e56bbb5c31e9436798",
-      "entityName": "姚顺雨",
-      "claim": "姚顺雨 的 sources 发生变化。",
-      "sourceName": "投资界",
-      "title": "腾讯混元组织架构再升级：合并大语言模型和多模态团队，统一由姚顺雨管理",
-      "url": "https://news.pedaily.cn/202607/566803.shtml",
-      "publishedAt": "2026-07-24",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E028",
-      "changeId": "chg-26e56bbb5c31e9436798",
-      "entityName": "姚顺雨",
-      "claim": "姚顺雨 的 sources 发生变化。",
-      "sourceName": "Bilibili · 字母榜",
-      "title": "汤道生 姚顺雨对话",
-      "url": "https://www.bilibili.com/video/BV1cG716CEJb",
-      "publishedAt": "2026-06-05",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E029",
-      "changeId": "chg-26e56bbb5c31e9436798",
-      "entityName": "姚顺雨",
-      "claim": "姚顺雨 的 sources 发生变化。",
-      "sourceName": "Bilibili · 上只当麻_1047008888",
-      "title": "当麻在北京：听 姚顺雨 聊大模型的看法和回忆2019年，汤道生、 姚顺雨 对谈实录完整版",
-      "url": "https://www.bilibili.com/video/BV1eW7C6xEnV",
-      "publishedAt": "2026-06-05",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E030",
-      "changeId": "chg-26e56bbb5c31e9436798",
-      "entityName": "姚顺雨",
-      "claim": "姚顺雨 的 sources 发生变化。",
-      "sourceName": "Bilibili · 初心笔记1982",
-      "title": "腾讯Ai首席 姚顺雨 最新访谈：畅谈Ai发展",
-      "url": "https://www.bilibili.com/video/BV1k97m6pESF",
-      "publishedAt": "2026-06-05",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E031",
-      "changeId": "chg-03d368739d29f4faa3e7",
+      "id": "E018",
+      "changeId": "chg-9a8f9344b6d09d9ff75b",
       "entityName": "埃隆·马斯克",
       "claim": "埃隆·马斯克 的 materials、sources 发生变化。",
       "sourceName": "Ars Technica",
@@ -3033,8 +2911,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E032",
-      "changeId": "chg-03d368739d29f4faa3e7",
+      "id": "E019",
+      "changeId": "chg-9a8f9344b6d09d9ff75b",
       "entityName": "埃隆·马斯克",
       "claim": "埃隆·马斯克 的 materials、sources 发生变化。",
       "sourceName": "Electrek",
@@ -3044,8 +2922,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E033",
-      "changeId": "chg-03d368739d29f4faa3e7",
+      "id": "E020",
+      "changeId": "chg-9a8f9344b6d09d9ff75b",
       "entityName": "埃隆·马斯克",
       "claim": "埃隆·马斯克 的 materials、sources 发生变化。",
       "sourceName": "Electrek",
@@ -3055,8 +2933,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E034",
-      "changeId": "chg-03d368739d29f4faa3e7",
+      "id": "E021",
+      "changeId": "chg-9a8f9344b6d09d9ff75b",
       "entityName": "埃隆·马斯克",
       "claim": "埃隆·马斯克 的 materials、sources 发生变化。",
       "sourceName": "Electrek",
@@ -3066,52 +2944,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E035",
-      "changeId": "chg-94015e0033caac8d9c58",
-      "entityName": "Sam Altman",
-      "claim": "Sam Altman 的 materials、sources 发生变化。",
-      "sourceName": "机器之心",
-      "title": "GPT-6要来了？还没发布，就先「入侵」了Hugging Face",
-      "url": "http://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&mid=2651046034&idx=2&sn=28d08b24db4deb725bd70d2f6b20d1da&chksm=84e604ecb3918dfadc39adae5f8cb3cb4431b758c2f61a80bf89cc4cbf4e284833df35ed6e3c#rd",
-      "publishedAt": "2026-07-22",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E036",
-      "changeId": "chg-94015e0033caac8d9c58",
-      "entityName": "Sam Altman",
-      "claim": "Sam Altman 的 materials、sources 发生变化。",
-      "sourceName": "9to5Mac",
-      "title": "Jony Ive’s first OpenAI hardware device sounds rather like … a HomePad",
-      "url": "https://9to5mac.com/2026/07/30/jony-ives-first-openai-hardware-device-sounds-rather-like-a-homepad",
-      "publishedAt": "2026-07-30",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E037",
-      "changeId": "chg-94015e0033caac8d9c58",
-      "entityName": "Sam Altman",
-      "claim": "Sam Altman 的 materials、sources 发生变化。",
-      "sourceName": "Wikipedia (en)",
-      "title": "Sam Altman — Wikipedia",
-      "url": "https://en.wikipedia.org/wiki/Sam_Altman",
-      "publishedAt": "持续更新",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E038",
-      "changeId": "chg-94015e0033caac8d9c58",
-      "entityName": "Sam Altman",
-      "claim": "Sam Altman 的 materials、sources 发生变化。",
-      "sourceName": "新浪财经",
-      "title": "OpenAI首席执行官山姆·奥特曼赴华盛顿就人工智能监管政策与美官员会谈",
-      "url": "https://finance.sina.com.cn/stock/usstock/c/2026-07-28/doc-inikivui0457912.shtml",
-      "publishedAt": "2026-07-28",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E039",
-      "changeId": "chg-b21cae2a5c644c6c563d",
+      "id": "E022",
+      "changeId": "chg-7c8d31422a06cc0ce093",
       "entityName": "Kunle Olukotun",
       "claim": "Kunle Olukotun 的 sources 发生变化。",
       "sourceName": "YouTube · Muhammad Shahbaz (‫محمد شہباز‬‎)",
@@ -3121,8 +2955,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E040",
-      "changeId": "chg-b21cae2a5c644c6c563d",
+      "id": "E023",
+      "changeId": "chg-7c8d31422a06cc0ce093",
       "entityName": "Kunle Olukotun",
       "claim": "Kunle Olukotun 的 sources 发生变化。",
       "sourceName": "YouTube · Malcolm Wallace",
@@ -3132,8 +2966,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E041",
-      "changeId": "chg-b21cae2a5c644c6c563d",
+      "id": "E024",
+      "changeId": "chg-7c8d31422a06cc0ce093",
       "entityName": "Kunle Olukotun",
       "claim": "Kunle Olukotun 的 sources 发生变化。",
       "sourceName": "YouTube · SC Conference Series",
@@ -3143,8 +2977,8 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E042",
-      "changeId": "chg-b21cae2a5c644c6c563d",
+      "id": "E025",
+      "changeId": "chg-7c8d31422a06cc0ce093",
       "entityName": "Kunle Olukotun",
       "claim": "Kunle Olukotun 的 sources 发生变化。",
       "sourceName": "YouTube · Paul G. Allen School",
@@ -3154,98 +2988,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E043",
-      "changeId": "chg-7ff8c1c92e7ccfe8c53b",
-      "entityName": "Demis Hassabis",
-      "claim": "Demis Hassabis 的 materials 发生变化。",
-      "sourceName": "Google DeepMind",
-      "title": "Google DeepMind leadership",
-      "url": "https://deepmind.google/about/",
-      "publishedAt": "持续更新",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E044",
-      "changeId": "chg-7ff8c1c92e7ccfe8c53b",
-      "entityName": "Demis Hassabis",
-      "claim": "Demis Hassabis 的 materials 发生变化。",
-      "sourceName": "Wikipedia (en)",
-      "title": "Demis Hassabis — Wikipedia",
-      "url": "https://en.wikipedia.org/wiki/Demis_Hassabis",
-      "publishedAt": "持续更新",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E045",
-      "changeId": "chg-7ff8c1c92e7ccfe8c53b",
-      "entityName": "Demis Hassabis",
-      "claim": "Demis Hassabis 的 materials 发生变化。",
-      "sourceName": "SiliconANGLE",
-      "title": "Google reveals big shakeup in its AI teams as Jeff Dean leaves and Demis Hassabis moves upstairs",
-      "url": "https://siliconangle.com/2026/08/05/google-reveals-big-shake-ai-teams-jeff-dean-leaves-demis-hassabis-moves-upstairs",
-      "publishedAt": "2026-08-05",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E046",
-      "changeId": "chg-7ff8c1c92e7ccfe8c53b",
-      "entityName": "Demis Hassabis",
-      "claim": "Demis Hassabis 的 materials 发生变化。",
-      "sourceName": "Slashdot",
-      "title": "Google Overhauls AI Leadership As DeepMind CEO Steps Aside",
-      "url": "https://tech.slashdot.org/story/26/08/05/1718218/google-overhauls-ai-leadership-as-deepmind-ceo-steps-aside",
-      "publishedAt": "2026-08-05",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E047",
-      "changeId": "chg-265d6544bb7fadf76915",
-      "entityName": "David Kirtley",
-      "claim": "David Kirtley 的 sources 发生变化。",
-      "sourceName": "Bilibili · 梨云的笔记",
-      "title": "核聚变工程师亲述：我们如何在2028年前实现商业发电（ Helion CEO专访）",
-      "url": "https://www.bilibili.com/video/BV1dcy7BDEJM",
-      "publishedAt": "2025-11-19",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E048",
-      "changeId": "chg-265d6544bb7fadf76915",
-      "entityName": "David Kirtley",
-      "claim": "David Kirtley 的 sources 发生变化。",
-      "sourceName": "Bilibili · 荒野生存探索",
-      "title": "【中英字幕】【颠覆认知】核聚变专家 David Kirtley ：人类能源的未来竟是等离子体？！| Lex播客485期",
-      "url": "https://www.bilibili.com/video/BV1i4roBxEL7",
-      "publishedAt": "2026-01-15",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E049",
-      "changeId": "chg-265d6544bb7fadf76915",
-      "entityName": "David Kirtley",
-      "claim": "David Kirtley 的 sources 发生变化。",
-      "sourceName": "Helion Energy",
-      "title": "Helion Energy",
-      "url": "https://www.helionenergy.com/",
-      "publishedAt": "持续更新",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E050",
-      "changeId": "chg-265d6544bb7fadf76915",
-      "entityName": "David Kirtley",
-      "claim": "David Kirtley 的 sources 发生变化。",
-      "sourceName": "YouTube · Lex Fridman",
-      "title": "David Kirtley: Nuclear Fusion, Plasma Physics, and the Future of Energy | Lex Fridman Podcast #485",
-      "url": "https://www.youtube.com/watch?v=m_CFCyc2Shs",
-      "publishedAt": "8个月前",
-      "evidenceGrade": "未分级"
-    },
-    {
-      "id": "E051",
-      "changeId": "chg-ee4a292d910e551464fd",
+      "id": "E026",
+      "changeId": "chg-9216e88636b699e12ea3",
       "entityName": "晶泰控股有限公司",
-      "claim": "晶泰控股有限公司 更新至 2026-08-07，最新收盘价为 7.55；同时变更字段：metrics、news、priceHistory、quote。",
+      "claim": "晶泰控股有限公司 的 metrics、sources 发生变化。",
       "sourceName": "新浪财经",
       "title": "AI制药，10大核心玩家！",
       "url": "https://cj.sina.cn/articles/view/7970234518/1db10209601902l0wk",
@@ -3253,10 +2999,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E052",
-      "changeId": "chg-ee4a292d910e551464fd",
+      "id": "E027",
+      "changeId": "chg-9216e88636b699e12ea3",
       "entityName": "晶泰控股有限公司",
-      "claim": "晶泰控股有限公司 更新至 2026-08-07，最新收盘价为 7.55；同时变更字段：metrics、news、priceHistory、quote。",
+      "claim": "晶泰控股有限公司 的 metrics、sources 发生变化。",
       "sourceName": "新浪财经",
       "title": "北大校友的AI战事",
       "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkfvm3864119.shtml",
@@ -3264,10 +3010,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E053",
-      "changeId": "chg-ee4a292d910e551464fd",
+      "id": "E028",
+      "changeId": "chg-9216e88636b699e12ea3",
       "entityName": "晶泰控股有限公司",
-      "claim": "晶泰控股有限公司 更新至 2026-08-07，最新收盘价为 7.55；同时变更字段：metrics、news、priceHistory、quote。",
+      "claim": "晶泰控股有限公司 的 metrics、sources 发生变化。",
       "sourceName": "新浪财经",
       "title": "“APEC大会倒计时100天媒体采风活动”在深圳启动",
       "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimmtwt3406792.shtml",
@@ -3275,10 +3021,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E054",
-      "changeId": "chg-ee4a292d910e551464fd",
+      "id": "E029",
+      "changeId": "chg-9216e88636b699e12ea3",
       "entityName": "晶泰控股有限公司",
-      "claim": "晶泰控股有限公司 更新至 2026-08-07，最新收盘价为 7.55；同时变更字段：metrics、news、priceHistory、quote。",
+      "claim": "晶泰控股有限公司 的 metrics、sources 发生变化。",
       "sourceName": "新浪财经",
       "title": "从“卖水人”到“造浪者”：晶泰科技（02228）发布XtalPi Science，以Physical AI重构万亿科研基建",
       "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-04/doc-inimctrp5357879.shtml",
@@ -3286,10 +3032,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E055",
-      "changeId": "chg-52f03cea66b170b37c2d",
+      "id": "E030",
+      "changeId": "chg-c1d3b9d6281af4142260",
       "entityName": "文远知行",
-      "claim": "文远知行 的 warnings 发生变化。",
+      "claim": "文远知行 更新至 2026-08-07，最新收盘价为 6.11；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
       "title": "How Investors Are Reacting To WeRide (WRD) Expanding Level 4 Robotaxis Into Denmark With GreenMobility",
       "url": "https://finance.yahoo.com/markets/stocks/articles/investors-reacting-weride-wrd-expanding-101115139.html?.tsrc=rss",
@@ -3297,10 +3043,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E056",
-      "changeId": "chg-52f03cea66b170b37c2d",
+      "id": "E031",
+      "changeId": "chg-c1d3b9d6281af4142260",
       "entityName": "文远知行",
-      "claim": "文远知行 的 warnings 发生变化。",
+      "claim": "文远知行 更新至 2026-08-07，最新收盘价为 6.11；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
       "title": "WeRide (WRD) Partners In Denmark, Is The Stock A Bargain?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/weride-wrd-partners-denmark-stock-231437255.html?.tsrc=rss",
@@ -3308,10 +3054,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E057",
-      "changeId": "chg-52f03cea66b170b37c2d",
+      "id": "E032",
+      "changeId": "chg-c1d3b9d6281af4142260",
       "entityName": "文远知行",
-      "claim": "文远知行 的 warnings 发生变化。",
+      "claim": "文远知行 更新至 2026-08-07，最新收盘价为 6.11；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
       "title": "WeRide (WRD) Stock Looks Rich On Sales But Reasonable On Price Falls",
       "url": "https://finance.yahoo.com/markets/stocks/articles/weride-wrd-stock-looks-rich-081256172.html?.tsrc=rss",
@@ -3319,10 +3065,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E058",
-      "changeId": "chg-52f03cea66b170b37c2d",
+      "id": "E033",
+      "changeId": "chg-c1d3b9d6281af4142260",
       "entityName": "文远知行",
-      "claim": "文远知行 的 warnings 发生变化。",
+      "claim": "文远知行 更新至 2026-08-07，最新收盘价为 6.11；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
       "title": "China's WeRide enters Denmark, extending European footprint",
       "url": "https://finance.yahoo.com/technology/ai/articles/chinas-weride-enters-denmark-extending-053524450.html?.tsrc=rss",
@@ -3330,32 +3076,76 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E059",
-      "changeId": "chg-0f6e4e5bf29473738d5d",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 更新至 2026-08-07，最新收盘价为 388.07；同时变更字段：metrics、news、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "宜春官方称宁德时代锂矿处于停产检修状态",
-      "url": "https://cj.sina.cn/articles/view/1642088277/61e04755040023ugw",
-      "publishedAt": "2026-08-07T17:34:00+08:00",
+      "id": "E034",
+      "changeId": "chg-7b658f6c495b7f7a245e",
+      "entityName": "小马智行",
+      "claim": "小马智行 更新至 2026-08-07，最新收盘价为 7.89；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "Momenta Targets $752 Million Hong Kong IPO",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/momenta-targets-752-million-hong-194724183.html?.tsrc=rss",
+      "publishedAt": "2026-06-29T19:47:24+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E060",
-      "changeId": "chg-0f6e4e5bf29473738d5d",
-      "entityName": "宁德时代",
-      "claim": "宁德时代 更新至 2026-08-07，最新收盘价为 388.07；同时变更字段：metrics、news、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "Mysteel：金属锂的生产和应用",
-      "url": "https://cj.sina.cn/articles/view/2299163722/890a744a02702bhe4",
-      "publishedAt": "2026-08-07T17:39:00+08:00",
+      "id": "E035",
+      "changeId": "chg-7b658f6c495b7f7a245e",
+      "entityName": "小马智行",
+      "claim": "小马智行 更新至 2026-08-07，最新收盘价为 7.89；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "PONY AI Inc. to Report Second Quarter and Interim Financial Results for 2026 on August 18, 2026",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/pony-ai-inc-report-second-090000635.html?.tsrc=rss",
+      "publishedAt": "2026-07-17T09:00:00+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E061",
-      "changeId": "chg-0f6e4e5bf29473738d5d",
+      "id": "E036",
+      "changeId": "chg-7b658f6c495b7f7a245e",
+      "entityName": "小马智行",
+      "claim": "小马智行 更新至 2026-08-07，最新收盘价为 7.89；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "BofA Highlights Pony AI (PONY) Robotaxi Expansion",
+      "url": "https://finance.yahoo.com/technology/ai/articles/bofa-highlights-pony-ai-pony-155810225.html?.tsrc=rss",
+      "publishedAt": "2026-07-01T15:58:10+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E037",
+      "changeId": "chg-7b658f6c495b7f7a245e",
+      "entityName": "小马智行",
+      "claim": "小马智行 更新至 2026-08-07，最新收盘价为 7.89；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "Pony AI (PONY) Launches Autonomous Mobility Service Across Singapore",
+      "url": "https://finance.yahoo.com/technology/ai/articles/pony-ai-pony-launches-autonomous-163445756.html?.tsrc=rss",
+      "publishedAt": "2026-06-30T16:34:45+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E038",
+      "changeId": "chg-3d3d9c15d314684915b3",
       "entityName": "宁德时代",
-      "claim": "宁德时代 更新至 2026-08-07，最新收盘价为 388.07；同时变更字段：metrics、news、priceHistory、quote。",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "知名基金经理，买入科技，高位站岗",
+      "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b01901h2pw",
+      "publishedAt": "2026-08-07T21:30:00+08:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E039",
+      "changeId": "chg-3d3d9c15d314684915b3",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
+      "sourceName": "新浪财经",
+      "title": "宁德时代：披露2026年第一次临时股东会前十名股东持股情况",
+      "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002yteo",
+      "publishedAt": "2026-08-07T20:20:00+08:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E040",
+      "changeId": "chg-3d3d9c15d314684915b3",
+      "entityName": "宁德时代",
+      "claim": "宁德时代 的 news 发生变化。",
       "sourceName": "新浪财经",
       "title": "智通港股空仓持单统计|8月7日",
       "url": "https://cj.sina.cn/articles/view/5835524730/15bd30a7a020028fdq",
@@ -3363,10 +3153,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E062",
-      "changeId": "chg-0f6e4e5bf29473738d5d",
+      "id": "E041",
+      "changeId": "chg-3d3d9c15d314684915b3",
       "entityName": "宁德时代",
-      "claim": "宁德时代 更新至 2026-08-07，最新收盘价为 388.07；同时变更字段：metrics、news、priceHistory、quote。",
+      "claim": "宁德时代 的 news 发生变化。",
       "sourceName": "新浪财经",
       "title": "主力大调仓，超56亿元撤出中际旭创",
       "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimnzsc3139869.shtml",
@@ -3374,54 +3164,54 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E063",
-      "changeId": "chg-b992a2f5059dda065b50",
-      "entityName": "华大基因",
-      "claim": "华大基因 更新至 2026-08-07，最新收盘价为 39.96；同时变更字段：metrics、news、priceHistory、quote。",
+      "id": "E042",
+      "changeId": "chg-7da51573f223e235740b",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
       "sourceName": "新浪财经",
-      "title": "华大基因(300676.SZ)：累计回购1.6092%股份 回购方案已实施完毕",
-      "url": "https://cj.sina.cn/articles/view/5115326071/130e5ae7702002yqzw",
-      "publishedAt": "2026-08-06T17:39:00+08:00",
+      "title": "寒武纪：上半年净利润23.11亿元，同比增长122%",
+      "url": "https://cj.sina.cn/articles/view/1651428902/626ece2602001io72",
+      "publishedAt": "2026-08-07T21:13:00+08:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E064",
-      "changeId": "chg-b992a2f5059dda065b50",
-      "entityName": "华大基因",
-      "claim": "华大基因 更新至 2026-08-07，最新收盘价为 39.96；同时变更字段：metrics、news、priceHistory、quote。",
+      "id": "E043",
+      "changeId": "chg-7da51573f223e235740b",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
       "sourceName": "新浪财经",
-      "title": "公司大模型发展的如何？华大基因回应",
-      "url": "https://finance.sina.com.cn/jjxw/2026-08-04/doc-inimcatx2283844.shtml",
-      "publishedAt": "2026-08-04T09:01:00+08:00",
+      "title": "知名基金经理，买入科技，高位站岗",
+      "url": "https://cj.sina.cn/articles/view/1750070171/684ff39b01901h2pw",
+      "publishedAt": "2026-08-07T21:30:00+08:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E065",
-      "changeId": "chg-b992a2f5059dda065b50",
-      "entityName": "华大基因",
-      "claim": "华大基因 更新至 2026-08-07，最新收盘价为 39.96；同时变更字段：metrics、news、priceHistory、quote。",
+      "id": "E044",
+      "changeId": "chg-7da51573f223e235740b",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
       "sourceName": "新浪财经",
-      "title": "华大基因：回购方案已实施完毕，成交额2.5亿元",
-      "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkncc4640017.shtml",
-      "publishedAt": "2026-08-06T17:41:00+08:00",
+      "title": "寒武纪公布“炸裂”业绩：营收、净利双双翻倍",
+      "url": "https://cj.sina.cn/articles/view/1905628462/7195952e01901q7em",
+      "publishedAt": "2026-08-07T21:09:00+08:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E066",
-      "changeId": "chg-b992a2f5059dda065b50",
-      "entityName": "华大基因",
-      "claim": "华大基因 更新至 2026-08-07，最新收盘价为 39.96；同时变更字段：metrics、news、priceHistory、quote。",
+      "id": "E045",
+      "changeId": "chg-7da51573f223e235740b",
+      "entityName": "中科寒武纪科技股份有限公司",
+      "claim": "中科寒武纪科技股份有限公司 的 news 发生变化。",
       "sourceName": "新浪财经",
-      "title": "华大基因涨4.99%，成交额4.37亿元，今日主力净流入2407.33万",
-      "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-07/doc-inimnrak9997062.shtml",
-      "publishedAt": "2026-08-07T15:42:00+08:00",
+      "title": "8月7日晚间公告集锦|寒武纪上半年净利润23.11亿元同比增长123%，国泰君安国际拟私有化退市，蓝盾光电拟购买岚创科技股票复牌",
+      "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimnzsc3174175.shtml",
+      "publishedAt": "2026-08-07T21:15:00+08:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E067",
-      "changeId": "chg-2bcd293c003a7c7101dd",
+      "id": "E046",
+      "changeId": "chg-4e39ce77124c49802ed4",
       "entityName": "Tempus AI, Inc.",
-      "claim": "Tempus AI, Inc. 的 warnings 发生变化。",
+      "claim": "Tempus AI, Inc. 更新至 2026-08-07，最新收盘价为 49.360001；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "CellCarta Adds Tempus to CDx Commercialization Lab Network",
       "url": "https://finance.yahoo.com/healthcare/articles/cellcarta-adds-tempus-cdx-commercialization-131500610.html?.tsrc=rss",
@@ -3429,10 +3219,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E068",
-      "changeId": "chg-2bcd293c003a7c7101dd",
+      "id": "E047",
+      "changeId": "chg-4e39ce77124c49802ed4",
       "entityName": "Tempus AI, Inc.",
-      "claim": "Tempus AI, Inc. 的 warnings 发生变化。",
+      "claim": "Tempus AI, Inc. 更新至 2026-08-07，最新收盘价为 49.360001；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "[Latest] Global AI In Digital Pathology Market Size/Share Worth USD 5.14 Billion by 2035 at a 18.02% CAGR: Healthcare Foresights (Analysis, Outlook, Leaders, Re",
       "url": "https://finance.yahoo.com/healthcare/articles/latest-global-ai-digital-pathology-103000243.html?.tsrc=rss",
@@ -3440,10 +3230,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E069",
-      "changeId": "chg-2bcd293c003a7c7101dd",
+      "id": "E048",
+      "changeId": "chg-4e39ce77124c49802ed4",
       "entityName": "Tempus AI, Inc.",
-      "claim": "Tempus AI, Inc. 的 warnings 发生变化。",
+      "claim": "Tempus AI, Inc. 更新至 2026-08-07，最新收盘价为 49.360001；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "[Latest] Global Generative AI In Clinical Trials Market Size/Share Worth USD 1.86 Billion by 2035 at a 9.63% CAGR: Healthcare Foresights (Analysis, Outlook, Lea",
       "url": "https://finance.yahoo.com/healthcare/articles/latest-global-generative-ai-clinical-163000800.html?.tsrc=rss",
@@ -3451,10 +3241,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E070",
-      "changeId": "chg-2bcd293c003a7c7101dd",
+      "id": "E049",
+      "changeId": "chg-4e39ce77124c49802ed4",
       "entityName": "Tempus AI, Inc.",
-      "claim": "Tempus AI, Inc. 的 warnings 发生变化。",
+      "claim": "Tempus AI, Inc. 更新至 2026-08-07，最新收盘价为 49.360001；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Tempus Study Published in Nature Medicine Demonstrates Best-in-Class Performance of PRISM2 Across Diagnostic and Prognostic Applications",
       "url": "https://finance.yahoo.com/healthcare/articles/tempus-study-published-nature-medicine-123000922.html?.tsrc=rss",
@@ -3462,32 +3252,54 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E071",
-      "changeId": "chg-d8eac96a4d3424ce8c1c",
+      "id": "E050",
+      "changeId": "chg-e368799982812290c57a",
       "entityName": "Rocket Lab Corporation",
-      "claim": "Rocket Lab Corporation 的 news 发生变化。",
+      "claim": "Rocket Lab Corporation 更新至 2026-08-07，最新收盘价为 80.764999；同时变更字段：metrics、news、priceHistory、quote。",
       "sourceName": "Yahoo财经",
-      "title": "Rocket Lab to buy Iridium for US$8 bil in challenge to SpaceX",
-      "url": "https://sg.finance.yahoo.com/news/rocket-lab-buy-iridium-us-043636623.html?.tsrc=rss",
-      "publishedAt": "2026-06-29T04:36:36+00:00",
+      "title": "Rocket Lab Corporation (RKLB) Ascends While Market Falls: Some Facts to Note",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-corporation-rklb-ascends-221503456.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T22:15:03+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E072",
-      "changeId": "chg-d8eac96a4d3424ce8c1c",
+      "id": "E051",
+      "changeId": "chg-e368799982812290c57a",
       "entityName": "Rocket Lab Corporation",
-      "claim": "Rocket Lab Corporation 的 news 发生变化。",
+      "claim": "Rocket Lab Corporation 更新至 2026-08-07，最新收盘价为 80.764999；同时变更字段：metrics、news、priceHistory、quote。",
       "sourceName": "Yahoo财经",
-      "title": "",
-      "url": "https://sg.finance.yahoo.com/quote/RKLB/",
-      "publishedAt": "",
+      "title": "Rocket Lab (RKLB) Could Be 12% Undervalued After Its $397 Million Space Force Win",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-rklb-could-12-141547421.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T14:15:47+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E073",
-      "changeId": "chg-75fb5df33de51430c771",
+      "id": "E052",
+      "changeId": "chg-e368799982812290c57a",
+      "entityName": "Rocket Lab Corporation",
+      "claim": "Rocket Lab Corporation 更新至 2026-08-07，最新收盘价为 80.764999；同时变更字段：metrics、news、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Rocket Lab Set to Report Q2 Earnings: Should You Own the Stock?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/rocket-lab-set-report-q2-151700644.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T15:17:00+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E053",
+      "changeId": "chg-e368799982812290c57a",
+      "entityName": "Rocket Lab Corporation",
+      "claim": "Rocket Lab Corporation 更新至 2026-08-07，最新收盘价为 80.764999；同时变更字段：metrics、news、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Why Rocket Lab Stock Popped Today",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/why-rocket-lab-stock-popped-211333985.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T21:13:33+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E054",
+      "changeId": "chg-266bfc4803ba131022cd",
       "entityName": "Rigetti Computing, Inc.",
-      "claim": "Rigetti Computing, Inc. 的 news、warnings 发生变化。",
+      "claim": "Rigetti Computing, Inc. 更新至 2026-08-07，最新收盘价为 17.09；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "QBTS & RGTI Q2 Earnings Tomorrow: Which Quantum Stock Is a Better Buy?",
       "url": "https://finance.yahoo.com/markets/stocks/articles/qbts-rgti-q2-earnings-tomorrow-190000461.html?.tsrc=rss",
@@ -3495,10 +3307,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E074",
-      "changeId": "chg-75fb5df33de51430c771",
+      "id": "E055",
+      "changeId": "chg-266bfc4803ba131022cd",
       "entityName": "Rigetti Computing, Inc.",
-      "claim": "Rigetti Computing, Inc. 的 news、warnings 发生变化。",
+      "claim": "Rigetti Computing, Inc. 更新至 2026-08-07，最新收盘价为 17.09；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Rigetti Computing, Inc. (RGTI) Reports Q2 Loss, Tops Revenue Estimates",
       "url": "https://finance.yahoo.com/markets/stocks/articles/rigetti-computing-inc-rgti-reports-231016086.html?.tsrc=rss",
@@ -3506,10 +3318,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E075",
-      "changeId": "chg-75fb5df33de51430c771",
+      "id": "E056",
+      "changeId": "chg-266bfc4803ba131022cd",
       "entityName": "Rigetti Computing, Inc.",
-      "claim": "Rigetti Computing, Inc. 的 news、warnings 发生变化。",
+      "claim": "Rigetti Computing, Inc. 更新至 2026-08-07，最新收盘价为 17.09；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Is HPE (HPE) Using Quantum Partnerships To Deepen Its AI Infrastructure Moat?",
       "url": "https://finance.yahoo.com/technology/ai/articles/hpe-hpe-using-quantum-partnerships-071403278.html?.tsrc=rss",
@@ -3517,10 +3329,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E076",
-      "changeId": "chg-75fb5df33de51430c771",
+      "id": "E057",
+      "changeId": "chg-266bfc4803ba131022cd",
       "entityName": "Rigetti Computing, Inc.",
-      "claim": "Rigetti Computing, Inc. 的 news、warnings 发生变化。",
+      "claim": "Rigetti Computing, Inc. 更新至 2026-08-07，最新收盘价为 17.09；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Rigetti Computing Reports Second Quarter 2026 Financial Results",
       "url": "https://finance.yahoo.com/technology/ai/articles/rigetti-computing-reports-second-quarter-200500437.html?.tsrc=rss",
@@ -3528,10 +3340,54 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E077",
-      "changeId": "chg-bf88a3bd33d4e6e6efa2",
+      "id": "E058",
+      "changeId": "chg-d293deceac033d940e5c",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 更新至 2026-08-07，最新收盘价为 3.2499；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "Recursion to Participate in Upcoming Investor Conferences",
+      "url": "https://finance.yahoo.com/healthcare/articles/recursion-participate-upcoming-investor-conferences-120000579.html?.tsrc=rss",
+      "publishedAt": "2026-08-04T12:00:00+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E059",
+      "changeId": "chg-d293deceac033d940e5c",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 更新至 2026-08-07，最新收盘价为 3.2499；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "Recursion Pharmaceuticals (RXRX) Is Up 11.4% After Mixed Q2 Results And Genentech Milestone Update",
+      "url": "https://finance.yahoo.com/healthcare/articles/recursion-pharmaceuticals-rxrx-11-4-151331943.html?.tsrc=rss",
+      "publishedAt": "2026-08-05T15:13:31+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E060",
+      "changeId": "chg-d293deceac033d940e5c",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 更新至 2026-08-07，最新收盘价为 3.2499；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "Recursion Pharmaceuticals (RXRX) Reports Q2 Loss, Misses Revenue Estimates",
+      "url": "https://finance.yahoo.com/healthcare/articles/recursion-pharmaceuticals-rxrx-reports-q2-114505496.html?.tsrc=rss",
+      "publishedAt": "2026-08-05T11:45:05+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E061",
+      "changeId": "chg-d293deceac033d940e5c",
+      "entityName": "Recursion Pharmaceuticals, Inc.",
+      "claim": "Recursion Pharmaceuticals, Inc. 更新至 2026-08-07，最新收盘价为 3.2499；同时变更字段：metrics、priceHistory、quote、warnings。",
+      "sourceName": "Yahoo财经",
+      "title": "Recursion Reports Second Quarter Financial Results; Genentech Options First Neuroscience Target into Early Discovery Program",
+      "url": "https://finance.yahoo.com/healthcare/articles/recursion-reports-second-quarter-financial-103000056.html?.tsrc=rss",
+      "publishedAt": "2026-08-05T10:30:00+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E062",
+      "changeId": "chg-f1552e8bdeed3b616e67",
       "entityName": "Mobileye Global Inc.",
-      "claim": "Mobileye Global Inc. 的 warnings 发生变化。",
+      "claim": "Mobileye Global Inc. 更新至 2026-08-07，最新收盘价为 8.62；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Intel Stock Outlook as AI and Foundry Growth Reshape INTC Strategy",
       "url": "https://finance.yahoo.com/markets/stocks/articles/intel-stock-outlook-ai-foundry-161200704.html?.tsrc=rss",
@@ -3539,10 +3395,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E078",
-      "changeId": "chg-bf88a3bd33d4e6e6efa2",
+      "id": "E063",
+      "changeId": "chg-f1552e8bdeed3b616e67",
       "entityName": "Mobileye Global Inc.",
-      "claim": "Mobileye Global Inc. 的 warnings 发生变化。",
+      "claim": "Mobileye Global Inc. 更新至 2026-08-07，最新收盘价为 8.62；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Mobileye Announces Participation in Upcoming Third Quarter 2026 Investor Conferences",
       "url": "https://finance.yahoo.com/markets/stocks/articles/mobileye-announces-participation-upcoming-third-103000904.html?.tsrc=rss",
@@ -3550,10 +3406,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E079",
-      "changeId": "chg-bf88a3bd33d4e6e6efa2",
+      "id": "E064",
+      "changeId": "chg-f1552e8bdeed3b616e67",
       "entityName": "Mobileye Global Inc.",
-      "claim": "Mobileye Global Inc. 的 warnings 发生变化。",
+      "claim": "Mobileye Global Inc. 更新至 2026-08-07，最新收盘价为 8.62；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Mobileye (MBLY) Stock Fair Value Edges Lower As Analysts Weigh CEO Change And 2026 Risks",
       "url": "https://finance.yahoo.com/markets/stocks/articles/mobileye-mbly-stock-fair-value-110930683.html?.tsrc=rss",
@@ -3561,10 +3417,10 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E080",
-      "changeId": "chg-bf88a3bd33d4e6e6efa2",
+      "id": "E065",
+      "changeId": "chg-f1552e8bdeed3b616e67",
       "entityName": "Mobileye Global Inc.",
-      "claim": "Mobileye Global Inc. 的 warnings 发生变化。",
+      "claim": "Mobileye Global Inc. 更新至 2026-08-07，最新收盘价为 8.62；同时变更字段：metrics、priceHistory、quote、warnings。",
       "sourceName": "Yahoo财经",
       "title": "Qualcomm’s (QCOM) BMW Deal Adds To A Bigger Diversification Push",
       "url": "https://finance.yahoo.com/technology/articles/qualcomm-qcom-bmw-deal-adds-131949875.html?.tsrc=rss",
@@ -3572,91 +3428,135 @@
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E081",
-      "changeId": "chg-962435387ef0b179d70d",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 news 发生变化。",
+      "id": "E066",
+      "changeId": "chg-a492a7eddc3e3d7ec872",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 更新至 2026-08-07，最新收盘价为 8.5264；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
-      "title": "Jane Goodall Institute USA and FormationQ Launch First-of-its-kind Quantum Computing Research Programme to Explore the Ecological Roots of War and Peace",
-      "url": "https://sg.finance.yahoo.com/news/jane-goodall-institute-usa-formationq-070000259.html?.tsrc=rss",
-      "publishedAt": "2026-07-14T07:00:00+00:00",
+      "title": "Joby Aviation, Inc. (JOBY) Reports Q2 Loss, Beats Revenue Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/joby-aviation-inc-joby-reports-003510733.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T00:35:10+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E082",
-      "changeId": "chg-962435387ef0b179d70d",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 news 发生变化。",
+      "id": "E067",
+      "changeId": "chg-a492a7eddc3e3d7ec872",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 更新至 2026-08-07，最新收盘价为 8.5264；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
-      "title": "The King's Foundation and FormationQ Launch \"Harmonious Urban Growth\" Programme to Help Cities Plan Sustainable Expansion Using Quantum Optimisation",
-      "url": "https://sg.finance.yahoo.com/news/kings-foundation-formationq-launch-harmonious-070000349.html?.tsrc=rss",
-      "publishedAt": "2026-05-11T07:00:00+00:00",
+      "title": "Joby Aviation (JOBY) Partners With Atoms To Build Vertiport Sites In The US",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/joby-aviation-joby-partners-atoms-101035396.html?.tsrc=rss",
+      "publishedAt": "2026-08-05T10:10:35+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E083",
-      "changeId": "chg-962435387ef0b179d70d",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 news 发生变化。",
+      "id": "E068",
+      "changeId": "chg-a492a7eddc3e3d7ec872",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 更新至 2026-08-07，最新收盘价为 8.5264；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
-      "title": "NYSE Content Update: HawkEye 360 to Start Trading after its $416 Million IPO",
-      "url": "https://sg.finance.yahoo.com/news/nyse-content-hawkeye-360-start-125500550.html?.tsrc=rss",
-      "publishedAt": "2026-05-07T12:55:00+00:00",
+      "title": "Joby Aviation Stock Jumps as Air Taxi Launch Moves Closer",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/joby-aviation-stock-jumps-air-211636752.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T21:16:36+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E084",
-      "changeId": "chg-962435387ef0b179d70d",
-      "entityName": "IonQ, Inc.",
-      "claim": "IonQ, Inc. 的 news 发生变化。",
+      "id": "E069",
+      "changeId": "chg-a492a7eddc3e3d7ec872",
+      "entityName": "Joby Aviation, Inc.",
+      "claim": "Joby Aviation, Inc. 更新至 2026-08-07，最新收盘价为 8.5264；同时变更字段：metrics、priceHistory、quote。",
       "sourceName": "Yahoo财经",
-      "title": "NYSE Content Update: OpenLoop Health Debuts At-Home Sleep Apnea Test with 98% Accuracy",
-      "url": "https://sg.finance.yahoo.com/news/nyse-content-openloop-health-debuts-125500375.html?.tsrc=rss",
-      "publishedAt": "2026-04-14T12:55:00+00:00",
+      "title": "Joby Reports Second Quarter 2026 Financial Results",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/joby-reports-second-quarter-2026-200500689.html?.tsrc=rss",
+      "publishedAt": "2026-08-05T20:05:00+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E085",
-      "changeId": "chg-2cec6a372b289ce60d67",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 更新至 2026-08-07，最新收盘价为 5.0；同时变更字段：metrics、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "华泰 | 汽车：从主题走向放量，宇树催化国产机器人 - 智驾&机器人系列",
-      "url": "https://finance.sina.com.cn/roll/2026-08-06/doc-inimiqxp4749604.shtml",
-      "publishedAt": "2026-08-06T08:48:00+08:00",
+      "id": "E070",
+      "changeId": "chg-d80aae57e7f4b5105219",
+      "entityName": "IonQ, Inc.",
+      "claim": "IonQ, Inc. 更新至 2026-08-07，最新收盘价为 42.235001；同时变更字段：metrics、news、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Will AT&T (T)’s Expanded Quantum Deal Turn D-Wave (QBTS) Into a Scalable Enterprise Player?",
+      "url": "https://finance.yahoo.com/technology/ai/articles/t-t-expanded-quantum-deal-183733580.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T18:37:33+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E086",
-      "changeId": "chg-2cec6a372b289ce60d67",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 更新至 2026-08-07，最新收盘价为 5.0；同时变更字段：metrics、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "地平线机器人-W(09660)完成发行2027年到期的4.5亿美元零息可转换债券",
-      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-07-29/doc-iniknmii5784927.shtml",
-      "publishedAt": "2026-07-29T17:01:00+08:00",
+      "id": "E071",
+      "changeId": "chg-d80aae57e7f4b5105219",
+      "entityName": "IonQ, Inc.",
+      "claim": "IonQ, Inc. 更新至 2026-08-07，最新收盘价为 42.235001；同时变更字段：metrics、news、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "UPDATED: DARPA Selects IonQ to Produce Next-Generation Atomic Clocks",
+      "url": "https://finance.yahoo.com/technology/ai/articles/updated-darpa-selects-ionq-produce-033400776.html?.tsrc=rss",
+      "publishedAt": "2026-08-07T03:34:00+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E087",
-      "changeId": "chg-2cec6a372b289ce60d67",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 更新至 2026-08-07，最新收盘价为 5.0；同时变更字段：metrics、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "地平线机器人-W向CARIAD发行13.02亿股新B类普通股份",
-      "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-04/doc-inimcatr5803207.shtml",
-      "publishedAt": "2026-08-04T08:48:00+08:00",
+      "id": "E072",
+      "changeId": "chg-d80aae57e7f4b5105219",
+      "entityName": "IonQ, Inc.",
+      "claim": "IonQ, Inc. 更新至 2026-08-07，最新收盘价为 42.235001；同时变更字段：metrics、news、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Why D-Wave Quantum Stock Fell After Earnings Revealed a 1,120% Surge in Bookings",
+      "url": "https://sg.finance.yahoo.com/m/60cf5242-b372-3a07-9df2-13037e5d9644/why-d-wave-quantum-stock-fell.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T20:54:00+00:00",
       "evidenceGrade": "未分级"
     },
     {
-      "id": "E088",
-      "changeId": "chg-2cec6a372b289ce60d67",
-      "entityName": "Horizon Robotics",
-      "claim": "Horizon Robotics 更新至 2026-08-07，最新收盘价为 5.0；同时变更字段：metrics、priceHistory、quote。",
-      "sourceName": "新浪财经",
-      "title": "地平线机器人-W午后涨近7% 花旗给予目标价12.30港元",
-      "url": "https://finance.sina.com.cn/stock/hkstock/hkgg/2026-07-28/doc-inikivuc2491683.shtml",
-      "publishedAt": "2026-07-28T14:14:00+08:00",
+      "id": "E073",
+      "changeId": "chg-d80aae57e7f4b5105219",
+      "entityName": "IonQ, Inc.",
+      "claim": "IonQ, Inc. 更新至 2026-08-07，最新收盘价为 42.235001；同时变更字段：metrics、news、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Why Rigetti Stock Isn’t Rallying After Its Quantum Sales Surged",
+      "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/why-rigetti-stock-isn%E2%80%99t.html?.tsrc=rss",
+      "publishedAt": "2026-08-07T12:50:00+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E074",
+      "changeId": "chg-9b14632206ae53b82902",
+      "entityName": "Aurora Innovation, Inc.",
+      "claim": "Aurora Innovation, Inc. 更新至 2026-08-07，最新收盘价为 7.025；同时变更字段：metrics、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Aurora Announces Second Quarter 2026 Results",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aurora-announces-second-quarter-2026-201500830.html?.tsrc=rss",
+      "publishedAt": "2026-07-29T20:15:00+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E075",
+      "changeId": "chg-9b14632206ae53b82902",
+      "entityName": "Aurora Innovation, Inc.",
+      "claim": "Aurora Innovation, Inc. 更新至 2026-08-07，最新收盘价为 7.025；同时变更字段：metrics、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Aurora to Host a Retail Investor Town Hall on August 20, 2026",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aurora-host-retail-investor-town-130000361.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T13:00:00+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E076",
+      "changeId": "chg-9b14632206ae53b82902",
+      "entityName": "Aurora Innovation, Inc.",
+      "claim": "Aurora Innovation, Inc. 更新至 2026-08-07，最新收盘价为 7.025；同时变更字段：metrics、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "What Is Aurora Innovation (AUR) Signaling With Its New Deals And Branding Push?",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aurora-innovation-aur-signaling-deals-161115196.html?.tsrc=rss",
+      "publishedAt": "2026-08-06T16:11:15+00:00",
+      "evidenceGrade": "未分级"
+    },
+    {
+      "id": "E077",
+      "changeId": "chg-9b14632206ae53b82902",
+      "entityName": "Aurora Innovation, Inc.",
+      "claim": "Aurora Innovation, Inc. 更新至 2026-08-07，最新收盘价为 7.025；同时变更字段：metrics、priceHistory、quote。",
+      "sourceName": "Yahoo财经",
+      "title": "Aurora Innovation, Inc. (AUR) Reports Q2 Loss, Tops Revenue Estimates",
+      "url": "https://finance.yahoo.com/markets/stocks/articles/aurora-innovation-inc-aur-reports-003502685.html?.tsrc=rss",
+      "publishedAt": "2026-07-30T00:35:02+00:00",
       "evidenceGrade": "未分级"
     }
   ],
@@ -3689,10 +3589,10 @@
     },
     {
       "date": "2026-08-07",
-      "generatedAt": "2026-08-07T13:22:11+00:00",
+      "generatedAt": "2026-08-07T13:57:57+00:00",
       "runStatus": "api-fallback",
-      "changeCount": 24,
-      "executiveSummary": "本期检测到 24 条结构化变化；以下内容为确定性规则摘要，不包含模型补充推断。"
+      "changeCount": 20,
+      "executiveSummary": "本期检测到 20 条结构化变化；以下内容为确定性规则摘要，不包含模型补充推断。"
     }
   ]
 }
