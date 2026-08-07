@@ -12,6 +12,10 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import {
+  isIntelligenceDomRow,
+  subscribeIntelligenceDom,
+} from "@/lib/intelligence-dom-runtime";
+import {
   TRACKING_CAPTURE_CHANGED_EVENT,
   TRACKING_ADMIN_TOKEN_SESSION_KEY,
   applyTrackingCapture,
@@ -210,22 +214,6 @@ function captureItemForRow(row: HTMLElement): CaptureItem | null {
     sectors: [...new Set(sectors)],
     keywords,
   };
-}
-
-function collectCandidateRows(): HTMLElement[] {
-  const rows = new Set<HTMLElement>();
-  const add = (selector: string) => {
-    document.querySelectorAll<HTMLElement>(selector).forEach((row) => rows.add(row));
-  };
-  add(".event-row");
-  add("[data-intelligence-item]");
-  add(".headlines-column a[class*='feedRow']");
-  add(".side-column a[class*='feedRow']");
-  add(".material-list > a");
-  add("a.source-card[href]");
-  add("a[class*='eventCard'][href]");
-  add(".market-news-item[href]");
-  return [...rows];
 }
 
 function placementFor(row: HTMLElement): CapturePlacement {
@@ -627,7 +615,6 @@ export function IntelligenceTrackingCaptureControls() {
 
   useEffect(() => {
     const registry = new Map<HTMLElement, CaptureMount>();
-    let frame = 0;
     let sequence = 0;
 
     const removeMount = (mount: CaptureMount) => {
@@ -670,8 +657,7 @@ export function IntelligenceTrackingCaptureControls() {
       return { host, element, item, key, placement };
     };
 
-    const scan = () => {
-      frame = 0;
+    const scan = (rows: readonly HTMLElement[]) => {
       let changed = false;
       for (const [host, mount] of registry) {
         if (!host.isConnected || !mount.element.isConnected) {
@@ -680,7 +666,8 @@ export function IntelligenceTrackingCaptureControls() {
           changed = true;
         }
       }
-      for (const row of collectCandidateRows()) {
+      for (const row of rows) {
+        if (!isIntelligenceDomRow(row, "capture")) continue;
         const item = captureItemForRow(row);
         if (!item) continue;
         const placement = placementFor(row);
@@ -704,17 +691,9 @@ export function IntelligenceTrackingCaptureControls() {
       if (changed) publish();
     };
 
-    const schedule = () => {
-      if (frame) return;
-      frame = window.requestAnimationFrame(scan);
-    };
-
-    scan();
-    const observer = new MutationObserver(schedule);
-    observer.observe(document.body, { childList: true, subtree: true });
+    const unsubscribe = subscribeIntelligenceDom(scan, { priority: 20 });
     return () => {
-      observer.disconnect();
-      if (frame) window.cancelAnimationFrame(frame);
+      unsubscribe();
       registry.forEach(removeMount);
       registry.clear();
     };
