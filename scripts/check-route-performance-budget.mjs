@@ -8,24 +8,24 @@ const ROOT = process.cwd();
 const OUT = path.join(ROOT, "out");
 
 const DEFAULT_BUDGET = {
-  maxSingleScriptBytes: 420_000,
-  maxTotalScriptBytes: 1_400_000,
-  maxHtmlBytes: 1_600_000,
+  maxSingleScriptBytes: 260_000,
+  maxTotalScriptBytes: 1_000_000,
+  maxHtmlBytes: 650_000,
 };
 
 const ROUTES = [
-  ["/", "index.html", { maxHtmlBytes: 1_600_000 }],
-  ["/search/", "search/index.html", { maxHtmlBytes: 1_600_000 }],
-  ["/hot/", "hot/index.html", { maxHtmlBytes: 1_000_000 }],
-  ["/favorites/", "favorites/index.html", { maxHtmlBytes: 500_000 }],
-  ["/technologies/", "technologies/index.html", {}],
-  ["/technology/", "technology/index.html", {}],
-  ["/people/", "people/index.html", {}],
-  ["/companies/", "companies/index.html", {}],
+  ["/", "index.html", { maxHtmlBytes: 1_200_000 }],
+  ["/search/", "search/index.html", { maxHtmlBytes: 100_000 }],
+  ["/hot/", "hot/index.html", { maxHtmlBytes: 750_000 }],
+  ["/favorites/", "favorites/index.html", { maxHtmlBytes: 80_000 }],
+  ["/technologies/", "technologies/index.html", { maxHtmlBytes: 100_000 }],
+  ["/technology/", "technology/index.html", { maxHtmlBytes: 600_000 }],
+  ["/people/", "people/index.html", { maxHtmlBytes: 450_000 }],
+  ["/companies/", "companies/index.html", { maxHtmlBytes: 600_000 }],
 ];
 
 const MAX_SEARCH_INDEX_BYTES = Number(
-  process.env.SEARCH_INDEX_MAX_BYTES ?? 850_000,
+  process.env.SEARCH_INDEX_MAX_BYTES ?? 600_000,
 );
 
 let failed = false;
