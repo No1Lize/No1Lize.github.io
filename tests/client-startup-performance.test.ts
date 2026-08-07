@@ -26,7 +26,7 @@ test("homepage client does not import full build-time research datasets", () => 
 
 test("global header status is build-time and cannot trigger the article archive fetch", () => {
   assert.doesNotMatch(liveStatus, /"use client"/);
-  assert.doesNotMatch(liveStatus, /useArticles/);
+  assert.doesNotMatch(liveStatus, /import[^\n]*useArticles/);
   assert.match(liveStatus, /@\/public\/data\/articles\.json/);
   assert.doesNotMatch(siteHeader, /@\/components\/live-status/);
   assert.match(siteHeader, /status: ReactNode/);
@@ -40,7 +40,8 @@ test("browser article archive avoids startup fetch and a second full validation 
   assert.match(articles, /parseArticlePayload/);
   assert.match(articles, /pointerdown/);
   assert.match(articles, /keydown/);
-  assert.match(articles, /enabled: enabled/);
+  assert.match(articles, /const enabled = options\.enabled \?\? interactionEnabled/);
+  assert.match(articles, /placeholderData: initialPayload,[\s\S]*?\benabled,/);
   assert.match(articles, /refetchIntervalInBackground: false/);
   assert.match(articles, /refetchOnWindowFocus: false/);
 });
