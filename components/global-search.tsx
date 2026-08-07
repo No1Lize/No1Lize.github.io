@@ -2,7 +2,7 @@
 
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ArticleSearchIndexPayload, SearchRecord } from "@/lib/search-index";
 
 const SEARCH_LIMIT = 30;
@@ -56,7 +56,8 @@ export function GlobalSearch({ staticRecords }: { staticRecords: SearchRecord[] 
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [type, setType] = useState("全部");
   const [eventRecords, setEventRecords] = useState<SearchRecord[]>([]);
-  const [eventStatus, setEventStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [eventStatus, setEventStatus] = useState<"idle" | "ready" | "error">("idle");
+  const eventLoadStarted = useRef(false);
 
   useEffect(() => {
     const timer = window.setTimeout(
@@ -71,8 +72,14 @@ export function GlobalSearch({ staticRecords }: { staticRecords: SearchRecord[] 
     (type === "全部" || type === "事件");
 
   useEffect(() => {
-    if (!shouldLoadEvents || eventStatus !== "idle") return;
-    setEventStatus("loading");
+    if (
+      !shouldLoadEvents ||
+      eventStatus !== "idle" ||
+      eventLoadStarted.current
+    ) {
+      return;
+    }
+    eventLoadStarted.current = true;
     void fetch("/data/article_search_index.json", { cache: "default" })
       .then((response) => {
         if (!response.ok) throw new Error(`事件搜索索引返回 ${response.status}`);
@@ -83,7 +90,10 @@ export function GlobalSearch({ staticRecords }: { staticRecords: SearchRecord[] 
         setEventRecords(payload.records);
         setEventStatus("ready");
       })
-      .catch(() => setEventStatus("error"));
+      .catch(() => {
+        eventLoadStarted.current = false;
+        setEventStatus("error");
+      });
   }, [eventStatus, shouldLoadEvents]);
 
   const matches = useMemo(() => {
@@ -100,7 +110,7 @@ export function GlobalSearch({ staticRecords }: { staticRecords: SearchRecord[] 
     return [...staticMatches, ...dynamicMatches].slice(0, SEARCH_LIMIT);
   }, [debouncedQuery, eventRecords, staticRecords, type]);
 
-  const waitingForEvents = shouldLoadEvents && eventStatus === "loading";
+  const waitingForEvents = shouldLoadEvents && eventStatus === "idle";
 
   return (
     <div className="search-workspace">
