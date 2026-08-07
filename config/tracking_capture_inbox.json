@@ -1,7 +1,93 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T05:13:33.075Z",
+  "generatedAt": "2026-08-07T05:15:21.437Z",
   "records": [
+    {
+      "id": "capture-4iq8c",
+      "entityType": "topic",
+      "canonicalName": "Claude",
+      "rawSelection": "Claude",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-ilenlp",
+        "title": "Introducing Claude Opus 5",
+        "url": "https://www.anthropic.com/news/claude-opus-5",
+        "summary": "",
+        "sourceName": "产品发布Anthropic 官方来源",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "产品发布"
+      },
+      "capturedAt": "2026-08-07T05:15:21.437Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Claude",
+        "targetId": "topic:claude",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "claude",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-bur3cp",
+      "entityType": "topic",
+      "canonicalName": "Opus",
+      "rawSelection": "Opus",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-ilenlp",
+        "title": "Introducing Claude Opus 5",
+        "url": "https://www.anthropic.com/news/claude-opus-5",
+        "summary": "",
+        "sourceName": "产品发布Anthropic 官方来源",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "产品发布"
+      },
+      "capturedAt": "2026-08-07T05:15:21.437Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Opus",
+        "targetId": "topic:opus",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术/主题”,且未与正式目录冲突。",
+        "decisionKey": "opus",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-1x58yu6",
       "entityType": "company",
