@@ -135,10 +135,10 @@ jobs:
             fi
           done
           echo "changed=true" >> "$GITHUB_OUTPUT"
-      - name: Deploy refreshed snapshot
+      - name: Reconcile derived entity state before publication
         if: steps.data-update.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "A real news crawl was published; deploy the refreshed public snapshot."
-          gh workflow run pages.yml --ref main
+          echo "A real news crawl was published; refresh derived entity and candidate state before Pages."
+          gh workflow run company-candidate-discovery.yml --ref main
