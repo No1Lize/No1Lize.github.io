@@ -195,9 +195,11 @@ async function loadArticles(force = false): Promise<ArticlePayload> {
   return inFlight;
 }
 
-function subscribeArticles(subscriber: (payload: ArticlePayload) => void) {
+function subscribeArticles(subscriber: (payload: ArticlePayload) => void): () => void {
   subscribers.add(subscriber);
-  return () => subscribers.delete(subscriber);
+  return () => {
+    subscribers.delete(subscriber);
+  };
 }
 
 export function useArticles(
