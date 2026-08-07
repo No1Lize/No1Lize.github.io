@@ -22,6 +22,8 @@ export type HomepageFeedItem = {
   importance: number;
 };
 
+const INITIAL_FEED_RENDER_LIMIT = 60;
+
 function sortItems(items: HomepageFeedItem[], mode: HomepageSortMode) {
   return [...items].sort((left, right) => {
     if (mode === "importance") {
@@ -55,10 +57,15 @@ export function HomepageSortableFeed({
   emptyMessage?: string;
 }) {
   const [sortMode, setSortMode] = useState<HomepageSortMode>(initialSort);
-  const visibleItems = useMemo(
+  const [renderLimit, setRenderLimit] = useState(
+    Math.min(limit, INITIAL_FEED_RENDER_LIMIT),
+  );
+  const sortedItems = useMemo(
     () => sortItems(items, sortMode).slice(0, limit),
     [items, limit, sortMode],
   );
+  const visibleItems = sortedItems.slice(0, renderLimit);
+  const hasMore = visibleItems.length < sortedItems.length;
 
   return (
     <>
@@ -66,7 +73,10 @@ export function HomepageSortableFeed({
         <p>{description}</p>
         <HomepageSortToggle
           value={sortMode}
-          onChange={setSortMode}
+          onChange={(value) => {
+            setSortMode(value);
+            setRenderLimit(Math.min(limit, INITIAL_FEED_RENDER_LIMIT));
+          }}
           ariaLabel={`${ariaLabel}排序方式`}
         />
       </div>
@@ -104,6 +114,21 @@ export function HomepageSortableFeed({
         ))}
         {!visibleItems.length ? <p className={styles.empty}>{emptyMessage}</p> : null}
       </div>
+
+      {hasMore ? (
+        <div className={styles.loadMore}>
+          <button
+            type="button"
+            onClick={() =>
+              setRenderLimit((current) =>
+                Math.min(limit, current + INITIAL_FEED_RENDER_LIMIT),
+              )
+            }
+          >
+            显示更多 · 已显示 {visibleItems.length}/{sortedItems.length}
+          </button>
+        </div>
+      ) : null}
     </>
   );
 }
