@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CANDIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "company-candidate-discovery.yml"
+REFRESH_WORKFLOW = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
 PAGES_WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
 
 
@@ -35,29 +36,32 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         deploy = text.index("gh workflow run pages.yml --ref main")
         self.assertLess(refresh, deploy)
         self.assertIn("TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}", text)
-        self.assertIn("EVENT_NAME: ${{ github.event_name }}", text)
-        self.assertIn('[ "${TRACKING_CHANGED:-false}" = "true" ] || [ "$EVENT_NAME" = "push" ]', text)
-        self.assertIn("github.event_name == 'workflow_run'", text)
+        self.assertIn("PUSH_TRACKING_INPUTS_CHANGED: ${{ steps.push-inputs.outputs.changed }}", text)
+        self.assertIn('[ "${TRACKING_CHANGED:-false}" = "true" ] || [ "${PUSH_TRACKING_INPUTS_CHANGED:-false}" = "true" ]', text)
+        self.assertIn("Detect pushed tracking inputs", text)
+        self.assertIn("config/user_tracking.json", text)
+        self.assertIn("config/tracking_capture_inbox.json", text)
+        self.assertIn("config/official_company_sources.json", text)
+        self.assertIn("github.event_name == 'workflow_dispatch'", text)
         self.assertIn("github.event_name == 'push'", text)
 
-    def test_candidate_generation_follows_successful_full_refreshes(self) -> None:
-        text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn('workflows: ["Refresh public intelligence"]', text)
-        self.assertIn("types: [completed]", text)
-        self.assertIn("github.event.workflow_run.conclusion == 'success'", text)
-        self.assertIn("github.event.workflow_run.head_branch == 'main'", text)
-        self.assertIn("ref: main", text)
-        self.assertIn("gh workflow run pages.yml --ref main", text)
+    def test_full_refresh_explicitly_hands_off_to_reconciliation(self) -> None:
+        refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
+        candidate = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("Continue through entity reconciliation before publication", refresh)
+        self.assertIn("steps.data-update.outcome == 'success'", refresh)
+        self.assertIn("gh workflow run company-candidate-discovery.yml --ref main", refresh)
+        self.assertIn("workflow_dispatch:", candidate)
+        self.assertNotIn("workflow_run:", candidate)
+        self.assertIn("gh workflow run pages.yml --ref main", candidate)
 
-    def test_failed_refreshes_skip_outside_the_writer_queue(self) -> None:
+    def test_candidate_writer_is_serialized_without_recursive_workflow_run_logic(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("github.event_name == 'workflow_run'", text)
-        self.assertIn("github.event.workflow_run.conclusion != 'success'", text)
-        self.assertIn("vciq-company-candidate-skip-{0}", text)
-        self.assertIn("github.run_id", text)
-        self.assertIn("vciq-repository-writer-{0}", text)
+        self.assertIn("group: vciq-repository-writer-", text)
+        self.assertIn("github.ref", text)
         self.assertIn("queue: max", text)
         self.assertNotIn("queue: single", text)
+        self.assertNotIn("workflow_run:", text)
         self.assertNotIn("cancel-in-progress:", text)
 
     def test_pages_build_uses_the_same_resolution_gate(self) -> None:
