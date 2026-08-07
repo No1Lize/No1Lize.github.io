@@ -7,15 +7,15 @@ https://nextjs.org/telemetry
 ▲ Next.js 16.2.12 (Turbopack)
 
   Creating an optimized production build ...
-✓ Compiled successfully in 4.8s
+✓ Compiled successfully in 5.5s
   Running TypeScript ...
-  Finished TypeScript in 7.5s ...
+  Finished TypeScript in 10.2s ...
   Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/283) ...
-  Generating static pages using 3 workers (70/283) 
-  Generating static pages using 3 workers (141/283) 
-  Generating static pages using 3 workers (212/283) 
-✓ Generating static pages using 3 workers (283/283) in 26.3s
+  Generating static pages using 3 workers (0/294) ...
+  Generating static pages using 3 workers (73/294) 
+  Generating static pages using 3 workers (146/294) 
+  Generating static pages using 3 workers (220/294) 
+✓ Generating static pages using 3 workers (294/294) in 20.6s
   Finalizing page optimization ...
 
 Route (app)
@@ -55,8 +55,8 @@ Route (app)
 │ └ [+2 more paths]
 ├ ● /reports/pdf/[slug]
 │ ├ /reports/pdf/public-c901c5ad7c8680a84300
+│ ├ /reports/pdf/public-99650e337832e3626abf
 │ ├ /reports/pdf/public-c324438bbf30fbf52e3a
-│ ├ /reports/pdf/public-130a11f5feec527d3648
 │ └ [+24 more paths]
 ├ ○ /research-agent
 ├ ○ /robots.txt
@@ -68,14 +68,14 @@ Route (app)
 │ ├ /technology/ai
 │ ├ /technology/robotics
 │ ├ /technology/semiconductor
-│ └ [+10 more paths]
+│ └ [+11 more paths]
 ├ ○ /tracking
 ├ ○ /tracking/entities
 └ ● /tracking/entities/[type]/[slug]
   ├ /tracking/entities/person/track-qq1dt6-ye2wkf
-  ├ /tracking/entities/company/deepseek
-  ├ /tracking/entities/company/github-12tvwx
-  └ [+91 more paths]
+  ├ /tracking/entities/company/anthropic
+  ├ /tracking/entities/topic/claude-ngqso
+  └ [+101 more paths]
 
 
 ○  (Static)  prerendered as static content
