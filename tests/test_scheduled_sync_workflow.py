@@ -57,6 +57,15 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("tools/refresh_article_quality_gate.py", text)
         self.assertIn("tests.test_refresh_article_quality_gate", text)
 
+    def test_successful_publication_gate_explicitly_dispatches_entity_reconciliation(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        handoff = text.index("Continue through entity reconciliation before publication")
+        data_update = text.index("Commit semantically changed public data")
+        self.assertGreater(handoff, data_update)
+        self.assertIn("always() && steps.data-update.outcome == 'success'", text)
+        self.assertIn("gh workflow run company-candidate-discovery.yml --ref main", text)
+        self.assertIn("actions: write", text)
+
 
 if __name__ == "__main__":
     unittest.main()
