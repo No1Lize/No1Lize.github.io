@@ -35,6 +35,11 @@ const channelLabels: Record<ChannelUpdateKey, string> = {
   people: "人物研究",
 };
 
+type ChannelArchivePayload = {
+  schemaVersion: number;
+  channels?: Partial<Record<ChannelUpdateKey, ChannelUpdateDirectory>>;
+};
+
 function hasDraggedFiles(event: DragEvent<HTMLElement>): boolean {
   return Array.from(event.dataTransfer?.types ?? []).includes("Files");
 }
@@ -42,10 +47,12 @@ function hasDraggedFiles(event: DragEvent<HTMLElement>): boolean {
 export function ChannelUpdateDirectoryClient({
   channel,
   directory,
+  totalItemCount,
   layout = "default",
 }: {
   channel: ChannelUpdateKey;
   directory: ChannelUpdateDirectory;
+  totalItemCount: number;
   layout?: "default" | "split";
 }) {
   const eventTypeSelectId = useId();
@@ -60,20 +67,25 @@ export function ChannelUpdateDirectoryClient({
   const [incomingFiles, setIncomingFiles] = useState<File[] | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [localItems, setLocalItems] = useState<ChannelUpdateItem[]>([]);
+  const [archiveItems, setArchiveItems] = useState<ChannelUpdateItem[] | null>(null);
+  const [archiveLoading, setArchiveLoading] = useState(false);
+  const [archiveError, setArchiveError] = useState(false);
   const dragDepthRef = useRef(0);
 
+  const directoryItems = archiveItems ?? directory.items;
   const allItems = useMemo(() => {
-    if (!localItems.length) return directory.items;
-    const existing = new Set(directory.items.map((item) => item.id));
+    if (!localItems.length) return directoryItems;
+    const existing = new Set(directoryItems.map((item) => item.id));
     return [
       ...localItems.filter((item) => !existing.has(item.id)),
-      ...directory.items,
+      ...directoryItems,
     ];
-  }, [directory.items, localItems]);
+  }, [directoryItems, localItems]);
   const localIds = useMemo(
     () => new Set(localItems.map((item) => item.id)),
     [localItems],
   );
+  const fullArchiveLoaded = archiveItems !== null || directory.items.length >= totalItemCount;
 
   const eventTypeOptions = useMemo(
     () => collectChannelUpdateKeywords(allItems),
@@ -112,6 +124,28 @@ export function ChannelUpdateDirectoryClient({
   const isFiltered =
     keyword !== ALL_CHANNEL_UPDATE_KEYWORDS ||
     classification !== ALL_CHANNEL_UPDATE_CLASSIFICATIONS;
+
+  async function loadFullArchive() {
+    if (fullArchiveLoaded || archiveLoading) return;
+    setArchiveLoading(true);
+    setArchiveError(false);
+    try {
+      const response = await fetch("/data/channel_update_directories.json", {
+        cache: "default",
+      });
+      if (!response.ok) throw new Error(`channel archive returned ${response.status}`);
+      const payload = (await response.json()) as ChannelArchivePayload;
+      const nextDirectory = payload.channels?.[channel];
+      if (!nextDirectory || !Array.isArray(nextDirectory.items)) {
+        throw new Error("channel archive is missing the requested directory");
+      }
+      setArchiveItems(nextDirectory.items);
+    } catch {
+      setArchiveError(true);
+    } finally {
+      setArchiveLoading(false);
+    }
+  }
 
   function onDragEnter(event: DragEvent<HTMLElement>) {
     if (!hasDraggedFiles(event)) return;
@@ -178,12 +212,25 @@ export function ChannelUpdateDirectoryClient({
             <Upload size={13} aria-hidden="true" />
             {importOpen ? "收起导入面板" : "导入文档信源（拖拽 / Ctrl+V）"}
           </button>
+          {!fullArchiveLoaded ? (
+            <button
+              type="button"
+              className={styles.importToggle}
+              onClick={loadFullArchive}
+              disabled={archiveLoading}
+            >
+              {archiveLoading
+                ? "正在加载完整更新目录…"
+                : `加载完整更新目录（${totalItemCount} 条）`}
+            </button>
+          ) : null}
+          {archiveError ? <small>完整目录暂时不可用；最新更新仍可正常浏览。</small> : null}
         </div>
         <div className={styles.snapshot}>
           <span>滚动总库</span>
-          <strong>{allItems.length}</strong>
+          <strong>{totalItemCount}</strong>
           <small title="首次收录按精确 firstSeenAt 计算；快照日事件按来源事件日期计算">
-            今日首次收录 {firstSeenItemCount} · 快照日事件 {snapshotDayItemCount}
+            当前载入 {allItems.length} · 今日首次收录 {firstSeenItemCount} · 快照日事件 {snapshotDayItemCount}
           </small>
         </div>
       </div>
@@ -209,7 +256,11 @@ export function ChannelUpdateDirectoryClient({
               <Tags size={17} aria-hidden="true" />
               <div>
                 <strong>按事件和证据分类筛选</strong>
-                <span>绿色标签保持事件类型；机构/资本归类和 A—D 来源等级使用独立筛选。</span>
+                <span>
+                  {fullArchiveLoaded
+                    ? "当前筛选完整滚动目录。"
+                    : `首屏仅载入最新 ${directory.items.length} 条；需要全库筛选时再加载完整目录。`}
+                </span>
               </div>
             </div>
 
