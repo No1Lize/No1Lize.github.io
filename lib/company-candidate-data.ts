@@ -1,5 +1,3 @@
-import rawCandidates from "@/public/data/company_candidates.json";
-
 export type CompanyCandidateStatus =
   | "pending"
   | "accepted"
@@ -111,7 +109,13 @@ export function normalizeCompanyCandidateSnapshot(value: unknown): CompanyCandid
   };
 }
 
-export const companyCandidateSnapshot = normalizeCompanyCandidateSnapshot(rawCandidates);
-export const pendingCompanyCandidates = companyCandidateSnapshot.candidates
-  .filter((candidate) => candidate.status === "pending")
-  .sort((left, right) => right.score - left.score || right.lastSeenAt.localeCompare(left.lastSeenAt));
+// Public application code must never statically import the human-review queue.
+// Admin-only clients start from this empty snapshot and may fetch review data
+// from the repository only after explicit GitHub authentication.
+export const companyCandidateSnapshot = normalizeCompanyCandidateSnapshot({
+  schemaVersion: 1,
+  generatedAt: "",
+  candidates: [],
+});
+
+export const pendingCompanyCandidates: CompanyCandidate[] = [];
