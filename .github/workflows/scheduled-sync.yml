@@ -331,3 +331,10 @@ jobs:
             gh issue comment "$ISSUE_NUMBER" --body '所有持续异常来源均已恢复，自动关闭告警。'
             gh issue close "$ISSUE_NUMBER" --reason completed
           fi
+      - name: Continue through entity reconciliation before publication
+        if: always() && steps.data-update.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Full refresh passed its publication gate; reconcile committed entity state before Pages."
+          gh workflow run company-candidate-discovery.yml --ref main
