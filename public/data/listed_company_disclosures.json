@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T06:13:48+00:00",
+  "generatedAt": "2026-08-07T13:09:29+00:00",
   "companyCount": 15,
   "eventCount": 143,
   "companies": {
     "bgi-genomics": {
       "slug": "bgi-genomics",
       "name": "华大基因",
-      "updatedAt": "2026-08-07T06:13:27+00:00",
+      "updatedAt": "2026-08-07T13:09:06+00:00",
       "status": "ok",
       "listings": [
         {
@@ -385,7 +385,7 @@
     "cambricon": {
       "slug": "cambricon",
       "name": "寒武纪",
-      "updatedAt": "2026-08-07T06:13:27+00:00",
+      "updatedAt": "2026-08-07T13:09:06+00:00",
       "status": "ok",
       "listings": [
         {
@@ -783,7 +783,7 @@
     "catl": {
       "slug": "catl",
       "name": "宁德时代",
-      "updatedAt": "2026-08-07T06:13:27+00:00",
+      "updatedAt": "2026-08-07T13:09:06+00:00",
       "status": "ok",
       "listings": [
         {
@@ -800,6 +800,26 @@
         }
       ],
       "events": [
+        {
+          "id": "disclosure-catl-2f47086b3d22373858",
+          "companySlug": "catl",
+          "companyName": "宁德时代",
+          "market": "A股",
+          "ticker": "300750",
+          "exchange": "深圳证券交易所",
+          "listingRole": "primary",
+          "publishedAt": "2026-08-07",
+          "documentType": "股份回购",
+          "title": "关于回购股份事项前十名股东和前十名无限售条件股东持股情况的公告",
+          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225464975",
+          "source": {
+            "name": "巨潮资讯",
+            "url": "https://static.cninfo.com.cn/finalpage/2026-08-07/1225464975.PDF",
+            "level": "监管文件"
+          },
+          "discoveredVia": "cninfo-structured-api",
+          "fallback": false
+        },
         {
           "id": "disclosure-catl-9f155fe3afae307b2b",
           "companySlug": "catl",
@@ -1499,26 +1519,6 @@
           },
           "discoveredVia": "cninfo-structured-api",
           "fallback": false
-        },
-        {
-          "id": "disclosure-catl-9d7bb7a5b258bf8546",
-          "companySlug": "catl",
-          "companyName": "宁德时代",
-          "market": "A股",
-          "ticker": "300750",
-          "exchange": "深圳证券交易所",
-          "listingRole": "primary",
-          "publishedAt": "2026-04-22",
-          "documentType": "股权激励",
-          "title": "关于授予2026年A股员工持股计划预留份额的公告",
-          "summary": "证券代码 300750 · 宁德时代 · 文件类型 PDF · 公告编号 1225150151",
-          "source": {
-            "name": "巨潮资讯",
-            "url": "https://static.cninfo.com.cn/finalpage/2026-04-22/1225150151.PDF",
-            "level": "监管文件"
-          },
-          "discoveredVia": "cninfo-structured-api",
-          "fallback": false
         }
       ],
       "officialEventCount": 36,
@@ -1527,7 +1527,7 @@
     "horizon-robotics": {
       "slug": "horizon-robotics",
       "name": "地平线机器人",
-      "updatedAt": "2026-08-07T06:13:21+00:00",
+      "updatedAt": "2026-08-07T13:09:02+00:00",
       "status": "ok",
       "listings": [
         {
@@ -1965,7 +1965,7 @@
     "xtalpi": {
       "slug": "xtalpi",
       "name": "晶泰科技",
-      "updatedAt": "2026-08-07T06:13:21+00:00",
+      "updatedAt": "2026-08-07T13:09:02+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2343,7 +2343,7 @@
     "pony-ai": {
       "slug": "pony-ai",
       "name": "小马智行",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2385,7 +2385,7 @@
     "weride": {
       "slug": "weride",
       "name": "文远知行",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2427,7 +2427,7 @@
     "rigetti": {
       "slug": "rigetti",
       "name": "Rigetti Computing",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2469,7 +2469,7 @@
     "ionq": {
       "slug": "ionq",
       "name": "IonQ",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2511,7 +2511,7 @@
     "rocket-lab": {
       "slug": "rocket-lab",
       "name": "Rocket Lab",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2553,7 +2553,7 @@
     "tempus-ai": {
       "slug": "tempus-ai",
       "name": "Tempus AI",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2595,7 +2595,7 @@
     "recursion": {
       "slug": "recursion",
       "name": "Recursion Pharmaceuticals",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2637,7 +2637,7 @@
     "mobileye": {
       "slug": "mobileye",
       "name": "Mobileye",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -2679,7 +2679,7 @@
     "aurora": {
       "slug": "aurora",
       "name": "Aurora Innovation",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -3095,7 +3095,7 @@
     "joby": {
       "slug": "joby",
       "name": "Joby Aviation",
-      "updatedAt": "2026-08-07T06:13:48+00:00",
+      "updatedAt": "2026-08-07T13:09:29+00:00",
       "status": "ok",
       "listings": [
         {
@@ -3236,14 +3236,10 @@
       "scanned": 72,
       "accepted": 18,
       "fallback": false,
-      "errors": [
-        "search:ParseError:not well-formed (invalid token): line 1, column 41"
-      ],
+      "errors": [],
       "fallbackScanned": 0,
       "fallbackAccepted": 0,
-      "fallbackErrors": [
-        "search:ParseError:not well-formed (invalid token): line 1, column 41"
-      ],
+      "fallbackErrors": [],
       "structuredProvider": "cninfo-structured-api",
       "structuredAttempted": true,
       "structuredOrgIdResolved": true,
@@ -3266,9 +3262,7 @@
       "errors": [],
       "fallbackScanned": 0,
       "fallbackAccepted": 0,
-      "fallbackErrors": [
-        "search:ParseError:not well-formed (invalid token): line 1, column 41"
-      ],
+      "fallbackErrors": [],
       "structuredProvider": "cninfo-structured-api",
       "structuredAttempted": true,
       "structuredOrgIdResolved": true,
@@ -3288,14 +3282,10 @@
       "scanned": 72,
       "accepted": 18,
       "fallback": false,
-      "errors": [
-        "search:ParseError:not well-formed (invalid token): line 1, column 41"
-      ],
+      "errors": [],
       "fallbackScanned": 0,
       "fallbackAccepted": 0,
-      "fallbackErrors": [
-        "search:ParseError:not well-formed (invalid token): line 1, column 41"
-      ],
+      "fallbackErrors": [],
       "structuredProvider": "cninfo-structured-api",
       "structuredAttempted": true,
       "structuredOrgIdResolved": true,
@@ -3315,9 +3305,7 @@
       "scanned": 103,
       "accepted": 18,
       "fallback": false,
-      "errors": [
-        "search:ParseError:not well-formed (invalid token): line 1, column 41"
-      ]
+      "errors": []
     },
     {
       "id": "exchange-disclosure-xtalpi-hk-02228",
@@ -3331,9 +3319,7 @@
       "scanned": 105,
       "accepted": 18,
       "fallback": false,
-      "errors": [
-        "search:ParseError:not well-formed (invalid token): line 1, column 41"
-      ]
+      "errors": []
     },
     {
       "id": "exchange-disclosure-catl-hk-03750",
@@ -3430,7 +3416,7 @@
       "directAccepted": 0,
       "searchAccepted": 0,
       "searchScanned": 0,
-      "searchResults": 10,
+      "searchResults": 7,
       "searchQuery": "site:investors.rigetti.com (\"10-K\" OR \"10-Q\" OR \"8-K\" OR \"20-F\" OR \"6-K\" OR \"F-1\" OR \"S-1\" OR \"S-3\" OR \"F-3\" OR \"424B4\" OR \"DEF 14A\") (\"Rigetti Computing\" OR \"RGTI\")",
       "searchErrors": [],
       "discoveryModes": [
