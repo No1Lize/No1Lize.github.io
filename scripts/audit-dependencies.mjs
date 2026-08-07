@@ -3,8 +3,14 @@
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 
+const BRACE_EXPANSION_ADVISORY = "GHSA-MH99-V99M-4GVG";
+const IMAGE_SIZE_DEV_ADVISORIES = new Set([
+  "GHSA-W3RX-R6R6-PGPR",
+  "GHSA-5P2G-FCMC-QVQQ",
+]);
 const ALLOWED_DEV_ADVISORIES = new Set([
-  "GHSA-MH99-V99M-4GVG",
+  BRACE_EXPANSION_ADVISORY,
+  ...IMAGE_SIZE_DEV_ADVISORIES,
 ]);
 const SAFE_BRACE_EXPANSION_BACKPORTS = new Set([
   "1.1.16",
@@ -12,6 +18,8 @@ const SAFE_BRACE_EXPANSION_BACKPORTS = new Set([
   "3.0.2",
   "5.0.8",
 ]);
+const EXPECTED_IMAGE_SIZE_DEV_VERSION = "2.0.2";
+const EXPECTED_VINEXT_VERSION = "0.0.50";
 
 function runAudit(args) {
   const result = spawnSync("npm", ["audit", "--json", ...args], {
@@ -48,20 +56,32 @@ function directAdvisories(payload) {
   return advisories;
 }
 
-function validateBraceExpansionBackports() {
-  const lock = JSON.parse(readFileSync("package-lock.json", "utf8"));
+function loadLock() {
+  return JSON.parse(readFileSync("package-lock.json", "utf8"));
+}
+
+function validateBraceExpansionBackports(lock = loadLock()) {
   const installed = [];
   for (const [path, detail] of Object.entries(lock.packages || {})) {
-    if (path === "node_modules/brace-expansion" || path.endsWith("/node_modules/brace-expansion")) {
+    if (
+      path === "node_modules/brace-expansion" ||
+      path.endsWith("/node_modules/brace-expansion")
+    ) {
       installed.push({ path, version: String(detail.version || "") });
     }
   }
   if (installed.length === 0) {
-    throw new Error("package-lock.json contains no brace-expansion installation to validate");
+    throw new Error(
+      "package-lock.json contains no brace-expansion installation to validate",
+    );
   }
-  const unsafe = installed.filter(({ version }) => !SAFE_BRACE_EXPANSION_BACKPORTS.has(version));
+  const unsafe = installed.filter(
+    ({ version }) => !SAFE_BRACE_EXPANSION_BACKPORTS.has(version),
+  );
   if (unsafe.length > 0) {
-    throw new Error(`unsafe brace-expansion versions in lockfile: ${JSON.stringify(unsafe)}`);
+    throw new Error(
+      `unsafe brace-expansion versions in lockfile: ${JSON.stringify(unsafe)}`,
+    );
   }
   console.log(
     `Validated official brace-expansion maintenance releases: ${installed
@@ -70,12 +90,79 @@ function validateBraceExpansionBackports() {
   );
 }
 
+function validateImageSizeDevIsolation(lock = loadLock()) {
+  const packages = lock.packages || {};
+  const imageSize = packages["node_modules/image-size"];
+  const vinext = packages["node_modules/vinext"];
+  if (!imageSize || !vinext) {
+    throw new Error("expected vinext and image-size installations are absent");
+  }
+  if (
+    String(imageSize.version || "") !== EXPECTED_IMAGE_SIZE_DEV_VERSION ||
+    imageSize.dev !== true
+  ) {
+    throw new Error(
+      `image-size advisory is only accepted for dev-only ${EXPECTED_IMAGE_SIZE_DEV_VERSION}; ` +
+        `found ${JSON.stringify({ version: imageSize.version, dev: imageSize.dev })}`,
+    );
+  }
+  if (
+    String(vinext.version || "") !== EXPECTED_VINEXT_VERSION ||
+    vinext.dev !== true ||
+    String(vinext.dependencies?.["image-size"] || "") !==
+      EXPECTED_IMAGE_SIZE_DEV_VERSION
+  ) {
+    throw new Error(
+      `image-size advisory is only accepted through dev-only vinext ${EXPECTED_VINEXT_VERSION}`,
+    );
+  }
+
+  const consumers = [];
+  for (const [path, detail] of Object.entries(packages)) {
+    if (detail?.dependencies?.["image-size"]) {
+      consumers.push({
+        path,
+        version: String(detail.version || ""),
+        range: String(detail.dependencies["image-size"] || ""),
+        dev: detail.dev === true,
+      });
+    }
+  }
+  const unexpected = consumers.filter(
+    ({ path, range, dev }) =>
+      path !== "node_modules/vinext" ||
+      range !== EXPECTED_IMAGE_SIZE_DEV_VERSION ||
+      dev !== true,
+  );
+  if (unexpected.length > 0 || consumers.length !== 1) {
+    throw new Error(
+      `image-size advisory escaped the expected vinext-only dev boundary: ${JSON.stringify(
+        consumers,
+      )}`,
+    );
+  }
+
+  const manifest = JSON.parse(readFileSync("package.json", "utf8"));
+  if (
+    manifest.dependencies?.["image-size"] ||
+    manifest.devDependencies?.["image-size"]
+  ) {
+    throw new Error("image-size must remain transitive and may not become a direct dependency");
+  }
+  console.log(
+    `Validated image-size ${EXPECTED_IMAGE_SIZE_DEV_VERSION} is isolated to dev-only ` +
+      `vinext ${EXPECTED_VINEXT_VERSION}; production audit remains clean.`,
+  );
+}
+
 const production = runAudit(["--omit=dev", "--audit-level=high"]);
 if (production.result.status !== 0) {
   console.error(JSON.stringify(production.payload, null, 2));
   throw new Error("high or critical production dependency vulnerability detected");
 }
-console.log("Production dependency audit passed with no high or critical vulnerabilities.");
+console.log(
+  "Production dependency audit passed with no high or critical vulnerabilities.",
+);
 
 const full = runAudit(["--audit-level=high"]);
 if (full.result.status === 0) {
@@ -96,9 +183,17 @@ if (unapproved.length > 0) {
   );
 }
 
-validateBraceExpansionBackports();
+const presentIds = new Set(advisories.map(({ id }) => id));
+const lock = loadLock();
+if (presentIds.has(BRACE_EXPANSION_ADVISORY)) {
+  validateBraceExpansionBackports(lock);
+}
+if ([...IMAGE_SIZE_DEV_ADVISORIES].some((id) => presentIds.has(id))) {
+  validateImageSizeDevIsolation(lock);
+}
+
 console.log(
-  "The only remaining npm audit finding is the brace-expansion advisory whose " +
-    "maintenance fixes are pinned in package-lock.json. No other high or critical " +
-    "development advisory is accepted.",
+  "All remaining high-severity npm audit findings are explicitly bounded to " +
+    "validated development-only dependency paths; any new advisory or dependency " +
+    "path still fails closed.",
 );
