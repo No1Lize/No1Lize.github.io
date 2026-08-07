@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   description: "围绕核心技术、核心赛道、核心人物与核心公司的每日变化检测和证据摘要。",
 };
 
+const researchWorkspaceUrl = process.env.NEXT_PUBLIC_QM_WORKSPACE_URL?.trim();
+
 const statusLabels: Record<string, string> = {
   model: "模型研判完成",
   "no-material-change": "无材料变化",
@@ -122,6 +124,38 @@ export default function ResearchAgentPage() {
           <strong>{researchAgentReport.asOfDate || "—"}</strong>
           <small>{formatDate(researchAgentReport.generatedAt)}</small>
         </article>
+      </section>
+
+      <section className={styles.workspacePanel} aria-label="VCIQ Research Workspace">
+        <div>
+          <p className="section-index">INTERACTIVE RESEARCH</p>
+          <h2>VCIQ Research Workspace</h2>
+          <p>
+            交互式研究工作台由独立 QM 服务承载。公开站继续只读发布已审核数据；工作台只读消费
+            VCIQ 数据，并用于持续研究、Memory、Skills、Watch 与候选 PR，不直接改写生产数据。
+          </p>
+          <div className={styles.workspaceBadges}>
+            <span>只读 VCIQ 数据</span>
+            <span>独立权限边界</span>
+            <span>候选变更走 PR</span>
+          </div>
+        </div>
+        {researchWorkspaceUrl ? (
+          <a
+            className={styles.workspaceAction}
+            href={researchWorkspaceUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            进入研究工作台
+            <ExternalLink size={14} aria-hidden="true" />
+          </a>
+        ) : (
+          <div className={styles.workspacePending}>
+            <strong>工作台尚未发布</strong>
+            <span>配置 QM_WORKSPACE_URL 后自动启用入口</span>
+          </div>
+        )}
       </section>
 
       <section className={styles.summaryPanel}>
