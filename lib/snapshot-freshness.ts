@@ -2,6 +2,7 @@ export type RefreshAudit = {
   mode?: string;
   pipelineCompleted?: boolean;
   completedAt?: string;
+  lastNewsCrawlAt?: string;
   localDate?: string;
   articleCount?: number;
   previousArticleCount?: number;

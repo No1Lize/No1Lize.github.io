@@ -5,6 +5,7 @@ import {
 } from "@/components/dashboard-client";
 import { HomepageChannelUpdates } from "@/components/homepage-channel-updates";
 import { coreResearchObjectStats } from "@/lib/core-research-objects";
+import { formatTaipeiDate } from "@/lib/snapshot-freshness";
 import { trackedSectors } from "@/lib/tracked-sectors";
 import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import rawArticles from "@/public/data/articles.json";
@@ -16,7 +17,8 @@ const trackedSectorAliases = [
 ];
 const trackedSectorNames = new Set(trackedSectorAliases);
 const activeArticles = snapshot.articles.filter((item) => trackedSectorNames.has(item.sector));
-const initialArticles: LiveIntelligenceEvent[] = [...activeArticles]
+const initialArticles: LiveIntelligenceEvent[] = activeArticles
+  .filter((item) => item.qualityStatus !== "低可信")
   .sort(
     (left, right) =>
       right.importance - left.importance ||
@@ -50,8 +52,10 @@ const initialPayload: ArticlePayload = {
   refreshAudit: snapshot.refreshAudit,
 };
 
+const taipeiToday = formatTaipeiDate(new Date());
 const bootstrap: DashboardBootstrap = {
   trackedSectorAliases,
+  todayArticleCount: activeArticles.filter((item) => item.publishedAt === taipeiToday).length,
   sectorCount: trackedSectors.length,
   activeArticleCount: activeArticles.length,
   sourceCount: new Set(activeArticles.map((item) => item.source.url)).size,

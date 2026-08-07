@@ -2014,7 +2014,18 @@ def write_if_changed(
     if unchanged:
         print(f"No snapshot changes ({len(articles)} articles).")
         return False
+    preserved_metadata = {
+        key: previous_payload[key]
+        for key in (
+            "refreshAudit",
+            "trackingConfigHash",
+            "trackingEnrichedAt",
+            "trackCoverage",
+        )
+        if key in previous_payload
+    }
     payload = {
+        **preserved_metadata,
         "schemaVersion": 3,
         "generatedAt": datetime.now(UTC).replace(microsecond=0).isoformat(),
         "articleCount": len(articles),

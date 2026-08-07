@@ -20,6 +20,7 @@ type ArticleRecord = {
   type?: string;
   publishedAt?: string;
   importance?: number;
+  qualityStatus?: string;
   source?: { name?: string; url?: string; platform?: string };
 };
 
@@ -72,6 +73,7 @@ export function selectDailyHeadlines(
       const day = headlineDay(String(article.publishedAt ?? ""));
       return Boolean(
         article.title &&
+          article.qualityStatus !== "低可信" &&
           source.url &&
           (source.name || platform) &&
           /^\d{4}-\d{2}-\d{2}$/.test(day) &&

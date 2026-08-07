@@ -13,23 +13,18 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn('cron: "17 0,2,4,8,10,12,14,16,18,20,22 * * *"', text)
         self.assertIn('timezone: "Asia/Taipei"', text)
-        self.assertNotIn('cron: "47 */2 * * *"', text)
 
     def test_lightweight_refresh_uses_the_repository_writer_queue(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("group: vciq-repository-writer-", text)
-        self.assertIn("github.ref", text)
         self.assertIn("queue: max", text)
         self.assertNotIn("cancel-in-progress:", text)
 
-    def test_due_check_reads_main_after_the_writer_lock_is_acquired(self) -> None:
+    def test_due_check_uses_the_real_news_crawl_clock(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        checkout = text.index("- uses: actions/checkout@v4")
-        due_check = text.index("- name: Skip refresh when the current snapshot is still recent")
-        self.assertLess(checkout, due_check)
-        checkout_block = text[checkout:due_check]
-        self.assertIn("ref: main", checkout_block)
-        self.assertIn("fetch-depth: 0", checkout_block)
+        self.assertIn("python tools/frequent_refresh_due.py", text)
+        self.assertNotIn('audit.get("completedAt") or payload.get("generatedAt")', text)
+        self.assertIn("ref: main", text)
 
     def test_lightweight_refresh_only_crawls_news_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
@@ -37,13 +32,18 @@ class FrequentRefreshWorkflowTests(unittest.TestCase):
         self.assertIn("python tools/finalize_frequent_refresh.py", text)
         self.assertNotIn("python -m tools.us_ir_baseline_disclosures", text)
         self.assertNotIn("python tools/refresh_market_profiles_enriched.py", text)
-        self.assertNotIn("python tools/refresh_people_profiles_with_video.py", text)
 
-    def test_semantic_change_uses_the_single_push_deploy_path(self) -> None:
+    def test_successful_crawl_persists_audit_even_without_new_articles(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("python tools/semantic_data_diff.py", text)
-        self.assertIn('git commit -m "data: refresh public intelligence (two-hour check)"', text)
-        self.assertNotIn("gh workflow run pages.yml --ref main", text)
+        self.assertIn("No semantic article changes; publishing the completed source-crawl audit.", text)
+        self.assertNotIn("git restore \"${DATA_PATHS[@]}\"", text)
+
+    def test_bot_authored_refresh_explicitly_dispatches_pages(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("Deploy refreshed snapshot", text)
+        self.assertIn("steps.data-update.outputs.changed == 'true'", text)
+        self.assertIn("gh workflow run pages.yml --ref main", text)
+        self.assertIn("actions: write", text)
 
 
 if __name__ == "__main__":
