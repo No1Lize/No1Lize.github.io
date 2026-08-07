@@ -50,6 +50,8 @@ jobs:
           test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
           git diff --exit-code -- config public/data
       - name: Build deployable Pages snapshot
+        env:
+          NEXT_PUBLIC_QM_WORKSPACE_URL: ${{ vars.QM_WORKSPACE_URL }}
         run: npm run build:pages
       - name: Verify the build stayed read-only
         run: git diff --exit-code -- config public/data
