@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
-"""Auto-accept manually added company candidates after entity resolution.
+"""Auto-accept audited human company additions after entity resolution.
 
-This module implements the two-lane candidate policy:
+VCIQ uses exception-based candidate review:
 
-* explicit/manual company additions do not require a second human review;
+* a company explicitly captured by a human does not require a second human review;
 * automatically discovered companies remain pending until reviewed;
 * entity-type conflicts and ambiguous identities remain review-gated;
 * formal company publication still requires the existing onboarding quality gate.
 
-The command is deliberately conservative. A manual assertion is trusted only when
-shared entity resolution still resolves the name to a company. Capture-backed
-trust additionally requires explicit human provenance, and a capture-backed
-candidate can never fall through to the direct-tracking trust path. Final review
-outcomes (accepted/rejected/merged/published) are never overwritten.
+The trust signal is deliberately narrow. `sampleCompanies` is not provenance: both
+humans and automation can write that derived tracking field. Automatic acceptance
+therefore requires an auditable capture with a non-automation `capturedBy` actor.
+Final review outcomes (accepted/rejected/merged/published) are never overwritten.
 """
 
 from __future__ import annotations
@@ -65,27 +64,6 @@ AUTOMATION_ACTOR_MARKERS = (
 )
 
 
-def _tracks(payload: Mapping[str, Any]) -> list[dict[str, Any]]:
-    rows = payload.get("tracks", [])
-    return [row for row in rows if isinstance(row, dict)] if isinstance(rows, list) else []
-
-
-def manual_tracking_companies(payload: Mapping[str, Any]) -> dict[str, str]:
-    """Return explicit company names from the versioned tracking configuration."""
-
-    result: dict[str, str] = {}
-    for track in _tracks(payload):
-        names = track.get("sampleCompanies", [])
-        if not isinstance(names, list):
-            continue
-        for raw in names:
-            name = clean(raw, 160)
-            key = normalize_identity(name)
-            if name and key and key not in result:
-                result[key] = name
-    return result
-
-
 def _capture_index(payload: Mapping[str, Any]) -> dict[str, dict[str, Any]]:
     rows = payload.get("records", [])
     if not isinstance(rows, list):
@@ -129,8 +107,8 @@ def _candidate_capture_resolution(
     company_registry_payload: Mapping[str, Any],
     people_payload: Mapping[str, Any],
     tracking_payload: Mapping[str, Any],
-) -> tuple[bool, str, str, str]:
-    """Return trust plus actor/time/reason for an explicit manual capture."""
+) -> tuple[bool, str, str, str, bool]:
+    """Return trust, audit identity, reason, and whether capture evidence exists."""
 
     candidate_key = normalize_identity(candidate.get("decisionKey") or candidate.get("name"))
     raw_ids = candidate.get("captureIds", [])
@@ -174,54 +152,10 @@ def _candidate_capture_resolution(
                 actor,
                 clean(capture.get("capturedAt"), 80),
                 "管理员文章采集已通过实体解析",
+                True,
             )
         last_reason = resolution.reason or "管理员采集未解析为公司"
-    if saw_capture:
-        return False, "", "", last_reason
-    return False, "", "", ""
-
-
-def _manual_tracking_resolution(
-    candidate: Mapping[str, Any],
-    tracked_names: Mapping[str, str],
-    *,
-    entity_decisions_payload: Mapping[str, Any],
-    company_registry_payload: Mapping[str, Any],
-    people_payload: Mapping[str, Any],
-    tracking_payload: Mapping[str, Any],
-) -> tuple[bool, str]:
-    """Validate a direct sampleCompanies assertion against cross-type conflicts."""
-
-    key = normalize_identity(candidate.get("decisionKey") or candidate.get("name"))
-    name = tracked_names.get(key)
-    if not name:
-        return False, ""
-
-    # The synthetic context does not add external evidence. It represents the
-    # administrator's explicit assertion that this tracking entry is a company.
-    # Shared resolution still checks versioned decisions, company aliases,
-    # people and topic indexes before it reaches this explicit company context.
-    resolution = resolve_entity(
-        "company",
-        name,
-        {
-            "title": f"{name} 公司",
-            "summary": "管理员显式将该对象加入公司追踪清单。",
-            "eventType": "管理员显式添加",
-            "sourceName": "VCIQ manual tracking",
-        },
-        decisions_payload=entity_decisions_payload,
-        company_registry_payload=company_registry_payload,
-        people_payload=people_payload,
-        tracking_payload=tracking_payload,
-    )
-    if (
-        resolution.status == "resolved"
-        and resolution.entityType == "company"
-        and normalize_identity(resolution.canonicalName) == key
-    ):
-        return True, "版本化追踪配置中的显式公司添加已通过实体冲突检查"
-    return False, resolution.reason or "显式公司添加存在类型或身份冲突"
+    return False, "", "", last_reason, saw_capture
 
 
 def apply_manual_company_trust(
@@ -245,15 +179,13 @@ def apply_manual_company_trust(
         root["decisions"] = raw_decisions
     root["schemaVersion"] = max(1, int(root.get("schemaVersion", 1) or 1))
 
-    tracked_names = manual_tracking_companies(tracking_payload)
     capture_rows = _capture_index(captures_payload)
     decision_rows = _decision_index(root)
 
     trusted_keys: list[str] = []
-    capture_trusted_keys: list[str] = []
-    tracking_trusted_keys: list[str] = []
     exception_rows: list[dict[str, str]] = []
     preserved_final_keys: list[str] = []
+    provenance_pending_keys: list[str] = []
 
     candidates = candidates_payload.get("candidates", [])
     for candidate in candidates if isinstance(candidates, list) else []:
@@ -269,9 +201,7 @@ def apply_manual_company_trust(
             preserved_final_keys.append(key)
             continue
 
-        raw_capture_ids = candidate.get("captureIds", [])
-        has_capture_evidence = isinstance(raw_capture_ids, list) and bool(raw_capture_ids)
-        capture_trusted, actor, decided_at, capture_reason = _candidate_capture_resolution(
+        trusted, actor, decided_at, capture_reason, saw_capture = _candidate_capture_resolution(
             candidate,
             capture_rows,
             entity_decisions_payload=entity_decisions_payload,
@@ -279,30 +209,19 @@ def apply_manual_company_trust(
             people_payload=people_payload,
             tracking_payload=tracking_payload,
         )
-        tracking_trusted = False
-        tracking_reason = ""
-        # Capture-backed candidates must prove human provenance on the capture
-        # itself. They may have been reconciled into sampleCompanies, but that
-        # derived placement must never become a second route around provenance.
-        if not capture_trusted and not has_capture_evidence:
-            tracking_trusted, tracking_reason = _manual_tracking_resolution(
-                candidate,
-                tracked_names,
-                entity_decisions_payload=entity_decisions_payload,
-                company_registry_payload=company_registry_payload,
-                people_payload=people_payload,
-                tracking_payload=tracking_payload,
-            )
-
-        if not capture_trusted and not tracking_trusted:
-            manually_asserted = has_capture_evidence or key in tracked_names
-            if manually_asserted:
+        if not trusted:
+            if saw_capture:
                 exception_rows.append(
                     {
                         "candidateKey": key,
-                        "reason": capture_reason or tracking_reason or "人工添加未通过实体冲突检查",
+                        "reason": capture_reason or "人工采集未通过实体冲突检查",
                     }
                 )
+            else:
+                # `sampleCompanies` cannot distinguish a direct human edit from an
+                # automatic discovery/reconciliation write. Keep it pending until
+                # a dedicated human provenance record exists.
+                provenance_pending_keys.append(key)
             continue
 
         raw_key = existing[0] if existing else key
@@ -316,28 +235,27 @@ def apply_manual_company_trust(
                     decided_at
                     or clean(candidate.get("lastSeenAt"), 80)
                     or clean(candidates_payload.get("generatedAt"), 80)
-                    or clean(tracking_payload.get("generatedAt"), 80)
                 ),
-                "reviewedBy": actor or "VCIQ/manual-trusted",
+                "reviewedBy": actor,
             }
         )
         raw_decisions[raw_key] = previous
         decision_rows[key] = (raw_key, previous)
         trusted_keys.append(key)
-        if capture_trusted:
-            capture_trusted_keys.append(key)
-        else:
-            tracking_trusted_keys.append(key)
 
     report = {
         "trustedCount": len(trusted_keys),
         "trustedKeys": sorted(set(trusted_keys)),
-        "captureTrustedCount": len(capture_trusted_keys),
-        "captureTrustedKeys": sorted(set(capture_trusted_keys)),
-        "trackingTrustedCount": len(tracking_trusted_keys),
-        "trackingTrustedKeys": sorted(set(tracking_trusted_keys)),
+        "captureTrustedCount": len(trusted_keys),
+        "captureTrustedKeys": sorted(set(trusted_keys)),
+        # Kept for machine-readable compatibility. Direct tracking values are no
+        # longer a trust source because automation can write sampleCompanies.
+        "trackingTrustedCount": 0,
+        "trackingTrustedKeys": [],
         "manualExceptionCount": len(exception_rows),
         "manualExceptions": sorted(exception_rows, key=lambda row: row["candidateKey"]),
+        "provenancePendingCount": len(set(provenance_pending_keys)),
+        "provenancePendingKeys": sorted(set(provenance_pending_keys)),
         "preservedFinalCount": len(set(preserved_final_keys)),
     }
     return root, report
