@@ -160,13 +160,18 @@ async function fetchArticles(): Promise<ArticlePayload> {
   return parseArticlePayload(await response.json());
 }
 
-export function useArticles(initialPayload: ArticlePayload = emptyPayload) {
+export function useArticles(
+  initialPayload: ArticlePayload = emptyPayload,
+  options: { enabled?: boolean } = {},
+) {
+  const enabled = options.enabled ?? true;
   const query = useQuery({
     queryKey: ["public-articles"],
     queryFn: fetchArticles,
     placeholderData: initialPayload,
+    enabled,
     staleTime: 20 * 60_000,
-    refetchInterval: 30 * 60_000,
+    refetchInterval: enabled ? 30 * 60_000 : false,
     refetchIntervalInBackground: false,
     refetchOnWindowFocus: false,
   });
@@ -178,6 +183,6 @@ export function useArticles(initialPayload: ArticlePayload = emptyPayload) {
     sourceStatus: payload.sourceStatus ?? [],
     qualityGate: payload.qualityGate,
     refreshAudit: payload.refreshAudit,
-    isLive: query.isSuccess && !query.isPlaceholderData,
+    isLive: enabled && query.isSuccess && !query.isPlaceholderData,
   };
 }
