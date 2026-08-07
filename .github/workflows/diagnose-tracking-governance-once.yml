@@ -1,4 +1,4 @@
-name: Diagnose tracking governance once
+name: Apply source health summary fix once
 
 on:
   push:
@@ -9,10 +9,10 @@ permissions:
   contents: write
 
 jobs:
-  normalize:
+  patch:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -21,117 +21,33 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Preserve before snapshots
+      - name: Apply pure summary patch
+        run: python tools/apply_source_health_summary_fix_once.py
+      - name: Validate canonical source health behavior
         run: |
-          cp config/user_tracking.json /tmp/user_tracking.before.json
-          cp config/tracking_auto_discovery.json /tmp/tracking_auto_discovery.before.json
-          cp public/data/source_health.json /tmp/source_health.before.json
-      - name: Apply governance normalization
-        run: |
-          python tools/tracking_source_governance.py
+          python -m py_compile \
+            tools/source_health_summary.py \
+            tools/tracking_source_governance.py \
+            tools/update_source_health.py
+          python -m unittest \
+            tests.test_source_health_summary \
+            tests.test_source_health \
+            tests.test_tracking_source_governance \
+            tests.test_source_health_runtime \
+            tests.test_source_health_performance
+          python tools/source_health_summary.py --check
           python tools/tracking_source_governance.py --check
-      - name: Explain the semantic difference
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json
-          from collections import Counter
-          from pathlib import Path
-
-          def load(path):
-              return json.loads(Path(path).read_text(encoding='utf-8'))
-
-          before_config = load('/tmp/user_tracking.before.json')
-          after_config = load('config/user_tracking.json')
-          before_ledger = load('/tmp/tracking_auto_discovery.before.json')
-          after_ledger = load('config/tracking_auto_discovery.json')
-          before_health = load('/tmp/source_health.before.json')
-          after_health = load('public/data/source_health.json')
-
-          print('=== changed files ===')
-          print(json.dumps({
-              'userTrackingChanged': before_config != after_config,
-              'ledgerChanged': before_ledger != after_ledger,
-              'sourceHealthChanged': before_health != after_health,
-          }, ensure_ascii=False))
-
-          if before_config != after_config:
-              keys = sorted(set(before_config) | set(after_config))
-              print('user_tracking top-level changed:', [k for k in keys if before_config.get(k) != after_config.get(k)])
-              print('source counts:', len(before_config.get('sources', [])), '->', len(after_config.get('sources', [])))
-
-          def row_key(row):
-              if not isinstance(row, dict):
-                  return ('<invalid>', repr(row), '')
-              return (str(row.get('track') or ''), str(row.get('kind') or ''), str(row.get('value') or ''))
-
-          if before_ledger != after_ledger:
-              for field in ('added', 'removed'):
-                  before_rows = before_ledger.get(field, []) if isinstance(before_ledger.get(field), list) else []
-                  after_rows = after_ledger.get(field, []) if isinstance(after_ledger.get(field), list) else []
-                  before_counts = Counter(row_key(row) for row in before_rows)
-                  after_counts = Counter(row_key(row) for row in after_rows)
-                  duplicate_before = sum(count - 1 for count in before_counts.values() if count > 1)
-                  duplicate_after = sum(count - 1 for count in after_counts.values() if count > 1)
-                  samples = [
-                      {'key': key, 'count': count}
-                      for key, count in before_counts.most_common()
-                      if count > 1
-                  ][:10]
-                  print(json.dumps({
-                      'ledgerField': field,
-                      'rowsBefore': len(before_rows),
-                      'rowsAfter': len(after_rows),
-                      'duplicateRowsBefore': duplicate_before,
-                      'duplicateRowsAfter': duplicate_after,
-                      'duplicateSamples': samples,
-                  }, ensure_ascii=False))
-              keys = sorted(set(before_ledger) | set(after_ledger))
-              print('ledger top-level changed:', [k for k in keys if before_ledger.get(k) != after_ledger.get(k)])
-
-          if before_health != after_health:
-              before_sources = before_health.get('sources', {}) if isinstance(before_health.get('sources'), dict) else {}
-              after_sources = after_health.get('sources', {}) if isinstance(after_health.get('sources'), dict) else {}
-              root_keys = sorted((set(before_health) | set(after_health)) - {'sources'})
-              changed_root = [k for k in root_keys if before_health.get(k) != after_health.get(k)]
-              changed_source_ids = sorted(
-                  source_id
-                  for source_id in set(before_sources) | set(after_sources)
-                  if before_sources.get(source_id) != after_sources.get(source_id)
-              )
-              print(json.dumps({
-                  'healthRootFieldsChanged': changed_root,
-                  'healthSourceRowsChanged': len(changed_source_ids),
-                  'healthSourceRowSamples': changed_source_ids[:20],
-              }, ensure_ascii=False))
-              for key in changed_root:
-                  print(json.dumps({
-                      'healthField': key,
-                      'before': before_health.get(key),
-                      'after': after_health.get(key),
-                  }, ensure_ascii=False))
-          PY
-          git diff --stat -- \
-            config/user_tracking.json \
-            config/tracking_auto_discovery.json \
-            public/data/source_health.json
-          git diff --numstat -- \
-            config/user_tracking.json \
-            config/tracking_auto_discovery.json \
-            public/data/source_health.json
-      - name: Persist canonical fixed point on diagnostic branch
+      - name: Commit ordinary source and test files
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add \
-            config/user_tracking.json \
-            config/tracking_auto_discovery.json \
-            public/data/source_health.json
-          if git diff --cached --quiet; then
-            echo 'Already at governance fixed point.'
-            exit 0
-          fi
-          git commit -m 'data: normalize tracking source governance state'
+            tools/source_health_summary.py \
+            tools/tracking_source_governance.py \
+            tools/update_source_health.py \
+            tests/test_source_health_summary.py \
+            tests/test_source_health.py
+          git commit -m 'fix: canonicalize source health aggregate summary'
           git push origin HEAD:fix/tracking-governance-fixed-point
