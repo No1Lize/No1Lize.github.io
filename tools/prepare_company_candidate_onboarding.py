@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Prepare safe automatic onboarding requests for accepted company candidates.
 
-This is the bridge between entity acceptance and formal company publication.  It
+This is the bridge between entity acceptance and formal company publication. It
 never treats a model as an authority for identity or source discovery.
 
 Automatic onboarding requires all of the following:
@@ -16,7 +16,7 @@ Automatic onboarding requires all of the following:
 * the existing onboarding quality gate remains the final publication authority.
 
 If any condition is uncertain, the candidate stays accepted and is reported as an
-exception.  No homepage, identity or factual profile field is invented by the LLM.
+exception. No homepage, identity or factual profile field is invented by the LLM.
 """
 
 from __future__ import annotations
@@ -28,7 +28,6 @@ import json
 import os
 import re
 import unicodedata
-from dataclasses import dataclass
 from datetime import UTC, datetime
 from html.parser import HTMLParser
 from pathlib import Path
@@ -48,7 +47,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES_PATH = ROOT / "public" / "data" / "company_candidates.json"
 DECISIONS_PATH = ROOT / "config" / "company_candidate_decisions.json"
 OFFICIAL_SOURCES_PATH = ROOT / "config" / "official_company_sources.json"
-REGISTRY_PATH = ROOT / "config" / "company_entity_registry.json"
+REGISTRY_PATH = onboarding.REGISTRY_PATH
 CAPTURES_PATH = ROOT / "config" / "tracking_capture_inbox.json"
 
 DEFAULT_BASE_URL = "https://api.siliconflow.cn/v1"
@@ -216,7 +215,11 @@ def _aliases(entity: Mapping[str, Any], language: str) -> list[str]:
     rows = aliases.get(language, []) if isinstance(aliases, dict) else []
     if not isinstance(rows, list):
         return []
-    return [clean(row.get("value"), 240) for row in rows if isinstance(row, dict) and clean(row.get("value"), 240)]
+    return [
+        clean(row.get("value"), 240)
+        for row in rows
+        if isinstance(row, dict) and clean(row.get("value"), 240)
+    ]
 
 
 def _description(entity: Mapping[str, Any], language: str) -> str:
@@ -231,7 +234,9 @@ def _http_json(url: str, *, timeout: int = REQUEST_TIMEOUT) -> Any:
         return json.loads(response.read().decode("utf-8"))
 
 
-def _wikidata_api(params: Mapping[str, Any], *, fetch_json: Callable[[str], Any] = _http_json) -> Any:
+def _wikidata_api(
+    params: Mapping[str, Any], *, fetch_json: Callable[[str], Any] = _http_json
+) -> Any:
     url = "https://www.wikidata.org/w/api.php?" + urlencode(params)
     return fetch_json(url)
 
@@ -243,9 +248,9 @@ def resolve_wikidata_company(
 ) -> tuple[dict[str, Any] | None, str]:
     """Resolve one exact Wikidata identity and its official website.
 
-    Fuzzy search alone is never accepted.  A returned item must contain an exact
+    Fuzzy search alone is never accepted. A returned item must contain an exact
     normalized label/alias match for the candidate name and exactly one official
-    website host.  Human (Q5) identities are rejected explicitly.
+    website host. Human (Q5) identities are rejected explicitly.
     """
 
     query = clean(name, 160)
@@ -264,10 +269,14 @@ def resolve_wikidata_company(
             },
             fetch_json=fetch_json,
         )
-    except Exception as exc:  # network failures are ordinary exception-path results
+    except Exception as exc:
         return None, f"wikidata search {type(exc).__name__}"
     rows = search.get("search", []) if isinstance(search, dict) else []
-    ids = [clean(row.get("id"), 30) for row in rows if isinstance(row, dict) and clean(row.get("id"), 30)]
+    ids = [
+        clean(row.get("id"), 30)
+        for row in rows
+        if isinstance(row, dict) and clean(row.get("id"), 30)
+    ]
     if not ids:
         return None, "wikidata returned no candidate"
     try:
@@ -305,8 +314,15 @@ def resolve_wikidata_company(
     claims = entity.get("claims", {}) if isinstance(entity.get("claims"), dict) else {}
     if "Q5" in _claim_entity_ids(claims, "P31"):
         return None, "wikidata exact identity is a person"
-    homepages = unique([safe_http_url(value) for value in _claim_strings(claims, "P856") if safe_http_url(value)], 5)
-    hosts = {urlsplit(url).hostname.casefold() for url in homepages if urlsplit(url).hostname}
+    homepages = unique(
+        [safe_http_url(value) for value in _claim_strings(claims, "P856") if safe_http_url(value)],
+        5,
+    )
+    hosts = {
+        urlsplit(url).hostname.casefold()
+        for url in homepages
+        if urlsplit(url).hostname
+    }
     if not homepages:
         return None, "wikidata exact identity has no official website"
     if len(hosts) != 1:
@@ -329,7 +345,11 @@ def resolve_wikidata_company(
                 },
                 fetch_json=fetch_json,
             )
-            raw_related = related_payload.get("entities", {}) if isinstance(related_payload, dict) else {}
+            raw_related = (
+                related_payload.get("entities", {})
+                if isinstance(related_payload, dict)
+                else {}
+            )
             related = raw_related if isinstance(raw_related, dict) else {}
         except Exception:
             related = {}
@@ -339,7 +359,10 @@ def resolve_wikidata_company(
     if country_ids:
         row = related.get(country_ids[0], {}) if isinstance(related, dict) else {}
         if isinstance(row, dict):
-            region = _label(row, "zh") or COUNTRY_LABELS.get(_label(row, "en").casefold(), _label(row, "en"))
+            english_country = _label(row, "en")
+            region = _label(row, "zh") or COUNTRY_LABELS.get(
+                english_country.casefold(), english_country
+            )
     headquarters_ids = _claim_entity_ids(claims, "P159")
     headquarters = ""
     if headquarters_ids:
@@ -377,7 +400,9 @@ class OfficialPageParser(HTMLParser):
         self._title_depth = 0
         self._text_depth = 0
 
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
         values = {key.casefold(): value or "" for key, value in attrs}
         tag = tag.casefold()
         if tag == "title":
@@ -459,7 +484,10 @@ def fetch_official_page(url: str, *, timeout: int = REQUEST_TIMEOUT) -> dict[str
         path = urlsplit(link).path.casefold()
         if host.casefold() != final_host.casefold():
             continue
-        if any(token in path for token in ("/news", "/blog", "/press", "/updates", "/insights")):
+        if any(
+            token in path
+            for token in ("/news", "/blog", "/press", "/updates", "/insights")
+        ):
             news_urls.append(link)
     return {
         "url": final_url,
@@ -475,7 +503,11 @@ def _term_present(text: str, term: str) -> bool:
     haystack = unicodedata.normalize("NFKC", text).casefold()
     needle = unicodedata.normalize("NFKC", term).casefold()
     if re.fullmatch(r"[a-z0-9]{1,4}", needle):
-        return bool(re.search(rf"(?<![a-z0-9]){re.escape(needle)}(?![a-z0-9])", haystack))
+        return bool(
+            re.search(
+                rf"(?<![a-z0-9]){re.escape(needle)}(?![a-z0-9])", haystack
+            )
+        )
     return needle in haystack
 
 
@@ -507,30 +539,35 @@ def candidate_is_institution_like(candidate: Mapping[str, Any]) -> bool:
     return bool(INSTITUTION_NAME_RE.search(name))
 
 
-def _official_source_match(payload: Mapping[str, Any], candidate: Mapping[str, Any]) -> dict[str, Any] | None:
+def _official_source_match(
+    payload: Mapping[str, Any], candidate: Mapping[str, Any]
+) -> dict[str, Any] | None:
     key = identity_key(candidate.get("decisionKey") or candidate.get("name"))
     matches: list[dict[str, Any]] = []
     rows = payload.get("companies", [])
     for row in rows if isinstance(rows, list) else []:
         if not isinstance(row, dict):
             continue
-        names = [row.get("name"), *(row.get("aliases") or [])]
+        aliases = row.get("aliases") if isinstance(row.get("aliases"), list) else []
+        names = [row.get("name"), *aliases]
         if any(identity_key(value) == key for value in names if clean(value, 240)):
             homepage = safe_http_url(row.get("homepage"))
             if homepage:
+                news = row.get("newsUrls") if isinstance(row.get("newsUrls"), list) else []
                 matches.append(
                     {
                         "source": "official-source-registry",
                         "sourceId": clean(row.get("slug"), 120),
-                        "canonicalName": clean(row.get("name"), 240) or clean(candidate.get("name"), 240),
+                        "canonicalName": clean(row.get("name"), 240)
+                        or clean(candidate.get("name"), 240),
                         "englishName": "",
                         "homepage": homepage,
                         "region": clean(row.get("region"), 80),
                         "founded": "",
                         "headquarters": "",
-                        "aliases": unique(list(row.get("aliases") or []), 20),
+                        "aliases": unique(list(aliases), 20),
                         "description": "",
-                        "newsUrls": unique(list(row.get("newsUrls") or []), 8),
+                        "newsUrls": unique(list(news), 8),
                     }
                 )
     return matches[0] if len(matches) == 1 else None
@@ -543,7 +580,8 @@ def _registry_match(payload: Mapping[str, Any], candidate: Mapping[str, Any]) ->
     for row in rows if isinstance(rows, list) else []:
         if not isinstance(row, dict):
             continue
-        names = [row.get("name"), row.get("englishName"), *(row.get("aliases") or [])]
+        aliases = row.get("aliases") if isinstance(row.get("aliases"), list) else []
+        names = [row.get("name"), row.get("englishName"), *aliases]
         if any(identity_key(value) == key for value in names if clean(value, 240)):
             slug = clean(row.get("slug"), 120)
             if slug:
@@ -551,7 +589,18 @@ def _registry_match(payload: Mapping[str, Any], candidate: Mapping[str, Any]) ->
     return matches[0] if len(set(matches)) == 1 else ""
 
 
-def _capture_context(candidate: Mapping[str, Any], captures_payload: Mapping[str, Any]) -> list[dict[str, str]]:
+def _registry_slug_exists(payload: Mapping[str, Any], slug: str) -> bool:
+    rows = payload.get("companies", [])
+    if not isinstance(rows, list):
+        return False
+    return any(
+        isinstance(row, dict) and clean(row.get("slug"), 120) == slug for row in rows
+    )
+
+
+def _capture_context(
+    candidate: Mapping[str, Any], captures_payload: Mapping[str, Any]
+) -> list[dict[str, str]]:
     raw_rows = captures_payload.get("records", [])
     rows = raw_rows if isinstance(raw_rows, list) else []
     by_id = {
@@ -578,7 +627,7 @@ def _capture_context(candidate: Mapping[str, Any], captures_payload: Mapping[str
 
 
 def _normalized_excerpt(value: Any) -> str:
-    return clean(value, 1_000).casefold()
+    return clean(value, 50_000).casefold()
 
 
 def _supported_quotes(quotes: Any, page_text: str) -> list[str]:
@@ -623,9 +672,19 @@ def synthesize_official_profile(
         },
         "candidate": {
             "name": clean(candidate.get("name"), 240),
-            "aliases": unique(list(candidate.get("aliases") or []), 20),
+            "aliases": unique(
+                list(candidate.get("aliases") or [])
+                if isinstance(candidate.get("aliases"), list)
+                else [],
+                20,
+            ),
             "sector": clean(candidate.get("sector"), 120),
-            "eventTypes": unique(list(candidate.get("eventTypes") or []), 12),
+            "eventTypes": unique(
+                list(candidate.get("eventTypes") or [])
+                if isinstance(candidate.get("eventTypes"), list)
+                else [],
+                12,
+            ),
         },
         "resolvedPublicIdentity": {
             "canonicalName": clean(metadata.get("canonicalName"), 240),
@@ -644,12 +703,27 @@ def synthesize_official_profile(
     try:
         raw = call_siliconflow(
             api_key=api_key,
-            base_url=os.environ.get("SILICONFLOW_BASE_URL", DEFAULT_BASE_URL).strip() or DEFAULT_BASE_URL,
-            model=os.environ.get("SILICONFLOW_MODEL", DEFAULT_MODEL).strip() or DEFAULT_MODEL,
-            reasoning_effort=os.environ.get("AUTO_COMPANY_PROFILE_REASONING_EFFORT", "medium").strip() or "medium",
+            base_url=os.environ.get("SILICONFLOW_BASE_URL", DEFAULT_BASE_URL).strip()
+            or DEFAULT_BASE_URL,
+            model=os.environ.get("SILICONFLOW_MODEL", DEFAULT_MODEL).strip()
+            or DEFAULT_MODEL,
+            reasoning_effort=os.environ.get(
+                "AUTO_COMPANY_PROFILE_REASONING_EFFORT", "medium"
+            ).strip()
+            or "medium",
             prompt=json.dumps(prompt, ensure_ascii=False, separators=(",", ":")),
-            timeout=float(os.environ.get("AUTO_COMPANY_PROFILE_API_TIMEOUT", "120") or 120),
-            retries=max(0, min(2, int(os.environ.get("AUTO_COMPANY_PROFILE_API_RETRIES", "1") or 1))),
+            timeout=float(
+                os.environ.get("AUTO_COMPANY_PROFILE_API_TIMEOUT", "120") or 120
+            ),
+            retries=max(
+                0,
+                min(
+                    2,
+                    int(
+                        os.environ.get("AUTO_COMPANY_PROFILE_API_RETRIES", "1") or 1
+                    ),
+                ),
+            ),
         )
     except Exception as exc:
         return None, f"model {type(exc).__name__}"
@@ -680,7 +754,11 @@ def synthesize_official_profile(
 
 
 def _slug_from_identity(name: str, homepage: str) -> str:
-    ascii_name = unicodedata.normalize("NFKD", clean(name, 200)).encode("ascii", "ignore").decode("ascii")
+    ascii_name = (
+        unicodedata.normalize("NFKD", clean(name, 200))
+        .encode("ascii", "ignore")
+        .decode("ascii")
+    )
     slug = re.sub(r"[^a-z0-9]+", "-", ascii_name.casefold()).strip("-")
     if slug and len(slug) >= 2:
         return slug[:80]
@@ -700,21 +778,32 @@ def _profile_from_verified_sources(
     synthesis: Mapping[str, Any],
 ) -> dict[str, Any]:
     candidate_region = clean(candidate.get("region"), 80)
-    region = clean(metadata.get("region"), 80) or (candidate_region if candidate_region != "全球" else "")
-    sector = clean(candidate.get("sector"), 120)
-    homepage = safe_http_url(page.get("url")) or safe_http_url(metadata.get("homepage"))
-    canonical = clean(metadata.get("canonicalName"), 240) or clean(candidate.get("name"), 240)
-    news_urls = unique(
-        [
-            *(metadata.get("newsUrls") or []),
-            *(page.get("newsUrls") or []),
-            homepage,
-        ],
-        8,
+    region = clean(metadata.get("region"), 80) or (
+        candidate_region if candidate_region != "全球" else ""
     )
+    sector = clean(candidate.get("sector"), 120)
+    homepage = safe_http_url(page.get("url")) or safe_http_url(
+        metadata.get("homepage")
+    )
+    canonical = clean(metadata.get("canonicalName"), 240) or clean(
+        candidate.get("name"), 240
+    )
+    metadata_news = (
+        metadata.get("newsUrls") if isinstance(metadata.get("newsUrls"), list) else []
+    )
+    page_news = page.get("newsUrls") if isinstance(page.get("newsUrls"), list) else []
+    candidate_aliases = (
+        candidate.get("aliases") if isinstance(candidate.get("aliases"), list) else []
+    )
+    metadata_aliases = (
+        metadata.get("aliases") if isinstance(metadata.get("aliases"), list) else []
+    )
+    news_urls = unique([*metadata_news, *page_news, homepage], 8)
     return onboarding.normalize_profile(
         {
-            "slug": _slug_from_identity(clean(metadata.get("englishName"), 240) or canonical, homepage),
+            "slug": _slug_from_identity(
+                clean(metadata.get("englishName"), 240) or canonical, homepage
+            ),
             "name": canonical,
             "englishName": clean(metadata.get("englishName"), 240),
             "region": region,
@@ -728,14 +817,16 @@ def _profile_from_verified_sources(
             "homepage": homepage,
             "newsUrls": news_urls,
             "aliases": unique(
-                [
-                    *(candidate.get("aliases") or []),
-                    *(metadata.get("aliases") or []),
-                    clean(candidate.get("name"), 240),
-                ],
+                [*candidate_aliases, *metadata_aliases, clean(candidate.get("name"), 240)],
                 30,
             ),
-            "confidence": max(0.85, min(0.99, float(synthesis.get("identityConfidence", 0.9) or 0.9))),
+            "confidence": max(
+                0.85,
+                min(
+                    0.99,
+                    float(synthesis.get("identityConfidence", 0.9) or 0.9),
+                ),
+            ),
         }
     )
 
@@ -766,17 +857,33 @@ def prepare_automatic_onboarding(
             break
         if decision.get("status") != "accepted":
             continue
-        onboarding_state = decision.get("onboarding") if isinstance(decision.get("onboarding"), dict) else {}
-        if onboarding_state.get("status") in {"requested", "published", "failed", "merged"}:
+        onboarding_state = (
+            decision.get("onboarding")
+            if isinstance(decision.get("onboarding"), dict)
+            else {}
+        )
+        if onboarding_state.get("status") in {
+            "requested",
+            "published",
+            "failed",
+            "merged",
+        }:
             continue
         candidate = candidates.get(key)
         if not candidate:
-            holds.append({"candidateKey": key, "reason": "candidate absent from current snapshot"})
+            holds.append(
+                {"candidateKey": key, "reason": "candidate absent from current snapshot"}
+            )
             continue
         processed += 1
 
         if candidate_is_institution_like(candidate):
-            holds.append({"candidateKey": key, "reason": "candidate appears to be an investment institution, not a company profile"})
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": "candidate appears to be an investment institution, not a company profile",
+                }
+            )
             continue
 
         existing_slug = _registry_match(registry_payload, candidate)
@@ -795,32 +902,63 @@ def prepare_automatic_onboarding(
         if metadata is None:
             metadata, reason = resolver(clean(candidate.get("name"), 240))
         if metadata is None:
-            holds.append({"candidateKey": key, "reason": reason or "no verified official homepage"})
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": reason or "no verified official homepage",
+                }
+            )
             continue
         homepage = safe_http_url(metadata.get("homepage"))
         if not homepage:
-            holds.append({"candidateKey": key, "reason": "verified identity has no valid homepage"})
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": "verified identity has no valid homepage",
+                }
+            )
             continue
         try:
             page = page_fetcher(homepage)
         except (HTTPError, URLError, TimeoutError, OSError, ValueError) as exc:
-            holds.append({"candidateKey": key, "reason": f"official homepage fetch {type(exc).__name__}"})
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": f"official homepage fetch {type(exc).__name__}",
+                }
+            )
             continue
+        candidate_aliases = (
+            candidate.get("aliases") if isinstance(candidate.get("aliases"), list) else []
+        )
+        metadata_aliases = (
+            metadata.get("aliases") if isinstance(metadata.get("aliases"), list) else []
+        )
         names = unique(
             [
                 candidate.get("name"),
-                *(candidate.get("aliases") or []),
+                *candidate_aliases,
                 metadata.get("canonicalName"),
                 metadata.get("englishName"),
-                *(metadata.get("aliases") or []),
+                *metadata_aliases,
             ],
             30,
         )
         if not page_supports_identity(page, names):
-            holds.append({"candidateKey": key, "reason": "official homepage does not name the resolved candidate"})
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": "official homepage does not name the resolved candidate",
+                }
+            )
             continue
         if not page_supports_sector(page, clean(candidate.get("sector"), 120)):
-            holds.append({"candidateKey": key, "reason": "official homepage does not support the candidate sector"})
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": "official homepage does not support the candidate sector",
+                }
+            )
             continue
 
         synthesis, synthesis_reason = synthesizer(
@@ -830,12 +968,27 @@ def prepare_automatic_onboarding(
             capture_context=_capture_context(candidate, captures_payload),
         )
         if synthesis is None:
-            holds.append({"candidateKey": key, "reason": synthesis_reason or "official profile synthesis failed"})
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": synthesis_reason or "official profile synthesis failed",
+                }
+            )
             continue
         profile = _profile_from_verified_sources(candidate, metadata, page, synthesis)
+        if _registry_slug_exists(registry_payload, profile["slug"]):
+            holds.append(
+                {
+                    "candidateKey": key,
+                    "reason": f"generated slug {profile['slug']} already belongs to another company",
+                }
+            )
+            continue
         errors = onboarding.validate_profile(profile, candidate)
         if errors:
-            holds.append({"candidateKey": key, "reason": "; ".join(errors[:4])})
+            holds.append(
+                {"candidateKey": key, "reason": "; ".join(errors[:4])}
+            )
             continue
         decision["onboarding"] = {
             "status": "requested",
@@ -864,7 +1017,9 @@ def prepare_automatic_onboarding(
 
 def write_json(path: Path, payload: Mapping[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
 
 def main() -> int:
@@ -877,7 +1032,9 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=MAX_AUTO_REQUESTS)
     args = parser.parse_args()
 
-    current = onboarding.load_json(args.decisions, {"schemaVersion": 1, "decisions": {}})
+    current = onboarding.load_json(
+        args.decisions, {"schemaVersion": 1, "decisions": {}}
+    )
     next_decisions, report = prepare_automatic_onboarding(
         onboarding.load_json(args.candidates, {"candidates": []}),
         current,
