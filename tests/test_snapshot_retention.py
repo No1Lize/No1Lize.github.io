@@ -28,6 +28,23 @@ def article(article_id: str, published_at: str, importance: int = 70) -> dict:
     }
 
 
+def eastmoney_article(
+    article_id: str,
+    published_at: str,
+    source_id: str,
+    importance: int = 70,
+) -> dict:
+    row = article(article_id, published_at, importance)
+    row["sourceId"] = source_id
+    row["source"] = {
+        "name": "东方财富",
+        "url": f"https://finance.eastmoney.com/a/{article_id}.html",
+        "level": "媒体报道",
+        "platform": "东方财富",
+    }
+    return row
+
+
 class SnapshotRetentionTest(unittest.TestCase):
     def test_newest_articles_displace_oldest_at_capacity(self) -> None:
         rows = [
@@ -92,6 +109,54 @@ class SnapshotRetentionTest(unittest.TestCase):
             "canonical-source-url",
         )
         self.assertEqual(snapshot_retention.validate_retention(next_payload, 2), [])
+
+    def test_retention_closes_eastmoney_source_accounting_after_tail_drop(self) -> None:
+        eastmoney_a = "official-user-东方财富"
+        eastmoney_b = "official-user-东方财富-半导体信源"
+        payload = {
+            "schemaVersion": 3,
+            "articleCount": 3,
+            "articles": [
+                eastmoney_article("old-retained", "2026-07-01", eastmoney_a),
+                eastmoney_article("mid-retained", "2026-07-02", eastmoney_b),
+                eastmoney_article("new-current", "2026-07-03", eastmoney_a),
+            ],
+            "sourceStatus": [
+                {
+                    "id": eastmoney_a,
+                    "status": "ok",
+                    "accepted": 2,
+                    "newAccepted": 1,
+                    "retainedPrevious": True,
+                    "retainedPreviousCount": 1,
+                },
+                {
+                    "id": eastmoney_b,
+                    "status": "ok",
+                    "accepted": 1,
+                    "newAccepted": 0,
+                    "retainedPrevious": True,
+                    "retainedPreviousCount": 1,
+                },
+            ],
+        }
+
+        next_payload, removed = snapshot_retention.apply_retention(payload, capacity=2)
+
+        self.assertEqual(removed, 1)
+        self.assertEqual(
+            [row["id"] for row in next_payload["articles"]],
+            ["new-current", "mid-retained"],
+        )
+        statuses = {row["id"]: row for row in next_payload["sourceStatus"]}
+        self.assertEqual(statuses[eastmoney_a]["accepted"], 1)
+        self.assertEqual(statuses[eastmoney_a]["newAccepted"], 1)
+        self.assertEqual(statuses[eastmoney_a]["retainedPreviousCount"], 0)
+        self.assertNotIn("retainedPrevious", statuses[eastmoney_a])
+        self.assertEqual(statuses[eastmoney_b]["accepted"], 1)
+        self.assertEqual(statuses[eastmoney_b]["newAccepted"], 0)
+        self.assertEqual(statuses[eastmoney_b]["retainedPreviousCount"], 1)
+        self.assertTrue(statuses[eastmoney_b]["retainedPrevious"])
 
     def test_core_merge_already_applies_the_same_replacement_rule(self) -> None:
         existing = [
