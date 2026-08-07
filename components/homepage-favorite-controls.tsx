@@ -4,14 +4,12 @@ import { Bookmark } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "@/components/homepage-favorite-controls.module.css";
+import { useFavorite } from "@/components/use-favorites";
 import {
   isIntelligenceDomRow,
   subscribeIntelligenceDom,
 } from "@/lib/intelligence-dom-runtime";
 import {
-  FAVORITES_CHANGED_EVENT,
-  FAVORITES_STORAGE_KEY,
-  isFavorite,
   toggleFavorite,
   type FavoriteChannel,
   type FavoriteInput,
@@ -297,21 +295,7 @@ function makeGenericFavorite(row: HTMLElement): FavoriteInput | null {
 }
 
 function InlineFavoriteButton({ item }: { item: FavoriteInput }) {
-  const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    const refresh = () => setSaved(isFavorite(item.id));
-    const onStorage = (event: StorageEvent) => {
-      if (event.key === FAVORITES_STORAGE_KEY) refresh();
-    };
-    refresh();
-    window.addEventListener(FAVORITES_CHANGED_EVENT, refresh);
-    window.addEventListener("storage", onStorage);
-    return () => {
-      window.removeEventListener(FAVORITES_CHANGED_EVENT, refresh);
-      window.removeEventListener("storage", onStorage);
-    };
-  }, [item.id]);
+  const saved = useFavorite(item.id);
 
   return (
     <button
@@ -328,7 +312,7 @@ function InlineFavoriteButton({ item }: { item: FavoriteInput }) {
       onClick={(event) => {
         event.preventDefault();
         event.stopPropagation();
-        setSaved(toggleFavorite(item));
+        toggleFavorite(item);
       }}
     >
       <Bookmark size={12} fill={saved ? "currentColor" : "none"} />
