@@ -122,21 +122,29 @@ function getChannelUpdates() {
 
 export function HomepageChannelUpdates() {
   const updates = getChannelUpdates();
-  const items = updates.map((item) => ({
-    id: item.id,
-    title: item.title,
-    href: item.href,
-    // Use semantic labels instead of legacy numeric channel codes. The
-    // favorite compatibility layer still recognizes old 02-07 tags, but new
-    // items must classify directly as technology, track, person or company.
-    tag: item.channels.map((channel) => channel.label).join(" / "),
-    context: item.context || "研究对象更新",
-    date: item.date,
-    time: updateTime(item),
-    asideLabel: item.label,
-    sortAt: item.sortAt,
-    importance: articleImportance.get(updateKey(item.href, item.title)) ?? 0,
-  }));
+  const items = updates
+    .map((item) => ({
+      id: item.id,
+      title: item.title,
+      href: item.href,
+      // Use semantic labels instead of legacy numeric channel codes. The
+      // favorite compatibility layer still recognizes old 02-07 tags, but new
+      // items must classify directly as technology, track, person or company.
+      tag: item.channels.map((channel) => channel.label).join(" / "),
+      context: item.context || "研究对象更新",
+      date: item.date,
+      time: updateTime(item),
+      asideLabel: item.label,
+      sortAt: item.sortAt,
+      importance: articleImportance.get(updateKey(item.href, item.title)) ?? 0,
+    }))
+    .sort(
+      (left, right) =>
+        right.sortAt.localeCompare(left.sortAt) ||
+        right.importance - left.importance ||
+        left.title.localeCompare(right.title, "zh-CN"),
+    )
+    .slice(0, HOMEPAGE_CHANNEL_UPDATE_LIMIT);
 
   return (
     <aside className={`side-column ${styles.column}`} aria-label="核心研究对象最新更新">
@@ -145,7 +153,7 @@ export function HomepageChannelUpdates() {
           <p className="section-index">03 / OBJECT UPDATES</p>
           <h2>研究对象最新更新</h2>
         </div>
-        <span>{Math.min(items.length, HOMEPAGE_CHANNEL_UPDATE_LIMIT)} 条</span>
+        <span>{items.length} 条</span>
       </div>
 
       <HomepageSortableFeed
@@ -153,7 +161,7 @@ export function HomepageChannelUpdates() {
         limit={HOMEPAGE_CHANNEL_UPDATE_LIMIT}
         ariaLabel="核心研究对象最新更新目录"
         initialSort="latest"
-        description={`聚合核心技术、核心赛道、核心人物与核心公司，合并跨对象重复条目并展示前 ${HOMEPAGE_CHANNEL_UPDATE_LIMIT} 条；可切换按最新时间或重要性排序。`}
+        description={`聚合核心技术、核心赛道、核心人物与核心公司，合并跨对象重复条目并保留最新 ${HOMEPAGE_CHANNEL_UPDATE_LIMIT} 条；可在这批候选中切换按最新时间或重要性排序。`}
       />
     </aside>
   );

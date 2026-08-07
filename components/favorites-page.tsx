@@ -11,6 +11,7 @@ import { useFavorites } from "@/components/use-favorites";
 import { removeFavorite, type FavoriteItem } from "@/lib/favorites";
 
 export const FAVORITE_SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
+const FAVORITES_BATCH_SIZE = 60;
 
 export type FavoriteShareRequest = {
   title: string;
@@ -77,8 +78,6 @@ function ShareFavoriteButton({ item }: { item: FavoriteItem }) {
       url: absoluteShareUrl(item.href),
     };
 
-    // The favorite card itself never calls navigator.share(). Windows and
-    // macOS therefore cannot open their native share sheets from this button.
     window.dispatchEvent(
       new CustomEvent<FavoriteShareRequest>(FAVORITE_SHARE_REQUEST_EVENT, { detail }),
     );
@@ -181,6 +180,7 @@ export function FavoritesPage() {
   const [channel, setChannel] = useState("全部频道");
   const [query, setQuery] = useState("");
   const [sortMode, setSortMode] = useState<HomepageSortMode>("latest");
+  const [visibleLimit, setVisibleLimit] = useState(FAVORITES_BATCH_SIZE);
   const channels = useMemo(
     () => [
       "全部频道",
@@ -204,6 +204,8 @@ export function FavoritesPage() {
     });
     return sortFavorites(filtered, sortMode);
   }, [channel, favorites, query, sortMode]);
+  const renderedVisible = visible.slice(0, visibleLimit);
+  const hasMore = renderedVisible.length < visible.length;
 
   return (
     <>
@@ -230,7 +232,10 @@ export function FavoritesPage() {
                 <button
                   type="button"
                   className={channel === item ? "active" : ""}
-                  onClick={() => setChannel(item)}
+                  onClick={() => {
+                    setChannel(item);
+                    setVisibleLimit(FAVORITES_BATCH_SIZE);
+                  }}
                   key={item}
                 >
                   {item}
@@ -240,14 +245,20 @@ export function FavoritesPage() {
             <div className="favorites-toolbar-actions">
               <HomepageSortToggle
                 value={sortMode}
-                onChange={setSortMode}
+                onChange={(value) => {
+                  setSortMode(value);
+                  setVisibleLimit(FAVORITES_BATCH_SIZE);
+                }}
                 ariaLabel="收藏排序方式"
               />
               <label className="favorites-search">
                 <Search size={15} />
                 <input
                   value={query}
-                  onChange={(event) => setQuery(event.target.value)}
+                  onChange={(event) => {
+                    setQuery(event.target.value);
+                    setVisibleLimit(FAVORITES_BATCH_SIZE);
+                  }}
                   placeholder="搜索收藏标题、摘要或关键词"
                   aria-label="搜索收藏"
                 />
@@ -256,7 +267,7 @@ export function FavoritesPage() {
           </div>
 
           <div className="favorites-list">
-            {visible.map((item, index) =>
+            {renderedVisible.map((item, index) =>
               isIntelligenceCard(item) ? (
                 <IntelligenceFavoriteCard item={item} key={item.id} />
               ) : (
@@ -288,6 +299,17 @@ export function FavoritesPage() {
             )}
           </div>
 
+          {hasMore ? (
+            <div className="favorites-load-more">
+              <button
+                type="button"
+                onClick={() => setVisibleLimit((current) => current + FAVORITES_BATCH_SIZE)}
+              >
+                显示更多 · 已显示 {renderedVisible.length}/{visible.length}
+              </button>
+            </div>
+          ) : null}
+
           {!visible.length ? (
             <div className="favorites-empty compact">
               <Search size={24} />
@@ -316,6 +338,12 @@ export function FavoritesPage() {
 
         .favorites-toolbar-actions .favorites-search {
           margin-left: 0;
+        }
+
+        .favorite-intelligence-card,
+        .favorite-card {
+          content-visibility: auto;
+          contain-intrinsic-size: 150px;
         }
 
         .favorite-intelligence-card {
@@ -418,6 +446,28 @@ export function FavoritesPage() {
           flex: 0 0 auto;
           width: 30px;
           height: 30px;
+        }
+
+        .favorites-load-more {
+          display: flex;
+          justify-content: center;
+          padding: 20px 0 6px;
+        }
+
+        .favorites-load-more button {
+          min-height: 38px;
+          padding: 8px 16px;
+          border: 1px solid var(--border);
+          background: var(--surface-2);
+          color: var(--text);
+          cursor: pointer;
+          font: inherit;
+          font-size: 12px;
+        }
+
+        .favorites-load-more button:hover {
+          border-color: var(--green);
+          color: var(--green-bright);
         }
 
         @media (max-width: 900px) {

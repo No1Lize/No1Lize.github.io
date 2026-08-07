@@ -41,6 +41,37 @@
   line-height: 1.65;
 }
 
+.archiveButton {
+  width: 100%;
+  margin-top: 12px;
+  min-height: 34px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+}
+
+.archiveButton:hover:not(:disabled) {
+  border-color: var(--green);
+  color: var(--green-bright);
+}
+
+.archiveButton:disabled {
+  cursor: wait;
+  color: var(--muted);
+}
+
+.archiveStatus {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
 .weightBar {
   display: flex;
   flex-wrap: wrap;
@@ -135,6 +166,8 @@
   align-items: stretch;
   border-bottom: 1px solid var(--border);
   transition: background 0.18s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 170px;
 }
 
 .row:hover {
