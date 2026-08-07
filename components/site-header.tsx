@@ -2,8 +2,7 @@
 
 import { Bookmark, Bot, Menu, Search, Settings, X } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import { LiveStatus } from "@/components/live-status";
+import { useState, type ReactNode } from "react";
 
 const navItems = [
   ["研究首页", "/"],
@@ -13,7 +12,7 @@ const navItems = [
   ["核心公司", "/companies"],
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ status }: { status: ReactNode }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -37,7 +36,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="header-actions">
-          <LiveStatus />
+          {status}
           <Link className="icon-button" href="/research-agent" aria-label="研究助手" title="研究助手">
             <Bot size={18} />
           </Link>
