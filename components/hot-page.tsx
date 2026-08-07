@@ -30,7 +30,7 @@ import {
   setArticleFavorite,
   type HotnessInput,
 } from "@/lib/hotness";
-import type { LiveIntelligenceEvent } from "@/lib/use-articles";
+import type { ArticlePayload, LiveIntelligenceEvent } from "@/lib/use-articles";
 import { useArticles } from "@/lib/use-articles";
 
 const SHARE_REQUEST_EVENT = "vciq:favorite-share-request";
@@ -96,12 +96,16 @@ function shareArticle(article: LiveIntelligenceEvent) {
   );
 }
 
-export function HotPage() {
-  const { articles, generatedAt, isLive } = useArticles();
+export function HotPage({ initialPayload }: { initialPayload: ArticlePayload }) {
+  const { articles, generatedAt, refetch, isFetching } = useArticles(initialPayload, {
+    enabled: false,
+  });
   const hotness = useHotness();
   const favorites = useFavorites();
   const [query, setQuery] = useState("");
   const [onlyInteracted, setOnlyInteracted] = useState(false);
+  const [fullArchiveLoaded, setFullArchiveLoaded] = useState(false);
+  const [archiveError, setArchiveError] = useState(false);
 
   const favoriteKeys = useMemo(
     () => new Set(favorites.map((item) => canonicalHotnessKey(item.href)).filter(Boolean)),
@@ -188,8 +192,13 @@ export function HotPage() {
       .slice(0, DISPLAY_LIMIT);
   }, [allRanked, onlyInteracted, query]);
 
-  const totalOpens = hotness.reduce((sum, item) => sum + item.opens, 0);
-  const totalShares = hotness.reduce((sum, item) => sum + item.shares, 0);
+  const loadFullArchive = () => {
+    if (fullArchiveLoaded || isFetching) return;
+    setArchiveError(false);
+    void refetch()
+      .then(() => setFullArchiveLoaded(true))
+      .catch(() => setArchiveError(true));
+  };
 
   return (
     <>
@@ -202,9 +211,24 @@ export function HotPage() {
           </p>
         </div>
         <div className={styles.summary}>
-          <span>{isLive ? "实时文章池" : "内置文章池"}</span>
-          <strong>{ranked.length}</strong>
-          <p>条候选 · 数据快照 {generatedAt.slice(0, 10)}</p>
+          <span>{fullArchiveLoaded ? "完整文章池" : "部署候选池"}</span>
+          <strong>{articles.length}</strong>
+          <p>
+            当前候选 · 总档案 {initialPayload.articleCount} 条 · 数据快照 {generatedAt.slice(0, 10)}
+          </p>
+          {!fullArchiveLoaded ? (
+            <button
+              type="button"
+              className={styles.archiveButton}
+              onClick={loadFullArchive}
+              disabled={isFetching}
+            >
+              {isFetching ? "正在加载完整档案…" : "需要时加载完整档案"}
+            </button>
+          ) : null}
+          {archiveError ? (
+            <small className={styles.archiveStatus}>完整档案暂时不可用，当前候选池仍可正常使用。</small>
+          ) : null}
         </div>
       </header>
 
