@@ -1,13 +1,54 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-06T09:47:07+00:00",
-  "candidateCount": 8,
-  "pendingCount": 0,
+  "generatedAt": "2026-08-07T00:06:25+00:00",
+  "candidateCount": 9,
+  "pendingCount": 1,
   "acceptedCount": 7,
   "rejectedCount": 0,
   "mergedCount": 0,
   "publishedCount": 1,
   "candidates": [
+    {
+      "id": "candidate-movida-e1c1f617",
+      "decisionKey": "movida",
+      "name": "Movida",
+      "aliases": [
+        "Movida"
+      ],
+      "region": "全球",
+      "sector": "AI / AGI",
+      "score": 55,
+      "status": "pending",
+      "reasons": [
+        "1 条管理员文章采集",
+        "最近 90 天仍有公开活动"
+      ],
+      "firstSeenAt": "2026-08-06T15:01:56.206000+00:00",
+      "lastSeenAt": "2026-08-06T15:01:56.206000+00:00",
+      "articleCount": 1,
+      "captureCount": 1,
+      "captureIds": [
+        "capture-67bd8v"
+      ],
+      "sourceCount": 1,
+      "sourceHosts": [
+        "leiphone.com"
+      ],
+      "sourceArticleIds": [
+        "capture-67bd8v"
+      ],
+      "sourceUrls": [
+        "https://www.leiphone.com/category/industrynews/f2V1P6CeMXNjyvSG.html"
+      ],
+      "eventTypes": [
+        "商业进展"
+      ],
+      "note": "",
+      "mergedSlug": "",
+      "decidedAt": "",
+      "reviewedBy": "",
+      "onboarding": {}
+    },
     {
       "id": "candidate-company-7c8a4a0a",
       "decisionKey": "砺思资本",
@@ -200,12 +241,12 @@
       ],
       "sourceArticleIds": [
         "user-source-source-auto-item-ca1e1423-033aa3f67387509e",
-        "user-source-source-auto-item-ca1e1423-a128d4f754b42819",
+        "user-source-source-auto-item-ca1e1423-f51d555d240b3370",
         "user-source-source-auto-item-ca1e1423-f52941c60f8dff5e"
       ],
       "sourceUrls": [
         "https://www.sohu.com/a/1059451554_114988?edtcode=iuHdqxHtf8KDncYwGWrkFA%3D%3D&edtsign=16D687925B5626CA4B0D57FD6A1A1F52BE538851&scm=thor.280_14-200000.0.0-0-0-0-0.",
-        "https://www.sohu.com/a/1059570005_121345914?edtcode=w450obQ2be7zSzjp7zczNQ%3D%3D&edtsign=DD03B26BA317D69D8348B52D69428D98A3E12E1E&scm=thor.280_14-200000.0.0-0-0-0-0.",
+        "https://www.sohu.com/a/1059570005_121345914?edtcode=ZXZIga8TCtoUBnjChyFSEw%3D%3D&edtsign=A30DA1B82F9CD54555AE1B9296104693BCB149C5&scm=thor.280_14-200000.0.0-0-0-0-0.",
         "https://www.sohu.com/a/1057353761_161795?edtcode=LPEGkn04C3vvNUzzNAOT4ga2oN2%2BAMpMDyHU9tYktFw%3D&edtsign=EA42681E5F133136982DCFF2436D01182B98F734&scm=thor.280_14-200000.0.0-0-0-0-0."
       ],
       "eventTypes": [
@@ -312,7 +353,7 @@
         "最近 90 天仍有公开活动"
       ],
       "firstSeenAt": "2025-11-25T00:00:00+00:00",
-      "lastSeenAt": "2026-08-05T00:00:00+00:00",
+      "lastSeenAt": "2026-08-06T00:00:00+00:00",
       "articleCount": 13,
       "captureCount": 0,
       "captureIds": [],
@@ -391,8 +432,8 @@
     }
   ],
   "entityResolution": {
-    "captureCount": 16,
-    "companyCount": 5,
+    "captureCount": 19,
+    "companyCount": 8,
     "reviewCount": 8,
     "reclassifiedCount": 2,
     "rejectedCount": 0
