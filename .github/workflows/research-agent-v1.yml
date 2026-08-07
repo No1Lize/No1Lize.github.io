@@ -35,9 +35,11 @@ jobs:
         run: |
           python -m py_compile \
             tools/research_agent.py \
+            tools/research_agent_runtime.py \
             tools/run_pipeline.py \
             tools/build_pipeline_health.py
           python -m unittest tests.test_research_agent tests.test_research_agent_workflow
+          python -m unittest tests.test_research_agent_runtime
           python -m unittest tests.test_pipeline_control
           python tools/run_pipeline.py check
 
@@ -48,7 +50,33 @@ jobs:
           SILICONFLOW_MODEL: deepseek-ai/DeepSeek-V4-Flash
           RESEARCH_AGENT_REASONING_EFFORT: high
           RESEARCH_AGENT_TIMEZONE: Asia/Taipei
-        run: python tools/research_agent.py --bootstrap-git-ref HEAD^
+          RESEARCH_AGENT_API_TIMEOUT: "180"
+          RESEARCH_AGENT_API_RETRIES: "1"
+          RESEARCH_AGENT_MODEL_CHANGE_LIMIT: "16"
+        run: python tools/research_agent_runtime.py --bootstrap-git-ref HEAD^
+
+      - name: Report model execution status
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(
+              Path("public/data/research_agent_daily.json").read_text(encoding="utf-8")
+          )
+          status = str(report.get("runStatus") or "unknown")
+          methodology = report.get("methodology")
+          reason = ""
+          if isinstance(methodology, dict):
+              reason = str(methodology.get("fallbackReason") or "")
+          print(f"Research Agent runStatus={status} fallbackReason={reason or '-'}")
+          if status == "api-fallback":
+              print(
+                  f"::warning title=Research Agent degraded::"
+                  f"Model analysis fell back to deterministic rules ({reason or 'unknown reason'})."
+              )
+          PY
 
       - name: Validate published research contract
         run: python tools/research_agent.py --check
