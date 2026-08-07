@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T00:06:23+00:00",
+  "generatedAt": "2026-08-07T00:49:44+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-07T00:05:57+00:00",
+      "updatedAt": "2026-08-07T00:49:22+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -1002,16 +1002,6 @@
           "value": "59.97"
         },
         {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "1.99%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "¥143.04亿"
-        },
-        {
           "id": "totalShares",
           "label": "总股本",
           "value": "6.28亿股"
@@ -1139,7 +1129,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-07T00:05:54+00:00",
+      "updatedAt": "2026-08-07T00:49:21+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2130,16 +2120,6 @@
           "value": "4.81"
         },
         {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "1.06%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "¥177.50亿"
-        },
-        {
           "id": "totalShares",
           "label": "总股本",
           "value": "46.27亿股"
@@ -2201,6 +2181,12 @@
       },
       "news": [
         {
+          "title": "智通港股沽空统计|8月7日",
+          "url": "https://finance.sina.com.cn/stock/hkstock/ggscyd/2026-08-07/doc-inimmyem4125815.shtml",
+          "publishedAt": "2026-08-07T08:20:00+08:00",
+          "source": "新浪财经"
+        },
+        {
           "title": "DeepSeek预告API价格大幅上调 AI大模型行业定价逻辑生变",
           "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimmtwx3294919.shtml",
           "publishedAt": "2026-08-07T07:45:00+08:00",
@@ -2253,12 +2239,6 @@
           "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimmtwx3264128.shtml",
           "publishedAt": "2026-08-07T00:00:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "资金“追光”，涌入光模块龙头",
-          "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimmazc0421693.shtml",
-          "publishedAt": "2026-08-06T23:00:00+08:00",
-          "source": "新浪财经"
         }
       ]
     },
@@ -2267,7 +2247,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-07T00:05:59+00:00",
+      "updatedAt": "2026-08-07T00:49:22+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3254,16 +3234,6 @@
           "value": "1.89"
         },
         {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "2.19%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "¥3.53亿"
-        },
-        {
           "id": "totalShares",
           "label": "总股本",
           "value": "4.18亿股"
@@ -3391,7 +3361,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-07T00:05:53+00:00",
+      "updatedAt": "2026-08-07T00:49:20+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4519,7 +4489,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-07T00:05:53+00:00",
+      "updatedAt": "2026-08-07T00:49:20+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5647,7 +5617,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-07T00:06:07+00:00",
+      "updatedAt": "2026-08-07T00:49:32+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6747,6 +6717,9 @@
           "publishedAt": "2026-06-29T19:47:24+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "weride": {
@@ -6754,7 +6727,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-07T00:06:07+00:00",
+      "updatedAt": "2026-08-07T00:49:32+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7856,7 +7829,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-07T00:06:07+00:00",
+      "updatedAt": "2026-08-07T00:49:33+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8906,9 +8879,15 @@
       },
       "news": [
         {
+          "title": "Rigetti Computing, Inc. (RGTI) Reports Q2 Loss, Tops Revenue Estimates",
+          "url": "https://finance.yahoo.com/markets/stocks/articles/rigetti-computing-inc-rgti-reports-231016086.html?.tsrc=rss",
+          "publishedAt": "2026-08-06T23:10:16+00:00",
+          "source": "Yahoo财经"
+        },
+        {
           "title": "Rigetti’s Quantum System Sales Are Accelerating and the Stock Is Tumbling",
           "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/rigetti%E2%80%99s-quantum-system.html?.tsrc=rss",
-          "publishedAt": "2026-08-06T21:11:00+00:00",
+          "publishedAt": "2026-08-06T22:58:00+00:00",
           "source": "Yahoo财经"
         },
         {
@@ -8934,12 +8913,6 @@
           "url": "https://finance.yahoo.com/markets/stocks/articles/qbts-rgti-q2-earnings-tomorrow-190000461.html?.tsrc=rss",
           "publishedAt": "2026-08-05T19:00:00+00:00",
           "source": "Yahoo财经"
-        },
-        {
-          "title": "Rigetti Expands Hybrid Quantum HPC Push With New NSF Project",
-          "url": "https://finance.yahoo.com/technology/articles/rigetti-expands-hybrid-quantum-hpc-174400386.html?.tsrc=rss",
-          "publishedAt": "2026-08-05T17:44:00+00:00",
-          "source": "Yahoo财经"
         }
       ]
     },
@@ -8948,7 +8921,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-07T00:06:09+00:00",
+      "updatedAt": "2026-08-07T00:49:33+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -10020,7 +9993,7 @@
         {
           "title": "Rigetti’s Quantum System Sales Are Accelerating and the Stock Is Tumbling",
           "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/rigetti%E2%80%99s-quantum-system.html?.tsrc=rss",
-          "publishedAt": "2026-08-06T21:11:00+00:00",
+          "publishedAt": "2026-08-06T22:58:00+00:00",
           "source": "Yahoo财经"
         },
         {
@@ -10060,7 +10033,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-07T00:06:11+00:00",
+      "updatedAt": "2026-08-07T00:49:33+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -11061,7 +11034,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$15.03亿"
+          "value": "US$15.04亿"
         },
         {
           "id": "totalShares",
@@ -11172,7 +11145,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-07T00:06:16+00:00",
+      "updatedAt": "2026-08-07T00:49:40+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -12284,7 +12257,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-07T00:06:16+00:00",
+      "updatedAt": "2026-08-07T00:49:40+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -13285,7 +13258,7 @@
         {
           "id": "amount",
           "label": "成交额",
-          "value": "US$4687.50万"
+          "value": "US$4687.51万"
         },
         {
           "id": "totalShares",
@@ -13396,7 +13369,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-07T00:06:18+00:00",
+      "updatedAt": "2026-08-07T00:49:41+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -14508,7 +14481,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-07T00:06:19+00:00",
+      "updatedAt": "2026-08-07T00:49:41+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -15619,7 +15592,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-07T00:06:20+00:00",
+      "updatedAt": "2026-08-07T00:49:42+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
