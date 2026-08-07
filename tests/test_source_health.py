@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 from datetime import UTC, datetime, timedelta
 
+from tools.source_health_summary import rebuild_source_health_summary
 from tools.update_source_health import DEFAULT_POLICY, update_health
 
 

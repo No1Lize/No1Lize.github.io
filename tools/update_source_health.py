@@ -43,6 +43,11 @@ except ImportError:
         review_index,
     )
 
+try:
+    from .source_health_summary import rebuild_source_health_summary
+except ImportError:
+    from source_health_summary import rebuild_source_health_summary
+
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ARTICLES_PATH = ROOT / "public" / "data" / "articles.json"
 DEFAULT_STATE_PATH = ROOT / "public" / "data" / "source_health.json"
@@ -443,6 +448,7 @@ def update_health(
         "monitorSources": monitor_ids,
         "sources": dict(sorted(next_sources.items())),
     }
+    result = rebuild_source_health_summary(result)
     summary = {
         "activeAlerts": active_alerts,
         "newAlerts": sorted(new_alerts),
