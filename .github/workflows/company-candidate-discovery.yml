@@ -8,6 +8,7 @@ on:
   push:
     branches: [main]
     paths:
+      - tools/apply_manual_company_trust.py
       - tools/build_company_candidates.py
       - tools/build_resolved_company_candidates.py
       - tools/entity_resolution.py
@@ -20,6 +21,7 @@ on:
       - config/tracking_capture_inbox.json
       - config/user_tracking.json
       - tests/test_company_candidates.py
+      - tests/test_manual_company_trust.py
       - tests/test_entity_resolution.py
       - tests/test_entity_resolution_workflow.py
       - tests/test_resolved_company_candidates.py
@@ -48,6 +50,7 @@ jobs:
       - name: Validate entity resolution and candidate discovery
         run: |
           python -m py_compile \
+            tools/apply_manual_company_trust.py \
             tools/build_company_candidates.py \
             tools/build_resolved_company_candidates.py \
             tools/entity_resolution.py \
@@ -55,6 +58,7 @@ jobs:
             tools/resolved_company_captures.py
           python -m unittest \
             tests.test_company_candidates \
+            tests.test_manual_company_trust \
             tests.test_entity_resolution \
             tests.test_entity_resolution_workflow \
             tests.test_resolved_company_candidates
@@ -76,11 +80,14 @@ jobs:
             tracking_inputs_changed=true
           fi
           echo "changed=$tracking_inputs_changed" >> "$GITHUB_OUTPUT"
-      - name: Reconcile entity types and build candidate review snapshot
+      - name: Reconcile entities, auto-trust manual additions and build review snapshot
         run: |
           python tools/reconcile_entity_resolution.py
           python tools/build_resolved_company_candidates.py
+          python tools/apply_manual_company_trust.py
+          python tools/build_resolved_company_candidates.py
           python tools/reconcile_entity_resolution.py --check
+          python tools/apply_manual_company_trust.py --check
           python tools/build_resolved_company_candidates.py --check
       - name: Commit resolved tracking and candidate evidence
         id: publish
@@ -90,10 +97,11 @@ jobs:
           changed_paths=(
             config/user_tracking.json
             config/tracking_capture_inbox.json
+            config/company_candidate_decisions.json
             public/data/company_candidates.json
           )
           if git diff --quiet -- "${changed_paths[@]}"; then
-            echo "No semantic entity-resolution or candidate changes."
+            echo "No semantic entity-resolution, trust-policy or candidate changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "tracking_changed=false" >> "$GITHUB_OUTPUT"
             exit 0
@@ -106,7 +114,10 @@ jobs:
             git pull --rebase -X theirs origin main
             python tools/reconcile_entity_resolution.py
             python tools/build_resolved_company_candidates.py
+            python tools/apply_manual_company_trust.py
+            python tools/build_resolved_company_candidates.py
             python tools/reconcile_entity_resolution.py --check
+            python tools/apply_manual_company_trust.py --check
             python tools/build_resolved_company_candidates.py --check
             git add "${changed_paths[@]}"
             if ! git diff --cached --quiet; then
