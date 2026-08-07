@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "pipelineVersion": "automation-control-plane-v1",
-  "generatedAt": "2026-08-07T17:34:29Z",
+  "generatedAt": "2026-08-07T20:42:56Z",
   "repository": "VCIQ/VCIQ.github.io",
   "artifacts": {
     "public/data/articles.json": {
@@ -13,17 +13,17 @@
       "required": true,
       "shared": true,
       "status": "healthy",
-      "contentSha256": "c6c4317759094ec3c92dd3fca61c4105376635ffc8283f12abe4d53d5d0f2f68",
-      "bytes": 2398166,
-      "dataTimestamp": "2026-08-07T16:56:54Z",
-      "ageHours": 0.63,
+      "contentSha256": "3a04a4a48fd2ebfddc79ed3410e6e239de5c0c14d4e63d4556e2bde2189d02bd",
+      "bytes": 2233629,
+      "dataTimestamp": "2026-08-07T20:42:52Z",
+      "ageHours": 0.0,
       "freshnessSlaHours": 4.0,
       "producer": {
-        "jobId": "public-intelligence-full-refresh",
-        "runId": "gha:31197284605:1:public-intelligence-full-refresh",
-        "codeSha": "145a47782fef05ad07ff83580438ac185f2721c6",
+        "jobId": "public-intelligence-frequent-refresh",
+        "runId": "gha:31215646117:1:public-intelligence-frequent-refresh",
+        "codeSha": "7db9c74733677b1539b975b24c065ed25c829186",
         "sourceRef": "refs/heads/main",
-        "completedAt": "2026-08-07T16:59:47Z",
+        "completedAt": "2026-08-07T20:42:56Z",
         "qualityGate": "passed",
         "status": "success"
       }
@@ -39,7 +39,7 @@
       "contentSha256": "bf4eb0d79c0352900221e5889c13d07240d02dc12a24d1f19aef3da0e3097b5d",
       "bytes": 186871,
       "dataTimestamp": "2026-08-04T00:00:00Z",
-      "ageHours": 89.57,
+      "ageHours": 92.72,
       "freshnessSlaHours": 168.0,
       "producer": {
         "jobId": "institution-data-layers",
@@ -62,7 +62,7 @@
       "contentSha256": "55d167bf50d88ec1c4cee4d47e0323522fbd9b580f3f8ef8a0272f3a0621cc0d",
       "bytes": 162221,
       "dataTimestamp": "2026-08-04T16:56:36Z",
-      "ageHours": 72.63,
+      "ageHours": 75.77,
       "freshnessSlaHours": 168.0,
       "producer": {
         "jobId": "institution-data-layers",
@@ -85,7 +85,7 @@
       "contentSha256": "8f8aaaeae68dd854c63957cb9e34d1c6ae443ddb78558f976d67617e632bdb21",
       "bytes": 112330,
       "dataTimestamp": "2026-08-05T03:43:51Z",
-      "ageHours": 61.84,
+      "ageHours": 64.98,
       "freshnessSlaHours": 168.0,
       "producer": {
         "jobId": "institution-data-layers",
@@ -108,7 +108,7 @@
       "contentSha256": "3dc67c353d61655424fa97c024775cc96aec461791af4daed38e32c89894ceaf",
       "bytes": 168885,
       "dataTimestamp": "2026-08-07T16:47:06Z",
-      "ageHours": 0.79,
+      "ageHours": 3.93,
       "freshnessSlaHours": 30.0,
       "producer": {
         "jobId": "public-intelligence-full-refresh",
@@ -131,7 +131,7 @@
       "contentSha256": "7993922e9baf727f52a46b0740345abe82e21b03140619033adf8d75b2392ef6",
       "bytes": 464208,
       "dataTimestamp": "2026-08-07T16:56:52Z",
-      "ageHours": 0.63,
+      "ageHours": 3.77,
       "freshnessSlaHours": 30.0,
       "producer": {
         "jobId": "public-intelligence-full-refresh",
@@ -154,7 +154,7 @@
       "contentSha256": "b16381923aee63823c9e63ddfcbf48784f9f15b481ecb1d84ac375f752ecadc7",
       "bytes": 237074,
       "dataTimestamp": "2026-08-07T16:59:02Z",
-      "ageHours": 0.59,
+      "ageHours": 3.73,
       "freshnessSlaHours": 30.0,
       "producer": {
         "jobId": "public-intelligence-full-refresh",
@@ -177,7 +177,7 @@
       "contentSha256": "e345fa505ebdf6104551bf8acc0c78dd509cc3501db52a8c44506f9fa2d71d1c",
       "bytes": 202274,
       "dataTimestamp": "2026-08-07T17:33:11Z",
-      "ageHours": 0.02,
+      "ageHours": 3.16,
       "freshnessSlaHours": 36.0,
       "producer": {
         "jobId": "research-agent-daily",
@@ -200,7 +200,7 @@
       "contentSha256": "37bca16833321739880b4b31e4955ab02a1b380f06f859bdfae338cd1a615e50",
       "bytes": 910776,
       "dataTimestamp": "2026-08-07T17:33:11Z",
-      "ageHours": 0.02,
+      "ageHours": 3.16,
       "freshnessSlaHours": 36.0,
       "producer": {
         "jobId": "research-agent-daily",
@@ -224,7 +224,7 @@
       "contentSha256": "91b43b89912d45742fe0cfead1eaed806944e6c0cd5298b22759971422f0bb46",
       "bytes": 5200712,
       "dataTimestamp": "2026-08-07T16:55:26Z",
-      "ageHours": 0.65,
+      "ageHours": 3.79,
       "freshnessSlaHours": 30.0,
       "producer": {
         "jobId": "public-intelligence-full-refresh",
@@ -262,7 +262,7 @@
       "contentSha256": "075cf9075944367929de3cded569e4ef45e8f948315239f8831cd717341a871a",
       "bytes": 132093,
       "dataTimestamp": "2026-08-04T16:56:36Z",
-      "ageHours": 72.63,
+      "ageHours": 75.77,
       "freshnessSlaHours": 192.0,
       "producer": {
         "jobId": "star-market-investor-refresh",
@@ -285,7 +285,7 @@
       "contentSha256": "9a4dcdc209ee41d4f64f8cd5bae26ea7e6bf9eaa392e5388fc54483443a2f268",
       "bytes": 479065,
       "dataTimestamp": "2026-08-05T01:21:18Z",
-      "ageHours": 64.22,
+      "ageHours": 67.36,
       "freshnessSlaHours": 30.0,
       "producer": {
         "jobId": "venture-profile-refresh",
