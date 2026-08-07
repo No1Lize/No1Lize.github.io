@@ -5,9 +5,6 @@ on:
     - cron: "45 7 * * *"
       timezone: "Asia/Taipei"
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Refresh public intelligence"]
-    types: [completed]
   push:
     branches: [main]
     paths:
@@ -33,13 +30,11 @@ permissions:
   actions: write
 
 concurrency:
-  # Failed or cancelled refresh completions skip outside the repository-writer queue.
-  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('vciq-company-candidate-skip-{0}', github.run_id) || format('vciq-repository-writer-{0}', github.ref) }}
+  group: vciq-repository-writer-${{ github.ref }}
   queue: max
 
 jobs:
   discover:
-    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -114,7 +109,7 @@ jobs:
             fi
           done
       - name: Continue refresh or deploy after reconciliation
-        if: steps.publish.outputs.changed == 'true' || github.event_name == 'workflow_run' || github.event_name == 'push'
+        if: steps.publish.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
           EVENT_NAME: ${{ github.event_name }}
@@ -126,6 +121,6 @@ jobs:
             echo "Tracking inputs may have changed; rebuild the article snapshot before Pages."
             gh workflow run scheduled-sync.yml --ref main
           else
-            echo "Tracking scope is stable after a successful refresh; deploy the fixed-point snapshot."
+            echo "Tracking scope is fixed after refresh reconciliation; deploy the committed snapshot."
             gh workflow run pages.yml --ref main
           fi
