@@ -18,13 +18,29 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
             "sourceUrls": ["https://news.example/article"],
         }
 
-    def page(self, url: str, *, text: str = "Taalas builds AI chip infrastructure") -> dict:
+    def page(
+        self,
+        url: str,
+        *,
+        text: str = "Taalas builds AI chip infrastructure",
+    ) -> dict:
         return {
             "url": url,
             "title": "Taalas",
             "description": text,
             "text": text,
             "newsUrls": [],
+        }
+
+    def decisions(self, key: str) -> dict:
+        return {
+            "decisions": {
+                key: {
+                    "status": "accepted",
+                    "note": "manual",
+                    "reviewedBy": "VCIQ",
+                }
+            }
         }
 
     def test_brand_domain_candidates_are_bounded_and_exact(self) -> None:
@@ -61,13 +77,17 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
             fetched.append(url)
             if url == "https://taalas.com/":
                 return self.page(url)
-            raise AssertionError(f"brand probe should not run after verified source link: {url}")
+            raise AssertionError(
+                f"brand probe should not run after verified source link: {url}"
+            )
 
         metadata, reason = discovery.discover_verified_official_site(
             candidate,
             page_fetcher=page_fetcher,
-            identity_checker=lambda page, names: "Taalas" in page["text"] and "Taalas" in names,
-            sector_checker=lambda page, sector: "AI chip" in page["text"] and sector == "AI / AGI",
+            identity_checker=lambda page, names: "Taalas" in page["text"]
+            and "Taalas" in names,
+            sector_checker=lambda page, sector: "AI chip" in page["text"]
+            and sector == "AI / AGI",
             source_link_fetcher=source_fetcher,
         )
         self.assertEqual(reason, "")
@@ -94,8 +114,10 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
         metadata, reason = discovery.discover_verified_official_site(
             candidate,
             page_fetcher=page_fetcher,
-            identity_checker=lambda page, names: "Firmus" in page["text"] and "Firmus" in names,
-            sector_checker=lambda page, sector: "artificial intelligence" in page["text"],
+            identity_checker=lambda page, names: "Firmus" in page["text"]
+            and "Firmus" in names,
+            sector_checker=lambda page, _sector: "artificial intelligence"
+            in page["text"],
             source_link_fetcher=lambda _url: [],
         )
         self.assertEqual(reason, "")
@@ -141,24 +163,45 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
             candidate,
             page_fetcher=page_fetcher,
             identity_checker=lambda _page, _names: True,
-            sector_checker=lambda page, _sector: "artificial intelligence" in page["text"],
+            sector_checker=lambda page, _sector: "artificial intelligence"
+            in page["text"],
             source_link_fetcher=lambda _url: [],
         )
         self.assertIsNone(metadata)
         self.assertIn("no verified official site", reason)
 
-    def test_v2_precomputes_verified_identity_only_for_accepted_company(self) -> None:
+    def test_v2_prefers_exact_wikidata_before_domain_discovery(self) -> None:
         candidate = self.candidate("Taalas")
-        candidates = {"candidates": [candidate]}
-        decisions = {
-            "decisions": {
-                "taalas": {
-                    "status": "accepted",
-                    "note": "manual",
-                    "reviewedBy": "VCIQ",
-                }
-            }
+        wikidata = {
+            "source": "wikidata",
+            "canonicalName": "Taalas",
+            "englishName": "Taalas",
+            "homepage": "https://verified.example/",
+            "region": "美国",
+            "aliases": [],
         }
+        with patch.object(
+            onboarding_v2.preparation,
+            "resolve_wikidata_company",
+            return_value=(wikidata, ""),
+        ) as wikidata_mock, patch.object(
+            onboarding_v2.discovery,
+            "discover_verified_official_site",
+        ) as discover_mock:
+            verified, report = onboarding_v2.discover_candidate_identities(
+                {"candidates": [candidate]},
+                self.decisions("taalas"),
+                {"companies": []},
+                {"companies": []},
+                limit=6,
+            )
+        self.assertEqual(verified["taalas"]["homepage"], "https://verified.example/")
+        self.assertEqual(report["verifiedSources"]["taalas"], "wikidata")
+        wikidata_mock.assert_called_once_with("Taalas")
+        discover_mock.assert_not_called()
+
+    def test_v2_uses_evidence_discovery_after_wikidata_failure(self) -> None:
+        candidate = self.candidate("Taalas")
         metadata = {
             "source": "brand-domain-probe",
             "canonicalName": "Taalas",
@@ -168,18 +211,23 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
             "aliases": [],
         }
         with patch.object(
+            onboarding_v2.preparation,
+            "resolve_wikidata_company",
+            return_value=(None, "wikidata has no exact identity"),
+        ), patch.object(
             onboarding_v2.discovery,
             "discover_verified_official_site",
             return_value=(metadata, ""),
         ) as discover_mock:
             verified, report = onboarding_v2.discover_candidate_identities(
-                candidates,
-                decisions,
+                {"candidates": [candidate]},
+                self.decisions("taalas"),
+                {"companies": []},
                 {"companies": []},
                 limit=6,
             )
         self.assertEqual(verified["taalas"]["homepage"], "https://taalas.com/")
-        self.assertEqual(report["verifiedCount"], 1)
+        self.assertEqual(report["verifiedSources"]["taalas"], "brand-domain-probe")
         discover_mock.assert_called_once()
 
 
