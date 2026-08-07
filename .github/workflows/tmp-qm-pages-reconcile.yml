@@ -1,0 +1,47 @@
+name: One-shot entity reconciliation
+
+on:
+  push:
+    branches: ["fix/qm-pages-reconcile-20260807"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: one-shot-entity-reconciliation
+  cancel-in-progress: false
+
+jobs:
+  reconcile:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/qm-pages-reconcile-20260807
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Reconcile generated entity state
+        run: |
+          set -euo pipefail
+          python tools/reconcile_entity_resolution.py
+          python tools/build_resolved_company_candidates.py
+          python tools/reconcile_entity_resolution.py --check
+          python tools/build_resolved_company_candidates.py --check
+          python tools/run_pipeline.py check
+          python tools/company_profile_refresh_queue.py --check
+      - name: Commit generated fixed point and remove one-shot workflow
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/tmp-qm-pages-reconcile.yml
+          git add \
+            config/tracking_capture_inbox.json \
+            config/user_tracking.json \
+            public/data/company_candidates.json
+          git commit -m "data: restore entity resolution fixed point"
+          git push origin HEAD:fix/qm-pages-reconcile-20260807
