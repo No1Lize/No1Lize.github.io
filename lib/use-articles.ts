@@ -1,13 +1,55 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { z } from "zod";
-import {
-  intelligenceEvents,
-  snapshotDate,
-  type IntelligenceEvent,
-} from "@/lib/intelligence-data";
 import type { RefreshAudit } from "@/lib/snapshot-freshness";
+
+export type Region = "中国" | "美国" | "全球";
+export type EventType =
+  | "融资"
+  | "产业投资"
+  | "产品发布"
+  | "技术突破"
+  | "商业进展"
+  | "公司动态"
+  | "并购"
+  | "财报"
+  | "政策"
+  | "监管文件"
+  | "IPO"
+  | "论文"
+  | "人物观点";
+
+export type IntelligenceSource = {
+  name: string;
+  url: string;
+  level:
+    | "官方披露"
+    | "原始材料"
+    | "监管文件"
+    | "媒体报道"
+    | "数据库记录"
+    | "待交叉验证";
+  platform?: string;
+};
+
+export type IntelligenceEvent = {
+  id: string;
+  title: string;
+  summary: string;
+  type: EventType;
+  region: Region;
+  sector: string;
+  company: string;
+  companySlug?: string;
+  personSlug?: string;
+  sourceId?: string;
+  authors?: string[];
+  institutions?: string[];
+  publishedAt: string;
+  importance: number;
+  source: IntelligenceSource;
+  curated?: boolean;
+};
 
 export type RelatedArticleSource = {
   name: string;
@@ -31,161 +73,111 @@ export type LiveIntelligenceEvent = IntelligenceEvent & {
   matchedTrackingTerms?: string[];
 };
 
-const eventTypeSchema = z.enum([
-  "融资",
-  "产业投资",
-  "产品发布",
-  "技术突破",
-  "商业进展",
-  "公司动态",
-  "并购",
-  "财报",
-  "政策",
-  "监管文件",
-  "IPO",
-  "论文",
-  "人物观点",
-]);
-
-const relatedSourceSchema = z.object({
-  name: z.string(),
-  url: z.url(),
-  level: z.string(),
-  platform: z.string(),
-  title: z.string(),
-  publishedAt: z.string(),
-});
-
-const articleSchema = z.object({
-  id: z.string(),
-  title: z.string(),
-  summary: z.string(),
-  type: eventTypeSchema,
-  region: z.enum(["中国", "美国", "全球"]),
-  sector: z.string(),
-  company: z.string(),
-  companySlug: z.string().optional(),
-  personSlug: z.string().optional(),
-  sourceId: z.string().optional(),
-  authors: z.array(z.string()).optional(),
-  institutions: z.array(z.string()).optional(),
-  publishedAt: z.string(),
-  importance: z.number().min(0).max(100),
-  source: z.object({
-    name: z.string(),
-    url: z.url(),
-    level: z.enum([
-      "官方披露",
-      "原始材料",
-      "监管文件",
-      "媒体报道",
-      "数据库记录",
-      "待交叉验证",
-    ]),
-    platform: z.string().optional(),
-  }),
-  curated: z.boolean().optional(),
-  qualityScore: z.number().min(0).max(100).optional(),
-  qualityStatus: z.enum(["高可信", "可用", "低可信"]).optional(),
-  qualitySignals: z.array(z.string()).optional(),
-  relatedSources: z.array(relatedSourceSchema).optional(),
-  duplicateCount: z.number().int().nonnegative().optional(),
-  eventClusterId: z.string().optional(),
-  wechatAccount: z.string().optional(),
-  mentionedCompanies: z.array(z.string()).optional(),
-  mentionedPeople: z.array(z.string()).optional(),
-  matchedTrackingTerms: z.array(z.string()).optional(),
-});
-
-const refreshAuditSchema = z.object({
-  mode: z.string().optional(),
-  pipelineCompleted: z.boolean().optional(),
-  completedAt: z.string().optional(),
-  localDate: z.string().optional(),
-  articleCount: z.number().int().nonnegative().optional(),
-  previousArticleCount: z.number().int().nonnegative().optional(),
-  newArticleCount: z.number().int().nonnegative().optional(),
-  latestPublishedAt: z.string().optional(),
-  todayArticleCount: z.number().int().nonnegative().optional(),
-  todaySourceCount: z.number().int().nonnegative().optional(),
-});
-
-const payloadSchema = z.object({
-  schemaVersion: z.number(),
-  generatedAt: z.string(),
-  articleCount: z.number(),
-  articles: z.array(articleSchema),
-  companyFacts: z.record(z.string(), z.unknown()).optional(),
-  sourceStatus: z.array(z.object({
-    id: z.string(),
-    name: z.string(),
-    status: z.string(),
-    scanned: z.number(),
-    accepted: z.number(),
-    failed: z.number().optional(),
-    platform: z.string().optional(),
-    error: z.string().optional(),
-  })).optional(),
-  qualityGate: z.object({
-    passed: z.boolean(),
-    checks: z.record(z.string(), z.object({
-      actual: z.number(),
-      required: z.number(),
-      passed: z.boolean(),
-    })),
-    invalidArticles: z.array(z.object({
-      id: z.string(),
-      errors: z.array(z.string()),
-    })).optional(),
-    trackingQuality: z.object({
-      scoredUserArticles: z.number().int().nonnegative(),
-      acceptedUserArticles: z.number().int().nonnegative(),
-      rejectedUserArticles: z.number().int().nonnegative(),
-      clusteredDuplicates: z.number().int().nonnegative(),
-      minimumScore: z.number().min(0).max(100),
-    }).optional(),
-  }).optional(),
-  refreshAudit: refreshAuditSchema.optional(),
-});
-
-type ArticlePayload = z.infer<typeof payloadSchema>;
-
-const fallbackPayload: ArticlePayload = {
-  schemaVersion: 1,
-  generatedAt: `${snapshotDate}T00:00:00Z`,
-  articleCount: intelligenceEvents.length,
-  articles: intelligenceEvents,
-  companyFacts: {},
-  sourceStatus: [],
-  qualityGate: undefined,
-  refreshAudit: undefined,
+export type ArticleSourceStatus = {
+  id: string;
+  name: string;
+  status: string;
+  scanned: number;
+  accepted: number;
+  failed?: number;
+  platform?: string;
+  error?: string;
 };
+
+export type ArticleQualityGate = {
+  passed: boolean;
+  checks: Record<string, { actual: number; required: number; passed: boolean }>;
+  invalidArticles?: { id: string; errors: string[] }[];
+  trackingQuality?: {
+    scoredUserArticles: number;
+    acceptedUserArticles: number;
+    rejectedUserArticles: number;
+    clusteredDuplicates: number;
+    minimumScore: number;
+  };
+};
+
+export type ArticlePayload = {
+  schemaVersion: number;
+  generatedAt: string;
+  articleCount: number;
+  articles: LiveIntelligenceEvent[];
+  sourceStatus?: ArticleSourceStatus[];
+  qualityGate?: ArticleQualityGate;
+  refreshAudit?: RefreshAudit;
+};
+
+const emptyPayload: ArticlePayload = {
+  schemaVersion: 1,
+  generatedAt: "",
+  articleCount: 0,
+  articles: [],
+  sourceStatus: [],
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+/**
+ * Browser reads only a shallow contract here. The production snapshot is
+ * already validated article-by-article by the crawler, Pages build and public
+ * artifact gates. Repeating the full Zod walk over ~2.4 MB on every page load
+ * created a long synchronous task on the browser main thread.
+ */
+export function parseArticlePayload(value: unknown): ArticlePayload {
+  if (!isRecord(value)) throw new Error("Public article data is not an object");
+  if (typeof value.schemaVersion !== "number") {
+    throw new Error("Public article data is missing schemaVersion");
+  }
+  if (typeof value.generatedAt !== "string") {
+    throw new Error("Public article data is missing generatedAt");
+  }
+  if (!Array.isArray(value.articles)) {
+    throw new Error("Public article data is missing articles");
+  }
+
+  const first = value.articles[0];
+  if (
+    first !== undefined &&
+    (!isRecord(first) ||
+      typeof first.id !== "string" ||
+      typeof first.title !== "string" ||
+      !isRecord(first.source) ||
+      typeof first.source.url !== "string")
+  ) {
+    throw new Error("Public article data has an invalid article contract");
+  }
+
+  return value as unknown as ArticlePayload;
+}
 
 async function fetchArticles(): Promise<ArticlePayload> {
   const response = await fetch("/data/articles.json", { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`Public article data returned ${response.status}`);
   }
-  return payloadSchema.parse(await response.json());
+  return parseArticlePayload(await response.json());
 }
 
-export function useArticles() {
+export function useArticles(initialPayload: ArticlePayload = emptyPayload) {
   const query = useQuery({
     queryKey: ["public-articles"],
     queryFn: fetchArticles,
-    placeholderData: fallbackPayload,
-    refetchInterval: 5 * 60_000,
-    refetchIntervalInBackground: true,
-    refetchOnWindowFocus: true,
+    placeholderData: initialPayload,
+    staleTime: 20 * 60_000,
+    refetchInterval: 30 * 60_000,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: false,
   });
-  const payload = query.data ?? fallbackPayload;
+  const payload = query.data ?? initialPayload;
   return {
     ...query,
-    articles: payload.articles as LiveIntelligenceEvent[],
+    articles: payload.articles,
     generatedAt: payload.generatedAt,
     sourceStatus: payload.sourceStatus ?? [],
     qualityGate: payload.qualityGate,
-    refreshAudit: payload.refreshAudit as RefreshAudit | undefined,
+    refreshAudit: payload.refreshAudit,
     isLive: query.isSuccess && !query.isPlaceholderData,
   };
 }
