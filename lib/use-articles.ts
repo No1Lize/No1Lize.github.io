@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { RefreshAudit } from "@/lib/snapshot-freshness";
 
@@ -164,7 +165,23 @@ export function useArticles(
   initialPayload: ArticlePayload = emptyPayload,
   options: { enabled?: boolean } = {},
 ) {
-  const enabled = options.enabled ?? true;
+  // With build-time bootstrap data available, wait until the first real user
+  // interaction before loading the complete multi-megabyte event archive.
+  // Callers can still opt into immediate or fully disabled loading explicitly.
+  const [interactionEnabled, setInteractionEnabled] = useState(false);
+
+  useEffect(() => {
+    if (options.enabled !== undefined || interactionEnabled) return;
+    const activate = () => setInteractionEnabled(true);
+    window.addEventListener("pointerdown", activate, { once: true, passive: true });
+    window.addEventListener("keydown", activate, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", activate);
+      window.removeEventListener("keydown", activate);
+    };
+  }, [interactionEnabled, options.enabled]);
+
+  const enabled = options.enabled ?? interactionEnabled;
   const query = useQuery({
     queryKey: ["public-articles"],
     queryFn: fetchArticles,
