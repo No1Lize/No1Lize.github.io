@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Building2 } from "lucide-react";
 import { ChannelSplitLayout } from "@/components/channel-split-layout";
-import { CompanyCandidateDirectory } from "@/components/company-candidate-directory";
 import { CompanyDirectory } from "@/components/company-directory";
 import { CompanyProfileRefreshStatus } from "@/components/company-profile-refresh-status";
 import { companies } from "@/lib/catalog-data";
@@ -36,7 +35,6 @@ export default function CompaniesPage() {
       >
         <CompanyDirectory pageSize={6} />
         <CompanyProfileRefreshStatus />
-        <CompanyCandidateDirectory />
       </ChannelSplitLayout>
     </main>
   );
