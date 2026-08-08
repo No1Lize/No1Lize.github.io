@@ -31,7 +31,7 @@ import styles from "./tracking-company-onboarding.module.css";
 
 const API_ROOT = "https://api.github.com";
 const TOKEN_SESSION_KEY = "no1lize:tracking-admin-token";
-const CANDIDATE_PATH = "public/data/company_candidates.json";
+const CANDIDATE_PATH = "config/company_candidate_review_queue.json";
 const DECISION_PATH = "config/company_candidate_decisions.json";
 
 type GithubFile = { sha: string; content: string };
