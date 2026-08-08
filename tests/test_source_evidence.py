@@ -104,6 +104,27 @@ class SourceEvidenceTests(unittest.TestCase):
             "discovery",
         )
 
+    def test_runtime_source_id_overrides_preliminary_media_role(self) -> None:
+        # `_source()` may enrich a media row before sourceId exists, producing a
+        # preliminary corroboration role.  Once the stable runtime ID is known,
+        # automatic media must be reclassified as discovery.
+        rows = enrich_article_sources(
+            [
+                {
+                    "sourceId": "user-source-source-auto-media-example-com",
+                    "source": {
+                        "name": "Example Media",
+                        "url": "https://example.com/story",
+                        "level": "媒体报道",
+                        "platform": "Example Media",
+                        "sourceRole": "corroboration",
+                    },
+                }
+            ]
+        )
+        self.assertEqual(rows[0]["source"]["evidenceGrade"], "C")
+        self.assertEqual(rows[0]["source"]["sourceRole"], "discovery")
+
     def test_direct_wechat_is_corroboration_not_search_discovery(self) -> None:
         self.assertEqual(
             classify_source_role(
