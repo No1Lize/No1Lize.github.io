@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T03:10:05+00:00",
+  "generatedAt": "2026-08-08T03:43:19+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-08T03:09:44+00:00",
+      "updatedAt": "2026-08-08T03:42:57+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -1139,7 +1139,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-08T03:09:44+00:00",
+      "updatedAt": "2026-08-08T03:42:56+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2115,39 +2115,14 @@
           "value": "¥1.80万亿"
         },
         {
-          "id": "floatMarketCap",
-          "label": "流通市值",
-          "value": "¥1.65万亿"
-        },
-        {
-          "id": "pe",
-          "label": "市盈率",
-          "value": "20.74"
-        },
-        {
-          "id": "pb",
-          "label": "市净率",
-          "value": "4.82"
-        },
-        {
-          "id": "turnover",
-          "label": "换手率",
-          "value": "0.60%"
-        },
-        {
-          "id": "amount",
-          "label": "成交额",
-          "value": "¥98.78亿"
-        },
-        {
           "id": "totalShares",
           "label": "总股本",
-          "value": "46.27亿股"
+          "value": "46.27亿"
         },
         {
           "id": "floatShares",
           "label": "流通股",
-          "value": "42.60亿股"
+          "value": "42.60亿"
         },
         {
           "id": "eps",
@@ -2184,7 +2159,6 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/300750/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
-        "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300750&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
         "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml"
       },
       "quote": {
@@ -2200,12 +2174,6 @@
         }
       },
       "news": [
-        {
-          "title": "一句话点奶茶成真！千问闪购首次上车：极狐阿尔法T7又放大",
-          "url": "https://t.cj.sina.cn/articles/view/1659643027/62ec249302001rda0",
-          "publishedAt": "2026-08-08T10:33:00+08:00",
-          "source": "新浪财经"
-        },
         {
           "title": "恒翼能IPO，宁德时代如何“托举”？",
           "url": "https://finance.sina.com.cn/roll/2026-08-08/doc-inimqimt2738783.shtml",
@@ -2259,6 +2227,12 @@
           "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gadg",
           "publishedAt": "2026-08-08T03:41:00+08:00",
           "source": "新浪财经"
+        },
+        {
+          "title": "宁德时代获得发明专利授权：“电池、用电装置、电池制造方法及制造设备”",
+          "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gahm",
+          "publishedAt": "2026-08-08T03:40:00+08:00",
+          "source": "新浪财经"
         }
       ]
     },
@@ -2267,7 +2241,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-08T03:09:44+00:00",
+      "updatedAt": "2026-08-08T03:42:56+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3391,7 +3365,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-08T03:09:43+00:00",
+      "updatedAt": "2026-08-08T03:42:55+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4519,7 +4493,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-08T03:09:43+00:00",
+      "updatedAt": "2026-08-08T03:42:55+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5647,7 +5621,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-08T03:09:55+00:00",
+      "updatedAt": "2026-08-08T03:43:04+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6747,6 +6721,9 @@
           "publishedAt": "2026-06-29T19:47:24+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "weride": {
@@ -6754,7 +6731,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-08T03:09:54+00:00",
+      "updatedAt": "2026-08-08T03:43:04+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7856,7 +7833,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-08T03:09:54+00:00",
+      "updatedAt": "2026-08-08T03:43:06+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8968,7 +8945,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-08T03:09:54+00:00",
+      "updatedAt": "2026-08-08T03:43:07+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -10080,7 +10057,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-08T03:09:54+00:00",
+      "updatedAt": "2026-08-08T03:43:10+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -11192,7 +11169,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-08T03:10:02+00:00",
+      "updatedAt": "2026-08-08T03:43:10+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -12304,7 +12281,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-08T03:10:02+00:00",
+      "updatedAt": "2026-08-08T03:43:12+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -13409,6 +13386,9 @@
           "publishedAt": "2026-07-31T20:30:00+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "mobileye": {
@@ -13416,7 +13396,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-08T03:10:02+00:00",
+      "updatedAt": "2026-08-08T03:43:13+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -14521,6 +14501,9 @@
           "publishedAt": "2026-07-24T16:12:00+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "aurora": {
@@ -14528,7 +14511,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-08T03:10:03+00:00",
+      "updatedAt": "2026-08-08T03:43:17+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -15639,7 +15622,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-08T03:10:03+00:00",
+      "updatedAt": "2026-08-08T03:43:17+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
