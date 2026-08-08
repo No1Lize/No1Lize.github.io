@@ -86,6 +86,35 @@ class TrackingSeedGovernanceTests(unittest.TestCase):
         self.assertGreaterEqual(row["confidence"], 0.8)
         self.assertEqual(row["expiresAt"], "2026-10-30T00:00:00+00:00")
 
+    def test_verified_team_entries_get_high_confidence_but_still_expire(self) -> None:
+        config = self._config()
+        config["tracks"][0]["keywords"] = ["大模型"]
+        config["tracks"][0]["people"] = ["Sam Altman", "Research Lead"]
+        ledger = {
+            "schemaVersion": 1,
+            "updatedAt": "",
+            "tracks": {},
+            "added": [
+                {
+                    "track": "ai",
+                    "kind": "people",
+                    "value": "Research Lead",
+                    "addedAt": "2026-08-01T00:00:00+00:00",
+                    "evidence": ["sample-company-core-team", "verified-company-profile"],
+                }
+            ],
+            "removed": [],
+        }
+        governance.govern(
+            config,
+            ledger,
+            now=datetime(2026, 8, 8, tzinfo=timezone.utc),
+        )
+        row = ledger["added"][0]
+        self.assertEqual(row["termProvenance"], "auto:verified-directory")
+        self.assertEqual(row["confidence"], 0.97)
+        self.assertEqual(row["expiresAt"], "2027-08-01T00:00:00+00:00")
+
     def test_expired_entries_are_removed_without_permanent_tombstone(self) -> None:
         config = self._config()
         config["tracks"][0]["keywords"] = ["大模型", "agentic ai"]
