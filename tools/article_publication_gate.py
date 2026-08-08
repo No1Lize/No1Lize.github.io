@@ -117,6 +117,14 @@ def _explicit_event(article: dict[str, Any]) -> bool:
 
 
 def _title_mentions_entity(article: dict[str, Any]) -> bool:
+    """Require a literal entity cue in the title, not merely a resolved slug.
+
+    Entity resolution is valuable for joining records, but allowing a formal slug
+    alone to satisfy relevance would let a broad search result self-authorize its
+    own publication.  Discovery-tier material therefore needs the company/person
+    name in the title unless an independent stronger source corroborates it.
+    """
+
     title = _fold(article.get("title"))
     if not title:
         return False
@@ -129,9 +137,7 @@ def _title_mentions_entity(article: dict[str, Any]) -> bool:
             continue
         if any(_fold(value) and _fold(value) in title for value in values[:12]):
             return True
-    return bool(article.get("companySlug") or article.get("personSlug")) and bool(
-        _entity_keys(article)
-    )
+    return False
 
 
 def _strong_relevance(article: dict[str, Any]) -> bool:
