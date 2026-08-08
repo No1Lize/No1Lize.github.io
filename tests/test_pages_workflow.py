@@ -23,7 +23,8 @@ class PagesWorkflowTests(unittest.TestCase):
             [
                 "python tools/run_pipeline.py check",
                 "python tools/reconcile_entity_resolution.py --check",
-                "python tools/build_resolved_company_candidates.py --check",
+                "python tools/apply_manual_company_trust.py \\",
+                "python tools/build_resolved_company_candidates.py \\",
                 "python tools/company_profile_refresh_queue.py --check",
                 "python tools/crawl_articles.py --validate-only",
                 "python tools/validate_eastmoney_snapshot.py",
@@ -31,6 +32,15 @@ class PagesWorkflowTests(unittest.TestCase):
                 "python tools/run_pipeline.py build-provenance \\",
             ],
         )
+        self.assertIn(
+            "--candidates config/company_candidate_review_queue.json",
+            self.workflow,
+        )
+        self.assertIn(
+            "--output config/company_candidate_review_queue.json",
+            self.workflow,
+        )
+        self.assertNotIn("public/data/company_candidates.json", self.workflow)
         self.assertNotIn("Reconcile derived public data", self.workflow)
         self.assertNotIn("tools/run_pipeline.py finalize", self.workflow)
 
