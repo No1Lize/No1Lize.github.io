@@ -8,6 +8,11 @@ on:
       - tools/finalize_full_refresh.py
       - tools/validate_full_refresh.py
       - tools/professional_media_sources.py
+      - tools/source_portfolio.py
+      - tools/source_evidence.py
+      - tools/article_publication_gate.py
+      - tools/core_official_adapters.py
+      - tools/tracking_seed_governance.py
       - tools/validate_professional_media_snapshot.py
       - tools/crawl_with_wechat_registry.py
       - tools/snapshot_retention.py
@@ -16,6 +21,11 @@ on:
       - tools/tracking_source_governance.py
       - public/data/source_health.json
       - tests/test_professional_media_sources.py
+      - tests/test_source_portfolio.py
+      - tests/test_source_evidence.py
+      - tests/test_article_publication_gate.py
+      - tests/test_core_official_adapters.py
+      - tests/test_tracking_seed_governance.py
       - tests/test_source_health_summary.py
       - tests/test_scheduled_sync_workflow.py
       - .github/workflows/scheduled-sync.yml
@@ -38,6 +48,11 @@ jobs:
         run: |
           python -m py_compile \
             tools/professional_media_sources.py \
+            tools/source_portfolio.py \
+            tools/source_evidence.py \
+            tools/article_publication_gate.py \
+            tools/core_official_adapters.py \
+            tools/tracking_seed_governance.py \
             tools/validate_professional_media_snapshot.py \
             tools/crawl_with_wechat_registry.py \
             tools/validate_full_refresh.py \
@@ -46,6 +61,11 @@ jobs:
             tools/tracking_source_governance.py
           python -m unittest \
             tests.test_professional_media_sources \
+            tests.test_source_portfolio \
+            tests.test_source_evidence \
+            tests.test_article_publication_gate \
+            tests.test_core_official_adapters \
+            tests.test_tracking_seed_governance \
             tests.test_source_health_summary \
             tests.test_scheduled_sync_workflow
           python tools/source_health_summary.py --check
