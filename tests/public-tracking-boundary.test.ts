@@ -33,6 +33,33 @@ test("public research detail compatibility component contains no write client", 
   assert.match(source, /return null/u);
 });
 
+test("public companies page contains formal profiles only", () => {
+  const page = read("app/companies/page.tsx");
+  assert.match(page, /CompanyDirectory/u);
+  assert.match(page, /CompanyProfileRefreshStatus/u);
+  assert.doesNotMatch(page, /CompanyCandidateDirectory/u);
+  assert.equal(
+    fs.existsSync(path.join(root, "components/company-candidate-directory.tsx")),
+    false,
+  );
+});
+
+test("company review queue is not statically imported into the public frontend", () => {
+  const dataBoundary = read("lib/company-candidate-data.ts");
+  assert.doesNotMatch(dataBoundary, /public\/data\/company_candidates\.json/u);
+  assert.match(dataBoundary, /candidates:\s*\[\]/u);
+
+  const adminOnboarding = read("components/tracking-company-onboarding.tsx");
+  assert.match(
+    adminOnboarding,
+    /config\/company_candidate_review_queue\.json/u,
+  );
+  assert.doesNotMatch(
+    adminOnboarding,
+    /public\/data\/company_candidates\.json/u,
+  );
+});
+
 test("tracking snapshot coverage has no environment bypass", () => {
   const validator = read("scripts/validate-tracking-snapshot.mjs");
   assert.doesNotMatch(validator, /ALLOW_INCOMPLETE_TRACKING_COVERAGE/u);
@@ -41,7 +68,7 @@ test("tracking snapshot coverage has no environment bypass", () => {
   assert.match(validator, /errors\.push/u);
 });
 
-test("Pages build audits the final public artifact", () => {
+test("Pages build audits the final public artifact and rejects private review files", () => {
   const packageJson = JSON.parse(read("package.json")) as {
     scripts: Record<string, string>;
   };
@@ -55,4 +82,8 @@ test("Pages build audits the final public artifact", () => {
   assert.match(audit, /tracking\/capture/u);
   assert.match(audit, /GitHub Token/u);
   assert.match(audit, /totalBytes/u);
+  assert.match(audit, /data\/company_candidates\.json/u);
+  assert.match(audit, /data\/company_candidate_onboarding\.json/u);
+  assert.match(audit, /company_candidate_review_queue\.json/u);
+  assert.match(audit, /company_candidate_onboarding_state\.json/u);
 });
