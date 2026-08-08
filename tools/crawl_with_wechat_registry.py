@@ -151,13 +151,31 @@ def _install_source_governance() -> None:
         )
 
     def repair_media_company_attribution(articles):
-        enriched = source_evidence.enrich_article_sources(original_repair(articles))
-        publishable, report = article_publication_gate.filter_publishable_articles(enriched)
-        print("Article publication gate: " + json.dumps(report, ensure_ascii=False))
-        return publishable
+        # Add evidence grade/role before tracking-quality scoring so downstream
+        # ranking can inspect authority, but defer publication filtering until the
+        # runtime wrapper has attached qualityScore and tracking signals.
+        return source_evidence.enrich_article_sources(original_repair(articles))
 
     def install_runtime(merged, sec_specs, active_ids):
         original_install_runtime(merged, sec_specs, active_ids)
+
+        runtime_repair = crawler.repair_media_company_attribution
+        if not getattr(runtime_repair, "_article_publication_gate", False):
+            def repair_with_publication_gate(articles):
+                scored = runtime_repair(articles)
+                enriched = source_evidence.enrich_article_sources(scored)
+                publishable, report = article_publication_gate.filter_publishable_articles(
+                    enriched
+                )
+                print(
+                    "Article publication gate: "
+                    + json.dumps(report, ensure_ascii=False)
+                )
+                return publishable
+
+            setattr(repair_with_publication_gate, "_article_publication_gate", True)
+            crawler.repair_media_company_attribution = repair_with_publication_gate
+
         original_replace = crawler.replace_source_batches
         if getattr(original_replace, "_source_publication_quarantine", False):
             return
