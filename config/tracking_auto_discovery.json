@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-04T16:44:18+00:00",
+  "updatedAt": "2026-08-08T12:54:40+00:00",
   "tracks": {
     "ai": {
       "lastExpandedAt": "2026-08-03T06:23:05+00:00"
@@ -50,7 +50,10 @@
       "addedAt": "2026-07-26T14:54:23+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2027-07-26T14:54:23+00:00"
     },
     {
       "track": "energy",
@@ -59,7 +62,10 @@
       "addedAt": "2026-07-26T14:54:23+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T14:54:23+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -68,7 +74,10 @@
       "addedAt": "2026-07-26T14:57:16+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-24T14:57:16+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -77,7 +86,10 @@
       "addedAt": "2026-07-26T14:57:16+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2027-07-26T14:57:16+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -86,7 +98,10 @@
       "addedAt": "2026-07-26T15:15:55+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-24T15:15:55+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -95,7 +110,10 @@
       "addedAt": "2026-07-26T15:15:55+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-24T15:15:55+00:00"
     },
     {
       "track": "ai",
@@ -104,7 +122,10 @@
       "addedAt": "2026-07-26T15:44:42+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:44:42+00:00"
     },
     {
       "track": "ai",
@@ -113,7 +134,10 @@
       "addedAt": "2026-07-26T15:44:42+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:44:42+00:00"
     },
     {
       "track": "ai",
@@ -124,7 +148,10 @@
         "corpus-term",
         "news-confirmed",
         "news-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus+news",
+      "confidence": 0.88,
+      "expiresAt": "2027-07-26T15:44:42+00:00"
     },
     {
       "track": "ai",
@@ -133,7 +160,10 @@
       "addedAt": "2026-07-26T15:44:42+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:44:42+00:00"
     },
     {
       "track": "ai",
@@ -142,7 +172,10 @@
       "addedAt": "2026-07-26T15:44:42+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:44:42+00:00"
     },
     {
       "track": "robotics",
@@ -152,7 +185,10 @@
       "evidence": [
         "corpus-term",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:corpus+news",
+      "confidence": 0.88,
+      "expiresAt": "2026-10-24T15:45:02+00:00"
     },
     {
       "track": "robotics",
@@ -161,7 +197,10 @@
       "addedAt": "2026-07-26T15:45:02+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:45:02+00:00"
     },
     {
       "track": "robotics",
@@ -170,7 +209,10 @@
       "addedAt": "2026-07-26T15:45:02+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:45:02+00:00"
     },
     {
       "track": "robotics",
@@ -179,7 +221,10 @@
       "addedAt": "2026-07-26T15:45:02+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:45:02+00:00"
     },
     {
       "track": "robotics",
@@ -188,7 +233,10 @@
       "addedAt": "2026-07-26T15:45:02+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:45:02+00:00"
     },
     {
       "track": "semiconductor",
@@ -197,7 +245,10 @@
       "addedAt": "2026-07-26T15:45:17+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:45:17+00:00"
     },
     {
       "track": "semiconductor",
@@ -206,7 +257,10 @@
       "addedAt": "2026-07-26T15:45:17+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:45:17+00:00"
     },
     {
       "track": "semiconductor",
@@ -215,7 +269,10 @@
       "addedAt": "2026-07-26T15:45:17+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:45:17+00:00"
     },
     {
       "track": "energy",
@@ -225,7 +282,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:45:35+00:00"
     },
     {
       "track": "biotech",
@@ -234,7 +294,10 @@
       "addedAt": "2026-07-26T15:45:51+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:45:51+00:00"
     },
     {
       "track": "biotech",
@@ -243,16 +306,10 @@
       "addedAt": "2026-07-26T15:45:51+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
-    },
-    {
-      "track": "quantum",
-      "kind": "keywords",
-      "value": "LLC",
-      "addedAt": "2026-07-26T15:46:08+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:45:51+00:00"
     },
     {
       "track": "space",
@@ -261,7 +318,10 @@
       "addedAt": "2026-07-26T15:46:23+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:46:23+00:00"
     },
     {
       "track": "materials",
@@ -272,7 +332,10 @@
         "news-confirmed",
         "news-term",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:46:54+00:00"
     },
     {
       "track": "manufacturing",
@@ -282,7 +345,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:47:11+00:00"
     },
     {
       "track": "manufacturing",
@@ -292,7 +358,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:47:11+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -301,16 +370,10 @@
       "addedAt": "2026-07-26T15:47:49+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
-    },
-    {
-      "track": "ai",
-      "kind": "keywords",
-      "value": "Here",
-      "addedAt": "2026-07-26T15:57:19+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:47:49+00:00"
     },
     {
       "track": "ai",
@@ -320,7 +383,10 @@
       "evidence": [
         "google-suggest",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:57:19+00:00"
     },
     {
       "track": "ai",
@@ -329,7 +395,10 @@
       "addedAt": "2026-07-26T15:57:19+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-26T15:57:19+00:00"
     },
     {
       "track": "robotics",
@@ -338,7 +407,10 @@
       "addedAt": "2026-07-26T15:57:35+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:57:35+00:00"
     },
     {
       "track": "robotics",
@@ -347,7 +419,10 @@
       "addedAt": "2026-07-26T15:57:35+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:57:35+00:00"
     },
     {
       "track": "energy",
@@ -356,7 +431,10 @@
       "addedAt": "2026-07-26T15:58:07+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:58:07+00:00"
     },
     {
       "track": "quantum",
@@ -366,7 +444,10 @@
       "evidence": [
         "baidu-suggest",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:58:38+00:00"
     },
     {
       "track": "quantum",
@@ -376,7 +457,10 @@
       "evidence": [
         "baidu-suggest",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:58:38+00:00"
     },
     {
       "track": "space",
@@ -385,7 +469,10 @@
       "addedAt": "2026-07-26T15:58:52+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T15:58:52+00:00"
     },
     {
       "track": "materials",
@@ -395,7 +482,10 @@
       "evidence": [
         "baidu-suggest",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T15:59:21+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -404,16 +494,10 @@
       "addedAt": "2026-07-26T16:00:16+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Comment",
-      "addedAt": "2026-07-26T16:00:16+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T16:00:16+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -422,7 +506,10 @@
       "addedAt": "2026-07-26T16:12:04+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-24T16:12:04+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -431,7 +518,10 @@
       "addedAt": "2026-07-26T16:12:04+00:00",
       "evidence": [
         "news-term"
-      ]
+      ],
+      "termProvenance": "auto:news-discovery",
+      "confidence": 0.68,
+      "expiresAt": "2026-10-24T16:12:04+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -440,7 +530,10 @@
       "addedAt": "2026-07-26T16:12:04+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-24T16:12:04+00:00"
     },
     {
       "track": "robotics",
@@ -450,7 +543,10 @@
       "evidence": [
         "baidu-suggest",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T23:44:27+00:00"
     },
     {
       "track": "semiconductor",
@@ -460,7 +556,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T23:44:43+00:00"
     },
     {
       "track": "web3",
@@ -470,7 +569,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-24T23:45:58+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -479,7 +581,10 @@
       "addedAt": "2026-07-26T23:47:00+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-24T23:47:00+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -488,7 +593,10 @@
       "addedAt": "2026-07-26T23:47:00+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-24T23:47:00+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -497,7 +605,10 @@
       "addedAt": "2026-07-26T23:47:00+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-24T23:47:00+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -506,7 +617,10 @@
       "addedAt": "2026-07-27T00:11:07+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T00:11:07+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -515,7 +629,10 @@
       "addedAt": "2026-07-27T00:11:07+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T00:11:07+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -524,7 +641,10 @@
       "addedAt": "2026-07-27T00:11:07+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T00:11:07+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -533,7 +653,10 @@
       "addedAt": "2026-07-27T03:12:46+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T03:12:46+00:00"
     },
     {
       "track": "semiconductor",
@@ -543,7 +666,10 @@
       "evidence": [
         "baidu-suggest",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-25T03:13:41+00:00"
     },
     {
       "track": "energy",
@@ -553,16 +679,10 @@
       "evidence": [
         "baidu-suggest",
         "news-confirmed"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Inc",
-      "addedAt": "2026-07-27T05:00:15+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-25T03:13:57+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -571,7 +691,10 @@
       "addedAt": "2026-07-27T05:00:15+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T05:00:15+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -580,7 +703,10 @@
       "addedAt": "2026-07-27T05:00:28+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T05:00:28+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -589,7 +715,10 @@
       "addedAt": "2026-07-27T05:00:28+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T05:00:28+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -598,7 +727,10 @@
       "addedAt": "2026-07-27T05:00:28+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T05:00:28+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -607,7 +739,10 @@
       "addedAt": "2026-07-27T05:00:28+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2027-07-27T05:00:28+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -616,7 +751,10 @@
       "addedAt": "2026-07-27T05:00:28+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-27T05:00:28+00:00"
     },
     {
       "track": "robotics",
@@ -625,7 +763,10 @@
       "addedAt": "2026-07-27T05:01:06+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T05:01:06+00:00"
     },
     {
       "track": "semiconductor",
@@ -634,7 +775,10 @@
       "addedAt": "2026-07-27T05:01:21+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T05:01:21+00:00"
     },
     {
       "track": "semiconductor",
@@ -643,34 +787,10 @@
       "addedAt": "2026-07-27T05:01:21+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Call",
-      "addedAt": "2026-07-27T06:17:36+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Deployment",
-      "addedAt": "2026-07-27T06:17:36+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Results",
-      "addedAt": "2026-07-27T06:17:36+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T05:01:21+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -679,7 +799,10 @@
       "addedAt": "2026-07-27T06:17:56+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T06:17:56+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -688,7 +811,10 @@
       "addedAt": "2026-07-27T06:17:56+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T06:17:56+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -697,7 +823,10 @@
       "addedAt": "2026-07-27T06:17:56+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2027-07-27T06:17:56+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -706,7 +835,10 @@
       "addedAt": "2026-07-27T06:17:56+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-27T06:17:56+00:00"
     },
     {
       "track": "robotics",
@@ -716,7 +848,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:03:52+00:00"
     },
     {
       "track": "robotics",
@@ -726,7 +861,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:03:52+00:00"
     },
     {
       "track": "robotics",
@@ -736,7 +874,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:03:52+00:00"
     },
     {
       "track": "robotics",
@@ -746,7 +887,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:03:52+00:00"
     },
     {
       "track": "semiconductor",
@@ -756,7 +900,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:03:56+00:00"
     },
     {
       "track": "semiconductor",
@@ -766,7 +913,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:03:56+00:00"
     },
     {
       "track": "energy",
@@ -776,7 +926,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:04:00+00:00"
     },
     {
       "track": "energy",
@@ -786,7 +939,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:04:00+00:00"
     },
     {
       "track": "quantum",
@@ -796,7 +952,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:04:02+00:00"
     },
     {
       "track": "quantum",
@@ -806,7 +965,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:04:02+00:00"
     },
     {
       "track": "fusion",
@@ -816,7 +978,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:04:05+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -825,7 +990,10 @@
       "addedAt": "2026-07-27T08:04:57+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T08:04:57+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -834,7 +1002,10 @@
       "addedAt": "2026-07-27T08:04:57+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T08:04:57+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -843,7 +1014,10 @@
       "addedAt": "2026-07-27T08:05:14+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2026-10-25T08:05:14+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -852,7 +1026,10 @@
       "addedAt": "2026-07-27T08:05:14+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2027-07-27T08:05:14+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -861,7 +1038,10 @@
       "addedAt": "2026-07-27T08:05:14+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-27T08:05:14+00:00"
     },
     {
       "track": "robotics",
@@ -871,7 +1051,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:22:56+00:00"
     },
     {
       "track": "semiconductor",
@@ -881,7 +1064,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T08:22:59+00:00"
     },
     {
       "track": "fusion",
@@ -891,7 +1077,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-25T08:24:05+00:00"
     },
     {
       "track": "quantum",
@@ -901,7 +1090,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-25T08:29:22+00:00"
     },
     {
       "track": "web3",
@@ -911,7 +1103,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-25T08:32:35+00:00"
     },
     {
       "track": "ai",
@@ -920,7 +1115,10 @@
       "addedAt": "2026-07-27T08:34:44+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T08:34:44+00:00"
     },
     {
       "track": "ai",
@@ -929,16 +1127,10 @@
       "addedAt": "2026-07-27T08:34:44+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "ai",
-      "kind": "keywords",
-      "value": "能力",
-      "addedAt": "2026-07-27T08:34:44+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T08:34:44+00:00"
     },
     {
       "track": "ai",
@@ -948,16 +1140,10 @@
       "evidence": [
         "google-suggest",
         "news-confirmed"
-      ]
-    },
-    {
-      "track": "ai",
-      "kind": "keywords",
-      "value": "The US",
-      "addedAt": "2026-07-27T08:52:26+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-25T08:52:26+00:00"
     },
     {
       "track": "ai",
@@ -966,7 +1152,10 @@
       "addedAt": "2026-07-27T08:52:26+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T08:52:26+00:00"
     },
     {
       "track": "ai",
@@ -975,7 +1164,10 @@
       "addedAt": "2026-07-27T09:06:00+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T09:06:00+00:00"
     },
     {
       "track": "ai",
@@ -984,7 +1176,10 @@
       "addedAt": "2026-07-27T09:17:49+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T09:17:49+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -994,7 +1189,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1004,7 +1202,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1014,7 +1215,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1024,7 +1228,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1034,7 +1241,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1044,7 +1254,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1054,7 +1267,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1064,7 +1280,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1074,7 +1293,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1084,7 +1306,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:37+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1094,7 +1319,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:40+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1104,7 +1332,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:40+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1114,7 +1345,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:40+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1124,7 +1358,10 @@
       "evidence": [
         "sample-company-core-team",
         "verified-company-profile"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:40+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1134,7 +1371,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-team-page"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:40+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1144,7 +1384,10 @@
       "evidence": [
         "investment-institution-directory",
         "verified-institution-team-page"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T10:34:40+00:00"
     },
     {
       "track": "semiconductor",
@@ -1153,7 +1396,10 @@
       "addedAt": "2026-07-27T12:04:38+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-27T12:04:38+00:00"
     },
     {
       "track": "ai",
@@ -1162,7 +1408,10 @@
       "addedAt": "2026-07-27T12:08:25+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-25T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1172,7 +1421,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1182,7 +1434,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1192,7 +1447,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1202,7 +1460,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1212,7 +1473,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1222,7 +1486,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1232,7 +1499,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1242,7 +1512,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1252,7 +1525,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1262,7 +1538,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1272,7 +1551,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1282,7 +1564,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1292,7 +1577,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1302,7 +1590,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1312,7 +1603,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1322,7 +1616,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1332,7 +1629,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1342,7 +1642,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1352,7 +1655,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1362,7 +1668,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1372,7 +1681,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1382,7 +1694,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1392,7 +1707,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1402,7 +1720,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1412,7 +1733,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1422,7 +1746,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1432,7 +1759,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1442,7 +1772,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1452,7 +1785,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1462,7 +1798,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1472,7 +1811,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1482,7 +1824,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1492,7 +1837,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1502,7 +1850,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1512,7 +1863,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1522,7 +1876,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1532,7 +1889,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1542,7 +1902,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1552,7 +1915,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1562,7 +1928,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1572,7 +1941,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1582,7 +1954,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1592,7 +1967,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1602,7 +1980,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1612,7 +1993,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1622,7 +2006,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1632,7 +2019,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1642,7 +2032,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1652,7 +2045,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1662,7 +2058,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1672,7 +2071,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1682,7 +2084,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1692,7 +2097,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1702,7 +2110,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1712,7 +2123,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1722,7 +2136,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1732,7 +2149,10 @@
       "evidence": [
         "investment-institution-directory",
         "shared-directory-reference"
-      ]
+      ],
+      "termProvenance": "auto:verified-directory",
+      "confidence": 0.97,
+      "expiresAt": "2027-07-27T12:08:25+00:00"
     },
     {
       "track": "robotics",
@@ -1742,7 +2162,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-27T04:54:34+00:00"
     },
     {
       "track": "robotics",
@@ -1751,7 +2174,10 @@
       "addedAt": "2026-07-29T04:54:34+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-29T04:54:34+00:00"
     },
     {
       "track": "semiconductor",
@@ -1760,7 +2186,10 @@
       "addedAt": "2026-07-29T04:54:50+00:00",
       "evidence": [
         "corpus-company"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2027-07-29T04:54:50+00:00"
     },
     {
       "track": "semiconductor",
@@ -1769,16 +2198,10 @@
       "addedAt": "2026-07-29T04:54:50+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "From",
-      "addedAt": "2026-07-29T04:57:38+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-29T04:54:50+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1787,7 +2210,10 @@
       "addedAt": "2026-07-29T04:57:38+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-27T04:57:38+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1796,7 +2222,10 @@
       "addedAt": "2026-07-29T04:57:38+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-27T04:57:38+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1805,7 +2234,10 @@
       "addedAt": "2026-07-29T04:57:38+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-29T04:57:38+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -1814,7 +2246,10 @@
       "addedAt": "2026-07-29T04:57:55+00:00",
       "evidence": [
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:reference",
+      "confidence": 0.58,
+      "expiresAt": "2027-07-29T04:57:55+00:00"
     },
     {
       "track": "track-1p8ob4k",
@@ -1823,7 +2258,10 @@
       "addedAt": "2026-07-29T04:57:55+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-29T04:57:55+00:00"
     },
     {
       "track": "ai",
@@ -1832,7 +2270,10 @@
       "addedAt": "2026-07-29T12:33:49+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-29T12:33:49+00:00"
     },
     {
       "track": "semiconductor",
@@ -1841,7 +2282,10 @@
       "addedAt": "2026-07-29T12:34:23+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-27T12:34:23+00:00"
     },
     {
       "track": "energy",
@@ -1851,7 +2295,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-27T12:34:56+00:00"
     },
     {
       "track": "energy",
@@ -1861,7 +2308,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2027-07-29T12:34:56+00:00"
     },
     {
       "track": "energy",
@@ -1870,7 +2320,10 @@
       "addedAt": "2026-07-29T12:34:56+00:00",
       "evidence": [
         "wikidata-official-site"
-      ]
+      ],
+      "termProvenance": "auto:official-site",
+      "confidence": 0.93,
+      "expiresAt": "2027-07-29T12:34:56+00:00"
     },
     {
       "track": "space",
@@ -1879,7 +2332,10 @@
       "addedAt": "2026-07-29T12:35:53+00:00",
       "evidence": [
         "news-term"
-      ]
+      ],
+      "termProvenance": "auto:news-discovery",
+      "confidence": 0.68,
+      "expiresAt": "2027-07-29T12:35:53+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1889,16 +2345,10 @@
       "evidence": [
         "corpus-term",
         "google-suggest"
-      ]
-    },
-    {
-      "track": "semiconductor",
-      "kind": "keywords",
-      "value": "亿元",
-      "addedAt": "2026-07-29T15:32:02+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-27T12:37:29+00:00"
     },
     {
       "track": "semiconductor",
@@ -1907,16 +2357,10 @@
       "addedAt": "2026-07-29T15:32:02+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "semiconductor",
-      "kind": "keywords",
-      "value": "万亿",
-      "addedAt": "2026-07-29T15:32:02+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-27T15:32:02+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1925,7 +2369,10 @@
       "addedAt": "2026-07-29T22:37:43+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-27T22:37:43+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1934,27 +2381,10 @@
       "addedAt": "2026-07-29T22:37:43+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Review",
-      "addedAt": "2026-07-29T22:37:43+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
-    },
-    {
-      "track": "semiconductor",
-      "kind": "keywords",
-      "value": "万亿美元",
-      "addedAt": "2026-07-29T22:38:58+00:00",
-      "evidence": [
-        "corpus-term",
-        "news-confirmed",
-        "news-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-27T22:37:43+00:00"
     },
     {
       "track": "web3",
@@ -1964,16 +2394,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Video",
-      "addedAt": "2026-07-29T22:48:19+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-27T22:40:32+00:00"
     },
     {
       "track": "fusion",
@@ -1983,7 +2407,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-28T12:10:24+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -1992,16 +2419,10 @@
       "addedAt": "2026-07-30T12:10:42+00:00",
       "evidence": [
         "corpus-term"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "Features",
-      "addedAt": "2026-07-30T12:10:42+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-28T12:10:42+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -2010,7 +2431,10 @@
       "addedAt": "2026-07-31T12:32:33+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-29T12:32:33+00:00"
     },
     {
       "track": "semiconductor",
@@ -2019,7 +2443,10 @@
       "addedAt": "2026-07-31T12:33:57+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-29T12:33:57+00:00"
     },
     {
       "track": "biotech",
@@ -2028,7 +2455,10 @@
       "addedAt": "2026-07-31T12:34:51+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-29T12:34:51+00:00"
     },
     {
       "track": "web3",
@@ -2038,16 +2468,10 @@
       "evidence": [
         "news-confirmed",
         "wikipedia-morelike"
-      ]
-    },
-    {
-      "track": "track-1ccjq49",
-      "kind": "keywords",
-      "value": "This",
-      "addedAt": "2026-07-31T14:25:21+00:00",
-      "evidence": [
-        "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-10-29T14:24:10+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -2056,7 +2480,10 @@
       "addedAt": "2026-07-31T14:25:21+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-29T14:25:21+00:00"
     },
     {
       "track": "track-1ccjq49",
@@ -2065,7 +2492,10 @@
       "addedAt": "2026-07-31T14:25:21+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-29T14:25:21+00:00"
     },
     {
       "track": "biotech",
@@ -2074,7 +2504,10 @@
       "addedAt": "2026-07-31T14:27:14+00:00",
       "evidence": [
         "news-term"
-      ]
+      ],
+      "termProvenance": "auto:news-discovery",
+      "confidence": 0.68,
+      "expiresAt": "2027-01-27T14:27:14+00:00"
     },
     {
       "track": "biotech",
@@ -2083,7 +2516,10 @@
       "addedAt": "2026-07-31T14:45:28+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-29T14:45:28+00:00"
     },
     {
       "track": "biotech",
@@ -2092,7 +2528,10 @@
       "addedAt": "2026-07-31T14:45:28+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-29T14:45:28+00:00"
     },
     {
       "track": "space",
@@ -2101,7 +2540,10 @@
       "addedAt": "2026-08-01T10:59:33+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-30T10:59:33+00:00"
     },
     {
       "track": "robotics",
@@ -2112,7 +2554,10 @@
         "corpus-term",
         "news-confirmed",
         "news-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus+news",
+      "confidence": 0.88,
+      "expiresAt": "2026-10-30T11:02:14+00:00"
     },
     {
       "track": "semiconductor",
@@ -2121,7 +2566,10 @@
       "addedAt": "2026-08-01T11:02:30+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-30T11:02:30+00:00"
     },
     {
       "track": "biotech",
@@ -2130,7 +2578,10 @@
       "addedAt": "2026-08-02T08:23:12+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-31T08:23:12+00:00"
     },
     {
       "track": "biotech",
@@ -2139,7 +2590,10 @@
       "addedAt": "2026-08-02T08:23:12+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-31T08:23:12+00:00"
     },
     {
       "track": "biotech",
@@ -2148,7 +2602,10 @@
       "addedAt": "2026-08-02T08:23:12+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-31T08:23:12+00:00"
     },
     {
       "track": "space",
@@ -2157,7 +2614,10 @@
       "addedAt": "2026-08-02T08:23:43+00:00",
       "evidence": [
         "corpus-term"
-      ]
+      ],
+      "termProvenance": "auto:corpus",
+      "confidence": 0.78,
+      "expiresAt": "2026-10-31T08:23:43+00:00"
     },
     {
       "track": "quantum",
@@ -2167,7 +2627,10 @@
       "evidence": [
         "baidu-suggest",
         "news-confirmed"
-      ]
+      ],
+      "termProvenance": "auto:news-confirmed",
+      "confidence": 0.8,
+      "expiresAt": "2026-11-01T06:20:18+00:00"
     }
   ],
   "removed": [
@@ -3178,6 +3641,279 @@
       "value": "https://tech.slashdot.org/",
       "removedAt": "2026-08-04T16:44:18+00:00",
       "reason": "auto-source-governance"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "Here",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "能力",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "The US",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "商业进展",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "产业投资",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "2026-07-27",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "公开材料",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "keywords",
+      "value": "人物材料",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "ai",
+      "kind": "people",
+      "value": "The Washington Post @washingtonpost",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-invalid-person"
+    },
+    {
+      "track": "ai",
+      "kind": "people",
+      "value": "关注前沿科技",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-invalid-person"
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "人物材料",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "产品发布",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "公司动态",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "robotics",
+      "kind": "keywords",
+      "value": "商业进展",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "robotics",
+      "kind": "people",
+      "value": "关注前沿科技",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-invalid-person"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "亿元",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "万亿",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "公司动态",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "全球",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "中国",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "产品发布",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "semiconductor",
+      "kind": "keywords",
+      "value": "万亿美元",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "公司动态",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "energy",
+      "kind": "keywords",
+      "value": "中国",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "biotech",
+      "kind": "keywords",
+      "value": "全球",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "biotech",
+      "kind": "people",
+      "value": "The Washington Post @washingtonpost",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-invalid-person"
+    },
+    {
+      "track": "quantum",
+      "kind": "keywords",
+      "value": "LLC",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Comment",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Inc",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Call",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Deployment",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Results",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "产业投资",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "From",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "中国",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Review",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Video",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "Features",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
+    },
+    {
+      "track": "track-1ccjq49",
+      "kind": "keywords",
+      "value": "This",
+      "removedAt": "2026-08-08T12:54:40+00:00",
+      "reason": "seed-governance-low-signal"
     }
   ]
 }
