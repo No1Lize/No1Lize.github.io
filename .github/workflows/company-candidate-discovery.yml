@@ -39,6 +39,8 @@ jobs:
   discover:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      CANDIDATE_QUEUE: config/company_candidate_review_queue.json
     steps:
       - uses: actions/checkout@v4
         with:
@@ -80,16 +82,20 @@ jobs:
             tracking_inputs_changed=true
           fi
           echo "changed=$tracking_inputs_changed" >> "$GITHUB_OUTPUT"
-      - name: Reconcile entities, auto-trust manual additions and build review snapshot
+      - name: Reconcile entities, auto-trust manual additions and build private review snapshot
         run: |
           python tools/reconcile_entity_resolution.py
-          python tools/build_resolved_company_candidates.py
-          python tools/apply_manual_company_trust.py
-          python tools/build_resolved_company_candidates.py
+          python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
+          python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
+          python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
           python tools/reconcile_entity_resolution.py --check
-          python tools/apply_manual_company_trust.py --check
-          python tools/build_resolved_company_candidates.py --check
-      - name: Commit resolved tracking and candidate evidence
+          python tools/apply_manual_company_trust.py \
+            --candidates "$CANDIDATE_QUEUE" \
+            --check
+          python tools/build_resolved_company_candidates.py \
+            --output "$CANDIDATE_QUEUE" \
+            --check
+      - name: Commit resolved tracking and private candidate evidence
         id: publish
         shell: bash
         run: |
@@ -98,58 +104,75 @@ jobs:
             config/user_tracking.json
             config/tracking_capture_inbox.json
             config/company_candidate_decisions.json
-            public/data/company_candidates.json
+            "$CANDIDATE_QUEUE"
           )
           if git diff --quiet -- "${changed_paths[@]}"; then
             echo "No semantic entity-resolution, trust-policy or candidate changes."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "tracking_changed=false" >> "$GITHUB_OUTPUT"
+            echo "candidate_changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${changed_paths[@]}"
-          git commit -m "data: reconcile captured entities and company candidates"
+          git commit -m "data: reconcile captured entities and private company candidates"
           for attempt in 1 2 3; do
             git pull --rebase -X theirs origin main
             python tools/reconcile_entity_resolution.py
-            python tools/build_resolved_company_candidates.py
-            python tools/apply_manual_company_trust.py
-            python tools/build_resolved_company_candidates.py
+            python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
+            python tools/apply_manual_company_trust.py --candidates "$CANDIDATE_QUEUE"
+            python tools/build_resolved_company_candidates.py --output "$CANDIDATE_QUEUE"
             python tools/reconcile_entity_resolution.py --check
-            python tools/apply_manual_company_trust.py --check
-            python tools/build_resolved_company_candidates.py --check
+            python tools/apply_manual_company_trust.py \
+              --candidates "$CANDIDATE_QUEUE" \
+              --check
+            python tools/build_resolved_company_candidates.py \
+              --output "$CANDIDATE_QUEUE" \
+              --check
             git add "${changed_paths[@]}"
             if ! git diff --cached --quiet; then
               git commit --amend --no-edit
             fi
             if git push origin HEAD:main; then
               tracking_changed=false
+              candidate_changed=false
               if git diff-tree --no-commit-id --name-only -r HEAD -- config/user_tracking.json \
                 | grep -qx 'config/user_tracking.json'; then
                 tracking_changed=true
               fi
+              if git diff-tree --no-commit-id --name-only -r HEAD -- \
+                config/company_candidate_review_queue.json \
+                config/company_candidate_decisions.json \
+                | grep -q .; then
+                candidate_changed=true
+              fi
               echo "changed=true" >> "$GITHUB_OUTPUT"
               echo "tracking_changed=$tracking_changed" >> "$GITHUB_OUTPUT"
+              echo "candidate_changed=$candidate_changed" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             if [ "$attempt" -eq 3 ]; then
               exit 1
             fi
           done
-      - name: Continue refresh or deploy after reconciliation
+      - name: Continue private review or refresh after reconciliation
         if: steps.publish.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
           TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}
+          CANDIDATE_CHANGED: ${{ steps.publish.outputs.candidate_changed }}
           PUSH_TRACKING_INPUTS_CHANGED: ${{ steps.push-inputs.outputs.changed }}
         shell: bash
         run: |
           set -euo pipefail
+          if [ "${CANDIDATE_CHANGED:-false}" = "true" ]; then
+            echo "Private candidate state changed; continue verified onboarding."
+            gh workflow run company-candidate-onboarding.yml --ref main
+          fi
           if [ "${TRACKING_CHANGED:-false}" = "true" ] || [ "${PUSH_TRACKING_INPUTS_CHANGED:-false}" = "true" ]; then
-            echo "Tracking inputs changed; rebuild the article snapshot before Pages."
+            echo "Tracking inputs changed; rebuild the public article snapshot before Pages."
             gh workflow run scheduled-sync.yml --ref main
           else
-            echo "Tracking scope is fixed after reconciliation; deploy the committed snapshot."
-            gh workflow run pages.yml --ref main
+            echo "No public tracking input changed; private review state does not require a Pages deployment."
           fi
