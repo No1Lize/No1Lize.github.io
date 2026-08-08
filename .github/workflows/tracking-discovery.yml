@@ -4,7 +4,8 @@ name: Tracking entity discovery
 # institution datasets. The venture-capital lane directly references the full
 # investment-institution directory; verified institution teams then provide
 # people and public team/account sources. Owner-deleted automatic entries remain
-# tombstoned and are never silently restored.
+# tombstoned and are never silently restored. Automatic seeds carry provenance,
+# confidence and expiry metadata and must pass lifecycle governance before use.
 
 on:
   schedule:
@@ -48,15 +49,26 @@ jobs:
       - name: Validate institution, sample-company and public-channel discovery
         run: |
           node --import tsx scripts/sync-tracking-institution-directory.ts --dry-run
+          python -m py_compile tools/tracking_seed_governance.py
           python -m py_compile tools/tracking_source_governance.py
           python -m py_compile tools/enrich_tracking_institutions.py
           python -m py_compile tools/enrich_tracking_people_from_sample_companies.py
           python -m py_compile tools/enrich_tracking_person_channels.py
           python -m unittest \
+            tests.test_tracking_seed_governance \
             tests.test_tracking_source_governance \
             tests.test_tracking_institution_people \
             tests.test_tracking_sample_company_people \
             tests.test_tracking_person_channels
+
+      - name: Govern tracking seeds before discovery
+        id: seed-governance-before
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/tracking_seed_governance.py | tee /tmp/seed-governance-before.json
+          CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/seed-governance-before.json'))['changed']).lower())")
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
 
       - name: Normalize automatic sources before discovery
         id: source-governance-before
@@ -129,6 +141,15 @@ jobs:
           CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/channel-discovery.json'))['changed']).lower())")
           echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
 
+      - name: Govern tracking seeds after discovery
+        id: seed-governance-after
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/tracking_seed_governance.py | tee /tmp/seed-governance-after.json
+          CHANGED=$(python -c "import json;print(str(json.load(open('/tmp/seed-governance-after.json'))['changed']).lower())")
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
       - name: Normalize automatic sources after discovery
         id: source-governance-after
         shell: bash
@@ -142,12 +163,14 @@ jobs:
         id: changes
         shell: bash
         run: |
-          if [ "${{ steps.source-governance-before.outputs.changed }}" = "true" ] || \
+          if [ "${{ steps.seed-governance-before.outputs.changed }}" = "true" ] || \
+             [ "${{ steps.source-governance-before.outputs.changed }}" = "true" ] || \
              [ "${{ steps.expand.outputs.changed }}" = "true" ] || \
              [ "${{ steps.directory.outputs.changed }}" = "true" ] || \
              [ "${{ steps.institutions.outputs.changed }}" = "true" ] || \
              [ "${{ steps.team.outputs.changed }}" = "true" ] || \
              [ "${{ steps.channels.outputs.changed }}" = "true" ] || \
+             [ "${{ steps.seed-governance-after.outputs.changed }}" = "true" ] || \
              [ "${{ steps.source-governance-after.outputs.changed }}" = "true" ]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else
@@ -157,6 +180,7 @@ jobs:
       - name: Validate the expanded config before committing
         if: steps.changes.outputs.changed == 'true'
         run: |
+          python tools/tracking_seed_governance.py --check
           python tools/tracking_source_governance.py --check
           npm run validate:tracking
           npm run validate:taxonomy
@@ -185,6 +209,8 @@ jobs:
           regenerate_from_latest_main() {
             git fetch origin main
             git reset --hard origin/main
+            python tools/tracking_seed_governance.py \
+              | tee /tmp/seed-governance-before-replay.json
             python tools/tracking_source_governance.py \
               | tee /tmp/source-governance-before-replay.json
 
@@ -205,9 +231,12 @@ jobs:
               --max-requests 70 | tee /tmp/team-discovery-replay.json
             python tools/enrich_tracking_person_channels.py \
               --max-tracks 20 | tee /tmp/channel-discovery-replay.json
+            python tools/tracking_seed_governance.py \
+              | tee /tmp/seed-governance-after-replay.json
             python tools/tracking_source_governance.py \
               | tee /tmp/source-governance-after-replay.json
 
+            python tools/tracking_seed_governance.py --check
             python tools/tracking_source_governance.py --check
             npm run validate:tracking
             npm run validate:taxonomy
