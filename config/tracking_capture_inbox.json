@@ -1,7 +1,57 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T04:38:06.266Z",
+  "generatedAt": "2026-08-08T04:39:25.183Z",
   "records": [
+    {
+      "id": "capture-115xtr0",
+      "entityType": "topic",
+      "canonicalName": "Voice Personas",
+      "rawSelection": "Voice Personas",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-gfnn78",
+        "title": "Introducing Voice Personas",
+        "url": "https://sierra.ai/blog/introducing-voice-personas",
+        "summary": "",
+        "sourceName": "产品发布Sierra · 官方网站",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "产品发布"
+      },
+      "capturedAt": "2026-08-08T04:39:25.183Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords",
+        "robotics:keywords"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "技术突破",
+        "融资机会"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Voice Personas",
+        "targetId": "topic:voicepersonas",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术/主题”,且未与正式目录冲突。",
+        "decisionKey": "voicepersonas",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-1y7leg8",
       "entityType": "topic",
