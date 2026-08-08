@@ -56,6 +56,10 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
         self.assertIn("      - config/user_tracking.json", refresh)
         self.assertIn("      - config/user_tracking.json", pages)
+        self.assertIn(
+            "Pages must wait for that workflow to commit the matching public snapshot",
+            pages,
+        )
 
     def test_full_refresh_explicitly_hands_off_to_reconciliation(self) -> None:
         refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
