@@ -27,6 +27,11 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("      - config/user_tracking.json", text)
 
+    def test_test_only_changes_do_not_start_a_production_full_refresh(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertNotIn("      - tests/**/*.py", text)
+        self.assertNotIn("      - tests/**", text)
+
     def test_full_refresh_covers_required_source_families(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         required_commands = (
