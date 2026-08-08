@@ -1,5 +1,3 @@
-import rawCandidates from "@/public/data/company_candidates.json";
-
 export type CompanyCandidateStatus =
   | "pending"
   | "accepted"
@@ -111,7 +109,12 @@ export function normalizeCompanyCandidateSnapshot(value: unknown): CompanyCandid
   };
 }
 
-export const companyCandidateSnapshot = normalizeCompanyCandidateSnapshot(rawCandidates);
-export const pendingCompanyCandidates = companyCandidateSnapshot.candidates
-  .filter((candidate) => candidate.status === "pending")
-  .sort((left, right) => right.score - left.score || right.lastSeenAt.localeCompare(left.lastSeenAt));
+// Company review state is repository-only. Public builds intentionally start from
+// an empty candidate snapshot; the authenticated admin client fetches the private-
+// from-Pages queue directly from the repository after owner authentication.
+export const companyCandidateSnapshot = normalizeCompanyCandidateSnapshot({
+  schemaVersion: 1,
+  generatedAt: "",
+  candidates: [],
+});
+export const pendingCompanyCandidates: CompanyCandidate[] = [];
