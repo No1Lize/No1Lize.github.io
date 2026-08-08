@@ -1,7 +1,134 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T06:54:55.657Z",
+  "generatedAt": "2026-08-08T06:57:51.031Z",
   "records": [
+    {
+      "id": "capture-19b9qi",
+      "entityType": "company",
+      "canonicalName": "DataBahn",
+      "rawSelection": "DataBahn",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1bpxvkj",
+        "title": "07-30",
+        "url": "https://siliconangle.com/2026/07/30/databahn-raises-40m-ai-agents-queue-enterprise-telemetry",
+        "summary": "Enterprise data pipeline startup DataBahn Inc. today revealed that it has raised $40 million in new funding to accelerate development of what it calls an agentic data control plane. Founded in 2024, DataBahn sells software that sits between the systems generating enterprise telemetry and the tools that consume it. The platform ingests, normalizes and routes [...] The post DataBahn raises $40M as AI agents queue up for enterprise telemetry appeared first on SiliconANGLE .",
+        "sourceName": "媒体报道 · SiliconANGLE · SiliconANGLE",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T06:57:51.031Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "DataBahn",
+        "targetId": "company-candidate:databahn",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "decisionKey": "databahn",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-7hlq7q",
+      "entityType": "company",
+      "canonicalName": "Enterprise",
+      "rawSelection": "Enterprise",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1bpxvkj",
+        "title": "07-30",
+        "url": "https://siliconangle.com/2026/07/30/databahn-raises-40m-ai-agents-queue-enterprise-telemetry",
+        "summary": "Enterprise data pipeline startup DataBahn Inc. today revealed that it has raised $40 million in new funding to accelerate development of what it calls an agentic data control plane. Founded in 2024, DataBahn sells software that sits between the systems generating enterprise telemetry and the tools that consume it. The platform ingests, normalizes and routes [...] The post DataBahn raises $40M as AI agents queue up for enterprise telemetry appeared first on SiliconANGLE .",
+        "sourceName": "媒体报道 · SiliconANGLE · SiliconANGLE",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T06:57:51.031Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Enterprise",
+        "targetId": "company-candidate:enterprise",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "decisionKey": "enterprise",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-z8iqjg",
+      "entityType": "company",
+      "canonicalName": "Insight Partners LP",
+      "rawSelection": "Insight Partners LP",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1bpxvkj",
+        "title": "07-30",
+        "url": "https://siliconangle.com/2026/07/30/databahn-raises-40m-ai-agents-queue-enterprise-telemetry",
+        "summary": "Enterprise data pipeline startup DataBahn Inc. today revealed that it has raised $40 million in new funding to accelerate development of what it calls an agentic data control plane. Founded in 2024, DataBahn sells software that sits between the systems generating enterprise telemetry and the tools that consume it. The platform ingests, normalizes and routes [...] The post DataBahn raises $40M as AI agents queue up for enterprise telemetry appeared first on SiliconANGLE .",
+        "sourceName": "媒体报道 · SiliconANGLE · SiliconANGLE",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T06:57:51.031Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Insight Partners LP",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "decisionKey": "insightpartnerslp",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-1dk5cz",
       "entityType": "company",
