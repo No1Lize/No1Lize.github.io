@@ -1,7 +1,59 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T04:31:59.346Z",
+  "generatedAt": "2026-08-08T04:33:15.452Z",
   "records": [
+    {
+      "id": "capture-pfveuk",
+      "entityType": "topic",
+      "canonicalName": "AI越狱",
+      "rawSelection": "AI越狱",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "ai-2"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "AI安全"
+      ],
+      "source": {
+        "articleId": "article-58xaip",
+        "title": "一个月内七起“AI越狱”事件,性质已经悄悄变了",
+        "url": "https://www.tmtpost.com/8095947.html",
+        "summary": "",
+        "sourceName": "公司动态钛媒体 · 专业媒体",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "公司动态"
+      },
+      "capturedAt": "2026-08-08T04:33:15.452Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords",
+        "ai-2:keywords"
+      ],
+      "reasons": [
+        "技术突破",
+        "融资机会",
+        "商业模式创新",
+        "个人研究兴趣",
+        "监管变化"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "AI越狱",
+        "targetId": "topic:ai越狱",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术/主题”,且未与正式目录冲突。",
+        "decisionKey": "ai越狱",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-erj701",
       "entityType": "topic",
