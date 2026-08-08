@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T00:51:46+00:00",
+  "generatedAt": "2026-08-08T04:20:24+00:00",
   "datasets": {
     "ventureCompany": {
       "agibot": {
@@ -10255,6 +10255,11 @@
         "market": "A股",
         "metrics": [
           {
+            "id": "amount",
+            "label": "成交额",
+            "value": "¥187.53亿"
+          },
+          {
             "id": "bookValuePerShare",
             "label": "每股净资产",
             "value": "21.57元"
@@ -10270,19 +10275,34 @@
             "value": "3.68元"
           },
           {
+            "id": "floatMarketCap",
+            "label": "流通市值",
+            "value": "¥7539.08亿"
+          },
+          {
             "id": "floatShares",
             "label": "流通股",
-            "value": "6.28亿"
+            "value": "6.28亿股"
           },
           {
             "id": "marketCap",
             "label": "总市值",
-            "value": "¥7535.56亿"
+            "value": "¥7539.08亿"
           },
           {
             "id": "netIncome",
             "label": "净利润",
             "value": "23.11亿元"
+          },
+          {
+            "id": "pb",
+            "label": "市净率",
+            "value": "55.62"
+          },
+          {
+            "id": "pe",
+            "label": "市盈率",
+            "value": "163.12"
           },
           {
             "id": "revenue",
@@ -10298,6 +10318,11 @@
             "id": "totalShares",
             "label": "总股本",
             "value": "6.28亿股"
+          },
+          {
+            "id": "turnover",
+            "label": "换手率",
+            "value": "2.54%"
           }
         ],
         "news": [
@@ -10308,22 +10333,16 @@
             "url": "https://cj.sina.cn/articles/view/1702925432/65809478019019zg8"
           },
           {
-            "publishedAt": "2026-08-07T22:01:00+08:00",
+            "publishedAt": "2026-08-08T09:56:00+08:00",
             "source": "新浪财经",
-            "title": "寒武纪：2026年半年度归属于上市公司股东的净利润同比增长122.61%",
-            "url": "https://cj.sina.cn/articles/view/2311077472/89c03e6002002mltm"
+            "title": "寒武纪(688256.SH)：2026年中报净利润为23.11亿元",
+            "url": "https://cj.sina.cn/articles/view/6192937794/17120bb4202002squi"
           },
           {
             "publishedAt": "2026-08-07T22:38:00+08:00",
             "source": "新浪财经",
             "title": "寒武纪上半年营收翻番，净利润23亿元增长1.2倍",
             "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimpfxz3083852.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T22:16:00+08:00",
-            "source": "新浪财经",
-            "title": "营收净利翻倍狂奔！寒武纪上半年存货金额创新高 持续加大上游采购力度",
-            "url": "https://finance.sina.com.cn/jjxw/2026-08-07/doc-inimpfya9847281.shtml"
           },
           {
             "publishedAt": "2026-08-08T01:17:00+08:00",
@@ -10338,6 +10357,12 @@
             "url": "https://finance.sina.com.cn/jjxw/2026-08-08/doc-inimqccv2788396.shtml"
           },
           {
+            "publishedAt": "2026-08-08T09:39:00+08:00",
+            "source": "新浪财经",
+            "title": "机构风向标 | 寒武纪(688256)2026年二季度已披露持股减少机构超200家",
+            "url": "https://finance.sina.com.cn/jjxw/2026-08-08/doc-inimqimv9824387.shtml"
+          },
+          {
             "publishedAt": "2026-08-07T22:37:00+08:00",
             "source": "新浪财经",
             "title": "8月7日晚间重要公告集锦",
@@ -10350,16 +10375,16 @@
             "url": "https://finance.sina.com.cn/roll/2026-08-08/doc-inimpspz2910345.shtml"
           },
           {
+            "publishedAt": "2026-08-08T08:11:00+08:00",
+            "source": "新浪财经",
+            "title": "寒武纪：8月7日获融资买入24.62亿元，融资余额连续4天增加，市场人气旺盛属强势市场",
+            "url": "https://finance.sina.com.cn/stock/aiassist/lr/2026-08-08/doc-inimqccz6678166.shtml"
+          },
+          {
             "publishedAt": "2026-08-07T22:17:00+08:00",
             "source": "新浪财经",
             "title": "寒王，业绩大增！知名牛散加仓",
             "url": "https://finance.sina.com.cn/stock/s/2026-08-07/doc-inimpfxz3075652.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T22:10:00+08:00",
-            "source": "新浪财经",
-            "title": "寒武纪上半年净利暴增122.61%",
-            "url": "https://t.cj.sina.cn/articles/view/1654203637/629924f5020016ow0"
           }
         ],
         "priceHistory": [
@@ -10395,6 +10420,7 @@
         "slug": "cambricon",
         "sources": {
           "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sh688256%2Cday%2C%2C%2C120%2Cqfq",
+          "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=1.688256&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
           "sinaFinance": "https://finance.sina.com.cn/realstock/company/sh688256/nc.shtml",
           "tonghuashun": "https://stockpage.10jqka.com.cn/688256/"
         },
@@ -10490,22 +10516,10 @@
             "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gadg"
           },
           {
-            "publishedAt": "2026-08-08T03:40:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代获得发明专利授权：“正极片、固态电池单体、电池装置、用电装置、正极活性材料及其制备方法”",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gafc"
-          },
-          {
             "publishedAt": "2026-08-08T03:41:00+08:00",
             "source": "新浪财经",
             "title": "宁德时代获得发明专利授权：“一种双面涂布的纠偏方法、装置”",
             "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gagi"
-          },
-          {
-            "publishedAt": "2026-08-08T03:40:00+08:00",
-            "source": "新浪财经",
-            "title": "宁德时代获得发明专利授权：“电池、用电装置、电池制造方法及制造设备”",
-            "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gahm"
           },
           {
             "publishedAt": "2026-08-08T03:41:00+08:00",
@@ -10538,10 +10552,22 @@
             "url": "https://finance.sina.com.cn/jjxw/2026-08-08/doc-inimqccx4356736.shtml"
           },
           {
+            "publishedAt": "2026-08-08T10:00:00+08:00",
+            "source": "新浪财经",
+            "title": "恒翼能IPO，宁德时代如何“托举”？",
+            "url": "https://finance.sina.com.cn/roll/2026-08-08/doc-inimqimt2738783.shtml"
+          },
+          {
             "publishedAt": "2026-08-08T08:13:00+08:00",
             "source": "新浪财经",
             "title": "宇树科技IPO倒计时，下周一启动申购！受益股曝光",
             "url": "https://finance.sina.com.cn/stock/zqgd/2026-08-08/doc-inimqccv2797926.shtml"
+          },
+          {
+            "publishedAt": "2026-08-08T10:33:00+08:00",
+            "source": "新浪财经",
+            "title": "一句话点奶茶成真！千问闪购首次上车：极狐阿尔法T7又放大",
+            "url": "https://t.cj.sina.cn/articles/view/1659643027/62ec249302001rda0"
           }
         ],
         "priceHistory": [
@@ -10663,6 +10689,12 @@
         ],
         "news": [
           {
+            "publishedAt": "2026-08-03T20:56:00+08:00",
+            "source": "新浪财经",
+            "title": "华大基因：累计回购公司股份4620102股",
+            "url": "https://cj.sina.cn/articles/view/2311077472/89c03e6002002mfdw"
+          },
+          {
             "publishedAt": "2026-08-06T17:39:00+08:00",
             "source": "新浪财经",
             "title": "华大基因(300676.SZ)：累计回购1.6092%股份 回购方案已实施完毕",
@@ -10679,12 +10711,6 @@
             "source": "新浪财经",
             "title": "华大基因：回购方案已实施完毕，成交额2.5亿元",
             "url": "https://finance.sina.com.cn/jjxw/2026-08-06/doc-inimkncc4640017.shtml"
-          },
-          {
-            "publishedAt": "2026-08-07T15:42:00+08:00",
-            "source": "新浪财经",
-            "title": "华大基因涨4.99%，成交额4.37亿元，今日主力净流入2407.33万",
-            "url": "https://finance.sina.com.cn/stock/aiassist/ggsp/2026-08-07/doc-inimnrak9997062.shtml"
           },
           {
             "publishedAt": "2026-08-07T09:32:00+08:00",
@@ -11265,8 +11291,8 @@
             "date": "2026-08-07",
             "high": 8.15,
             "low": 7.83,
-            "open": 7.9899,
-            "volume": 2198558.0
+            "open": 7.99,
+            "volume": 2201300.0
           }
         ],
         "quote": {
@@ -11423,7 +11449,7 @@
             "high": 6.3,
             "low": 5.975,
             "open": 5.99,
-            "volume": 2310280.0
+            "volume": 2311400.0
           }
         ],
         "quote": {
@@ -11589,8 +11615,8 @@
             "date": "2026-08-07",
             "high": 17.950001,
             "low": 16.405001,
-            "open": 16.784,
-            "volume": 29843427.0
+            "open": 16.775,
+            "volume": 29943900.0
           }
         ],
         "quote": {
@@ -11760,7 +11786,7 @@
             "high": 44.615002,
             "low": 40.0,
             "open": 40.384998,
-            "volume": 28072130.0
+            "volume": 34382100.0
           }
         ],
         "quote": {
@@ -11926,8 +11952,8 @@
             "date": "2026-08-07",
             "high": 83.25,
             "low": 77.379997,
-            "open": 78.970001,
-            "volume": 23781299.0
+            "open": 78.800003,
+            "volume": 23988300.0
           }
         ],
         "quote": {
@@ -12092,9 +12118,9 @@
             "close": 52.049999,
             "date": "2026-08-07",
             "high": 52.400002,
-            "low": 47.226299,
-            "open": 47.610001,
-            "volume": 5058129.0
+            "low": 47.226002,
+            "open": 47.555,
+            "volume": 5671200.0
           }
         ],
         "quote": {
@@ -12260,8 +12286,8 @@
             "date": "2026-08-07",
             "high": 3.265,
             "low": 3.18,
-            "open": 3.2541,
-            "volume": 9248157.0
+            "open": 3.254,
+            "volume": 9320500.0
           }
         ],
         "quote": {
@@ -12426,9 +12452,9 @@
             "close": 8.73,
             "date": "2026-08-07",
             "high": 8.78,
-            "low": 8.565,
+            "low": 8.57,
             "open": 8.58,
-            "volume": 3628757.0
+            "volume": 3672100.0
           }
         ],
         "quote": {
@@ -12593,8 +12619,8 @@
             "date": "2026-08-07",
             "high": 7.14,
             "low": 6.91,
-            "open": 6.91,
-            "volume": 21343527.0
+            "open": 6.93,
+            "volume": 28659100.0
           }
         ],
         "quote": {
@@ -12758,9 +12784,9 @@
             "close": 8.64,
             "date": "2026-08-07",
             "high": 8.72,
-            "low": 8.35,
+            "low": 8.34,
             "open": 8.4,
-            "volume": 31503644.0
+            "volume": 33507700.0
           }
         ],
         "quote": {
@@ -12872,13 +12898,6 @@
             "title": "AI的未来： Demis Hassabis 爵士与Wendy Hall女爵士对话",
             "type": "qa",
             "url": "https://www.bilibili.com/video/BV1ECKg6LEBV"
-          },
-          {
-            "date": "2026-02-01",
-            "source": "Bilibili · 吉米讀書JimmyReading",
-            "title": "哈撒比斯最新万字访谈：关于中国追赶、AGI 终局与 Google 的底牌｜ Demis Hassabis 《The Tech Download》专访汉语完整版 2",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1Ga6xBZEgR"
           },
           {
             "date": "2025-03-27",
@@ -13018,10 +13037,14 @@
         "sources": [
           "https://deepmind.google/about/",
           "https://en.wikipedia.org/wiki/Demis_Hassabis",
+          "https://www.bilibili.com/video/BV19EV26XELk",
+          "https://www.bilibili.com/video/BV1JXZ3YJEst",
+          "https://www.bilibili.com/video/BV1PT411G7As",
+          "https://www.bilibili.com/video/BV1iibSeYESF",
           "https://www.wikidata.org/wiki/Q3022141",
+          "https://www.youtube.com/watch?v=0X-NdPtFKq0",
           "https://www.youtube.com/watch?v=D-eyJhJXXsE",
           "https://www.youtube.com/watch?v=DsewHeVbL-0",
-          "https://www.youtube.com/watch?v=EhAjLnT9aL4",
           "https://www.youtube.com/watch?v=P0enFK4bzLE"
         ],
         "speeches": [
@@ -13045,13 +13068,6 @@
             "title": "AI的未来： Demis Hassabis 爵士与Wendy Hall女爵士对话",
             "type": "qa",
             "url": "https://www.bilibili.com/video/BV1ECKg6LEBV"
-          },
-          {
-            "date": "2026-02-01",
-            "source": "Bilibili · 吉米讀書JimmyReading",
-            "title": "哈撒比斯最新万字访谈：关于中国追赶、AGI 终局与 Google 的底牌｜ Demis Hassabis 《The Tech Download》专访汉语完整版 2",
-            "type": "interview",
-            "url": "https://www.bilibili.com/video/BV1Ga6xBZEgR"
           },
           {
             "date": "2025-03-27",
@@ -13308,6 +13324,13 @@
             "title": "【高清重制】 马斯克 Elon Musk 20年前谈 SpaceX 2003年斯坦福思想领袖讲座【中英】",
             "type": "speech",
             "url": "https://www.bilibili.com/video/BV1Uk4y1S7ov"
+          },
+          {
+            "date": "2026-08-05",
+            "source": "Bilibili · ACYee2084",
+            "title": "The full-length interview with Elon Musk | The Economist 2026.07.29",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV1VBM26GENa"
           },
           {
             "date": "2020-05-29",
@@ -13598,13 +13621,6 @@
           },
           {
             "date": "4年前",
-            "source": "YouTube · The Economist",
-            "title": "Elon Musk: A future worth getting excited about | Tesla Texas Gigafactory interview | TED",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=XuoqKYxDHVc"
-          },
-          {
-            "date": "4年前",
             "source": "YouTube · TED",
             "title": "Elon Musk: A future worth getting excited about | Tesla Texas Gigafactory interview | TED",
             "type": "interview",
@@ -13766,6 +13782,10 @@
         ],
         "slug": "elon-musk",
         "sources": [
+          "https://www.bilibili.com/video/BV1MGmGYgExR",
+          "https://www.bilibili.com/video/BV1VBM26GENa",
+          "https://www.bilibili.com/video/BV1euub6wEmi",
+          "https://www.bilibili.com/video/BV1rR4y157LC",
           "https://www.spacex.com/",
           "https://www.tesla.com/elon-musk",
           "https://www.wikidata.org/wiki/Q317521",
@@ -13996,6 +14016,13 @@
             "url": "https://www.bilibili.com/video/BV1CU3B6VEc4"
           },
           {
+            "date": "2026-08-03",
+            "source": "Bilibili · 名校课程-顶级中配",
+            "title": "【中英双语】 李飞飞 正在攻克机器人领域最难的难题，探讨空间智能如何突破机器人学习的数据瓶颈 | a16z",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV1CYMR6mErJ"
+          },
+          {
             "date": "2025-12-10",
             "source": "Bilibili · michina21",
             "title": "专访 李飞飞",
@@ -14029,6 +14056,13 @@
             "title": "杨澜访谈录-开启人工智能时代 给AI一双慧眼 斯坦福大学人工智能实验室主任— 李飞飞",
             "type": "interview",
             "url": "https://www.bilibili.com/video/BV1hJ411F71K"
+          },
+          {
+            "date": "2019-12-01",
+            "source": "Bilibili · Python与机器学习算法",
+            "title": "【公开课】最新斯坦福 李飞飞 cs231n计算机视觉课程【附中文字幕】",
+            "type": "speech",
+            "url": "https://www.bilibili.com/video/BV1nJ411z7fe"
           },
           {
             "date": "2017-03-31",
@@ -14129,6 +14163,13 @@
             "url": "https://www.youtube.com/watch?v=b9TfkgH0Xzw"
           },
           {
+            "date": "2年前",
+            "source": "YouTube · SciSci",
+            "title": "2024年开年AI大牛世界论坛关于AI的三大访谈之一 李飞飞、吴恩达对谈：这一次，AI冬天不会到来2024 A Dialogue between Li Fei-Fei and Andrew Ng",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=g_yXe4jiFQ0"
+          },
+          {
             "date": "4个月前",
             "source": "YouTube · Zhang Xiaojun Podcast",
             "title": "A 7-hour marathon interview with Saining Xie: World Models, AMI Labs, Yann LeCun, Fei-Fei Li, and 42",
@@ -14181,10 +14222,11 @@
           "https://profiles.stanford.edu/fei-fei-li",
           "https://www.bilibili.com/video/BV1Bp3k61EaJ",
           "https://www.bilibili.com/video/BV1CU3B6VEc4",
-          "https://www.bilibili.com/video/BV1QE411S7xE",
+          "https://www.bilibili.com/video/BV1CYMR6mErJ",
           "https://www.bilibili.com/video/BV1ox411D7uY",
           "https://www.wikidata.org/wiki/Q18686107",
           "https://www.youtube.com/watch?v=ElDWanLOc4c",
+          "https://www.youtube.com/watch?v=HiSK7nv-i94",
           "https://www.youtube.com/watch?v=b9TfkgH0Xzw",
           "https://www.youtube.com/watch?v=xODWJzwGKb0",
           "https://x.com/drfeifei"
@@ -14247,6 +14289,13 @@
             "url": "https://www.bilibili.com/video/BV1hJ411F71K"
           },
           {
+            "date": "2019-12-01",
+            "source": "Bilibili · Python与机器学习算法",
+            "title": "【公开课】最新斯坦福 李飞飞 cs231n计算机视觉课程【附中文字幕】",
+            "type": "speech",
+            "url": "https://www.bilibili.com/video/BV1nJ411z7fe"
+          },
+          {
             "date": "2017-03-31",
             "source": "Bilibili · 大脚怪",
             "title": "[生肉]谷歌云首席科学家 李飞飞演讲",
@@ -14283,13 +14332,6 @@
           },
           {
             "date": "2年前",
-            "source": "YouTube · Stanford HAI",
-            "title": "Fei-Fei Li in Conversation with John Hennessy on Her New Book: The Worlds I See",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=HiSK7nv-i94"
-          },
-          {
-            "date": "2年前",
             "source": "YouTube · Arts & Science - University of Toronto",
             "title": "Geoffrey Hinton in conversation with Fei-Fei Li — Responsible AI development",
             "type": "interview",
@@ -14310,18 +14352,18 @@
             "url": "https://www.youtube.com/watch?v=YW7sm-Mt9z8"
           },
           {
+            "date": "2年前",
+            "source": "YouTube · SciSci",
+            "title": "2024年开年AI大牛世界论坛关于AI的三大访谈之一 李飞飞、吴恩达对谈：这一次，AI冬天不会到来2024 A Dialogue between Li Fei-Fei and Andrew Ng",
+            "type": "interview",
+            "url": "https://www.youtube.com/watch?v=g_yXe4jiFQ0"
+          },
+          {
             "date": "4个月前",
             "source": "YouTube · Zhang Xiaojun Podcast",
             "title": "A 7-hour marathon interview with Saining Xie: World Models, AMI Labs, Yann LeCun, Fei-Fei Li, and 42",
             "type": "interview",
             "url": "https://www.youtube.com/watch?v=rIwgZWzUKm8"
-          },
-          {
-            "date": "6年前",
-            "source": "YouTube · Society for Neuroscience",
-            "title": "Dialogues Between Neuroscience and Society: Fei-Fei Li",
-            "type": "qa",
-            "url": "https://www.youtube.com/watch?v=xODWJzwGKb0"
           },
           {
             "date": "3年前",
@@ -14476,11 +14518,25 @@
             "url": "https://www.bilibili.com/video/BV1Zz421B7Vf"
           },
           {
+            "date": "2026-02-04",
+            "source": "Bilibili · 京口先生",
+            "title": "恺明 老师和同学们的 对话 ，值得一看 | 何恺明 | Kaiming He | 原创中英字幕",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1bnfdBpEPs"
+          },
+          {
             "date": "2024-05-14",
             "source": "Bilibili · ZRDMATH",
             "title": "2016年 何恺明 在CVPR大会上关于ResNet的 演讲",
             "type": "speech",
             "url": "https://www.bilibili.com/video/BV1hM4m1C7qi"
+          },
+          {
+            "date": "2023-10-19",
+            "source": "Bilibili · 内卷大冬瓜",
+            "title": "何恺明 ：科研总是让人感到沮丧的",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV1q84y1d7Xm"
           },
           {
             "date": "2024-03-11",
@@ -14567,11 +14623,25 @@
             "url": "https://www.bilibili.com/video/BV1Zz421B7Vf"
           },
           {
+            "date": "2026-02-04",
+            "source": "Bilibili · 京口先生",
+            "title": "恺明 老师和同学们的 对话 ，值得一看 | 何恺明 | Kaiming He | 原创中英字幕",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1bnfdBpEPs"
+          },
+          {
             "date": "2024-05-14",
             "source": "Bilibili · ZRDMATH",
             "title": "2016年 何恺明 在CVPR大会上关于ResNet的 演讲",
             "type": "speech",
             "url": "https://www.bilibili.com/video/BV1hM4m1C7qi"
+          },
+          {
+            "date": "2023-10-19",
+            "source": "Bilibili · 内卷大冬瓜",
+            "title": "何恺明 ：科研总是让人感到沮丧的",
+            "type": "interview",
+            "url": "https://www.bilibili.com/video/BV1q84y1d7Xm"
           },
           {
             "date": "2024-03-11",
@@ -15317,13 +15387,13 @@
           "https://en.wikipedia.org/wiki/Sam_Altman",
           "https://openai.com/",
           "https://www.bilibili.com/video/BV18p3n6MEsN",
-          "https://www.bilibili.com/video/BV1NkM66LEkW",
+          "https://www.bilibili.com/video/BV1Y93E6uEQv",
           "https://www.bilibili.com/video/BV1b73z6WEmM",
           "https://www.bilibili.com/video/BV1sK421y7bo",
           "https://www.wikidata.org/wiki/Q7407093",
           "https://www.youtube.com/watch?v=5MWT_doo68k",
-          "https://www.youtube.com/watch?v=5eouRdDYM2c",
           "https://www.youtube.com/watch?v=FVRHTWWEIz4",
+          "https://www.youtube.com/watch?v=GLKoDkbS1Cg",
           "https://www.youtube.com/watch?v=jvqFAi7vkBc",
           "https://x.com/sama"
         ],
@@ -15441,18 +15511,18 @@
             "url": "https://www.bilibili.com/video/BV1xWGV67EYf"
           },
           {
+            "date": "2025-05-20",
+            "source": "Bilibili · TED官方视频大全",
+            "title": "【TED】 OpenAI 的 Sam Altman 在TED2025上分享了ChatGPT、人工智能代理和超级智能",
+            "type": "speech",
+            "url": "https://www.bilibili.com/video/BV1yNE9zWEhi"
+          },
+          {
             "date": "直播时间：3年前",
             "source": "YouTube · The Economic Times",
             "title": "Watch ET Conversations with OpenAI CEO Sam Altman | An ET Exclusive",
             "type": "interview",
             "url": "https://www.youtube.com/watch?v=AiE7FsdRzz8"
-          },
-          {
-            "date": "3年前",
-            "source": "YouTube · Lex Fridman",
-            "title": "Sam Altman: OpenAI CEO on GPT-4, ChatGPT, and the Future of AI | Lex Fridman Podcast #367",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=L_Guz73e6fw"
           },
           {
             "date": "7年前",
@@ -15603,10 +15673,6 @@
         ],
         "slug": "shunyu-yao",
         "sources": [
-          "https://www.bilibili.com/video/BV1eW7C6xEnV",
-          "https://www.bilibili.com/video/BV1pqwJz2EHs",
-          "https://www.bilibili.com/video/BV1qR7r6tEK7",
-          "https://www.youtube.com/watch?v=-04XgcnLx2k",
           "https://www.youtube.com/watch?v=NzcHWqJWE4M",
           "https://www.youtube.com/watch?v=Y4jRSIIdmB8",
           "https://www.youtube.com/watch?v=gQgKkUsx5q0",
@@ -16843,7 +16909,12 @@
           "新能源"
         ],
         "slug": "person-80d5a740b7",
-        "sources": [],
+        "sources": [
+          "https://www.bilibili.com/video/BV1171HBJEvs",
+          "https://www.bilibili.com/video/BV1CRUUYgEBw",
+          "https://www.bilibili.com/video/BV1EAM167Epz",
+          "https://www.bilibili.com/video/BV1Y8ut6fEyE"
+        ],
         "speeches": [
           {
             "date": "2025-11-05",
@@ -17000,13 +17071,6 @@
             "title": "KEYNOTE: Chris Urmson",
             "type": "speech",
             "url": "https://www.youtube.com/watch?v=hMBWiWg_oDo"
-          },
-          {
-            "date": "2周前",
-            "source": "YouTube · DWS News",
-            "title": "How Aurora's Autonomous Trucks Could Transform Freight & Logistics | Chris Urmson Interview | AF1G",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=v_9BluICGkI"
           }
         ],
         "name": "Chris Urmson",
@@ -17021,7 +17085,7 @@
           "https://www.youtube.com/watch?v=8YT0hZGX2gs",
           "https://www.youtube.com/watch?v=R0ZmicQcGEM",
           "https://www.youtube.com/watch?v=Tj6NOfdfa4o",
-          "https://www.youtube.com/watch?v=v_9BluICGkI"
+          "https://www.youtube.com/watch?v=cJG6l_TUHao"
         ],
         "speeches": [
           {
@@ -17093,13 +17157,6 @@
             "title": "KEYNOTE: Chris Urmson",
             "type": "speech",
             "url": "https://www.youtube.com/watch?v=hMBWiWg_oDo"
-          },
-          {
-            "date": "2周前",
-            "source": "YouTube · DWS News",
-            "title": "How Aurora's Autonomous Trucks Could Transform Freight & Logistics | Chris Urmson Interview | AF1G",
-            "type": "interview",
-            "url": "https://www.youtube.com/watch?v=v_9BluICGkI"
           }
         ],
         "status": "partial",
@@ -17210,6 +17267,13 @@
             "url": "https://www.bilibili.com/video/BV1jd4y1C7iQ"
           },
           {
+            "date": "2026-08-08",
+            "source": "Bilibili · 南方Plus",
+            "title": "对话李泽湘 ：当新工科教育遇上大湾区超级供应链",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1omuM6yEt1"
+          },
+          {
             "date": "2026-03-09",
             "source": "Bilibili · 联合早报网",
             "title": "对话 大疆教父 李泽湘 ：新工科教育与供应链，让黄仁勋很羡慕",
@@ -17246,6 +17310,9 @@
         "slug": "li-zexiang",
         "sources": [
           "https://ece.hkust.edu.hk/",
+          "https://www.bilibili.com/video/BV1jB4y1i7Ge",
+          "https://www.bilibili.com/video/BV1jd4y1C7iQ",
+          "https://www.bilibili.com/video/BV1omuM6yEt1",
           "https://www.xbotpark.com/"
         ],
         "speeches": [
@@ -17269,6 +17336,13 @@
             "title": "科技 x 设计=量产独角兽？ 对话 大疆的“科创教父” 李泽湘 教授",
             "type": "interview",
             "url": "https://www.bilibili.com/video/BV1jd4y1C7iQ"
+          },
+          {
+            "date": "2026-08-08",
+            "source": "Bilibili · 南方Plus",
+            "title": "对话李泽湘 ：当新工科教育遇上大湾区超级供应链",
+            "type": "qa",
+            "url": "https://www.bilibili.com/video/BV1omuM6yEt1"
           },
           {
             "date": "2026-03-09",
@@ -17308,6 +17382,13 @@
           {
             "date": "2026-08-08",
             "source": "东方财富",
+            "title": "AI早报 | 宇树科技王兴兴身家有望超200亿元；张一鸣：字节跳动“拒绝蒸馏”，不用别人输出换榜单排名",
+            "type": "article",
+            "url": "http://finance.eastmoney.com/a/202608073834493676.html"
+          },
+          {
+            "date": "2026-08-08",
+            "source": "东方财富",
             "title": "宇树科技IPO路演 募资近半投向“大脑”研发",
             "type": "article",
             "url": "https://finance.eastmoney.com/a/202608083835609232.html"
@@ -17322,7 +17403,7 @@
           {
             "date": "2026-08-07",
             "source": "机器人 · Google News 中文",
-            "title": "宇树科技IPO路演详解具身智能前景 王兴兴：现类似家用电脑起步阶段 - cls.cn",
+            "title": "宇树科技IPO路演详解具身智能前景 王兴兴：现类似家用电脑起步阶段 - 财联社",
             "type": "article",
             "url": "https://news.google.com/rss/articles/CBMiSEFVX3lxTE1OZVZmSjNLbTRuNnFXUWhudlBaN0xJMTVGbUJqcTZWMzJXREY0b2haVU1JUEtuWkxWSGJQU1FxSjRXLUtLUEFHNg?oc=5"
           },
@@ -17472,6 +17553,13 @@
             "title": "【钛晨报】工信部印发民爆行业\"十五五\"规划：2030年生产线危险工序实现无人化，培育3—5家大型企业集团；网信办对派拓公司在华销售产品启动网络安全审查；宇树科技IPO定价150.80元，王兴兴身家有望超200亿元",
             "type": "article",
             "url": "https://www.tmtpost.com/8094590.html"
+          },
+          {
+            "date": "2026-08-08",
+            "source": "钛媒体",
+            "title": "三个小时，王兴兴和宇树“努力”回应一切",
+            "type": "article",
+            "url": "https://www.tmtpost.com/8095642.html"
           },
           {
             "date": "2026-08-06",
@@ -17803,7 +17891,12 @@
           "机器人"
         ],
         "slug": "person-3307c75e01",
-        "sources": [],
+        "sources": [
+          "https://www.bilibili.com/video/BV15CRsBaEfg",
+          "https://www.bilibili.com/video/BV17YK4zTEvo",
+          "https://www.bilibili.com/video/BV1Ms421M76y",
+          "https://www.bilibili.com/video/BV1jL411x7fX"
+        ],
         "speeches": [
           {
             "date": "2026-05-06",
@@ -17865,9 +17958,7 @@
           "机器人"
         ],
         "slug": "person-a9e5a688d6",
-        "sources": [
-          "https://www.bilibili.com/video/BV1MU4y1A7g3"
-        ],
+        "sources": [],
         "speeches": [
           {
             "date": "2021-09-22",
@@ -17900,6 +17991,31 @@
           "生物科技"
         ],
         "slug": "person-a07adc0854",
+        "sources": [],
+        "speeches": [],
+        "status": "pending",
+        "summary": "公开背景资料待补充。",
+        "works": []
+      },
+      "person-ee510d9f18": {
+        "aliases": [
+          "罗敏敏"
+        ],
+        "books": [],
+        "concepts": [
+          "生物科技"
+        ],
+        "englishName": "罗敏敏",
+        "handles": [],
+        "materials": [],
+        "name": "罗敏敏",
+        "organizations": [],
+        "products": [],
+        "role": "人物档案待补充",
+        "sectors": [
+          "生物科技"
+        ],
+        "slug": "person-ee510d9f18",
         "sources": [],
         "speeches": [],
         "status": "pending",
@@ -18063,7 +18179,9 @@
           "风险投资"
         ],
         "slug": "gustaf-alstr",
-        "sources": [],
+        "sources": [
+          "https://www.youtube.com/watch?v=PybOg3uS-FA"
+        ],
         "speeches": [
           {
             "date": "2026-07-21",
@@ -23473,9 +23591,9 @@
     "ventureCompany": 63,
     "institution": 216,
     "marketCompany": 15,
-    "person": 35,
+    "person": 36,
     "institutionEvent": 65,
     "listedDisclosure": 146
   },
-  "contentHash": "197737a0e241accdb3e4"
+  "contentHash": "a9dfbf4e82fe04db9740"
 }
