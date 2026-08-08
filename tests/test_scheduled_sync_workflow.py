@@ -54,6 +54,7 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         self.assertIn("Continue through entity reconciliation before publication", text)
         self.assertIn("steps.data-update.outcome == 'success'", text)
         self.assertIn("gh workflow run company-candidate-discovery.yml --ref main", text)
+        self.assertIn("-f publish_after_reconciliation=true", text)
         self.assertIn("actions: write", text)
 
     def test_full_crawl_persists_audit_without_semantic_article_changes(self) -> None:

@@ -5,6 +5,12 @@ on:
     - cron: "45 7 * * *"
       timezone: "Asia/Taipei"
   workflow_dispatch:
+    inputs:
+      publish_after_reconciliation:
+        description: Publish Pages after reconciliation reaches a fixed point
+        required: false
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -156,13 +162,14 @@ jobs:
               exit 1
             fi
           done
-      - name: Continue private review or refresh after reconciliation
+      - name: Continue private review, refresh or publication after reconciliation
         if: steps.publish.outputs.changed == 'true' || github.event_name == 'workflow_dispatch' || github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
           TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}
           CANDIDATE_CHANGED: ${{ steps.publish.outputs.candidate_changed }}
           PUSH_TRACKING_INPUTS_CHANGED: ${{ steps.push-inputs.outputs.changed }}
+          PUBLISH_AFTER_RECONCILIATION: ${{ inputs.publish_after_reconciliation }}
         shell: bash
         run: |
           set -euo pipefail
@@ -173,6 +180,9 @@ jobs:
           if [ "${TRACKING_CHANGED:-false}" = "true" ] || [ "${PUSH_TRACKING_INPUTS_CHANGED:-false}" = "true" ]; then
             echo "Tracking inputs changed; rebuild the public article snapshot before Pages."
             gh workflow run scheduled-sync.yml --ref main
+          elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
+            echo "Entity reconciliation reached a fixed point; publish the synchronized public snapshot."
+            gh workflow run pages.yml --ref main
           else
             echo "No public tracking input changed; private review state does not require a Pages deployment."
           fi
