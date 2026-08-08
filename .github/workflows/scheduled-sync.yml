@@ -100,8 +100,9 @@ permissions:
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
-  # Preserve the active writer but let the newest full refresh replace stale pending runs.
-  queue: single
+  # A full refresh must not evict candidate onboarding or reconciliation that was
+  # queued first. Writer correctness takes precedence over cross-workflow compaction.
+  queue: max
 
 jobs:
   crawl:
