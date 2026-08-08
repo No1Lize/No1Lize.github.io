@@ -1,12 +1,15 @@
-"""Classify public intelligence sources into an explicit A-D evidence grade.
+"""Classify public intelligence sources by evidence grade and publication role.
 
-Grades describe the strength of the source for factual claims, not whether the
-underlying organization is reputable in general:
+Evidence grade describes factual authority.  `sourceRole` is a separate control
+plane decision:
 
-A -- regulator, exchange or statutory filing source;
-B -- first-party organization/person publication or original material;
-C -- professional media or structured research database;
-D -- discovery index, aggregation or otherwise unverified public lead.
+primary        -- regulator, exchange, first-party organization/person material;
+corroboration  -- independent professional media/database material;
+discovery      -- search indexes, automatic media discovery and other lead-only rows.
+
+A source may be reputable and still be `discovery` when the crawler reached it
+through an automatically promoted/search-only path.  This keeps recall separate
+from publication privilege.
 """
 
 from __future__ import annotations
@@ -15,6 +18,7 @@ from typing import Any
 from urllib.parse import urlsplit
 
 VALID_EVIDENCE_GRADES = {"A", "B", "C", "D"}
+VALID_SOURCE_ROLES = {"primary", "corroboration", "discovery"}
 EVIDENCE_GRADE_LABELS = {
     "A": "监管/法定原始来源",
     "B": "主体官方/原始材料",
@@ -26,6 +30,11 @@ EVIDENCE_GRADE_POLICIES = {
     "B": "可作为信息主体的正式公开声明",
     "C": "作为媒体或数据库报道使用，重大资本事实宜交叉核验",
     "D": "仅用于发现线索，不应单独表述为确定事实",
+}
+SOURCE_ROLE_LABELS = {
+    "primary": "直接事实来源",
+    "corroboration": "独立交叉验证来源",
+    "discovery": "线索发现来源",
 }
 
 REGULATORY_PLATFORMS = {
@@ -71,6 +80,16 @@ PROFESSIONAL_PLATFORM_MARKERS = (
     "数据库",
     "openalex",
     "arxiv",
+)
+DISCOVERY_SOURCE_IDS = {
+    "finance-media-index",
+    "wechat-public-index",
+}
+DISCOVERY_SOURCE_ID_MARKERS = (
+    "-bing",
+    "-google-cn",
+    "-google-us",
+    "-toutiao",
 )
 
 
@@ -135,10 +154,53 @@ def classify_source_evidence(
     return "D"
 
 
+def _direct_wechat(platform: Any, url: Any) -> bool:
+    return _fold(platform) == "微信" and _host(url) == "mp.weixin.qq.com"
+
+
+def classify_source_role(
+    *,
+    grade: str,
+    source_id: Any = "",
+    platform: Any = "",
+    url: Any = "",
+    source_name: Any = "",
+    explicit_role: Any = "",
+) -> str:
+    explicit = _fold(explicit_role)
+    if explicit in VALID_SOURCE_ROLES:
+        return explicit
+
+    sid = _fold(source_id)
+    if sid in DISCOVERY_SOURCE_IDS:
+        return "discovery"
+    if sid.startswith("user-source-source-auto-media-"):
+        return "discovery"
+    if sid.startswith("user-track-") and not _direct_wechat(platform, url):
+        return "discovery"
+    if any(marker in sid for marker in DISCOVERY_SOURCE_ID_MARKERS):
+        return "discovery"
+
+    folded_name = _fold(source_name)
+    folded_platform = _fold(platform)
+    if _contains_any(folded_name, DISCOVERY_PLATFORM_MARKERS) or _contains_any(
+        folded_platform, DISCOVERY_PLATFORM_MARKERS
+    ):
+        return "discovery"
+
+    if grade in {"A", "B"}:
+        return "primary"
+    if grade == "C":
+        return "corroboration"
+    return "discovery"
+
+
 def enrich_source_evidence(
     source: dict[str, Any],
     *,
     source_category: Any = "",
+    source_id: Any = "",
+    explicit_role: Any = "",
 ) -> dict[str, Any]:
     result = dict(source)
     grade = classify_source_evidence(
@@ -148,9 +210,27 @@ def enrich_source_evidence(
         source_name=result.get("name"),
         source_category=source_category,
     )
+    # `_source()` creates a preliminary evidence envelope before the article has
+    # a sourceId. Once source_id is known, recompute the role from that stable
+    # runtime identity unless an upstream portfolio adapter explicitly supplied
+    # a top-level role. Otherwise a preliminary C/corroboration label could mask
+    # an automatic/search source that must become discovery.
+    role_hint = explicit_role
+    if not _fold(source_id) and not _fold(role_hint):
+        role_hint = result.get("sourceRole", "")
+    role = classify_source_role(
+        grade=grade,
+        source_id=source_id,
+        platform=result.get("platform"),
+        url=result.get("url"),
+        source_name=result.get("name"),
+        explicit_role=role_hint,
+    )
     result["evidenceGrade"] = grade
     result["evidenceLabel"] = EVIDENCE_GRADE_LABELS[grade]
     result["evidencePolicy"] = EVIDENCE_GRADE_POLICIES[grade]
+    result["sourceRole"] = role
+    result["sourceRoleLabel"] = SOURCE_ROLE_LABELS[role]
     return result
 
 
@@ -163,7 +243,10 @@ def enrich_article_sources(articles: list[dict[str, Any]]) -> list[dict[str, Any
             article["source"] = enrich_source_evidence(
                 source,
                 source_category=article.get("sourceCategory", ""),
+                source_id=article.get("sourceId", ""),
+                explicit_role=article.get("sourceRole", ""),
             )
+            article["sourceRole"] = article["source"]["sourceRole"]
         enriched.append(article)
     return enriched
 
@@ -171,10 +254,15 @@ def enrich_article_sources(articles: list[dict[str, Any]]) -> list[dict[str, Any
 def validate_source_evidence(source: dict[str, Any]) -> list[str]:
     errors: list[str] = []
     grade = str(source.get("evidenceGrade") or "")
+    role = str(source.get("sourceRole") or "")
     if grade and grade not in VALID_EVIDENCE_GRADES:
         errors.append("invalid:source-evidence-grade")
     if grade and not str(source.get("evidenceLabel") or "").strip():
         errors.append("missing:source-evidence-label")
+    if role and role not in VALID_SOURCE_ROLES:
+        errors.append("invalid:source-role")
+    if role and not str(source.get("sourceRoleLabel") or "").strip():
+        errors.append("missing:source-role-label")
     return errors
 
 
