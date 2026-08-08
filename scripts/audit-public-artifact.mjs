@@ -14,6 +14,12 @@ const forbiddenMarkers = [
   "外部文章采集 | VCIQ",
 ];
 const publicPageMarkers = ["上市跟踪", "PUBLIC MARKETS"];
+const forbiddenCompanyReviewFiles = new Set([
+  "data/company_candidates.json",
+  "data/company_candidate_onboarding.json",
+  "company_candidate_review_queue.json",
+  "company_candidate_onboarding_state.json",
+]);
 
 function fail(messages) {
   for (const message of messages) {
@@ -43,6 +49,10 @@ for (const filePath of files) {
   const relativePath = path.relative(outputRoot, filePath).split(path.sep).join("/");
   const size = fs.statSync(filePath).size;
   totalBytes += size;
+
+  if (forbiddenCompanyReviewFiles.has(relativePath)) {
+    errors.push(`private company review artifact leaked into out/${relativePath}`);
+  }
 
   if (
     relativePath === "tracking/capture.html" ||
@@ -81,5 +91,5 @@ for (const filePath of files) {
 
 if (errors.length) fail(errors);
 console.log(
-  `Public artifact audit passed: ${files.length} files, ${(totalBytes / 1024 / 1024).toFixed(2)} MiB, no admin or retired listed-market routes.`,
+  `Public artifact audit passed: ${files.length} files, ${(totalBytes / 1024 / 1024).toFixed(2)} MiB, no admin, private company-review, or retired listed-market routes.`,
 );
