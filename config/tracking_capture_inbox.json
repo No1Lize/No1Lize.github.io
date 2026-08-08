@@ -1,7 +1,142 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T06:53:54.220Z",
+  "generatedAt": "2026-08-08T06:54:55.657Z",
   "records": [
+    {
+      "id": "capture-1dk5cz",
+      "entityType": "company",
+      "canonicalName": "Alphabet",
+      "rawSelection": "Alphabet",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-pcc26h",
+        "title": "07-30",
+        "url": "https://siliconangle.com/2026/07/30/google-deepmind-debuts-gemini-robotics-2-model-series-humanoid-robots",
+        "summary": "Alphabet Inc.’s artificial intelligence research lab today debuted a family of models optimized to power humanoid robots. Google DeepMind says that the Gemini Robotics 2 series enables multiple autonomous machines to collaborate on a task. According to the company, it can automate chores that comprise hundreds of steps. Many humanoid robots feature a so-called dual-system [...] The post Google DeepMind debuts Gemini Robotics 2 model series for humanoid robots appeared first on SiliconANGLE .",
+        "sourceName": "媒体报道 · SiliconANGLE · SiliconANGLE",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T06:54:55.657Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Alphabet",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具,不能直接作为公司写入。",
+        "decisionKey": "alphabet",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-1y2yyo2",
+      "entityType": "topic",
+      "canonicalName": "DeepMind",
+      "rawSelection": "DeepMind",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-pcc26h",
+        "title": "07-30",
+        "url": "https://siliconangle.com/2026/07/30/google-deepmind-debuts-gemini-robotics-2-model-series-humanoid-robots",
+        "summary": "Alphabet Inc.’s artificial intelligence research lab today debuted a family of models optimized to power humanoid robots. Google DeepMind says that the Gemini Robotics 2 series enables multiple autonomous machines to collaborate on a task. According to the company, it can automate chores that comprise hundreds of steps. Many humanoid robots feature a so-called dual-system [...] The post Google DeepMind debuts Gemini Robotics 2 model series for humanoid robots appeared first on SiliconANGLE .",
+        "sourceName": "媒体报道 · SiliconANGLE · SiliconANGLE",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T06:54:55.657Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords",
+        "robotics:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "topic",
+        "canonicalName": "DeepMind",
+        "targetId": "topic:deepmind",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "deepmind",
+        "reclassified": true
+      }
+    },
+    {
+      "id": "capture-1uvsaqf",
+      "entityType": "company",
+      "canonicalName": "Google",
+      "rawSelection": "Google",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-pcc26h",
+        "title": "07-30",
+        "url": "https://siliconangle.com/2026/07/30/google-deepmind-debuts-gemini-robotics-2-model-series-humanoid-robots",
+        "summary": "Alphabet Inc.’s artificial intelligence research lab today debuted a family of models optimized to power humanoid robots. Google DeepMind says that the Gemini Robotics 2 series enables multiple autonomous machines to collaborate on a task. According to the company, it can automate chores that comprise hundreds of steps. Many humanoid robots feature a so-called dual-system [...] The post Google DeepMind debuts Gemini Robotics 2 model series for humanoid robots appeared first on SiliconANGLE .",
+        "sourceName": "媒体报道 · SiliconANGLE · SiliconANGLE",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T06:54:55.657Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies",
+        "robotics:sampleCompanies"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Google",
+        "targetId": "company:google",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "google",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-vr0te1",
       "entityType": "company",
