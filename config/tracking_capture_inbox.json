@@ -1,7 +1,53 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T07:21:48.329Z",
+  "generatedAt": "2026-08-08T07:23:50.634Z",
   "records": [
+    {
+      "id": "capture-1cr3d63",
+      "entityType": "topic",
+      "canonicalName": "TPU",
+      "rawSelection": "TPU",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "semiconductor"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "半导体"
+      ],
+      "source": {
+        "articleId": "article-fmjhht",
+        "title": "08-06",
+        "url": "https://x.com/GoogleDeepMind/status/2085395447586160949",
+        "summary": "The model learned from years of everyday global atmospheric data alongside a curated database of almost 5,000 historical cyclones. It generates each 15-day probabilistic forecast scenario in under a minute on a TPU. https://t.co/vptoun7H9G",
+        "sourceName": "原始材料 · X · Google DeepMind on X",
+        "channel": "people",
+        "channelLabel": "人物研究",
+        "eventType": "人物观点"
+      },
+      "capturedAt": "2026-08-08T07:23:50.634Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords",
+        "semiconductor:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "TPU",
+        "targetId": "topic:tpu",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术/主题”,且未与正式目录冲突。",
+        "decisionKey": "tpu",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-sp71qt",
       "entityType": "topic",
