@@ -1,21 +1,97 @@
 name: Refresh public intelligence
 
 on:
-  schedule:
-    - cron: "30 6 * * *"
-      timezone: "Asia/Taipei"
-  workflow_dispatch:
   push:
     branches: [main]
     paths:
+      - tools/crawl_articles.py
+      - tools/crawl_listed_company_disclosures.py
+      - tools/cninfo_structured_disclosures.py
+      - tools/sec_structured_disclosures.py
+      - tools/sec_configured_disclosures.py
+      - tools/us_ir_sec_disclosures.py
+      - tools/us_ir_search_disclosures.py
+      - tools/us_ir_baseline_disclosures.py
+      - tools/publish_us_ir_baselines.py
+      - tools/snapshot_retention.py
+      - tools/refresh_article_quality_gate.py
+      - tools/crawl_with_tracking.py
+      - tools/crawl_tracked_articles.py
+      - tools/crawl_with_source_categories.py
+      - tools/crawl_with_wechat_registry.py
+      - tools/http_request_policy.py
+      - tools/http_policy_bridge.py
+      - tools/semantic_data_diff.py
+      - tools/update_source_health.py
+      - tools/source_health_summary.py
+      - tools/tracking_source_governance.py
+      - tools/source_evidence.py
+      - tools/source_health_runtime.py
+      - tools/source_performance.py
+      - tools/source_quality_reviews.py
+      - tools/source_performance_review.py
+      - tools/professional_media_progress.py
+      - tools/professional_media_sources.py
+      - tools/validate_professional_media_snapshot.py
+      - tools/adaptive_public_sources.py
+      - tools/generic_web_sources.py
+      - tools/wechat_public_sources.py
+      - tools/wechat_registry_bridge.py
+      - tools/wechat_index_context_guard.py
+      - tools/wechat_index_record_fallback.py
+      - tools/wechat_source_registry.py
+      - tools/wechat_sogou_index.py
+      - tools/wechat_sogou_bridge.py
+      - tools/robust_web_fallback.py
+      - tools/prepare_full_refresh.py
+      - tools/finalize_full_refresh.py
+      - tools/validate_full_refresh.py
+      - tools/validate_user_source_coverage.py
+      - tools/tracking_taxonomy.py
+      - tools/enrich_tracking_snapshot.py
+      - tools/tracking_quality.py
+      - tools/crawl_market_profiles.py
+      - tools/refresh_market_profiles.py
+      - tools/refresh_market_profiles_enriched.py
+      - tools/market_profile_enrichment.py
+      - tools/market_quote_news_sources.py
+      - tools/validate_market_profiles.py
+      - tools/refresh_people_profiles.py
+      - tools/refresh_people_profiles_with_video.py
+      - tools/person_video_discovery.py
+      - tools/crawl_official_companies.py
+      - tools/bytedance_official_sources.py
+      - tools/validate_bytedance_official_live.py
+      - tools/crawl_official_with_tracking.py
+      - tools/crawl_official_with_source_categories.py
+      - tools/eastmoney_transport.py
+      - tools/eastmoney_entities.py
+      - tools/refine_eastmoney_snapshot.py
+      - tools/validate_eastmoney_snapshot.py
+      - tools/migrate_article_entities.py
+      - tools/run_pipeline.py
+      - tools/build_pipeline_health.py
+      - lib/listed-company-disclosure-data.ts
+      - lib/venture-profile-data-with-disclosures.ts
+      - tsconfig.json
+      - config/automation_jobs.json
+      - config/intelligence_sources.json
       - config/user_tracking.json
-      - config/tracking_source_governance.json
-      - config/source_registry.json
-      - config/professional_media_sources.json
+      - config/listed_company_disclosure_sources.json
+      - config/professional_technology_media_sources.json
+      - config/wechat_sources.json
+      - config/wechat_public_indexes.json
       - config/official_company_sources.json
-      - config/listed_companies.json
-      - tools/**
+      - config/person_profile_overrides.json
+      - config/source_health_policy.json
+      - config/source_quality_reviews.json
+      - .github/workflows/source-performance-review.yml
       - .github/workflows/scheduled-sync.yml
+  schedule:
+  # One complete, quality-gated refresh after the US market close.
+  - cron: "30 6 * * *"
+    timezone: "Asia/Taipei"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,16 +100,16 @@ permissions:
 
 concurrency:
   group: vciq-repository-writer-${{ github.ref }}
+  # Preserve the active writer but let the newest full refresh replace stale pending runs.
   queue: single
 
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: main
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -41,49 +117,68 @@ jobs:
       - name: Validate source, disclosure, retention and automation plans
         run: |
           python -m py_compile \
-            tools/build_source_registry.py \
+            tools/http_request_policy.py \
+            tools/http_policy_bridge.py \
+            tools/semantic_data_diff.py \
+            tools/update_source_health.py \
             tools/source_health_summary.py \
             tools/tracking_source_governance.py \
-            tools/start_full_refresh.py \
-            tools/finalize_full_refresh.py \
-            tools/refresh_article_quality_gate.py \
-            tools/run_pipeline.py \
-            tools/crawl_articles.py \
-            tools/crawl_with_wechat_registry.py \
+            tools/source_evidence.py \
+            tools/source_health_runtime.py \
+            tools/source_performance.py \
+            tools/source_quality_reviews.py \
+            tools/source_performance_review.py \
+            tools/professional_media_progress.py \
+            tools/professional_media_sources.py \
             tools/validate_professional_media_snapshot.py \
             tools/crawl_listed_company_disclosures.py \
             tools/cninfo_structured_disclosures.py \
+            tools/sec_structured_disclosures.py \
+            tools/sec_configured_disclosures.py \
+            tools/us_ir_sec_disclosures.py \
+            tools/us_ir_search_disclosures.py \
             tools/us_ir_baseline_disclosures.py \
-            tools/eastmoney_transport.py \
-            tools/migrate_entity_attribution.py \
-            tools/refine_eastmoney_snapshot.py \
-            tools/backfill_tracking_sectors.py \
-            tools/refresh_people_profiles_with_video.py \
+            tools/publish_us_ir_baselines.py \
             tools/snapshot_retention.py \
-            tools/validate_full_refresh.py \
-            tools/update_source_health.py \
-            tools/validate_snapshot_retention.py \
-            tools/validate_data.py \
-            tools/validate_source_coverage.py \
-            tools/validate_eastmoney_snapshot.py \
-            tools/validate_user_source_coverage.py \
-            tools/validate_market_profiles.py
+            tools/refresh_article_quality_gate.py \
+            tools/crawl_with_wechat_registry.py \
+            tools/run_pipeline.py \
+            tools/build_pipeline_health.py
           python -m unittest \
+            tests.test_http_request_policy \
+            tests.test_semantic_data_diff \
+            tests.test_source_health \
             tests.test_source_health_summary \
+            tests.test_tracking_source_governance \
+            tests.test_source_evidence \
+            tests.test_source_health_runtime \
+            tests.test_source_performance \
+            tests.test_source_quality_reviews \
+            tests.test_source_performance_review \
+            tests.test_source_health_performance \
+            tests.test_source_performance_workflow \
+            tests.test_source_performance_review_cli \
+            tests.test_professional_media_progress \
+            tests.test_professional_media_sources \
+            tests.test_listed_company_disclosures \
+            tests.test_cninfo_structured_disclosures \
+            tests.test_sec_structured_disclosures \
+            tests.test_sec_configured_disclosures \
+            tests.test_us_ir_sec_disclosures \
+            tests.test_us_ir_search_disclosures \
+            tests.test_us_ir_baseline_disclosures \
             tests.test_refresh_article_quality_gate \
-            tests.test_scheduled_sync_workflow
+            tests.test_scheduled_sync_workflow \
+            tests.test_snapshot_retention \
+            tests.test_pipeline_control
           python tools/run_pipeline.py check
       - name: Require a normalized automatic source registry
-        run: |
-          python tools/build_source_registry.py
-          python tools/build_source_registry.py --check
+        run: python tools/tracking_source_governance.py --check
       - name: Start a clean full-source status ledger
-        env:
-          PIPELINE_RUN_ID: gha:${{ github.run_id }}:${{ github.run_attempt }}:public-intelligence-full-refresh
-          PIPELINE_CODE_SHA: ${{ github.sha }}
-          PIPELINE_SOURCE_REF: ${{ github.ref }}
-        run: python tools/start_full_refresh.py
+        run: python tools/prepare_full_refresh.py
       - name: Crawl core, tracking, professional media, X and WeChat sources
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: python tools/crawl_with_wechat_registry.py --source all
       - name: Require executed professional media groups and original-domain articles
         run: python tools/validate_professional_media_snapshot.py --require-articles
@@ -92,7 +187,9 @@ jobs:
       - name: Resolve A-share documents through CNINFO structured data
         run: python tools/cninfo_structured_disclosures.py --require-events
       - name: Validate A-share and Hong Kong disclosure coverage
-        run: python tools/validate_listed_company_disclosures.py
+        run: |
+          python tools/crawl_listed_company_disclosures.py --validate-only --require-events
+          python tools/cninfo_structured_disclosures.py --check --require-events
       - name: Publish verified US filing baselines
         run: python -m tools.publish_us_ir_baselines
       - name: Refresh US filings through live official sources
@@ -100,38 +197,34 @@ jobs:
       - name: Require complete listed-company disclosure coverage
         run: python -m tools.us_ir_baseline_disclosures --check --require-events
       - name: Crawl all fixed and user-configured official company sources
-        run: python tools/crawl_official_company_sources.py
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: python tools/eastmoney_transport.py
       - name: Crawl listed market profiles trends and quote metrics
-        run: python tools/crawl_market_profiles.py
+        run: python tools/refresh_market_profiles_enriched.py
       - name: Migrate legacy entity attribution
-        run: python tools/migrate_entity_attribution.py
+        run: python tools/migrate_article_entities.py
       - name: Refine Eastmoney snapshot
         run: python tools/refine_eastmoney_snapshot.py
       - name: Backfill tracking sectors and coverage
-        run: python tools/backfill_tracking_sectors.py
+        run: python tools/enrich_tracking_snapshot.py
       - name: Refresh tracked people profiles and public videos
         run: python tools/refresh_people_profiles_with_video.py
       - name: Apply rolling newest-first article retention
         run: python tools/snapshot_retention.py
       - name: Finalize full refresh audit
-        env:
-          PIPELINE_RUN_ID: gha:${{ github.run_id }}:${{ github.run_attempt }}:public-intelligence-full-refresh
-          PIPELINE_CODE_SHA: ${{ github.sha }}
-          PIPELINE_SOURCE_REF: ${{ github.ref }}
-        run: |
-          python tools/refresh_article_quality_gate.py
-          python tools/finalize_full_refresh.py
+        run: python tools/finalize_full_refresh.py
       - name: Update cross-run source health
+        id: source-health
         run: python tools/update_source_health.py
       - name: Require canonical source health summary
-        id: source-health
-        run: python tools/source_health_summary.py --check --issue-body /tmp/source-health-issue.md --github-output "$GITHUB_OUTPUT"
+        run: python tools/source_health_summary.py --check
       - name: Validate rolling article retention
-        run: python tools/validate_snapshot_retention.py
+        run: python tools/snapshot_retention.py --check
       - name: Validate data quality
-        run: python tools/validate_data.py
+        run: python tools/crawl_articles.py --validate-only
       - name: Validate complete source coverage
-        run: python tools/validate_source_coverage.py
+        run: python tools/validate_full_refresh.py
       - name: Validate Eastmoney snapshot
         run: python tools/validate_eastmoney_snapshot.py
       - name: Validate user source coverage
@@ -144,48 +237,66 @@ jobs:
         run: python -m unittest discover -s tests -p "test_*.py"
       - name: Commit semantically changed public data
         id: data-update
-        env:
-          PIPELINE_RUN_ID: gha:${{ github.run_id }}:${{ github.run_attempt }}:public-intelligence-full-refresh
-          PIPELINE_CODE_SHA: ${{ github.sha }}
-          PIPELINE_SOURCE_REF: ${{ github.ref }}
         shell: bash
         run: |
           set -euo pipefail
           DATA_PATHS=(
             public/data/articles.json
-            public/data/source_health.json
-            public/data/refresh_audit.json
-            public/data/data_lineage.json
-            public/data/pipeline_health.json
-            public/data/market_profiles.json
-            public/data/people_profiles.json
             public/data/listed_company_disclosures.json
-            public/data/us_ir_disclosures.json
+            public/data/market_profiles.json
+            public/data/people.json
+            public/data/source_health.json
           )
           CONTROL_PATHS=(
-            config/source_registry.json
+            public/data/data_lineage.json
+            public/data/pipeline_health.json
           )
+          SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD "${DATA_PATHS[@]}")
+          echo "$SEMANTIC_JSON"
+          SEMANTIC_CHANGED=$(printf '%s' "$SEMANTIC_JSON" | python -c 'import json,sys; print(str(json.load(sys.stdin)["changed"]).lower())')
+          if [ "$SEMANTIC_CHANGED" != "true" ]; then
+            echo "No semantic public-data changes; publishing the completed full-crawl audit."
+          fi
+
+          python tools/run_pipeline.py finalize \
+            public-intelligence-full-refresh \
+            --quality-gate passed
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "${DATA_PATHS[@]}" "${CONTROL_PATHS[@]}"
           if git diff --cached --quiet; then
-            echo "No semantic public-data changes; publishing the completed full-crawl audit."
-          else
-            git commit -m "data: refresh public intelligence with source health"
+            echo "No crawl-audit or public-data changes to publish."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
-
+          git commit -m "data: refresh public intelligence with source health"
           for attempt in 1 2 3; do
+            # Rebase swaps ours/theirs: "theirs" keeps this run's freshly
+            # generated snapshot when main changed the same data file.
             git pull --rebase -X theirs origin main
-            python tools/build_source_registry.py
-            python tools/source_health_summary.py
-            python tools/tracking_source_governance.py --check
+
+            # Re-run deterministic enrichment at the rebased HEAD. Network source
+            # statuses and source-health streaks remain those produced by this run.
+            python tools/refresh_market_profiles_enriched.py
+            python tools/migrate_article_entities.py
+            python tools/refine_eastmoney_snapshot.py
+            python tools/enrich_tracking_snapshot.py
+            python tools/refresh_people_profiles_with_video.py
             python tools/snapshot_retention.py
             python tools/refresh_article_quality_gate.py
             python tools/finalize_full_refresh.py
-            python tools/validate_snapshot_retention.py
-            python tools/validate_data.py
-            python tools/validate_source_coverage.py
+            # Rebase may combine the latest source rows with an older root summary.
+            # Rebuild only aggregate fields; do not run update_source_health.py again
+            # because that would advance failure/recovery streaks twice in one crawl.
+            python tools/source_health_summary.py
+            python tools/source_health_summary.py --check
+            python tools/tracking_source_governance.py --check
+            python tools/snapshot_retention.py --check
+            python -m tools.us_ir_baseline_disclosures --check --require-events
+            python tools/validate_professional_media_snapshot.py --require-articles
+            python tools/crawl_articles.py --validate-only
+            python tools/validate_full_refresh.py
             python tools/validate_eastmoney_snapshot.py
             python tools/validate_user_source_coverage.py
             python tools/validate_market_profiles.py
