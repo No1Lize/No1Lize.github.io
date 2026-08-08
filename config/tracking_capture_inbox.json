@@ -1,7 +1,50 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T07:06:16.830Z",
+  "generatedAt": "2026-08-08T07:21:48.329Z",
   "records": [
+    {
+      "id": "capture-sp71qt",
+      "entityType": "topic",
+      "canonicalName": "DetoxAI图像识别系统",
+      "rawSelection": "DetoxAI图像识别系统",
+      "aliases": [],
+      "trackSlugs": [
+        "space"
+      ],
+      "trackNames": [
+        "商业航天"
+      ],
+      "source": {
+        "articleId": "article-1i9z6ih",
+        "title": "08-06",
+        "url": "https://arxiv.org/abs/2608.06351v1",
+        "summary": "This paper addresses the limitations of Explainable Artificial Intelligence (XAI) with respect to insufficient evaluation. They are illustrated through the DetoxAI image recognition system for bias detection and concept unlearning. Then, an example of a human-grounded evaluation of methods for explaining image classification is presented. The paper further explores methods for adapting explanations to evolving data streams with concept drift. Experiences with adapting counterfactuals for this pr",
+        "sourceName": "原始材料 · arXiv · arXiv · Core AI companies",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "论文"
+      },
+      "capturedAt": "2026-08-08T07:21:48.329Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "space:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "DetoxAI图像识别系统",
+        "targetId": "topic:detoxai图像识别系统",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术/主题”,且未与正式目录冲突。",
+        "decisionKey": "detoxai图像识别系统",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-1lb3bfa",
       "entityType": "person",
