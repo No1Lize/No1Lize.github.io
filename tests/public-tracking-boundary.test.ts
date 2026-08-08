@@ -44,7 +44,24 @@ test("public companies page contains formal profiles only", () => {
   );
 });
 
-test("company review queue is not statically imported into the public frontend", () => {
+test("company review queue is repository-only and not statically bundled", () => {
+  assert.equal(
+    fs.existsSync(path.join(root, "public/data/company_candidates.json")),
+    false,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, "public/data/company_candidate_onboarding.json")),
+    false,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, "config/company_candidate_review_queue.json")),
+    true,
+  );
+  assert.equal(
+    fs.existsSync(path.join(root, "config/company_candidate_onboarding_state.json")),
+    true,
+  );
+
   const dataBoundary = read("lib/company-candidate-data.ts");
   assert.doesNotMatch(dataBoundary, /public\/data\/company_candidates\.json/u);
   assert.match(dataBoundary, /candidates:\s*\[\]/u);
