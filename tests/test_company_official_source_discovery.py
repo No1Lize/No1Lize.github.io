@@ -197,6 +197,7 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
             )
         self.assertEqual(verified["taalas"]["homepage"], "https://verified.example/")
         self.assertEqual(report["verifiedSources"]["taalas"], "wikidata")
+        self.assertEqual(report["attemptedFailureCount"], 0)
         wikidata_mock.assert_called_once_with("Taalas")
         discover_mock.assert_not_called()
 
@@ -228,7 +229,48 @@ class CompanyOfficialSourceDiscoveryTests(unittest.TestCase):
             )
         self.assertEqual(verified["taalas"]["homepage"], "https://taalas.com/")
         self.assertEqual(report["verifiedSources"]["taalas"], "brand-domain-probe")
+        self.assertEqual(report["attemptedFailureCount"], 0)
         discover_mock.assert_called_once()
+
+    def test_v2_caches_negative_identity_resolution_for_core_preparer(self) -> None:
+        candidate = {
+            **self.candidate("Unresolved AI"),
+            "id": "candidate-unresolvedai",
+            "score": 75,
+            "status": "accepted",
+            "articleCount": 1,
+            "sourceCount": 1,
+            "sourceArticleIds": ["article-a"],
+            "eventTypes": ["产品发布"],
+            "captureIds": [],
+        }
+        with patch.object(
+            onboarding_v2.preparation,
+            "resolve_wikidata_company",
+            return_value=(None, "wikidata has no exact identity"),
+        ) as wikidata_mock, patch.object(
+            onboarding_v2.discovery,
+            "discover_verified_official_site",
+            return_value=(None, "no verified official site"),
+        ) as discover_mock:
+            next_decisions, report = onboarding_v2.run(
+                candidates_payload={"candidates": [candidate]},
+                decisions_payload=self.decisions("unresolvedai"),
+                official_sources_payload={"companies": []},
+                registry_payload={"companies": []},
+                captures_payload={"records": []},
+                limit=6,
+            )
+        self.assertNotIn(
+            "onboarding", next_decisions["decisions"]["unresolvedai"]
+        )
+        self.assertEqual(report["sourceDiscovery"]["attemptedFailureCount"], 1)
+        self.assertIn(
+            "wikidata has no exact identity",
+            report["sourceDiscovery"]["attemptedReasons"]["unresolvedai"],
+        )
+        self.assertEqual(wikidata_mock.call_count, 1)
+        self.assertEqual(discover_mock.call_count, 1)
 
 
 if __name__ == "__main__":

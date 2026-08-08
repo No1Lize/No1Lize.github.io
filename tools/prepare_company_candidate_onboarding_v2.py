@@ -10,6 +10,8 @@ Resolution order stays authority-first:
 4. hold for exception handling.
 
 Only already-verified metadata is passed into the existing onboarding preparer.
+Both successful and failed pre-resolution outcomes are cached for the bounded
+batch so the core preparer never repeats the same external identity lookup.
 """
 
 from __future__ import annotations
@@ -41,6 +43,7 @@ def discover_candidate_identities(
     decisions = onboarding.normalize_decisions(decisions_payload)
     verified: dict[str, dict[str, Any]] = {}
     verified_sources: dict[str, str] = {}
+    attempted_reasons: dict[str, str] = {}
     holds: list[dict[str, str]] = []
     checked = 0
 
@@ -89,15 +92,12 @@ def discover_candidate_identities(
             verified_sources[name_key] = str(metadata.get("source") or "evidence-linked")
             continue
 
-        holds.append(
-            {
-                "candidateKey": key,
-                "reason": (
-                    f"{wikidata_reason or 'Wikidata unresolved'}; "
-                    f"{discovery_reason or 'no verified evidence-linked official site'}"
-                ),
-            }
+        reason = (
+            f"{wikidata_reason or 'Wikidata unresolved'}; "
+            f"{discovery_reason or 'no verified evidence-linked official site'}"
         )
+        attempted_reasons[name_key] = reason
+        holds.append({"candidateKey": key, "reason": reason})
 
     return verified, {
         "checkedCount": checked,
@@ -105,6 +105,10 @@ def discover_candidate_identities(
         "verifiedKeys": sorted(verified),
         "verifiedSources": {
             key: verified_sources[key] for key in sorted(verified_sources)
+        },
+        "attemptedFailureCount": len(attempted_reasons),
+        "attemptedReasons": {
+            key: attempted_reasons[key] for key in sorted(attempted_reasons)
         },
         "holdCount": len(holds),
         "holds": sorted(holds, key=lambda row: row["candidateKey"]),
@@ -127,11 +131,19 @@ def run(
         registry_payload,
         limit=limit,
     )
+    attempted_reasons = discovery_report.get("attemptedReasons", {})
+    attempted_reasons = attempted_reasons if isinstance(attempted_reasons, dict) else {}
 
     def resolver(name: str):
         key = preparation.identity_key(name)
         if key in discovered:
             return discovered[key], ""
+        if key in attempted_reasons:
+            # The bounded pre-resolution pass already exhausted exact Wikidata and
+            # deterministic evidence-linked discovery for this identity. Reusing
+            # the cached negative result avoids duplicate network traffic and makes
+            # one run internally deterministic even if upstream sources change.
+            return None, str(attempted_reasons[key])
         # Candidates beyond the bounded pre-discovery window retain the core
         # exact-Wikidata fallback instead of being silently disabled.
         return preparation.resolve_wikidata_company(name)
