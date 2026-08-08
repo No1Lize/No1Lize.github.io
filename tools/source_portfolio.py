@@ -1,8 +1,8 @@
 """Source Portfolio v2 routing for professional media.
 
 The catalog keeps all registered outlets for recall and source-health accounting,
-but only a bounded core receives the expensive direct-site fallback and normal
-publication privilege.  The long tail remains a cheap discovery surface.
+but only a bounded healthy core receives the expensive direct-site fallback and
+normal publication privilege. The long tail remains a cheap discovery surface.
 """
 
 from __future__ import annotations
@@ -43,12 +43,20 @@ def classify_professional_media_specs(
     health_path: Path = SOURCE_HEALTH_PATH,
     core_limit: int = CORE_MEDIA_LIMIT,
 ) -> list[dict[str, Any]]:
-    """Assign publication roles while preserving one execution row per outlet."""
+    """Assign publication roles while preserving one execution row per outlet.
+
+    Health-downgraded outlets do not consume a core slot: the next eligible
+    outlet is promoted until `core_limit` healthy corroboration sources are
+    selected (or the catalog is exhausted). This keeps the active core near the
+    intended 30–40 sources instead of shrinking after every quarantine cycle.
+    """
 
     downgraded = _downgrade_ids(health_path)
     result: list[dict[str, Any]] = []
     core_limit = max(1, min(int(core_limit), len(specs) or 1))
-    for index, raw in enumerate(specs):
+    core_used = 0
+
+    for raw in specs:
         spec = copy.deepcopy(raw)
         rows = spec.get("professionalMedia")
         rows = rows if isinstance(rows, list) else []
@@ -56,11 +64,18 @@ def classify_professional_media_specs(
         if explicit not in VALID_SOURCE_ROLES and rows:
             explicit = str(rows[0].get("sourceRole") or "").strip().casefold()
         source_id = str(spec.get("id") or "")
-        role = explicit if explicit in VALID_SOURCE_ROLES else (
-            "corroboration" if index < core_limit else "discovery"
-        )
+
         if source_id in downgraded:
             role = "discovery"
+        elif explicit in VALID_SOURCE_ROLES:
+            role = explicit
+        elif core_used < core_limit:
+            role = "corroboration"
+        else:
+            role = "discovery"
+
+        if role == "corroboration":
+            core_used += 1
 
         spec["sourceRole"] = role
         spec["sourcePortfolioTier"] = "core" if role == "corroboration" else "discovery"
@@ -71,6 +86,8 @@ def classify_professional_media_specs(
             budget["feedLimit"] = 0
             budget["candidateLimit"] = 1
             spec["directRequestBudget"] = budget
+        else:
+            spec.pop("discoveryOnly", None)
         for row in rows:
             if isinstance(row, dict):
                 row["sourceRole"] = role
