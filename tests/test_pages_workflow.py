@@ -60,6 +60,10 @@ class PagesWorkflowTests(unittest.TestCase):
     def test_tracking_config_is_refreshed_before_pages_can_publish_it(self):
         self.assertIn("      - config/user_tracking.json", self.refresh_workflow)
         self.assertIn("      - config/user_tracking.json", self.workflow)
+        self.assertIn(
+            "Pages must wait for that workflow to commit the matching public snapshot",
+            self.workflow,
+        )
         self.assertIn("run: npm run build:pages", self.workflow)
         self.assertNotIn("ALLOW_INCOMPLETE_TRACKING_COVERAGE", self.workflow)
 
