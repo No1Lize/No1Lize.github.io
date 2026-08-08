@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T12:11:45+00:00",
+  "generatedAt": "2026-08-08T12:50:25+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-08T12:11:21+00:00",
+      "updatedAt": "2026-08-08T12:49:59+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -1139,7 +1139,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-08T12:11:22+00:00",
+      "updatedAt": "2026-08-08T12:49:59+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2201,6 +2201,12 @@
       },
       "news": [
         {
+          "title": "太行三电机最大马力970匹！阿维塔07L上市：限时21.99万起",
+          "url": "https://t.cj.sina.cn/articles/view/1659643027/62ec249302001rdri",
+          "publishedAt": "2026-08-08T20:31:00+08:00",
+          "source": "新浪财经"
+        },
+        {
           "title": "反超纳斯达克！2025年港股IPO募资2863亿港元登顶全球！“A+H”潮起：中国投行的新战场 | 2026新财富杂志最佳投行",
           "url": "https://finance.sina.com.cn/money/fund/jjzl/2026-08-08/doc-inimrerp6341390.shtml",
           "publishedAt": "2026-08-08T18:56:00+08:00",
@@ -2253,12 +2259,6 @@
           "url": "https://finance.sina.com.cn/jjxw/2026-08-08/doc-inimpwvx2824859.shtml",
           "publishedAt": "2026-08-08T04:38:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "宁德时代获得发明专利授权：“电池充电方法、装置、设备及存储介质”",
-          "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gal2",
-          "publishedAt": "2026-08-08T03:41:00+08:00",
-          "source": "新浪财经"
         }
       ]
     },
@@ -2267,7 +2267,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-08T12:11:18+00:00",
+      "updatedAt": "2026-08-08T12:50:00+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3391,7 +3391,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-08T12:11:18+00:00",
+      "updatedAt": "2026-08-08T12:49:58+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4519,7 +4519,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-08T12:11:17+00:00",
+      "updatedAt": "2026-08-08T12:49:58+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5647,7 +5647,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-08T12:11:30+00:00",
+      "updatedAt": "2026-08-08T12:50:09+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6754,7 +6754,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-08T12:11:30+00:00",
+      "updatedAt": "2026-08-08T12:50:11+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7849,6 +7849,9 @@
           "publishedAt": "2026-07-22T11:40:00+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "rigetti": {
@@ -7856,7 +7859,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-08T12:11:30+00:00",
+      "updatedAt": "2026-08-08T12:50:12+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8961,6 +8964,9 @@
           "publishedAt": "2026-08-06T20:05:00+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "ionq": {
@@ -8968,7 +8974,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-08T12:11:33+00:00",
+      "updatedAt": "2026-08-08T12:50:13+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -10038,33 +10044,39 @@
       },
       "news": [
         {
-          "title": "Jane Goodall Institute USA and FormationQ Launch First-of-its-kind Quantum Computing Research Programme to Explore the Ecological Roots of War and Peace",
-          "url": "https://sg.finance.yahoo.com/news/jane-goodall-institute-usa-formationq-070000259.html?.tsrc=rss",
-          "publishedAt": "2026-07-14T07:00:00+00:00",
+          "title": "Rigetti Stock Rises as Major Quantum Orders Fuel Growth",
+          "url": "https://sg.finance.yahoo.com/m/90128436-a61a-3e8d-89d5-f3581bdbfec8/rigetti-stock-rises-as-major.html?.tsrc=rss",
+          "publishedAt": "2026-08-07T16:17:00+00:00",
           "source": "Yahoo财经"
         },
         {
-          "title": "The King's Foundation and FormationQ Launch \"Harmonious Urban Growth\" Programme to Help Cities Plan Sustainable Expansion Using Quantum Optimisation",
-          "url": "https://sg.finance.yahoo.com/news/kings-foundation-formationq-launch-harmonious-070000349.html?.tsrc=rss",
-          "publishedAt": "2026-05-11T07:00:00+00:00",
+          "title": "Two Quantum IPOs Face Their First Big Earnings Tests",
+          "url": "https://sg.finance.yahoo.com/m/a9f6bf05-b0cc-36db-b51e-9cc6980de966/two-quantum-ipos-face-their.html?.tsrc=rss",
+          "publishedAt": "2026-08-07T07:00:00+00:00",
           "source": "Yahoo财经"
         },
         {
-          "title": "NYSE Content Update: HawkEye 360 to Start Trading after its $416 Million IPO",
-          "url": "https://sg.finance.yahoo.com/news/nyse-content-hawkeye-360-start-125500550.html?.tsrc=rss",
-          "publishedAt": "2026-05-07T12:55:00+00:00",
+          "title": "UPDATED: DARPA Selects IonQ to Produce Next-Generation Atomic Clocks",
+          "url": "https://finance.yahoo.com/technology/ai/articles/updated-darpa-selects-ionq-produce-033400776.html?.tsrc=rss",
+          "publishedAt": "2026-08-07T03:34:00+00:00",
           "source": "Yahoo财经"
         },
         {
-          "title": "NYSE Content Update: OpenLoop Health Debuts At-Home Sleep Apnea Test with 98% Accuracy",
-          "url": "https://sg.finance.yahoo.com/news/nyse-content-openloop-health-debuts-125500375.html?.tsrc=rss",
-          "publishedAt": "2026-04-14T12:55:00+00:00",
+          "title": "IonQ Kicks Off Quantum Earnings Season as Revenue Nearly Quadruples",
+          "url": "https://sg.finance.yahoo.com/m/ed62bc93-680a-336b-b6df-73e3bdccd782/ionq-kicks-off-quantum.html?.tsrc=rss",
+          "publishedAt": "2026-08-06T20:59:00+00:00",
           "source": "Yahoo财经"
         },
         {
-          "title": "Space Cybersecurity Leaders Convene in Singapore to Address Escalating Threats in Inaugural Edition of CYSAT Asia",
-          "url": "https://sg.finance.yahoo.com/news/space-cybersecurity-leaders-convene-singapore-083700197.html?.tsrc=rss",
-          "publishedAt": "2026-02-06T08:37:00+00:00",
+          "title": "Why D-Wave Quantum Stock Fell After Earnings Revealed a 1,120% Surge in Bookings",
+          "url": "https://sg.finance.yahoo.com/m/60cf5242-b372-3a07-9df2-13037e5d9644/why-d-wave-quantum-stock-fell.html?.tsrc=rss",
+          "publishedAt": "2026-08-06T20:54:00+00:00",
+          "source": "Yahoo财经"
+        },
+        {
+          "title": "Will AT&T (T)’s Expanded Quantum Deal Turn D-Wave (QBTS) Into a Scalable Enterprise Player?",
+          "url": "https://finance.yahoo.com/technology/ai/articles/t-t-expanded-quantum-deal-183733580.html?.tsrc=rss",
+          "publishedAt": "2026-08-06T18:37:33+00:00",
           "source": "Yahoo财经"
         }
       ]
@@ -10074,7 +10086,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-08T12:11:33+00:00",
+      "updatedAt": "2026-08-08T12:50:12+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -11186,7 +11198,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-08T12:11:40+00:00",
+      "updatedAt": "2026-08-08T12:50:19+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -12298,7 +12310,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-08T12:11:40+00:00",
+      "updatedAt": "2026-08-08T12:50:21+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -13413,7 +13425,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-08T12:11:40+00:00",
+      "updatedAt": "2026-08-08T12:50:21+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -14525,7 +14537,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-08T12:11:43+00:00",
+      "updatedAt": "2026-08-08T12:50:22+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -15636,7 +15648,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-08T12:11:43+00:00",
+      "updatedAt": "2026-08-08T12:50:22+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
@@ -16705,39 +16717,9 @@
       },
       "news": [
         {
-          "title": "JOBY Shares Gain 5.5% Since Second-Quarter 2026 Revenues Beat",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/joby-shares-gain-5-5-180800247.html?.tsrc=rss",
-          "publishedAt": "2026-08-07T18:08:00+00:00",
-          "source": "Yahoo财经"
-        },
-        {
-          "title": "Joby Aviation Stock Jumps as Air Taxi Launch Moves Closer",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/joby-aviation-stock-jumps-air-211636752.html?.tsrc=rss",
-          "publishedAt": "2026-08-06T21:16:36+00:00",
-          "source": "Yahoo财经"
-        },
-        {
-          "title": "Joby Stock Pops as Air-Taxi Sales Jump But the Wait for Investors Isn’t Over",
-          "url": "https://sg.finance.yahoo.com/m/d14ce67e-0dde-30f9-9f44-6a09ce6ab393/joby-stock-pops-as-air-taxi.html?.tsrc=rss",
-          "publishedAt": "2026-08-06T20:30:00+00:00",
-          "source": "Yahoo财经"
-        },
-        {
-          "title": "Joby Aviation Establishes Hub at Perot Field Fort Worth Alliance Airport, Advancing Air Mobility Innovation in Texas",
-          "url": "https://finance.yahoo.com/technology/articles/joby-aviation-establishes-hub-perot-133000528.html?.tsrc=rss",
-          "publishedAt": "2026-08-06T15:21:00+00:00",
-          "source": "Yahoo财经"
-        },
-        {
-          "title": "Joby Aviation, Inc. (JOBY) Reports Q2 Loss, Beats Revenue Estimates",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/joby-aviation-inc-joby-reports-003510733.html?.tsrc=rss",
-          "publishedAt": "2026-08-06T00:35:10+00:00",
-          "source": "Yahoo财经"
-        },
-        {
-          "title": "Joby Reports Second Quarter 2026 Financial Results",
-          "url": "https://finance.yahoo.com/markets/stocks/articles/joby-reports-second-quarter-2026-200500689.html?.tsrc=rss",
-          "publishedAt": "2026-08-05T20:05:00+00:00",
+          "title": "NYSE Content Update: Joby Aviation Rings Opening Bell Following NYC Test Flight",
+          "url": "https://sg.finance.yahoo.com/news/nyse-content-joby-aviation-rings-125500166.html?.tsrc=rss",
+          "publishedAt": "2026-04-28T12:55:00+00:00",
           "source": "Yahoo财经"
         }
       ]
@@ -16823,7 +16805,7 @@
       "pricePoints": 120,
       "marketCapAccepted": true,
       "quoteAccepted": true,
-      "newsCount": 5
+      "newsCount": 6
     },
     {
       "slug": "rocket-lab",
@@ -16877,7 +16859,7 @@
       "pricePoints": 120,
       "marketCapAccepted": true,
       "quoteAccepted": true,
-      "newsCount": 6
+      "newsCount": 1
     }
   ]
 }
