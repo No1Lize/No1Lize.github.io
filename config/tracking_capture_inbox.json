@@ -1,7 +1,99 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T02:40:23.155Z",
+  "generatedAt": "2026-08-08T02:42:43.529Z",
   "records": [
+    {
+      "id": "capture-9o7ccz",
+      "entityType": "company",
+      "canonicalName": "健达九州",
+      "rawSelection": "健达九州",
+      "aliases": [],
+      "trackSlugs": [
+        "biotech"
+      ],
+      "trackNames": [
+        "生物科技"
+      ],
+      "source": {
+        "articleId": "article-ery7xf",
+        "title": "07-30",
+        "url": "https://www.chinaventure.com.cn/news/111-20260730-392523.html",
+        "summary": "由太平医疗健康基金领投、老股东华泰紫金旗下基金追投,高榕创投等多家新老股东参与投资。",
+        "sourceName": "媒体报道 · 投中网 · 投中网",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T02:42:43.529Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "融资机会",
+        "技术突破",
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "健达九州",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "decisionKey": "健达九州",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-1od1nu4",
+      "entityType": "person",
+      "canonicalName": "罗敏敏",
+      "rawSelection": "罗敏敏",
+      "aliases": [],
+      "trackSlugs": [
+        "biotech"
+      ],
+      "trackNames": [
+        "生物科技"
+      ],
+      "source": {
+        "articleId": "article-ery7xf",
+        "title": "07-30",
+        "url": "https://www.chinaventure.com.cn/news/111-20260730-392523.html",
+        "summary": "由太平医疗健康基金领投、老股东华泰紫金旗下基金追投,高榕创投等多家新老股东参与投资。",
+        "sourceName": "媒体报道 · 投中网 · 投中网",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T02:42:43.529Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "biotech:people"
+      ],
+      "reasons": [
+        "融资机会",
+        "技术突破",
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "罗敏敏",
+        "targetId": "person:罗敏敏",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”,且未与正式目录冲突。",
+        "decisionKey": "罗敏敏",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-1vya9wd",
       "entityType": "company",
