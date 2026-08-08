@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Run the standard crawler with verified WeChat and professional media routing."""
+"""Run the standard crawler with verified WeChat and source-portfolio routing."""
 
 from __future__ import annotations
 
 import json
 
 try:  # Imported by tests as tools.crawl_with_wechat_registry.
+    from . import article_publication_gate
+    from . import core_official_adapters
     from . import crawl_with_source_categories as base
     from . import http_policy_bridge
     from . import professional_media_progress
@@ -14,6 +16,7 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import source_evidence
     from . import source_health_runtime
     from . import source_performance
+    from . import source_portfolio
     from . import toutiao_public_feed
     from . import wechat_fetch_compat
     from . import wechat_index_context_guard
@@ -28,6 +31,8 @@ try:  # Imported by tests as tools.crawl_with_wechat_registry.
     from . import wechat_sogou_redirect_compat
     from . import wechat_snapshot_quality
 except ImportError:  # Executed directly with python tools/...
+    import article_publication_gate
+    import core_official_adapters
     import crawl_with_source_categories as base
     import http_policy_bridge
     import professional_media_progress
@@ -36,6 +41,7 @@ except ImportError:  # Executed directly with python tools/...
     import source_evidence
     import source_health_runtime
     import source_performance
+    import source_portfolio
     import toutiao_public_feed
     import wechat_fetch_compat
     import wechat_index_context_guard
@@ -105,11 +111,16 @@ def _install_professional_media() -> None:
     if getattr(original, "_professional_media_catalog", False):
         return
 
+    source_portfolio.install_professional_media(professional_media_sources)
+
     def custom_sources(tracking_config, tracks):
         runtime_specs, sec_specs = original(tracking_config, tracks)
         professional_specs = professional_media_sources.grouped_specs(
             tracks,
             base.tracking,
+        )
+        professional_specs = source_portfolio.classify_professional_media_specs(
+            professional_specs
         )
         return [*runtime_specs, *professional_specs], sec_specs
 
@@ -140,7 +151,10 @@ def _install_source_governance() -> None:
         )
 
     def repair_media_company_attribution(articles):
-        return source_evidence.enrich_article_sources(original_repair(articles))
+        enriched = source_evidence.enrich_article_sources(original_repair(articles))
+        publishable, report = article_publication_gate.filter_publishable_articles(enriched)
+        print("Article publication gate: " + json.dumps(report, ensure_ascii=False))
+        return publishable
 
     def install_runtime(merged, sec_specs, active_ids):
         original_install_runtime(merged, sec_specs, active_ids)
@@ -185,6 +199,7 @@ def _install_source_governance() -> None:
 
 
 def main() -> int:
+    core_official_adapters.install(base.tracking.crawler)
     http_policy_bridge.install(base.tracking.crawler)
     search_index_feed_redirects.install(base.tracking.crawler)
     wechat_fetch_compat.install(wechat_public_sources)
