@@ -13,6 +13,12 @@ on:
       - config/tracking_capture_inbox.json
       - config/entity_resolution_decisions.json
   workflow_dispatch:
+    inputs:
+      run_research_after_deploy:
+        description: Run Research Agent after this terminal fixed-point deployment
+        required: false
+        type: boolean
+        default: false
   repository_dispatch:
     types: [data-updated]
 
@@ -20,6 +26,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: pages
@@ -158,3 +165,8 @@ jobs:
       - name: Deploy without replacing the last good version on build failure
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Continue to Research Agent after terminal publication
+        if: github.event_name == 'workflow_dispatch' && inputs.run_research_after_deploy == true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run research-agent-v1.yml --ref main
