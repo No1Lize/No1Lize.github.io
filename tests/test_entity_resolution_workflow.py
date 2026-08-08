@@ -36,16 +36,31 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
             text,
         )
 
+    def test_candidate_and_tracking_changes_serialize_onboarding_before_refresh(self) -> None:
+        candidate = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        onboarding = ONBOARDING_WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("CANDIDATE_CHANGED: ${{ steps.publish.outputs.candidate_changed }}", candidate)
+        self.assertIn("tracking_refresh_required=false", candidate)
+        self.assertIn("gh workflow run company-candidate-onboarding.yml --ref main", candidate)
+        self.assertIn("-f post_onboarding_handoff=refresh", candidate)
+        self.assertIn("-f post_onboarding_handoff=publish-with-research", candidate)
+        self.assertIn('elif [ "$tracking_refresh_required" = "true" ]; then', candidate)
+        self.assertIn("post_onboarding_handoff:", onboarding)
+        self.assertIn("POST_ONBOARDING_HANDOFF: ${{ inputs.post_onboarding_handoff }}", onboarding)
+        self.assertIn("gh workflow run scheduled-sync.yml --ref main", onboarding)
+        self.assertIn("gh workflow run pages.yml --ref main", onboarding)
+        self.assertIn("-f run_research_after_deploy=true", onboarding)
+        self.assertIn('handoff="${POST_ONBOARDING_HANDOFF:-none}"', onboarding)
+
     def test_private_candidate_changes_handoff_to_onboarding_before_any_optional_pages_publish(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
-        self.assertIn("CANDIDATE_CHANGED: ${{ steps.publish.outputs.candidate_changed }}", text)
-        self.assertIn("gh workflow run company-candidate-onboarding.yml --ref main", text)
-        self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
         self.assertIn("publish_after_reconciliation:", text)
         self.assertIn(
             "PUBLISH_AFTER_RECONCILIATION: ${{ inputs.publish_after_reconciliation }}",
             text,
         )
+        self.assertIn("gh workflow run company-candidate-onboarding.yml --ref main", text)
+        self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
         self.assertIn("gh workflow run pages.yml --ref main", text)
         self.assertIn("-f run_research_after_deploy=true", text)
         onboarding = text.index("gh workflow run company-candidate-onboarding.yml --ref main")
@@ -53,10 +68,6 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         pages = text.index("gh workflow run pages.yml --ref main")
         self.assertLess(onboarding, tracking_refresh)
         self.assertLess(tracking_refresh, pages)
-        self.assertIn(
-            'elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then',
-            text,
-        )
 
     def test_tracking_changes_refresh_snapshot_before_publication(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")

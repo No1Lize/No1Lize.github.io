@@ -9,12 +9,13 @@ WORKFLOW = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
 
 
 class ScheduledSyncWorkflowTest(unittest.TestCase):
-    def test_complete_refresh_keeps_only_the_latest_pending_writer(self) -> None:
+    def test_complete_refresh_preserves_pending_repository_writers(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("group: vciq-repository-writer-", text)
         self.assertIn("github.ref", text)
-        self.assertIn("queue: single", text)
-        self.assertNotIn("queue: max", text)
+        self.assertIn("queue: max", text)
+        self.assertNotIn("queue: single", text)
+        self.assertIn("must not evict candidate onboarding or reconciliation", text)
         self.assertNotIn("cancel-in-progress:", text)
 
     def test_full_refresh_runs_once_daily_after_the_us_close(self) -> None:

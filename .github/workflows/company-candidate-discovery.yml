@@ -173,11 +173,25 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ "${CANDIDATE_CHANGED:-false}" = "true" ]; then
-            echo "Private candidate state changed; continue verified onboarding."
-            gh workflow run company-candidate-onboarding.yml --ref main
-          fi
+          tracking_refresh_required=false
           if [ "${TRACKING_CHANGED:-false}" = "true" ] || [ "${PUSH_TRACKING_INPUTS_CHANGED:-false}" = "true" ]; then
+            tracking_refresh_required=true
+          fi
+
+          if [ "${CANDIDATE_CHANGED:-false}" = "true" ]; then
+            if [ "$tracking_refresh_required" = "true" ]; then
+              echo "Candidate and tracking state changed; onboard first, then refresh from the committed company state."
+              gh workflow run company-candidate-onboarding.yml --ref main \
+                -f post_onboarding_handoff=refresh
+            elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
+              echo "Candidate state changed at the terminal fixed point; onboard before terminal Pages and research."
+              gh workflow run company-candidate-onboarding.yml --ref main \
+                -f post_onboarding_handoff=publish-with-research
+            else
+              echo "Private candidate state changed; continue verified onboarding."
+              gh workflow run company-candidate-onboarding.yml --ref main
+            fi
+          elif [ "$tracking_refresh_required" = "true" ]; then
             echo "Tracking inputs changed; rebuild the public article snapshot before Pages."
             gh workflow run scheduled-sync.yml --ref main
           elif [ "${PUBLISH_AFTER_RECONCILIATION:-false}" = "true" ]; then
