@@ -73,7 +73,7 @@ if (!actualHash) {
   errors.push("article snapshot has no trackingConfigHash; crawler enrichment has not run");
 } else if (actualHash !== expectedHash) {
   errors.push(
-    "tracking configuration is newer than the article snapshot; wait for Refresh public intelligence",
+    `tracking configuration is newer than the article snapshot; wait for Refresh public intelligence (expected=${expectedHash.slice(0, 12)} actual=${actualHash.slice(0, 12)})`,
   );
 }
 
