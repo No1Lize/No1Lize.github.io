@@ -76,8 +76,15 @@ class SourcePortfolioTests(unittest.TestCase):
                 return rows[0]
 
             @staticmethod
-            def _dedupe_attributed(articles, _rows, _crawler, limit):
-                return list(articles)[:limit]
+            def _dedupe_attributed(articles, rows, _crawler, limit):
+                result = []
+                for article in articles:
+                    attributed = FakeModule.attribute_article(article, rows)
+                    if attributed:
+                        result.append(attributed)
+                    if len(result) >= limit:
+                        break
+                return result
 
             @staticmethod
             def crawl_professional_source(*_args, **_kwargs):
