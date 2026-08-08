@@ -1,7 +1,103 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T02:37:32.332Z",
+  "generatedAt": "2026-08-08T02:40:23.155Z",
   "records": [
+    {
+      "id": "capture-1vya9wd",
+      "entityType": "company",
+      "canonicalName": "Cadre",
+      "rawSelection": "Cadre",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-1hsv4v2"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "商业模式创新"
+      ],
+      "source": {
+        "articleId": "article-z13jxp",
+        "title": "07-31",
+        "url": "https://techcrunch.com/2026/07/31/repeat-founder-ryan-williams-raises-10m-seed-for-an-ai-startup-for-private-credit-managers",
+        "summary": "Ellis AI announced Thursday its emergence from stealth with $10 million in seed funding.",
+        "sourceName": "媒体报道 · 专业媒体 · TechCrunch Venture",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T02:40:23.155Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "商业模式创新",
+        "个人研究兴趣",
+        "技术突破",
+        "融资机会"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Cadre",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "decisionKey": "cadre",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-zcdfzv",
+      "entityType": "company",
+      "canonicalName": "Ellis AI",
+      "rawSelection": "Ellis AI",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-1hsv4v2"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "商业模式创新"
+      ],
+      "source": {
+        "articleId": "article-z13jxp",
+        "title": "07-31",
+        "url": "https://techcrunch.com/2026/07/31/repeat-founder-ryan-williams-raises-10m-seed-for-an-ai-startup-for-private-credit-managers",
+        "summary": "Ellis AI announced Thursday its emergence from stealth with $10 million in seed funding.",
+        "sourceName": "媒体报道 · 专业媒体 · TechCrunch Venture",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T02:40:23.155Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "商业模式创新",
+        "个人研究兴趣",
+        "技术突破",
+        "融资机会"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Ellis AI",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "decisionKey": "ellisai",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-952o3g",
       "entityType": "company",
