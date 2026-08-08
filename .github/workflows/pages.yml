@@ -3,6 +3,12 @@ name: Build and deploy GitHub Pages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - config/company_candidate_review_queue.json
+      - config/company_candidate_onboarding_state.json
+      - config/company_candidate_decisions.json
+      - config/tracking_capture_inbox.json
+      - config/entity_resolution_decisions.json
   workflow_dispatch:
   repository_dispatch:
     types: [data-updated]
@@ -33,12 +39,6 @@ jobs:
         run: |
           python tools/run_pipeline.py check
           python tools/reconcile_entity_resolution.py --check
-          python tools/apply_manual_company_trust.py \
-            --candidates config/company_candidate_review_queue.json \
-            --check
-          python tools/build_resolved_company_candidates.py \
-            --output config/company_candidate_review_queue.json \
-            --check
           python tools/company_profile_refresh_queue.py --check
           python tools/crawl_articles.py --validate-only
           python tools/validate_eastmoney_snapshot.py
