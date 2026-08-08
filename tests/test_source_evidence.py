@@ -94,6 +94,15 @@ class SourceEvidenceTests(unittest.TestCase):
             ),
             "discovery",
         )
+        self.assertEqual(
+            classify_source_role(
+                grade="C",
+                source_id="finance-media-index",
+                platform="金融媒体",
+                url="https://reuters.com/example",
+            ),
+            "discovery",
+        )
 
     def test_direct_wechat_is_corroboration_not_search_discovery(self) -> None:
         self.assertEqual(
