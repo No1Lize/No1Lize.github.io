@@ -13,6 +13,7 @@ class PagesWorkflowTests(unittest.TestCase):
         cls.workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
         cls.control_plane = CONTROL_PLANE_PATH.read_text(encoding="utf-8")
         cls.lines = [line.strip() for line in cls.workflow.splitlines()]
+        cls.runtime_workflow = cls.workflow.split("permissions:", 1)[1]
 
     def test_pages_build_only_observes_and_validates_public_build_inputs(self):
         python_commands = [
@@ -30,13 +31,13 @@ class PagesWorkflowTests(unittest.TestCase):
                 "python tools/run_pipeline.py build-provenance \\",
             ],
         )
-        self.assertNotIn("company_candidate_review_queue.json", self.workflow)
-        self.assertNotIn("company_candidate_onboarding_state.json", self.workflow)
-        self.assertNotIn("apply_manual_company_trust.py", self.workflow)
-        self.assertNotIn("build_resolved_company_candidates.py", self.workflow)
-        self.assertNotIn("public/data/company_candidates.json", self.workflow)
-        self.assertNotIn("Reconcile derived public data", self.workflow)
-        self.assertNotIn("tools/run_pipeline.py finalize", self.workflow)
+        self.assertNotIn("company_candidate_review_queue.json", self.runtime_workflow)
+        self.assertNotIn("company_candidate_onboarding_state.json", self.runtime_workflow)
+        self.assertNotIn("apply_manual_company_trust.py", self.runtime_workflow)
+        self.assertNotIn("build_resolved_company_candidates.py", self.runtime_workflow)
+        self.assertNotIn("public/data/company_candidates.json", self.runtime_workflow)
+        self.assertNotIn("Reconcile derived public data", self.runtime_workflow)
+        self.assertNotIn("tools/run_pipeline.py finalize", self.runtime_workflow)
 
     def test_private_review_only_pushes_do_not_start_pages(self):
         ignored = (
