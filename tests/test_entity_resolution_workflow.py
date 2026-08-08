@@ -45,6 +45,8 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
 
     def test_tracking_changes_refresh_snapshot_before_publication(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        pages = PAGES_WORKFLOW.read_text(encoding="utf-8")
+        refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}", text)
         self.assertIn(
             "PUSH_TRACKING_INPUTS_CHANGED: ${{ steps.push-inputs.outputs.changed }}",
@@ -52,6 +54,8 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         )
         self.assertIn("Detect pushed tracking inputs", text)
         self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
+        self.assertIn("      - config/user_tracking.json", refresh)
+        self.assertIn("      - config/user_tracking.json", pages)
 
     def test_full_refresh_explicitly_hands_off_to_reconciliation(self) -> None:
         refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
@@ -90,6 +94,7 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertNotIn("public/data/company_candidates.json", runtime)
 
         self.assertIn("paths-ignore:", text)
+        self.assertIn("config/user_tracking.json", text)
         self.assertIn("config/company_candidate_review_queue.json", text)
         self.assertIn("config/company_candidate_onboarding_state.json", text)
         self.assertIn("config/company_candidate_decisions.json", text)
