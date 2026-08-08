@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T01:11:05.777Z",
+  "generatedAt": "2026-08-08T01:47:56+00:00",
   "records": [
     {
       "id": "capture-1m1wgtu",
@@ -33,8 +33,8 @@
       "status": "applied",
       "appliedTo": [
         "ai:sampleCompanies",
-        "robotics:sampleCompanies",
-        "manufacturing:sampleCompanies"
+        "manufacturing:sampleCompanies",
+        "robotics:sampleCompanies"
       ],
       "reasons": [
         "IPO可能",
@@ -50,16 +50,16 @@
         "targetId": "company-candidate:硕橙科技",
         "confidence": "medium",
         "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "硕橙科技",
         "reclassified": false
       }
     },
     {
-      "id": "capture-1doay4i",
-      "entityType": "company",
-      "canonicalName": "Kimi",
-      "rawSelection": "Kimi",
+      "id": "capture-w6han0",
+      "entityType": "topic",
+      "canonicalName": "RoPE",
+      "rawSelection": "RoPE",
       "aliases": [],
       "trackSlugs": [
         "robotics",
@@ -81,22 +81,25 @@
       },
       "capturedAt": "2026-08-07T15:38:35.048Z",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "robotics:keywords",
+        "ai:keywords"
+      ],
       "reasons": [
         "个人研究兴趣"
       ],
       "note": "",
       "resolution": {
-        "status": "review",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "Kimi",
-        "targetId": "",
-        "confidence": "low",
-        "source": "source-context",
-        "reason": "原文邻近语境更像人物,不能直接作为公司写入。",
-        "decisionKey": "kimi",
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "RoPE",
+        "targetId": "topic:rope",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "rope",
         "reclassified": false
       }
     },
@@ -149,10 +152,10 @@
       }
     },
     {
-      "id": "capture-w6han0",
-      "entityType": "topic",
-      "canonicalName": "RoPE",
-      "rawSelection": "RoPE",
+      "id": "capture-1doay4i",
+      "entityType": "company",
+      "canonicalName": "Kimi",
+      "rawSelection": "Kimi",
       "aliases": [],
       "trackSlugs": [
         "robotics",
@@ -174,25 +177,22 @@
       },
       "capturedAt": "2026-08-07T15:38:35.048Z",
       "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:keywords",
-        "ai:keywords"
-      ],
+      "status": "queued",
+      "appliedTo": [],
       "reasons": [
         "个人研究兴趣"
       ],
       "note": "",
       "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "RoPE",
-        "targetId": "topic:rope",
-        "confidence": "high",
-        "source": "tracking-taxonomy",
-        "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "rope",
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Kimi",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像人物，不能直接作为公司写入。",
+        "decisionKey": "kimi",
         "reclassified": false
       }
     },
@@ -424,49 +424,6 @@
       }
     },
     {
-      "id": "capture-4iq8c",
-      "entityType": "topic",
-      "canonicalName": "Claude",
-      "rawSelection": "Claude",
-      "aliases": [],
-      "trackSlugs": [
-        "ai"
-      ],
-      "trackNames": [
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-ilenlp",
-        "title": "Introducing Claude Opus 5",
-        "url": "https://www.anthropic.com/news/claude-opus-5",
-        "summary": "",
-        "sourceName": "产品发布Anthropic 官方来源",
-        "channel": "technology",
-        "channelLabel": "新兴科技",
-        "eventType": "产品发布"
-      },
-      "capturedAt": "2026-08-07T05:15:21.437Z",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:keywords"
-      ],
-      "reasons": [],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "topic",
-        "entityType": "topic",
-        "canonicalName": "Claude",
-        "targetId": "topic:claude",
-        "confidence": "high",
-        "source": "tracking-taxonomy",
-        "reason": "名称唯一命中已审核追踪赛道或关键词。",
-        "decisionKey": "claude",
-        "reclassified": false
-      }
-    },
-    {
       "id": "capture-bur3cp",
       "entityType": "topic",
       "canonicalName": "Opus",
@@ -510,6 +467,49 @@
       }
     },
     {
+      "id": "capture-4iq8c",
+      "entityType": "topic",
+      "canonicalName": "Claude",
+      "rawSelection": "Claude",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-ilenlp",
+        "title": "Introducing Claude Opus 5",
+        "url": "https://www.anthropic.com/news/claude-opus-5",
+        "summary": "",
+        "sourceName": "产品发布Anthropic 官方来源",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "产品发布"
+      },
+      "capturedAt": "2026-08-07T05:15:21.437Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Claude",
+        "targetId": "topic:claude",
+        "confidence": "high",
+        "source": "tracking-taxonomy",
+        "reason": "名称唯一命中已审核追踪赛道或关键词。",
+        "decisionKey": "claude",
+        "reclassified": false
+      }
+    },
+    {
       "id": "capture-1x58yu6",
       "entityType": "company",
       "canonicalName": "Firmus",
@@ -547,8 +547,57 @@
         "targetId": "company-candidate:firmus",
         "confidence": "medium",
         "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "firmus",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-1jwloj2",
+      "entityType": "company",
+      "canonicalName": "Taalas",
+      "rawSelection": "Taalas",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "semiconductor",
+        "robotics"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "半导体",
+        "机器人"
+      ],
+      "source": {
+        "articleId": "article-k6tl0m",
+        "title": "AMD宣布收购AI推理芯片初创公司Taalas",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-07/doc-inimmyem4109720.shtml",
+        "summary": "",
+        "sourceName": "并购新浪财经 · 新浪",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "并购"
+      },
+      "capturedAt": "2026-08-07T02:42:11.465Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies",
+        "semiconductor:sampleCompanies",
+        "robotics:sampleCompanies"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Taalas",
+        "targetId": "company-candidate:taalas",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "taalas",
         "reclassified": false
       }
     },
@@ -602,55 +651,6 @@
       }
     },
     {
-      "id": "capture-1jwloj2",
-      "entityType": "company",
-      "canonicalName": "Taalas",
-      "rawSelection": "Taalas",
-      "aliases": [],
-      "trackSlugs": [
-        "ai",
-        "semiconductor",
-        "robotics"
-      ],
-      "trackNames": [
-        "AI / AGI",
-        "半导体",
-        "机器人"
-      ],
-      "source": {
-        "articleId": "article-k6tl0m",
-        "title": "AMD宣布收购AI推理芯片初创公司Taalas",
-        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-07/doc-inimmyem4109720.shtml",
-        "summary": "",
-        "sourceName": "并购新浪财经 · 新浪",
-        "channel": "institutions",
-        "channelLabel": "投资机构",
-        "eventType": "并购"
-      },
-      "capturedAt": "2026-08-07T02:42:11.465Z",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies",
-        "semiconductor:sampleCompanies",
-        "robotics:sampleCompanies"
-      ],
-      "reasons": [],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "Taalas",
-        "targetId": "company-candidate:taalas",
-        "confidence": "medium",
-        "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
-        "decisionKey": "taalas",
-        "reclassified": false
-      }
-    },
-    {
       "id": "capture-1ethjwr",
       "entityType": "company",
       "canonicalName": "Expedition Growth Capital",
@@ -688,7 +688,7 @@
         "targetId": "company-candidate:expeditiongrowthcapital",
         "confidence": "medium",
         "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "expeditiongrowthcapital",
         "reclassified": false
       }
@@ -777,7 +777,7 @@
         "targetId": "",
         "confidence": "low",
         "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "omilia",
         "reclassified": false
       }
@@ -823,51 +823,8 @@
         "targetId": "company-candidate:movida",
         "confidence": "medium",
         "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "movida",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-1fo2o5k",
-      "entityType": "company",
-      "canonicalName": "Anthropic",
-      "rawSelection": "Anthropic",
-      "aliases": [],
-      "trackSlugs": [
-        "ai"
-      ],
-      "trackNames": [
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-1sm6g94",
-        "title": "错过OpenAI与Anthropic 红杉新旧管理层交替 AI投资由保守转向激进",
-        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-06/doc-inimkncm0606384.shtml",
-        "summary": "",
-        "sourceName": "产业投资新浪财经 · 新浪",
-        "channel": "institutions",
-        "channelLabel": "投资机构",
-        "eventType": "产业投资"
-      },
-      "capturedAt": "2026-08-06T15:00:01.535Z",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "ai:sampleCompanies"
-      ],
-      "reasons": [],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "Anthropic",
-        "targetId": "company:anthropic",
-        "confidence": "verified",
-        "source": "company-registry",
-        "reason": "名称唯一命中正式公司注册表。",
-        "decisionKey": "anthropic",
         "reclassified": false
       }
     },
@@ -915,10 +872,10 @@
       }
     },
     {
-      "id": "capture-1mgvy5u",
+      "id": "capture-1fo2o5k",
       "entityType": "company",
-      "canonicalName": "Benchmarks",
-      "rawSelection": "Benchmarks",
+      "canonicalName": "Anthropic",
+      "rawSelection": "Anthropic",
       "aliases": [],
       "trackSlugs": [
         "ai"
@@ -927,31 +884,33 @@
         "AI / AGI"
       ],
       "source": {
-        "articleId": "article-1vvq9hg",
-        "title": "AI Model Leaderboards & Benchmarks",
-        "url": "https://labs.scale.com/leaderboard",
+        "articleId": "article-1sm6g94",
+        "title": "错过OpenAI与Anthropic 红杉新旧管理层交替 AI投资由保守转向激进",
+        "url": "https://finance.sina.com.cn/stock/usstock/c/2026-08-06/doc-inimkncm0606384.shtml",
         "summary": "",
-        "sourceName": "技术突破Scale AI 官方来源",
-        "channel": "technology",
-        "channelLabel": "新兴科技",
-        "eventType": "技术突破"
+        "sourceName": "产业投资新浪财经 · 新浪",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "产业投资"
       },
-      "capturedAt": "2026-08-06T14:56:33.813Z",
+      "capturedAt": "2026-08-06T15:00:01.535Z",
       "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies"
+      ],
       "reasons": [],
       "note": "",
       "resolution": {
-        "status": "review",
+        "status": "resolved",
         "requestedType": "company",
         "entityType": "company",
-        "canonicalName": "Benchmarks",
-        "targetId": "",
-        "confidence": "low",
-        "source": "source-context",
-        "reason": "原文邻近语境更像技术、项目或工具,不能直接作为公司写入。",
-        "decisionKey": "benchmarks",
+        "canonicalName": "Anthropic",
+        "targetId": "company:anthropic",
+        "confidence": "verified",
+        "source": "company-registry",
+        "reason": "名称唯一命中正式公司注册表。",
+        "decisionKey": "anthropic",
         "reclassified": false
       }
     },
@@ -991,8 +950,49 @@
         "targetId": "",
         "confidence": "low",
         "source": "source-context",
-        "reason": "原文邻近语境更像技术、项目或工具,不能直接作为公司写入。",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
         "decisionKey": "leaderboards",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-1mgvy5u",
+      "entityType": "company",
+      "canonicalName": "Benchmarks",
+      "rawSelection": "Benchmarks",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1vvq9hg",
+        "title": "AI Model Leaderboards & Benchmarks",
+        "url": "https://labs.scale.com/leaderboard",
+        "summary": "",
+        "sourceName": "技术突破Scale AI 官方来源",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "技术突破"
+      },
+      "capturedAt": "2026-08-06T14:56:33.813Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Benchmarks",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
+        "decisionKey": "benchmarks",
         "reclassified": false
       }
     },
@@ -1040,101 +1040,6 @@
       }
     },
     {
-      "id": "capture-1g43wss",
-      "entityType": "company",
-      "canonicalName": "GitHub",
-      "rawSelection": "GitHub",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-1h43l07",
-        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
-        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
-        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
-        "sourceName": "专业媒体",
-        "channel": "technology",
-        "channelLabel": "新兴科技",
-        "eventType": "公司动态"
-      },
-      "capturedAt": "2026-08-06T00:50:19.596Z",
-      "capturedBy": "VCIQ",
-      "status": "applied",
-      "appliedTo": [
-        "robotics:sampleCompanies",
-        "ai:sampleCompanies"
-      ],
-      "reasons": [
-        "技术突破",
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "resolved",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "GitHub",
-        "targetId": "company:github",
-        "confidence": "verified",
-        "source": "human-decision",
-        "reason": "人工确认 GitHub 是公司/平台实体;后续同名采集复用该结论。",
-        "decisionKey": "github",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-mkkhpz",
-      "entityType": "company",
-      "canonicalName": "Matt",
-      "rawSelection": "Matt",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-1h43l07",
-        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
-        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
-        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
-        "sourceName": "专业媒体",
-        "channel": "technology",
-        "channelLabel": "新兴科技",
-        "eventType": "公司动态"
-      },
-      "capturedAt": "2026-08-06T00:50:19.596Z",
-      "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
-      "reasons": [
-        "技术突破",
-        "个人研究兴趣"
-      ],
-      "note": "",
-      "resolution": {
-        "status": "review",
-        "requestedType": "company",
-        "entityType": "person",
-        "canonicalName": "Matt",
-        "targetId": "",
-        "confidence": "low",
-        "source": "human-decision",
-        "reason": "单名 Matt 无法唯一解析;必须补充全名或由管理员明确绑定规范人物。",
-        "decisionKey": "matt",
-        "reclassified": true
-      }
-    },
-    {
       "id": "capture-1hp6p68",
       "entityType": "topic",
       "canonicalName": "TypeScript",
@@ -1178,9 +1083,104 @@
         "targetId": "topic:typescript",
         "confidence": "verified",
         "source": "human-decision",
-        "reason": "人工确认 TypeScript 是编程语言/技术主题,不得进入公司候选池。",
+        "reason": "人工确认 TypeScript 是编程语言／技术主题，不得进入公司候选池。",
         "decisionKey": "typescript",
         "reclassified": true
+      }
+    },
+    {
+      "id": "capture-mkkhpz",
+      "entityType": "company",
+      "canonicalName": "Matt",
+      "rawSelection": "Matt",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1h43l07",
+        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
+        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
+        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
+        "sourceName": "专业媒体",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "公司动态"
+      },
+      "capturedAt": "2026-08-06T00:50:19.596Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "技术突破",
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "person",
+        "canonicalName": "Matt",
+        "targetId": "",
+        "confidence": "low",
+        "source": "human-decision",
+        "reason": "单名 Matt 无法唯一解析；必须补充全名或由管理员明确绑定规范人物。",
+        "decisionKey": "matt",
+        "reclassified": true
+      }
+    },
+    {
+      "id": "capture-1g43wss",
+      "entityType": "company",
+      "canonicalName": "GitHub",
+      "rawSelection": "GitHub",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-1h43l07",
+        "title": "20万星里程碑达成!GitHub 封神技能包,专治 AI 瞎写、失忆、造屎山",
+        "url": "https://www.leiphone.com/category/yanxishe/mBdAuQmsVFjBiMiy.html",
+        "summary": "20多个技能,包含需求规划、代码开发、工具安全、知识管理全流程。 作者丨 高允毅 编辑丨 岑 峰 昨天,TypeScript圈大佬、AI 工程化先锋 Matt Pocock 喜滋滋宣布,他的开源项目 “mattpocock/skills” 在全球最大开源平台GitHub喜提 20万颗星 。 20万颗星什么概念?绝对的开源界顶流。 近四个月的时间里,该项目一路爆火,下载量更是高达 1300万次 ,网友清一色评价:实至名归。 它之所以爆红,全靠两个字:实用。简单来说,这是一套 基于 Markdown 的、可自由组合的“AI 工作流技能包(Skill s) ”。 几乎每一位长期使用 Claude Code 的工程师,都深陷同一个困境。AI工具确实有潜力,但它不了解你的团队工作方式。不知道你写功能前要先写测试,不知道哪些Git操作需要人工审批,更不清楚你的代码库采用什么架构模式。 项目里包含 20 多个Skill文件,从 需求规划、代码开发、工具安全、知识管理 等全流程的疑难杂症,它都一一拆解了,而且全部沉淀自 Matt 多年一线实战经验。 不同于市面上笨重、全权接管开发环境的巨型 AI 框架",
+        "sourceName": "专业媒体",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "公司动态"
+      },
+      "capturedAt": "2026-08-06T00:50:19.596Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "robotics:sampleCompanies",
+        "ai:sampleCompanies"
+      ],
+      "reasons": [
+        "技术突破",
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "GitHub",
+        "targetId": "company:github",
+        "confidence": "verified",
+        "source": "human-decision",
+        "reason": "人工确认 GitHub 是公司／平台实体；后续同名采集复用该结论。",
+        "decisionKey": "github",
+        "reclassified": false
       }
     },
     {
@@ -1265,7 +1265,7 @@
         "targetId": "",
         "confidence": "low",
         "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "杭州联汇科技股份有限",
         "reclassified": false
       }
@@ -1351,7 +1351,7 @@
         "targetId": "company-candidate:前海母基金",
         "confidence": "medium",
         "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "前海母基金",
         "reclassified": false
       }
@@ -1394,7 +1394,7 @@
         "targetId": "company-candidate:omai",
         "confidence": "medium",
         "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "omai",
         "reclassified": false
       }
@@ -1440,7 +1440,7 @@
         "targetId": "company-candidate:砺思资本",
         "confidence": "medium",
         "source": "source-context",
-        "reason": "原文邻近语境存在公司、企业或平台表述,可进入候选审核。",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
         "decisionKey": "砺思资本",
         "reclassified": false
       }
@@ -1483,53 +1483,8 @@
         "targetId": "",
         "confidence": "low",
         "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "星海图",
-        "reclassified": false
-      }
-    },
-    {
-      "id": "capture-wiuop1",
-      "entityType": "company",
-      "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
-      "rawSelection": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
-      "aliases": [],
-      "trackSlugs": [
-        "robotics",
-        "track-1ccjq49",
-        "ai"
-      ],
-      "trackNames": [
-        "机器人",
-        "风险投资",
-        "AI / AGI"
-      ],
-      "source": {
-        "articleId": "article-c0o8yq",
-        "title": "08-03",
-        "url": "https://news.pedaily.cn/202608/567178.shtml",
-        "summary": "破壳机器人完成亿美元级Pre-A轮融资,公司成立不到半年,已完成从基础模型、真机强化学习、数据采集硬件到复杂任务训练的全链路搭建;并组建起一支覆盖基础模型、强化学习、Agent、机器人本体、硬件系统、产品与商业化的团队。",
-        "sourceName": "媒体报道 · 投资界 · 投资界",
-        "channel": "institutions",
-        "channelLabel": "投资机构",
-        "eventType": "融资"
-      },
-      "capturedAt": "2026-08-05T05:24:45.821Z",
-      "capturedBy": "VCIQ",
-      "status": "queued",
-      "appliedTo": [],
-      "reasons": [],
-      "note": "",
-      "resolution": {
-        "status": "review",
-        "requestedType": "company",
-        "entityType": "company",
-        "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
-        "targetId": "",
-        "confidence": "low",
-        "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
-        "decisionKey": "本轮融资由顺为资本与经纬创投共同领投九坤创投钧山资本seefund猎聘投资元诺资本钟鼎资本等多家财务及产业投资机构参与云启资本小米战投弘晖基金英诺天使基金东方嘉富",
         "reclassified": false
       }
     },
@@ -1573,7 +1528,7 @@
         "targetId": "",
         "confidence": "low",
         "source": "source-context",
-        "reason": "原文邻近语境更像技术、项目或工具,不能直接作为公司写入。",
+        "reason": "原文邻近语境更像技术、项目或工具，不能直接作为公司写入。",
         "decisionKey": "破壳机器人",
         "reclassified": false
       }
@@ -1618,8 +1573,53 @@
         "targetId": "",
         "confidence": "low",
         "source": "unresolved",
-        "reason": "缺少正式目录命中或明确公司语境,暂存到实体解析审核队列。",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
         "decisionKey": "破壳时刻上海智能科技有限责任",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-wiuop1",
+      "entityType": "company",
+      "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+      "rawSelection": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+      "aliases": [],
+      "trackSlugs": [
+        "robotics",
+        "track-1ccjq49",
+        "ai"
+      ],
+      "trackNames": [
+        "机器人",
+        "风险投资",
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-c0o8yq",
+        "title": "08-03",
+        "url": "https://news.pedaily.cn/202608/567178.shtml",
+        "summary": "破壳机器人完成亿美元级Pre-A轮融资,公司成立不到半年,已完成从基础模型、真机强化学习、数据采集硬件到复杂任务训练的全链路搭建;并组建起一支覆盖基础模型、强化学习、Agent、机器人本体、硬件系统、产品与商业化的团队。",
+        "sourceName": "媒体报道 · 投资界 · 投资界",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-05T05:24:45.821Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "本轮融资由顺为资本与经纬创投共同领投,九坤创投、钧山资本、SEE Fund、猎聘投资、元诺资本、钟鼎资本等多家财务及产业投资机构参与,云启资本、小米战投、弘晖基金、英诺天使基金、东方嘉富",
+        "targetId": "",
+        "confidence": "low",
+        "source": "unresolved",
+        "reason": "缺少正式目录命中或明确公司语境，暂存到实体解析审核队列。",
+        "decisionKey": "本轮融资由顺为资本与经纬创投共同领投九坤创投钧山资本seefund猎聘投资元诺资本钟鼎资本等多家财务及产业投资机构参与云启资本小米战投弘晖基金英诺天使基金东方嘉富",
         "reclassified": false
       }
     }
