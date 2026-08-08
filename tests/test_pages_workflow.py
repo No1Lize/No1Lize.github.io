@@ -57,6 +57,31 @@ class PagesWorkflowTests(unittest.TestCase):
             with self.subTest(path=path):
                 self.assertIn(f"      - {path}", self.workflow)
 
+    def test_transient_fixed_point_states_defer_pages_without_weakening_validation(self):
+        self.assertIn("name: Assess publication readiness", self.workflow)
+        self.assertIn("id: publication_readiness", self.workflow)
+        self.assertIn("ready: ${{ steps.publication_readiness.outputs.ready }}", self.workflow)
+        self.assertIn(
+            "entity resolution reconciliation is not at a fixed point",
+            self.workflow,
+        )
+        self.assertIn(
+            "tracking configuration is newer than the article snapshot",
+            self.workflow,
+        )
+        self.assertIn("missing crawler coverage record", self.workflow)
+        self.assertIn("ready=false", self.workflow)
+        self.assertIn("::notice title=Pages deferred::", self.workflow)
+        self.assertIn(
+            "::error title=Pages readiness check failed::",
+            self.workflow,
+        )
+        self.assertIn("if: needs.build.outputs.ready == 'true'", self.workflow)
+        self.assertGreaterEqual(
+            self.workflow.count("if: steps.publication_readiness.outputs.ready == 'true'"),
+            9,
+        )
+
     def test_tracking_config_is_refreshed_before_pages_can_publish_it(self):
         self.assertIn("      - config/user_tracking.json", self.refresh_workflow)
         self.assertIn("      - config/user_tracking.json", self.workflow)
@@ -64,6 +89,7 @@ class PagesWorkflowTests(unittest.TestCase):
             "Pages must wait for that workflow to commit the matching public snapshot",
             self.workflow,
         )
+        self.assertIn("-f publish_after_reconciliation=true", self.refresh_workflow)
         self.assertIn("run: npm run build:pages", self.workflow)
         self.assertNotIn("ALLOW_INCOMPLETE_TRACKING_COVERAGE", self.workflow)
 
@@ -84,6 +110,7 @@ class PagesWorkflowTests(unittest.TestCase):
     def test_tracking_coverage_cannot_be_bypassed(self):
         self.assertNotIn("ALLOW_INCOMPLETE_TRACKING_COVERAGE", self.workflow)
         self.assertIn("run: npm run build:pages", self.workflow)
+        self.assertIn("node scripts/validate-tracking-snapshot.mjs", self.workflow)
 
     def test_deployed_artifact_records_source_sha_and_control_plane_hashes(self):
         self.assertIn('"sourceSha": git_head(root)', self.control_plane)
