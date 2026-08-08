@@ -45,6 +45,8 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
 
     def test_tracking_changes_refresh_snapshot_before_publication(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        pages = PAGES_WORKFLOW.read_text(encoding="utf-8")
+        refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("TRACKING_CHANGED: ${{ steps.publish.outputs.tracking_changed }}", text)
         self.assertIn(
             "PUSH_TRACKING_INPUTS_CHANGED: ${{ steps.push-inputs.outputs.changed }}",
@@ -52,6 +54,12 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         )
         self.assertIn("Detect pushed tracking inputs", text)
         self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
+        self.assertIn("      - config/user_tracking.json", refresh)
+        self.assertIn("      - config/user_tracking.json", pages)
+        self.assertIn(
+            "Pages must wait for that workflow to commit the matching public snapshot",
+            pages,
+        )
 
     def test_full_refresh_explicitly_hands_off_to_reconciliation(self) -> None:
         refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
@@ -79,15 +87,23 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertNotIn("public/data/company_candidates.json", text)
         self.assertNotIn("public/data/company_candidate_onboarding.json", text)
 
-    def test_pages_build_uses_the_same_private_resolution_gate(self) -> None:
+    def test_pages_build_does_not_depend_on_private_candidate_fixed_point(self) -> None:
         text = PAGES_WORKFLOW.read_text(encoding="utf-8")
-        reconcile = text.index("python tools/reconcile_entity_resolution.py")
-        trust = text.index("python tools/apply_manual_company_trust.py")
-        build = text.index("python tools/build_resolved_company_candidates.py")
-        self.assertLess(reconcile, trust)
-        self.assertLess(trust, build)
+        runtime = text.split("permissions:", 1)[1]
+        self.assertIn("python tools/reconcile_entity_resolution.py --check", runtime)
+        self.assertNotIn("python tools/apply_manual_company_trust.py", runtime)
+        self.assertNotIn("python tools/build_resolved_company_candidates.py", runtime)
+        self.assertNotIn("config/company_candidate_review_queue.json", runtime)
+        self.assertNotIn("config/company_candidate_onboarding_state.json", runtime)
+        self.assertNotIn("public/data/company_candidates.json", runtime)
+
+        self.assertIn("paths-ignore:", text)
+        self.assertIn("config/user_tracking.json", text)
         self.assertIn("config/company_candidate_review_queue.json", text)
-        self.assertNotIn("public/data/company_candidates.json", text)
+        self.assertIn("config/company_candidate_onboarding_state.json", text)
+        self.assertIn("config/company_candidate_decisions.json", text)
+        self.assertIn("config/tracking_capture_inbox.json", text)
+        self.assertIn("config/entity_resolution_decisions.json", text)
 
 
 if __name__ == "__main__":
