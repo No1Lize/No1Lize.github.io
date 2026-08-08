@@ -81,6 +81,10 @@ PROFESSIONAL_PLATFORM_MARKERS = (
     "openalex",
     "arxiv",
 )
+DISCOVERY_SOURCE_IDS = {
+    "finance-media-index",
+    "wechat-public-index",
+}
 DISCOVERY_SOURCE_ID_MARKERS = (
     "-bing",
     "-google-cn",
@@ -168,6 +172,8 @@ def classify_source_role(
         return explicit
 
     sid = _fold(source_id)
+    if sid in DISCOVERY_SOURCE_IDS:
+        return "discovery"
     if sid.startswith("user-source-source-auto-media-"):
         return "discovery"
     if sid.startswith("user-track-") and not _direct_wechat(platform, url):
