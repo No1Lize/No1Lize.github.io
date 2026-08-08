@@ -52,7 +52,7 @@ class SourcePortfolioTests(unittest.TestCase):
         self.assertEqual(tail["directRequestBudget"]["feedLimit"], 0)
         self.assertEqual(tail["professionalMedia"][0]["sourceRole"], "discovery")
 
-    def test_health_downgrade_overrides_core_position(self) -> None:
+    def test_health_downgrade_replenishes_the_core_from_later_sources(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             health = Path(tmp) / "health.json"
             health.write_text(
@@ -60,10 +60,13 @@ class SourcePortfolioTests(unittest.TestCase):
                 encoding="utf-8",
             )
             specs = source_portfolio.classify_professional_media_specs(
-                self.specs(3), health_path=health, core_limit=3
+                self.specs(4), health_path=health, core_limit=3
             )
         self.assertEqual(specs[0]["sourceRole"], "discovery")
-        self.assertEqual(specs[1]["sourceRole"], "corroboration")
+        self.assertEqual(
+            sum(spec["sourceRole"] == "corroboration" for spec in specs), 3
+        )
+        self.assertEqual(specs[3]["sourceRole"], "corroboration")
 
     def test_discovery_media_uses_search_only_collection(self) -> None:
         class FakeModule:
