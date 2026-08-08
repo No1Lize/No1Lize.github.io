@@ -1,9 +1,10 @@
 name: Generate Research Agent v1
 
 on:
-  workflow_run:
-    workflows: ["Refresh public intelligence"]
-    types: [completed]
+  # Production refreshes hand off through entity reconciliation and a successful
+  # terminal Pages deployment before starting research. Keeping this workflow
+  # dispatch-only prevents the refresh-completion event from competing with the
+  # reconciliation writer for the single repository-writer queue slot.
   workflow_dispatch:
 
 permissions:
@@ -11,15 +12,13 @@ permissions:
   actions: write
 
 concurrency:
-  # Failed or cancelled refresh completions must skip without entering the writer queue.
-  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('vciq-research-agent-skip-{0}', github.run_id) || format('vciq-repository-writer-{0}', github.ref) }}
-  # Research runs must never replace a pending full refresh. A newer refresh may
-  # replace an older pending research run and will trigger a fresh report on success.
+  group: vciq-repository-writer-${{ github.ref }}
+  # Research is a repository writer. Preserve the active writer and allow the
+  # newest explicit research request to supersede stale pending research work.
   queue: max
 
 jobs:
   research-agent:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 18
     steps:
