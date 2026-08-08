@@ -1,7 +1,93 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T04:33:15.452Z",
+  "generatedAt": "2026-08-08T04:38:06.266Z",
   "records": [
+    {
+      "id": "capture-1y7leg8",
+      "entityType": "topic",
+      "canonicalName": "Claude",
+      "rawSelection": "Claude",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-x66yh5",
+        "title": "Introducing Claude Sonnet 5",
+        "url": "https://www.anthropic.com/news/claude-sonnet-5",
+        "summary": "",
+        "sourceName": "产品发布Anthropic · 官方网站",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "产品发布"
+      },
+      "capturedAt": "2026-08-08T04:38:06.266Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Claude",
+        "targetId": "topic:claude",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术/主题”,且未与正式目录冲突。",
+        "decisionKey": "claude",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-1t230wp",
+      "entityType": "topic",
+      "canonicalName": "Sonnet",
+      "rawSelection": "Sonnet",
+      "aliases": [],
+      "trackSlugs": [
+        "ai"
+      ],
+      "trackNames": [
+        "AI / AGI"
+      ],
+      "source": {
+        "articleId": "article-x66yh5",
+        "title": "Introducing Claude Sonnet 5",
+        "url": "https://www.anthropic.com/news/claude-sonnet-5",
+        "summary": "",
+        "sourceName": "产品发布Anthropic · 官方网站",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "产品发布"
+      },
+      "capturedAt": "2026-08-08T04:38:06.266Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:keywords"
+      ],
+      "reasons": [],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "topic",
+        "entityType": "topic",
+        "canonicalName": "Sonnet",
+        "targetId": "topic:sonnet",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“技术/主题”,且未与正式目录冲突。",
+        "decisionKey": "sonnet",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-pfveuk",
       "entityType": "topic",
