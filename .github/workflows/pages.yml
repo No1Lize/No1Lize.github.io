@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
     paths-ignore:
+      # Tracking config is a crawler input. Its push launches scheduled-sync, and
+      # Pages must wait for that workflow to commit the matching public snapshot.
+      - config/user_tracking.json
       - config/company_candidate_review_queue.json
       - config/company_candidate_onboarding_state.json
       - config/company_candidate_decisions.json
