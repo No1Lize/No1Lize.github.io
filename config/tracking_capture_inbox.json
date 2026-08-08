@@ -1,7 +1,55 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T07:00:30.090Z",
+  "generatedAt": "2026-08-08T07:03:58.860Z",
   "records": [
+    {
+      "id": "capture-1y429ya",
+      "entityType": "person",
+      "canonicalName": "Rodney Luster",
+      "rawSelection": "Rodney Luster",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-13l0ia6"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "心理学"
+      ],
+      "source": {
+        "articleId": "article-16wgeld",
+        "title": "08-07",
+        "url": "https://www.prnewswire.com/news-releases/university-of-phoenix-research-chair-presents-pilot-findings-on-ai-assisted-empathy-at-2026-american-psychological-association-convention-302846323.html",
+        "summary": "Dr. Rodney Luster shares early findings and ethical considerations for using generative AI as an adjunct to psychotherapy and counselor training. PHOENIX, Aug. 7, 2026 /PRNewswire/ -- Rodney Luster, PhD, University research chair and chair of the Center for Leadership and Entrepreneurial...",
+        "sourceName": "媒体报道 · 新闻稿 · PR Newswire Consumer Technology",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "技术突破"
+      },
+      "capturedAt": "2026-08-08T07:03:58.860Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:people",
+        "track-13l0ia6:people"
+      ],
+      "reasons": [
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Rodney Luster",
+        "targetId": "person:rodneyluster",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”,且未与正式目录冲突。",
+        "decisionKey": "rodneyluster",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-17yceo0",
       "entityType": "company",
