@@ -1,7 +1,102 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T07:03:58.860Z",
+  "generatedAt": "2026-08-08T07:06:16.830Z",
   "records": [
+    {
+      "id": "capture-1lb3bfa",
+      "entityType": "person",
+      "canonicalName": "Amber Nigam",
+      "rawSelection": "Amber Nigam",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-1wmwa8m"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "医疗科技"
+      ],
+      "source": {
+        "articleId": "article-a0edu",
+        "title": "08-07",
+        "url": "https://www.prnewswire.com/news-releases/harvard-awards-basysai-ceo-amber-nigam-2026-alumni-innovation-award-302846314.html",
+        "summary": "BOSTON, Aug. 7, 2026 /PRNewswire/ -- Basys.ai today announced that its CEO and Co-founder, Amber Nigam, has received the 2026 Harvard Alumni Innovation Award from the Harvard T.H. Chan School of Public Health, the school's highest alumni recognition. The award is presented annually to a...",
+        "sourceName": "媒体报道 · 新闻稿 · PR Newswire Consumer Technology",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "技术突破"
+      },
+      "capturedAt": "2026-08-08T07:06:16.830Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:people",
+        "track-1wmwa8m:people"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "融资机会"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Amber Nigam",
+        "targetId": "person:ambernigam",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”,且未与正式目录冲突。",
+        "decisionKey": "ambernigam",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-1nmnh6p",
+      "entityType": "company",
+      "canonicalName": "basys.ai",
+      "rawSelection": "basys.ai",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "track-1wmwa8m"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "医疗科技"
+      ],
+      "source": {
+        "articleId": "article-a0edu",
+        "title": "08-07",
+        "url": "https://www.prnewswire.com/news-releases/harvard-awards-basysai-ceo-amber-nigam-2026-alumni-innovation-award-302846314.html",
+        "summary": "BOSTON, Aug. 7, 2026 /PRNewswire/ -- Basys.ai today announced that its CEO and Co-founder, Amber Nigam, has received the 2026 Harvard Alumni Innovation Award from the Harvard T.H. Chan School of Public Health, the school's highest alumni recognition. The award is presented annually to a...",
+        "sourceName": "媒体报道 · 新闻稿 · PR Newswire Consumer Technology",
+        "channel": "technology",
+        "channelLabel": "新兴科技",
+        "eventType": "技术突破"
+      },
+      "capturedAt": "2026-08-08T07:06:16.830Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "个人研究兴趣",
+        "融资机会"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "basys.ai",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像人物,不能直接作为公司写入。",
+        "decisionKey": "basysai",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-1y429ya",
       "entityType": "person",
