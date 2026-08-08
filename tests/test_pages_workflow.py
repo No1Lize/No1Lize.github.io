@@ -93,6 +93,17 @@ class PagesWorkflowTests(unittest.TestCase):
         self.assertIn("run: npm run build:pages", self.workflow)
         self.assertNotIn("ALLOW_INCOMPLETE_TRACKING_COVERAGE", self.workflow)
 
+    def test_terminal_deploy_can_handoff_to_research_without_creating_a_refresh_race(self):
+        self.assertIn("run_research_after_deploy:", self.workflow)
+        self.assertIn("type: boolean", self.workflow)
+        self.assertIn("default: false", self.workflow)
+        self.assertIn("actions: write", self.workflow)
+        deploy = self.workflow.split("  deploy:", 1)[1]
+        deployment = deploy.index("uses: actions/deploy-pages@v4")
+        research = deploy.index("gh workflow run research-agent-v1.yml --ref main")
+        self.assertLess(deployment, research)
+        self.assertIn("inputs.run_research_after_deploy == true", deploy)
+
     def test_tracking_hash_mismatch_exposes_only_safe_short_hashes(self):
         self.assertIn("expected=${expectedHash.slice(0, 12)}", self.tracking_validator)
         self.assertIn("actual=${actualHash.slice(0, 12)}", self.tracking_validator)
