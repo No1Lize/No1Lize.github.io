@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "pipelineVersion": "automation-control-plane-v1",
-  "generatedAt": "2026-08-08T03:46:05Z",
+  "generatedAt": "2026-08-08T04:20:04Z",
   "overallStatus": "stale",
   "summary": {
     "jobCount": 9,
@@ -26,13 +26,13 @@
       "failurePolicy": "retain-last-good",
       "qualityGate": "frequent-refresh-quality",
       "status": "healthy",
-      "lastCompletedAt": "2026-08-08T03:46:05Z",
+      "lastCompletedAt": "2026-08-08T04:20:04Z",
       "artifacts": [
         {
           "path": "public/data/articles.json",
           "status": "healthy",
-          "ageHours": 0.05,
-          "dataTimestamp": "2026-08-08T03:43:22Z"
+          "ageHours": 0.06,
+          "dataTimestamp": "2026-08-08T04:16:44Z"
         }
       ]
     },
@@ -49,13 +49,13 @@
       "failurePolicy": "retain-last-good",
       "qualityGate": "tracking-discovery-quality",
       "status": "healthy",
-      "lastCompletedAt": "2026-08-08T03:46:05Z",
+      "lastCompletedAt": "2026-08-08T04:20:04Z",
       "artifacts": [
         {
           "path": "public/data/source_health.json",
           "status": "healthy",
-          "ageHours": 0.07,
-          "dataTimestamp": "2026-08-08T03:41:57Z"
+          "ageHours": 0.08,
+          "dataTimestamp": "2026-08-08T04:15:13Z"
         }
       ]
     },
@@ -72,37 +72,37 @@
       "failurePolicy": "retain-last-good",
       "qualityGate": "full-refresh-quality",
       "status": "healthy",
-      "lastCompletedAt": "2026-08-08T03:46:05Z",
+      "lastCompletedAt": "2026-08-08T04:20:04Z",
       "artifacts": [
         {
           "path": "public/data/articles.json",
           "status": "healthy",
-          "ageHours": 0.05,
-          "dataTimestamp": "2026-08-08T03:43:22Z"
+          "ageHours": 0.06,
+          "dataTimestamp": "2026-08-08T04:16:44Z"
         },
         {
           "path": "public/data/listed_company_disclosures.json",
           "status": "healthy",
-          "ageHours": 0.23,
-          "dataTimestamp": "2026-08-08T03:32:18Z"
+          "ageHours": 0.24,
+          "dataTimestamp": "2026-08-08T04:05:55Z"
         },
         {
           "path": "public/data/market_profiles.json",
           "status": "healthy",
-          "ageHours": 0.05,
-          "dataTimestamp": "2026-08-08T03:43:19Z"
+          "ageHours": 0.06,
+          "dataTimestamp": "2026-08-08T04:16:41Z"
         },
         {
           "path": "public/data/people.json",
           "status": "healthy",
           "ageHours": 0.01,
-          "dataTimestamp": "2026-08-08T03:45:15Z"
+          "dataTimestamp": "2026-08-08T04:19:13Z"
         },
         {
           "path": "public/data/source_health.json",
           "status": "healthy",
-          "ageHours": 0.07,
-          "dataTimestamp": "2026-08-08T03:41:57Z"
+          "ageHours": 0.08,
+          "dataTimestamp": "2026-08-08T04:15:13Z"
         }
       ]
     },
@@ -126,7 +126,7 @@
         {
           "path": "public/data/venture_profiles.json",
           "status": "stale",
-          "ageHours": 74.41,
+          "ageHours": 74.98,
           "dataTimestamp": "2026-08-05T01:21:18Z"
         }
       ]
@@ -151,19 +151,19 @@
         {
           "path": "public/data/institution_entities.json",
           "status": "healthy",
-          "ageHours": 99.77,
+          "ageHours": 100.33,
           "dataTimestamp": "2026-08-04T00:00:00Z"
         },
         {
           "path": "public/data/institution_events.json",
           "status": "healthy",
-          "ageHours": 72.04,
+          "ageHours": 72.6,
           "dataTimestamp": "2026-08-05T03:43:51Z"
         },
         {
           "path": "public/data/institution_equity_relationships.json",
           "status": "healthy",
-          "ageHours": 82.82,
+          "ageHours": 83.39,
           "dataTimestamp": "2026-08-04T16:56:36Z"
         }
       ]
@@ -186,7 +186,7 @@
         {
           "path": "public/data/star_market_investors.json",
           "status": "healthy",
-          "ageHours": 82.82,
+          "ageHours": 83.39,
           "dataTimestamp": "2026-08-04T16:56:36Z"
         }
       ]
@@ -236,13 +236,13 @@
         {
           "path": "public/data/research_agent_daily.json",
           "status": "healthy",
-          "ageHours": 2.91,
+          "ageHours": 3.47,
           "dataTimestamp": "2026-08-08T00:51:46Z"
         },
         {
           "path": "public/data/research_agent_snapshot.json",
           "status": "healthy",
-          "ageHours": 2.91,
+          "ageHours": 3.47,
           "dataTimestamp": "2026-08-08T00:51:46Z"
         }
       ]

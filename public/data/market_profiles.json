@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T03:43:19+00:00",
+  "generatedAt": "2026-08-08T04:16:41+00:00",
   "profiles": {
     "cambricon": {
       "slug": "cambricon",
       "market": "A股",
       "ticker": "688256",
       "thsCode": "688256",
-      "updatedAt": "2026-08-08T03:42:57+00:00",
+      "updatedAt": "2026-08-08T04:16:16+00:00",
       "status": "ok",
       "company": {
         "name": "中科寒武纪科技股份有限公司",
@@ -1139,7 +1139,7 @@
       "market": "A股",
       "ticker": "300750",
       "thsCode": "300750",
-      "updatedAt": "2026-08-08T03:42:56+00:00",
+      "updatedAt": "2026-08-08T04:16:15+00:00",
       "status": "ok",
       "company": {
         "name": "宁德时代",
@@ -2115,14 +2115,39 @@
           "value": "¥1.80万亿"
         },
         {
+          "id": "floatMarketCap",
+          "label": "流通市值",
+          "value": "¥1.65万亿"
+        },
+        {
+          "id": "pe",
+          "label": "市盈率",
+          "value": "20.74"
+        },
+        {
+          "id": "pb",
+          "label": "市净率",
+          "value": "4.82"
+        },
+        {
+          "id": "turnover",
+          "label": "换手率",
+          "value": "0.60%"
+        },
+        {
+          "id": "amount",
+          "label": "成交额",
+          "value": "¥98.78亿"
+        },
+        {
           "id": "totalShares",
           "label": "总股本",
-          "value": "46.27亿"
+          "value": "46.27亿股"
         },
         {
           "id": "floatShares",
           "label": "流通股",
-          "value": "42.60亿"
+          "value": "42.60亿股"
         },
         {
           "id": "eps",
@@ -2159,6 +2184,7 @@
       "sources": {
         "tonghuashun": "https://stockpage.10jqka.com.cn/300750/",
         "price": "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param=sz300750%2Cday%2C%2C%2C120%2Cqfq",
+        "quote": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.300750&ut=fa5fd1943c7b386f172d6893dbfba10b&fields=f43,f44,f45,f46,f47,f48,f57,f58,f60,f84,f85,f100,f102,f116,f117,f162,f167,f168,f170",
         "sinaFinance": "https://finance.sina.com.cn/realstock/company/sz300750/nc.shtml"
       },
       "quote": {
@@ -2174,6 +2200,12 @@
         }
       },
       "news": [
+        {
+          "title": "一句话点奶茶成真！千问闪购首次上车：极狐阿尔法T7又放大",
+          "url": "https://t.cj.sina.cn/articles/view/1659643027/62ec249302001rda0",
+          "publishedAt": "2026-08-08T10:33:00+08:00",
+          "source": "新浪财经"
+        },
         {
           "title": "恒翼能IPO，宁德时代如何“托举”？",
           "url": "https://finance.sina.com.cn/roll/2026-08-08/doc-inimqimt2738783.shtml",
@@ -2227,12 +2259,6 @@
           "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gadg",
           "publishedAt": "2026-08-08T03:41:00+08:00",
           "source": "新浪财经"
-        },
-        {
-          "title": "宁德时代获得发明专利授权：“电池、用电装置、电池制造方法及制造设备”",
-          "url": "https://cj.sina.cn/articles/view/1850649324/6e4eaaec02002gahm",
-          "publishedAt": "2026-08-08T03:40:00+08:00",
-          "source": "新浪财经"
         }
       ]
     },
@@ -2241,7 +2267,7 @@
       "market": "A股",
       "ticker": "300676",
       "thsCode": "300676",
-      "updatedAt": "2026-08-08T03:42:56+00:00",
+      "updatedAt": "2026-08-08T04:16:16+00:00",
       "status": "ok",
       "company": {
         "name": "华大基因",
@@ -3365,7 +3391,7 @@
       "market": "港股",
       "ticker": "09660",
       "thsCode": "HK9660",
-      "updatedAt": "2026-08-08T03:42:55+00:00",
+      "updatedAt": "2026-08-08T04:16:14+00:00",
       "status": "ok",
       "company": {
         "name": "Horizon Robotics",
@@ -4493,7 +4519,7 @@
       "market": "港股",
       "ticker": "02228",
       "thsCode": "HK2228",
-      "updatedAt": "2026-08-08T03:42:55+00:00",
+      "updatedAt": "2026-08-08T04:16:14+00:00",
       "status": "ok",
       "company": {
         "name": "晶泰控股有限公司",
@@ -5621,7 +5647,7 @@
       "market": "美股",
       "ticker": "PONY",
       "thsCode": "PONY",
-      "updatedAt": "2026-08-08T03:43:04+00:00",
+      "updatedAt": "2026-08-08T04:16:26+00:00",
       "status": "ok",
       "company": {
         "name": "小马智行",
@@ -6591,11 +6617,11 @@
         },
         {
           "date": "2026-08-07",
-          "open": 7.9899001121521,
+          "open": 7.989999771118164,
           "close": 8.149999618530273,
           "high": 8.149999618530273,
           "low": 7.829999923706055,
-          "volume": 2198558.0
+          "volume": 2201300.0
         }
       ],
       "metrics": [
@@ -6721,9 +6747,6 @@
           "publishedAt": "2026-06-29T19:47:24+00:00",
           "source": "Yahoo财经"
         }
-      ],
-      "warnings": [
-        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "weride": {
@@ -6731,7 +6754,7 @@
       "market": "美股",
       "ticker": "WRD",
       "thsCode": "WRD",
-      "updatedAt": "2026-08-08T03:43:04+00:00",
+      "updatedAt": "2026-08-08T04:16:27+00:00",
       "status": "ok",
       "company": {
         "name": "文远知行",
@@ -7705,7 +7728,7 @@
           "close": 6.300000190734863,
           "high": 6.300000190734863,
           "low": 5.974999904632568,
-          "volume": 2310280.0
+          "volume": 2311400.0
         }
       ],
       "metrics": [
@@ -7833,7 +7856,7 @@
       "market": "美股",
       "ticker": "RGTI",
       "thsCode": "RGTI",
-      "updatedAt": "2026-08-08T03:43:06+00:00",
+      "updatedAt": "2026-08-08T04:16:27+00:00",
       "status": "ok",
       "company": {
         "name": "Rigetti Computing, Inc.",
@@ -8803,11 +8826,11 @@
         },
         {
           "date": "2026-08-07",
-          "open": 16.784000396728516,
+          "open": 16.774999618530273,
           "close": 17.940000534057617,
           "high": 17.950000762939453,
           "low": 16.405000686645508,
-          "volume": 29843427.0
+          "volume": 29943900.0
         }
       ],
       "metrics": [
@@ -8938,6 +8961,9 @@
           "publishedAt": "2026-08-06T20:05:00+00:00",
           "source": "Yahoo财经"
         }
+      ],
+      "warnings": [
+        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "ionq": {
@@ -8945,7 +8971,7 @@
       "market": "美股",
       "ticker": "IONQ",
       "thsCode": "IONQ",
-      "updatedAt": "2026-08-08T03:43:07+00:00",
+      "updatedAt": "2026-08-08T04:16:28+00:00",
       "status": "ok",
       "company": {
         "name": "IonQ, Inc.",
@@ -9919,7 +9945,7 @@
           "close": 44.43000030517578,
           "high": 44.6150016784668,
           "low": 40.0,
-          "volume": 28072130.0
+          "volume": 34382100.0
         }
       ],
       "metrics": [
@@ -10057,7 +10083,7 @@
       "market": "美股",
       "ticker": "RKLB",
       "thsCode": "RKLB",
-      "updatedAt": "2026-08-08T03:43:10+00:00",
+      "updatedAt": "2026-08-08T04:16:29+00:00",
       "status": "ok",
       "company": {
         "name": "Rocket Lab Corporation",
@@ -11027,11 +11053,11 @@
         },
         {
           "date": "2026-08-07",
-          "open": 78.97000122070312,
+          "open": 78.80000305175781,
           "close": 82.83000183105469,
           "high": 83.25,
           "low": 77.37999725341797,
-          "volume": 23781299.0
+          "volume": 23988300.0
         }
       ],
       "metrics": [
@@ -11169,7 +11195,7 @@
       "market": "美股",
       "ticker": "TEM",
       "thsCode": "TEM",
-      "updatedAt": "2026-08-08T03:43:10+00:00",
+      "updatedAt": "2026-08-08T04:16:36+00:00",
       "status": "ok",
       "company": {
         "name": "Tempus AI, Inc.",
@@ -12139,11 +12165,11 @@
         },
         {
           "date": "2026-08-07",
-          "open": 47.61000061035156,
+          "open": 47.55500030517578,
           "close": 52.04999923706055,
           "high": 52.400001525878906,
-          "low": 47.22629928588867,
-          "volume": 5058129.0
+          "low": 47.22600173950195,
+          "volume": 5671200.0
         }
       ],
       "metrics": [
@@ -12281,7 +12307,7 @@
       "market": "美股",
       "ticker": "RXRX",
       "thsCode": "RXRX",
-      "updatedAt": "2026-08-08T03:43:12+00:00",
+      "updatedAt": "2026-08-08T04:16:36+00:00",
       "status": "ok",
       "company": {
         "name": "Recursion Pharmaceuticals, Inc.",
@@ -13251,11 +13277,11 @@
         },
         {
           "date": "2026-08-07",
-          "open": 3.2541000843048096,
+          "open": 3.253999948501587,
           "close": 3.2200000286102295,
           "high": 3.265000104904175,
           "low": 3.180000066757202,
-          "volume": 9248157.0
+          "volume": 9320500.0
         }
       ],
       "metrics": [
@@ -13386,9 +13412,6 @@
           "publishedAt": "2026-07-31T20:30:00+00:00",
           "source": "Yahoo财经"
         }
-      ],
-      "warnings": [
-        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "mobileye": {
@@ -13396,7 +13419,7 @@
       "market": "美股",
       "ticker": "MBLY",
       "thsCode": "MBLY",
-      "updatedAt": "2026-08-08T03:43:13+00:00",
+      "updatedAt": "2026-08-08T04:16:36+00:00",
       "status": "ok",
       "company": {
         "name": "Mobileye Global Inc.",
@@ -14369,8 +14392,8 @@
           "open": 8.579999923706055,
           "close": 8.729999542236328,
           "high": 8.779999732971191,
-          "low": 8.5649995803833,
-          "volume": 3628757.0
+          "low": 8.569999694824219,
+          "volume": 3672100.0
         }
       ],
       "metrics": [
@@ -14501,9 +14524,6 @@
           "publishedAt": "2026-07-24T16:12:00+00:00",
           "source": "Yahoo财经"
         }
-      ],
-      "warnings": [
-        "本轮公开新闻为空，保留上一轮新闻标题"
       ]
     },
     "aurora": {
@@ -14511,7 +14531,7 @@
       "market": "美股",
       "ticker": "AUR",
       "thsCode": "AUR",
-      "updatedAt": "2026-08-08T03:43:17+00:00",
+      "updatedAt": "2026-08-08T04:16:38+00:00",
       "status": "ok",
       "company": {
         "name": "Aurora Innovation, Inc.",
@@ -15480,11 +15500,11 @@
         },
         {
           "date": "2026-08-07",
-          "open": 6.909999847412109,
+          "open": 6.929999828338623,
           "close": 7.059999942779541,
           "high": 7.139999866485596,
           "low": 6.909999847412109,
-          "volume": 21343527.0
+          "volume": 28659100.0
         }
       ],
       "metrics": [
@@ -15622,7 +15642,7 @@
       "market": "美股",
       "ticker": "JOBY",
       "thsCode": "JOBY",
-      "updatedAt": "2026-08-08T03:43:17+00:00",
+      "updatedAt": "2026-08-08T04:16:39+00:00",
       "status": "ok",
       "company": {
         "name": "Joby Aviation, Inc.",
@@ -16594,8 +16614,8 @@
           "open": 8.399999618530273,
           "close": 8.640000343322754,
           "high": 8.720000267028809,
-          "low": 8.350000381469727,
-          "volume": 31503644.0
+          "low": 8.34000015258789,
+          "volume": 33507700.0
         }
       ],
       "metrics": [
