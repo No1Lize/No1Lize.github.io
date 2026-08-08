@@ -252,6 +252,41 @@ jobs:
             public/data/data_lineage.json
             public/data/pipeline_health.json
           )
+          REFRESH_INPUT_PATHS=(
+            config/automation_jobs.json
+            config/company_registry.json
+            config/intelligence_sources.json
+            config/user_tracking.json
+            config/listed_company_disclosure_sources.json
+            config/professional_technology_media_sources.json
+            config/wechat_sources.json
+            config/wechat_public_indexes.json
+            config/official_company_sources.json
+            config/person_profile_overrides.json
+            config/source_health_policy.json
+            config/source_quality_reviews.json
+          )
+
+          supersede_if_refresh_inputs_changed() {
+            local target_ref="$1"
+            if git diff --quiet "$GITHUB_SHA" "$target_ref" -- "${REFRESH_INPUT_PATHS[@]}"; then
+              return 1
+            fi
+            echo "A newer commit changed live full-refresh inputs while this crawl was running:"
+            git diff --name-only "$GITHUB_SHA" "$target_ref" -- "${REFRESH_INPUT_PATHS[@]}"
+            echo "::notice title=Full refresh superseded::Discarding this unpushed snapshot and scheduling a fresh refresh from current main."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "superseded=true" >> "$GITHUB_OUTPUT"
+            return 0
+          }
+
+          # A long network crawl must never publish a hybrid snapshot against
+          # newer source/tracking inputs it did not actually execute.
+          git fetch origin main
+          if supersede_if_refresh_inputs_changed origin/main; then
+            exit 0
+          fi
+
           SEMANTIC_JSON=$(python tools/semantic_data_diff.py --base HEAD "${DATA_PATHS[@]}")
           echo "$SEMANTIC_JSON"
           SEMANTIC_CHANGED=$(printf '%s' "$SEMANTIC_JSON" | python -c 'import json,sys; print(str(json.load(sys.stdin)["changed"]).lower())')
@@ -269,6 +304,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No crawl-audit or public-data changes to publish."
             echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "superseded=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git commit -m "data: refresh public intelligence with source health"
@@ -276,6 +312,13 @@ jobs:
             # Rebase swaps ours/theirs: "theirs" keeps this run's freshly
             # generated snapshot when main changed the same data file.
             git pull --rebase -X theirs origin main
+
+            # Rebase may introduce source/tracking inputs that this run never
+            # crawled. Supersede instead of fabricating coverage or publishing a
+            # hybrid snapshot; a fresh run will execute those inputs end-to-end.
+            if supersede_if_refresh_inputs_changed HEAD; then
+              exit 0
+            fi
 
             # Re-run deterministic enrichment at the rebased HEAD. Network source
             # statuses and source-health streaks remain those produced by this run.
@@ -319,8 +362,9 @@ jobs:
             fi
           done
           echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "superseded=false" >> "$GITHUB_OUTPUT"
       - name: Sync persistent source health issue
-        if: always() && steps.source-health.outcome == 'success' && steps.data-update.outcome == 'success'
+        if: always() && steps.source-health.outcome == 'success' && steps.data-update.outcome == 'success' && steps.data-update.outputs.superseded != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           ACTIVE_COUNT: ${{ steps.source-health.outputs.active_count }}
@@ -345,8 +389,15 @@ jobs:
             gh issue comment "$ISSUE_NUMBER" --body '所有持续异常来源均已恢复，自动关闭告警。'
             gh issue close "$ISSUE_NUMBER" --reason completed
           fi
+      - name: Restart superseded refresh from current main
+        if: always() && steps.data-update.outcome == 'success' && steps.data-update.outputs.superseded == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Full refresh inputs changed during the crawl; start a clean run from current main."
+          gh workflow run scheduled-sync.yml --ref main
       - name: Continue through entity reconciliation before publication
-        if: always() && steps.data-update.outcome == 'success'
+        if: always() && steps.data-update.outcome == 'success' && steps.data-update.outputs.superseded != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

@@ -54,9 +54,49 @@ class ScheduledSyncWorkflowTest(unittest.TestCase):
         text = WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("Continue through entity reconciliation before publication", text)
         self.assertIn("steps.data-update.outcome == 'success'", text)
+        self.assertIn("steps.data-update.outputs.superseded != 'true'", text)
         self.assertIn("gh workflow run company-candidate-discovery.yml --ref main", text)
         self.assertIn("-f publish_after_reconciliation=true", text)
         self.assertIn("actions: write", text)
+
+    def test_newer_refresh_inputs_supersede_the_unpublished_snapshot(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("REFRESH_INPUT_PATHS=(", text)
+        for path in (
+            "config/company_registry.json",
+            "config/intelligence_sources.json",
+            "config/user_tracking.json",
+            "config/wechat_sources.json",
+            "config/official_company_sources.json",
+        ):
+            with self.subTest(path=path):
+                self.assertIn(path, text)
+        self.assertIn("supersede_if_refresh_inputs_changed()", text)
+        self.assertIn('git diff --quiet "$GITHUB_SHA" "$target_ref" -- "${REFRESH_INPUT_PATHS[@]}"', text)
+        self.assertIn("git fetch origin main", text)
+        self.assertIn("supersede_if_refresh_inputs_changed origin/main", text)
+        self.assertIn("supersede_if_refresh_inputs_changed HEAD", text)
+        self.assertIn("superseded=true", text)
+        self.assertIn("Restart superseded refresh from current main", text)
+        self.assertIn("steps.data-update.outputs.superseded == 'true'", text)
+        self.assertIn("gh workflow run scheduled-sync.yml --ref main", text)
+        self.assertIn("Full refresh superseded", text)
+
+        rebase_block = text.split("git pull --rebase -X theirs origin main", 1)[1]
+        supersede = rebase_block.index("supersede_if_refresh_inputs_changed HEAD")
+        validate = rebase_block.index("python tools/validate_full_refresh.py")
+        self.assertLess(supersede, validate)
+
+    def test_superseded_refresh_does_not_publish_source_health_or_reconcile(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn(
+            "steps.data-update.outputs.superseded != 'true'",
+            text.split("- name: Sync persistent source health issue", 1)[1].split("env:", 1)[0],
+        )
+        self.assertIn(
+            "steps.data-update.outputs.superseded != 'true'",
+            text.split("- name: Continue through entity reconciliation before publication", 1)[1].split("env:", 1)[0],
+        )
 
     def test_full_crawl_persists_audit_without_semantic_article_changes(self) -> None:
         text = WORKFLOW.read_text(encoding="utf-8")
