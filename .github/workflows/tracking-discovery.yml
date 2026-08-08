@@ -8,6 +8,14 @@ name: Tracking entity discovery
 # confidence and expiry metadata and must pass lifecycle governance before use.
 
 on:
+  push:
+    branches: [main]
+    paths:
+      # A rollout of seed-governance code/policy gets one governance-only pass on
+      # current main. The config commit itself does not match these paths, so this
+      # cannot recurse. Normal entity expansion remains scheduled/manual.
+      - tools/tracking_seed_governance.py
+      - .github/workflows/tracking-discovery.yml
   schedule:
     # Discover entities before the next daily full refresh consumes them.
     - cron: "0 3 * * 0"
@@ -81,6 +89,7 @@ jobs:
 
       - name: Expand tracking entities from public web sources
         id: expand
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set -euo pipefail
@@ -102,6 +111,7 @@ jobs:
 
       - name: Reference the complete investment-institution directory
         id: directory
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set -euo pipefail
@@ -112,6 +122,7 @@ jobs:
 
       - name: Reuse verified institution teams and public accounts
         id: institutions
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set -euo pipefail
@@ -122,6 +133,7 @@ jobs:
 
       - name: Discover founders, core team and public social accounts
         id: team
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set -euo pipefail
@@ -133,6 +145,7 @@ jobs:
 
       - name: Register public communities and media columns
         id: channels
+        if: github.event_name != 'push'
         shell: bash
         run: |
           set -euo pipefail
@@ -188,10 +201,16 @@ jobs:
       - name: Commit expanded tracking config
         if: steps.changes.outputs.changed == 'true'
         env:
-          DISCOVERY_MODE: ${{ steps.expand.outputs.mode }}
+          EVENT_NAME: ${{ github.event_name }}
+          EXPAND_MODE: ${{ steps.expand.outputs.mode }}
         shell: bash
         run: |
           set -euo pipefail
+          DISCOVERY_MODE="$EXPAND_MODE"
+          if [ "$EVENT_NAME" = "push" ]; then
+            DISCOVERY_MODE="govern-only"
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
@@ -203,7 +222,11 @@ jobs:
             if git diff --cached --quiet; then
               return 1
             fi
-            git commit -m "config: expand tracking entities from public web sources [auto-discovery]"
+            if [ "$DISCOVERY_MODE" = "govern-only" ]; then
+              git commit -m "config: govern automatic tracking seed lifecycle"
+            else
+              git commit -m "config: expand tracking entities from public web sources [auto-discovery]"
+            fi
           }
 
           regenerate_from_latest_main() {
@@ -214,27 +237,29 @@ jobs:
             python tools/tracking_source_governance.py \
               | tee /tmp/source-governance-before-replay.json
 
-            if [ "$DISCOVERY_MODE" = "seed-only" ]; then
-              python tools/expand_tracking_entities.py --seed-new-only \
-                | tee /tmp/discovery-replay.json
-            else
-              python tools/expand_tracking_entities.py \
-                --max-tracks 12 \
-                --max-requests 240 | tee /tmp/discovery-replay.json
+            if [ "$DISCOVERY_MODE" != "govern-only" ]; then
+              if [ "$DISCOVERY_MODE" = "seed-only" ]; then
+                python tools/expand_tracking_entities.py --seed-new-only \
+                  | tee /tmp/discovery-replay.json
+              else
+                python tools/expand_tracking_entities.py \
+                  --max-tracks 12 \
+                  --max-requests 240 | tee /tmp/discovery-replay.json
+              fi
+              node --import tsx scripts/sync-tracking-institution-directory.ts \
+                | tee /tmp/institution-directory-sync-replay.json
+              python -m tools.enrich_tracking_institutions \
+                --max-requests 50 | tee /tmp/institution-discovery-replay.json
+              python tools/enrich_tracking_people_from_sample_companies.py \
+                --max-tracks 20 \
+                --max-requests 70 | tee /tmp/team-discovery-replay.json
+              python tools/enrich_tracking_person_channels.py \
+                --max-tracks 20 | tee /tmp/channel-discovery-replay.json
+              python tools/tracking_seed_governance.py \
+                | tee /tmp/seed-governance-after-replay.json
+              python tools/tracking_source_governance.py \
+                | tee /tmp/source-governance-after-replay.json
             fi
-            node --import tsx scripts/sync-tracking-institution-directory.ts \
-              | tee /tmp/institution-directory-sync-replay.json
-            python -m tools.enrich_tracking_institutions \
-              --max-requests 50 | tee /tmp/institution-discovery-replay.json
-            python tools/enrich_tracking_people_from_sample_companies.py \
-              --max-tracks 20 \
-              --max-requests 70 | tee /tmp/team-discovery-replay.json
-            python tools/enrich_tracking_person_channels.py \
-              --max-tracks 20 | tee /tmp/channel-discovery-replay.json
-            python tools/tracking_seed_governance.py \
-              | tee /tmp/seed-governance-after-replay.json
-            python tools/tracking_source_governance.py \
-              | tee /tmp/source-governance-after-replay.json
 
             python tools/tracking_seed_governance.py --check
             python tools/tracking_source_governance.py --check
