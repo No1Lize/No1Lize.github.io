@@ -1,7 +1,117 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-08T04:39:25.183Z",
+  "generatedAt": "2026-08-08T04:41:55.021Z",
   "records": [
+    {
+      "id": "capture-12fupyw",
+      "entityType": "person",
+      "canonicalName": "Elon Musk",
+      "rawSelection": "Elon Musk",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "robotics",
+        "energy",
+        "semiconductor",
+        "manufacturing"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "机器人",
+        "新能源",
+        "半导体",
+        "智能制造"
+      ],
+      "source": {
+        "articleId": "article-uta2k8",
+        "title": "Elon Musk’s 60 Minutes Interview | SpaceX Engineer Reacts",
+        "url": "https://www.youtube.com/watch?v=GPOnkNFD1X0",
+        "summary": "",
+        "sourceName": "核心人物埃隆·马斯克",
+        "channel": "people",
+        "channelLabel": "人物研究",
+        "eventType": "核心人物"
+      },
+      "capturedAt": "2026-08-08T04:41:55.021Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:people",
+        "robotics:people",
+        "semiconductor:people",
+        "energy:people",
+        "manufacturing:people"
+      ],
+      "reasons": [
+        "个人研究兴趣",
+        "商业模式创新"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "person",
+        "entityType": "person",
+        "canonicalName": "Elon Musk",
+        "targetId": "person:elonmusk",
+        "confidence": "medium",
+        "source": "explicit-type",
+        "reason": "管理员显式选择“人物”,且未与正式目录冲突。",
+        "decisionKey": "elonmusk",
+        "reclassified": false
+      }
+    },
+    {
+      "id": "capture-foyhjv",
+      "entityType": "company",
+      "canonicalName": "Minutes",
+      "rawSelection": "Minutes",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "robotics",
+        "energy",
+        "semiconductor",
+        "manufacturing"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "机器人",
+        "新能源",
+        "半导体",
+        "智能制造"
+      ],
+      "source": {
+        "articleId": "article-uta2k8",
+        "title": "Elon Musk’s 60 Minutes Interview | SpaceX Engineer Reacts",
+        "url": "https://www.youtube.com/watch?v=GPOnkNFD1X0",
+        "summary": "",
+        "sourceName": "核心人物埃隆·马斯克",
+        "channel": "people",
+        "channelLabel": "人物研究",
+        "eventType": "核心人物"
+      },
+      "capturedAt": "2026-08-08T04:41:55.021Z",
+      "capturedBy": "VCIQ",
+      "status": "queued",
+      "appliedTo": [],
+      "reasons": [
+        "个人研究兴趣",
+        "商业模式创新"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "review",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "Minutes",
+        "targetId": "",
+        "confidence": "low",
+        "source": "source-context",
+        "reason": "原文邻近语境更像人物,不能直接作为公司写入。",
+        "decisionKey": "minutes",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-115xtr0",
       "entityType": "topic",
