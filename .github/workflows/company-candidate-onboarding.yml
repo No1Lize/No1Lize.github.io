@@ -22,6 +22,16 @@ on:
       - tests/test_prepare_company_candidate_onboarding.py
       - .github/workflows/company-candidate-onboarding.yml
   workflow_dispatch:
+    inputs:
+      post_onboarding_handoff:
+        description: Next publication stage after verified onboarding
+        required: false
+        type: choice
+        default: none
+        options:
+          - none
+          - refresh
+          - publish-with-research
 
 permissions:
   contents: write
@@ -39,6 +49,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       CANDIDATE_QUEUE: config/company_candidate_review_queue.json
       ONBOARDING_STATE: config/company_candidate_onboarding_state.json
+      POST_ONBOARDING_HANDOFF: ${{ inputs.post_onboarding_handoff }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -230,7 +241,7 @@ jobs:
           ALLOW_INCOMPLETE_TRACKING_COVERAGE=true npm run build:pages
           git restore public/data/articles.json
 
-      - name: Commit published profiles and private onboarding state
+      - name: Commit published profiles and continue the requested handoff
         shell: bash
         run: |
           set -euo pipefail
@@ -243,27 +254,52 @@ jobs:
             config/company_candidate_onboarding_state.json \
             config/official_company_sources.json \
             public/data/venture_profiles.json
+
+          pushed=false
           if git diff --cached --quiet; then
             echo "No candidate onboarding changes."
-            exit 0
+          else
+            git commit -m "data: publish reviewed company candidates"
+            for attempt in 1 2 3; do
+              git pull --rebase -X theirs origin main
+              python tools/company_registry.py --check
+              python tools/build_company_candidates.py \
+                --output "$CANDIDATE_QUEUE" \
+                --check
+              python tools/onboard_company_candidates.py \
+                --candidates "$CANDIDATE_QUEUE" \
+                --report "$ONBOARDING_STATE" \
+                --check
+              npx tsc --noEmit
+              if git push origin HEAD:main; then
+                pushed=true
+                break
+              fi
+              if [ "$attempt" -eq 3 ]; then
+                exit 1
+              fi
+            done
           fi
-          git commit -m "data: publish reviewed company candidates"
-          for attempt in 1 2 3; do
-            git pull --rebase -X theirs origin main
-            python tools/company_registry.py --check
-            python tools/build_company_candidates.py \
-              --output "$CANDIDATE_QUEUE" \
-              --check
-            python tools/onboard_company_candidates.py \
-              --candidates "$CANDIDATE_QUEUE" \
-              --report "$ONBOARDING_STATE" \
-              --check
-            npx tsc --noEmit
-            if git push origin HEAD:main; then
-              gh workflow run pages.yml --ref main
-              exit 0
-            fi
-            if [ "$attempt" -eq 3 ]; then
+
+          handoff="${POST_ONBOARDING_HANDOFF:-none}"
+          case "$handoff" in
+            refresh)
+              echo "Verified onboarding finished; refresh the public snapshot from the committed company state."
+              gh workflow run scheduled-sync.yml --ref main
+              ;;
+            publish-with-research)
+              echo "Verified onboarding finished at the terminal fixed point; publish Pages, then generate research."
+              gh workflow run pages.yml --ref main \
+                -f run_research_after_deploy=true
+              ;;
+            none|"")
+              if [ "$pushed" = "true" ]; then
+                echo "Onboarding changed public company profiles; publish the updated Pages snapshot."
+                gh workflow run pages.yml --ref main
+              fi
+              ;;
+            *)
+              echo "Unsupported post_onboarding_handoff=$handoff" >&2
               exit 1
-            fi
-          done
+              ;;
+          esac
