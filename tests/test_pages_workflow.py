@@ -5,12 +5,14 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW_PATH = ROOT / ".github" / "workflows" / "pages.yml"
 CONTROL_PLANE_PATH = ROOT / "tools" / "run_pipeline.py"
+REFRESH_WORKFLOW_PATH = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
 
 
 class PagesWorkflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
+        cls.refresh_workflow = REFRESH_WORKFLOW_PATH.read_text(encoding="utf-8")
         cls.control_plane = CONTROL_PLANE_PATH.read_text(encoding="utf-8")
         cls.lines = [line.strip() for line in cls.workflow.splitlines()]
         cls.runtime_workflow = cls.workflow.split("permissions:", 1)[1]
@@ -39,8 +41,9 @@ class PagesWorkflowTests(unittest.TestCase):
         self.assertNotIn("Reconcile derived public data", self.runtime_workflow)
         self.assertNotIn("tools/run_pipeline.py finalize", self.runtime_workflow)
 
-    def test_private_review_only_pushes_do_not_start_pages(self):
+    def test_control_plane_only_pushes_do_not_start_pages(self):
         ignored = (
+            "config/user_tracking.json",
             "config/company_candidate_review_queue.json",
             "config/company_candidate_onboarding_state.json",
             "config/company_candidate_decisions.json",
@@ -51,6 +54,12 @@ class PagesWorkflowTests(unittest.TestCase):
         for path in ignored:
             with self.subTest(path=path):
                 self.assertIn(f"      - {path}", self.workflow)
+
+    def test_tracking_config_is_refreshed_before_pages_can_publish_it(self):
+        self.assertIn("      - config/user_tracking.json", self.refresh_workflow)
+        self.assertIn("      - config/user_tracking.json", self.workflow)
+        self.assertIn("run: npm run build:pages", self.workflow)
+        self.assertNotIn("ALLOW_INCOMPLETE_TRACKING_COVERAGE", self.workflow)
 
     def test_pages_build_is_pinned_to_the_event_commit(self):
         self.assertIn("ref: ${{ github.sha }}", self.workflow)
