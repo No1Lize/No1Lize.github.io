@@ -9,6 +9,7 @@ CANDIDATE_WORKFLOW = ROOT / ".github" / "workflows" / "company-candidate-discove
 ONBOARDING_WORKFLOW = ROOT / ".github" / "workflows" / "company-candidate-onboarding.yml"
 REFRESH_WORKFLOW = ROOT / ".github" / "workflows" / "scheduled-sync.yml"
 PAGES_WORKFLOW = ROOT / ".github" / "workflows" / "pages.yml"
+RESEARCH_WORKFLOW = ROOT / ".github" / "workflows" / "research-agent-v1.yml"
 
 
 class EntityResolutionWorkflowTests(unittest.TestCase):
@@ -46,6 +47,7 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
             text,
         )
         self.assertIn("gh workflow run pages.yml --ref main", text)
+        self.assertIn("-f run_research_after_deploy=true", text)
         onboarding = text.index("gh workflow run company-candidate-onboarding.yml --ref main")
         tracking_refresh = text.index("gh workflow run scheduled-sync.yml --ref main")
         pages = text.index("gh workflow run pages.yml --ref main")
@@ -74,9 +76,11 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
             pages,
         )
 
-    def test_full_refresh_explicitly_hands_off_to_reconciliation_and_terminal_publication(self) -> None:
+    def test_full_refresh_explicitly_hands_off_to_reconciliation_pages_then_research(self) -> None:
         refresh = REFRESH_WORKFLOW.read_text(encoding="utf-8")
         candidate = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
+        pages = PAGES_WORKFLOW.read_text(encoding="utf-8")
+        research = RESEARCH_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn("Continue through entity reconciliation before publication", refresh)
         self.assertIn("steps.data-update.outcome == 'success'", refresh)
         self.assertIn("gh workflow run company-candidate-discovery.yml --ref main", refresh)
@@ -84,7 +88,10 @@ class EntityResolutionWorkflowTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", candidate)
         self.assertIn("publish_after_reconciliation:", candidate)
         self.assertIn("gh workflow run pages.yml --ref main", candidate)
-        self.assertNotIn("workflow_run:", candidate)
+        self.assertIn("-f run_research_after_deploy=true", candidate)
+        self.assertIn("run_research_after_deploy:", pages)
+        self.assertIn("gh workflow run research-agent-v1.yml --ref main", pages)
+        self.assertNotIn("workflow_run:", research)
 
     def test_candidate_writer_is_serialized_without_recursive_workflow_run_logic(self) -> None:
         text = CANDIDATE_WORKFLOW.read_text(encoding="utf-8")
