@@ -210,13 +210,21 @@ def enrich_source_evidence(
         source_name=result.get("name"),
         source_category=source_category,
     )
+    # `_source()` creates a preliminary evidence envelope before the article has
+    # a sourceId. Once source_id is known, recompute the role from that stable
+    # runtime identity unless an upstream portfolio adapter explicitly supplied
+    # a top-level role. Otherwise a preliminary C/corroboration label could mask
+    # an automatic/search source that must become discovery.
+    role_hint = explicit_role
+    if not _fold(source_id) and not _fold(role_hint):
+        role_hint = result.get("sourceRole", "")
     role = classify_source_role(
         grade=grade,
         source_id=source_id,
         platform=result.get("platform"),
         url=result.get("url"),
         source_name=result.get("name"),
-        explicit_role=(explicit_role or result.get("sourceRole")),
+        explicit_role=role_hint,
     )
     result["evidenceGrade"] = grade
     result["evidenceLabel"] = EVIDENCE_GRADE_LABELS[grade]
