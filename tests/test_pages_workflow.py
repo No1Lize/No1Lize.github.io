@@ -14,7 +14,7 @@ class PagesWorkflowTests(unittest.TestCase):
         cls.control_plane = CONTROL_PLANE_PATH.read_text(encoding="utf-8")
         cls.lines = [line.strip() for line in cls.workflow.splitlines()]
 
-    def test_pages_build_only_observes_and_validates_committed_data(self):
+    def test_pages_build_only_observes_and_validates_public_build_inputs(self):
         python_commands = [
             line for line in self.lines if line.startswith("python tools/")
         ]
@@ -23,8 +23,6 @@ class PagesWorkflowTests(unittest.TestCase):
             [
                 "python tools/run_pipeline.py check",
                 "python tools/reconcile_entity_resolution.py --check",
-                "python tools/apply_manual_company_trust.py \\",
-                "python tools/build_resolved_company_candidates.py \\",
                 "python tools/company_profile_refresh_queue.py --check",
                 "python tools/crawl_articles.py --validate-only",
                 "python tools/validate_eastmoney_snapshot.py",
@@ -32,17 +30,26 @@ class PagesWorkflowTests(unittest.TestCase):
                 "python tools/run_pipeline.py build-provenance \\",
             ],
         )
-        self.assertIn(
-            "--candidates config/company_candidate_review_queue.json",
-            self.workflow,
-        )
-        self.assertIn(
-            "--output config/company_candidate_review_queue.json",
-            self.workflow,
-        )
+        self.assertNotIn("company_candidate_review_queue.json", self.workflow)
+        self.assertNotIn("company_candidate_onboarding_state.json", self.workflow)
+        self.assertNotIn("apply_manual_company_trust.py", self.workflow)
+        self.assertNotIn("build_resolved_company_candidates.py", self.workflow)
         self.assertNotIn("public/data/company_candidates.json", self.workflow)
         self.assertNotIn("Reconcile derived public data", self.workflow)
         self.assertNotIn("tools/run_pipeline.py finalize", self.workflow)
+
+    def test_private_review_only_pushes_do_not_start_pages(self):
+        ignored = (
+            "config/company_candidate_review_queue.json",
+            "config/company_candidate_onboarding_state.json",
+            "config/company_candidate_decisions.json",
+            "config/tracking_capture_inbox.json",
+            "config/entity_resolution_decisions.json",
+        )
+        self.assertIn("paths-ignore:", self.workflow)
+        for path in ignored:
+            with self.subTest(path=path):
+                self.assertIn(f"      - {path}", self.workflow)
 
     def test_pages_build_is_pinned_to_the_event_commit(self):
         self.assertIn("ref: ${{ github.sha }}", self.workflow)
