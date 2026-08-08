@@ -1,7 +1,60 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-07T20:43:11+00:00",
+  "generatedAt": "2026-08-08T01:47:56+00:00",
   "records": [
+    {
+      "id": "capture-1m1wgtu",
+      "entityType": "company",
+      "canonicalName": "硕橙科技",
+      "rawSelection": "硕橙科技",
+      "aliases": [],
+      "trackSlugs": [
+        "ai",
+        "manufacturing",
+        "robotics"
+      ],
+      "trackNames": [
+        "AI / AGI",
+        "智能制造",
+        "机器人"
+      ],
+      "source": {
+        "articleId": "article-lfi7kw",
+        "title": "工业AI企业硕橙科技完成超亿元D+轮融资,工业母机产业投资基金领投|首发",
+        "url": "https://www.tmtpost.com/8090423.html",
+        "summary": "",
+        "sourceName": "融资钛媒体 · 专业媒体",
+        "channel": "institutions",
+        "channelLabel": "投资机构",
+        "eventType": "融资"
+      },
+      "capturedAt": "2026-08-08T01:11:05.777Z",
+      "capturedBy": "VCIQ",
+      "status": "applied",
+      "appliedTo": [
+        "ai:sampleCompanies",
+        "manufacturing:sampleCompanies",
+        "robotics:sampleCompanies"
+      ],
+      "reasons": [
+        "IPO可能",
+        "技术突破",
+        "个人研究兴趣"
+      ],
+      "note": "",
+      "resolution": {
+        "status": "resolved",
+        "requestedType": "company",
+        "entityType": "company",
+        "canonicalName": "硕橙科技",
+        "targetId": "company-candidate:硕橙科技",
+        "confidence": "medium",
+        "source": "source-context",
+        "reason": "原文邻近语境存在公司、企业或平台表述，可进入候选审核。",
+        "decisionKey": "硕橙科技",
+        "reclassified": false
+      }
+    },
     {
       "id": "capture-w6han0",
       "entityType": "topic",
