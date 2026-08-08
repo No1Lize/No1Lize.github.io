@@ -112,12 +112,22 @@ def _provenance(evidence: set[str]) -> tuple[str, float, int | None]:
         or marker in {
             "investment-institution-directory",
             "shared-directory-reference",
+            "verified-company-profile",
+            "verified-institution-profile",
+            "verified-institution-team-page",
         }
         for marker in evidence
     ):
         return "auto:verified-directory", 0.97, VERIFIED_TTL_DAYS
+    if {
+        "sample-company-core-team",
+        "public-social-identifier",
+    } & evidence:
+        return "auto:verified-team", 0.94, VERIFIED_TTL_DAYS
     if "wikidata-official-site" in evidence:
         return "auto:official-site", 0.93, VERIFIED_TTL_DAYS
+    if "wikidata-social" in evidence:
+        return "auto:verified-social", 0.90, VERIFIED_TTL_DAYS
     if any(marker.startswith("corpus-") for marker in evidence) and "news-confirmed" in evidence:
         return "auto:corpus+news", 0.88, None
     if any(marker.startswith("corpus-") for marker in evidence):
