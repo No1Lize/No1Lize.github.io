@@ -28,9 +28,22 @@ class CoreOfficialAdaptersTests(unittest.TestCase):
                 self.sector = sector
                 self.path_prefixes = path_prefixes
 
+        source_type = NewsSource
+
         class FakeCrawler:
-            NEWS_SOURCES = (NewsSource("openai", "OpenAI", "", "OpenAI", "openai", "美国", "AI / AGI", ("/index/",)),)
-            NewsSource = NewsSource
+            NEWS_SOURCES = (
+                source_type(
+                    "openai",
+                    "OpenAI",
+                    "",
+                    "OpenAI",
+                    "openai",
+                    "美国",
+                    "AI / AGI",
+                    ("/index/",),
+                ),
+            )
+            NewsSource = source_type
 
         core_official_adapters.install(FakeCrawler)
         first_ids = [source.id for source in FakeCrawler.NEWS_SOURCES]
