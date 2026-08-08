@@ -28,6 +28,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.publication_readiness.outputs.ready }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -38,46 +40,115 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Assess publication readiness
+        id: publication_readiness
+        shell: bash
+        run: |
+          set +e
+          entity_output="$(python tools/reconcile_entity_resolution.py --check 2>&1)"
+          entity_status=$?
+          tracking_output="$(node scripts/validate-tracking-snapshot.mjs 2>&1)"
+          tracking_status=$?
+          set -e
+
+          deferred_reasons=()
+
+          if [ "$entity_status" -ne 0 ]; then
+            if printf '%s\n' "$entity_output" | grep -Fq "entity resolution reconciliation is not at a fixed point"; then
+              deferred_reasons+=("entity reconciliation")
+            else
+              printf '%s\n' "$entity_output"
+              echo "::error title=Pages readiness check failed::Entity reconciliation failed for an unexpected reason."
+              exit "$entity_status"
+            fi
+          fi
+
+          if [ "$tracking_status" -ne 0 ]; then
+            tracking_errors="$(printf '%s\n' "$tracking_output" | grep '^TRACKING_SNAPSHOT_ERROR:' || true)"
+            if printf '%s\n' "$tracking_errors" | grep -Fq "tracking configuration is newer than the article snapshot"; then
+              unexpected_tracking_errors="$(
+                printf '%s\n' "$tracking_errors" \
+                  | grep -Fv "tracking configuration is newer than the article snapshot" \
+                  | grep -Fv "missing crawler coverage record" \
+                  || true
+              )"
+              if [ -n "$unexpected_tracking_errors" ]; then
+                printf '%s\n' "$tracking_output"
+                echo "::error title=Pages readiness check failed::Tracking snapshot has a non-transient validation error."
+                exit "$tracking_status"
+              fi
+              deferred_reasons+=("tracking snapshot refresh")
+            else
+              printf '%s\n' "$tracking_output"
+              echo "::error title=Pages readiness check failed::Tracking snapshot validation failed without a pending-refresh signature."
+              exit "$tracking_status"
+            fi
+          fi
+
+          if [ "${#deferred_reasons[@]}" -gt 0 ]; then
+            if [ "$entity_status" -ne 0 ]; then
+              printf '%s\n' "$entity_output"
+            fi
+            if [ "$tracking_status" -ne 0 ]; then
+              printf '%s\n' "$tracking_output"
+            fi
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::notice title=Pages deferred::Waiting for ${deferred_reasons[*]} before publishing. The last good deployment remains active."
+            exit 0
+          fi
+
+          echo "ready=true" >> "$GITHUB_OUTPUT"
+          echo "Publication inputs are at a fixed point."
       - name: Validate committed public data and automation contract
+        if: steps.publication_readiness.outputs.ready == 'true'
         run: |
           python tools/run_pipeline.py check
           python tools/reconcile_entity_resolution.py --check
           python tools/company_profile_refresh_queue.py --check
           python tools/crawl_articles.py --validate-only
           python tools/validate_eastmoney_snapshot.py
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
       - name: Install locked project dependencies
+        if: steps.publication_readiness.outputs.ready == 'true'
         run: npm ci
       - name: Run unit tests
+        if: steps.publication_readiness.outputs.ready == 'true'
         run: npm run test:unit
       - name: Verify build inputs match the source commit
+        if: steps.publication_readiness.outputs.ready == 'true'
         run: |
           test "$(git rev-parse HEAD)" = "${GITHUB_SHA}"
           git diff --exit-code -- config public/data
       - name: Build deployable Pages snapshot
+        if: steps.publication_readiness.outputs.ready == 'true'
         env:
           NEXT_PUBLIC_QM_WORKSPACE_URL: ${{ vars.QM_WORKSPACE_URL }}
         run: npm run build:pages
       - name: Verify the build stayed read-only
+        if: steps.publication_readiness.outputs.ready == 'true'
         run: git diff --exit-code -- config public/data
       - name: Build deploy-time lineage and health
+        if: steps.publication_readiness.outputs.ready == 'true'
         run: |
           python tools/run_pipeline.py refresh \
             --lineage-output out/data/data_lineage.json \
             --health-output out/data/pipeline_health.json
       - name: Record build provenance
+        if: steps.publication_readiness.outputs.ready == 'true'
         run: |
           python tools/run_pipeline.py build-provenance \
             --output out/build-provenance.json \
             --lineage out/data/data_lineage.json \
             --health out/data/pipeline_health.json
       - uses: actions/upload-pages-artifact@v3
+        if: steps.publication_readiness.outputs.ready == 'true'
         with:
           path: out
   deploy:
+    if: needs.build.outputs.ready == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
